@@ -8,4 +8,4 @@
 
 Такой короткий контракт помогает заметить ошибку до повторного переноса.
 
-Здесь уже есть два начальных правила: package-independence.md и human-folder-guides.md. Их наличие не означает, что весь harness наполнен и подключён к агентам.
+Здесь уже есть три начальных правила: package-independence.md, human-folder-guides.md и user-owned-entrypoints.md. Их наличие не означает, что весь harness наполнен и подключён к агентам.
