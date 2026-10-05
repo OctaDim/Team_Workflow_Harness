@@ -10,14 +10,15 @@ BOOTSTRAP = '''# Harness
 В начале каждой сессии до выполнения задачи запусти из корня проекта:
 
 ```sh
-python3 harness/common/checks/ensure_entrypoint_links.py
+python3 harness/{package}/checks/ensure_entrypoint_links.py
 ```
 
 При ошибке проверки остановись и сообщи причину. Затем прочитай INDEX.md и START.md
 подключённых пакетов. Подробности открывай по задаче; README.human.md не читай.
 Индивидуальные инструкции не отменяют применимые канонические требования.
-AGENTS.md принадлежит пользователю; разрешено только восстановление указанных ниже
-ссылок. Динамическую память сохраняй внутри harness.
+Прямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически
+не заблокированы; изменения предлагай через inbox. Согласованное создание и восстановление
+стартовых ссылок — узкое исключение. Динамическую память сохраняй внутри harness.
 '''
 
 
@@ -95,7 +96,7 @@ def ensure(root):
             raise ValueError(f'Not a regular file: {path.name}')
     report_history_changes(root)
     original_agents = agents.read_text(encoding='utf-8') if agents.exists() else ''
-    content = original_agents or BOOTSTRAP
+    content = original_agents or BOOTSTRAP.replace('{package}', packages[0])
     visible = instruction_text(content)
     missing = [relative for relative in resources if not re.search(
         r'\[[^\]\n]+\]\(<?(?:\./)?' + re.escape(relative) + r'(?:#[^\s)>]+)?>?\)', visible)]
