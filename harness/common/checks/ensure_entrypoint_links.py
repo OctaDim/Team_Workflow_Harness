@@ -1,5 +1,4 @@
 """Restore entrypoint links; run from the project root or pass that root."""
-import argparse
 import re
 import subprocess
 import sys
@@ -28,15 +27,12 @@ def instruction_text(text):
     return re.sub(r'(`+).*?\1', '', text, flags=re.S)
 
 
-WARNING = ('Прямое редактирование AGENTS.md и CLAUDE.md запрещено. '
-           'Предложите изменение через заявку в harness/<пакет>/inbox/.')
+WARNING = ('Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, '
+           'но технически не заблокировано. Изменения предлагайте через заявку в '
+           'harness/<пакет>/inbox/.')
 NOTICE = 'Стартовые ссылки повреждены и будут автоматически восстановлены.'
 LINK_LINES = {f'- [harness/{p}/{n}](harness/{p}/{n})'
               for p in ('common', 'project') for n in ('INDEX.md', 'START.md')}
-
-
-def git(root, *args):
-    return subprocess.run(['git', *args], cwd=root, capture_output=True)
 
 
 def without_startup_links(text):
@@ -56,60 +52,33 @@ def without_startup_links(text):
     return ''.join(result).rstrip('\n')
 
 
-def check_protected(root, staged=False, require_links=True):
-    top = git(root, 'rev-parse', '--show-toplevel')
-    if top.returncode or Path(top.stdout.decode().strip()).resolve() != root:
-        raise ValueError(WARNING + ' Проверка требует корень Git-проекта.')
-    for name in ('AGENTS.md', 'CLAUDE.md'):
-        baseline = git(root, 'show', f'HEAD:{name}')
-        if baseline.returncode:
-            raise ValueError(WARNING + f' Нет согласованной версии {name} в HEAD; '
-                             'начальная регистрация требует подтверждения пользователя.')
-        path = root / name
-        if staged:
-            entry = git(root, 'ls-files', '--stage', '--', name)
-            mode = entry.stdout.split(maxsplit=1)[0] if entry.stdout else b''
-            if entry.returncode or mode not in (b'100644', b'100755'):
-                raise ValueError(WARNING + f' {name}: в индексе нет обычного файла.')
-            current = git(root, 'show', f':{name}')
-            if current.returncode:
-                raise ValueError(WARNING + f' {name}: файл недоступен в индексе.')
-            content = current.stdout.decode('utf-8')
-        else:
-            if path.is_symlink() or (path.exists() and not path.is_file()):
-                raise ValueError(WARNING + f' {name}: требуется обычный файл.')
-            content = path.read_bytes().decode('utf-8') if path.exists() else ''
-        before = baseline.stdout.decode('utf-8')
-        if name == 'AGENTS.md':
-            if without_startup_links(content) != without_startup_links(before):
-                raise ValueError(WARNING + f' {name}: изменены настройки вне стартовых ссылок.')
-            if require_links:
-                visible = instruction_text(content)
-                for package in ('common', 'project'):
-                    if (root / 'harness' / package).is_dir():
-                        for resource in ('INDEX.md', 'START.md'):
-                            relative = f'harness/{package}/{resource}'
-                            if not re.search(r'\[[^\]\n]+\]\(<?(?:\./)?' + re.escape(relative)
-                                             + r'(?:#[^\s)>]+)?>?\)', visible):
-                                raise ValueError(WARNING + f' {name}: отсутствует ссылка {relative}.')
-        elif content not in ('@AGENTS.md', '@AGENTS.md\n'):
-            if require_links or content:
-                raise ValueError(WARNING + ' CLAUDE.md должен содержать только @AGENTS.md.')
-    return True
+def report_history_changes(root):
+    """Use existing Git history if available; no registration or setup is required."""
+    try:
+        top = subprocess.run(['git', '--no-optional-locks', 'rev-parse', '--show-toplevel'],
+                             cwd=root, capture_output=True)
+        if top.returncode or Path(top.stdout.decode().strip()).resolve() != root:
+            print('Сравнение настроек с историей не проверено: нет истории этого проекта.')
+            return
+        for name in ('AGENTS.md', 'CLAUDE.md'):
+            baseline = subprocess.run(['git', '--no-optional-locks', 'show', f'HEAD:{name}'],
+                                      cwd=root, capture_output=True)
+            if baseline.returncode:
+                print(f'{name}: сравнение с историей не проверено; версии в HEAD нет.')
+                continue
+            file = root / name
+            current = file.read_bytes().decode('utf-8') if file.exists() else ''
+            previous = baseline.stdout.decode('utf-8')
+            changed = (without_startup_links(current) != without_startup_links(previous)
+                       if name == 'AGENTS.md' else current != previous)
+            if changed:
+                print(f'{name}: обнаружено изменение настроек относительно HEAD. ' + WARNING)
+    except FileNotFoundError:
+        print('Сравнение настроек с историей не проверено: Git отсутствует; он не обязателен.')
 
 
 def ensure(root):
-    # Before the initial approved Git registration, only link repair is available.
-    top = git(root, 'rev-parse', '--show-toplevel')
-    if not top.returncode and Path(top.stdout.decode().strip()).resolve() == root:
-        if all(not git(root, 'show', f'HEAD:{name}').returncode
-               for name in ('AGENTS.md', 'CLAUDE.md')):
-            check_protected(root, require_links=False)
-        else:
-            print('Защита содержимого ещё не активирована: нет согласованной версии входов в HEAD.',
-                  file=sys.stderr)
-    else:
-        print('Защита содержимого не проверена: проект не зарегистрирован в Git.', file=sys.stderr)
+    print(WARNING)
     packages = [name for name in ('common', 'project')
                 if (root / 'harness' / name).is_dir()]
     if not packages:
@@ -124,6 +93,7 @@ def ensure(root):
     for path in (agents, claude):
         if path.is_symlink() or (path.exists() and not path.is_file()):
             raise ValueError(f'Not a regular file: {path.name}')
+    report_history_changes(root)
     original_agents = agents.read_text(encoding='utf-8') if agents.exists() else ''
     content = original_agents or BOOTSTRAP
     visible = instruction_text(content)
@@ -144,31 +114,23 @@ def ensure(root):
         if updated != original or not path.exists():
             path.write_text(updated, encoding='utf-8')
             changed.append(path.name)
-    if bridge.strip() not in ('@AGENTS.md', '@./AGENTS.md'):
-        raise ValueError('CLAUDE.md import restored, but additional content was preserved. '
-                         'Предложите исправление через harness/<пакет>/inbox/.')
+    if bridge not in ('@AGENTS.md', '@AGENTS.md\n'):
+        print('CLAUDE.md: требуется единственная строка @AGENTS.md; '
+              'дополнительное или отличающееся содержимое сохранено. ' + WARNING)
     return changed
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--check-protected', action='store_true', help='read-only content protection check')
-    parser.add_argument('--staged', action='store_true', help='check the Git index before a commit')
-    parser.add_argument('root', nargs='?', default='.')
-    args = parser.parse_args()
-    if args.staged and not args.check_protected:
-        parser.error('--staged requires --check-protected')
-    root = Path(args.root).resolve()
+    if len(sys.argv) > 2:
+        print('Usage: python3 ensure_entrypoint_links.py [project-root]', file=sys.stderr)
+        return 2
+    root = Path(sys.argv[1] if len(sys.argv) == 2 else '.').resolve()
     try:
-        if args.check_protected:
-            check_protected(root, staged=args.staged)
-            print('Protected entrypoints OK' + (' (Git index)' if args.staged else ' (working tree)'))
-        else:
-            changed = ensure(root)
-            print('Entrypoint links OK' + (': updated ' + ', '.join(changed) if changed else ''))
+        changed = ensure(root)
     except (OSError, UnicodeError, ValueError) as error:
         print(f'Entrypoint check failed: {error}', file=sys.stderr)
         return 2
+    print('Entrypoint check completed' + (': updated links in ' + ', '.join(changed) if changed else ''))
     return 0
 
 

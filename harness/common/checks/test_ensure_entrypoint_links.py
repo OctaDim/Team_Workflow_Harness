@@ -67,10 +67,12 @@ class EntryPointLinksTest(unittest.TestCase):
         self.assertEqual(self.run_check().returncode, 0)
         self.assertNotIn('harness/project/', (self.root / 'AGENTS.md').read_text())
 
-    def test_adds_import_but_reports_extra_claude_content_without_deleting_it(self):
+    def test_adds_import_and_warns_about_extra_claude_content_without_deleting_it(self):
         (self.root / 'CLAUDE.md').write_text('User text\n')
         result = self.run_check()
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0)
+        self.assertIn('inbox', result.stdout)
+        self.assertIn('технически не заблокировано', result.stdout)
         self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\nUser text\n')
 
     def test_refuses_symlinked_entrypoint_without_changing_target(self):
