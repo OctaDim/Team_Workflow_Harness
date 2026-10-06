@@ -1,0 +1,126 @@
+{
+  "kind": "workflow-guide",
+  "createdAt": "2026-10-06T15:09:11.215Z",
+  "target": {
+    "kind": "directory",
+    "path": "/tmp/human-filter-rule-analysis-90i0jhoe",
+    "entryPath": "/tmp/human-filter-rule-analysis-90i0jhoe",
+    "name": "human-filter-rule-analysis-90i0jhoe",
+    "relativePath": "../../../../tmp/human-filter-rule-analysis-90i0jhoe"
+  },
+  "requestedGoal": "evaluate",
+  "requestedChatPrompt": "Evaluate this rule.",
+  "requestRouting": {
+    "goal": "evaluate",
+    "reason": "it asks for the overall evaluation report or prioritized findings from it"
+  },
+  "recommendedWorkflowId": "evaluate",
+  "recommendedWorkflow": {
+    "id": "evaluate",
+    "label": "Evaluate Skill",
+    "chatPrompt": "Evaluate this target.",
+    "summary": "Start here when you want the overall report for a target, including structure, budgets, and code checks.",
+    "firstCommand": "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown",
+    "commands": [
+      "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown"
+    ],
+    "startCommand": "plugin-eval start /tmp/human-filter-rule-analysis-90i0jhoe --request 'Evaluate this target.' --format markdown"
+  },
+  "workflowStatus": {
+    "hasBenchmarkConfig": false,
+    "hasUsageLog": false
+  },
+  "beginnerSummary": "Start with a natural chat request, then let plugin-eval show the exact local command sequence behind it.",
+  "startHere": {
+    "chatPrompt": "Evaluate this rule.",
+    "label": "Evaluate Skill",
+    "summary": "Start here when you want the overall report for a target, including structure, budgets, and code checks.",
+    "routingExplanation": "Plugin Eval routed \"Evaluate this rule.\" to Evaluate Skill because it asks for the overall evaluation report or prioritized findings from it.",
+    "startCommand": "plugin-eval start /tmp/human-filter-rule-analysis-90i0jhoe --request 'Evaluate this rule.' --format markdown",
+    "firstCommand": "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown",
+    "commands": [
+      "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown"
+    ]
+  },
+  "entrypoints": [
+    {
+      "id": "analysis",
+      "label": "Full Skill Analysis",
+      "chatPrompt": "Give me a full analysis of this target, including benchmark setup.",
+      "summary": "Use this when you want the full report and starter benchmark setup for this target in one guided path.",
+      "firstCommand": "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown",
+      "commands": [
+        "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown",
+        "plugin-eval init-benchmark /tmp/human-filter-rule-analysis-90i0jhoe",
+        "plugin-eval benchmark /tmp/human-filter-rule-analysis-90i0jhoe --config /tmp/human-filter-rule-analysis-90i0jhoe/.plugin-eval/benchmark.json"
+      ],
+      "startCommand": "plugin-eval start /tmp/human-filter-rule-analysis-90i0jhoe --request 'Give me a full analysis of this target, including benchmark setup.' --format markdown"
+    },
+    {
+      "id": "evaluate",
+      "label": "Evaluate Skill",
+      "chatPrompt": "Evaluate this target.",
+      "summary": "Start here when you want the overall report for a target, including structure, budgets, and code checks.",
+      "firstCommand": "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown",
+      "commands": [
+        "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown"
+      ],
+      "startCommand": "plugin-eval start /tmp/human-filter-rule-analysis-90i0jhoe --request 'Evaluate this target.' --format markdown"
+    },
+    {
+      "id": "budget",
+      "label": "Explain Token Budget",
+      "chatPrompt": "Explain the token budget for this target.",
+      "summary": "Use this when the main question is why the target feels expensive before you collect any live measurements.",
+      "firstCommand": "plugin-eval explain-budget /tmp/human-filter-rule-analysis-90i0jhoe --format markdown",
+      "commands": [
+        "plugin-eval explain-budget /tmp/human-filter-rule-analysis-90i0jhoe --format markdown"
+      ],
+      "startCommand": "plugin-eval start /tmp/human-filter-rule-analysis-90i0jhoe --request 'Explain the token budget for this target.' --format markdown"
+    },
+    {
+      "id": "measure",
+      "label": "Measure Real Token Usage",
+      "chatPrompt": "Measure the real token usage of this target.",
+      "summary": "Use this when you want real token usage instead of only the static estimate.",
+      "firstCommand": "plugin-eval init-benchmark /tmp/human-filter-rule-analysis-90i0jhoe",
+      "commands": [
+        "plugin-eval init-benchmark /tmp/human-filter-rule-analysis-90i0jhoe",
+        "plugin-eval benchmark /tmp/human-filter-rule-analysis-90i0jhoe --config /tmp/human-filter-rule-analysis-90i0jhoe/.plugin-eval/benchmark.json",
+        "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --observed-usage /tmp/human-filter-rule-analysis-90i0jhoe/.plugin-eval/benchmark-usage.jsonl --format markdown"
+      ],
+      "startCommand": "plugin-eval start /tmp/human-filter-rule-analysis-90i0jhoe --request 'Measure the real token usage of this target.' --format markdown"
+    },
+    {
+      "id": "benchmark",
+      "label": "Benchmark With Starter Scenarios",
+      "chatPrompt": "Help me benchmark this target.",
+      "summary": "Use this when you want starter scenarios and a repeatable real-Codex benchmark run for this target.",
+      "firstCommand": "plugin-eval init-benchmark /tmp/human-filter-rule-analysis-90i0jhoe",
+      "commands": [
+        "plugin-eval init-benchmark /tmp/human-filter-rule-analysis-90i0jhoe"
+      ],
+      "startCommand": "plugin-eval start /tmp/human-filter-rule-analysis-90i0jhoe --request 'Help me benchmark this target.' --format markdown"
+    },
+    {
+      "id": "next",
+      "label": "Start Here",
+      "chatPrompt": "What should I run next?",
+      "summary": "If you are new to plugin-eval, start with the overall evaluation report for this target.",
+      "firstCommand": "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown",
+      "commands": [
+        "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown"
+      ],
+      "startCommand": "plugin-eval start /tmp/human-filter-rule-analysis-90i0jhoe --request 'What should I run next?' --format markdown"
+    }
+  ],
+  "nextSteps": [
+    "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown"
+  ],
+  "nextAction": {
+    "label": "Evaluate Skill",
+    "why": "Plugin Eval routed \"Evaluate this rule.\" to Evaluate Skill because it asks for the overall evaluation report or prioritized findings from it.",
+    "command": "plugin-eval analyze /tmp/human-filter-rule-analysis-90i0jhoe --format markdown",
+    "chatPrompt": "Evaluate this rule."
+  }
+}

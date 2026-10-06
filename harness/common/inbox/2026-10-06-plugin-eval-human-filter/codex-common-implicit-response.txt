@@ -1,0 +1,54 @@
+В нативном каталоге сессии доступны навыки: `imagegen`, `openai-docs`, `skill-creator`, `skill-installer`, `comm-create-lazy-claude-codex-skills`.
+
+Первой командой выполню обязательную стартовую проверку, затем прочитаю инструкции и проверю доступность установленного `plugin-eval`. Оценку проведу read-only, с отчётами в stdout.
+
+Применяю установленные `plugin-eval` и `evaluate-skill`; также прочитал обязательные инструкции `skill-creator` и локальной lazy-процедуры. Маршрутизацию и анализ запущу через harness-фильтр, который исключает `README.human.md` до чтения. Бюджет будет статической оценкой; benchmark/config создавать не буду по вашему указанию.
+
+Маршрутизация `Evaluate this skill` выбрала **Evaluate Skill**. Затем статический `analyze` завершился успешно: **95/100, A**, риск `medium`; 0 ошибок, 1 предупреждение. Оба отчёта напечатаны в stdout.
+
+| Статический бюджет | Токены |
+|---|---:|
+| Обнаружение | 47 |
+| Вызов | 397 |
+| Активный контекст | 444 |
+| Отложенные ресурсы | 1198 |
+| Всего | 1642 |
+
+Предупреждение относится к объёму отложенных ресурсов. Сравнительная выборка пуста (`skills=0, plugins=0`), поэтому вывод о превышении baseline ограничен. Это оценка объёма, а не измеренный расход. Поведение Codex/Claude, нативный выбор и два режима установки не проверялись; полного статуса «проверено» результат не даёт.
+
+Файлы не изменял; benchmark/config не создавал; тела `README.human.md` не читал.
+
+Основные фактические команды из корня проекта:
+
+```sh
+python3 harness/common/checks/ensure_entrypoint_links.py
+```
+
+```sh
+plugin_eval_entry=$(command -v plugin-eval) || exit 1
+node harness/common/checks/plugin_eval_without_human.mjs "$plugin_eval_entry" start harness/common/skills/comm-create-lazy-claude-codex-skills --request "Evaluate this skill" --format markdown
+```
+
+```sh
+plugin_eval_entry=$(command -v plugin-eval) || exit 1
+node harness/common/checks/plugin_eval_without_human.mjs "$plugin_eval_entry" analyze harness/common/skills/comm-create-lazy-claude-codex-skills --format markdown
+```
+
+Для чтения и обнаружения также выполнялись `cat`, `pwd` и:
+
+```sh
+rg --files --hidden .claude/rules -g '*.md' -g '!README.human.md'
+rg --files --hidden /tmp/two-modes-native-n68yutsk -g '*plugin*eval*' -g 'SKILL.md' -g '!README.human.md'
+```
+
+Прочитанные инструкции — пути относительно `/tmp/two-modes-native-n68yutsk/`:
+
+- `workspace/harness/{common,project}/{INDEX,START}.md` — все четыре файла.
+- `workspace/.claude/rules/`: `comm-skill-rule-ownership.md`, `comm-user-owned-entrypoints.md`, `comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-human-folder-guides.md`.
+- `workspace/harness/common/rules/comm-skill-rule-ownership.md`.
+- `workspace/harness/common/docs/skill-rule-ownership-contract.md`, `plugin-eval-without-human.md`.
+- `workspace/harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md` и `references/{content-contract,validation-and-publication}.md`.
+- `runtime/skills/.system/skill-creator/SKILL.md`.
+- `plugin-eval/skills/{plugin-eval,evaluate-skill}/SKILL.md`.
+
+Использован установленный [plugin-eval](/tmp/two-modes-native-n68yutsk/plugin-eval/skills/plugin-eval/SKILL.md) через отдельный Node.js процесс с harness-фильтром человеческих README.

@@ -1,0 +1,44 @@
+В нативном каталоге сессии доступны навыки: `imagegen`, `openai-docs`, `skill-creator`, `skill-installer`, `comm-create-lazy-claude-codex-skills`. Первой командой выполню обязательный старт, затем прочитаю инструкции и проверю доступность `plugin-eval`. Оценка будет read-only, с отчётами в stdout.
+Стартовая проверка прошла. Инструкции harness требуют запускать `plugin-eval` через отдельный Node.js launcher: он исключает `README.human.md` до чтения и расчёта бюджета. Использую этот launcher для маршрутизации `Evaluate this skill`, затем для статического `analyze`; результаты не будут означать проверку поведения Codex и Claude.
+Маршрутизация `Evaluate this skill` выбрала **Evaluate Skill**. Последующий статический `analyze` завершился успешно: **95/100, A**, риск `medium`, 0 ошибок, 1 предупреждение. Оба отчёта напечатаны в stdout.
+
+| Бюджет | Токены |
+|---|---:|
+| Обнаружение (`trigger`) | 47 |
+| Вызов (`invoke`) | 397 |
+| Активный | **444** |
+| Отложенные ресурсы (`deferred`) | 1198 |
+| Всего | **1642** |
+
+Предупреждение касается объёма отложенных ресурсов. Это сигнал для ручного анализа повторов, а не основание автоматически сокращать обязательные требования.
+
+Ограничения: бюджет рассчитан статически, фактический расход не предоставлен; baseline содержит 0 samples; coverage отсутствует. Benchmark, проверка поведения и нативного выбора Codex/Claude не выполнялись — их статусы остаются **«не проверено»**. Файлы, benchmark/config не создавались и не изменялись. Тела `README.human.md` не читались.
+
+Основные фактические команды из корня проекта:
+
+```sh
+python3 harness/common/checks/ensure_entrypoint_links.py
+command -v plugin-eval
+plugin-eval --help
+
+plugin_eval_entry=$(command -v plugin-eval) || exit 1
+node harness/common/checks/plugin_eval_without_human.mjs "$plugin_eval_entry" start harness/common/skills/comm-create-lazy-claude-codex-skills --request "Evaluate this skill" --format markdown
+
+plugin_eval_entry=$(command -v plugin-eval) || exit 1
+node harness/common/checks/plugin_eval_without_human.mjs "$plugin_eval_entry" analyze harness/common/skills/comm-create-lazy-claude-codex-skills --format markdown
+```
+
+Установленная команда: `/tmp/two-modes-native-wt9jdp7m/bin/plugin-eval`. Дополнительно использовались `pwd`, `rg --files`, `cat` и рекурсивный `find .claude/rules … -exec cat`, с исключением `README.human.md`.
+
+Прочитанные инструкции и процедура:
+
+- `harness/{common,project}/{INDEX,START}.md` — все четыре файла.
+- `.claude/rules/comm-{entrypoint-links-rule,user-owned-entrypoints,human-folder-guides,package-independence,skill-rule-ownership}.md` — все пять правил.
+- `harness/common/rules/comm-skill-rule-ownership.md`.
+- `harness/common/docs/plugin-eval-without-human.md`.
+- `harness/common/docs/skill-rule-ownership-contract.md`.
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.
+- В той же папке: `references/content-contract.md` и `references/validation-and-publication.md`.
+- Код защитного launcher: `harness/common/checks/plugin_eval_without_human.mjs`.
+
+Анализатор также обходил ресурсы оцениваемой папки через launcher, который исключает человеческие README в памяти и запрещает запись.

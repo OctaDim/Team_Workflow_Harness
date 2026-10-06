@@ -1,0 +1,45 @@
+В нативном каталоге сессии доступны навыки: `imagegen`, `openai-docs`, `skill-creator`, `skill-installer`, `comm-create-lazy-claude-codex-skills`. Первой командой выполню обязательный старт, затем прочитаю инструкции и применю процедуру `comm-human-folder-guides.md`. Оценку проведу read-only, с отчётами в stdout.
+
+Стартовая проверка прошла. Применяю `comm-human-folder-guides.md`: запуск plugin-eval будет идти через отдельный Node.js launcher, который исключает `README.human.md` до чтения и расчёта бюджета. Также применяю обязательный `skill-creator`; это будет статическая оценка, без проверки поведения Codex и Claude.
+
+Оценка завершена: **95/100, A**, риск `medium`; **0 ошибок, 1 предупреждение**. Маршрутизация `Evaluate this skill` выбрала `Evaluate Skill`, затем выполнен статический `analyze`. Оба отчёта напечатаны в stdout.
+
+| Бюджет | Оценка токенов |
+|---|---:|
+| Обнаружение навыка | 47 |
+| Загрузка инструкций | 397 |
+| Активный бюджет | **444** |
+| Отложенные ресурсы | 1198 |
+| Полный комплект | **1642** |
+
+Предупреждение касается объёма отложенных ресурсов. Это эвристика: у анализатора **0 baseline samples**, измеренного usage нет. Оценка не подтверждает качество выполнения задач или нативное поведение агентов: **Codex — не проверено; Claude — не проверено**.
+
+Фактические команды старта и оценки, в порядке выполнения:
+
+```bash
+python3 harness/common/checks/ensure_entrypoint_links.py
+
+plugin_eval_entry=$(command -v plugin-eval) || exit 1
+node harness/common/checks/plugin_eval_without_human.mjs "$plugin_eval_entry" start harness/common/skills/comm-create-lazy-claude-codex-skills --request "Evaluate this skill" --format markdown
+
+plugin_eval_entry=$(command -v plugin-eval) || exit 1
+node harness/common/checks/plugin_eval_without_human.mjs "$plugin_eval_entry" analyze harness/common/skills/comm-create-lazy-claude-codex-skills --format markdown
+```
+
+Для чтения и обнаружения использованы `cat`, `rg --files` с исключением `-g '!README.human.md'` и `command -v plugin-eval`.
+
+Прочитанные инструкции, относительно корня проекта:
+
+- `harness/{common,project}/{INDEX,START}.md` — все четыре файла.
+- `.claude/rules/comm-{skill-rule-ownership,package-independence,entrypoint-links-rule,user-owned-entrypoints,human-folder-guides}.md` — все пять правил.
+- `harness/common/docs/plugin-eval-without-human.md`
+- `harness/common/docs/skill-rule-ownership-contract.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- Его `references/content-contract.md` и `references/validation-and-publication.md`.
+
+Вне проекта прочитаны:
+
+- `/tmp/two-modes-native-ofkp5x6z/runtime/skills/.system/skill-creator/SKILL.md`
+- В `/tmp/two-modes-native-ofkp5x6z/runtime/plugins/cache/openai-curated-remote/plugin-eval/0.1.2/`: `skills/plugin-eval/SKILL.md`, `skills/evaluate-skill/SKILL.md`, `references/chat-first-workflows.md`.
+
+Также прочитан код launcher `harness/common/checks/plugin_eval_without_human.mjs`. Процедура `comm-human-folder-guides.md` применена явно: человеческие README исключались в памяти отдельного процесса до чтения и расчёта стоимости. **Тела `README.human.md` не читались; benchmark/config не создавались; файлы не изменялись.**
