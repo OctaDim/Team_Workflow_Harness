@@ -1,0 +1,168 @@
+{
+  "agent": "codex-cli 0.159.3",
+  "results": [
+    {
+      "case": "implicit-rule-common",
+      "mode": "common",
+      "exit": 0,
+      "own_resource_read_observed": true,
+      "passed": true,
+      "decision": {
+        "selected_skill": "comm-create-lazy-claude-codex-skills",
+        "opened_resource": [
+          ".agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          ".agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+          ".agents/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md"
+        ],
+        "required_skills": [
+          "superpowers:using-superpowers",
+          "openai-docs",
+          "skill-creator",
+          "superpowers:writing-skills",
+          "plugin-eval:plugin-eval"
+        ],
+        "rule_format": "Preserve project format and Fails-when → What happened → How to fix → Why should be fixed. Justify always-loaded placement by a failure before skill selection. Check conflicts/references, compactness and both agents' behavior.",
+        "evaluation_branch": "Standalone plain rule: no skill validator; evaluate-skill and evaluate-plugin are N/A. Generic analysis is not native proof. Apply RED–GREEN–REFACTOR and check both agents' behavior; recheck corrected rules. improve-skill corrects skills.",
+        "publication_if_claude_unavailable": "Record separate Codex/Claude statuses and missing or unperformed checks. Retain the unverified version in the inbox. Publication requires explicit permission for that unverified version at named source/native paths; exceptions preserve its status and constraints."
+      },
+      "limitation": "workspace isolation; global prerequisites available, not OS-isolated; tabletop plan, not actual authoring/tool execution"
+    },
+    {
+      "case": "implicit-rule-both",
+      "mode": "both",
+      "exit": 0,
+      "own_resource_read_observed": true,
+      "passed": true,
+      "decision": {
+        "selected_skill": "comm-create-lazy-claude-codex-skills",
+        "opened_resource": [
+          ".agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          ".agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+          ".agents/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md"
+        ],
+        "required_skills": [
+          "superpowers:using-superpowers",
+          "openai-docs",
+          "skill-creator",
+          "superpowers:writing-skills",
+          "plugin-eval:plugin-eval"
+        ],
+        "rule_format": "Preserve project format and Fails-when → What happened → How to fix → Why should be fixed. Justify always-loaded placement by a failure before skill selection. Do not edit AGENTS.md or CLAUDE.md directly.",
+        "evaluation_branch": "Standalone plain rule: check conflicts/references, compactness and both agents' behavior; perform RED–GREEN–REFACTOR and recheck corrections. No skill validator. evaluate-plugin is N/A without an actual plugin manifest; generic analysis is neither evaluate-skill/plugin nor native proof. improve-skill corrects skills.",
+        "publication_if_claude_unavailable": "Record separate Codex/Claude statuses and missing or unperformed checks. Retain the unverified version in the inbox; publication requires explicit permission for that version at named source/native paths. Permission preserves the unverified status and constraints."
+      },
+      "limitation": "workspace isolation; global prerequisites available, not OS-isolated; tabletop plan, not actual authoring/tool execution"
+    },
+    {
+      "case": "explicit-skill-common",
+      "mode": "common",
+      "exit": 0,
+      "own_resource_read_observed": true,
+      "passed": true,
+      "decision": {
+        "selected_skill": "comm-create-lazy-claude-codex-skills",
+        "opened_resource": [
+          "/tmp/authoring-native-explicit-skill-common-7od1pv_t/.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "/tmp/authoring-native-explicit-skill-common-7od1pv_t/.agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+          "/tmp/authoring-native-explicit-skill-common-7od1pv_t/.agents/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md"
+        ],
+        "required_skills": [
+          "superpowers:using-superpowers",
+          "openai-docs",
+          "skill-creator",
+          "superpowers:writing-skills",
+          "plugin-eval:plugin-eval",
+          "plugin-eval:evaluate-skill",
+          "plugin-eval:evaluate-plugin",
+          "plugin-eval:improve-skill"
+        ],
+        "correction_steps": [
+          "Before authoring, establish the outcome, target harness, scope and destination; the chat working directory does not establish canonical placement.",
+          "Resolve named skills and helpers from the current catalog, and use openai-docs to search and fetch current official guidance.",
+          "Use plugin-eval:improve-skill, read its generated brief and address required and recommended fixes with skill-creator, including the bad trigger and broken reference.",
+          "Preserve the compact contract and keep discovery in the name and description. Apply superpowers:writing-skills RED–GREEN–REFACTOR.",
+          "Run quick_validate.py on the final folder, re-evaluate the skill and compare results. Repeat final format, resource, helper, behavior and evaluation checks because edits invalidate previous validation.",
+          "Test native listing, explicit own-resource use and implicit selection separately. Record version, files, tools, findings and pass/fail/not-run/N/A reasons, with separate Codex and Claude statuses.",
+          "Without explicit canonical placement, retain the context, acceptance criteria and full candidate in a separate dated inbox. Saving requires capture authorization.",
+          "After the publication gate, save the canonical source and complete ordinary native copies; verify resources, regular files, file-set and byte equality, Git visibility and native behavior. Do not use symlinks or edit protected entrypoints.",
+          "This assessment performed only reads; no corrections, installations, benchmarks or validation runs were performed."
+        ],
+        "plugin_evaluation": {
+          "required": true,
+          "reason": "An actual plugin manifest requires plugin-eval:evaluate-plugin in addition to skill evaluation.",
+          "skill_evaluation": "Route through plugin-eval:plugin-eval; use plugin-eval:evaluate-skill to run analyze and review findings and recommendations.",
+          "conditional_skill": "plugin-management:plugin-management is required for integration or installation, neither of which is requested here.",
+          "authorization": "Benchmark file, configuration or dependency changes require write authorization. Installation is not validation."
+        },
+        "publication_if_claude_unavailable": {
+          "status": "Unverified; record Claude checks as not-run with the reason and keep Codex evidence separate.",
+          "default": "Retain the candidate in the inbox and stop dependent publication.",
+          "exception": "Publication requires explicit permission for this specific unverified version at named source and native paths. A transfer request, earlier success or deadline is not a waiver.",
+          "limitations": "Any exception preserves the unverified status and constraints. File equality does not establish native behavior."
+        }
+      },
+      "limitation": "workspace isolation; global prerequisites available, not OS-isolated; tabletop plan, not actual authoring/tool execution"
+    },
+    {
+      "case": "project-only-control",
+      "mode": "project",
+      "exit": 0,
+      "own_resource_read_observed": false,
+      "passed": true,
+      "decision": {
+        "local_skill_present": false,
+        "checked_paths": [
+          "/tmp/authoring-native-project-only-control-sjidpipu"
+        ],
+        "explanation": "Recursively inspected the current workspace, including hidden files. No local SKILL.md or path named comm-create-lazy-claude-codex-skills was found. No global skill bodies or other workspaces were read, and nothing was written."
+      },
+      "limitation": "workspace isolation; global prerequisites available, not OS-isolated; tabletop plan, not actual authoring/tool execution"
+    },
+    {
+      "case": "explicit-skill-both",
+      "mode": "both",
+      "exit": 0,
+      "own_resource_read_observed": true,
+      "passed": true,
+      "decision": {
+        "selected_skill": "comm-create-lazy-claude-codex-skills",
+        "opened_resource": [
+          ".agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          ".agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+          ".agents/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md"
+        ],
+        "required_skills": [
+          "superpowers:using-superpowers",
+          "openai-docs",
+          "skill-creator",
+          "superpowers:writing-skills",
+          "plugin-eval:plugin-eval",
+          "plugin-eval:evaluate-skill",
+          "plugin-eval:evaluate-plugin",
+          "plugin-eval:improve-skill"
+        ],
+        "correction_steps": [
+          "Establish the intended outcome, target harness, scope and canonical destination; the chat cwd does not establish ownership.",
+          "Route evaluation through plugin-eval:plugin-eval. Use plugin-eval:improve-skill, read its generated brief, and address required and recommended fixes.",
+          "Correct the discovery trigger in name/description and repair the reference and its resource while preserving the compact contract; apply skill-creator.",
+          "Fetch current official Codex guidance through openai-docs. Run quick_validate.py on the final folder, RED–GREEN–REFACTOR behavior checks, and skill re-evaluation with comparison.",
+          "Repeat final validation after edits. Check native listing, explicit own-resource use and implicit selection separately for Codex and Claude.",
+          "Record versions, files, commands, findings, missing tools and pass/fail/not-run/N/A reasons in validation.md, with separate agent statuses and three installation modes.",
+          "Without explicit canonical placement, retain the request context, acceptance criteria and complete candidate in a dated inbox. Publication requires the gate; afterward verify complete ordinary copies, resources, file equality, Git visibility and native behavior."
+        ],
+        "plugin_evaluation": {
+          "required": true,
+          "reason": "An actual plugin manifest requires plugin-eval:evaluate-plugin; it is not N/A.",
+          "integration_or_installation": "Use plugin-management:plugin-management only if integration or installation is undertaken.",
+          "scenario_status": "No writes, installations, benchmarks or evaluations were performed; this assessment does not establish verification."
+        },
+        "publication_if_claude_unavailable": {
+          "status": "Unverified because mandatory Claude native checks cannot be completed.",
+          "requirement": "Retain the inbox and stop dependent publication unless explicit permission covers this unverified version at named source and native paths.",
+          "limits": "A transfer request, prior success or deadline is not a waiver. An exception preserves the unverified status and constraints; file equality does not prove native behavior."
+        }
+      },
+      "limitation": "workspace isolation; global prerequisites available, not OS-isolated; tabletop plan, not actual authoring/tool execution"
+    }
+  ]
+}
