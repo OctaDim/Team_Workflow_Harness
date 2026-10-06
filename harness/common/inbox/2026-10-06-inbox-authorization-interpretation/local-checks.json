@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-06",
+  "scope": "local mechanical checks, not native agent behavior",
+  "manifest_sha256": "53465571cf2f4ddcb4a9e3a9241e40a5acf80a937c0681651cfe74f9325dc23d",
+  "live_source_hashes": "unchanged except original lesson moved",
+  "original_lesson_preserved": true,
+  "ordinary_full_skill_copies_equal": true,
+  "rule_copy_equal": true,
+  "new_links_resolve": [
+    [
+      "harness/common/docs/skill-rule-ownership-contract.md",
+      "../decisions/inbox-execution-status.md"
+    ],
+    [
+      "harness/common/lessons/comm-blockers-explicit-permission.md",
+      "comm-inbox-explicit-approval.md"
+    ]
+  ],
+  "candidate_whitespace": "pass",
+  "modes": [
+    {
+      "mode": "common",
+      "startup": {
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nСтартовые ссылки повреждены и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n",
+        "stderr": ""
+      },
+      "tests": {
+        "command": [
+          "/usr/bin/python3",
+          "-I",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "harness/common/checks",
+          "-p",
+          "test_*.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Peer byte comparison: not checked (only one package installed).\nChecked 5 shared rule copies.\n",
+        "stderr": "...............................\n----------------------------------------------------------------------\nRan 31 tests in 2.429s\n\nOK\n"
+      }
+    },
+    {
+      "mode": "project",
+      "startup": {
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nСтартовые ссылки повреждены и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n",
+        "stderr": ""
+      },
+      "tests": {
+        "status": "N/A",
+        "reason": "Package ships no test_*.py; startup executed independently."
+      }
+    },
+    {
+      "mode": "common+project",
+      "startup": {
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nСтартовые ссылки повреждены и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n",
+        "stderr": ""
+      },
+      "tests": {
+        "command": [
+          "/usr/bin/python3",
+          "-I",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "harness/common/checks",
+          "-p",
+          "test_*.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Checked 5 shared rule copies.\n",
+        "stderr": "...............................\n----------------------------------------------------------------------\nRan 31 tests in 2.614s\n\nOK\n"
+      }
+    }
+  ]
+}

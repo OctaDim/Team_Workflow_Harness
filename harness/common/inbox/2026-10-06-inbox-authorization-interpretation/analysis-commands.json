@@ -1,0 +1,56 @@
+[
+  {
+    "label": "candidate-skill-start",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/plugin_eval_without_human.mjs",
+      "/home/octadim/.codex/plugins/cache/openai-curated-remote/plugin-eval/0.1.2/scripts/plugin-eval.js",
+      "start",
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/skills/comm-create-lazy-claude-codex-skills",
+      "--format",
+      "json",
+      "--request",
+      "Evaluate this skill."
+    ]
+  },
+  {
+    "label": "candidate-skill-analysis",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/plugin_eval_without_human.mjs",
+      "/home/octadim/.codex/plugins/cache/openai-curated-remote/plugin-eval/0.1.2/scripts/plugin-eval.js",
+      "analyze",
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/skills/comm-create-lazy-claude-codex-skills",
+      "--format",
+      "json"
+    ]
+  },
+  {
+    "label": "baseline-skill-analysis",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/plugin_eval_without_human.mjs",
+      "/home/octadim/.codex/plugins/cache/openai-curated-remote/plugin-eval/0.1.2/scripts/plugin-eval.js",
+      "analyze",
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/skills/comm-create-lazy-claude-codex-skills",
+      "--format",
+      "json"
+    ]
+  },
+  {
+    "label": "candidate-rule-analysis",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/plugin_eval_without_human.mjs",
+      "/home/octadim/.codex/plugins/cache/openai-curated-remote/plugin-eval/0.1.2/scripts/plugin-eval.js",
+      "analyze",
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/rules",
+      "--format",
+      "json"
+    ]
+  }
+]
