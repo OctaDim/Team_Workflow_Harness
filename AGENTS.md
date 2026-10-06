@@ -16,3 +16,6 @@ AGENTS.md принадлежит пользователю; разрешено т
 - [harness/common/START.md](harness/common/START.md)
 - [harness/project/INDEX.md](harness/project/INDEX.md)
 - [harness/project/START.md](harness/project/START.md)
+
+- [.claude/rules](.claude/rules/)
+До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.

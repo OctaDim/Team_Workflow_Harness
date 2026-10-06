@@ -1,0 +1,54 @@
+......F...FFFF.......F.......
+======================================================================
+FAIL: test_longer_fence_closers_do_not_turn_examples_into_installed_links (test_ensure_entrypoint_links.EntryPointLinksTest.test_longer_fence_closers_do_not_turn_examples_into_installed_links) (opener='~~~md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/test_ensure_entrypoint_links.py", line 75, in test_longer_fence_closers_do_not_turn_examples_into_installed_links
+    self.assertIn(f'](harness/{package}/{name})', appended)
+AssertionError: '](harness/common/INDEX.md)' not found in ''
+
+======================================================================
+FAIL: test_unclosed_fence_fails_before_writing_either_entrypoint (test_ensure_entrypoint_links.EntryPointLinksTest.test_unclosed_fence_fails_before_writing_either_entrypoint) (name='AGENTS.md', opener='~~~md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/test_ensure_entrypoint_links.py", line 93, in test_unclosed_fence_fails_before_writing_either_entrypoint
+    self.assertEqual(result.returncode, 2, result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_unclosed_fence_fails_before_writing_either_entrypoint (test_ensure_entrypoint_links.EntryPointLinksTest.test_unclosed_fence_fails_before_writing_either_entrypoint) (name='AGENTS.md', opener='```md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/test_ensure_entrypoint_links.py", line 93, in test_unclosed_fence_fails_before_writing_either_entrypoint
+    self.assertEqual(result.returncode, 2, result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_unclosed_fence_fails_before_writing_either_entrypoint (test_ensure_entrypoint_links.EntryPointLinksTest.test_unclosed_fence_fails_before_writing_either_entrypoint) (name='CLAUDE.md', opener='~~~md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/test_ensure_entrypoint_links.py", line 93, in test_unclosed_fence_fails_before_writing_either_entrypoint
+    self.assertEqual(result.returncode, 2, result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_unclosed_fence_fails_before_writing_either_entrypoint (test_ensure_entrypoint_links.EntryPointLinksTest.test_unclosed_fence_fails_before_writing_either_entrypoint) (name='CLAUDE.md', opener='```md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/test_ensure_entrypoint_links.py", line 93, in test_unclosed_fence_fails_before_writing_either_entrypoint
+    self.assertEqual(result.returncode, 2, result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change (test_entrypoint_notifications.NotificationTest.test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/checks/test_entrypoint_notifications.py", line 84, in test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change
+    self.assertIn('изменение настроек', result.stdout)
+AssertionError: 'изменение настроек' not found in 'Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n'
+
+----------------------------------------------------------------------
+Ran 26 tests in 2.117s
+
+FAILED (failures=6)
+Checked 5 shared rule copies.
