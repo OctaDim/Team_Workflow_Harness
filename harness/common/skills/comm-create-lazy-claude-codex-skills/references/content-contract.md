@@ -1,24 +1,9 @@
-# Content contract
+# Content
 
-Use when authoring or reviewing skills/rules.
+Skills/rules: applicability, required behavior, observable compliance. Preserve limits/approvals/stops, missing-data handling/resource access. Do not repeat metadata. Headings optional; order only for correctness. Defer details; examples/reasons only to prevent errors. Explain violations separately only if ambiguous. Corrections: behavior; history/rationale in inbox/lessons.
 
-Express applicability, required action/restriction/invariant and observable compliance unambiguously. Always applicable within a scope suffices; clear skill metadata need not be repeated. Content matters; headings/count/order are optional, one sentence can suffice. Do not restate requirements.
+Tools/resources survive install: portable when/how links; separate platforms.
 
-Preserve relevant limits/approvals/stops/handling of insufficient data; no speculative unrelated constraints. Fix step order only for correctness. Every fragment improves decisions: short instructions, deferred details, examples/reasons preventing concrete errors. Compression preserves applicability/behavior/boundaries/resource access completely.
+SKILL.md: YAML nonempty name/description + Markdown. Name: 1–64 [a-z0-9-], no leading/trailing '-' or '--'; matches folder, shared comm-/proj-. Description: 1–1024 chars, capability/activation; algorithms/constraints in body. SKILL.md suffices; define optional references/=guidance, scripts/=actions, assets/=outputs. Optional agents/openai.yaml: UI name/description/icons, invocation policy/dependencies. Keep harness human README rules; never load bodies.
 
-Necessary tools/resources remain available after installation; specify how/when to access. All links portable; no symlinks. Platform actions separately.
-
-The old four sections are optional: infer violations, explaining separately only if ambiguous; keep history in inbox/lessons/reports; keep correction as required behavior in instructions; keep a short reason only when useful, detailed rationale separately.
-
-## Skills
-
-A folder with SKILL.md: YAML frontmatter with explicit nonempty name/description, then Markdown instructions.
-
-- name: 1–64 characters inclusive; a-z, digits, hyphens; no leading/trailing/consecutive hyphens; matches folder. Shared prefixes: comm-/proj-.
-- description: 1–1024 characters, capability plus precise activation conditions; algorithms/constraints in body.
-- Minimal agent bundle: SKILL.md. Resources only as needed. Recommended names: references/ (guidance), scripts/ (executable actions), assets/ (output materials). SKILL.md defines use; these directories are optional.
-- Optional agents/openai.yaml: UI name/description/icons, invocation policy, dependencies. Separate harness README.human.md requirements remain; never load its body.
-
-## Rules
-
-Markdown with applicability/behavior in body; no paths in this harness. Justify always-loaded placement by a requirement needed before skill selection. Claude Code reads only paths, ignores description/other frontmatter and removes frontmatter before loading context. Metadata alone cannot express scope. Check Codex loading separately.
+Rules: applicability/behavior in Markdown body, no paths here. Always-loaded placement needs a pre-selection requirement. Claude uses only paths frontmatter, strips it; metadata cannot express scope. Check Codex loading separately.

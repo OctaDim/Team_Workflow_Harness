@@ -8,6 +8,8 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 def check_rule_copies(root):
+    if not (root / 'harness/common').is_dir():
+        raise ValueError('harness/common is required; project-only is unsupported.')
     native = root / '.claude/rules'
     sources = {}
     installed_prefixes = []
@@ -39,8 +41,20 @@ class RuleCopiesTest(unittest.TestCase):
         count = check_rule_copies(ROOT)
         print(f'Checked {count} shared rule copies.')
 
+    def test_project_only_rules_are_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / 'harness/project/rules'
+            native = root / '.claude/rules'
+            source.mkdir(parents=True)
+            native.mkdir(parents=True)
+            for folder in (source, native):
+                (folder / 'proj-example.md').write_bytes(b'canonical\n')
+            with self.assertRaisesRegex(ValueError, 'common'):
+                check_rule_copies(root)
+
     def test_copy_drift_is_detected(self):
-        for mode in (('common',), ('project',), ('common', 'project')):
+        for mode in (('common',), ('common', 'project')):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 native = root / '.claude/rules'
@@ -75,7 +89,7 @@ class RuleCopiesTest(unittest.TestCase):
                 extra.unlink()
                 self.assertEqual(check_rule_copies(root), len(mode))
         with tempfile.TemporaryDirectory() as directory:
-            with self.assertRaisesRegex(ValueError, 'nothing checked'):
+            with self.assertRaisesRegex(ValueError, 'common'):
                 check_rule_copies(Path(directory))
 
 

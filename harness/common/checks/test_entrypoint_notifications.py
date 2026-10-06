@@ -3,6 +3,7 @@ import contextlib
 import importlib.util
 import io
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -27,6 +28,9 @@ class NotificationTest(unittest.TestCase):
             directory.mkdir(parents=True)
             (directory / 'INDEX.md').write_text('# Index\n')
             (directory / 'START.md').touch()
+        template = self.root / 'harness/common/base/project-skeleton.json'
+        template.parent.mkdir()
+        shutil.copyfile(SCRIPT.parent.parent / 'base/project-skeleton.json', template)
         (self.root / 'AGENTS.md').write_text('# Static settings\n\nKeep this setting.\n\n' + ''.join(
             f'- [harness/{p}/{n}](harness/{p}/{n})\n'
             for p in ('common', 'project') for n in ('INDEX.md', 'START.md')) + RULES_LINES)

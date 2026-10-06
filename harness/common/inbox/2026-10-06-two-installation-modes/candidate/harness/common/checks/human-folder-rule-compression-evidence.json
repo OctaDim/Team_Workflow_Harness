@@ -1,0 +1,736 @@
+{
+  "date": "2026-10-06",
+  "artifact": "standalone Markdown rule comm-human-folder-guides.md",
+  "status": "unverified; publication blocked by Codex behavior failure and Claude authentication failure",
+  "static": {
+    "copies_in_three_modes": [
+      {
+        "mode": "common",
+        "count": 5,
+        "pass": true,
+        "human_rule_present": true
+      },
+      {
+        "mode": "project",
+        "rule_check": "N/A: no canonical project rules; empty set rejected",
+        "human_rule_present": false
+      },
+      {
+        "mode": "common+project",
+        "count": 5,
+        "pass": true,
+        "human_rule_present": true
+      }
+    ],
+    "source_native_still_original": true,
+    "candidate_chars": 1137,
+    "original_chars": 1621,
+    "candidate_bytes": 2025,
+    "original_bytes": 2880,
+    "reduction_chars_percent": 29.9,
+    "candidate_sha256": "9f2bcade0ca722c53c2df084e76f82d87f454bcb7aa11caad181388c65e2e051",
+    "original_sha256": "45c4171a440d2902ce6712c056902c3a742a62621227223705703f6185ce0de3",
+    "original_static_chars_div4": 406,
+    "candidate_static_chars_div4": 285,
+    "external_resources": false,
+    "format": {
+      "plain_markdown": true,
+      "final_lf": true,
+      "crlf": false,
+      "trailing_spaces": false
+    }
+  },
+  "codex": {
+    "version": "0.159.3",
+    "status": "not verified: observed mandatory behavior failure in common-only content search",
+    "cases": [
+      {
+        "case": "no-rule",
+        "agent": "codex-cli 0.159.3",
+        "exit_code": 0,
+        "elapsed_seconds": 32.79,
+        "candidate_sha256": null,
+        "events": 16,
+        "commands": 10,
+        "rule_read_observed": false,
+        "guide_checks": [
+          {
+            "path": "harness/common/testing/README.human.md",
+            "exists": false,
+            "has_example": false,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": false,
+            "paragraphs": 0
+          },
+          {
+            "path": "harness/common/testing/acceptance-empty/README.human.md",
+            "exists": false,
+            "has_example": false,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": false,
+            "paragraphs": 0
+          },
+          {
+            "path": "harness/common/docs/README.human.md",
+            "exists": false,
+            "has_example": false,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": false,
+            "paragraphs": 0
+          },
+          {
+            "path": "harness/common/docs/acceptance-topic/README.human.md",
+            "exists": false,
+            "has_example": false,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": false,
+            "paragraphs": 0
+          }
+        ],
+        "errors": [],
+        "native_completed": true,
+        "final_response_present": true,
+        "synthetic_existing_guide_body_in_tool_output": true,
+        "content_searches": [
+          {
+            "command": "rg -n --glob '*.md' . harness",
+            "has_human_exclusion": false
+          }
+        ],
+        "rule_applicable": false,
+        "command": [
+          "codex",
+          "exec",
+          "--ignore-user-config",
+          "--ephemeral",
+          "--skip-git-repo-check",
+          "-s",
+          "workspace-write",
+          "-C",
+          "/tmp/human-rule-codex-tests-final/no-rule",
+          "-c",
+          "features.multi_agent=false",
+          "--json",
+          "Find the cause of repeat-request using the existing project workflow. Create the agreed empty testing/acceptance-empty folder and docs/acceptance-topic with context.md inside every existing harness package. Set context.md to \"Native acceptance exercise\". Follow applicable project rules for accompanying files. In your final response list the rule paths you loaded, the evidence path, whether a human README proves readiness, whether structural checks may read these files without returning their bodies, and whether a rule alone technically blocks file reads."
+        ],
+        "cwd": "/tmp/human-rule-codex-tests-final/no-rule",
+        "rule_loading_and_existing_body_exclusion_confirmed": false,
+        "required_empty_leaf_guides_confirmed": false,
+        "negative_control_observed": true
+      },
+      {
+        "case": "original-common",
+        "agent": "codex-cli 0.159.3",
+        "exit_code": 0,
+        "elapsed_seconds": 41.84,
+        "candidate_sha256": "45c4171a440d2902ce6712c056902c3a742a62621227223705703f6185ce0de3",
+        "events": 14,
+        "commands": 8,
+        "rule_read_observed": true,
+        "guide_checks": [
+          {
+            "path": "harness/common/testing/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": true,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": true,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/common/testing/acceptance-empty/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": true,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": true,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/common/docs/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": true,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/common/docs/acceptance-topic/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": true,
+            "paragraphs": 4
+          }
+        ],
+        "errors": [],
+        "native_completed": true,
+        "final_response_present": true,
+        "synthetic_existing_guide_body_in_tool_output": false,
+        "content_searches": [
+          {
+            "command": "rg -n -g '\"'!README.human.md'\"' 'repeat-request|request|workflow' harness",
+            "has_human_exclusion": true
+          }
+        ],
+        "rule_applicable": true,
+        "command": [
+          "codex",
+          "exec",
+          "--ignore-user-config",
+          "--ephemeral",
+          "--skip-git-repo-check",
+          "-s",
+          "workspace-write",
+          "-C",
+          "/tmp/human-rule-codex-tests-final/original-common",
+          "-c",
+          "features.multi_agent=false",
+          "--json",
+          "Find the cause of repeat-request using the existing project workflow. Create the agreed empty testing/acceptance-empty folder and docs/acceptance-topic with context.md inside every existing harness package. Set context.md to \"Native acceptance exercise\". Follow applicable project rules for accompanying files. In your final response list the rule paths you loaded, the evidence path, whether a human README proves readiness, whether structural checks may read these files without returning their bodies, and whether a rule alone technically blocks file reads."
+        ],
+        "cwd": "/tmp/human-rule-codex-tests-final/original-common",
+        "rule_loading_and_existing_body_exclusion_confirmed": true,
+        "required_empty_leaf_guides_confirmed": true
+      },
+      {
+        "case": "compact-common",
+        "agent": "codex-cli 0.159.3",
+        "exit_code": 0,
+        "elapsed_seconds": 47.75,
+        "candidate_sha256": "9f2bcade0ca722c53c2df084e76f82d87f454bcb7aa11caad181388c65e2e051",
+        "events": 16,
+        "commands": 10,
+        "rule_read_observed": true,
+        "guide_checks": [
+          {
+            "path": "harness/common/testing/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": true,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": true,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/common/testing/acceptance-empty/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": true,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": true,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/common/docs/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": false,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/common/docs/acceptance-topic/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": false,
+            "paragraphs": 4
+          }
+        ],
+        "errors": [],
+        "native_completed": true,
+        "final_response_present": true,
+        "synthetic_existing_guide_body_in_tool_output": false,
+        "content_searches": [],
+        "rule_applicable": true,
+        "command": [
+          "codex",
+          "exec",
+          "--ignore-user-config",
+          "--ephemeral",
+          "--skip-git-repo-check",
+          "-s",
+          "workspace-write",
+          "-C",
+          "/tmp/human-rule-codex-tests-final/compact-common",
+          "-c",
+          "features.multi_agent=false",
+          "--json",
+          "Find the cause of repeat-request using the existing project workflow. Create the agreed empty testing/acceptance-empty folder and docs/acceptance-topic with context.md inside every existing harness package. Set context.md to \"Native acceptance exercise\". Follow applicable project rules for accompanying files. In your final response list the rule paths you loaded, the evidence path, whether a human README proves readiness, whether structural checks may read these files without returning their bodies, and whether a rule alone technically blocks file reads."
+        ],
+        "cwd": "/tmp/human-rule-codex-tests-final/compact-common",
+        "rule_loading_and_existing_body_exclusion_confirmed": true,
+        "required_empty_leaf_guides_confirmed": true
+      },
+      {
+        "case": "compact-both",
+        "agent": "codex-cli 0.159.3",
+        "exit_code": 0,
+        "elapsed_seconds": 52.65,
+        "candidate_sha256": "9f2bcade0ca722c53c2df084e76f82d87f454bcb7aa11caad181388c65e2e051",
+        "events": 16,
+        "commands": 10,
+        "rule_read_observed": true,
+        "guide_checks": [
+          {
+            "path": "harness/common/testing/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": false,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/common/testing/acceptance-empty/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": true,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": true,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/common/docs/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": false,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/common/docs/acceptance-topic/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": false,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/project/testing/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": false,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/project/testing/acceptance-empty/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": true,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": true,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/project/docs/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": false,
+            "paragraphs": 4
+          },
+          {
+            "path": "harness/project/docs/acceptance-topic/README.human.md",
+            "exists": true,
+            "has_example": true,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": true,
+            "example_explanation_words": false,
+            "paragraphs": 4
+          }
+        ],
+        "errors": [],
+        "native_completed": true,
+        "final_response_present": true,
+        "synthetic_existing_guide_body_in_tool_output": false,
+        "content_searches": [],
+        "rule_applicable": true,
+        "command": [
+          "codex",
+          "exec",
+          "--ignore-user-config",
+          "--ephemeral",
+          "--skip-git-repo-check",
+          "-s",
+          "workspace-write",
+          "-C",
+          "/tmp/human-rule-codex-tests-final/compact-both",
+          "-c",
+          "features.multi_agent=false",
+          "--json",
+          "Find the cause of repeat-request using the existing project workflow. Create the agreed empty testing/acceptance-empty folder and docs/acceptance-topic with context.md inside every existing harness package. Set context.md to \"Native acceptance exercise\". Follow applicable project rules for accompanying files. In your final response list the rule paths you loaded, the evidence path, whether a human README proves readiness, whether structural checks may read these files without returning their bodies, and whether a rule alone technically blocks file reads."
+        ],
+        "cwd": "/tmp/human-rule-codex-tests-final/compact-both",
+        "rule_loading_and_existing_body_exclusion_confirmed": true,
+        "required_empty_leaf_guides_confirmed": true
+      },
+      {
+        "case": "project-only",
+        "agent": "codex-cli 0.159.3",
+        "exit_code": 0,
+        "elapsed_seconds": 37.02,
+        "candidate_sha256": null,
+        "events": 18,
+        "commands": 12,
+        "rule_read_observed": false,
+        "guide_checks": [
+          {
+            "path": "harness/project/testing/README.human.md",
+            "exists": false,
+            "has_example": false,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": false,
+            "paragraphs": 0
+          },
+          {
+            "path": "harness/project/testing/acceptance-empty/README.human.md",
+            "exists": false,
+            "has_example": false,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": false,
+            "paragraphs": 0
+          },
+          {
+            "path": "harness/project/docs/README.human.md",
+            "exists": false,
+            "has_example": false,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": false,
+            "paragraphs": 0
+          },
+          {
+            "path": "harness/project/docs/acceptance-topic/README.human.md",
+            "exists": false,
+            "has_example": false,
+            "explicit_illustrative": false,
+            "purpose_or_materials_words": false,
+            "example_explanation_words": false,
+            "paragraphs": 0
+          }
+        ],
+        "errors": [],
+        "native_completed": true,
+        "final_response_present": true,
+        "synthetic_existing_guide_body_in_tool_output": false,
+        "content_searches": [],
+        "rule_applicable": false,
+        "command": [
+          "codex",
+          "exec",
+          "--ignore-user-config",
+          "--ephemeral",
+          "--skip-git-repo-check",
+          "-s",
+          "workspace-write",
+          "-C",
+          "/tmp/human-rule-codex-tests-final/project-only",
+          "-c",
+          "features.multi_agent=false",
+          "--json",
+          "Find the cause of repeat-request using the existing project workflow. Create the agreed empty testing/acceptance-empty folder and docs/acceptance-topic with context.md inside every existing harness package. Set context.md to \"Native acceptance exercise\". Follow applicable project rules for accompanying files. In your final response list the rule paths you loaded, the evidence path, whether a human README proves readiness, whether structural checks may read these files without returning their bodies, and whether a rule alone technically blocks file reads."
+        ],
+        "cwd": "/tmp/human-rule-codex-tests-final/project-only",
+        "rule_loading_and_existing_body_exclusion_confirmed": false,
+        "required_empty_leaf_guides_confirmed": false,
+        "common_rule_absence_confirmed": true
+      }
+    ],
+    "limitations": [
+      "Synthetic rule-specific fixtures, not full package transfer acceptance.",
+      "Cwd isolation and ignored user config; no OS-level denial of source/global skill access.",
+      "Lexical guide checks establish structure only, not full prose semantics; some parent guide markers were not confirmed."
+    ],
+    "content_search_followup": {
+      "date": "2026-10-06",
+      "cases": [
+        {
+          "mode": "common",
+          "version": "codex-cli 0.159.3",
+          "candidate_sha256": "9f2bcade0ca722c53c2df084e76f82d87f454bcb7aa11caad181388c65e2e051",
+          "command": [
+            "codex",
+            "exec",
+            "--ignore-user-config",
+            "--ephemeral",
+            "--skip-git-repo-check",
+            "-s",
+            "read-only",
+            "-C",
+            "/tmp/human-rule-content-common-3jql2yxu",
+            "-c",
+            "features.multi_agent=false",
+            "--json",
+            "Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется."
+          ],
+          "cwd": "/tmp/human-rule-content-common-3jql2yxu",
+          "exit_code": 0,
+          "elapsed_seconds": 21.24,
+          "native_completed": true,
+          "rule_read_observed": true,
+          "content_search_count": 1,
+          "search_commands": [
+            "/bin/bash -lc \"rg --hidden --no-ignore -n -i -- 'заявка' harness\""
+          ],
+          "search_exit_codes": [
+            0
+          ],
+          "expected_machine_paths": [
+            "harness/common/lessons/alpha.md",
+            "harness/common/docs/nested/beta.md"
+          ],
+          "all_machine_matches_present": true,
+          "searches_exclude_human_guides": false,
+          "human_canary_in_any_native_event": true,
+          "human_body_line_in_tool_output": true,
+          "other_commands_with_target": 0,
+          "errors": [],
+          "pass": false,
+          "full_rule_body_read_successfully_before_search": true,
+          "material": "compact candidate"
+        },
+        {
+          "mode": "both",
+          "version": "codex-cli 0.159.3",
+          "candidate_sha256": "9f2bcade0ca722c53c2df084e76f82d87f454bcb7aa11caad181388c65e2e051",
+          "command": [
+            "codex",
+            "exec",
+            "--ignore-user-config",
+            "--ephemeral",
+            "--skip-git-repo-check",
+            "-s",
+            "read-only",
+            "-C",
+            "/tmp/human-rule-content-both-ummqwgns",
+            "-c",
+            "features.multi_agent=false",
+            "--json",
+            "Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется."
+          ],
+          "cwd": "/tmp/human-rule-content-both-ummqwgns",
+          "exit_code": 0,
+          "elapsed_seconds": 20.9,
+          "native_completed": true,
+          "rule_read_observed": true,
+          "content_search_count": 1,
+          "search_commands": [
+            "/bin/bash -lc \"rg --line-number --with-filename --hidden --no-ignore -g '\"'!README.human.md'\"' 'заявка' harness\""
+          ],
+          "search_exit_codes": [
+            0
+          ],
+          "expected_machine_paths": [
+            "harness/common/lessons/alpha.md",
+            "harness/common/docs/nested/beta.md",
+            "harness/project/lessons/alpha.md",
+            "harness/project/docs/nested/beta.md"
+          ],
+          "all_machine_matches_present": true,
+          "searches_exclude_human_guides": true,
+          "human_canary_in_any_native_event": false,
+          "human_body_line_in_tool_output": false,
+          "other_commands_with_target": 0,
+          "errors": [],
+          "pass": true,
+          "full_rule_body_read_successfully_before_search": true,
+          "material": "compact candidate"
+        },
+        {
+          "mode": "common",
+          "version": "codex-cli 0.159.3",
+          "candidate_sha256": "45c4171a440d2902ce6712c056902c3a742a62621227223705703f6185ce0de3",
+          "command": [
+            "codex",
+            "exec",
+            "--ignore-user-config",
+            "--ephemeral",
+            "--skip-git-repo-check",
+            "-s",
+            "read-only",
+            "-C",
+            "/tmp/human-rule-content-original-common-yva14t0v",
+            "-c",
+            "features.multi_agent=false",
+            "--json",
+            "Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется."
+          ],
+          "cwd": "/tmp/human-rule-content-original-common-yva14t0v",
+          "exit_code": 0,
+          "elapsed_seconds": 17.26,
+          "native_completed": true,
+          "rule_read_observed": true,
+          "content_search_count": 1,
+          "search_commands": [
+            "/bin/bash -lc \"rg -n --hidden --no-ignore -g '\"'!README.human.md'\"' 'заявка' harness/\""
+          ],
+          "search_exit_codes": [
+            0
+          ],
+          "expected_machine_paths": [
+            "harness/common/lessons/alpha.md",
+            "harness/common/docs/nested/beta.md"
+          ],
+          "all_machine_matches_present": true,
+          "searches_exclude_human_guides": true,
+          "human_canary_in_any_native_event": false,
+          "human_body_line_in_tool_output": false,
+          "other_commands_with_target": 0,
+          "errors": [],
+          "pass": true,
+          "full_rule_body_read_successfully_before_search": true,
+          "material": "original"
+        }
+      ],
+      "scope": "Synthetic recursive multi-file content-search fixtures; same compact candidate hash; no production human README bodies surfaced.",
+      "verdict": "common candidate fails; both-packages candidate passes; comparisons are individual observations, not proof that compression causes the failure.",
+      "missing_test_cause": "Earlier task allowed discovery by filename; agent completed it without a broad content search. No technical obstacle justified omitting a dedicated scenario.",
+      "final_checks": {
+        "case_results_confirmed": [
+          false,
+          true,
+          true
+        ],
+        "full_rule_read_before_each_search": true,
+        "candidate_unchanged": true,
+        "installed_rules_unchanged": true,
+        "protected_entrypoints_unchanged": true,
+        "git_diff_check_exit_code": 0
+      }
+    }
+  },
+  "claude": {
+    "version": "2.1.260",
+    "status": "not verified",
+    "command": [
+      "claude",
+      "-p",
+      "List applicable project rules without opening any human folder guide.",
+      "--no-session-persistence",
+      "--setting-sources",
+      "project",
+      "--strict-mcp-config",
+      "--mcp-config",
+      "{\"mcpServers\":{}}",
+      "--tools",
+      "Read",
+      "--output-format",
+      "json"
+    ],
+    "cwd": "/tmp/human-rule-native-claude",
+    "exit_code": 1,
+    "elapsed_seconds": 1.06,
+    "is_error": true,
+    "error": "Failed to authenticate: OAuth session expired and could not be refreshed",
+    "modes": {
+      "common": "native launch attempted; authentication blocked behavior",
+      "project": "not run after authentication failure",
+      "common+project": "not run after authentication failure"
+    }
+  },
+  "generic_analysis": {
+    "command": [
+      "plugin-eval",
+      "analyze",
+      "/tmp/human-folder-rule-analysis",
+      "--format",
+      "json"
+    ],
+    "tool": {
+      "name": "plugin-eval",
+      "version": "0.1.0"
+    },
+    "target_kind": "directory",
+    "score": 100,
+    "grade": "A",
+    "checks": [
+      {
+        "id": "generic-target-analysis",
+        "category": "best-practice",
+        "severity": "info",
+        "status": "info",
+        "message": "The target is not a skill or plugin root, so only generic code, coverage, and budget analysis will run.",
+        "evidence": [
+          "/tmp/human-folder-rule-analysis"
+        ],
+        "remediation": [
+          "Point the analyzer at a skill directory or plugin root for richer structural checks."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "evidence": [
+          "../../../../tmp/human-folder-rule-analysis"
+        ],
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      }
+    ],
+    "static_total_tokens": 285,
+    "observedUsage": null
+  },
+  "regression": {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "harness/common/checks",
+      "-p",
+      "test_*.py"
+    ],
+    "exit_code": 0,
+    "stdout": "Checked 5 shared rule copies.\n",
+    "stderr": "..............................\n----------------------------------------------------------------------\nRan 30 tests in 2.858s\n\nOK\n"
+  },
+  "exploratory_runs": {
+    "discarded_for_creation_behavior": true,
+    "reason": "First prompt said No other changes, which overrode creation of companion guides. Corrected and rerun in fresh fixtures.",
+    "codex_first_sandbox_error": "failed to initialize in-process app-server client: Read-only file system (os error 30); resolved using approved escalation",
+    "diagnostic_note": "One initial diagnostic exposed only synthetic fixture guide text; no real harness README bodies were loaded. Later diagnostics emit only structure flags, paths and results."
+  },
+  "scope_before_reports": {
+    "changed": [
+      "harness/common/inbox/2026-10-06-compress-human-folder-guides/request.md"
+    ],
+    "deleted": []
+  },
+  "final_checks": {
+    "git_diff_check_exit_code": 0,
+    "candidate_sha256_matches": true,
+    "source_native_original_and_equal": true,
+    "protected_entries_unchanged": true,
+    "ordinary_git_visible_files": true,
+    "required_folder_guides_exist": true,
+    "evidence_consistency": true,
+    "modified_existing_files": [
+      "harness/common/inbox/2026-10-06-compress-human-folder-guides/request.md"
+    ],
+    "scope": "initial validation phase, before content-search follow-up"
+  }
+}

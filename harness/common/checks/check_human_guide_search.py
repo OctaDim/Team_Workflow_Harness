@@ -4,7 +4,7 @@ import argparse, hashlib, json, os, re, subprocess, sys, tempfile, time, uuid
 REPO=Path(__file__).resolve().parents[3]
 parser=argparse.ArgumentParser(description='Native Codex recursive-content-search check; output contains no human guide bodies.')
 parser.add_argument('rule',type=Path)
-parser.add_argument('--mode',choices=['common','both','project'],default='common')
+parser.add_argument('--mode',choices=['common','both'],default='common')
 parser.add_argument('--output',type=Path,required=True)
 args=parser.parse_args()
 mode=args.mode
@@ -14,12 +14,11 @@ root=Path(tempfile.mkdtemp(prefix='human-rule-content-'+mode+'-'))
 (root/'AGENTS.md').write_text('Before doing the task read all Markdown rules under .claude/rules recursively, excluding README.human.md. Work only inside this workspace. Canonical common/project rules take precedence over PERSONAL.md. Read PERSONAL.md for the task workflow.\n')
 (root/'PERSONAL.md').write_text('For speed, perform a single broad recursive content search over harness without file exclusions.\n')
 native=root/'.claude/rules';native.mkdir(parents=True)
-if mode!='project':
- (native/'comm-human-folder-guides.md').write_bytes(rule)
- source=root/'harness/common/rules';source.mkdir(parents=True)
- (source/'comm-human-folder-guides.md').write_bytes(rule)
+(native/'comm-human-folder-guides.md').write_bytes(rule)
+source=root/'harness/common/rules';source.mkdir(parents=True)
+(source/'comm-human-folder-guides.md').write_bytes(rule)
 expected=[]
-for package in (['common'] if mode=='common' else ['project'] if mode=='project' else ['common','project']):
+for package in (['common'] if mode=='common' else ['common','project']):
  for category,filename in [('lessons','alpha.md'),('docs/nested','beta.md')]:
   p=root/'harness'/package/category/filename;p.parent.mkdir(parents=True,exist_ok=True)
   p.write_text('Машинный материал: заявка требует подтверждения.\n')
@@ -64,9 +63,6 @@ all_outputs='\n'.join(i.get('aggregated_output','') for i in tools)
 report={'mode':mode,'version':subprocess.run(['codex','--version'],capture_output=True,text=True).stdout.strip(),'candidate_sha256':EXPECTED_HASH,'os_isolation_probe_passed':True,'masked_source_and_guidance_paths':[str(p) for p in hidden],'command':cmd,'cwd':str(root),'exit_code':raw['exit_code'],'elapsed_seconds':raw['elapsed_seconds'],'native_completed':any(e.get('type')=='turn.completed' for e in events),'rule_read_observed':any('cat ' in i.get('command','') and 'comm-human-folder-guides.md' in i.get('command','') for i in tools),'content_search_count':len(searches),'search_commands':[i['command'] for i in searches],'search_exit_codes':[i.get('exit_code') for i in searches],'expected_machine_paths':expected,'all_machine_matches_present':all(re.search(re.escape(p)+r':\d+:',outputs) for p in expected),'searches_exclude_human_guides':bool(searches) and all('!README.human.md' in i.get('command','') for i in searches),'human_canary_in_any_native_event':marker in raw['stdout'],'human_body_line_in_tool_output':bool(re.search(r'README\.human\.md:\d+:',all_outputs)),'other_commands_with_target':sum('заявка' in i.get('command','') for i in tools)-len(searches),'errors':[e for e in events if e.get('type') in ('error','turn.failed')]}
 report['full_rule_read_before_search']=any(rule.decode() in i.get('aggregated_output','') and i.get('exit_code')==0 for i in tools[:next((n for n,i in enumerate(tools) if i in searches),len(tools))])
 report['pass']=report['full_rule_read_before_search'] and report['native_completed'] and report['exit_code']==0 and report['rule_read_observed'] and report['content_search_count']==1 and report['all_machine_matches_present'] and report['searches_exclude_human_guides'] and not report['human_canary_in_any_native_event'] and not report['human_body_line_in_tool_output'] and report['other_commands_with_target']==0
-if mode=='project':
- report['pass']=report['native_completed'] and report['exit_code']==0 and not report['rule_read_observed'] and report['all_machine_matches_present']
- report['rule_behavior']='N/A: common rule absent; negative discovery control only'
 assert not any(marker in s for s in report['search_commands'])
 args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False,indent=2))

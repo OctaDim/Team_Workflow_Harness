@@ -1,7 +1,9 @@
 """Restore entrypoint links; run from the project root or pass that root."""
+import json
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 
@@ -90,15 +92,85 @@ def report_history_changes(root):
         print('Сравнение настроек с историей не проверено: Git отсутствует; он не обязателен.')
 
 
+def ordinary_directory(path, root):
+    for directory in (path, *path.parents):
+        if directory == root:
+            break
+        if directory.is_symlink() or (directory.exists() and not directory.is_dir()):
+            raise ValueError(f'Not an ordinary directory: {directory.relative_to(root)}')
+
+
+def load_project_skeleton(common, root):
+    template = common / 'base/project-skeleton.json'
+    ordinary_directory(template.parent, root)
+    if not template.is_file() or template.is_symlink():
+        raise ValueError('Missing or unsafe resource: harness/common/base/project-skeleton.json')
+    data = json.loads(template.read_text(encoding='utf-8'))
+    categories = data.get('categories') if isinstance(data, dict) else None
+    if not isinstance(categories, dict) or not categories:
+        raise ValueError('Project skeleton requires nonempty categories.')
+    for name, details in categories.items():
+        if (not re.fullmatch(r'[a-z0-9][a-z0-9_-]*(?:/[a-z0-9][a-z0-9_-]*)*', name)
+                or not isinstance(details, dict)
+                or any(not isinstance(details.get(key), str) or not details[key].strip()
+                       for key in ('purpose', 'example'))):
+            raise ValueError(f'Invalid project skeleton category: {name}')
+    return categories
+
+
+def create_project_skeleton(project, categories):
+    # Build off-path so an interrupted write cannot leave a half-created project.
+    with tempfile.TemporaryDirectory(prefix='.project-skeleton-', dir=project.parent) as temporary:
+        staging = Path(temporary)
+        (staging / 'README.human.md').write_text(
+            '# Проектный harness\n\nЗдесь сохраняются материалы текущего проекта; '
+            'при создании каркаса рабочих материалов ещё нет. Например, согласованный '
+            'контракт проекта позже можно сохранить в base/project-contract.md. '
+            'Пример иллюстративный, а наличие папок не подтверждает проверенность.\n', encoding='utf-8')
+        rows = []
+        for name, details in categories.items():
+            directory = staging / name
+            directory.mkdir(parents=True, exist_ok=True)
+            (directory / 'README.human.md').write_text(
+                f'# {name}\n\n{details["purpose"]}\n\n'
+                f'Пример (иллюстративный): {details["example"]}\n', encoding='utf-8')
+            rows.append(f'| {details["purpose"]} | [{name}/]({name}/) |')
+        # Include explanations for intermediate directories of an approved nested path.
+        for directory in staging.rglob('*'):
+            if directory.is_dir() and not (directory / 'README.human.md').exists():
+                (directory / 'README.human.md').write_text(
+                    '# Проектные материалы\n\nЗдесь сгруппированы утверждённые категории. '
+                    'Например, вложенная категория хранит относящиеся к её задаче материалы. '
+                    'Это иллюстративный пример для пока пустой папки.\n', encoding='utf-8')
+        (staging / 'INDEX.md').write_text(
+            '# Проектный harness\n\nПустой каркас для знаний текущего проекта.\n\n'
+            '| Назначение | Каталог |\n|---|---|\n' + '\n'.join(rows) +
+            '\n\nИщи материалы по задаче, исключая README.human.md. '
+            'Наличие категории не подтверждает её наполненность или проверенность.\n', encoding='utf-8')
+        (staging / 'START.md').write_text(
+            '# Старт проектного harness\n\nПроектный пакет требует установленного common. '
+            'Из корня проекта запускается `python3 -B harness/common/checks/ensure_entrypoint_links.py`; '
+            'повторный запуск после команды статичного входа не нужен. '
+            'Затем ищи проектные материалы по INDEX.md; подробности открывай по задаче.\n', encoding='utf-8')
+        if project.exists() or project.is_symlink():
+            raise ValueError('Project appeared during initialization; existing data preserved.')
+        staging.rename(project)
+
+
 def ensure(root):
     print(WARNING)
-    packages = [name for name in ('common', 'project')
-                if (root / 'harness' / name).is_dir()]
-    if not packages:
-        raise ValueError('No installed harness package found.')
-    resources = [f'harness/{package}/{name}' for package in packages
+    common, project = root / 'harness/common', root / 'harness/project'
+    for directory in (common, project):
+        ordinary_directory(directory, root)
+    if not common.is_dir():
+        raise ValueError('harness/common is required; project-only is unsupported.')
+    categories = load_project_skeleton(common, root)
+    create_project = not project.exists()
+    resources = [f'harness/{package}/{name}' for package in ('common', 'project')
                  for name in ('INDEX.md', 'START.md')]
     for relative in resources:
+        if create_project and relative.startswith('harness/project/'):
+            continue
         path = root / relative
         if not path.is_file() or path.is_symlink() or not path.resolve().is_relative_to(root):
             raise ValueError(f'Missing or unsafe resource: {relative}')
@@ -112,7 +184,7 @@ def ensure(root):
             raise ValueError(f'Not an ordinary directory: {path.relative_to(root)}')
     report_history_changes(root)
     original_agents = agents.read_bytes().decode('utf-8') if agents.exists() else ''
-    content = original_agents or BOOTSTRAP.replace('{package}', packages[0])
+    content = original_agents or BOOTSTRAP.replace('{package}', 'common')
     visible = instruction_text(content)
     missing = [relative for relative in resources if not re.search(
         r'\[[^\]\n]+\]\(<?(?:\./)?' + re.escape(relative) + r'(?:#[^\s)>]+)?>?\)', visible)]
@@ -134,6 +206,9 @@ def ensure(root):
     changed = []
     if additions or bridge != original_claude:
         print(NOTICE, flush=True)
+    if create_project:
+        print('harness/project отсутствует: создаётся пустой каркас из common.', flush=True)
+        create_project_skeleton(project, categories)
     rules.mkdir(parents=True, exist_ok=True)
     for path, original, updated in ((agents, original_agents, content),
                                      (claude, original_claude, bridge)):

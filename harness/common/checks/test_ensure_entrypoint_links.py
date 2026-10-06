@@ -1,4 +1,6 @@
 """Run with python3 -B <this-file>; uses only temporary projects."""
+import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -18,6 +20,11 @@ class EntryPointLinksTest(unittest.TestCase):
             directory.mkdir(parents=True)
             (directory / 'INDEX.md').write_text('# Index\n')
             (directory / 'START.md').touch()
+        template = SCRIPT.parent.parent / 'base/project-skeleton.json'
+        if template.exists():
+            destination = self.root / 'harness/common/base/project-skeleton.json'
+            destination.parent.mkdir()
+            shutil.copyfile(template, destination)
 
     def run_check(self):
         return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)],
@@ -136,11 +143,91 @@ class EntryPointLinksTest(unittest.TestCase):
         self.assertFalse((self.root / 'AGENTS.md').exists())
         self.assertFalse((self.root / 'CLAUDE.md').exists())
 
-    def test_common_only_does_not_require_project(self):
-        import shutil
+    def test_common_only_creates_neutral_project(self):
         shutil.rmtree(self.root / 'harness/project')
+        result = self.run_check()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        project = self.root / 'harness/project'
+        expected = {'base', 'decisions', 'lessons', 'testing', 'rules', 'skills',
+                    'checks', 'inbox', 'docs', 'handoffs'}
+        self.assertTrue(project.is_dir(), 'common-only must create project')
+        self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)
+        for directory in [project, *(project / name for name in expected)]:
+            self.assertTrue((directory / 'README.human.md').is_file())
+        self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())
+        self.assertNotIn('EPL', (project / 'INDEX.md').read_text())
+        self.assertIn('harness/common/checks/ensure_entrypoint_links.py',
+                      (project / 'START.md').read_text())
+        self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())
+        before = {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')}
         self.assertEqual(self.run_check().returncode, 0)
-        self.assertNotIn('harness/project/', (self.root / 'AGENTS.md').read_text())
+        self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})
+
+    def test_existing_project_is_not_regenerated_or_exported(self):
+        project = self.root / 'harness/project'
+        task = project / 'docs/epl-import/notes.md'
+        task.parent.mkdir(parents=True)
+        task.write_bytes(b'project-specific material\n')
+        before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}
+        self.assertEqual(self.run_check().returncode, 0)
+        self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})
+        self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')
+
+    def test_new_template_categories_apply_only_to_new_project(self):
+        template = self.root / 'harness/common/base/project-skeleton.json'
+        data = json.loads(template.read_text())
+        data['categories']['specs'] = {'purpose': 'Shared specifications', 'example': 'api.md describes an agreed API.'}
+        template.write_text(json.dumps(data))
+        self.assertEqual(self.run_check().returncode, 0)
+        self.assertFalse((self.root / 'harness/project/specs').exists())
+        shutil.rmtree(self.root / 'harness/project')
+        result = self.run_check()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())
+
+    def test_project_only_is_rejected_before_writes(self):
+        shutil.rmtree(self.root / 'harness/common')
+        result = self.run_check()
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('common', result.stderr)
+        self.assertFalse((self.root / 'AGENTS.md').exists())
+        self.assertFalse((self.root / '.claude').exists())
+
+    def test_unsafe_project_path_is_rejected_without_writes(self):
+        project = self.root / 'harness/project'
+        shutil.rmtree(project)
+        for symlink in (False, True):
+            with self.subTest(symlink=symlink):
+                if symlink:
+                    project.symlink_to(self.root / 'missing-project')
+                else:
+                    project.write_text('keep this file')
+                result = self.run_check()
+                self.assertEqual(result.returncode, 2)
+                self.assertFalse((self.root / 'AGENTS.md').exists())
+                self.assertFalse((self.root / '.claude').exists())
+                project.unlink()
+
+    def test_invalid_template_does_not_create_project(self):
+        project = self.root / 'harness/project'
+        shutil.rmtree(project)
+        template = self.root / 'harness/common/base/project-skeleton.json'
+        for content in ('not json', '{}', '{"categories": {"../outside": {"purpose": "bad", "example": "bad"}}}'):
+            with self.subTest(content=content):
+                template.write_text(content)
+                result = self.run_check()
+                self.assertEqual(result.returncode, 2)
+                self.assertFalse(project.exists())
+                self.assertFalse((self.root / 'AGENTS.md').exists())
+
+    def test_invalid_entrypoint_prevents_project_creation(self):
+        shutil.rmtree(self.root / 'harness/project')
+        agents = self.root / 'AGENTS.md'
+        agents.write_text('# Keep\n```md\nunterminated')
+        result = self.run_check()
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse((self.root / 'harness/project').exists())
+        self.assertEqual(agents.read_text(), '# Keep\n```md\nunterminated')
 
     def test_adds_import_and_warns_about_extra_claude_content_without_deleting_it(self):
         (self.root / 'CLAUDE.md').write_text('User text\n')

@@ -1,0 +1,83 @@
+{
+  "codex": {
+    "version": "0.159.3",
+    "common": {
+      "listing": "verified: native catalog name/description reported before files read",
+      "explicit": "verified: local skill and own resource read, startup first; manually reviewed contract preserved",
+      "implicit": "verified: local skill and own resource read, startup first; manually reviewed contract preserved"
+    },
+    "both": {
+      "listing": "verified: native catalog name/description reported before files read",
+      "explicit": "verified: local skill and own resource read, startup first; manually reviewed contract preserved",
+      "implicit": "verified: local skill and own resource read, startup first; manually reviewed contract preserved"
+    }
+  },
+  "claude": {
+    "version": "2.1.260",
+    "common": {
+      "listing": "not-run: resources changed; previous observations are historical",
+      "explicit": "not-verified: authorized actual outside-sandbox CLI exit 1, OAuth session expired and could not be refreshed",
+      "implicit": "not-run: stop after authentication failure"
+    },
+    "both": {
+      "listing": "not-run: resources changed; previous observations are historical",
+      "explicit": "not-run: resources changed; previous observations are historical",
+      "implicit": "not-run: resources changed; previous observations are historical"
+    },
+    "authentication": "actual refresh failed, user login required"
+  },
+  "repeat_run": {
+    "status": "rejected by automatic approval review",
+    "action": "Execute corrected check_native.py with network access",
+    "reason": "Candidate repository contents/instructions would be sent to external Codex/Claude services; specific payload-to-destination disclosure permission not recorded.",
+    "historical": true
+  },
+  "overall": "published with explicit user permission and confirmation for this exact version; Codex PASS; Claude not verified",
+  "current_version_manifest_sha256": "388a37a1654462001cdb2dcf1742e50688a93efd179d8580ee6782f3154ea3ea",
+  "changes_invalidate_prior_statuses": "References compacted; earlier failed attempts are historical, final native version is not verified.",
+  "codex_retry": {
+    "authorization": "explicitly granted by user on 2026-10-06",
+    "execution": "outside sandbox approved and completed",
+    "completed_scenarios": 4,
+    "isolation": "full source repository and global instructions masked after runner repair",
+    "summary": "codex-retry-summary.json",
+    "permanent_evidence": "../../checks/codex-two-modes-final-compaction.json",
+    "final_compaction_summary": "codex-final-compaction-summary.json"
+  },
+  "historical_before_final_compaction": {
+    "version": "0.159.3",
+    "common": {
+      "listing": "not-verified: independent native catalog listing not probed",
+      "explicit": "verified: startup first, local SKILL.md and own validation-and-publication.md read; product contract respected",
+      "implicit": "not-verified: completed and contract respected via harness rules; no SKILL.md or own-resource read observed"
+    },
+    "both": {
+      "listing": "not-verified: independent native catalog listing not probed",
+      "explicit": "verified: startup first, local SKILL.md and own validation-and-publication.md read; product contract respected",
+      "implicit": "not-verified: completed and contract respected via harness rules; no SKILL.md or own-resource read observed"
+    },
+    "historical_before_retry": {
+      "common": {
+        "listing": "not-verified",
+        "explicit": "not-verified: native turn failed, workspace routing discovery failed in restricted network",
+        "implicit": "not-verified: same failure"
+      },
+      "both": {
+        "listing": "not-run",
+        "explicit": "not-run",
+        "implicit": "not-run"
+      }
+    }
+  },
+  "claude_authorized_summary": "claude-authorized-summary.json",
+  "claude_permanent_evidence": "../../checks/claude-two-modes-authorized.json",
+  "publication": {
+    "manifest_sha256": "388a37a1654462001cdb2dcf1742e50688a93efd179d8580ee6782f3154ea3ea",
+    "paths": 30,
+    "authorization": "explicit user permission and confirmation of this unverified publication on 2026-10-06",
+    "installed_hashes": "PASS",
+    "local_tests": "39/39 PASS",
+    "entrypoints": "unchanged",
+    "claude": "not verified"
+  }
+}

@@ -1,0 +1,43 @@
+Нативный каталог этой сессии предоставляет навыки:
+
+- **imagegen** — создание и редактирование растровых изображений.
+- **openai-docs** — документация и помощь по Codex, OpenAI API и продуктам OpenAI.
+- **skill-creator** — создание и обновление навыков Codex.
+- **skill-installer** — установка навыков Codex из каталога или GitHub.
+- **comm-create-lazy-claude-codex-skills** — создание, обновление, перенос и публикация навыков и агентских правил для Codex и Claude Code.
+
+Использую **comm-create-lazy-claude-codex-skills** и прочитаю его `references/validation-and-publication.md`. Сначала выполню обязательную стартовую проверку; далее буду только читать файлы и подготовлю проект инструкции.
+
+Стартовая проверка завершилась успешно. Ниже — проект для Codex и Claude; файлы инструкций не редактировались, тела `README.human.md` не читались.
+
+**Проект инструкции**
+
+> При установке или переносе harness поддерживай ровно два режима:
+>
+> 1. **Только common:** переноси `harness/common/`; стартовая проверка автоматически создаёт отсутствующий `harness/project/` из `harness/common/base/project-skeleton.json`, с нейтральными индексами, пустыми категориями и человеческими пояснениями. Материалы прежнего проекта не копируй.
+> 2. **Common + project:** сохраняй существующий project, включая `docs/epl-import`; не перезаписывай файлы и не дополняй его автоматически новым каркасом.
+>
+> Common обязателен. Установку **project-only** отклоняй; это негативный проверочный сценарий, а не третий режим.
+>
+> Состав каркаса определяет только `harness/common/base/project-skeleton.json`; не выводи его из структуры существующего project. Общую `specs/` сейчас не включай: предложение не утверждено. Изменение требует отдельной common inbox-заявки, отдельного явного решения пользователя и отдельного явного подтверждения пользы для всех проектов. Молчание не означает согласия.
+>
+> Перед задачей выполняй общую стартовую проверку. Codex затем читает все Markdown-правила `.claude/rules/` рекурсивно; Claude загружает правила нативно. Исключай `README.human.md`. Изменения защищённых `AGENTS.md` и `CLAUDE.md` предлагай через inbox.
+
+**Проверка и публикация**
+
+- Проверять оба режима в чистых установках без исходного проекта и авторских глобальных материалов: нейтральный каркас, сохранение существующих файлов, повторный запуск и отказ project-only. Отдельно проверять нативное поведение Codex и Claude.
+- Для итоговой компактной версии выполнять RED–GREEN–REFACTOR, проверку контракта, ресурсов и загрузки; после правок повторять проверки. Plain rule не требует skill-only валидатора.
+- Неуспех Claude означает «Claude — не проверено» и запрещает полностью проверенный итог, даже при успехе Codex. Публикация допустима только после явного разрешения и подтверждения **этой непроверенной версии** с конкретными source/native путями; статусы сохраняются. Обычный запрос переноса исключением не является.
+- Текущий проект инструкции: **Codex — не проверено; Claude — не проверено**. Стартовая проверка не доказывает поведение проекта инструкции. Обязательный `superpowers:using-superpowers` отсутствует в доступном каталоге; перед полноценной валидацией его следует установить в окружении разработчика.
+
+**Прочитанные пути**
+
+- `harness/{common,project}/{INDEX.md,START.md}`
+- Все пять `.claude/rules/comm-*.md`: ownership, entrypoints, package independence, entrypoint links, human folder guides.
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- Его собственные `references/validation-and-publication.md` и `references/content-contract.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `harness/common/docs/{compact-authoring.md,skill-rule-ownership-contract.md}`
+- `harness/common/base/project-skeleton.json`
+- `/tmp/two-modes-native-tqei0l8x/runtime/skills/.system/skill-creator/SKILL.md`

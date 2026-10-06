@@ -1,0 +1,34 @@
+{
+  "command": [
+    "claude",
+    "-p",
+    "--no-session-persistence",
+    "--output-format",
+    "stream-json",
+    "--verbose",
+    "--setting-sources",
+    "project",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "{\"mcpServers\":{}}",
+    "--permission-mode",
+    "dontAsk",
+    "--tools",
+    "Read,Glob,Grep,Bash,Skill",
+    "Используй локальный скилл comm-create-lazy-claude-codex-skills, прочитай его собственный references/validation-and-publication.md. Read-only. Сначала выполни обязательный старт. Не читай тела README.human.md. Нужны условия проверки и публикации обновления агентских инструкций: переносим common в новый проект; для существующего project с docs/epl-import предлагают общую specs/, но решение пользователя и отдельное подтверждение пользы всем проектам ещё не получены. Опиши два режима установки, ожидаемое поведение project-only, источник каркаса, допустимость включения specs/ сейчас и публикации при неуспехе проверки Claude. Ничего не изменяй кроме разрешённых действий стартовой проверки. Верни краткий ответ и пути прочитанных инструкций."
+  ],
+  "cwd": "/tmp/two-modes-native-fm_03xcs/workspace",
+  "isolation_probe": "passed",
+  "masked_paths": [
+    "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness",
+    "/home/octadim/.agents",
+    "/home/octadim/.codex/skills",
+    "/home/octadim/.codex/plugins",
+    "/home/octadim/.codex/memories",
+    "/home/octadim/.claude"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 0.92,
+  "stdout": "",
+  "stderr": "Error: Input must be provided either through stdin or as a prompt argument when using --print\n"
+}

@@ -1,15 +1,11 @@
 # Placement
 
-Read when saving/installing; complete ordinary copies, no symlinks.
+Full ordinary copies; no symlinks.
 
-| Material | Source | Native copies |
-|---|---|---|
-| Shared skill | harness/common/skills/comm-name or harness/project/skills/proj-name | identical complete same-name folders in .agents/skills and .claude/skills |
-| Shared rule | harness/common/rules/comm-name.md or harness/project/rules/proj-name.md | one ordinary same-name file directly in .claude/rules/; no Codex mirror |
-| Explicit personal skill | .agents/skills/name | complete copy in .claude/skills/name |
+Shared skill: harness/{common/skills/comm-name,project/skills/proj-name} → identical same-name .agents/skills and .claude/skills folders.
+Shared rule: harness/{common/rules/comm-name.md,project/rules/proj-name.md} → same-name file directly in .claude/rules; no Codex mirror.
+Explicit personal skill: .agents/skills/name → .claude/skills/name.
 
-Common is portable, project dependent. Personal names may omit prefixes; canonical requirements prevail; common/project conflicts need user decision.
+Common required/portable; project depends on it. Personal prefixes optional; canonical requirements prevail; conflicts need user decision. Edit source; verify file types/sets/bytes/Git visibility. Shared source/copies visible; auto-ignore personal paths exactly, preserve entries, never roots; ignoring ≠ untracking.
 
-Edit shared source or personal .agents once. Check regular files/equal sets/bytes/Git visibility. Shared source/copies visible; personal exact paths automatically .gitignored. Preserve entries; never ignore whole native roots. Ignoring does not untrack.
-
-Rules: the former octadim/personal scheme is revoked. Classify common/project by content; after authorized gate save source and copy together, no extra copy approval. Stop on a differing other-owner file. Claude loads rules natively; Codex reads recursively by AGENTS.md instruction, not a native import. The entrypoint check restores that instruction, never publishes rules.
+Rules: octadim/personal scheme revoked; classify common/project by content. After gate source/copy together, no extra approval; stop on differing other-owner file. Claude loads natively; Codex reads recursively via AGENTS.md, not native import. Entrypoint check restores instruction, never publishes rules.

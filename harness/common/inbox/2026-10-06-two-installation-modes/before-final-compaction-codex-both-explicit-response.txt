@@ -1,0 +1,19 @@
+Сначала выполню обязательную стартовую проверку, затем прочитаю правила harness и локальный скилл `comm-create-lazy-claude-codex-skills`, включая `references/validation-and-publication.md`. Работаю только на чтение, кроме разрешённых действий стартовой проверки.
+
+Стартовая проверка прошла (`exit 0`). Тела `README.human.md` не читал; дальнейших изменений не выполнял.
+
+- **Только common:** переносится `harness/common/`; проверка автоматически создаёт отсутствующий нейтральный `project` из `harness/common/base/project-skeleton.json`, без материалов прежнего проекта.
+- **Common + project:** существующий `project`, включая `docs/epl-import`, сохраняется; файлы не перезаписываются, новые категории шаблона автоматически не добавляются.
+- **Project-only:** установка не поддерживается; ожидается отказ без common. Это негативный контроль, не третий режим.
+- **`specs/` сейчас включать нельзя:** нужна отдельная common inbox-заявка, отдельное явное решение пользователя и отдельное подтверждение пользы для всех проектов. Предложение и отсутствие ответа этого не заменяют.
+- **Проверки:** оба режима проверяют в чистых установках без исходного проекта и авторских глобальных материалов; проверяют повторный запуск, отказ без common, стартовый контекст и реальное поведение Codex/Claude. Статусы фиксируют отдельно для текущей компактной версии; после правок проверки повторяют.
+- **При неуспехе Claude:** итог «не полностью проверено», кандидат остаётся в inbox. Публикация допустима только с явным разрешением и подтверждением именно этой непроверенной версии и конкретных source/native путей. Обычный запрос переноса не достаточен; исключение сохраняет статус «не проверено».
+
+Прочитаны инструкции:
+
+- `harness/{common,project}/{INDEX.md,START.md}`
+- Все пять Markdown-правил `.claude/rules/`: `comm-skill-rule-ownership.md`, `comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-user-owned-entrypoints.md`, `comm-human-folder-guides.md`
+- [.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md](.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md) и его собственный [references/validation-and-publication.md](.agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md)
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md` и `references/{content-contract.md,placement-contract.md}`
+- `harness/common/docs/{compact-authoring.md,skill-rule-ownership-contract.md}`
+- `harness/common/base/project-skeleton.json`

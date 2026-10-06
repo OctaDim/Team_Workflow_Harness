@@ -1,0 +1,106 @@
+[
+  {
+    "mode": "common",
+    "os_isolation_probe": "passed",
+    "network": "terminal sandbox restricted; tests initiate no network",
+    "masked_paths": [
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT",
+      "/home/octadim/.agents",
+      "/home/octadim/.claude",
+      "/home/octadim/.codex/skills",
+      "/home/octadim/.codex/plugins",
+      "/home/octadim/.codex/memories"
+    ],
+    "startup_command": [
+      "python3",
+      "-I",
+      "-B",
+      "harness/common/checks/ensure_entrypoint_links.py"
+    ],
+    "startup_exit_code": 0,
+    "suite_command": [
+      "python3",
+      "-I",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "harness/common/checks",
+      "-p",
+      "test_*.py"
+    ],
+    "suite_exit_code": 0,
+    "suite_stdout": "Checked 5 shared rule copies.\n",
+    "suite_stderr": "...............................ss......\n----------------------------------------------------------------------\nRan 38 tests in 2.839s\n\nOK (skipped=2)\n",
+    "startup_context_estimate": {
+      "method": "ceil(unicode_characters/4), pointers and rules only; skill catalog/native overhead not measured",
+      "files": {
+        "AGENTS.md": 259,
+        "CLAUDE.md": 3,
+        "harness/common/INDEX.md": 380,
+        "harness/common/START.md": 421,
+        "harness/project/INDEX.md": 201,
+        "harness/project/START.md": 75,
+        ".claude/rules/comm-human-folder-guides.md": 303,
+        ".claude/rules/comm-user-owned-entrypoints.md": 401,
+        ".claude/rules/comm-entrypoint-links-rule.md": 326,
+        ".claude/rules/comm-package-independence.md": 646,
+        ".claude/rules/comm-skill-rule-ownership.md": 673
+      },
+      "total": 3688
+    }
+  },
+  {
+    "mode": "both",
+    "os_isolation_probe": "passed",
+    "network": "terminal sandbox restricted; tests initiate no network",
+    "masked_paths": [
+      "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT",
+      "/home/octadim/.agents",
+      "/home/octadim/.claude",
+      "/home/octadim/.codex/skills",
+      "/home/octadim/.codex/plugins",
+      "/home/octadim/.codex/memories"
+    ],
+    "startup_command": [
+      "python3",
+      "-I",
+      "-B",
+      "harness/common/checks/ensure_entrypoint_links.py"
+    ],
+    "startup_exit_code": 0,
+    "suite_command": [
+      "python3",
+      "-I",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "harness/common/checks",
+      "-p",
+      "test_*.py"
+    ],
+    "suite_exit_code": 0,
+    "suite_stdout": "Checked 5 shared rule copies.\n",
+    "suite_stderr": "......................................\n----------------------------------------------------------------------\nRan 38 tests in 2.375s\n\nOK\n",
+    "startup_context_estimate": {
+      "method": "ceil(unicode_characters/4), pointers and rules only; skill catalog/native overhead not measured",
+      "files": {
+        "AGENTS.md": 259,
+        "CLAUDE.md": 3,
+        "harness/common/INDEX.md": 380,
+        "harness/common/START.md": 421,
+        "harness/project/INDEX.md": 240,
+        "harness/project/START.md": 129,
+        ".claude/rules/comm-human-folder-guides.md": 303,
+        ".claude/rules/comm-user-owned-entrypoints.md": 401,
+        ".claude/rules/comm-entrypoint-links-rule.md": 326,
+        ".claude/rules/comm-package-independence.md": 646,
+        ".claude/rules/comm-skill-rule-ownership.md": 673
+      },
+      "total": 3781
+    }
+  }
+]

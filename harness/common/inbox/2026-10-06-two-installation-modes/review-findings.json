@@ -1,0 +1,33 @@
+{
+  "findings": [
+    {
+      "review": "plan/coherence",
+      "priority": 1,
+      "problem": "Deleting project checker prevents project-only diagnosis.",
+      "resolution": "Retain tiny mandatory-common shim; no third supported mode."
+    },
+    {
+      "review": "plan/feasibility",
+      "priority": 2,
+      "problem": "Existing protected entrypoint can refer to old project checker.",
+      "resolution": "Preserve old command through shim."
+    },
+    {
+      "review": "implementation/feasibility",
+      "priority": 2,
+      "problem": "Shim could execute external code through a symlinked common or common/checks before preflight.",
+      "resolution": "Reject symlinks in checker and all ancestors before runpy; both negative subcases observed RED then GREEN."
+    }
+  ],
+  "unresolved": [],
+  "correction_review": "No remaining findings in changed shim and test.",
+  "behavioral_green": "Fresh-context review found explicit two modes, no automatic categories or retrofits, no unverified publication without current permission.",
+  "compaction": {
+    "required_fix": "deferred budget high",
+    "before": 1705,
+    "after": 1464,
+    "resolved": false,
+    "behavioral_review": "All simulations pass; one common-portability wording finding corrected and rechecked; no remaining semantic findings",
+    "human_guide_read_violation": "Intermediate size helper used read_text for README.human.md; only numeric size printed. Reported and filter corrected; final evaluation excludes it."
+  }
+}
