@@ -41,8 +41,8 @@ python3 -B harness/common/checks/ensure_entrypoint_links.py
 ## Проверки
 
 ```sh
-python3 -B harness/common/checks/test_ensure_entrypoint_links.py
-python3 -B harness/common/checks/test_entrypoint_notifications.py
+.venv/bin/python -m pytest harness/common/checks/test_ensure_entrypoint_links.py
+.venv/bin/python -m pytest harness/common/checks/test_entrypoint_notifications.py
 ```
 
 Проверяются работа без Git, сохранение прямых правок и лишнего текста, предупреждение до записи восстановленных ссылок, отсутствие ложного сообщения о повреждении, отсутствие установленных hooks/новых настроек и возможность обычного коммита после предупреждения.
@@ -58,7 +58,7 @@ Common обязателен. При переносе только common его 
 Новый согласованный статичный вход всегда вызывает common/checks/ensure_entrypoint_links.py. Действующая команда уже существующего AGENTS.md не переписывается. Старый путь project/checks/ensure_entrypoint_links.py сохраняется как короткий вызов обязательного common для совместимости; самостоятельного режима project-only нет.
 
 ```sh
-python3 -B harness/common/checks/test_entrypoint_portability.py
+.venv/bin/python -m pytest harness/common/checks/test_entrypoint_portability.py
 ```
 
 Проверка охватывает две установки, автоматическое создание, сохранение существующего project, повторный запуск и отрицательный контроль отсутствия common. Исторический успех прежних трёх режимов не подтверждает эту новую матрицу. Нативная загрузка обоих агентов и стартовые бюджеты требуют отдельных доказательств текущей версии.

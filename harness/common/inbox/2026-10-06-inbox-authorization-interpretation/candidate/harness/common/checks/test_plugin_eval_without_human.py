@@ -5,16 +5,17 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
-import unittest
+import pytest
 
 
 LAUNCHER = Path(__file__).with_name('plugin_eval_without_human.mjs')
 
 
-class HumanFilterTest(unittest.TestCase):
+class TestHumanFilter:
+
     def test_installed_analyzer_and_read_guards(self):
         executable = shutil.which('plugin-eval')
-        self.assertIsNotNone(executable, 'Install plugin-eval before this integration check')
+        assert executable is not None, 'Install plugin-eval before this integration check'
         cli = Path(executable).resolve()
         plugin_files = [cli, *cli.parent.parent.joinpath('src').rglob('*.js')]
         digest = lambda files: {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
@@ -37,17 +38,16 @@ class HumanFilterTest(unittest.TestCase):
                 nested.mkdir()
                 for folder in (target, nested):
                     (folder / 'README.human.md').write_text('HUMAN_CANARY_DO_NOT_READ\n' * 400)
-                before = digest(p for p in target.rglob('*') if p.is_file())
+                before = digest((p for p in target.rglob('*') if p.is_file()))
                 result = subprocess.run(['node', str(LAUNCHER), str(cli), 'analyze', str(target), '--format', 'json'], capture_output=True, text=True)
-                self.assertEqual(result.returncode, 0, result.stderr)
+                assert result.returncode == 0, result.stderr
                 report = json.loads(result.stdout)
-                self.assertEqual(report['target']['kind'], 'directory' if kind == 'rule' else kind)
+                assert report['target']['kind'] == ('directory' if kind == 'rule' else kind)
                 components = report['budgets']['deferred_cost_tokens']['components']
-                self.assertTrue(any(c['path'].endswith('details.md') for c in components))
-                self.assertFalse(any(c['path'].endswith('README.human.md') for c in components))
-                self.assertNotIn('HUMAN_CANARY', result.stdout)
-                self.assertEqual(before, digest(p for p in target.rglob('*') if p.is_file()))
-            # A direct read must fail before the body reaches stdout, including an alias.
+                assert any((c['path'].endswith('details.md') for c in components))
+                assert not any((c['path'].endswith('README.human.md') for c in components))
+                assert 'HUMAN_CANARY' not in result.stdout
+                assert before == digest((p for p in target.rglob('*') if p.is_file()))
             human = root / 'skill' / 'README.human.md'
             alias = root / 'alias.md'
             alias.symlink_to(human)
@@ -55,17 +55,13 @@ class HumanFilterTest(unittest.TestCase):
             for source in (human, alias):
                 probe.write_text("import fs from 'node:fs/promises';\nconsole.log(await fs.readFile(" + json.dumps(str(source)) + ", 'utf8'));\n")
                 result = subprocess.run(['node', str(LAUNCHER), str(probe)], capture_output=True, text=True)
-                self.assertNotEqual(result.returncode, 0)
-                self.assertIn('README.human.md', result.stderr)
-                self.assertNotIn('HUMAN_CANARY', result.stdout + result.stderr)
+                assert result.returncode != 0
+                assert 'README.human.md' in result.stderr
+                assert 'HUMAN_CANARY' not in result.stdout + result.stderr
             protected = root / 'protected.txt'
             protected.write_text('unchanged')
             probe.write_text("import fs from 'node:fs/promises';\nawait fs.writeFile(" + json.dumps(str(protected)) + ", 'changed');\n")
             result = subprocess.run(['node', str(LAUNCHER), str(probe)], capture_output=True, text=True)
-            self.assertNotEqual(result.returncode, 0)
-            self.assertEqual(protected.read_text(), 'unchanged')
-        self.assertEqual(plugin_before, digest(plugin_files))
-
-
-if __name__ == '__main__':
-    unittest.main()
+            assert result.returncode != 0
+            assert protected.read_text() == 'unchanged'
+        assert plugin_before == digest(plugin_files)

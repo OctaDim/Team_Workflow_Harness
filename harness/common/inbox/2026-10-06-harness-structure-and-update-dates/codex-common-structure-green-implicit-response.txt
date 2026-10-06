@@ -1,0 +1,63 @@
+В нативном каталоге сессии доступны навыки:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — актуальные процедуры и документация Codex и других продуктов OpenAI.
+- `skill-creator` — создание и обновление навыков Codex.
+- `skill-installer` — установка навыков Codex.
+- `comm-create-lazy-claude-codex-skills` — подготовка навыков и агентских правил Codex/Claude Code.
+
+Первой командой выполню обязательную стартовую проверку. Затем прочитаю правила и процедуры пакета; результат подготовлю без записи файлов.
+Применяю `comm-create-lazy-claude-codex-skills` для проекта инструкций. Стартовая проверка прошла; процедуры подтверждают два режима установки и отказ для project-only.
+
+При чтении ресурсов я ошибочно использовал `*.md` и загрузил также тело `README.human.md`. Это нарушило ваше ограничение. Дальше читаю только явно названные файлы; содержимое человеческого README в проекте решения не использую.
+Стартовая проверка прошла. Файлы не записывал вне её разрешённых действий. Комплект ниже — предложение для следующего проекта.
+
+Одинаковые категории `harness/common/` и `harness/project/`: `base`, `checks`, `scripts`, `testing`, `specs`, `docs`, `decisions`, `inbox`, `rules`, `skills`, `lessons`, `handoffs`; внутри `testing` — `acceptance`, `tests`, `evidence`. Общие переносимые материалы остаются в common, материалы приложения — в project.
+
+Конкретные пути:
+
+| Материал | Путь |
+|---|---|
+| Node.js launcher анализа без человеческих README | `harness/common/scripts/plugin_eval_without_human.mjs` |
+| Обязательная стартовая проверка | `harness/common/checks/ensure_entrypoint_links.py` |
+| Тест переносимости entrypoint | `harness/common/testing/tests/test_entrypoint_portability.py` |
+| Критерии приёмки | `harness/common/testing/acceptance/acceptance.md` |
+| Документ, созданный 04.10 | `harness/common/docs/2026-10-04-harness-transfer.md` |
+| Комплект отчёта, созданный 06.10 | `harness/common/testing/evidence/2026-10-06-harness-transfer/` |
+| MD отчёта, если создан 06.10 | `…/2026-10-06-harness-transfer-evidence.md` |
+| Новый JSON, создаваемый 07.10 | `…/2026-10-07-harness-transfer-evidence.json` |
+
+Каждой новой папке нужен `README.human.md` с пояснением и примером; его тело исключается из агентского чтения. Launcher запускает установленный JavaScript entrypoint plugin-eval отдельным процессом, без зависимости от домашнего каталога автора; отчёт сохраняется вне анализируемого комплекта.
+
+Поведение установки:
+
+- **Common-only:** автоматически создаёт отсутствующий нейтральный project по `common/base/project-skeleton.json`.
+- **Common+project:** проверяет и сохраняет существующий project; файлы не перезаписывает и категории автоматически не дополняет.
+- **Project-only:** отказ до записи; это негативный контроль, а не третий режим.
+
+При следующей правке документ сохраняет префикс `2026-10-04`, папка — `2026-10-06`, JSON — `2026-10-07`. Дата изменения не заменяет дату создания. Для старого файла нужна доказуемая история с учётом переименований; неизвестную дату нельзя выводить из mtime, даты проверки или импортирующего commit — имя согласуется до переименования. Автоматическое обновление дат, hooks, watchers и отдельный обслуживаемый manifest дат не нужны.
+
+Проект обновления инструкций предлагаю подготовить через `harness/common/inbox/2026-10-06-harness-transfer/`: `request.md`, `validation.md` и полный кандидат правила. Компактный текст кандидата:
+
+> При переносе harness сохраняй одинаковые категории common/project и обязательный common. До размещения материалов прочитай `harness/common/specs/2026-10-06-structure-and-creation-dates.md`; для plugin-eval — `harness/common/docs/2026-10-06-plugin-eval-without-human.md`. Сохраняй даты создания и технические имена, карту переноса, исходные hashes и сырые свидетельства. Проверяй common-only, common+project, повторный запуск и отказ project-only. Не читай тела README.human.md. Codex читает Markdown-правила `.claude/rules/` рекурсивно; Claude загружает их нативно. Изменения защищённых входов проводи через отдельно согласованную обработку inbox.
+
+Кандидат общего правила после разрешённой публикации получает источник `harness/common/rules/comm-harness-transfer.md` и одинаковую обычную копию `.claude/rules/comm-harness-transfer.md`. `CLAUDE.md` сохраняет только `@AGENTS.md`; прямые правки обоих входов запрещены.
+
+Необходимы RED–GREEN–REFACTOR итоговой компактной версии, проверки ссылок, hashes и копий, Git-видимости, launcher и исключения README, pytest и `common/scripts/run_tests.py`, чистые установки обоих режимов без исходного проекта, а также реальные сценарии Codex/Claude. Для скилла дополнительно обязательны `quick_validate.py`, нативное обнаружение, явный вызов ресурсов и неявный выбор. MD/JSON отчёта должны фиксировать версию, команды, инструменты, сценарии, результаты каждого режима и отдельные статусы агентов.
+
+**Текущий проект: Codex — не проверено; Claude — не проверено.** Внешние процедуры `using-superpowers`, `writing-skills`, `plugin-eval` и `improve-skill` не были доступны как вызываемые инструменты; их подготовку следует отдельно согласовать в окружении разработчика. Если Claude остаётся непроверенным, публикация требует явного разрешения и подтверждения именно для текущей непроверенной версии и названных путей; статус сохраняется. Любая правка требует повторной проверки.
+
+Реально прочитанные ресурсы, относительно корня workspace:
+
+- `harness/{common,project}/{INDEX.md,START.md}`;
+- все шесть `.claude/rules/comm-*.md`;
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md` и три именованных `references/*-contract.md`, `references/validation-and-publication.md`;
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md` и те же три ресурса;
+- `harness/common/specs/2026-10-06-structure-and-creation-dates.md`, `base/project-skeleton.json`;
+- `harness/common/rules/{comm-user-owned-entrypoints.md,comm-skill-rule-ownership.md}`;
+- `harness/common/docs/{2026-10-05-compact-authoring.md,2026-10-05-skill-rule-ownership-contract.md,2026-10-06-plugin-eval-without-human.md,2026-10-06-run-tests.md}`;
+- `harness/common/decisions/2026-10-05-inbox-execution-status.md`;
+- `harness/common/scripts/plugin_eval_without_human.mjs`;
+- `/tmp/two-modes-native-q9ftnbkj/runtime/skills/.system/skill-creator/SKILL.md`.
+
+Также ошибочно прочитан `.agents/skills/comm-create-lazy-claude-codex-skills/references/README.human.md` через wildcard. Это нарушение вашего ограничения; его содержимое в предложении не использовано.

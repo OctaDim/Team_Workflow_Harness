@@ -34,7 +34,7 @@ Read-only reviewer проверил launcher, интеграционный те�
 Все четыре hashes C manifest неизменны; source/native прежнего правила равны.
 Интеграционный тест повторно PASS (1 test, 0.369 с).
 Четыре текущих Codex turns common/both × explicit/implicit PASS;
-[постоянные полные журналы/review](../../checks/codex-human-filter-native.json).
+[постоянные полные журналы/review](../../testing/evidence/2026-10-06-plugin-eval-human-filter/2026-10-06-codex-human-filter-native.json).
 Процедура прочитана перед filtered start/analyze; fixture файлы не изменены.
 Bounded generic start/analyze только папки текущего plain rule через launcher:
 100/A, без FAIL/WARN. Это статическая общая оценка, не skill/native proof.

@@ -1,0 +1,49 @@
+Локальные навыки из нативного каталога сессии:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — инструкции и сведения о Codex, OpenAI API и продуктах OpenAI.
+- `skill-creator` — создание и обновление навыков Codex.
+- `skill-installer` — установка навыков из каталога или GitHub.
+- `comm-create-lazy-claude-codex-skills` — создание навыков и агентских правил для Codex и Claude Code.
+
+Использую `comm-create-lazy-claude-codex-skills` и его собственную процедуру проверки и публикации. Первой командой выполню обязательную стартовую проверку; далее работаю только на чтение.
+
+Стартовая проверка прошла. Канонический контракт уже задаёт одинаковые категории, два режима установки и постоянные даты создания. Подготовлю пути и компактный проект инструкций; результаты будущих тестов отмечу как незапущенные, поскольку сейчас разрешено только чтение.
+
+Стартовая проверка выполнена первой командой и прошла (`exit 0`). Записей сверх разрешённых действий проверки не выполнял; тела `README.human.md` не читал.
+
+Предлагаемые пути относительно корня нового проекта:
+
+| Материал | Путь |
+|---|---|
+| Переносимый Node.js launcher | `harness/common/scripts/plugin_eval_without_human.mjs` |
+| Тест entrypoint | `harness/common/testing/tests/test_entrypoint_portability.py` |
+| Критерии приёмки | `harness/common/testing/acceptance/acceptance.md` |
+| Документ, созданный 04.10 | `harness/common/docs/2026-10-04-harness-transfer.md` |
+| Комплект отчёта, созданный 06.10 | `harness/common/testing/evidence/2026-10-06-harness-transfer/` |
+| MD отчёта, если создан 06.10 | `…/2026-10-06-validation.md` |
+| JSON, создаваемый 07.10 | `…/2026-10-07-results.json` |
+| Будущая заявка инструкций | `harness/common/inbox/2026-10-06-harness-transfer-instructions/` |
+
+В common/project одинаковы категории: `base`, `checks`, `scripts`, `testing`, `specs`, `docs`, `decisions`, `lessons`, `handoffs`, `inbox`, `rules`, `skills`; внутри `testing` — `acceptance`, `tests`, `evidence`. Каждой папке нужен человеческий README, исключённый из агентского контекста.
+
+Два режима: **common-only** создаёт отсутствующий нейтральный project по `common/base/project-skeleton.json`; **common+project** сохраняет существующие файлы без перезаписи и автоматического дополнения. **Project-only** должен отказать до записи.
+
+При следующей правке документ сохраняет `2026-10-04`, несмотря на изменение 06.10; папка комплекта сохраняет `2026-10-06`, JSON — собственную дату `2026-10-07`. Последняя здесь обозначает будущий сценарий, не уже созданный файл. Неизвестную дату старого материала устанавливают по доказуемой истории либо согласуют конкретное имя до переименования. Автообновления дат, hooks, watchers и manifest дат не нужны.
+
+Компактный проект дополнения агентских инструкций:
+
+> При переносе harness открывай `harness/common/specs/2026-10-06-structure-and-creation-dates.md`; сохраняй категории, даты создания, карту путей и исходные hashes. Проверяй оба режима установки, повторный запуск, сохранность существующего project и отказ project-only. Для plugin-eval открывай `harness/common/docs/2026-10-06-plugin-eval-without-human.md` и используй отдельный Node.js launcher. README.human.md исключай. Codex читает `.claude/rules/` рекурсивно по статичному входу; Claude загружает правила нативно. Изменения инструкций проходят inbox и gate публикации.
+
+`AGENTS.md`/`CLAUDE.md` напрямую не менять; Claude-вход сохраняет `@AGENTS.md`. Предпочтительно обновить существующие канонические правила и их обычные копии в `.claude/rules/`.
+
+Проверки перед публикацией: контракт и компактность, RED–GREEN–REFACTOR, ссылки/ресурсы, тесты entrypoint и launcher, чистые установки обоих режимов, идемпотентность, project-only, равенство копий и видимость Git, нативное обнаружение/явный вызов/автовыбор обоими агентами. Plain rule не требует skill-only валидатора. Отчёт MD/JSON должен содержать версию/hashes, команды и версии инструментов, результаты `pass/fail/not-run/N/A`, ограничения и отдельные статусы агентов.
+
+Сейчас итоговая версия **Codex — не проверено; Claude — не проверено**. Требуемые helper-процедуры, включая `using-superpowers`, не представлены в нативном каталоге; их подключение следует отдельно разрешить, установка не заменяет проверку. Если Claude остаётся непроверенным, публикация возможна только с явным разрешением и подтверждением именно этой непроверенной версии и конкретных source/native путей. Здесь публикация не выполнялась.
+
+Реально прочитаны:
+
+- `harness/{common,project}/{INDEX.md,START.md}` и все шесть Markdown-правил `.claude/rules/`.
+- [.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md](/tmp/two-modes-native-sqgngwqn/workspace/.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md), собственные `references/{validation-and-publication,content-contract,placement-contract}.md`.
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`, `rules/comm-skill-rule-ownership.md`, `base/project-skeleton.json`.
+- `harness/common/docs/2026-10-05-{compact-authoring,skill-rule-ownership-contract}.md`, `docs/2026-10-06-plugin-eval-without-human.md`, [specs/2026-10-06-structure-and-creation-dates.md](/tmp/two-modes-native-sqgngwqn/workspace/harness/common/specs/2026-10-06-structure-and-creation-dates.md).

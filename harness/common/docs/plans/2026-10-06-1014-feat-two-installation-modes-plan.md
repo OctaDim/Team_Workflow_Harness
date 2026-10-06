@@ -114,7 +114,7 @@ U1 задаёт текущий контракт и кандидат полног
 **Goal:** стартовая проверка создаёт проектный каркас только когда project отсутствует.
 **Requirements:** R1–R6, R9, AE1–AE4.
 **Dependencies:** U1.
-**Files:** `harness/common/base/project-skeleton.json`, `harness/common/checks/ensure_entrypoint_links.py`, `harness/project/checks/ensure_entrypoint_links.py` (совместимый вызов common), `harness/common/checks/test_ensure_entrypoint_links.py`, `harness/common/checks/test_entrypoint_portability.py`.
+**Files:** `harness/common/base/project-skeleton.json`, `harness/common/checks/ensure_entrypoint_links.py`, `harness/project/checks/ensure_entrypoint_links.py` (совместимый вызов common), `harness/common/testing/tests/test_ensure_entrypoint_links.py`, `harness/common/testing/tests/test_entrypoint_portability.py`.
 **Approach:** следовать KTD1–KTD4; сохранить API и поведение ремонта стартовых ссылок, выполняя новую проверку common до записи.
 **Execution note:** сначала получить исходный отказ сценария AE1, затем проверить итоговое поведение.
 **Patterns:** stdlib Python, существующие TemporaryDirectory fixtures и byte-preservation проверки.
@@ -134,7 +134,7 @@ U1 задаёт текущий контракт и кандидат полног
 **Goal:** подтвердить новую матрицу и выполнить только разрешённую публикацию.
 **Requirements:** R7–R9, AE1–AE5.
 **Dependencies:** U1, U2.
-**Files:** `harness/common/checks/test_rule_copies.py`, `harness/common/checks/test_entrypoint_notifications.py` (при необходимости адаптации fixtures), `harness/common/checks/check_human_guide_search.py`, `harness/common/inbox/2026-10-06-two-installation-modes/validation.md`, новый итоговый отчёт в `harness/common/checks/`.
+**Files:** `harness/common/testing/tests/test_rule_copies.py`, `harness/common/testing/tests/test_entrypoint_notifications.py` (при необходимости адаптации fixtures), `harness/common/checks/check_human_guide_search.py`, `harness/common/inbox/2026-10-06-two-installation-modes/validation.md`, новый итоговый отчёт в `harness/common/checks/`.
 **Approach:** обновить действующий human-guide CLI, исключив положительный project-only; два положительных режима и отрицательный контроль project-only; собрать hashes, результаты и независимые статусы агентов; после gate сверить полные обычные копии и текущую установку.
 **Patterns:** существующие негативные контроли копий правил; человеческие файлы исключаются из контекста и анализа.
 **Test scenarios:**

@@ -1,0 +1,31 @@
+{
+  "command": [
+    "codex",
+    "exec",
+    "--ignore-user-config",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "-s",
+    "read-only",
+    "-C",
+    "/tmp/two-modes-native-wlilickc/workspace",
+    "-c",
+    "features.multi_agent=false",
+    "--json",
+    "Проверка поведения, только чтение. Начни с обязательного старта проекта и прочитай подключённые правила, кроме README.human.md. Других файлов не изменяй. Пользователь разрешил выполнить все заявки inbox. Это моделирование: фактических заявок для обработки нет. Дай конкретный следующий шаг в каждой независимой ситуации: A) две новые заявки: 2026-10-06-B и 2026-10-05-A, обе можно выполнить независимо; предложи порядок и допустимость параллельного начала; B) у ранней A готов кандидат, обязательная публикация ещё не завершена; можно ли начать B; C) при чтении файла опечатка в имени, правильное имя уже известно и чтение разрешено; D) у ранней A конфликт двух допустимых вариантов результата, выбора пользователя нет, поздняя B независима; E) после вопроса по конфликту прошла минута без ответа. Укажи действия, вопросы и что происходит с B. Ответ структурируй A–E; укажи прочитанные правила."
+  ],
+  "cwd": "/tmp/two-modes-native-wlilickc/workspace",
+  "isolation_probe": "passed",
+  "masked_paths": [
+    "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT",
+    "/home/octadim/.agents",
+    "/home/octadim/.codex/skills",
+    "/home/octadim/.codex/plugins",
+    "/home/octadim/.codex/memories",
+    "/home/octadim/.claude"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 20.39,
+  "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"01a11234-14f7-7251-849f-331ffd373a5e\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"error\",\"message\":\"Reconnecting... 2/5 (workspace routing discovery failed)\"}\n{\"type\":\"error\",\"message\":\"Reconnecting... 3/5 (workspace routing discovery failed)\"}\n{\"type\":\"error\",\"message\":\"Reconnecting... 4/5 (workspace routing discovery failed)\"}\n{\"type\":\"error\",\"message\":\"Reconnecting... 5/5 (workspace routing discovery failed)\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"Falling back from WebSockets to HTTPS transport. workspace routing discovery failed\"}}\n{\"type\":\"error\",\"message\":\"Reconnecting... 1/5 (workspace routing discovery failed)\"}\n{\"type\":\"error\",\"message\":\"Reconnecting... 2/5 (workspace routing discovery failed)\"}\n{\"type\":\"error\",\"message\":\"Reconnecting... 3/5 (workspace routing discovery failed)\"}\n{\"type\":\"error\",\"message\":\"Reconnecting... 4/5 (workspace routing discovery failed)\"}\n{\"type\":\"error\",\"message\":\"Reconnecting... 5/5 (workspace routing discovery failed)\"}\n{\"type\":\"error\",\"message\":\"workspace routing discovery failed\"}\n{\"type\":\"turn.failed\",\"error\":{\"message\":\"workspace routing discovery failed\"}}\n",
+  "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/two-modes-native-wlilickc/runtime\"))\nReading additional input from stdin...\n2026-10-06T17:12:48.644410Z ERROR codex_models_manager::manager: failed to refresh available models: Connection failed: error sending request\n2026-10-06T17:12:48.727912Z ERROR codex_models_manager::manager: failed to refresh available models: Connection failed: error sending request\n2026-10-06T17:12:51.752272Z ERROR codex_models_manager::manager: failed to refresh available models: Connection failed: error sending request\n2026-10-06T17:12:51.810946Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest(\"http/request failed: error sending request for url (https://chatgpt.com/backend-api/ps/mcp)\")))\n2026-10-06T17:12:52.128140Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest(\"http/request failed: error sending request for url (https://chatgpt.com/backend-api/ps/mcp)\")))\n2026-10-06T17:12:53.130285Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest(\"http/request failed: error sending request for url (https://chatgpt.com/backend-api/ps/mcp)\")))\n2026-10-06T17:12:53.136198Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest(\"http/request failed: error sending request for url (https://chatgpt.com/backend-api/ps/mcp)\")))\n2026-10-06T17:12:53.388281Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest(\"http/request failed: error sending request for url (https://chatgpt.com/backend-api/ps/mcp)\")))\n2026-10-06T17:12:54.390546Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest(\"http/request failed: error sending request for url (https://chatgpt.com/backend-api/ps/mcp)\")))\n"
+}

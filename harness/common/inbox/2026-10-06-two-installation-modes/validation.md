@@ -26,7 +26,7 @@ Prompt implicit теперь просит подготовить агентск�
 и не успех отсутствующего инструмента. Итоговый проект ответа агенты правильно
 отметили непроверенным: он отдельно не выполнялся.
 
-[Полные журналы и ручной review](../../checks/codex-two-modes-final-compaction.json)
+[Полные журналы и ручной review](../../testing/evidence/2026-10-06-two-installation-modes/2026-10-06-codex-two-modes-final-compaction.json)
 сохранены вне inbox. Claude не запускался с кандидатными материалами: локальная
 проверка авторизации показала expired, exit 1. Codex текущие сценарии PASS;
 Claude не проверен; публикация по-прежнему не разрешена. Нижележащие записи
@@ -63,7 +63,7 @@ RED подтвердил несовпадение с корнем проекта
 реальном авторинге, но и не успешная проверка его неявного выбора. Самостоятельный
 native listing отдельно не проверялся, статус Codex в целом не повышен.
 
-Полные актуальные [журналы и review](../../checks/codex-two-modes-native-retry.json)
+Полные актуальные [журналы и review](../../testing/evidence/2026-10-06-two-installation-modes/2026-10-06-codex-two-modes-native-retry.json)
 сохранены вне временного inbox. AGENTS.md/CLAUDE.md совпадают с HEAD; все 30
 кандидатных hashes совпадают с manifest. Claude, deferred budget FAIL и gate
 публикации остаются. Прежние сообщения об отказе сетевого запуска ниже — история,

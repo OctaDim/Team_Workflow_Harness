@@ -1,0 +1,62 @@
+Локальные навыки из нативного каталога сессии:
+
+- `imagegen` — генерация и редактирование растровых изображений.
+- `openai-docs` — документация и процедуры для Codex, OpenAI API и продуктов.
+- `skill-creator` — создание и обновление навыков Codex.
+- `skill-installer` — установка навыков из каталога или GitHub.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление, перенос и публикация навыков и правил Codex/Claude Code.
+
+Использую `comm-create-lazy-claude-codex-skills`. Первой командой выполню обязательную стартовую проверку; затем прочитаю инструкции и собственную процедуру проверки и публикации навыка. Работа останется read-only.
+
+Стартовая проверка прошла. Контракт пакета закрепляет два режима: common-only создаёт нейтральный project, common+project сохраняет существующий; project-only должен завершаться отказом до записи. Даты в именах отражают создание, поэтому следующая правка их не меняет.
+
+Подготовлю текст проекта переноса и карту путей. Проверки поведения Codex/Claude здесь не выполнены; статусы новой версии останутся «не проверено».
+
+Стартовая проверка выполнена первой командой, завершилась успешно. Ничего не записывал сверх разрешённых действий проверки; тела `README.human.md` не читал.
+
+Предлагаемые пути для следующего проекта:
+
+| Материал | Путь |
+|---|---|
+| Node.js launcher | `harness/common/scripts/plugin_eval_without_human.mjs` |
+| Проверка входа | `harness/common/checks/ensure_entrypoint_links.py` |
+| Тест entrypoint | `harness/common/testing/tests/test_ensure_entrypoint_links.py` |
+| Проверка переносимости | `harness/common/testing/tests/test_entrypoint_portability.py` |
+| Тест launcher | `harness/common/testing/tests/test_plugin_eval_without_human.py` |
+| Критерии приёмки | `harness/common/testing/acceptance/acceptance.md` |
+| Комплект отчёта | `harness/common/testing/evidence/2026-10-06-harness-transfer/` |
+| Существующий документ отчёта | `…/2026-10-04-transfer-report.md` |
+| Новый JSON, создаваемый 7 октября | `…/2026-10-07-validation.json` |
+| Будущая заявка обновления инструкций | `harness/common/inbox/2026-10-06-harness-transfer-instructions/` |
+
+Категории common/project одинаковы: `base`, `checks`, `scripts`, `testing/{acceptance,tests,evidence}`, `specs`, `docs`, `decisions`, `inbox`, `rules`, `skills`, `lessons`, `handoffs`. Каждой папке требуется человеческое пояснение, исключённое из агентского контекста.
+
+Два режима установки:
+
+- **Common-only:** отсутствующий project создаётся нейтральным по `common/base/project-skeleton.json`, без материалов прежнего приложения.
+- **Common+project:** существующие файлы сохраняются; новая редакция шаблона автоматически его не дополняет. Повреждение обязательных ресурсов вызывает отказ.
+- **Project-only:** отказ до записи; это негативный контроль, не третий режим.
+
+Дата документа остаётся **2026-10-04**, хотя он изменён 6 октября. Папка комплекта сохраняет **2026-10-06**, вложенный новый JSON получает **2026-10-07**. Следующая правка не меняет эти даты. Для старого файла нужна доказуемая история создания; при неизвестной дате согласовывается имя конкретного файла до переименования. Hooks, watchers и автоматическое обновление дат не применяются. Исполняемые программы, тесты и `acceptance.md` сохраняют технические имена.
+
+Проект общей инструкции для Codex/Claude:
+
+> При переносе harness соблюдай одинаковые категории и два режима установки; подробности структуры и дат открывай из спецификации по задаче. Сохраняй карту старых/новых путей, исходные hashes и сырые свидетельства; исправляй рабочие ссылки, не выдавая исторические результаты за новый прогон. Запускай plugin-eval через переносимый Node.js launcher с исключением README.human.md. После изменений повторяй проверки и отдельно фиксируй статусы Codex/Claude. Защищённые входы изменяй только через согласованную обработку inbox.
+
+Кандидат обновляет существующие common-инструкции, без дублирования в project. После gate правила получают обычные копии в `.claude/rules/`; Claude загружает их нативно, Codex читает рекурсивно по указанию входа. `CLAUDE.md` сохраняет только `@AGENTS.md`.
+
+Нужны RED–GREEN–REFACTOR, проверки ссылок/ресурсов/копий/Git, тест launcher, чистые установки обоих режимов, повторный запуск и отказ project-only. Для каждого агента — обнаружение, явный вызов собственных ресурсов и автоматический выбор. Отчёт MD/JSON фиксирует версию/hash, команды, инструменты и версии агентов, результаты по режимам, ограничения и отдельные статусы. `quick_validate.py` применяется к скиллу, не к plain rule.
+
+Сейчас **Codex — не проверено; Claude — не проверено** для предлагаемой версии. `using-superpowers` и другие обязательные авторские помощники не представлены в доступном каталоге; их подключение следует согласовать перед полноценной проверкой. Если Claude остаётся непроверенным, публикация требует явного разрешения **и подтверждения именно этой непроверенной версии** с конкретными source/native путями; статус не повышается.
+
+Реально прочитаны, относительно корня workspace:
+
+- `harness/{common,project}/{INDEX.md,START.md}`;
+- все шесть правил `.claude/rules/`: `comm-skill-rule-ownership.md`, `comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-dependencies-through-uv.md`, `comm-user-owned-entrypoints.md`, `comm-human-folder-guides.md`;
+- [.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md](/tmp/two-modes-native-iv0de4e_/workspace/.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md) и его собственные `references/{validation-and-publication,content-contract,placement-contract}.md`;
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`;
+- `harness/common/rules/comm-skill-rule-ownership.md`;
+- `harness/common/base/project-skeleton.json`;
+- `harness/common/docs/{2026-10-05-compact-authoring,2026-10-05-skill-rule-ownership-contract,2026-10-06-plugin-eval-without-human}.md`;
+- [спецификация структуры и дат](/tmp/two-modes-native-iv0de4e_/workspace/harness/common/specs/2026-10-06-structure-and-creation-dates.md);
+- `/tmp/two-modes-native-iv0de4e_/runtime/skills/.system/skill-creator/SKILL.md`.

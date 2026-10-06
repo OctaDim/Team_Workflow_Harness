@@ -18,7 +18,7 @@ Claude: не проверено, реальный запуск итоговой 
 Claude повторно подтвердил ту же ошибку авторизации. Регрессия — 30/30 PASS.
 Статус выполнения заявки — выполнена; статус проверки Claude не повышен.
 
-Постоянные [результаты](../../checks/human-guide-search-fix-evidence.md),
-[структурные доказательства](../../checks/human-guide-search-fix-evidence.json)
+Постоянные [результаты](../../testing/evidence/2026-10-06-human-guide-search-fix/2026-10-06-human-guide-search-fix-evidence.md),
+[структурные доказательства](../../testing/evidence/2026-10-06-human-guide-search-fix/2026-10-06-human-guide-search-fix-evidence.json)
 и [повторяемый check](../../checks/check_human_guide_search.py) находятся вне inbox.
 Ограничения и неудачные попытки сохранены; будущая безошибочность не заявлена.

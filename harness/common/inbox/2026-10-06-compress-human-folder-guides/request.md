@@ -44,8 +44,8 @@
   `90e228576cd885af894fddaca03fb1e1b5df7c485833c24cbabf0200c13c8936`,
   сокращение 25,4%, равные обычные source/native файлы. Девять сценариев
   Codex до установки и два после неё прошли; регрессия 30/30 PASS.
-  [Новые доказательства](../../checks/human-guide-search-fix-evidence.md)
-  сохраняют разрешение и результаты; [старые](../../checks/human-folder-rule-compression-evidence.md)
+  [Новые доказательства](../../testing/evidence/2026-10-06-human-guide-search-fix/2026-10-06-human-guide-search-fix-evidence.md)
+  сохраняют разрешение и результаты; [старые](../../testing/evidence/2026-10-06-human-folder-rule-compression/2026-10-06-human-folder-rule-compression-evidence.md)
   сохраняют обнаруженный сбой.
 - **Причина:** пользователь явно разрешил публикацию именно исправленной
   версии с общим статусом «непроверен». Claude остаётся непроверенным из-за

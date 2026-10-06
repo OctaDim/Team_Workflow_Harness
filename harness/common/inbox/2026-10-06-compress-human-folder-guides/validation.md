@@ -10,8 +10,8 @@ Claude — не проверено: реальный CLI запуск завер
 Кандидат не установлен. Правки его текста после проверок не вносились.
 
 Полные результаты, команды, ограничения и gate сохранены вне временного inbox:
-[отчёт](../../checks/human-folder-rule-compression-evidence.md),
-[структурные доказательства](../../checks/human-folder-rule-compression-evidence.json).
+[отчёт](../../testing/evidence/2026-10-06-human-folder-rule-compression/2026-10-06-human-folder-rule-compression-evidence.md),
+[структурные доказательства](../../testing/evidence/2026-10-06-human-folder-rule-compression/2026-10-06-human-folder-rule-compression-evidence.json).
 
 Публикация требует завершения проверок либо явного разрешения на этот непроверенный
 кандидат в каноническом правиле и его нативной копии. Само поручение выполнить
@@ -25,4 +25,4 @@ Claude — не проверено: реальный CLI запуск завер
 из [отдельной заявки](../2026-10-06-fix-human-guide-content-search/request.md).
 Заявки выполнены; общий статус опубликованной версии остаётся непроверенным
 из-за Claude. Текущие результаты и разрешение — в
-[постоянном отчёте](../../checks/human-guide-search-fix-evidence.md).
+[постоянном отчёте](../../testing/evidence/2026-10-06-human-guide-search-fix/2026-10-06-human-guide-search-fix-evidence.md).
