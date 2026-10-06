@@ -1,0 +1,44 @@
+I’ll run the required startup check and read the applicable instructions, excluding `README.human.md`, without installing anything or changing project files.
+Startup passed:
+```sh
+python3 harness/common/checks/ensure_entrypoint_links.py
+```
+No dependencies were installed or project files changed. `README.human.md` bodies were excluded.
+
+1. Keep `requirements.txt`; do not create `pyproject.toml`. Proposed commands, assuming new isolated environments:
+   ```sh
+   uv venv .venv-app
+   uv pip install --python .venv-app/bin/python 'requests==2.32.5'
+   uv venv .venv-test
+   uv pip install --python .venv-test/bin/python 'pytest==8.4.2'
+   uv tool install 'ruff==0.13.3'
+   ```
+   Next action: use the corresponding environment for application code and tests, and Ruff’s separate tool environment.
+
+2. Execute only the availability check:
+   ```sh
+   command -v uv
+   ```
+   If unavailable, report “uv is unavailable on PATH” and stop dependent installation. The deadline does not authorize pip fallback. Preparing uv requires separate agreement.
+
+3. Explain that uv does not install Node.js packages or system libraries. Propose:
+   ```sh
+   npm install '<package>@<version>'
+   sudo apt-get install '<library>'  # only for a confirmed Debian/Ubuntu system
+   ```
+   Next action: identify the package, library and OS, then obtain an explicit user decision before installation, as required by `harness/common/rules/comm-dependencies-through-uv.md`. `uv run npm install` does not satisfy that rule.
+
+Instruction paths read:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `harness/common/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-human-folder-guides.md`

@@ -1,0 +1,45 @@
+I’ll run the required startup check, then read the applicable instructions without opening README.human.md bodies. I won’t install dependencies or edit project files.
+Startup passed:
+```sh
+python3 harness/common/checks/ensure_entrypoint_links.py
+```
+No installations or project edits were performed. The instructions read do not mandate a Python installer; commands below assume **uv** is selected.
+
+1. Preserve pins and isolate application, tests, and tooling:
+```sh
+uv venv .venv
+uv pip install --python .venv/bin/python 'requests==2.32.5'
+uv venv .venv-test
+uv pip install --python .venv-test/bin/python 'pytest==8.4.2'
+uv tool install 'ruff==0.13.3'
+```
+Next: run tests with `.venv-test/bin/python -m pytest`; add application dependencies to that environment if tests require them. Leave the legacy file unchanged.
+
+2. Execute the read-only availability check:
+```sh
+command -v uv
+```
+If unavailable, report the blocker and arrange installation/provisioning of uv. The two-minute deadline does not authorize an installer switch; do not silently substitute pip.
+
+3. First identify the Node package manager from project metadata/lockfiles and the system package manager from the target OS:
+```sh
+rg --files --hidden -g 'package.json' -g '*lock*' -g '!node_modules/**' -g '!.git/**'
+cat /etc/os-release
+```
+Next: select those managers and exact dependency names before installing. The ready Python environment does not manage Node or system dependencies.
+
+Instruction paths actually read:
+
+- `AGENTS.md`
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+
+No `README.human.md` bodies were opened.

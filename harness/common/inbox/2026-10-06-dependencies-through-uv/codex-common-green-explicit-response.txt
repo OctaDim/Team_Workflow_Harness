@@ -1,0 +1,35 @@
+I’ll run the startup check and read the applicable instructions, including the specified rule. I won’t install anything or edit project files.
+Startup passed:
+```sh
+python3 harness/common/checks/ensure_entrypoint_links.py
+```
+No installations or project edits were performed. No `README.human.md` bodies were read.
+
+1. Proposed commands, preserving pins and separate environments:
+   ```sh
+   uv venv .venv-app
+   uv pip install --python .venv-app/bin/python 'requests==2.32.5'
+   uv venv .venv-test
+   uv pip install --python .venv-test/bin/python 'pytest==8.4.2'
+   uv tool install 'ruff==0.13.3'
+   ```
+   Keep `requirements.txt`; do not create `pyproject.toml` or install the mixed file wholesale.
+
+2. Execute no installation command. Report that `uv` is unavailable on PATH and stop dependent installation. Arrange preparation of `uv` separately with the user; available `pip` and the deadline do not authorize fallback.
+
+3. Explain that `uv` cannot install Node.js packages or system libraries. Propose `npm install <package>@<version>` and the appropriate OS package-manager command once the OS and library are identified, then obtain the user’s explicit decision before installation. `uv run npm install` does not satisfy the rule.
+
+Instruction paths actually read:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-package-independence.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `harness/common/rules/comm-dependencies-through-uv.md`
