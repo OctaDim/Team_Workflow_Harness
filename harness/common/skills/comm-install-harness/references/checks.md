@@ -42,3 +42,10 @@ limits; changes reset prior instruction statuses and preserve publication gates.
 New approved projects have no lessons category; plans remain docs/plans.
 Existing legacy folders survive ordinary startup; remove them only through an
 authorized addressed migration after requirement mapping and current checks.
+
+Разрешённое узкое исключение: обязательная стартовая проверка автоматически
+создаёт только отсутствующий harness/project как пустой нейтральный каркас
+из согласованного harness/common/base/project-skeleton.json, без inbox
+и отдельного подтверждения. Существующий project сохраняется побайтно;
+его правка, дополнение, пересоздание и изменение шаблона этим исключением
+не разрешены.

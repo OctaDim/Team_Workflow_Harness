@@ -43,6 +43,31 @@ class TestEntryPointLinks:
         for file in self.root.glob('harness/*/START.md'):
             assert file.read_bytes() == b''
 
+    @pytest.mark.parametrize('newline', ('\n', '\r\n'), ids=['LF', 'CRLF'])
+    @pytest.mark.parametrize('common_only', (False, True), ids=['combined', 'common-only'])
+    @pytest.mark.parametrize('adjacent', (False, True))
+    def test_repairs_each_repeated_block_before_index_without_changing_settings(self, newline, common_only, adjacent):
+        if common_only:
+            shutil.rmtree(self.root / 'harness/project')
+        paths = ['harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
+                 'harness/common/INDEX.md', 'harness/project/INDEX.md']
+        block = ''.join(f'- [{path}]({path})\n' for path in paths)
+        block = block.replace('](.claude/rules/)\n',
+            '](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules '
+            'и его подпапок, кроме README.human.md; соблюдай применимые требования.\n')
+        prefix, separator = '# User settings: keep exact bytes.\n\n', '\nRepeat:\n'
+        damaged = block.replace('- [harness/common/START.md](harness/common/START.md)\n', '')
+        if adjacent:
+            separator = ''
+            damaged = damaged.rstrip('\n')
+        agents = self.root / 'AGENTS.md'
+        agents.write_bytes((prefix + block + separator + damaged).replace('\n', newline).encode())
+        assert self.run_check().returncode == 0
+        expected = (prefix + block + separator + block).replace('\n', newline).encode()
+        assert agents.read_bytes() == expected
+        assert self.run_check().returncode == 0
+        assert agents.read_bytes() == expected
+
     def test_only_appends_missing_links_preserving_user_text(self):
         prefix = '# User configuration\n\nKeep this exact text.\n[Existing](./harness/common/INDEX.md)\n'
         (self.root / 'AGENTS.md').write_text(prefix)

@@ -178,7 +178,9 @@ class TestNotification:
         first = self.check()
         assert first.returncode == 0, first.stderr
         assert NOTICE in first.stdout
-        assert agents.read_bytes().startswith(original)
+        repaired = agents.read_bytes()
+        assert repaired.startswith(b'# Static settings\r\n\r\nKeep this setting.\r\n\r\n')
+        assert b'\n' not in repaired.replace(b'\r\n', b'')
         assert line in agents.read_bytes()
         second = self.check()
         assert second.returncode == 0, second.stderr

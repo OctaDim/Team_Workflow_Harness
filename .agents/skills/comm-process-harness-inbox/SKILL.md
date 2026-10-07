@@ -1,19 +1,27 @@
 ---
 name: comm-process-harness-inbox
-description: Use when saving reusable experience or a decision in harness, choosing its permanent form, creating or processing inbox requests, or resuming their execution.
+description: Use when changing any harness contents, saving reusable experience or decisions, creating or processing inbox requests, or resuming their execution.
 ---
 
-# Сохранение опыта и обработка inbox
+# Изменения harness и обработка inbox
+
+Перед прямой правкой проверь историю: отдельный вопрос агента о конкретной
+задаче → однозначный положительный ответ после него. Нет такой пары — задай
+вопрос и остановись без правки. Первоначальное «подтверждаю» не является
+ответом на ещё не заданный вопрос. Автоматическое создание отсутствующего
+пустого project стартовой проверкой — узкое исключение, описанное в workflow.
+
+Перед любой задачей изменения harness прочитай
+[workflow](references/workflow.md): обязательный маршрут, разрешённые стадии,
+отдельное подтверждение прямого изменения и ожидание ответа.
+До записи, выполнения или изменения статуса используй тот же workflow:
+полный кандидат, контекст, порядок, продолжение и закрытие.
+Готовый кандидат без обязательной публикации заявку не закрывает.
 
 При «сохрани опыт», «зафиксируй решение», «дополни harness» до выбора места
 прочитай [выбор результата](references/experience-routing.md): будущее
 поведение, существующий владелец, минимальное изменение. Skills-first не
 означает отдельный скилл для каждой ошибки. Определи common/project по содержанию.
-
-До записи, выполнения или изменения статуса прочитай
-[workflow](references/workflow.md): разрешённые стадии, полный кандидат,
-контекст, порядок, продолжение и закрытие. Обычный маршрут — подтверждённый inbox;
-готовый кандидат без обязательной публикации заявку не закрывает.
 
 До создания/изменения/проверки/публикации скилла или правила открой из корня
 проекта `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.

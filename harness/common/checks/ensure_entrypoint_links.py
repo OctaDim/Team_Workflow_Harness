@@ -15,8 +15,12 @@ BOOTSTRAP = '''# Harness
 python3 harness/{package}/checks/ensure_entrypoint_links.py
 ```
 
-При ошибке проверки остановись и сообщи причину. Затем прочитай INDEX.md и START.md
-подключённых пакетов. Подробности открывай по задаче; README.human.md не читай.
+При ошибке проверки остановись и сообщи причину.
+Прочитай в следующем порядке (точный порядок очень важен): START.md обоих
+пакетов, все Markdown-правила .claude/rules и подпапок, затем INDEX.md обоих
+пакетов. В каждой группе сначала common, затем project. Все правила получи
+завершёнными вызовами до чтения тела скилла; не объединяй правила и скилл
+в одном вызове. Подробности открывай по задаче; README.human.md не читай.
 Индивидуальные инструкции не отменяют применимые канонические требования.
 Прямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически
 не заблокированы; изменения предлагай через inbox. Согласованное создание и восстановление
@@ -58,7 +62,7 @@ RULES_LINK = '- [.claude/rules](.claude/rules/)'
 RULES_READ = ('До выполнения задачи прочитай все Markdown-правила из .claude/rules '
               'и его подпапок, кроме README.human.md; соблюдай применимые требования.')
 LINK_LINES = {f'- [harness/{p}/{n}](harness/{p}/{n})'
-              for p in ('common', 'project') for n in ('INDEX.md', 'START.md')} | {RULES_LINK, RULES_READ}
+              for p in ('common', 'project') for n in ('INDEX.md', 'START.md')} | {RULES_LINK, RULES_READ, RULES_LINK + ' ' + RULES_READ}
 
 
 def without_startup_links(text):
@@ -157,6 +161,44 @@ def create_project_skeleton(project, categories):
         staging.rename(project)
 
 
+
+def repair_startup_blocks(content, resources, missing):
+    """Repair only incomplete generated link blocks, retaining labels and user text."""
+    pattern = re.compile(r'^- \[[^\]\n]+\]\((harness/(?:common|project)/(?:START|INDEX)\.md|\.claude/rules/?)\)')
+    lines = list(fenced_lines(content))
+    output, changed = [], False
+    index = 0
+    while index < len(lines):
+        line, inside = lines[index]
+        if inside or not pattern.match(line):
+            output.append(line)
+            index += 1
+            continue
+        block, seen = [], set()
+        while index < len(lines) and not lines[index][1] and pattern.match(lines[index][0]):
+            target = pattern.match(lines[index][0]).group(1).rstrip('/')
+            if target in seen:
+                break
+            seen.add(target)
+            block.append(lines[index][0])
+            index += 1
+        links = {pattern.match(line).group(1).rstrip('/'): line for line in block}
+        missing_here = [path for path in resources if path not in links]
+        # A repeated canonical block is repaired even if another copy has the missing link.
+        complete_block = '.claude/rules' in links and any(path in links for path in resources)
+        if not missing_here or not (missing or complete_block):
+            output.extend(block)
+            continue
+        newline = '\r\n' if any(line.endswith('\r\n') for line in block) else '\n'
+        for path in missing_here:
+            links[path] = f'- [{path}]({path})' + newline
+        order = resources[:2] + (['.claude/rules'] if '.claude/rules' in links else []) + resources[2:]
+        output.extend(links[path] if links[path].endswith('\n') else links[path] + newline
+                      for path in order)
+        changed = True
+    return ''.join(output), changed
+
+
 def ensure(root):
     print(WARNING)
     common, project = root / 'harness/common', root / 'harness/project'
@@ -166,8 +208,8 @@ def ensure(root):
         raise ValueError('harness/common is required; project-only is unsupported.')
     categories = load_project_skeleton(common, root)
     create_project = not project.exists()
-    resources = [f'harness/{package}/{name}' for package in ('common', 'project')
-                 for name in ('INDEX.md', 'START.md')]
+    resources = [f'harness/{package}/{name}' for name in ('START.md', 'INDEX.md')
+                 for package in ('common', 'project')]
     for relative in resources:
         if create_project and relative.startswith('harness/project/'):
             continue
@@ -193,9 +235,23 @@ def ensure(root):
         additions.append(RULES_LINK)
     if RULES_READ not in visible:
         additions.append(RULES_READ)
+    content, repaired_blocks = repair_startup_blocks(content, resources, missing)
+    if repaired_blocks:
+        # The repaired blocks already contain all missing package links.
+        additions = [line for line in additions if line in (RULES_LINK, RULES_READ)]
+        if RULES_LINK in content:
+            additions = [line for line in additions if line != RULES_LINK]
     if additions:
         ending = re.search(r'\r?\n', content)
         newline = ending.group() if ending else '\n'
+        order = {f'- [{relative}]({relative})': index
+                 for index, relative in enumerate(resources[:2] + ['.claude/rules/'] + resources[2:])}
+        order[RULES_LINK] = 2
+        order[RULES_READ] = 2.5
+        additions.sort(key=lambda line: order[line])
+        if RULES_LINK in additions and RULES_READ in additions:
+            additions[additions.index(RULES_LINK)] += ' ' + RULES_READ
+            additions.remove(RULES_READ)
         content += ('' if content.endswith('\n') else newline) + newline + newline.join(additions) + newline
     original_claude = claude.read_bytes().decode('utf-8') if claude.exists() else ''
     bridge = original_claude
@@ -204,7 +260,7 @@ def ensure(root):
         newline = ending.group() if ending else '\n'
         bridge = '@AGENTS.md' + newline + bridge
     changed = []
-    if additions or bridge != original_claude:
+    if additions or repaired_blocks or bridge != original_claude:
         print(NOTICE, flush=True)
     if create_project:
         print('harness/project отсутствует: создаётся пустой каркас из common.', flush=True)
