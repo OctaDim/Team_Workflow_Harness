@@ -1,0 +1,539 @@
+{
+  "method": "Observed completed command outputs in bytes; actual cat commands and all borrowed read paths retained",
+  "before_local_metadata": [
+    {
+      "path": ".agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "chars": 183
+    },
+    {
+      "path": ".agents/skills/comm-install-harness/SKILL.md",
+      "chars": 162
+    },
+    {
+      "path": ".agents/skills/comm-preserve-text-line-endings/SKILL.md",
+      "chars": 212
+    },
+    {
+      "path": ".agents/skills/comm-process-harness-inbox/SKILL.md",
+      "chars": 174
+    },
+    {
+      "path": ".agents/skills/comm-protect-harness-evidence/SKILL.md",
+      "chars": 150
+    },
+    {
+      "path": ".agents/skills/comm-report-plugin-eval-budget/SKILL.md",
+      "chars": 161
+    },
+    {
+      "path": ".agents/skills/comm-resolve-permission-blockers/SKILL.md",
+      "chars": 201
+    }
+  ],
+  "after_local_metadata": [
+    {
+      "path": ".agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "chars": 131
+    },
+    {
+      "path": ".agents/skills/comm-diagnose-harness-entrypoints/SKILL.md",
+      "chars": 151
+    },
+    {
+      "path": ".agents/skills/comm-install-harness/SKILL.md",
+      "chars": 149
+    },
+    {
+      "path": ".agents/skills/comm-preserve-harness-knowledge/SKILL.md",
+      "chars": 159
+    },
+    {
+      "path": ".agents/skills/comm-preserve-text-line-endings/SKILL.md",
+      "chars": 212
+    },
+    {
+      "path": ".agents/skills/comm-process-harness-inbox/SKILL.md",
+      "chars": 99
+    },
+    {
+      "path": ".agents/skills/comm-protect-harness-evidence/SKILL.md",
+      "chars": 150
+    },
+    {
+      "path": ".agents/skills/comm-publish-harness-instructions/SKILL.md",
+      "chars": 151
+    },
+    {
+      "path": ".agents/skills/comm-report-plugin-eval-budget/SKILL.md",
+      "chars": 161
+    },
+    {
+      "path": ".agents/skills/comm-resolve-permission-blockers/SKILL.md",
+      "chars": 201
+    },
+    {
+      "path": ".agents/skills/comm-validate-harness-instructions/SKILL.md",
+      "chars": 181
+    }
+  ],
+  "before_startup_artifacts": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 1838
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 11
+    },
+    {
+      "path": "harness/common/START.md",
+      "bytes": 1491
+    },
+    {
+      "path": "harness/common/INDEX.md",
+      "bytes": 3542
+    },
+    {
+      "path": "harness/project/START.md",
+      "bytes": 853
+    },
+    {
+      "path": "harness/project/INDEX.md",
+      "bytes": 2110
+    },
+    {
+      "path": ".claude/rules/comm-human-folder-guides.md",
+      "bytes": 2573
+    },
+    {
+      "path": ".claude/rules/comm-user-owned-entrypoints.md",
+      "bytes": 2773
+    },
+    {
+      "path": ".claude/rules/comm-dependencies-through-uv.md",
+      "bytes": 1946
+    },
+    {
+      "path": ".claude/rules/comm-instruction-order.md",
+      "bytes": 3135
+    },
+    {
+      "path": ".claude/rules/comm-entrypoint-links-rule.md",
+      "bytes": 2794
+    },
+    {
+      "path": ".claude/rules/comm-package-independence.md",
+      "bytes": 2020
+    },
+    {
+      "path": ".claude/rules/comm-skill-rule-ownership.md",
+      "bytes": 7031
+    },
+    {
+      "path": "harness/common/rules/comm-skill-rule-ownership.md",
+      "bytes": 7031
+    },
+    {
+      "path": "harness/common/rules/comm-human-folder-guides.md",
+      "bytes": 2573
+    }
+  ],
+  "after_startup_artifacts": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 1838
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 11
+    },
+    {
+      "path": "harness/common/START.md",
+      "bytes": 1491
+    },
+    {
+      "path": "harness/common/INDEX.md",
+      "bytes": 3542
+    },
+    {
+      "path": "harness/project/START.md",
+      "bytes": 853
+    },
+    {
+      "path": "harness/project/INDEX.md",
+      "bytes": 2110
+    },
+    {
+      "path": ".claude/rules/comm-human-folder-guides.md",
+      "bytes": 2552
+    },
+    {
+      "path": ".claude/rules/comm-user-owned-entrypoints.md",
+      "bytes": 2769
+    },
+    {
+      "path": ".claude/rules/comm-dependencies-through-uv.md",
+      "bytes": 1946
+    },
+    {
+      "path": ".claude/rules/comm-instruction-order.md",
+      "bytes": 3135
+    },
+    {
+      "path": ".claude/rules/comm-entrypoint-links-rule.md",
+      "bytes": 2790
+    },
+    {
+      "path": ".claude/rules/comm-package-independence.md",
+      "bytes": 1994
+    },
+    {
+      "path": ".claude/rules/comm-skill-rule-ownership.md",
+      "bytes": 7460
+    },
+    {
+      "path": "harness/common/rules/comm-skill-rule-ownership.md",
+      "bytes": 7460
+    },
+    {
+      "path": "harness/common/rules/comm-human-folder-guides.md",
+      "bytes": 2552
+    }
+  ],
+  "matched_cases": [
+    {
+      "phase": "red",
+      "mode": "common",
+      "case": "knowledge-covered",
+      "startup_output_bytes": 39857,
+      "post_index_output_bytes": 6395,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-process-harness-inbox/SKILL.md'\"",
+          "paths": [
+            "harness/common/skills/comm-process-harness-inbox/SKILL.md"
+          ],
+          "observed_output_bytes": 2881
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-process-harness-inbox/references/experience-routing.md'\"",
+          "paths": [
+            "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md"
+          ],
+          "observed_output_bytes": 3514
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "red",
+      "mode": "common",
+      "case": "validate",
+      "startup_output_bytes": 39857,
+      "post_index_output_bytes": 88544,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md"
+          ],
+          "observed_output_bytes": 1847
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md' 'harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md'\"",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md"
+          ],
+          "observed_output_bytes": 2393
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md'\"",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md"
+          ],
+          "observed_output_bytes": 1427
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "red",
+      "mode": "common",
+      "case": "diagnose",
+      "startup_output_bytes": 39857,
+      "post_index_output_bytes": 10655,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-install-harness/SKILL.md'\"",
+          "paths": [
+            "harness/common/skills/comm-install-harness/SKILL.md"
+          ],
+          "observed_output_bytes": 1161
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-install-harness/references/entrypoints.md'\"",
+          "paths": [
+            "harness/common/skills/comm-install-harness/references/entrypoints.md"
+          ],
+          "observed_output_bytes": 7595
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "red",
+      "mode": "both",
+      "case": "knowledge-covered",
+      "startup_output_bytes": 40613,
+      "post_index_output_bytes": 6395,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-process-harness-inbox/SKILL.md'\"",
+          "paths": [
+            "harness/common/skills/comm-process-harness-inbox/SKILL.md"
+          ],
+          "observed_output_bytes": 2881
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-process-harness-inbox/references/experience-routing.md'\"",
+          "paths": [
+            "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md"
+          ],
+          "observed_output_bytes": 3514
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "red",
+      "mode": "both",
+      "case": "validate",
+      "startup_output_bytes": 40613,
+      "post_index_output_bytes": 7647,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md"
+          ],
+          "observed_output_bytes": 1847
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md' 'harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md'\"",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md"
+          ],
+          "observed_output_bytes": 2393
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md' 'harness/common/skills/comm-install-harness/references/testing.md'\"",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+            "harness/common/skills/comm-install-harness/references/testing.md"
+          ],
+          "observed_output_bytes": 3297
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "red",
+      "mode": "both",
+      "case": "diagnose",
+      "startup_output_bytes": 40613,
+      "post_index_output_bytes": 10835,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-install-harness/SKILL.md'",
+          "paths": [
+            "harness/common/skills/comm-install-harness/SKILL.md"
+          ],
+          "observed_output_bytes": 1161
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-install-harness/references/entrypoints.md'",
+          "paths": [
+            "harness/common/skills/comm-install-harness/references/entrypoints.md"
+          ],
+          "observed_output_bytes": 7595
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'AGENTS.md' 'CLAUDE.md'\"",
+          "paths": [],
+          "observed_output_bytes": 1849
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "green",
+      "mode": "common",
+      "case": "knowledge-covered",
+      "startup_output_bytes": 40639,
+      "post_index_output_bytes": 4050,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat '.agents/skills/comm-preserve-harness-knowledge/SKILL.md'\"",
+          "paths": [
+            ".agents/skills/comm-preserve-harness-knowledge/SKILL.md"
+          ],
+          "observed_output_bytes": 1355
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-preserve-harness-knowledge/SKILL.md' '.agents/skills/comm-preserve-harness-knowledge/references/experience-routing.md'\"",
+          "paths": [
+            "harness/common/skills/comm-preserve-harness-knowledge/SKILL.md",
+            ".agents/skills/comm-preserve-harness-knowledge/references/experience-routing.md"
+          ],
+          "observed_output_bytes": 2695
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "green",
+      "mode": "common",
+      "case": "validate",
+      "startup_output_bytes": 40639,
+      "post_index_output_bytes": 7611,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat '.agents/skills/comm-validate-harness-instructions/SKILL.md'\"",
+          "paths": [
+            ".agents/skills/comm-validate-harness-instructions/SKILL.md"
+          ],
+          "observed_output_bytes": 1625
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.agents/skills/comm-validate-harness-instructions/references/validation.md' '.agents/skills/comm-validate-harness-instructions/references/evaluation.md' 'harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md'\"",
+          "paths": [
+            ".agents/skills/comm-validate-harness-instructions/references/validation.md",
+            ".agents/skills/comm-validate-harness-instructions/references/evaluation.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md"
+          ],
+          "observed_output_bytes": 4573
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "green",
+      "mode": "common",
+      "case": "diagnose",
+      "startup_output_bytes": 40639,
+      "post_index_output_bytes": 6047,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat '/tmp/two-modes-native-xqfpmuis/workspace/.agents/skills/comm-diagnose-harness-entrypoints/SKILL.md'\"",
+          "paths": [
+            ".agents/skills/comm-diagnose-harness-entrypoints/SKILL.md"
+          ],
+          "observed_output_bytes": 1369
+        },
+        {
+          "command": "/bin/bash -lc \"cat '/tmp/two-modes-native-xqfpmuis/workspace/.agents/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md'\"",
+          "paths": [
+            ".agents/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md"
+          ],
+          "observed_output_bytes": 2649
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "green",
+      "mode": "both",
+      "case": "knowledge-covered",
+      "startup_output_bytes": 41395,
+      "post_index_output_bytes": 2695,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-preserve-harness-knowledge/SKILL.md'\"",
+          "paths": [
+            "harness/common/skills/comm-preserve-harness-knowledge/SKILL.md"
+          ],
+          "observed_output_bytes": 1355
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md'\"",
+          "paths": [
+            "harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md"
+          ],
+          "observed_output_bytes": 1340
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "green",
+      "mode": "both",
+      "case": "validate",
+      "startup_output_bytes": 41395,
+      "post_index_output_bytes": 6198,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-validate-harness-instructions/SKILL.md'\"",
+          "paths": [
+            "harness/common/skills/comm-validate-harness-instructions/SKILL.md"
+          ],
+          "observed_output_bytes": 1625
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-validate-harness-instructions/references/validation.md' 'harness/common/skills/comm-validate-harness-instructions/references/evaluation.md' 'harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md'\"",
+          "paths": [
+            "harness/common/skills/comm-validate-harness-instructions/references/validation.md",
+            "harness/common/skills/comm-validate-harness-instructions/references/evaluation.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md"
+          ],
+          "observed_output_bytes": 4573
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "green",
+      "mode": "both",
+      "case": "diagnose",
+      "startup_output_bytes": 41395,
+      "post_index_output_bytes": 5905,
+      "all_dependency_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat '/tmp/two-modes-native-hejmxi29/workspace/.agents/skills/comm-diagnose-harness-entrypoints/SKILL.md'\"",
+          "paths": [
+            ".agents/skills/comm-diagnose-harness-entrypoints/SKILL.md"
+          ],
+          "observed_output_bytes": 1369
+        },
+        {
+          "command": "/bin/bash -lc \"cat '/tmp/two-modes-native-hejmxi29/workspace/.agents/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md'\"",
+          "paths": [
+            ".agents/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md"
+          ],
+          "observed_output_bytes": 2649
+        }
+      ],
+      "exit": 0,
+      "file_changes": {}
+    }
+  ],
+  "limits": [
+    "Three matched cases/one sample per mode per version; not repeated statistical experiment.",
+    "Counts include helper/comparison output and possible truncation; bytes/static estimates are not actual context tokens/API usage/price.",
+    "Native fixture excludes inbox, contains no request state; missing state correctly reported. External authoring plugin prerequisites absent.",
+    "Metadata grows because four explicit task owners were requested; full instruction library is not startup context.",
+    "Do not infer global savings from per-folder grades or select only favourable case results."
+  ]
+}

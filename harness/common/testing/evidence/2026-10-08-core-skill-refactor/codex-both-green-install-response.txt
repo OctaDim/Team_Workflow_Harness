@@ -1,0 +1,26 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Сначала выполню указанную проверку, затем прочитаю инструкции в заданном порядке. Для подготовки установки применю comm-install-harness. Файлы менять и установку запускать не буду.
+Проверка входа прошла; история проекта отсутствует, поэтому сравнение настроек с историей не выполнено. Контракт поддерживает common-only и combined: существующий project сохраняется побайтно. Project-only, автоматическое дополнение project и вывод skeleton из текущих папок запрещены. Сейчас уточню проверки для будущего переноса; target и разрешение на изменение template из разрешения transfer не следуют.
+Владелец AGENTS.md — пользователь; общие правила, навыки и skeleton принадлежат common, проектные материалы — project. Нативные копии не отменяют канонические требования.
+
+Стартовая проверка прошла. Сравнение с историей не выполнено: история отсутствует. Установку не запускал, файлы не менял, тела README.human.md не читал.
+
+Подготовленный порядок переноса:
+
+1. Установить точный target и состав существующих файлов; сохранить перечень и хеши project, входов и конфигурации.
+2. **Common-only:** перенести common. Проверка создаёт нейтральный project только при его отсутствии из согласованного `harness/common/base/project-skeleton.json`. Существующий project сохранить побайтно.
+3. **Combined:** перенести common и согласованный project; существующий target/project не заменять и не дополнять автоматически. Конфликты остановить для решения.
+4. Перед публикацией правил/навыков открыть publication skill и проверить статус текущей версии отдельно для Codex/Claude и обоих режимов. Transfer не разрешает публикацию непроверенной версии.
+5. Из target выполнить `python3 -B harness/common/checks/ensure_entrypoint_links.py`; сохранить существующую стартовую команду и настройки защищённых входов.
+6. В двух изолированных временных установках проверить ресурсы/ссылки, независимость от исходного проекта, неизменность хешей project и повторного старта; отказ при повреждённых ресурсах и отсутствии common до записи. Для suite использовать uv и команды testing.md; отличающийся pytest.ini не перезаписывать. Зафиксировать agent/mode/version/results.
+
+**Replace/extend по новому шаблону — нельзя автоматически;** нужна адресная согласованная миграция. **Project-only — не поддерживается. Infer skeleton из папок — запрещено.** Изменение общего template требует отдельной common inbox-заявки, решения пользователя и подтверждения пользы всем проектам; transfer этого не разрешает.
+
+Фактически прочитанные machine paths (фигурные скобки перечисляют отдельные файлы):
+
+- `harness/{common,project}/{START,INDEX}.md`
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`
+- `.claude/rules/comm-{skill-rule-ownership,package-independence,entrypoint-links-rule,instruction-order,dependencies-through-uv,user-owned-entrypoints,human-folder-guides}.md`
+- `harness/common/skills/comm-install-harness/SKILL.md`
+- `harness/common/skills/comm-install-harness/references/{checks,testing}.md`

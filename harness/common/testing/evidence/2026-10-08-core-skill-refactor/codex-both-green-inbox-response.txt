@@ -1,0 +1,34 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Проверю инструкции в указанном порядке, затем применю comm-process-harness-inbox. Все действия будут только чтением.
+
+Новую заявку **можно создать**, пока старая открыта; **начинать выполнение новой нельзя** до закрытия старой. Создание и выполнение — разные стадии. Сейчас режим read-only: файлов не создавал и не менял.
+
+Владелец переносимых материалов — `harness/common`, проектных — `harness/project`. Обычная документная заявка принадлежит inbox соответствующего пакета; постоянный документ размещается вне inbox. Нативные копии не отменяют канонических требований.
+
+Порядок действий:
+
+1. Создать новую датированную заявку с обстоятельствами, причиной, проблемой, ожидаемым результатом и учётом `Execution`: `Status: new`, `Result: not executed`, причина, фактическая дата обновления. Разрешение создания не разрешает выполнение или публикацию.
+2. Для старой проверить полный состав, ресурсы, хронологию, статус, реальные артефакты и ранее разрешённые стадии. При `in progress` сверить результаты и продолжить оставшееся; разрешения прежнего неизменного объёма повторно не запрашивать.
+3. Выполнять от ранней заявки к поздней. Неясная хронология, конфликт или недостающее разрешение требуют остановки и решения пользователя.
+4. Старая закончена, когда результат и обязательная публикация завершены, постоянный результат сохранён независимо от inbox, индивидуальный статус обновлён; либо пользователь явно решил закрыть её. Подготовленный кандидат закрытием не считается.
+
+Проверка входов успешна. Оба каталога inbox отсутствуют: фактическую старую заявку, её состав и статус проверить здесь невозможно.
+
+Фактически прочитаны machine paths:
+
+- `harness/common/START.md`, `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`, `harness/common/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-instruction-order.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `harness/common/INDEX.md`, `harness/project/INDEX.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/workflow.md`
+- `harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md`
+
+Тела `README.human.md` не читались.

@@ -1,0 +1,33 @@
+Выполню проверку read-only в указанном порядке. Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions. Использую семь явно названных навыков для проверки их указателей и условий вызова.
+
+Владелец AGENTS.md — пользователь. Канонические общие процедуры принадлежат `harness/common`; прочитанные нативные копии — `.agents/skills`.
+
+Первая команда выполнена точно: `python3 harness/common/checks/ensure_entrypoint_links.py`, exit 0. Проверка завершилась; сравнение настроек с историей **не проверено**, поскольку истории нет. Затем соблюдён заданный порядок чтения. Файлы не редактировал; тела README.human.md не читал.
+
+Семь навыков явно применены к проверке указателей/вызова:
+
+| Навык (`comm-…`) | Задача; входы → действия → завершение |
+|---|---|
+| create-lazy-claude-codex-skills | Авторство; задача, владельцы → выбрать единственного владельца, описать контракт → полный компактный кандидат |
+| diagnose-harness-entrypoints | Диагностика; root, команда, exit/output → различить предупреждение и ошибку → доказанная причина и допустимое действие |
+| install-harness | Установка; цель, существующие файлы → выбрать режим, проверить сохранность/изоляцию → фактические результаты обоих режимов |
+| preserve-harness-knowledge | Сохранение опыта; будущее поведение → проверить покрытие, выбрать форму/категорию → постоянный результат вне inbox |
+| process-harness-inbox | Обработка заявки; содержание, хронология, разрешения → последовательно выполнить разрешённые стадии → результат и честный статус каждой заявки |
+| publish-harness-instructions | Публикация; версия, проверки, scope → пройти gate, сверить источники/копии → разрешённая версия с фактическими статусами |
+| validate-harness-instructions | Валидация; версия, контракт, инструменты → разделить структурные/поведенческие проверки → достоверный отчёт без пробелов проверенного scope |
+
+Фактически прочитанные machine paths:
+
+- `harness/{common,project}/{START,INDEX}.md`.
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`.
+- `.claude/rules/comm-{skill-rule-ownership,package-independence,entrypoint-links-rule,instruction-order,dependencies-through-uv,user-owned-entrypoints,human-folder-guides}.md`.
+- Для каждого из семи полных имён выше: `.agents/skills/<имя>/SKILL.md` и собственные `references/`:
+  - create: `content-contract.md`;
+  - diagnose: `entrypoints.md`;
+  - install: `checks.md`, `testing.md`;
+  - preserve: `material-placement.md`, `experience-routing.md`;
+  - inbox: `workflow.md`;
+  - publish: `gate.md`, `placement-contract.md`;
+  - validate: `evaluation.md`, `validation.md`.
+
+Все запрошенные указатели открылись. Дополнительные зависимости и следующие стадии не загружались. Установка, публикация и полная валидация не выполнялись; статусы не повышены.

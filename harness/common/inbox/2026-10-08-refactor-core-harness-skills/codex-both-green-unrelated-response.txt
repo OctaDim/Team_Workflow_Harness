@@ -1,0 +1,29 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Выполню чтение в указанном порядке, без изменения файлов.
+
+**Владелец:** AGENTS.md принадлежит пользователю. Общие требования принадлежат canonical `harness/common`; проектные — `harness/project`; нативные копии не отменяют канонических требований.
+
+Первой командой выполнена `python3 harness/common/checks/ensure_entrypoint_links.py`: код выхода 0, `Entrypoint check completed`. Проверка сообщила, что сравнение настроек с историей не выполнено: истории проекта нет. Причин для остановки не возникло.
+
+Далее соблюдён запрошенный порядок: оба START → canonical ownership и human rules → отдельный `rg` → отдельный `cat` всех найденных quoted путей → оба INDEX. Файлы не менял; тела `README.human.md` не открывал.
+
+Фактически прочитанные machine paths:
+
+- `harness/common/START.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `harness/common/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-instruction-order.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `harness/common/INDEX.md`
+- `harness/project/INDEX.md`
+
+**Выбор навыка:** по нативным name/description для объяснения элементарной арифметики применимого навыка нет. Задача не требует оценки или изменения harness-инструкций. Поэтому task skill bodies/resources реально загружено **0**; ни один `SKILL.md` или ресурс навыка не прочитан.
+
+**Почему 2 + 2 = 4:** сложение объединяет количества. Два предмета и ещё два дают четыре предмета: ●● + ●● = ●●●●. Эквивалентно, прибавить 2 к 2 — сделать два шага по числовому ряду: 2 → 3 → 4.

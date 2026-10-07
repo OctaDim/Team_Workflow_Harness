@@ -1,21 +1,27 @@
 ---
 name: comm-install-harness
-description: Use when installing, moving or diagnosing harness packages or entrypoints, placing harness materials, or changing the shared project skeleton.
+description: Use when installing or moving harness packages, changing their installation, or proposing changes to the shared project skeleton.
 ---
 
-# Install or migrate harness
+# Install the chosen package mode
 
-Before an installation change read [checks](references/checks.md): two modes,
-existing-project preservation, isolation and shared-template approvals.
-Common is mandatory. Identify the destination; chat cwd does not establish it.
+Identify intended target and existing files; cwd is not proof. Before installation
+or template work read [checks](references/checks.md). Common is mandatory;
+project-only is unsupported.
 
-For entrypoint diagnosis read [entrypoints](references/entrypoints.md).
-For byte/CRLF damage during narrow text repair use from the project root
-`harness/common/skills/comm-preserve-text-line-endings/SKILL.md`.
-Do not directly edit protected entrypoints or rewrite an existing startup command.
+1. Choose common-only (create absent neutral project) or combined (preserve
+   existing project byte-for-byte). Never replace/extend it from a changed template.
+2. Establish authorized transfer scope/current instruction gate. For publishing
+   skill/rule copies use from root
+   `harness/common/skills/comm-publish-harness-instructions/SKILL.md` only at that stage.
+3. Install ordinary full sources/native copies and required resources; run the
+   target-root startup check and two isolated-mode/negative checks.
+4. When installing/running the suite read [testing](references/testing.md);
+   preserve differing target configuration and use uv for Python dependencies.
 
-Before material placement/date migration read [placement](references/material-placement.md).
-For running/installing the harness suite read [testing](references/testing.md).
-Only open resources for the current action. Skill/rule authoring and native
-installation require `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
-from the target root. Copy equality does not prove native agent behavior.
+Done: chosen mode works without source-project/global-author dependencies,
+existing project preserved, repeat startup unchanged, resources/links and actual
+agent/mode/version results recorded. Structural/copy equality is not native proof.
+For startup warnings/errors select the separate diagnosis skill; keep protected
+entrypoints and existing startup commands intact. Template changes require the
+separate request/decision/confirmation described in checks.

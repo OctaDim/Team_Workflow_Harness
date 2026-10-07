@@ -33,6 +33,9 @@ pytest.ini, requirements.txt/requirements.lock, native skill/rule имена и 
 Каждой папке соответствует human guide с примером; тело не агентский контекст.
 
 Агентское размещение и миграция принадлежат
-[material placement](../skills/comm-install-harness/references/material-placement.md);
-выбор формы опыта — [inbox skill](../skills/comm-process-harness-inbox/SKILL.md).
+[material placement](../skills/comm-preserve-harness-knowledge/references/material-placement.md);
+выбор формы опыта — [knowledge skill](../skills/comm-preserve-harness-knowledge/SKILL.md).
 Этот файл задаёт согласованный состав и семантику, не отдельный workflow.
+
+Указатели на текущих владельцев обновлены 2026-10-08; даты и исторические
+результаты выше не изменены этим переносом.

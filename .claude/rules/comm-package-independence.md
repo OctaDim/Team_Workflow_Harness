@@ -4,14 +4,13 @@ Common обязателен и независим от прежнего прил
 common. Project-only не поддерживается. Существующий project нельзя заменять
 пустым каркасом или автоматически дополнять по изменившемуся шаблону.
 
-До создания/изменения установки, подключения/переноса harness или диагностики
-входов открой из корня проекта `harness/common/skills/comm-install-harness/SKILL.md`.
+До создания/изменения установки или подключения/переноса harness открой из корня проекта `harness/common/skills/comm-install-harness/SKILL.md`.
 Изменение общего `harness/common/base/project-skeleton.json` требует отдельной
 common inbox-заявки, отдельного явного решения пользователя и отдельного явного
 подтверждения пользы для всех проектов; до обоих ответов останови включение.
 
 При размещении материалов до записи открой
-`harness/common/skills/comm-install-harness/references/material-placement.md`.
+`harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md`.
 Два режима, проверки, совместимость старой команды и бюджет загрузки — в скилле.
 
 Разрешённое узкое исключение: обязательная стартовая проверка автоматически

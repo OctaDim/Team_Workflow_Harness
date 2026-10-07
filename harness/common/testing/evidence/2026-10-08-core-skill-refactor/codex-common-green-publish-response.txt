@@ -1,0 +1,26 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer; comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Сначала выполню проверку, затем прочитаю инструкции в заданном порядке. Анализ будет read-only.
+
+Выбираю comm-publish-harness-instructions для гипотетической публикации. Стартовая проверка успешна; обязательные правила прочитаны. Проверю gate текущей версии и требования к составу копий.
+
+**Нет, старый успешный отчёт не разрешает перенос.** Gate относится к текущей компактной версии и точной области source/native. Неуспешная текущая проверка Claude оставляет статус «не проверено». Разрешение переноса уже есть, но отсутствует отдельное разрешение и подтверждение публикации именно этой непроверенной версии: гипотетическая публикация останавливается. В этом read-only тесте подтверждение не запрашиваю, записи не выполняю.
+
+Владелец определяется содержанием: общие инструкции — `harness/common`, проектные — `harness/project`; канонические требования приоритетнее личных. `AGENTS.md` принадлежит пользователю.
+
+Gate требует повторить все обязательные проверки текущей версии: Codex и Claude отдельно, common-only и common+project; нативное обнаружение, явный вызов ресурсов, неявный выбор, отсутствие загрузки для посторонней задачи и фактическое поведение. После изменений статусы сбрасываются.
+
+Состав публикации: полный source с ресурсами и обычные побайтно равные копии навыков в `.agents/skills` и `.claude/skills`; shared rules — одноимённые файлы непосредственно в `.claude/rules`, без Codex-зеркала. Проверяется **весь** установленный канонический набор: непустой, без пропусков/лишних файлов, симлинков и различий; также Git visibility, ссылки и интеграция. Конфликт с чужим владельцем останавливает перенос. Восстановление копий проходит тот же gate.
+
+Итог: стартовая проверка успешна; публикация не выполнена; Claude — «не проверено», общий статус — «не проверено»; Codex/режимам нельзя приписать успех без текущих результатов. Равенство копий не доказывает нативную работу.
+
+Фактически прочитанные machine paths (группировка):
+
+- `harness/{common,project}/{START,INDEX}.md`
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`
+- `.claude/rules/comm-{dependencies-through-uv,skill-rule-ownership,user-owned-entrypoints,human-folder-guides,entrypoint-links-rule,instruction-order,package-independence}.md`
+- `.agents/skills/comm-publish-harness-instructions/{SKILL.md,references/gate.md,references/placement-contract.md}`
+- `harness/common/skills/comm-validate-harness-instructions/{SKILL.md,references/validation.md}`
+- `harness/common/skills/comm-resolve-permission-blockers/SKILL.md`
+
+Тела `README.human.md` не читались.

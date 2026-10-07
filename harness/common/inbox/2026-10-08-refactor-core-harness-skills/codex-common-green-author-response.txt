@@ -1,0 +1,22 @@
+Доступные в нативном каталоге навыки: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Выполню чтение в указанном порядке, затем выберу навыки для проектирования процедуры. Файлы менять не буду.
+Стартовая проверка прошла, обязательные правила прочитаны полностью. Для проектирования выбираю comm-create-lazy-claude-codex-skills и skill-creator; проверю, как они разделяют процедуры и учитывают бюджет загрузки.
+Выбор: authoring принадлежит **comm-create-lazy-claude-codex-skills**; skill-creator дополняет его. Архивная очистка требует **отдельного владельца**: собственные запрос, результат и независимая проверка важнее общей темы. Сначала проверить существующее покрытие; условный ресурс подходит лишь для детали одного результата.
+
+Процедура должна определить входы → действия → результат → наблюдаемое завершение; область, ограничения, недостающие данные, разрешения и остановки; точные условия чтения ресурсов. Сохранить обязательства Codex/Claude и обоих режимов установки. Основания и evidence хранить постоянно вне working instructions и inbox. Перед будущей записью — разрешённый inbox-маршрут; проверка и публикация — отдельные стадии.
+
+180 слов укладываются в ориентир ≤200. **1300 deferred превышают 1200**: нужна штатная детализация бюджета и сокращение/разделение с сохранением поведения. Raised thresholds и сокрытие необходимого ресурса ради A запрещены. Числа пользователя не подтверждают оценку A.
+
+Проверка входа успешна; история настроек недоступна. Файлы не менял, кандидата не писал, оценку не запускал. Продолжение authoring остановлено: [SKILL.md](harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md) требует «Use using-superpowers before authoring»; этот навык не найден в проверенных каталогах.
+
+Фактически прочитанные machine paths (фигурные скобки обозначают каждый перечисленный путь):
+
+- `harness/{common,project}/{START,INDEX}.md`
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`
+- `.claude/rules/comm-{dependencies-through-uv,skill-rule-ownership,user-owned-entrypoints,human-folder-guides,entrypoint-links-rule,instruction-order,package-independence}.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/{SKILL.md,references/content-contract.md}`
+- `harness/common/skills/comm-report-plugin-eval-budget/SKILL.md`
+- `/tmp/two-modes-native-oynk6hov/runtime/skills/.system/skill-creator/SKILL.md`
+
+Тела `README.human.md` не читал.

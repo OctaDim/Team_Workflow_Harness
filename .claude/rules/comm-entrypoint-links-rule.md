@@ -16,7 +16,7 @@ python3 -B harness/common/checks/ensure_entrypoint_links.py
 Поддерживаются два режима по [контракту установки](comm-package-independence.md): перенос только common автоматически создаёт отсутствующий project из явного общего описания; при переносе обоих пакетов существующий project сохраняется. Common обязателен. Старый проектный путь проверки может вызывать common для совместимости; отдельный project-only не поддерживается. Стартовую команду существующего AGENTS.md не переписывать.
 
 Нужен Python 3.9+. При диагностике из корня проекта открыть
-`harness/common/skills/comm-install-harness/references/entrypoints.md`.
+`harness/common/skills/comm-diagnose-harness-entrypoints/SKILL.md`.
 
 Разрешённое узкое исключение: обязательная стартовая проверка автоматически
 создаёт только отсутствующий harness/project как пустой нейтральный каркас

@@ -1,51 +1,36 @@
-# Installation contract
+# Installation checks
 
-Identify the destination and existing files before copying. Common is portable
-and independent of the old application/project; project requires common.
+Identify target/existing files. Common is portable and independent of the old
+application/project; project requires common. Common-only copies common, then
+its checker creates only an absent neutral project from explicit agreed
+`harness/common/base/project-skeleton.json`: categories, INDEX/START/human guides,
+no old work, without inbox/extra confirmation. Combined preserves existing
+project bytes, no replacement or automatic category additions. Missing/unsafe
+mandatory resources fail. Project-only refuses before writes, not a third mode.
 
-- Common-only: copy common; the common entrypoint check creates a missing
-  project from `harness/common/base/project-skeleton.json`. It creates the
-  agreed categories, neutral INDEX/START and human guides, never old work.
-- Common+project: preserve existing project files byte-for-byte; do not replace
-  it or add categories merely because the template changed. Missing/unsafe
-  mandatory resources fail the check.
-- Project-only is unsupported; refusal is a negative control, not a third mode.
+From target root run `python3 -B harness/common/checks/ensure_entrypoint_links.py`.
+It restores only startup links/rules-reading instruction, with notice before
+repair, never publishes copies. Keep existing AGENTS startup command; old project
+wrapper may delegate to common, not an independent implementation/new skeleton
+wrapper. Direct protected-entrypoint edits/hooks/blocking/machine setup forbidden.
+For warnings/errors use from root
+`harness/common/skills/comm-diagnose-harness-entrypoints/SKILL.md`.
 
-Run `python3 -B harness/common/checks/ensure_entrypoint_links.py` from the target
-root. It restores startup links and the recursive rules-reading instruction,
-not publications/copies; notify before repairs. Keep an existing AGENTS startup
-command. The old project check may delegate to common for compatibility; do
-not create an independent implementation or add this wrapper to the neutral
-template. Direct AGENTS/CLAUDE edits remain forbidden; no hooks/blocking or
-machine-specific setup. For warning/error diagnosis read [entrypoints](entrypoints.md).
+Never infer the shared skeleton from current folders. Changing it requires a
+separate common inbox request, separate explicit user decision and separate
+explicit confirmation of usefulness to ALL projects; wait for both. New projects
+use approved revision; existing projects change only via authorized addressed
+migration. New approved projects have no lessons, plans docs/plans; legacy
+folders survive ordinary startup. Removal needs requirement mapping/current checks.
+For material/date migration only read
+`harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md`.
 
-The shared template is explicit: never infer it from current project folders.
-Changing its contents requires a separate common inbox request, a separate
-explicit user decision and separate explicit confirmation of usefulness to all
-projects. Await both; a proposal or silence supplies neither. New projects use
-the approved revision; existing projects change only by an authorized migration.
-Before placement read [material placement](material-placement.md):
-keep agreed categories, creation dates and human guides; do not invent old dates.
-
-Check two clean temporary installations with no source-project or global-author
-access: neutral complete project creation; existing project hashes preserved;
-repeated startup unchanged; damaged resources rejected; common absence refused
-before writes. Verify links, resources, commands and ordinary native copies.
-Do not duplicate common/project knowledge; stop conflicting actions for the user.
-
-Measure startup separately for both modes: pointers/guards + skill metadata,
-then only the selected body and necessary resources. Exclude human-guide bodies;
-total package size is not startup cost. Structural success does not prove native
-Codex/Claude behavior. Record each agent/mode/version, commands, results and
-limits; changes reset prior instruction statuses and preserve publication gates.
-
-New approved projects have no lessons category; plans remain docs/plans.
-Existing legacy folders survive ordinary startup; remove them only through an
-authorized addressed migration after requirement mapping and current checks.
-
-Разрешённое узкое исключение: обязательная стартовая проверка автоматически
-создаёт только отсутствующий harness/project как пустой нейтральный каркас
-из согласованного harness/common/base/project-skeleton.json, без inbox
-и отдельного подтверждения. Существующий project сохраняется побайтно;
-его правка, дополнение, пересоздание и изменение шаблона этим исключением
-не разрешены.
+Check two clean temporary installations isolated from source project/global author:
+neutral complete project; existing hashes unchanged; repeated startup unchanged;
+damaged resources rejected; common absence refused before writes. Verify links,
+resources, commands, full ordinary native copies; avoid duplicated common/project
+knowledge and stop conflicts for decision. Measure both-mode startup guards+
+metadata separately from selected body/needed resources, excluding human bodies.
+Total package size is not startup cost. Record agent/mode/version/commands/results/
+limits; edits reset statuses and preserve publication gate. Installation/equality
+is not native Codex/Claude proof.

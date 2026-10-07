@@ -1,0 +1,29 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-report-plugin-eval-budget, comm-resolve-permission-blockers.
+
+Начну с указанной проверки, затем прочитаю инструкции в заданном порядке. Только диагностика.
+
+Проверка завершилась успешно; она сообщила, что сравнение настроек с историей не выполнено, поскольку истории проекта нет. Применяю навык comm-install-harness для диагностики входов и прочитаю его ресурс entrypoints.
+
+Владелец `AGENTS.md` — пользователь; `AGENTS.md` и `CLAUDE.md` защищены договорённостью harness.
+
+Фактический результат: стартовая проверка завершилась с кодом 0. Предупреждения об изменении настроек не было: выведено «нет истории этого проекта», поэтому сравнение с прошлым **не проверено**. Оба входа — обычные файлы; текущий `CLAUDE.md` содержит только `@AGENTS.md`. Существующая команда AGENTS без `-B` успешно выполнена; переписывать её под канонический пример нельзя.
+
+Для описанного вами случая:
+
+- Предупреждение об изменённых настройках не блокирует задачу. Проверяют структуру, ссылки, импорт и, при доступном HEAD, отличие от истории.
+- Extra text в CLAUDE сохраняют; исправление предлагают через `harness/<пакет>/inbox/`. Наличие заявки само по себе не разрешает правку.
+- Автоматическое восстановление допускается только для стартовых ссылок и указания чтения правил, с предварительным уведомлением. Здесь действует ваш режим read-only: никаких исправлений.
+- Hooks, `hooksPath`, индивидуальная настройка машины и регистрация версии входов не нужны.
+- Незакрытый fence текущего входа: ошибка с номером строки, остановка до записи входов/создания `.claude/rules`; автоматически закрывать нельзя.
+- Unsafe symlink входа или пути правил: отказ, остановка и сообщение причины; обходить или заменять его нельзя.
+
+Правок не выполнял; тела `README.human.md` не читал.
+
+Фактически прочитанные machine paths (фигурные скобки обозначают отдельные пути):
+
+- `AGENTS.md`, `CLAUDE.md`
+- `harness/{common,project}/{START,INDEX}.md`
+- `harness/common/rules/{comm-skill-rule-ownership,comm-human-folder-guides}.md`
+- `.claude/rules/{comm-instruction-order,comm-dependencies-through-uv,comm-user-owned-entrypoints,comm-human-folder-guides,comm-entrypoint-links-rule,comm-package-independence,comm-skill-rule-ownership}.md`
+- `harness/common/skills/comm-install-harness/SKILL.md`
+- `harness/common/skills/comm-install-harness/references/entrypoints.md`

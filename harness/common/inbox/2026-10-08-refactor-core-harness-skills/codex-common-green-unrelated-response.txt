@@ -1,0 +1,29 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Выполню указанный порядок чтения в режиме read-only, затем объясню равенство и перечислю фактически загруженные пути.
+
+2+2=4: число 2 означает две единицы. Добавляя ещё две, получаем четыре: (1+1)+(1+1)=4.
+
+Владелец AGENTS.md — пользователь. Канонические требования harness обязательны; индивидуальные инструкции их не отменяют.
+
+Первая команда выполнена точно: `python3 harness/common/checks/ensure_entrypoint_links.py`. Проверка завершилась успешно, код 0; сравнение с историей не выполнено, поскольку истории проекта нет. Причин для остановки не возникло. Затем выполнен весь заданный порядок отдельных чтений. Команд изменения файлов не выполнял; тела README.human.md не загружал.
+
+Фактически прочитанные machine paths:
+
+- `harness/common/START.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `harness/common/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-instruction-order.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `harness/common/INDEX.md`
+- `harness/project/INDEX.md`
+
+Список правил получен отдельным `rg --files --hidden --no-ignore` с исключением README.human.md; следующим отдельным вызовом все семь путей прочитаны через `cat`, каждый явно указан в кавычках.
+
+По задаче применимого навыка в нативном каталоге нет: объяснение элементарного сложения не требует процедур harness. **Task skill bodies/resources реально загружено: 0.** Каталог навыков перечислен до чтения; ненужные тела и ресурсы не открывал.

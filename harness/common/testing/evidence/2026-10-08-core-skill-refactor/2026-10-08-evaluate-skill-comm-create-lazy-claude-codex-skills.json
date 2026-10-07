@@ -1,0 +1,957 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "plugin-eval",
+    "version": "0.1.0"
+  },
+  "createdAt": "2026-10-07T22:12:01.552Z",
+  "target": {
+    "kind": "skill",
+    "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills",
+    "entryPath": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+    "name": "comm-create-lazy-claude-codex-skills",
+    "relativePath": "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+  },
+  "summary": {
+    "score": 86,
+    "grade": "B",
+    "riskLevel": "high",
+    "riskReasons": [
+      "Contains 1 failing error check (deferred_cost_tokens-budget-high)."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 14.25,
+      "finalScore": 86,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 2,
+      "pass": 0,
+      "warn": 0,
+      "fail": 1,
+      "info": 2,
+      "error": 1,
+      "warning": 0
+    },
+    "deductions": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "error",
+        "status": "fail",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "penalty": 14,
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "budget",
+        "totalPenalty": 14,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [
+      "Reduce repeated instruction text and move detail into deferred supporting files."
+    ],
+    "whyBullets": [
+      "1 failing error check are driving the highest-confidence problems.",
+      "budget is the largest source of score loss at -14 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "error",
+        "status": "fail",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "why": "Budget pressure matters because always-loaded or frequently-loaded text can make the workflow feel expensive fast.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "penalty": 14,
+        "source": "core"
+      }
+    ],
+    "watchNext": []
+  },
+  "budgets": {
+    "method": "estimated-static",
+    "invocation_policy": {
+      "allow_implicit_invocation": true
+    },
+    "trigger_cost_tokens": {
+      "value": 46,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 48,
+        "moderateMax": 92,
+        "heavyMax": 150
+      },
+      "components": [
+        {
+          "label": "skill-name",
+          "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "tokens": 9,
+          "note": "Always-loaded skill identifier"
+        },
+        {
+          "label": "skill-description",
+          "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "tokens": 37,
+          "note": "Always-loaded trigger description"
+        }
+      ]
+    },
+    "invoke_cost_tokens": {
+      "value": 464,
+      "band": "moderate",
+      "thresholds": {
+        "goodMax": 220,
+        "moderateMax": 480,
+        "heavyMax": 900
+      },
+      "components": [
+        {
+          "label": "skill-file",
+          "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "tokens": 464,
+          "note": "Loaded when the skill is invoked"
+        }
+      ]
+    },
+    "deferred_cost_tokens": {
+      "value": 2294,
+      "band": "excessive",
+      "thresholds": {
+        "goodMax": 180,
+        "moderateMax": 520,
+        "heavyMax": 1200
+      },
+      "components": [
+        {
+          "label": "references/content-contract.md",
+          "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+          "tokens": 387,
+          "note": "Deferred supporting file"
+        },
+        {
+          "label": "references/evaluation.md",
+          "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+          "tokens": 683,
+          "note": "Deferred supporting file"
+        },
+        {
+          "label": "references/placement-contract.md",
+          "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+          "tokens": 425,
+          "note": "Deferred supporting file"
+        },
+        {
+          "label": "references/validation-and-publication.md",
+          "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+          "tokens": 799,
+          "note": "Deferred supporting file"
+        }
+      ]
+    },
+    "total_tokens": {
+      "value": 2804,
+      "band": "excessive"
+    }
+  },
+  "observedUsage": null,
+  "checks": [
+    {
+      "id": "deferred_cost_tokens-budget-high",
+      "category": "budget",
+      "severity": "error",
+      "status": "fail",
+      "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+      "evidence": [
+        "Value: 2294 tokens",
+        "Baseline samples: skills=1, plugins=0"
+      ],
+      "remediation": [
+        "Reduce repeated instruction text and move detail into deferred supporting files."
+      ],
+      "source": "core"
+    },
+    {
+      "id": "coverage-artifacts-unavailable",
+      "category": "coverage",
+      "severity": "info",
+      "status": "info",
+      "message": "No coverage artifacts were found for this target.",
+      "evidence": [
+        "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+      ],
+      "remediation": [
+        "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+      ],
+      "source": "core"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "skill_line_count",
+      "category": "budget",
+      "value": 20,
+      "unit": "lines",
+      "band": "good",
+      "source": "core",
+      "targetPath": "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+    },
+    {
+      "id": "description_length_chars",
+      "category": "budget",
+      "value": 147,
+      "unit": "chars",
+      "band": "good",
+      "source": "core",
+      "targetPath": "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+    },
+    {
+      "id": "relative_link_count",
+      "category": "documentation",
+      "value": 3,
+      "unit": "links",
+      "band": "good",
+      "source": "core",
+      "targetPath": "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+    },
+    {
+      "id": "code_fence_count",
+      "category": "readability",
+      "value": 0,
+      "unit": "blocks",
+      "band": "good",
+      "source": "core",
+      "targetPath": "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+    },
+    {
+      "id": "support_file_count",
+      "category": "documentation",
+      "value": 4,
+      "unit": "files",
+      "band": "good",
+      "source": "core",
+      "targetPath": "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+    },
+    {
+      "id": "trigger_cost_tokens",
+      "category": "budget",
+      "value": 46,
+      "unit": "tokens",
+      "band": "good",
+      "source": "core"
+    },
+    {
+      "id": "invoke_cost_tokens",
+      "category": "budget",
+      "value": 464,
+      "unit": "tokens",
+      "band": "moderate",
+      "source": "core"
+    },
+    {
+      "id": "deferred_cost_tokens",
+      "category": "budget",
+      "value": 2294,
+      "unit": "tokens",
+      "band": "excessive",
+      "source": "core"
+    },
+    {
+      "id": "coverage_artifact_count",
+      "category": "coverage",
+      "value": 0,
+      "unit": "files",
+      "band": "info",
+      "source": "core"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "skill-link-inventory",
+      "type": "inventory",
+      "label": "Skill relative links",
+      "description": "Relative links found in SKILL.md.",
+      "source": "core",
+      "data": {
+        "links": [
+          "references/content-contract.md",
+          "references/validation-and-publication.md",
+          "references/placement-contract.md"
+        ]
+      }
+    },
+    {
+      "id": "budget-breakdown",
+      "type": "budget",
+      "label": "Budget breakdown",
+      "description": "Trigger, invoke, and deferred token budget analysis.",
+      "source": "core",
+      "data": {
+        "budgets": {
+          "method": "estimated-static",
+          "invocation_policy": {
+            "allow_implicit_invocation": true
+          },
+          "trigger_cost_tokens": {
+            "value": 46,
+            "band": "good",
+            "thresholds": {
+              "goodMax": 48,
+              "moderateMax": 92,
+              "heavyMax": 150
+            },
+            "components": [
+              {
+                "label": "skill-name",
+                "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+                "tokens": 9,
+                "note": "Always-loaded skill identifier"
+              },
+              {
+                "label": "skill-description",
+                "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+                "tokens": 37,
+                "note": "Always-loaded trigger description"
+              }
+            ]
+          },
+          "invoke_cost_tokens": {
+            "value": 464,
+            "band": "moderate",
+            "thresholds": {
+              "goodMax": 220,
+              "moderateMax": 480,
+              "heavyMax": 900
+            },
+            "components": [
+              {
+                "label": "skill-file",
+                "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+                "tokens": 464,
+                "note": "Loaded when the skill is invoked"
+              }
+            ]
+          },
+          "deferred_cost_tokens": {
+            "value": 2294,
+            "band": "excessive",
+            "thresholds": {
+              "goodMax": 180,
+              "moderateMax": 520,
+              "heavyMax": 1200
+            },
+            "components": [
+              {
+                "label": "references/content-contract.md",
+                "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+                "tokens": 387,
+                "note": "Deferred supporting file"
+              },
+              {
+                "label": "references/evaluation.md",
+                "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+                "tokens": 683,
+                "note": "Deferred supporting file"
+              },
+              {
+                "label": "references/placement-contract.md",
+                "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+                "tokens": 425,
+                "note": "Deferred supporting file"
+              },
+              {
+                "label": "references/validation-and-publication.md",
+                "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+                "tokens": 799,
+                "note": "Deferred supporting file"
+              }
+            ]
+          },
+          "total_tokens": {
+            "value": 2804,
+            "band": "excessive"
+          }
+        },
+        "baselineEvidence": {
+          "skillSamples": 1,
+          "pluginSamples": 0,
+          "sourceRoots": [
+            "../../.codex/skills",
+            "../../.codex/plugins/cache/openai-curated",
+            "../../.codex/.tmp/plugins/plugins"
+          ]
+        }
+      }
+    },
+    {
+      "id": "measurement-plan",
+      "type": "measurement-plan",
+      "label": "Measurement plan",
+      "description": "Recommended toolsets for measuring the real-world effect of this skill or plugin.",
+      "source": "core",
+      "data": {
+        "recommendedToolsets": [
+          "token-usage-observer",
+          "task-outcome-scorecard"
+        ],
+        "toolsets": [
+          {
+            "id": "token-usage-observer",
+            "label": "Token Usage Observer",
+            "priority": "high",
+            "goal": "Measure how many tokens the skill or plugin actually burns in representative runs.",
+            "why": "Static estimates are useful guardrails, but observed usage is what tells you whether a real workflow is affordable and whether caching or reasoning changes the picture.",
+            "signals": [
+              "observed_usage_sample_count",
+              "observed_input_tokens_avg",
+              "observed_total_tokens_avg",
+              "estimate_vs_observed_input_ratio"
+            ],
+            "evidenceSources": [
+              "Responses API usage logs",
+              "Codex-like session exports",
+              "JSONL traces captured from local benchmarking harnesses"
+            ],
+            "starterPack": {
+              "manifestName": "token-usage-pack",
+              "focus": "Validate sample size, cold-start versus warm-cache behavior, and estimate drift over time."
+            }
+          },
+          {
+            "id": "task-outcome-scorecard",
+            "label": "Task Outcome Scorecard",
+            "priority": "high",
+            "goal": "Measure whether the skill helps users finish the intended job with fewer retries and less cleanup.",
+            "why": "A low-token skill is still a miss if it fails the task, and a verbose skill may be worth it if it consistently improves first-pass success.",
+            "signals": [
+              "task_success_rate",
+              "first_pass_success_rate",
+              "retry_rate",
+              "human_override_rate"
+            ],
+            "evidenceSources": [
+              "Task run logs",
+              "Structured user acceptance checklist",
+              "Before/after comparison runs on the same prompts"
+            ],
+            "starterPack": {
+              "manifestName": "task-outcomes-pack",
+              "focus": "Score success, retries, and manual intervention across a fixed prompt set."
+            }
+          },
+          {
+            "id": "tool-call-audit",
+            "label": "Tool Call Audit",
+            "priority": "medium",
+            "goal": "Check whether the agent uses the right tools, arguments, and sequencing when the skill is active.",
+            "why": "For Codex plugins and many higher-agency skills, tool correctness is often the real determinant of user value.",
+            "signals": [
+              "tool_call_success_rate",
+              "invalid_tool_argument_rate",
+              "recoverable_tool_failure_rate"
+            ],
+            "evidenceSources": [
+              "Tool invocation traces",
+              "Recorded sessions",
+              "Golden-path scenario replays"
+            ],
+            "starterPack": {
+              "manifestName": "tool-audit-pack",
+              "focus": "Flag wrong tool selection, malformed args, and missing follow-up calls."
+            }
+          },
+          {
+            "id": "latency-efficiency",
+            "label": "Latency And Efficiency",
+            "priority": "medium",
+            "goal": "Track whether the skill speeds users up enough to justify its cost.",
+            "why": "DX improvements usually win when they reduce waiting or rework, not only when they reduce absolute token counts.",
+            "signals": [
+              "p50_time_to_first_acceptable_answer_seconds",
+              "p95_time_to_task_completion_seconds",
+              "tokens_per_successful_run"
+            ],
+            "evidenceSources": [
+              "Benchmark harness timings",
+              "Manual stopwatch runs on canonical tasks",
+              "Responses API timestamps combined with usage logs"
+            ],
+            "starterPack": {
+              "manifestName": "latency-efficiency-pack",
+              "focus": "Measure time-to-value and cost-per-success on a stable prompt suite."
+            }
+          },
+          {
+            "id": "human-rubric-review",
+            "label": "Human Rubric Review",
+            "priority": "medium",
+            "goal": "Capture clarity, trust, and usefulness signals that automated checks will miss.",
+            "why": "The best skills often reduce confusion and editing effort in ways that do not show up in static lint-like checks.",
+            "signals": [
+              "clarity_score_avg",
+              "confidence_score_avg",
+              "follow_up_question_rate"
+            ],
+            "evidenceSources": [
+              "Reviewer scorecards",
+              "Team rubric sheets",
+              "Annotated transcripts"
+            ],
+            "starterPack": {
+              "manifestName": "human-rubric-pack",
+              "focus": "Collect 1 to 5 scores for clarity, trust, and edit burden across a small evaluator panel."
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "extensions": [],
+  "measurementPlan": {
+    "kind": "measurement-plan",
+    "createdAt": "2026-10-07T22:12:01.577Z",
+    "target": {
+      "kind": "skill",
+      "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills",
+      "entryPath": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "name": "comm-create-lazy-claude-codex-skills",
+      "relativePath": "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+    },
+    "title": "Measurement plan for comm-create-lazy-claude-codex-skills",
+    "summary": "Combine cost, outcome, and trust signals so you can tell whether the skill or plugin is genuinely helping instead of only looking well-structured on paper.",
+    "recommendedToolsets": [
+      "token-usage-observer",
+      "task-outcome-scorecard"
+    ],
+    "toolsets": [
+      {
+        "id": "token-usage-observer",
+        "label": "Token Usage Observer",
+        "priority": "high",
+        "goal": "Measure how many tokens the skill or plugin actually burns in representative runs.",
+        "why": "Static estimates are useful guardrails, but observed usage is what tells you whether a real workflow is affordable and whether caching or reasoning changes the picture.",
+        "signals": [
+          "observed_usage_sample_count",
+          "observed_input_tokens_avg",
+          "observed_total_tokens_avg",
+          "estimate_vs_observed_input_ratio"
+        ],
+        "evidenceSources": [
+          "Responses API usage logs",
+          "Codex-like session exports",
+          "JSONL traces captured from local benchmarking harnesses"
+        ],
+        "starterPack": {
+          "manifestName": "token-usage-pack",
+          "focus": "Validate sample size, cold-start versus warm-cache behavior, and estimate drift over time."
+        }
+      },
+      {
+        "id": "task-outcome-scorecard",
+        "label": "Task Outcome Scorecard",
+        "priority": "high",
+        "goal": "Measure whether the skill helps users finish the intended job with fewer retries and less cleanup.",
+        "why": "A low-token skill is still a miss if it fails the task, and a verbose skill may be worth it if it consistently improves first-pass success.",
+        "signals": [
+          "task_success_rate",
+          "first_pass_success_rate",
+          "retry_rate",
+          "human_override_rate"
+        ],
+        "evidenceSources": [
+          "Task run logs",
+          "Structured user acceptance checklist",
+          "Before/after comparison runs on the same prompts"
+        ],
+        "starterPack": {
+          "manifestName": "task-outcomes-pack",
+          "focus": "Score success, retries, and manual intervention across a fixed prompt set."
+        }
+      },
+      {
+        "id": "tool-call-audit",
+        "label": "Tool Call Audit",
+        "priority": "medium",
+        "goal": "Check whether the agent uses the right tools, arguments, and sequencing when the skill is active.",
+        "why": "For Codex plugins and many higher-agency skills, tool correctness is often the real determinant of user value.",
+        "signals": [
+          "tool_call_success_rate",
+          "invalid_tool_argument_rate",
+          "recoverable_tool_failure_rate"
+        ],
+        "evidenceSources": [
+          "Tool invocation traces",
+          "Recorded sessions",
+          "Golden-path scenario replays"
+        ],
+        "starterPack": {
+          "manifestName": "tool-audit-pack",
+          "focus": "Flag wrong tool selection, malformed args, and missing follow-up calls."
+        }
+      },
+      {
+        "id": "latency-efficiency",
+        "label": "Latency And Efficiency",
+        "priority": "medium",
+        "goal": "Track whether the skill speeds users up enough to justify its cost.",
+        "why": "DX improvements usually win when they reduce waiting or rework, not only when they reduce absolute token counts.",
+        "signals": [
+          "p50_time_to_first_acceptable_answer_seconds",
+          "p95_time_to_task_completion_seconds",
+          "tokens_per_successful_run"
+        ],
+        "evidenceSources": [
+          "Benchmark harness timings",
+          "Manual stopwatch runs on canonical tasks",
+          "Responses API timestamps combined with usage logs"
+        ],
+        "starterPack": {
+          "manifestName": "latency-efficiency-pack",
+          "focus": "Measure time-to-value and cost-per-success on a stable prompt suite."
+        }
+      },
+      {
+        "id": "human-rubric-review",
+        "label": "Human Rubric Review",
+        "priority": "medium",
+        "goal": "Capture clarity, trust, and usefulness signals that automated checks will miss.",
+        "why": "The best skills often reduce confusion and editing effort in ways that do not show up in static lint-like checks.",
+        "signals": [
+          "clarity_score_avg",
+          "confidence_score_avg",
+          "follow_up_question_rate"
+        ],
+        "evidenceSources": [
+          "Reviewer scorecards",
+          "Team rubric sheets",
+          "Annotated transcripts"
+        ],
+        "starterPack": {
+          "manifestName": "human-rubric-pack",
+          "focus": "Collect 1 to 5 scores for clarity, trust, and edit burden across a small evaluator panel."
+        }
+      }
+    ],
+    "artifact": {
+      "id": "measurement-plan",
+      "type": "measurement-plan",
+      "label": "Measurement plan",
+      "description": "Recommended toolsets for measuring the real-world effect of this skill or plugin.",
+      "source": "core",
+      "data": {
+        "recommendedToolsets": [
+          "token-usage-observer",
+          "task-outcome-scorecard"
+        ],
+        "toolsets": [
+          {
+            "id": "token-usage-observer",
+            "label": "Token Usage Observer",
+            "priority": "high",
+            "goal": "Measure how many tokens the skill or plugin actually burns in representative runs.",
+            "why": "Static estimates are useful guardrails, but observed usage is what tells you whether a real workflow is affordable and whether caching or reasoning changes the picture.",
+            "signals": [
+              "observed_usage_sample_count",
+              "observed_input_tokens_avg",
+              "observed_total_tokens_avg",
+              "estimate_vs_observed_input_ratio"
+            ],
+            "evidenceSources": [
+              "Responses API usage logs",
+              "Codex-like session exports",
+              "JSONL traces captured from local benchmarking harnesses"
+            ],
+            "starterPack": {
+              "manifestName": "token-usage-pack",
+              "focus": "Validate sample size, cold-start versus warm-cache behavior, and estimate drift over time."
+            }
+          },
+          {
+            "id": "task-outcome-scorecard",
+            "label": "Task Outcome Scorecard",
+            "priority": "high",
+            "goal": "Measure whether the skill helps users finish the intended job with fewer retries and less cleanup.",
+            "why": "A low-token skill is still a miss if it fails the task, and a verbose skill may be worth it if it consistently improves first-pass success.",
+            "signals": [
+              "task_success_rate",
+              "first_pass_success_rate",
+              "retry_rate",
+              "human_override_rate"
+            ],
+            "evidenceSources": [
+              "Task run logs",
+              "Structured user acceptance checklist",
+              "Before/after comparison runs on the same prompts"
+            ],
+            "starterPack": {
+              "manifestName": "task-outcomes-pack",
+              "focus": "Score success, retries, and manual intervention across a fixed prompt set."
+            }
+          },
+          {
+            "id": "tool-call-audit",
+            "label": "Tool Call Audit",
+            "priority": "medium",
+            "goal": "Check whether the agent uses the right tools, arguments, and sequencing when the skill is active.",
+            "why": "For Codex plugins and many higher-agency skills, tool correctness is often the real determinant of user value.",
+            "signals": [
+              "tool_call_success_rate",
+              "invalid_tool_argument_rate",
+              "recoverable_tool_failure_rate"
+            ],
+            "evidenceSources": [
+              "Tool invocation traces",
+              "Recorded sessions",
+              "Golden-path scenario replays"
+            ],
+            "starterPack": {
+              "manifestName": "tool-audit-pack",
+              "focus": "Flag wrong tool selection, malformed args, and missing follow-up calls."
+            }
+          },
+          {
+            "id": "latency-efficiency",
+            "label": "Latency And Efficiency",
+            "priority": "medium",
+            "goal": "Track whether the skill speeds users up enough to justify its cost.",
+            "why": "DX improvements usually win when they reduce waiting or rework, not only when they reduce absolute token counts.",
+            "signals": [
+              "p50_time_to_first_acceptable_answer_seconds",
+              "p95_time_to_task_completion_seconds",
+              "tokens_per_successful_run"
+            ],
+            "evidenceSources": [
+              "Benchmark harness timings",
+              "Manual stopwatch runs on canonical tasks",
+              "Responses API timestamps combined with usage logs"
+            ],
+            "starterPack": {
+              "manifestName": "latency-efficiency-pack",
+              "focus": "Measure time-to-value and cost-per-success on a stable prompt suite."
+            }
+          },
+          {
+            "id": "human-rubric-review",
+            "label": "Human Rubric Review",
+            "priority": "medium",
+            "goal": "Capture clarity, trust, and usefulness signals that automated checks will miss.",
+            "why": "The best skills often reduce confusion and editing effort in ways that do not show up in static lint-like checks.",
+            "signals": [
+              "clarity_score_avg",
+              "confidence_score_avg",
+              "follow_up_question_rate"
+            ],
+            "evidenceSources": [
+              "Reviewer scorecards",
+              "Team rubric sheets",
+              "Annotated transcripts"
+            ],
+            "starterPack": {
+              "manifestName": "human-rubric-pack",
+              "focus": "Collect 1 to 5 scores for clarity, trust, and edit burden across a small evaluator panel."
+            }
+          }
+        ]
+      }
+    },
+    "nextAction": {
+      "label": "Start with Token Usage Observer",
+      "why": "Measure how many tokens the skill or plugin actually burns in representative runs.",
+      "command": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'What should I run next?' --format markdown",
+      "chatPrompt": "What should I run next?",
+      "toolsetId": "token-usage-observer"
+    }
+  },
+  "improvementBrief": {
+    "title": "Improve comm-create-lazy-claude-codex-skills",
+    "target": {
+      "kind": "skill",
+      "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills",
+      "entryPath": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "name": "comm-create-lazy-claude-codex-skills",
+      "relativePath": "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+    },
+    "summary": "Raise the evaluation from grade B (86/100) with a focus on the highest-signal structural and budget issues first.",
+    "goals": [
+      "Reduce repeated instruction text and move detail into deferred supporting files."
+    ],
+    "measurementGoals": [
+      "token-usage-observer",
+      "task-outcome-scorecard"
+    ],
+    "requiredFixes": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ]
+      }
+    ],
+    "recommendedFixes": [],
+    "suggestedPrompt": "Use the skill-creator guidance to improve comm-create-lazy-claude-codex-skills. Keep the structure compact and move bulky details into references or scripts. Define success measures with these toolsets: token-usage-observer, task-outcome-scorecard. Address deferred_cost_tokens-budget-high: deferred_cost_tokens is excessive relative to the current Codex baseline."
+  },
+  "nextAction": {
+    "label": "Fix the top findings and rerun the report",
+    "why": "A short pass on the highest-value findings will improve trust, readability, and the signal quality of future benchmarks.",
+    "command": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'What should I fix first?' --format markdown",
+    "chatPrompt": "What should I fix first?"
+  },
+  "workflowGuide": {
+    "kind": "workflow-guide",
+    "createdAt": "2026-10-07T22:12:01.579Z",
+    "target": {
+      "kind": "skill",
+      "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills",
+      "entryPath": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "name": "comm-create-lazy-claude-codex-skills",
+      "relativePath": "harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+    },
+    "requestedGoal": "evaluate",
+    "requestedChatPrompt": null,
+    "requestRouting": null,
+    "recommendedWorkflowId": "evaluate",
+    "recommendedWorkflow": {
+      "id": "evaluate",
+      "label": "Evaluate Skill",
+      "chatPrompt": "Evaluate this skill.",
+      "summary": "Start here when you want the overall report for a skill, including structure, budgets, and code checks.",
+      "firstCommand": "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown",
+      "commands": [
+        "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown"
+      ],
+      "startCommand": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'Evaluate this skill.' --format markdown"
+    },
+    "workflowStatus": {
+      "hasBenchmarkConfig": false,
+      "hasUsageLog": false
+    },
+    "beginnerSummary": "Start with a natural chat request, then let plugin-eval show the exact local command sequence behind it.",
+    "startHere": {
+      "chatPrompt": "Evaluate this skill.",
+      "label": "Evaluate Skill",
+      "summary": "Start here when you want the overall report for a skill, including structure, budgets, and code checks.",
+      "routingExplanation": "Plugin Eval recommended Evaluate Skill from the current local state for this skill.",
+      "startCommand": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'Evaluate this skill.' --format markdown",
+      "firstCommand": "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown",
+      "commands": [
+        "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown"
+      ]
+    },
+    "entrypoints": [
+      {
+        "id": "analysis",
+        "label": "Full Skill Analysis",
+        "chatPrompt": "Give me a full analysis of this skill, including benchmark setup.",
+        "summary": "Use this when you want the full report and starter benchmark setup for this skill in one guided path.",
+        "firstCommand": "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown",
+        "commands": [
+          "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown",
+          "plugin-eval init-benchmark ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills",
+          "plugin-eval benchmark ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --config ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/.plugin-eval/benchmark.json"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'Give me a full analysis of this skill, including benchmark setup.' --format markdown"
+      },
+      {
+        "id": "evaluate",
+        "label": "Evaluate Skill",
+        "chatPrompt": "Evaluate this skill.",
+        "summary": "Start here when you want the overall report for a skill, including structure, budgets, and code checks.",
+        "firstCommand": "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown",
+        "commands": [
+          "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'Evaluate this skill.' --format markdown"
+      },
+      {
+        "id": "budget",
+        "label": "Explain Token Budget",
+        "chatPrompt": "Explain the token budget for this skill.",
+        "summary": "Use this when the main question is why the skill feels expensive before you collect any live measurements.",
+        "firstCommand": "plugin-eval explain-budget ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown",
+        "commands": [
+          "plugin-eval explain-budget ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'Explain the token budget for this skill.' --format markdown"
+      },
+      {
+        "id": "measure",
+        "label": "Measure Real Token Usage",
+        "chatPrompt": "Measure the real token usage of this skill.",
+        "summary": "Use this when you want real token usage instead of only the static estimate.",
+        "firstCommand": "plugin-eval init-benchmark ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills",
+        "commands": [
+          "plugin-eval init-benchmark ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills",
+          "plugin-eval benchmark ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --config ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/.plugin-eval/benchmark.json",
+          "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --observed-usage ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills/.plugin-eval/benchmark-usage.jsonl --format markdown"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'Measure the real token usage of this skill.' --format markdown"
+      },
+      {
+        "id": "benchmark",
+        "label": "Benchmark With Starter Scenarios",
+        "chatPrompt": "Help me benchmark this skill.",
+        "summary": "Use this when you want starter scenarios and a repeatable real-Codex benchmark run for this skill.",
+        "firstCommand": "plugin-eval init-benchmark ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills",
+        "commands": [
+          "plugin-eval init-benchmark ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'Help me benchmark this skill.' --format markdown"
+      },
+      {
+        "id": "next",
+        "label": "Start Here",
+        "chatPrompt": "What should I run next?",
+        "summary": "If you are new to plugin-eval, start with the overall evaluation report for this skill.",
+        "firstCommand": "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown",
+        "commands": [
+          "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --request 'What should I run next?' --format markdown"
+      }
+    ],
+    "nextSteps": [
+      "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown"
+    ],
+    "nextAction": {
+      "label": "Evaluate Skill",
+      "why": "Plugin Eval recommended Evaluate Skill from the current local state for this skill.",
+      "command": "plugin-eval analyze ~/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-refactor-core-harness-skills/source-skills/comm-create-lazy-claude-codex-skills --format markdown",
+      "chatPrompt": "Evaluate this skill."
+    }
+  }
+}

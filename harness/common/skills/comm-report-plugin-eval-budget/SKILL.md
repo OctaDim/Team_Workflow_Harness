@@ -6,7 +6,7 @@ description: Use when plugin-eval deferred budgets exceed 1200 for skills or 160
 # Разбивка бюджета plugin-eval
 
 Перед оценкой прочитай из корня проекта
-`harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md`.
+`harness/common/skills/comm-validate-harness-instructions/references/evaluation.md`.
 Используй свежий JSON установленного plugin-eval через human-фильтр;
 отчёт сохраняй вне оцениваемой папки. Новый tokenizer не нужен.
 

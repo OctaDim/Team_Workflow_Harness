@@ -9,7 +9,10 @@
 Для оценки скиллов, правил и инструкций через plugin-eval выбран отдельный Node.js процесс, исключающий README.human.md из обхода в памяти, без изменения человеческих файлов и кода установленного анализатора.
 Пользователь принял размещение команды в отдельном файле harness и указателя в уже подключённом правиле вместо тела команды или новой прямой ссылки в AGENTS.md (session-settled: user-approved — chosen over editing AGENTS.md: короткий статичный вход и один поддерживаемый способ запуска).
 
-Процедура: [plugin-eval-without-human.md](../skills/comm-create-lazy-claude-codex-skills/references/evaluation.md).
+Процедура: [plugin-eval-without-human.md](../skills/comm-validate-harness-instructions/references/evaluation.md).
 Launcher: [plugin_eval_without_human.mjs](../scripts/plugin_eval_without_human.mjs).
 Проверка: [test_plugin_eval_without_human.py](../testing/tests/test_plugin_eval_without_human.py).
 Указатель в правиле публикуется после действующих проверок; принятие решения не повышает статусы нативной приёмки Codex/Claude и не разрешает пропуск проверок.
+
+Указатели на текущих владельцев обновлены 2026-10-08; даты и исторические
+результаты выше не изменены этим переносом.

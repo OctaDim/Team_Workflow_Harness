@@ -1,0 +1,27 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-report-plugin-eval-budget, comm-resolve-permission-blockers.
+
+Выполню чтение в заданном порядке без изменений файлов. По задаче выбираю comm-process-harness-inbox для оценки уже существующего покрытия опыта.
+Проверка входов завершилась успешно; все семь машинных правил прочитаны полностью. Выбор долговременного результата — существующее покрытие в common: правило уже прямо запрещает чтение README.human.md, а ownership запрещает создавать дублирующий материал. Прочитаю процедуру сохранения опыта, чтобы завершить оценку.
+Долговременный результат — **существующее покрытие**, без нового lessons-файла, скилла, rule или заявки.
+
+Владелец поведения — `harness/common/rules/comm-human-folder-guides.md`: исключать `README.human.md` на любой глубине до поиска и чтения. Навык `comm-process-harness-inbox` и его `experience-routing.md` подтверждают: если поведение полностью выражено, новую запись не создавать.
+
+Первая команда выполнена успешно (`exit 0`). Затем соблюдён заданный порядок; список правил получен отдельным `rg`, все найденные пути прочитаны следующим отдельным `cat` с явными кавычками. Ошибок, требующих остановки, не было. README.human.md не читались; команды записи не выполнялись. Упомянутые вами исправления отдельно не проверялись.
+
+Фактически прочитанные machine paths:
+
+- `harness/common/START.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `harness/common/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-instruction-order.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `harness/common/INDEX.md`
+- `harness/project/INDEX.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`

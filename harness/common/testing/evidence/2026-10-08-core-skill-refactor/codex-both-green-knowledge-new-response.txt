@@ -1,0 +1,29 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Начну с указанной проверки и прочитаю инструкции в заданном порядке. Записей делать не буду.
+
+Проверка входов прошла; история проекта недоступна для сравнения настроек. Выбираю навык comm-preserve-harness-knowledge для размещения повторяемого опыта и comm-process-harness-inbox для состава кандидата заявки. Разрешение создания заявки учтено, но ваше «не записывай» ограничивает результат ответом.
+
+Владелец нового общего повторяемого экспорта — отдельный lazy skill в `harness/common/skills/`: собственные запрос, результат и независимая проверка обосновывают самостоятельного владельца. Детали того же результата относятся к условным ресурсам этого навыка.
+
+Размещение:
+
+- procedure → `skills/<имя>/SKILL.md` и необходимые ресурсы;
+- rationale → `decisions/`;
+- raw checks, результаты и ограничения проверки → `testing/evidence/`;
+- plan → `docs/plans/`;
+- полный запрос и кандидат → временная заявка `inbox/`, которая сама по себе не сохраняет опыт постоянно.
+
+Сегодняшнее имя старому материалу по `mtime` или import commit давать **нельзя**: они не доказывают дату создания. Неизвестную дату сохраняют до адресного согласования. Новая заявка получает фактическую дату своего создания; технические имена навыков и ресурсов сохраняются без датировочного префикса.
+
+Первая команда выполнена успешно. Затем прочитаны инструкции в заданном порядке, включая отдельные поиск правил и `cat` явно quoted путей. Выбраны comm-preserve-harness-knowledge и comm-process-harness-inbox. Файлы не записывались; заявка не создана, выполнение и публикация не начинались. Полный кандидат процедуры экспорта требует конкретных входов, результата и критерия независимой проверки — этих данных в запросе нет.
+
+Фактически прочитанные machine paths (каждый префикс относится ко всем перечисленным суффиксам):
+
+- `harness/common/`: `START.md`, `INDEX.md`, `rules/comm-skill-rule-ownership.md`, `rules/comm-human-folder-guides.md`, `specs/2026-10-06-structure-and-creation-dates.md`.
+- `harness/project/`: `START.md`, `INDEX.md`.
+- `.claude/rules/`: `comm-skill-rule-ownership.md`, `comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-instruction-order.md`, `comm-dependencies-through-uv.md`, `comm-user-owned-entrypoints.md`, `comm-human-folder-guides.md`.
+- `harness/common/skills/comm-preserve-harness-knowledge/`: `SKILL.md`, `references/experience-routing.md`, `references/material-placement.md`.
+- `harness/common/skills/comm-process-harness-inbox/`: `SKILL.md`, `references/workflow.md`.
+
+Тела `README.human.md` не читались.

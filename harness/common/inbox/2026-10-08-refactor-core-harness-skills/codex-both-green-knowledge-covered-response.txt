@@ -1,0 +1,29 @@
+Доступные навыки из нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Начну с указанной проверки, затем прочитаю инструкции в заданном порядке. Работаю только на чтение.
+
+Проверка входов завершилась успешно; все семь машинных правил прочитаны полностью. Для выбора долговременного результата применяю навык `comm-preserve-harness-knowledge`: запрет чтения `README.human.md` уже закреплён в каноническом правиле.
+
+Выбран долговременный результат: **существующее покрытие**, без новой записи.
+
+Владелец поведения — общий пакет `harness/common`, каноническое правило `harness/common/rules/comm-human-folder-guides.md`. Оно полностью задаёт исключение `README.human.md` до поиска и чтения, отдельное получение списка правил и чтение явно перечисленных путей. Новый lessons-файл, скилл или rule дублировал бы инструкцию.
+
+Первая команда выполнена точно по запросу; проверка завершилась с кодом 0. Затем соблюдён заданный порядок чтения. Применён `comm-preserve-harness-knowledge` и его ресурс выбора результата. Дополнительных остановок не потребовалось. Ничего не записывал; тела `README.human.md` не читал. Проверка сообщила, что сравнение настроек с историей не выполнено из-за отсутствия истории проекта. Существующие исправления отдельно не проверял.
+
+Фактически прочитанные machine paths:
+
+- `harness/common/START.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `harness/common/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-instruction-order.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `harness/common/INDEX.md`
+- `harness/project/INDEX.md`
+- `harness/common/skills/comm-preserve-harness-knowledge/SKILL.md`
+- `harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md`

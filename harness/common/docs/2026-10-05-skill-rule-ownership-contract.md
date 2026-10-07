@@ -17,7 +17,10 @@ Personal ignore не должен скрывать общие материалы
 
 Рабочие владельцы: [ownership rule](../rules/comm-skill-rule-ownership.md),
 [inbox workflow](../skills/comm-process-harness-inbox/SKILL.md),
-[placement](../skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md),
-[validation](../skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md).
+[placement](../skills/comm-publish-harness-instructions/references/placement-contract.md),
+[validation](../skills/comm-validate-harness-instructions/references/validation.md).
 Решения и прежние разовые исключения: [decision](../decisions/2026-10-05-skill-rule-ownership.md).
 Здесь основания и смысл контрактов, не самостоятельная процедура.
+
+Указатели на текущих владельцев обновлены 2026-10-08; даты и исторические
+результаты выше не изменены этим переносом.

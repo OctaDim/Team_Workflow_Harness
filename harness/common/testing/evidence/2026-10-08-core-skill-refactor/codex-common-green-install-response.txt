@@ -1,0 +1,28 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer; comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Сначала выполню проверку входных ссылок, затем прочитаю инструкции в заданном порядке. Для подготовки установки выберу comm-install-harness. Все действия — только чтение.
+
+Владелец AGENTS.md — пользователь. Common владеет общим контрактом и шаблоном; project — материалами конкретного проекта. Выбран `comm-install-harness`.
+
+Первая команда выполнена успешно. START, canonical ownership/human rules, полный список `.claude/rules`, явно quoted `cat` всех найденных правил и INDEX прочитаны в заданном порядке. Ничего не устанавливал; тела README.human.md не читал.
+
+План для нового target:
+
+1. Установить точный target и проверить существующие файлы, ссылки и конфигурацию; cwd не подтверждает назначение. Зафиксировать побайтовый состав существующего `harness/project`.
+2. **Common-only:** перенести common; отсутствующий project создаст стартовая проверка из согласованного `project-skeleton.json`. Уже существующий project сохранить полностью.
+3. **Combined:** перенести common и согласованный project; при существующем target-project исключить его перезапись и автоматическое дополнение.
+4. Перед публикацией rules/skills открыть canonical `comm-publish-harness-instructions/SKILL.md` и проверить актуальный статус. Разрешение transfer не заменяет подтверждение публикации непроверенной версии.
+5. Из target выполнить `python3 -B harness/common/checks/ensure_entrypoint_links.py`; сохранить существующую стартовую команду и настройки входов.
+6. В двух изолированных временных установках проверить полный нейтральный каркас, неизменность существующего project и повторного старта, ссылки/ресурсы/native copies; повреждённые ресурсы и отсутствие common должны давать отказ. Python-зависимости — через uv; отличающийся pytest.ini сохранить. Зафиксировать Codex/Claude, режимы, версии, команды и ограничения; копирование не доказывает нативную работоспособность.
+
+**Нельзя:** replace/extend существующий project новым шаблоном, project-only, infer skeleton из нынешних папок. Изменение общего template требует отдельной common inbox-заявки, решения и подтверждения пользы всем проектам; transfer этого не разрешает. Сейчас результат — подготовленный план, target и установки не проверены.
+
+Фактически прочитанные machine paths:
+
+- `harness/{common,project}/{START,INDEX}.md`
+- `harness/common/rules/{comm-skill-rule-ownership,comm-human-folder-guides}.md`
+- `.claude/rules/{comm-instruction-order,comm-skill-rule-ownership,comm-package-independence,comm-entrypoint-links-rule,comm-dependencies-through-uv,comm-user-owned-entrypoints,comm-human-folder-guides}.md`
+- `.agents/skills/comm-install-harness/SKILL.md`
+- `.agents/skills/comm-install-harness/references/{checks,testing}.md`
+
+Фигурные скобки сокращают перечисление отдельных прочитанных путей.

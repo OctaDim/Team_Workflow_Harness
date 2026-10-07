@@ -1,0 +1,29 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-report-plugin-eval-budget, comm-resolve-permission-blockers.
+
+Начну с указанной команды и соблюду порядок чтения. Файлы менять не буду; тела README.human.md читать не буду.
+Проверка входов завершилась успешно; обязательные файлы прочитаны в заданном порядке. Для запроса «сохрани опыт» выбираю навык `comm-process-harness-inbox`: прочитаю его процедуру выбора долговременного результата. Каноническое правило уже полностью выражает запрет чтения README.human.md.
+Долговременный результат — **существующее покрытие**. Новый lessons-файл, скилл или rule не нужен: запрет читать `README.human.md` уже полностью выражен.
+
+Владелец ограничения — `harness/common/rules/comm-human-folder-guides.md`; установленное правило находится в `.claude/rules/comm-human-folder-guides.md`. Это общая граница до выбора процедуры, поэтому она принадлежит common. `AGENTS.md` принадлежит пользователю.
+
+Первая команда `python3 harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 0. Затем соблюдён заданный порядок: оба START → canonical ownership и human rules → отдельный `rg` → отдельный `cat` всех найденных явно quoted путей → оба INDEX. Выбран и прочитан `comm-process-harness-inbox` с ресурсом выбора результата.
+
+Тела `README.human.md` не читались. Записывающие действия и заявки не выполнялись; оснований для остановки из-за ошибки не возникло. Указанные вами готовые исправления отдельно не проверялись.
+
+Фактически прочитанные machine paths:
+
+- `harness/common/START.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `harness/common/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-instruction-order.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `harness/common/INDEX.md`
+- `harness/project/INDEX.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`

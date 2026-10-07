@@ -14,7 +14,10 @@ Checker не требует Git/настроек машины и не блоки
 
 Текущие рабочие владельцы: [rule](../rules/comm-user-owned-entrypoints.md),
 [installation](../skills/comm-install-harness/SKILL.md),
-[diagnosis](../skills/comm-install-harness/references/entrypoints.md),
+[diagnosis](../skills/comm-diagnose-harness-entrypoints/references/entrypoints.md),
 [byte preservation](../skills/comm-preserve-text-line-endings/SKILL.md).
 Common содержит реализацию; старый project path — совместимый wrapper.
 Прежняя автономная project копия и hooks относятся к отменённым вариантам.
+
+Указатели на текущих владельцев обновлены 2026-10-08; даты и исторические
+результаты выше не изменены этим переносом.

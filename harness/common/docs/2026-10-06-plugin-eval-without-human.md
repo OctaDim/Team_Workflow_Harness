@@ -11,8 +11,11 @@ Generic folder analysis не доказывает skill/plugin/native behavior; 
 Markdown в plugin-eval 0.1.2 не проходит directory-based budget walk.
 
 Текущая процедура и ограничения запуска:
-[evaluation resource](../skills/comm-create-lazy-claude-codex-skills/references/evaluation.md).
+[evaluation resource](../skills/comm-validate-harness-instructions/references/evaluation.md).
 Реализация: [launcher](../scripts/plugin_eval_without_human.mjs).
 Доказательство границы: [integration test](../testing/tests/test_plugin_eval_without_human.py).
 Принятые альтернативы: [decision](../decisions/2026-10-06-plugin-eval-human-filter.md).
 Документ объясняет выбор и пределы, не второй workflow.
+
+Указатели на текущих владельцев обновлены 2026-10-08; даты и исторические
+результаты выше не изменены этим переносом.

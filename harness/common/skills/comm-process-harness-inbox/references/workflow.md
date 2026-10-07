@@ -1,95 +1,48 @@
-# Маршрут, разрешения и учёт
+# Route, stages and state
 
-## Перед изменением harness
+All harness creation/edit/delete/rename/transfer, including instructions, code,
+tests, configuration, reports and memory, uses agreed inbox. Approved request
+creation and permanent results of its authorized execution are this route.
 
-По умолчанию любые создание, правка, удаление, переименование и перенос
-материалов harness проходят через согласованный inbox. Это включает правила,
-скиллы, ресурсы, код, тесты, настройки, документы, отчёты и память; способ
-записи не меняет маршрут. Создание одобренной заявки и запись результата её
-обработки в постоянные категории — обычный маршрут, а не прямой обход.
+Direct bypass requires an unambiguous instruction for named material/operation,
+plus a separate agent question about paths/operations/bypass and a positive
+answer after it. Check that history first: no question → ask/stop; no answer or
+silence/time → wait; conditional/ambiguous/options → clarify/wait; refusal → stop.
+Preliminary “confirm”, explicit skill invocation, deadline, or an operation
+permission does not cancel ordering. Same unchanged scope with that pair needs
+no repeat question; expanded/new scope needs new instruction/question/answer.
+User priority and asking are compatible unless the ordering itself is revoked.
+Bypass never waives checks, publication gate, protected inputs or template decisions.
 
-Прямая задача требует явного однозначного указания изменить названный материал
-напрямую, минуя inbox. Путь, «сохрани», «исправь» и общее разрешение работать
-не задают обход. При таком указании проверь историю:
+Only mandatory startup may create an absent neutral project from the agreed
+common skeleton without inbox/extra confirmation; preserve existing project bytes.
+This does not authorize changing existing project or the shared template.
 
-- Нет отдельного вопроса агента о конкретных путях, операциях и обходе inbox:
-  задай этот вопрос и остановись без выполнения задачи.
-- Вопрос есть, ответа нет: жди. Первоначальное «разрешаю/подтверждаю», явный
-  вызов скилла, срок и молчание не являются ответом после вопроса.
-- Ответ условный, неоднозначный или с вариантами: уточни и снова жди;
-  не выбирай разрешающий вариант. При отказе не выполняй прямую задачу.
-- Есть однозначный положительный ответ после вопроса: выполняй только
-  подтверждённый состав. Буквальная фраза не нужна. Для той же неизменной
-  задачи повторный вопрос не нужен; новая задача или расширение требуют
-  нового указания и ответа после нового вопроса.
+Creation, execution (including tests), publication and bypass are distinct.
+One message can authorize several stages; do not re-ask authorized stages.
+Path/“save”/deadline/option number do not grant missing stages. If separate
+agreement is required, wait before even creating/testing. An error grants no
+new authorization: propose a contextual request, then wait as necessary.
 
-Первоначальное разрешение не считается «уже полученным» подтверждением
-прямого обхода: оно появляется только после отдельного вопроса агента.
-Разрешение операции и отмена порядка подтверждения — разные указания.
-Если пользователь не отменил именно требование отдельного вопроса, выполняй
-его: явная просьба править напрямую и первоначальное «подтверждаю» этому
-требованию не противоречат. Не выводи отмену процедуры из разрешения правки.
-«Уже разрешено» проверь по истории вопроса и ответа, а не по намерению
-пользователя выполнить операцию. Так сохраняются и приоритет пользователя,
-и установленный им порядок; вопрос впервые не является повторным запросом.
-Обход не отменяет проверки, gate, защиту AGENTS/CLAUDE и решения о шаблоне.
-Конфликт обязательных требований согласуй до зависимого действия.
+Create harness/<package>/inbox/YYYY-MM-DD-meaning/ using actual creation date;
+disambiguate collisions by meaning. Record need time, circumstances, cause,
+problem and result; never invent dates. Instruction requests without confirmed
+direct route include full skill folders/resources or complete rule files.
 
-Узкое исключение: обязательная стартовая проверка автоматически создаёт только
-отсутствующий harness/project как пустой нейтральный каркас из согласованного
-harness/common/base/project-skeleton.json, без inbox и отдельного подтверждения.
-Существующий project сохраняется побайтно; правка, дополнение, пересоздание
-существующего project и изменение шаблона этим исключением не разрешены.
+Each request (legacy single-file in its file) has Execution: Status, Result,
+Reason, update date. Status new/in progress/completed/blocked/rejected; before
+work “not executed”, at start “in progress”. After work/stop record artifacts,
+remaining scope/reason; preserve prior results/links. Group accounting is insufficient.
+Completed → skip unless repeat requested; in progress → reconcile/resume;
+blocked → audit obstacle and continue only if removed; rejected → explicit resume;
+missing status → inspect actual evidence, do not infer completed/new, record uncertainty.
 
-## Разрешённая обработка
-
-Различай создание заявки, выполнение (включая тесты), публикацию и обход.
-Установи явное разрешение каждой нужной стадии из запроса или ответа на
-конкретный предложенный состав. Не расширяй «разрешаю» на непредложенное.
-Одно сообщение может разрешить несколько стадий; уже разрешённую стадию
-повторно не согласовывай. Прямой обход проверяй по истории выше.
-«Сохрани», путь, срок и номер варианта не разрешают недостающие стадии.
-Номер выбирает решение; создание не разрешает выполнение. При требовании
-отдельного согласования до ответа не создавай заявку и не выполняй её,
-включая тесты. Обычное сохранение направляй в inbox.
-
-После ошибки, конфликта или решения предложи заявку с контекстом и результатом;
-ошибка не даёт нового разрешения. Постоянную форму выбери по
-[experience-routing](experience-routing.md), без автоматической отдельной истории.
-Создай harness/<пакет>/inbox/YYYY-MM-DD-суть/ с фактической датой создания;
-совпадение имени уточни смыслом. Request содержит время возникновения потребности,
-обстоятельства, причину, решаемую проблему и требуемый результат. Не выдумывай
-даты. Для скилла/правила без подтверждённого прямого пути приложи полную папку
-со всеми ресурсами либо полный файл правила.
-
-В «Выполнение» каждой заявки (старой одиночной — в её файле) сохраняй Статус,
-Результат, Причину, дату обновления. Статусы: новая/в работе/выполнена/
-заблокирована/отклонена. До начала результат «не выполнялась», при начале —
-«в работе». После работы/остановки обнови все поля: артефакты, оставшееся,
-причина состояния. Прежние результаты и ссылки сохраняй; групповой учёт
-не заменяет индивидуальный. До обработки сверяй состояние:
-
-- Выполнена: пропусти; повторяй только по явной просьбе.
-- В работе: сверяй артефакты, продолжай оставшееся.
-- Заблокирована: проверь препятствие; осталось — обнови причину и сообщи,
-  устранено — продолжай разрешённое.
-- Отклонена: возобновляй только по явному запросу.
-- Нет статуса: сверяй отчёты и фактический результат; отсутствие поля не
-  означает выполнение или повторение. Неясность запиши.
-
-Обрабатывай по одной от ранней к поздней; не запускай заявки одновременно
-и не начинай следующую до закрытия предыдущей. Неясный порядок согласуй,
-дат не придумывай. Закрытие — достигнутый результат с завершённой обязательной
-работой либо явное решение пользователя; кандидат без публикации,
-«в работе» или «заблокирована» не закрытие.
-
-При недостающем разрешении, развилке или конфликте задай конкретный вопрос
-и жди без следующей заявки и зависимых действий. Молчание, время и старое
-общее поручение не ответ. При permission blocker, включая auto-review, открой
-из корня harness/common/skills/comm-resolve-permission-blockers/SKILL.md.
-Однозначную техническую ошибку исправляй в разрешённых пределах; это не
-разрешает выбирать за пользователя или обходить отказ.
-
-Постоянный результат понятен без заявки; ссылка на неё — provenance.
-В итоге перечисли выполненные, пропущенные завершённые и оставшиеся заявки
-с причинами. Учёт и непроверенная публикация не повышают статусы Codex/Claude.
+Sequential earliest→latest; unclear chronology requires decision, not invented
+dates. Do not start next until result and required publication complete or user
+explicitly decides closure. Blocked/in progress/prepared candidate is not closure.
+Missing authorization/branch/conflict → precise question and wait, no dependent
+work. For permission/auto-review blockers read from project root
+`harness/common/skills/comm-resolve-permission-blockers/SKILL.md`; known technical
+errors within granted scope can be fixed without choosing for the user.
+Permanent result stands without inbox; its link is provenance. Accounting or
+unverified publication never upgrades agent statuses.

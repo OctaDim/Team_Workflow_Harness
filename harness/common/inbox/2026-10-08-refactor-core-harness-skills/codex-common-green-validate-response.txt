@@ -1,0 +1,23 @@
+Доступны навыки: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Начну с указанной проверки, затем прочитаю инструкции в заданном порядке. Для проверки существующей инструкции выбран comm-validate-harness-instructions; файлы и отчёт записывать не буду.
+Стартовая проверка прошла; сравнение с историей проекта недоступно. Выбранный workflow требует раздельных результатов структуры, бюджета, кода и нативного поведения. Структурный A и совпадение копий не подтверждают загрузку и поведение в Codex/Claude и двух режимах установки. Проверю копии выбранной инструкции и доступность инструмента без установки.
+Владелец процедуры проверки — `harness/common/skills/comm-validate-harness-instructions`; `.agents/skills` и `.claude/skills` содержат установочные копии. Выбран workflow **Validate the current version**.
+
+Стартовая команда прошла. Чтение выполнено в заданном порядке. Проверены выбранный скилл и два его ресурса: три копии побайтно равны. `plugin-eval` отсутствует в PATH и доступном каталоге инструментов. Ничего не устанавливал, не изменял, не публиковал; отчёт не записывал.
+
+**Структурного A и equal copies недостаточно.** A здесь не получен. Реальный manifest необходим для evaluate-plugin; поддельный создавать нельзя. Отдельно нужны проверки структуры/контента, бюджета, кода и нативного поведения: Codex и Claude × common-only и common+project, нативное обнаружение, явный вызов собственных ресурсов, неявный выбор, отсутствие загрузки для посторонней задачи, фактическое поведение. Чтение правил, human-фильтр загрузчика и поведение проверяются отдельно. Эти проверки остаются **не проверено**.
+
+Для проверки нужны `references/validation.md`, `references/evaluation.md`, canonical `references/content-contract.md`. Для проверки установки дополнительно нужен `comm-install-harness/SKILL.md`; его `references/testing.md` — только при работе с suite/configuration. Авторство, публикация и inbox сейчас не нужны.
+
+Report fields: дата, версия/хеши, файлы, команды, инструменты и версии агентов, scope/contract; компактность, фактические пороги, baseline/различия/причины превышений; startup+metadata, полные actual reads и available resources отдельно; pass/fail/not-run/N/A с причиной; findings, missing tools, next steps; статус каждого agent/mode.
+
+Фактически прочитанные machine paths:
+
+- `harness/{common,project}/{START,INDEX}.md`;
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`;
+- `.claude/rules/comm-{skill-rule-ownership,package-independence,entrypoint-links-rule,instruction-order,dependencies-through-uv,user-owned-entrypoints,human-folder-guides}.md`;
+- `{harness/common,.agents,.claude}/skills/comm-validate-harness-instructions/{SKILL.md,references/validation.md,references/evaluation.md}`;
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`.
+
+Фигурные скобки сокращают перечисление путей. Тела `README.human.md` не читались.

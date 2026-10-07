@@ -1,0 +1,1272 @@
+[
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+    "block": 1,
+    "sha256": "4c424d6a07dbd28b4c1a8812188c70732c4e55e7ce050e63de9883d73d7dd5ce",
+    "historical_requirement_text": "---\nname: comm-process-harness-inbox\ndescription: Use when changing any harness contents, saving reusable experience or decisions, creating or processing inbox requests, or resuming their execution.\n---",
+    "new_owners": [
+      "comm-process-harness-inbox/SKILL.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+    "block": 2,
+    "sha256": "4387e8c134368942e6168db6928de8e2f3e62a2988cdad20e37d60016179216f",
+    "historical_requirement_text": "# Изменения harness и обработка inbox",
+    "new_owners": [
+      "comm-process-harness-inbox/SKILL.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+    "block": 3,
+    "sha256": "d375ca853db6f2249a0ce32916954ad5f864260a97b543847b686607bf503df0",
+    "historical_requirement_text": "Перед прямой правкой проверь историю: отдельный вопрос агента о конкретной\nзадаче → однозначный положительный ответ после него. Нет такой пары — задай\nвопрос и остановись без правки. Первоначальное «подтверждаю» не является\nответом на ещё не заданный вопрос. Автоматическое создание отсутствующего\nпустого project стартовой проверкой — узкое исключение, описанное в workflow.",
+    "new_owners": [
+      "comm-process-harness-inbox/SKILL.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+    "block": 4,
+    "sha256": "dfda81ce8dc7f4f2800b63a0299ea8f36796b48b1d91df2175200620bfcace4e",
+    "historical_requirement_text": "Разрешение операции не отменяет порядок подтверждения. Приоритет просьбы\nпользователя не позволяет считать «предварительно подтверждаю» отменой\nотдельного вопроса: просьба и процедура совместимы — спроси, затем жди ответа.",
+    "new_owners": [
+      "comm-process-harness-inbox/SKILL.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+    "block": 5,
+    "sha256": "0fee54d2df196347f350ad13bfac98715a0e550188c0d4e7a8aa6d015797da95",
+    "historical_requirement_text": "Перед любой задачей изменения harness прочитай\n[workflow](references/workflow.md): обязательный маршрут, разрешённые стадии,\nотдельное подтверждение прямого изменения и ожидание ответа.\nДо записи, выполнения или изменения статуса используй тот же workflow:\nполный кандидат, контекст, порядок, продолжение и закрытие.\nГотовый кандидат без обязательной публикации заявку не закрывает.",
+    "new_owners": [
+      "comm-process-harness-inbox/SKILL.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+    "block": 6,
+    "sha256": "0be18494d31d12497253ab5f30f58e3bd3190dd8a3357c0db707c8e90530da55",
+    "historical_requirement_text": "При «сохрани опыт», «зафиксируй решение», «дополни harness» до выбора места\nпрочитай [выбор результата](references/experience-routing.md): будущее\nповедение, существующий владелец, минимальное изменение. Skills-first не\nозначает отдельный скилл для каждой ошибки. Определи common/project по содержанию.",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/SKILL.md",
+      "comm-preserve-harness-knowledge/references/experience-routing.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+    "block": 7,
+    "sha256": "0126a354388fc393556be9b09c971565085a2177580e2732618656c6761d6721",
+    "historical_requirement_text": "До создания/изменения/проверки/публикации скилла или правила открой из корня\nпроекта `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.\nСохраняй долговременный результат независимо от временной заявки.\n",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/SKILL.md",
+      "comm-validate-harness-instructions/SKILL.md",
+      "comm-publish-harness-instructions/SKILL.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required",
+    "disposition": "Phase-specific selection and permanent result requirements moved; no broad router"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 1,
+    "sha256": "1ff552ae2e9b92a2eb145f7684e5042778e363b40044e285ef4b7efc7870378b",
+    "historical_requirement_text": "# Маршрут, разрешения и учёт",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 2,
+    "sha256": "9dac1a9f9b244e6cef85172c82f3e1f8f73374cbf903db3300edb25e36ce1bac",
+    "historical_requirement_text": "## Перед изменением harness",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 3,
+    "sha256": "41b08cd05c07af9c504cec9bbf79ab0863ccbf0277f946f01e0a889e43734129",
+    "historical_requirement_text": "По умолчанию любые создание, правка, удаление, переименование и перенос\nматериалов harness проходят через согласованный inbox. Это включает правила,\nскиллы, ресурсы, код, тесты, настройки, документы, отчёты и память; способ\nзаписи не меняет маршрут. Создание одобренной заявки и запись результата её\nобработки в постоянные категории — обычный маршрут, а не прямой обход.",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 4,
+    "sha256": "9f480252b466dc568e869f1a3917eb714c03e951df74b47e9b2b96f8e5b8416c",
+    "historical_requirement_text": "Прямая задача требует явного однозначного указания изменить названный материал\nнапрямую, минуя inbox. Путь, «сохрани», «исправь» и общее разрешение работать\nне задают обход. При таком указании проверь историю:",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 5,
+    "sha256": "841386617a282fa42e0af5938907988ccdc06801042e6f497f7b5612caac0066",
+    "historical_requirement_text": "- Нет отдельного вопроса агента о конкретных путях, операциях и обходе inbox:\n  задай этот вопрос и остановись без выполнения задачи.\n- Вопрос есть, ответа нет: жди. Первоначальное «разрешаю/подтверждаю», явный\n  вызов скилла, срок и молчание не являются ответом после вопроса.\n- Ответ условный, неоднозначный или с вариантами: уточни и снова жди;\n  не выбирай разрешающий вариант. При отказе не выполняй прямую задачу.\n- Есть однозначный положительный ответ после вопроса: выполняй только\n  подтверждённый состав. Буквальная фраза не нужна. Для той же неизменной\n  задачи повторный вопрос не нужен; новая задача или расширение требуют\n  нового указания и ответа после нового вопроса.",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 6,
+    "sha256": "fd41510147ff8750d86689ef4cfc6ecfdc94c8c413f6b9f3b928aa43219f15b7",
+    "historical_requirement_text": "Первоначальное разрешение не считается «уже полученным» подтверждением\nпрямого обхода: оно появляется только после отдельного вопроса агента.\nРазрешение операции и отмена порядка подтверждения — разные указания.\nЕсли пользователь не отменил именно требование отдельного вопроса, выполняй\nего: явная просьба править напрямую и первоначальное «подтверждаю» этому\nтребованию не противоречат. Не выводи отмену процедуры из разрешения правки.\n«Уже разрешено» проверь по истории вопроса и ответа, а не по намерению\nпользователя выполнить операцию. Так сохраняются и приоритет пользователя,\nи установленный им порядок; вопрос впервые не является повторным запросом.\nОбход не отменяет проверки, gate, защиту AGENTS/CLAUDE и решения о шаблоне.\nКонфликт обязательных требований согласуй до зависимого действия.",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 7,
+    "sha256": "f2638c20867b971e0dc299ccb43e483463f531dfdc7d61ba58f7a89b3f2c587a",
+    "historical_requirement_text": "Узкое исключение: обязательная стартовая проверка автоматически создаёт только\nотсутствующий harness/project как пустой нейтральный каркас из согласованного\nharness/common/base/project-skeleton.json, без inbox и отдельного подтверждения.\nСуществующий project сохраняется побайтно; правка, дополнение, пересоздание\nсуществующего project и изменение шаблона этим исключением не разрешены.",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 8,
+    "sha256": "dbb719ee1f528c6a155a7f917843b76d3e5fec7a8fd19578f022b1667b6a8c65",
+    "historical_requirement_text": "## Разрешённая обработка",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 9,
+    "sha256": "c710c3f5bc1149d2e336171975d2b38cb3932eb05f7703bbcd73c61cb7c69711",
+    "historical_requirement_text": "Различай создание заявки, выполнение (включая тесты), публикацию и обход.\nУстанови явное разрешение каждой нужной стадии из запроса или ответа на\nконкретный предложенный состав. Не расширяй «разрешаю» на непредложенное.\nОдно сообщение может разрешить несколько стадий; уже разрешённую стадию\nповторно не согласовывай. Прямой обход проверяй по истории выше.\n«Сохрани», путь, срок и номер варианта не разрешают недостающие стадии.\nНомер выбирает решение; создание не разрешает выполнение. При требовании\nотдельного согласования до ответа не создавай заявку и не выполняй её,\nвключая тесты. Обычное сохранение направляй в inbox.",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 10,
+    "sha256": "1c7ed3b493ba82575ecaa8bbc7c0e3b514fd6f94d4df0e174dc3e5ccbb420182",
+    "historical_requirement_text": "После ошибки, конфликта или решения предложи заявку с контекстом и результатом;\nошибка не даёт нового разрешения. Постоянную форму выбери по\n[experience-routing](experience-routing.md), без автоматической отдельной истории.\nСоздай harness/<пакет>/inbox/YYYY-MM-DD-суть/ с фактической датой создания;\nсовпадение имени уточни смыслом. Request содержит время возникновения потребности,\nобстоятельства, причину, решаемую проблему и требуемый результат. Не выдумывай\nдаты. Для скилла/правила без подтверждённого прямого пути приложи полную папку\nсо всеми ресурсами либо полный файл правила.",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md",
+      "comm-preserve-harness-knowledge/SKILL.md",
+      "comm-preserve-harness-knowledge/references/experience-routing.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 11,
+    "sha256": "b0695c4f1927f4dd84a9a5f4648b80c1934907b8d3110d6861b203fd069fbd7f",
+    "historical_requirement_text": "В «Выполнение» каждой заявки (старой одиночной — в её файле) сохраняй Статус,\nРезультат, Причину, дату обновления. Статусы: новая/в работе/выполнена/\nзаблокирована/отклонена. До начала результат «не выполнялась», при начале —\n«в работе». После работы/остановки обнови все поля: артефакты, оставшееся,\nпричина состояния. Прежние результаты и ссылки сохраняй; групповой учёт\nне заменяет индивидуальный. До обработки сверяй состояние:",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 12,
+    "sha256": "7881fa5ec1373b469a0f999d7d1e1253ada5ae5dc25494f3c89ba875d2cadf1f",
+    "historical_requirement_text": "- Выполнена: пропусти; повторяй только по явной просьбе.\n- В работе: сверяй артефакты, продолжай оставшееся.\n- Заблокирована: проверь препятствие; осталось — обнови причину и сообщи,\n  устранено — продолжай разрешённое.\n- Отклонена: возобновляй только по явному запросу.\n- Нет статуса: сверяй отчёты и фактический результат; отсутствие поля не\n  означает выполнение или повторение. Неясность запиши.",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 13,
+    "sha256": "4d83d6b377fc2cdde791655ac4d3bb3e0a29af9b7fa515ada165dd843620932a",
+    "historical_requirement_text": "Обрабатывай по одной от ранней к поздней; не запускай заявки одновременно\nи не начинай следующую до закрытия предыдущей. Неясный порядок согласуй,\nдат не придумывай. Закрытие — достигнутый результат с завершённой обязательной\nработой либо явное решение пользователя; кандидат без публикации,\n«в работе» или «заблокирована» не закрытие.",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 14,
+    "sha256": "8264f6aaad0e2272328883e5cc9becfb4034954dea846cb214813e2a57df22e6",
+    "historical_requirement_text": "При недостающем разрешении, развилке или конфликте задай конкретный вопрос\nи жди без следующей заявки и зависимых действий. Молчание, время и старое\nобщее поручение не ответ. При permission blocker, включая auto-review, открой\nиз корня harness/common/skills/comm-resolve-permission-blockers/SKILL.md.\nОднозначную техническую ошибку исправляй в разрешённых пределах; это не\nразрешает выбирать за пользователя или обходить отказ.",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+    "block": 15,
+    "sha256": "a7f60bf1083d4bde17c65bf908158953c1a87dd44cf9feb2ad0c7892862fd86c",
+    "historical_requirement_text": "Постоянный результат понятен без заявки; ссылка на неё — provenance.\nВ итоге перечисли выполненные, пропущенные завершённые и оставшиеся заявки\nс причинами. Учёт и непроверенная публикация не повышают статусы Codex/Claude.\n",
+    "new_owners": [
+      "comm-process-harness-inbox/references/workflow.md"
+    ],
+    "checks": [
+      "inbox pressure/status/permission/ordered closure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md",
+    "block": 1,
+    "sha256": "fc91285aebd3e088ed9f17fd6e4951b23383fee553804b7d7b5dae2f4f1c854e",
+    "historical_requirement_text": "# Выбор долговременного результата",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/experience-routing.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md",
+    "block": 2,
+    "sha256": "dbc3ee4ea98117c75e5a10d13861df5ec65b642fb3dcc3ddb600a46a2ca6e37c",
+    "historical_requirement_text": "До записи опыта сначала определи поведение, необходимое в следующем похожем\nслучае. Проверь descriptions существующих скиллов, применимые rules, а затем\nтолько подходящие bodies/resources и исполняемые проверки.",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/experience-routing.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md",
+    "block": 3,
+    "sha256": "01cb148f888f564a1d4871e900516027717495f60d6787a553e2dd9dc35f9c73",
+    "historical_requirement_text": "- Сценарий уже покрыт: используй или дополни существующую инструкцию/ресурс;\n  если всё необходимое уже выражено инструкцией, новой записи не создавай.\n- Самостоятельная повторяемая компетенция с распознаваемым trigger: компактный\n  lazy skill. Для преобразования опыта открой из корня проекта\n  `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.\n- Rule нужен только для ограничения до выбора процедуры: назови конкретное\n  ошибочное действие, возможное до выбора скилла. Обязательность алгоритма\n  сама по себе не основание для always-loaded rule.\n- Подробности, примеры, объяснения применения: условно читаемый ресурс\n  владельца скилла, с точным указателем когда открыть.",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/experience-routing.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md",
+    "block": 4,
+    "sha256": "562b0f84c5ba22b7f99871baf481b59ad174e96305d718a3a6b43401168d8857",
+    "historical_requirement_text": "Отдельно сохраняй лишь существенные основания/доказательства. Не переносить\nрассказ ошибки целиком в SKILL.md и не создавать ещё один маршрутизатор.\nНаличие исправления/теста проверяй при выборе; оно само по себе не заменяет\nнеобходимой инструкции будущего поведения.",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/experience-routing.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md",
+    "block": 5,
+    "sha256": "3e3f8f6e2f6eac96658cdffae0c81feec3b5c10fea59c4d470981e46b23d724b",
+    "historical_requirement_text": "| Материал | Постоянное место |\n|---|---|\n| Переиспользуемое рабочее поведение и применимый опыт | skills + ресурсы; ранние границы — rules |\n| Принятые решения, контракты, инварианты, ограничения, существенные альтернативы | decisions |\n| Результаты, ограничения проверок, исходные свидетельства | testing/evidence |\n| Базовые контракты, конфигурации, настройки | base |\n| Спецификации | specs |\n| Объяснения и исследования | docs |\n| Планы | docs/plans |\n| Незавершённое состояние | handoffs |",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/experience-routing.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md",
+    "block": 6,
+    "sha256": "313ac15893e01bc1f3c0818c02e7227ad1dc89f5c248df565115bb0bdb3f06c3",
+    "historical_requirement_text": "Inbox хранит временную заявку и полный кандидат, не единственный постоянный\nрезультат. Docs/decisions/specs/evidence и отчёты не задают самостоятельных\nагентских процедур: действия принадлежат rules/skills, документы — основаниям\nили формальному контракту. Для фактического размещения прочитай из корня\nпроекта `harness/common/skills/comm-install-harness/references/material-placement.md`.\n",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/experience-routing.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+    "block": 1,
+    "sha256": "314a1ebda22076429c8f7210baa3be2950aebb4b518dd0d0497b91033efe03da",
+    "historical_requirement_text": "---\nname: comm-create-lazy-claude-codex-skills\ndescription: Use when creating, updating, migrating or publishing Codex and Claude skills or rules, or converting reusable experience into working instructions.\n---",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/SKILL.md",
+      "comm-validate-harness-instructions/SKILL.md",
+      "comm-publish-harness-instructions/SKILL.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure",
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+    "block": 2,
+    "sha256": "d6bed1d7da665c6327e05f4fbba3accec60c033f54b6a0d1fc1716560814ab47",
+    "historical_requirement_text": "# Author task-focused skills and rules",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/SKILL.md",
+      "comm-validate-harness-instructions/SKILL.md",
+      "comm-publish-harness-instructions/SKILL.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure",
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+    "block": 3,
+    "sha256": "6076acc31bb0ac6324338348b92bbc512d5b86eabd90883bffd24e0336994cfe",
+    "historical_requirement_text": "Use using-superpowers before authoring. Establish task, useful result, target\nharness and destination; chat cwd is not proof of placement.",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/SKILL.md",
+      "comm-validate-harness-instructions/SKILL.md",
+      "comm-publish-harness-instructions/SKILL.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure",
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+    "block": 4,
+    "sha256": "e1533b8368ba8f5e3f9f9ed4f82b107c56f00654e87f6fe13908d7167ba88ab2",
+    "historical_requirement_text": "1. Before new work or substantial edits read [content](references/content-contract.md):\n   choose an owner and produce a procedure with inputs, actions and completion.\n   For experience routing first read from the project root\n   `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`.\n2. Before writing/processing a candidate read\n   `harness/common/skills/comm-process-harness-inbox/SKILL.md` and its workflow;\n   preserve stage permissions, a full dated candidate and permanent evidence.\n3. Before testing or publication read [validation](references/validation-and-publication.md).\n   Before plugin-eval read [evaluation](references/evaluation.md).\n   Before saving/installing a source or native copies read [placement](references/placement-contract.md).\n4. Repeat all mandatory checks for the final compact version; publish the authorized source and full\n   ordinary copies only after the gate. Missing/failed checks need permission\n   for this unverified version; transfer/prior success/deadline never waive it.",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/SKILL.md",
+      "comm-validate-harness-instructions/SKILL.md",
+      "comm-publish-harness-instructions/SKILL.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure",
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+    "block": 5,
+    "sha256": "cc9c8ef1347eb713bae87754b2dbda243f22c90f9d209ce61dc23e2cbea55863",
+    "historical_requirement_text": "Applicable external/skill-creator checks are mandatory.\nReport date/version/files/commands/tools/agent versions, contract/compactness,\nactual thresholds/baseline differences/excess reasons,\npass/fail/not-run/N/A+reason, findings/next steps, agent/mode statuses.",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/SKILL.md",
+      "comm-validate-harness-instructions/SKILL.md",
+      "comm-publish-harness-instructions/SKILL.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure",
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+    "block": 6,
+    "sha256": "aef20db65037499fda6d1186df4f1e413289688be60d1e9b7229848c60974030",
+    "historical_requirement_text": "Never edit protected entrypoints or let personal instructions skip canonical\nrequirements. Stop dependent publication until permission arrives.\n",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/SKILL.md",
+      "comm-validate-harness-instructions/SKILL.md",
+      "comm-publish-harness-instructions/SKILL.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure",
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+    "block": 1,
+    "sha256": "cf72617a6dc7e38f3a83f2b689f4c1af1ee50deb293cfefdd5a6ec9fd879737b",
+    "historical_requirement_text": "# Content",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+    "block": 2,
+    "sha256": "e25cd5717d33253698715a0968617a74d508b44f660ff372e66a4202f0a4fa56",
+    "historical_requirement_text": "Each new/substantial edit: name task/result; inspect existing skills/rules/\nresources/tests. Covered → reuse, no record. Own request/result/independent\ncheck → separate owner; one result's detail → conditional resource.\nTheme/old name ≠ ownership; no skill-count quota.",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+    "block": 3,
+    "sha256": "ec807dfb2b0eb62f6939e83f6a54710577bb03ebf37c77278c9258f0c787a508",
+    "historical_requirement_text": "Write inputs → actions → result → observable completion, when-read pointers,\nmissing data/approvals/stops/limits. Headings optional; metadata selects.\nRemove repeats/advice/history; examples prevent mistakes.\nRationale/evidence permanent outside instructions/inbox. Early guards in rules,\nalgorithm one owner; duplicate critical boundary only with proven need.\nPreserve obligations/both-mode dependencies with tested pointers, no mandatory\nchain of all skills. Rules prevent a wrong action before skill selection.",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+    "block": 4,
+    "sha256": "5feb84ed3a2415ad476f76d68314eb81aef8513d5754661234399783f94ef769",
+    "historical_requirement_text": "Goals: SKILL usually ≤200 words; resource sum ≤1000 static tokens,\nresolve >1200 deferred; evaluate-skill A/no errors. No raised thresholds, hidden resources or fake manifests/coverage.",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+    "block": 5,
+    "sha256": "ced1f7d19fcdfe8547cbc11d6ac9ac6918626dedcaf8692b59fd97813bea61bf",
+    "historical_requirement_text": "Profile: nonempty YAML name/description; name 1–64 [a-z0-9-], no edge hyphen/--,\nfolder match, shared comm-/proj-; description 1–1024 chars, trigger/capability.\nSKILL alone suffices; references/scripts/assets optional guidance/actions/outputs;\nagents/openai.yaml UI/policy/deps. Exclude human bodies.\nRules scope/behavior in body, no paths metadata; Claude ignores metadata\nexcept paths. Verify Codex loading separately.\n",
+    "new_owners": [
+      "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+    ],
+    "checks": [
+      "independent ownership/task contract/1300/static pressure"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+    "block": 1,
+    "sha256": "723c43599d6f2ebbe74464769dac3f946e093ceb0c45cb441e843f7f31817edc",
+    "historical_requirement_text": "# Validation/gate",
+    "new_owners": [
+      "comm-validate-harness-instructions/references/validation.md",
+      "comm-publish-harness-instructions/references/gate.md"
+    ],
+    "checks": [
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+    "block": 2,
+    "sha256": "ef7063087116f03e21d42438a012609eae6913fafd7ee10981251dbaa5b3d7ab",
+    "historical_requirement_text": "Save scenarios for the content contract.\nRED without guidance → compact candidate → GREEN; no artificial long drafts.\nHelpers: skill-creator/quick_validate; writing-skills;\nplugin-eval start→analyze; improve-skill brief→required/recommended fixes→\nre-evaluate/compare; openai-docs official sources; plugin-management integration.\nEvaluate-plugin real manifests only. Rules: content/conflicts/resources/compactness, not skill-only validation. Missing tools: warn/offer authorized\ninstall/unverified. Authorize benchmark/config/deps writes.",
+    "new_owners": [
+      "comm-validate-harness-instructions/references/validation.md",
+      "comm-publish-harness-instructions/references/gate.md"
+    ],
+    "checks": [
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+    "block": 3,
+    "sha256": "000bf2de9b7f1ee7297547944fc7d767076351ef99ba76097706afdb8f556dd6",
+    "historical_requirement_text": "Measure baseline/current startup guards+metadata, comparable task reads with\nfull dependencies, resources separately; record paths/limits/growth.\nStatic tokens ≠ usage; no agreed startup cap. Final versions: both agents,\nneutral common-only/preserved combined; listing/explicit own resources/\nimplicit choice/unrelated non-loading/behavior. Rule reading, loader exclusion,\nbehavior separate. Install/template changes: read from root\n`harness/common/skills/comm-install-harness/SKILL.md`; project-only refuses,\nno inferred shared template.",
+    "new_owners": [
+      "comm-validate-harness-instructions/references/validation.md",
+      "comm-publish-harness-instructions/references/gate.md"
+    ],
+    "checks": [
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+    "block": 4,
+    "sha256": "a6e329b852b7325b4c4e0e8cb7e0a81797dd2485ba566cd527a35076844eb19d",
+    "historical_requirement_text": "Verified only with no correctness/discovery/behavior gaps.\nEdits/new failures reset gate/status. Inbox until version/source/native scope authorized;\nmissing/failed checks: explicit permission+confirmation for unverified version,\nrecord scope/permission, retain statuses. Evidence belongs in testing/evidence, not checks.\nBefore harness suite/config read from root\n`harness/common/skills/comm-install-harness/references/testing.md`.\n",
+    "new_owners": [
+      "comm-validate-harness-instructions/references/validation.md",
+      "comm-publish-harness-instructions/references/gate.md"
+    ],
+    "checks": [
+      "read-only checks/missing tool/status/native distinction",
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+    "block": 1,
+    "sha256": "e8a1df74a95fdf4353b5ac74c7a089e8463da355fa442e35e8f2ebd909e4b50b",
+    "historical_requirement_text": "# Evaluation",
+    "new_owners": [
+      "comm-validate-harness-instructions/references/evaluation.md"
+    ],
+    "checks": [
+      "read-only checks/missing tool/status/native distinction"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+    "block": 2,
+    "sha256": "ae8f961b65cefe4cbeae4978045c22701d574452862c5f12d385a2440b44c456",
+    "historical_requirement_text": "Requires Node + installed plugin-eval JS entry; resolve shell-shims, launcher\nresolves entry symlinks. Set skill_dir to selected root before running:",
+    "new_owners": [
+      "comm-validate-harness-instructions/references/evaluation.md"
+    ],
+    "checks": [
+      "read-only checks/missing tool/status/native distinction"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+    "block": 3,
+    "sha256": "07de754d5c387fbd59f02c4917f02a72d8b4692a12a6b6fa8ff793c4701e675c",
+    "historical_requirement_text": "```sh\nentry=$(command -v plugin-eval) || exit 1\nnode harness/common/scripts/plugin_eval_without_human.mjs \"$entry\" start \"$skill_dir\" --format json\n```",
+    "new_owners": [
+      "comm-validate-harness-instructions/references/evaluation.md"
+    ],
+    "checks": [
+      "read-only checks/missing tool/status/native distinction"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+    "block": 4,
+    "sha256": "259010ea9caf2e3a0a4e03a7133ab13f3611814e5b27fcb21bdd282d7ed2203d",
+    "historical_requirement_text": "Then analyze. Own skill folder or bounded generic directory for\nplain instructions, not single Markdown. Structural/budget/code findings,\nJSON improvementBrief/compare. Save stdout outside target; no --output,\n--brief-out/benchmark writes or external metric-packs. README.human.md filter rejects nested/alias reads before content/cost;\nsources/tool unchanged. Avoid author-home/cache paths.\nPromises API, not OS isolation. After updates rerun via .venv Python pytest:\nharness/common/testing/tests/test_plugin_eval_without_human.py.\n",
+    "new_owners": [
+      "comm-validate-harness-instructions/references/evaluation.md"
+    ],
+    "checks": [
+      "read-only checks/missing tool/status/native distinction"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+    "block": 1,
+    "sha256": "7f0fa93d9a347da3b200f87dcaf595938cf1eda7277b7139473fc4ceac490134",
+    "historical_requirement_text": "# Placement",
+    "new_owners": [
+      "comm-publish-harness-instructions/references/placement-contract.md"
+    ],
+    "checks": [
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+    "block": 2,
+    "sha256": "470fc1133be96c34d71e63205fce03886b2bbdbe66152fe19bd0a047425740ca",
+    "historical_requirement_text": "Ordinary equal folders, no symlink components:\nshared harness/{common/skills/comm-name,project/skills/proj-name} →\n.agents/skills/name + .claude/skills/name; personal .agents/skills/name →\n.claude/skills/name. Shared rules: same-name .claude/rules directly, no Codex mirror.\nClassify by content; common required/project dependent; canonical prevails,\npersonal prefixes optional; conflicts need decision; octadim scheme revoked.",
+    "new_owners": [
+      "comm-publish-harness-instructions/references/placement-contract.md"
+    ],
+    "checks": [
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+    "block": 3,
+    "sha256": "b8ee2c1a9e6bdfdbc00fe4cb9fc8c852cb13dd0a55d269eb364ecc66b0ab532d",
+    "historical_requirement_text": "After gate source+copies together, no extra approval; other-owner mismatch stops.\nCheck full sets/bytes/Git visibility. Shared visible; exact personal\npaths auto-ignored only, preserve entries/roots; ignore ≠ untrack.\nInstalled canonical comm-/proj- rules: nonempty, ordinary paths, equal bytes,\nno missing/extra; ignore personal/human. Both-mode negative pytest controls:\nharness/common/testing/tests/test_rule_copies.py. Restore only through gate;\nClaude native/Codex recursive AGENTS; entrypoint\ncheck restores links only. Link/equality success ≠ native proof.\n",
+    "new_owners": [
+      "comm-publish-harness-instructions/references/placement-contract.md"
+    ],
+    "checks": [
+      "missing Claude scope/gate/full copy negative tests"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/SKILL.md",
+    "block": 1,
+    "sha256": "96018f4de9fd09fbf7755509a254fa84fcf800961fd2c8f5fcb5c2e29e70342c",
+    "historical_requirement_text": "---\nname: comm-install-harness\ndescription: Use when installing, moving or diagnosing harness packages or entrypoints, placing harness materials, or changing the shared project skeleton.\n---",
+    "new_owners": [
+      "comm-install-harness/SKILL.md",
+      "comm-diagnose-harness-entrypoints/SKILL.md",
+      "comm-preserve-harness-knowledge/SKILL.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence",
+      "warning/unsafe/fence/extra text/protected entrypoints",
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/SKILL.md",
+    "block": 2,
+    "sha256": "c8260b1037d36f1d069893b07489f032116760a801c073ba5c6aea750c01d08c",
+    "historical_requirement_text": "# Install or migrate harness",
+    "new_owners": [
+      "comm-install-harness/SKILL.md",
+      "comm-diagnose-harness-entrypoints/SKILL.md",
+      "comm-preserve-harness-knowledge/SKILL.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence",
+      "warning/unsafe/fence/extra text/protected entrypoints",
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/SKILL.md",
+    "block": 3,
+    "sha256": "88a29102d66a58f21571eca1694b82f98695f4352533e3fdb7152ef16739a5e0",
+    "historical_requirement_text": "Before an installation change read [checks](references/checks.md): two modes,\nexisting-project preservation, isolation and shared-template approvals.\nCommon is mandatory. Identify the destination; chat cwd does not establish it.",
+    "new_owners": [
+      "comm-install-harness/SKILL.md",
+      "comm-diagnose-harness-entrypoints/SKILL.md",
+      "comm-preserve-harness-knowledge/SKILL.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence",
+      "warning/unsafe/fence/extra text/protected entrypoints",
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/SKILL.md",
+    "block": 4,
+    "sha256": "f8896211401b1ee46323d22f62a694bc4ce5a307f9b42a7cdbf529ddedb120e6",
+    "historical_requirement_text": "For entrypoint diagnosis read [entrypoints](references/entrypoints.md).\nFor byte/CRLF damage during narrow text repair use from the project root\n`harness/common/skills/comm-preserve-text-line-endings/SKILL.md`.\nDo not directly edit protected entrypoints or rewrite an existing startup command.",
+    "new_owners": [
+      "comm-install-harness/SKILL.md",
+      "comm-diagnose-harness-entrypoints/SKILL.md",
+      "comm-preserve-harness-knowledge/SKILL.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence",
+      "warning/unsafe/fence/extra text/protected entrypoints",
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/SKILL.md",
+    "block": 5,
+    "sha256": "4e3921b34e00dde604b13e7bb915773e46f5a9ae56082c9e5ba31cfa6f47e062",
+    "historical_requirement_text": "Before material placement/date migration read [placement](references/material-placement.md).\nFor running/installing the harness suite read [testing](references/testing.md).\nOnly open resources for the current action. Skill/rule authoring and native\ninstallation require `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`\nfrom the target root. Copy equality does not prove native agent behavior.\n",
+    "new_owners": [
+      "comm-install-harness/SKILL.md",
+      "comm-diagnose-harness-entrypoints/SKILL.md",
+      "comm-preserve-harness-knowledge/SKILL.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence",
+      "warning/unsafe/fence/extra text/protected entrypoints",
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/checks.md",
+    "block": 1,
+    "sha256": "972928117c9dba3428f816e3f5a5c76c60dc7deada1247151a489bd48c685546",
+    "historical_requirement_text": "# Installation contract",
+    "new_owners": [
+      "comm-install-harness/references/checks.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/checks.md",
+    "block": 2,
+    "sha256": "8f5c37c9fe66a0978bf0450d05fd636094f6da7fc7e26e90af6ad777d0163c6f",
+    "historical_requirement_text": "Identify the destination and existing files before copying. Common is portable\nand independent of the old application/project; project requires common.",
+    "new_owners": [
+      "comm-install-harness/references/checks.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/checks.md",
+    "block": 3,
+    "sha256": "449b6345800131dd42cae7d1191925d16b52f547b77babbb0fe350724d1556fe",
+    "historical_requirement_text": "- Common-only: copy common; the common entrypoint check creates a missing\n  project from `harness/common/base/project-skeleton.json`. It creates the\n  agreed categories, neutral INDEX/START and human guides, never old work.\n- Common+project: preserve existing project files byte-for-byte; do not replace\n  it or add categories merely because the template changed. Missing/unsafe\n  mandatory resources fail the check.\n- Project-only is unsupported; refusal is a negative control, not a third mode.",
+    "new_owners": [
+      "comm-install-harness/references/checks.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/checks.md",
+    "block": 4,
+    "sha256": "ed34107cb9f021ff9b933572db9647bddc58ec92b1787deb1d0bec80f02271e5",
+    "historical_requirement_text": "Run `python3 -B harness/common/checks/ensure_entrypoint_links.py` from the target\nroot. It restores startup links and the recursive rules-reading instruction,\nnot publications/copies; notify before repairs. Keep an existing AGENTS startup\ncommand. The old project check may delegate to common for compatibility; do\nnot create an independent implementation or add this wrapper to the neutral\ntemplate. Direct AGENTS/CLAUDE edits remain forbidden; no hooks/blocking or\nmachine-specific setup. For warning/error diagnosis read [entrypoints](entrypoints.md).",
+    "new_owners": [
+      "comm-install-harness/references/checks.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/checks.md",
+    "block": 5,
+    "sha256": "3633cecb70f41855c22e133b153081bb5fcc611f86e8de33375a48f579727d0d",
+    "historical_requirement_text": "The shared template is explicit: never infer it from current project folders.\nChanging its contents requires a separate common inbox request, a separate\nexplicit user decision and separate explicit confirmation of usefulness to all\nprojects. Await both; a proposal or silence supplies neither. New projects use\nthe approved revision; existing projects change only by an authorized migration.\nBefore placement read [material placement](material-placement.md):\nkeep agreed categories, creation dates and human guides; do not invent old dates.",
+    "new_owners": [
+      "comm-install-harness/references/checks.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/checks.md",
+    "block": 6,
+    "sha256": "95e0d26ab76f2711a35992d759f3470284b8a529207e90d2ad123ea28de16bd6",
+    "historical_requirement_text": "Check two clean temporary installations with no source-project or global-author\naccess: neutral complete project creation; existing project hashes preserved;\nrepeated startup unchanged; damaged resources rejected; common absence refused\nbefore writes. Verify links, resources, commands and ordinary native copies.\nDo not duplicate common/project knowledge; stop conflicting actions for the user.",
+    "new_owners": [
+      "comm-install-harness/references/checks.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/checks.md",
+    "block": 7,
+    "sha256": "d4e94afb8b44eacf75e28b582fb5e22666e2ffd73568189d5594a252078539de",
+    "historical_requirement_text": "Measure startup separately for both modes: pointers/guards + skill metadata,\nthen only the selected body and necessary resources. Exclude human-guide bodies;\ntotal package size is not startup cost. Structural success does not prove native\nCodex/Claude behavior. Record each agent/mode/version, commands, results and\nlimits; changes reset prior instruction statuses and preserve publication gates.",
+    "new_owners": [
+      "comm-install-harness/references/checks.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/checks.md",
+    "block": 8,
+    "sha256": "456a90512710e7e3f2d52111f8ae32e8aa8b117f9af5c433f70f939ba9fe470a",
+    "historical_requirement_text": "New approved projects have no lessons category; plans remain docs/plans.\nExisting legacy folders survive ordinary startup; remove them only through an\nauthorized addressed migration after requirement mapping and current checks.",
+    "new_owners": [
+      "comm-install-harness/references/checks.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/checks.md",
+    "block": 9,
+    "sha256": "9e75be3c59a5905d5d818629e53eca006bb7c3082af11b3712d1991b075b58ba",
+    "historical_requirement_text": "Разрешённое узкое исключение: обязательная стартовая проверка автоматически\nсоздаёт только отсутствующий harness/project как пустой нейтральный каркас\nиз согласованного harness/common/base/project-skeleton.json, без inbox\nи отдельного подтверждения. Существующий project сохраняется побайтно;\nего правка, дополнение, пересоздание и изменение шаблона этим исключением\nне разрешены.\n",
+    "new_owners": [
+      "comm-install-harness/references/checks.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/testing.md",
+    "block": 1,
+    "sha256": "6f27d828e160f256f1b82d0da3d4b0071c0eebd3bf3d17ea2901f0809a3e1eac",
+    "historical_requirement_text": "# Запуск pytest",
+    "new_owners": [
+      "comm-install-harness/references/testing.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/testing.md",
+    "block": 2,
+    "sha256": "2c3f89c2bf2802efcb12be7077720ef04a6347551641cddad07016f32b655ed8",
+    "historical_requirement_text": "Из корня проекта, Python 3.9+ и установленный uv:",
+    "new_owners": [
+      "comm-install-harness/references/testing.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/testing.md",
+    "block": 3,
+    "sha256": "2ba48b25903b44d0031818a5f63797234fb576a2888f6a05f664d46046850564",
+    "historical_requirement_text": "```sh\nuv venv .venv\nuv pip sync --python .venv/bin/python harness/common/testing/requirements.lock\n.venv/bin/python -m pytest\n.venv/bin/python harness/common/scripts/run_tests.py\n```",
+    "new_owners": [
+      "comm-install-harness/references/testing.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/testing.md",
+    "block": 4,
+    "sha256": "fc3b1cb618aa753a112e03ac226e16236744b7c43ecdb9595d99cee578802733",
+    "historical_requirement_text": "Обычный запуск собирает основной набор. Последняя команда отдельно запускает\nкаждую фактическую редакцию тестов, включая все копии inbox; одноимённые модули\nне смешиваются благодаря `--import-mode=importlib`. Сбор тестов не зависит от\nустановленных сторонних pytest-плагинов: при диагностике можно задать\n`PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`.",
+    "new_owners": [
+      "comm-install-harness/references/testing.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/testing.md",
+    "block": 5,
+    "sha256": "4b0c9b9da6a0d15a3b8e409e0abc2729a68a01665ee68fd832c4446b41485b17",
+    "historical_requirement_text": "После переноса common скопируй `harness/common/testing/pytest.ini` в корневой\n`pytest.ini`, затем выполни команды выше. Не перезаписывай отличающуюся\nконфигурацию существующего проекта: интегрируй путь основного набора и режим\nимпорта в его настройку pytest. Тестовая зависимость не нужна для стартовой\nпроверки `python3 -B harness/common/checks/ensure_entrypoint_links.py`.",
+    "new_owners": [
+      "comm-install-harness/references/testing.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/testing.md",
+    "block": 6,
+    "sha256": "c576ba941095f44157ba5508cc8fe260e76ec66e171b52b5ca6927c9e39d2082",
+    "historical_requirement_text": "`requirements.txt` фиксирует прямые зависимости, `requirements.lock` —\nрезультат `uv pip compile --universal --python-version 3.9` с условными\nзависимостями платформ и версий Python. Coverage нужен для сравнения покрытия\nпри миграциях; основной набор не использует pytest-плагины.\n",
+    "new_owners": [
+      "comm-install-harness/references/testing.md"
+    ],
+    "checks": [
+      "two clean modes/project-only/project preservation/idempotence"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 1,
+    "sha256": "6e0c76e3dd43eab615828806cc7c843fb6c68c39b039cc700a6f422e1765c8a4",
+    "historical_requirement_text": "# Проверка входов без индивидуальной настройки",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 2,
+    "sha256": "bf643f5dcd86312c264723052a092948679a988d3b440b1df22406dec7e91d62",
+    "historical_requirement_text": "Уточнение пользователя 2026-10-05 отменяет Git hook, блокирующие проверки и обязательную регистрацию версии входов. Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Предложения изменения — через согласованную отдельную обработку inbox. Наличие заявки само по себе не разрешает правку.",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 3,
+    "sha256": "35452bcc47ae037a129f8000a0fcf0e447dff5c9b392a543ccaba966a7503ef8",
+    "historical_requirement_text": "## Запуск",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 4,
+    "sha256": "b536cea2242e7d8d764897b9be3267ef047f07731f6efc11212d2ed9aae19dff",
+    "historical_requirement_text": "Нужен Python 3.9+. Из корня проекта:",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 5,
+    "sha256": "5d3921bf1e925f9a485792f99d52a330630bb47129da39c5054008e3079df3ff",
+    "historical_requirement_text": "```sh\npython3 -B harness/common/checks/ensure_entrypoint_links.py\n```",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 6,
+    "sha256": "a095a4b08f87df3144f85ba877446071d75a3ceaa8a0ad3a4c7b55ba0d788470",
+    "historical_requirement_text": "Не требуются Git, hooks, hooksPath, изменения конфигурации машины или предварительная регистрация входов. Скрипт не запускается сам: его запускает агент по стартовой инструкции. Он не изменяет Git-настройки и не блокирует запись или коммит.",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 7,
+    "sha256": "88329ad98dca33bf98e7f4937a0371a430ddecce1a94549a61de9b1bbb5a67d3",
+    "historical_requirement_text": "## Что проверяется",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 8,
+    "sha256": "c5af4bac94257d4088cf4da0957c15fe0db6a752411fefdc0ecb79d9895c3e77",
+    "historical_requirement_text": "- Наличие INDEX.md/START.md установленных пакетов и обычные безопасные входные файлы.\n- Стартовые Markdown-ссылки INDEX.md/START.md, ссылка на .claude/rules/ и явное указание Codex прочитать Markdown-правила рекурсивно (кроме README.human.md) в AGENTS.md; относительный импорт в CLAUDE.md. Отсутствующий каталог .claude/rules создаётся; симлинки в пути или файл вместо каталога дают ошибку до правки входов. Перед восстановлением выводится сообщение о повреждении и предстоящей записи. Другие настройки не переписываются.\n- CLAUDE.md должен содержать только @AGENTS.md и необязательный конечный перевод строки. Лишний или отличающийся текст сохраняется; проверка предупреждает и направляет исправление в inbox.\n- Если Git уже доступен и содержит версии входов в HEAD, дополнительно сравнивается рабочий текст с историей. Для AGENTS.md стандартные строки стартовых ссылок и сгенерированное указание чтения правил не считаются изменением настроек. Обнаруженная правка вызывает предупреждение, а не блокировку.",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 9,
+    "sha256": "8ea77872a14b2ae4ea1fdafd118724d1f434c4f31d5ebd6f183f666a59d4987c",
+    "historical_requirement_text": "Поиск подключений и сравнение с Git используют один построчный разбор fenced-блоков:\nоткрывающий разделитель — минимум три обратные кавычки либо тильды с отступом\nдо трёх пробелов; закрывающий — тот же символ, не короче открывающего и только\nс пробелами/табуляциями после него. Ссылки и сгенерированные инструкции внутри\nблока остаются примерами кода. Незакрытый блок в текущем входе даёт ошибку с номером\nстроки до записи входов или создания .claude/rules; автоматически закрывать его\nнельзя. При сравнении с историей незакрытый блок считается кодом до конца текста:\nповреждённый HEAD не блокирует проверку исправного текущего файла.\nЭто разбор верхнеуровневых fenced-блоков, не полноценный Markdown-парсер вложенных\nконтейнеров. Историческое исправление fenced-блоков отражено в Git; текущие регрессии — test_ensure_entrypoint_links.py и test_entrypoint_notifications.py..",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 10,
+    "sha256": "5acd4478d553b1318734aeb6c9f71d0c1f33be0e646c8bdeaab281a82bb7c3a4",
+    "historical_requirement_text": "При отсутствии Git или версии HEAD сравнение произвольных настроек AGENTS.md с прошлым не проверено: без предыдущего текста нельзя доказать их неизменность. Структура и импорт проверяются независимо. Текущее содержимое не сохраняется автоматически как новое основание сравнения.",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 11,
+    "sha256": "7dddedfa5370a51b2058e939ca0748a8badab0da653482993f31723913309b3d",
+    "historical_requirement_text": "Сообщение проверки:",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 12,
+    "sha256": "cf89eb80f3126f354bbd976428d3c09e73f606cd8784e2b99b48826018d98049",
+    "historical_requirement_text": "> Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 13,
+    "sha256": "ee0786fa3a41d0456baa11dfbddc07d6dc66fd17d2f3f9785a08e97a0117f177",
+    "historical_requirement_text": "Предупреждения об изменённом тексте не меняют код успешного завершения и не блокируют задачу. Повреждение ресурсов, небезопасные пути и ошибки чтения/записи могут завершить проверку ошибкой: это невозможность безопасно выполнить её, а не технический запрет редактирования.",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 14,
+    "sha256": "eceaff1290ca17b8b103145367c988d0f5939d54769186e53c86b415718fac3b",
+    "historical_requirement_text": "## Проверки",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 15,
+    "sha256": "17affb8d3ccb5983b1ad91822c41c2e76ff0ad1f28def040b403de959463d20b",
+    "historical_requirement_text": "```sh\n.venv/bin/python -m pytest harness/common/testing/tests/test_ensure_entrypoint_links.py\n.venv/bin/python -m pytest harness/common/testing/tests/test_entrypoint_notifications.py\n```",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 16,
+    "sha256": "61409958878ee790106f66fc35fca773e2c87428e48b197ad21a21931161f788",
+    "historical_requirement_text": "Проверяются работа без Git, сохранение прямых правок и лишнего текста, предупреждение до записи восстановленных ссылок, отсутствие ложного сообщения о повреждении, отсутствие установленных hooks/новых настроек и возможность обычного коммита после предупреждения.",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 17,
+    "sha256": "c9c05963e3e07e6f268257153ef6640f949c0735207dc25ce9e133f7ef9c9678",
+    "historical_requirement_text": "В целевом проекте удалён только hook, установленный в этой задаче; чужие hooks не трогались. Старое описание блокировки и старые тесты блокирующей политики сохраняются в истории Git; они не являются действующим контрактом.",
+    "new_owners": [
+      "harness/common/testing/evidence/2026-10-05-entrypoint-notification-evidence.md"
+    ],
+    "checks": [
+      "Existing historical evidence factual coverage and unchanged SHA; no fresh historical claim"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required",
+    "disposition": "Historical story removed from working instruction; existing permanent record retained unchanged"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/entrypoints.md",
+    "block": 18,
+    "sha256": "9e75be3c59a5905d5d818629e53eca006bb7c3082af11b3712d1991b075b58ba",
+    "historical_requirement_text": "Разрешённое узкое исключение: обязательная стартовая проверка автоматически\nсоздаёт только отсутствующий harness/project как пустой нейтральный каркас\nиз согласованного harness/common/base/project-skeleton.json, без inbox\nи отдельного подтверждения. Существующий project сохраняется побайтно;\nего правка, дополнение, пересоздание и изменение шаблона этим исключением\nне разрешены.\n",
+    "new_owners": [
+      "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+    ],
+    "checks": [
+      "warning/unsafe/fence/extra text/protected entrypoints"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/material-placement.md",
+    "block": 1,
+    "sha256": "6fde0642c00e58316439a9bb8e51418fc2c4401cd5e1634b3b821ac6bbe59682",
+    "historical_requirement_text": "# Размещение и миграция материалов",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/material-placement.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/material-placement.md",
+    "block": 2,
+    "sha256": "3c9ead38255bd94a25321aefc287adab436f23a41df93d946424f5965a0af5ac",
+    "historical_requirement_text": "При размещении соблюдай формальный состав и семантику дат в\n`harness/common/specs/2026-10-06-structure-and-creation-dates.md` из корня проекта.\nДля выбора формы опыта до записи используй\n`harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`.\nCommon — общее переносимое; project — зависящее от проектного контракта.\nНе дублировать знания обоих пакетов и массово не преобразовывать старые inbox.",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/material-placement.md",
+      "comm-preserve-harness-knowledge/SKILL.md",
+      "comm-preserve-harness-knowledge/references/experience-routing.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/material-placement.md",
+    "block": 3,
+    "sha256": "80971f122241448b2b078397ea8ee03bda87b4d6760cd03c065cc59f8aaf6abd",
+    "historical_requirement_text": "Дата YYYY-MM-DD — доказанная дата создания, не обновления. Правка не меняет имя.\nПредметная папка получает собственную дату создания, независимую от новых файлов\nвнутри. Для старого материала проверь историю создания с rename/move либо явно\nзаписанный факт. Дата проверки/решения/import commit/checkout mtime сама по себе\nне доказательство. Неизвестную дату конкретного материала согласуй до rename;\nне придумывай её. No watchers/hooks/auto date updates/maintained date manifest.\nНативные skill/rule names и их ресурсы сохраняют технические имена спецификации.\nНовой папке сразу нужен human guide; тела исключить из агентского чтения.",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/material-placement.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/material-placement.md",
+    "block": 4,
+    "sha256": "e4e8fec005f85bf56b003144f2c81b9fee87d4f37d27f05b83dbcfc1682c59b4",
+    "historical_requirement_text": "Для миграции сохрани карту old/new paths, исходные hashes и raw evidence.\nКаждое переносимое требование сопоставь владельцу и проверке. После полного\ncoverage review и текущих checks исправь рабочие ссылки/команды, затем удаляй\nосвобождённые источники. Не создавать архив lessons. Исторические команды и\nрезультаты оставить явно прошлой проверкой, не переписывать как новый успех.\nПроверить tests, ссылки/ресурсы, обе чистые установки, идемпотентность,\nproject-only refusal, сохранение существующих файлов, source/native sets/bytes.\nИзменения instructions/resources сбрасывают отдельные Codex/Claude статусы;\ncurrent gate остаётся. AGENTS/CLAUDE напрямую не редактировать.",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/material-placement.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  },
+  {
+    "source": "harness/common/skills/comm-install-harness/references/material-placement.md",
+    "block": 5,
+    "sha256": "213ee6cf7fcabb71840be03d9ab02ef6cf4c28e1b061a437e43fcf791b6e1ab7",
+    "historical_requirement_text": "Общий шаблон менять только по отдельной common inbox заявке, отдельному решению\nи подтверждению пользы всем проектам. Новый project использует шаблон; обычный\nстарт существующий project не мигрирует. Его изменение — отдельная разрешённая\nадресная работа. Plan files остаются docs/plans, не новая root category.\n",
+    "new_owners": [
+      "comm-preserve-harness-knowledge/references/material-placement.md"
+    ],
+    "checks": [
+      "covered/new experience/date/rationale placement"
+    ],
+    "review": "Every old block accounted before removing candidate resources; final semantic review still required"
+  }
+]

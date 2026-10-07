@@ -1,0 +1,25 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Сначала выполню проверку, затем прочитаю инструкции в указанном порядке. Для вопроса о заявках выберу comm-process-harness-inbox; файлов создавать или менять не буду.
+Владелец согласования — пользователь; заявка размещается в `harness/<package>/inbox/`: common для общих материалов, project для проектных. AGENTS.md/CLAUDE.md принадлежат пользователю.
+
+Новую заявку можно **зарегистрировать**, если создание разрешено. Начинать её **выполнение** до закрытия старой нельзя. В вашем сценарии: зарегистрировать новую без выполнения и публикации; затем сверить и возобновить старую в ранее разрешённом объёме, без повторного согласования этих стадий. Сейчас всё ограничено read-only: файлов не создавал, выполнение и публикацию не начинал.
+
+Проверка порядка и состояния:
+
+- Установить фактическую хронологию, полный состав заявки, ресурсы, результаты и разрешённые стадии. Неясные даты требуют решения пользователя.
+- Проверить индивидуальный блок `Execution`: `Status`, `Result`, `Reason`, фактическое время обновления. `in progress` — сверить сделанное и продолжить остаток; `completed` — пропустить; отсутствующий статус — проверить свидетельства.
+- Обычная документная заявка содержит реальную дату создания, время возникновения потребности, обстоятельства, причину, проблему и ожидаемый результат.
+- Завершение — результат и требуемая публикация выполнены, постоянные материалы сохранены вне inbox, статус и ссылки обновлены; либо пользователь явно решил закрыть заявку. Подготовленный кандидат закрытием не считается.
+
+Стартовая проверка прошла. Поиск inbox обнаружил отсутствие `harness/common/inbox`; файлов project inbox не вывел. Поэтому конкретную старую заявку и её статус подтвердить нельзя.
+
+Фактически прочитанные machine paths:
+
+- `harness/{common,project}/{START,INDEX}.md` — все четыре файла.
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`.
+- `.claude/rules/comm-{skill-rule-ownership,package-independence,entrypoint-links-rule,instruction-order,dependencies-through-uv,user-owned-entrypoints,human-folder-guides}.md` — все семь файлов.
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`.
+- `harness/common/skills/comm-process-harness-inbox/references/workflow.md`.
+
+Тела `README.human.md` не читались.

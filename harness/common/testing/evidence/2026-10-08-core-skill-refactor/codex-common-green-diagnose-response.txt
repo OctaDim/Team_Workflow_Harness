@@ -1,0 +1,23 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Начну с указанной проверки, затем прочитаю инструкции в заданном порядке. Выполню только диагностику.
+
+Проверка завершилась успешно. Она сообщила о договорном запрете прямых правок; сравнение настроек не выполнено из-за отсутствия истории проекта. Это не подтверждает изменение настроек. Для диагностики входов применю навык comm-diagnose-harness-entrypoints.
+
+Владелец `AGENTS.md` — пользователь; `AGENTS.md` и `CLAUDE.md` защищены договорённостью harness. Выбран нативный навык `comm-diagnose-harness-entrypoints`.
+
+Фактический результат: первая команда выполнена точно как задано, exit 0. Проверка сообщила **об отсутствии истории**, поэтому сравнение настроек «не проверено»; изменения настроек не подтверждены. Оба входа — обычные файлы. `CLAUDE.md:1` содержит только `@AGENTS.md`: extra text сейчас отсутствует. В `AGENTS.md:6` команда без `-B`; существующую допустимую команду сохраняют.
+
+Допустимо проверить структуру входов, START/INDEX, импорт, ссылки, безопасность путей и доступную историю. Предупреждение о настройках само по себе работу не останавливает. Если extra text действительно обнаружен, сохранить его, предупредить и предложить исправление через согласованный `harness/<пакет>/inbox/`; наличие заявки ещё не разрешает правку. Hooks, hooksPath, индивидуальная регистрация и новая настройка машины не нужны.
+
+Незакрытый fence текущего входа — остановка с путём и номером строки, без автоматического закрытия и зависимых записей. Незакрытый исторический fence трактуется как код до EOF и не блокирует корректный текущий вход. Unsafe symlink — отказ и остановка зависимой работы; не переходить по нему и не подменять путь.
+
+Фактически прочитанные machine paths:
+
+- `harness/{common,project}/{START,INDEX}.md` — все четыре.
+- `harness/common/rules/comm-skill-rule-ownership.md`, `comm-human-folder-guides.md`.
+- `.claude/rules/comm-{skill-rule-ownership,package-independence,entrypoint-links-rule,instruction-order,dependencies-through-uv,user-owned-entrypoints,human-folder-guides}.md` — все семь.
+- `.agents/skills/comm-diagnose-harness-entrypoints/SKILL.md` и `references/entrypoints.md`.
+- `AGENTS.md`, `CLAUDE.md`.
+
+Порядок чтения соблюдён. Тела `README.human.md` не читались; правки не выполнялись.

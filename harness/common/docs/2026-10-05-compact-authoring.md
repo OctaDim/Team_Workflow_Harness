@@ -17,5 +17,9 @@ name/description, выбранное body и реально открытые р�
 копий не доказывают нативное применение.
 
 Текущий владелец авторства: [authoring skill](../skills/comm-create-lazy-claude-codex-skills/SKILL.md).
-Методика и gate: [validation](../skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md).
+Методика: [validation](../skills/comm-validate-harness-instructions/references/validation.md).
+Gate: [publication](../skills/comm-publish-harness-instructions/references/gate.md).
 Этот документ объясняет решения, не задаёт отдельный порядок действий.
+
+Указатели на текущих владельцев обновлены 2026-10-08; даты и исторические
+результаты выше не изменены этим переносом.

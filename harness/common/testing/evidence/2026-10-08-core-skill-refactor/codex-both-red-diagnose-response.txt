@@ -1,0 +1,36 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-report-plugin-eval-budget, comm-resolve-permission-blockers.
+
+Начну с указанной проверки, затем прочитаю инструкции в заданном порядке. Работа только диагностическая.
+
+Проверка завершилась успешно. Она сообщила, что сравнение настроек с историей не выполнено: истории проекта нет; это не свидетельство изменения настроек. Для диагностики входов применяю `comm-install-harness` и прочитаю его ресурс `entrypoints.md`.
+
+Владелец `AGENTS.md` — пользователь; `AGENTS.md` и `CLAUDE.md` защищены договорённостью harness. Применён навык `comm-install-harness`.
+
+Фактический результат: первая команда завершилась с кодом 0. Сравнение настроек с историей **не проверено**, поскольку истории проекта нет. Текущий `CLAUDE.md` содержит только `@AGENTS.md`; extra text не обнаружен. Входы и `.claude/rules` — обычные файлы/каталоги. Сообщений о восстановлении не было; правки не выполнял.
+
+Для описанного случая:
+
+- Предупреждение об изменении настроек не блокирует задачу. Проверить различия с HEAD, если история доступна; без неё неизменность настроек недоказуема.
+- Extra text в `CLAUDE.md` сохранить и предложить исправление через `harness/<пакет>/inbox/`. Наличие заявки само по себе не разрешает правку.
+- Отличающуюся допустимую стартовую команду существующего `AGENTS.md` не переписывать; второй запуск после стартовой проверки не нужен.
+- Автовосстановление допускается только для стартовых ссылок с предварительным сообщением. Здесь действует ваш read-only запрет.
+- Незакрытый текущий Markdown fence или unsafe symlink: остановить зависимую работу, сообщить путь/строку и причину; не закрывать fence автоматически, не обходить symlink.
+- Hooks, `hooksPath`, индивидуальная настройка и регистрация входов не требуются.
+
+Фактически прочитанные machine paths:
+
+- `AGENTS.md`, `CLAUDE.md`
+- `harness/common/START.md`, `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`, `harness/common/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-instruction-order.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-package-independence.md`
+- `harness/common/INDEX.md`, `harness/project/INDEX.md`
+- `harness/common/skills/comm-install-harness/SKILL.md`
+- `harness/common/skills/comm-install-harness/references/entrypoints.md`
+
+Тела `README.human.md` не читал.

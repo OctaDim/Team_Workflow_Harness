@@ -1,0 +1,29 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Начну с указанной проверки, затем прочитаю инструкции в заданном порядке. Все действия будут только на чтение.
+
+Стартовая проверка прошла; обязательные правила прочитаны полностью. Для гипотетической публикации применю comm-publish-harness-instructions: выясню gate текущей версии и требования к составу нативных копий.
+
+**Нет, перенос по старому успешному отчёту недопустим.** Разрешение current source/native transfer не заменяет отдельное разрешение и подтверждение публикации именно текущей непроверенной версии. При failed Claude check gate закрыт; гипотетическое действие — остановить публикацию. В этом read-only тесте подтверждение не запрашиваю и ничего не записываю.
+
+Владелец shared-инструкций — canonical `harness/common` либо зависимый `harness/project`; native-каталоги содержат установочные копии. AGENTS.md принадлежит пользователю.
+
+Gate требует повторить все обязательные проверки текущей компактной версии: Codex и Claude отдельно, каждый в common-only и common+project. Проверяются обнаружение, явный вызов ресурсов, неявный выбор, отсутствие загрузки на посторонней задаче и поведение. Правки сбрасывают статусы.
+
+После прохождения gate публикуются source и полные копии вместе:
+
+- Shared skills: canonical → `.agents/skills/name` и `.claude/skills/name`.
+- Shared rules: canonical → одноимённые `.claude/rules`, без Codex mirror.
+- Весь установленный canonical comm-/proj-набор: непустой, обычные пути без symlink-компонентов, равные байты, никаких missing/extra; проверяется Git visibility. Personal/human исключаются. Отличающийся файл другого владельца требует остановки.
+
+Итог: Claude — **не проверено** с результатом failed; неподтверждённые текущие agent/mode результаты — **не проверено**; overall — **не проверено**, публикация остановлена. Даже разрешённое исключение статусы не повышает. Равенство копий и исправные ссылки не доказывают native integration.
+
+Фактически прочитанные machine paths (скобки обозначают каждый перечисленный путь):
+
+- `harness/{common,project}/{START,INDEX}.md`
+- `harness/common/rules/{comm-skill-rule-ownership,comm-human-folder-guides}.md`
+- `.claude/rules/{comm-instruction-order,comm-skill-rule-ownership,comm-dependencies-through-uv,comm-user-owned-entrypoints,comm-human-folder-guides,comm-entrypoint-links-rule,comm-package-independence}.md`
+- `.agents/skills/comm-publish-harness-instructions/{SKILL.md,references/gate.md,references/placement-contract.md}`
+- `harness/common/skills/comm-validate-harness-instructions/{SKILL.md,references/validation.md}`
+
+Стартовая команда завершилась успешно; тела README.human.md не читались.

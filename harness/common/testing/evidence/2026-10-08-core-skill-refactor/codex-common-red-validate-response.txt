@@ -1,0 +1,31 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-report-plugin-eval-budget, comm-resolve-permission-blockers.
+
+Сначала выполню указанную проверку, затем прочитаю инструкции в заданном порядке. Работа будет только на чтение.
+
+Стартовая проверка прошла; сравнение с историей недоступно, поскольку истории проекта нет. Выбираю навык comm-create-lazy-claude-codex-skills для проверки существующей инструкции и определения достаточности свидетельств A/equal copies.
+
+**Структурного A и equal copies недостаточно.** A оценивает структуру; равенство копий подтверждает совпадение содержимого, но не нативное обнаружение, загрузку и поведение.
+
+Владелец процедуры — `harness/common/skills/comm-create-lazy-claude-codex-skills`; ранних ограничений — `harness/common/rules`. Workflow для этой задачи: **read-only validation**, без авторства, установки и публикации.
+
+Стартовая проверка завершилась успешно; история проекта отсутствует. Прочитанная инструкция требует:
+
+- проверки контракта, конфликтов, ресурсов и компактности;
+- применимых skill-creator/writing-skills проверок;
+- plugin-eval `start → analyze`, необходимых исправлений и повторного сравнения;
+- отдельных проверок Codex/Claude в common-only и common+project: каталог, явный вызов, неявный выбор, незагрузка для посторонней задачи, поведение;
+- раздельной проверки чтения правил, исключения human-файлов загрузчиками и поведения;
+- измерения baseline/current, зависимых чтений и ресурсов.
+
+Installed tool в isolated catalog отсутствует: зависимая оценка **not-run**. Real plugin manifest отсутствует: evaluate-plugin неприменим; поддельный manifest недопустим. Полная проверенность не установлена. Ничего не устанавливал, не записывал и не публиковал; тела README.human.md не читал.
+
+Для проверки нужны только **фактически прочитанные** ресурсы выбранного навыка: `references/content-contract.md`, `references/validation-and-publication.md`, `references/evaluation.md`. Placement и inbox workflow сейчас не нужны.
+
+Остальные фактически прочитанные machine paths:
+
+- `harness/{common,project}/{START,INDEX}.md` — оба пакета;
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`;
+- `.claude/rules/comm-{skill-rule-ownership,package-independence,entrypoint-links-rule,instruction-order,dependencies-through-uv,user-owned-entrypoints,human-folder-guides}.md`;
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.
+
+Report fields: дата/версия/файлы/команды/инструменты/версии агентов; контракт/компактность; пороги/baseline/причины превышений; pass/fail/not-run/N/A с причиной; findings/next steps; статусы по агентам и режимам. Отчёт на диск не создавался.

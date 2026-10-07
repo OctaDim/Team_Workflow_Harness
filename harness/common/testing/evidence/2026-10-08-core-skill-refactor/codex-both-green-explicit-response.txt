@@ -1,0 +1,29 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Применяю семь указанных навыков для проверки их собственных указателей и условий вызова. Работаю только на чтение, в заданном порядке.
+
+Владелец семи процедур — канонический `harness/common/skills/`; прочитаны нативные копии `.agents/skills/`. AGENTS.md принадлежит пользователю.
+
+Первая команда выполнена успешно: `python3 harness/common/checks/ensure_entrypoint_links.py`, exit 0. Сравнение настроек с историей **не проверено**: истории проекта нет. Заданный порядок чтения соблюдён. Все запрошенные ресурсы доступны. Файлы не менял; тела README.human.md не читал. Дополнительные зависимости и проверки других стадий не запускал; статусы валидации/публикации не повышал.
+
+Для каждого навыка: задача → входы → действия → завершение:
+
+| Навык (`comm-`) | Контракт |
+|---|---|
+| create-lazy-claude-codex-skills | Авторство → задача, владельцы → выбрать owner, описать алгоритм → компактный полный кандидат |
+| diagnose-harness-entrypoints | Диагностика → root, exit/output, история → отделить предупреждения от ошибок → доказанная причина и допустимое действие |
+| install-harness | Установка → цель, существующие файлы, режим → перенос, изолированные проверки → переносимость и сохранность project |
+| preserve-harness-knowledge | Сохранение опыта → будущее поведение → выбрать owner/категорию → единственное постоянное покрытие |
+| process-harness-inbox | Обработка → заявка, статус, разрешения → последовательно выполнить разрешённые стадии → результат, публикация и учёт |
+| publish-harness-instructions | Публикация → версия, проверки, разрешения → gate, source/copies → согласованная версия и честные статусы |
+| validate-harness-instructions | Проверка → версия, контракт, инструменты → текущие проверки каждого agent/mode → подтверждённый охват без пробелов |
+
+При ошибке входа останавливается зависимая работа; при отсутствующем разрешении — запись/публикация; missing/failed checks остаются непроверенными.
+
+Фактически прочитанные machine paths (фигурные скобки сокращают перечисление):
+
+- `harness/{common,project}/{START,INDEX}.md`
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`
+- `.claude/rules/comm-{skill-rule-ownership,package-independence,entrypoint-links-rule,instruction-order,dependencies-through-uv,user-owned-entrypoints,human-folder-guides}.md`
+- `.agents/skills/comm-<каждый навык таблицы>/SKILL.md`
+- Собственные `references/` этих навыков соответственно: `content-contract.md`; `entrypoints.md`; `checks.md`, `testing.md`; `material-placement.md`, `experience-routing.md`; `workflow.md`; `gate.md`, `placement-contract.md`; `evaluation.md`, `validation.md`.

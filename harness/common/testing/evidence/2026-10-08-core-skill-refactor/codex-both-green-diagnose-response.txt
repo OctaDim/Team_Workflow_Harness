@@ -1,0 +1,27 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Начну с указанной проверки, затем прочитаю инструкции в заданном порядке. Работа только диагностическая.
+
+Стартовая проверка завершилась успешно. Она сообщила, что сравнение настроек с историей не выполнено: истории проекта нет. Это не подтверждает изменение настроек. Применяю навык comm-diagnose-harness-entrypoints для проверки границ восстановления и причин остановки.
+
+Владелец AGENTS.md/CLAUDE.md — пользователь; канонические требования harness обязательны, индивидуальные инструкции их не отменяют.
+
+Первая команда выполнена точно по запросу, exit=0. Фактический вывод: сравнение настроек **не проверено из-за отсутствия истории**, а не подтверждено изменение. Оба входа — обычные файлы; текущий CLAUDE.md содержит только `@AGENTS.md` с конечным переводом строки, extra text отсутствует. Команда AGENTS без `-B` сохранена. Файлы не менял; тела README.human.md не читал.
+
+Допустимые действия и остановки:
+
+- Проверять фактическую команду, статус, вывод, доступность истории, START/INDEX, структуру входов, импорт CLAUDE и безопасность путей.
+- Предупреждение о настройках само по себе не блокирует работу. Extra text CLAUDE сохранять; исправление предлагать через `harness/<пакет>/inbox/`. Наличие заявки не разрешает правку.
+- Действующую стартовую команду AGENTS автоматически не переписывать. Только согласованный checker может восстанавливать стартовые ссылки, предварительно сообщив о предстоящей записи.
+- Hooks, hooksPath, индивидуальная регистрация и настройка машины не нужны.
+- Незакрытый fence **текущего** входа: сообщить путь/строку, остановиться до записи и создания каталога правил; автоматически не закрывать. Незакрытый исторический fence трактуется как код до EOF и не блокирует корректный текущий вход.
+- Unsafe symlink или файл вместо ожидаемого каталога: отказ до восстановления, остановка зависимых действий; без обхода.
+
+Фактически прочитанные machine paths (фигурные скобки обозначают каждый перечисленный путь):
+
+- `AGENTS.md`, `CLAUDE.md`
+- `harness/{common,project}/{START,INDEX}.md`
+- `harness/common/rules/{comm-skill-rule-ownership,comm-human-folder-guides}.md`
+- `.claude/rules/{comm-skill-rule-ownership,comm-package-independence,comm-entrypoint-links-rule,comm-instruction-order,comm-dependencies-through-uv,comm-user-owned-entrypoints,comm-human-folder-guides}.md`
+- `.agents/skills/comm-diagnose-harness-entrypoints/SKILL.md`
+- `.agents/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md`

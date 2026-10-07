@@ -1,0 +1,29 @@
+Доступные навыки из нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Проверю входные ссылки первой командой, затем прочитаю инструкции в указанном порядке. Файлы менять не буду.
+
+Стартовая проверка прошла; история настроек недоступна. Все семь машинных правил прочитаны. Для выбора формы опыта применяю comm-preserve-harness-knowledge, а для границ заявки — comm-process-harness-inbox. С учётом «не записывай» подготовлю только вывод о размещении и допустимых стадиях.
+
+Владелец общего переносимого опыта — **harness/common**. Самостоятельный повторяемый экспорт со своим запросом, результатом и независимой проверкой заслуживает отдельного lazy skill после проверки существующего покрытия; детали того же результата — ресурс существующего владельца.
+
+Размещение:
+
+- **procedure** → `skills/<native-name>/SKILL.md` и условные ресурсы;
+- **rationale** → `decisions/` для решений, ограничений и альтернатив; `docs/` для объяснений;
+- **raw checks**, результаты и ограничения проверок → `testing/evidence/`; исполняемые проверки → `checks/` или `testing/tests/`;
+- **plan** → `docs/plans/`.
+
+Сегодняшнее имя старому материалу по **mtime или import commit давать нельзя**: они не доказывают создание. Неизвестную дату сохраняют неизвестной до адресного согласования. Новая заявка получает фактическую дату своего создания независимо от возраста материала.
+
+Первая команда выполнена успешно; сравнение настроек с историей не проверено — истории проекта нет. Порядок чтения соблюдён. Ничего не записано, тела `README.human.md` не читались. Создание заявки разрешено, но остановлено вашим «не записывай»; выполнение и публикация не разрешены. Опыт фактически **не сохранён**, кандидат не создан.
+
+Фактически прочитанные machine paths (фигурные скобки перечисляют каждый прочитанный файл):
+
+- `harness/{common,project}/{START,INDEX}.md`
+- `harness/common/rules/{comm-skill-rule-ownership,comm-human-folder-guides}.md`
+- `.claude/rules/{comm-skill-rule-ownership,comm-package-independence,comm-entrypoint-links-rule,comm-instruction-order,comm-dependencies-through-uv,comm-user-owned-entrypoints,comm-human-folder-guides}.md`
+- `harness/common/skills/comm-preserve-harness-knowledge/SKILL.md`
+- `harness/common/skills/comm-preserve-harness-knowledge/references/{experience-routing,material-placement}.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/workflow.md`
+- `harness/common/specs/2026-10-06-structure-and-creation-dates.md`

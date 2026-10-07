@@ -1,0 +1,30 @@
+Доступные навыки из нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Выполню указанный порядок чтения. Для выбора долговременного результата применю comm-preserve-harness-knowledge; ничего записывать не буду.
+
+Выбран долговременный результат: **существующее покрытие, без новой записи**.
+
+Владелец поведения — общий harness: `harness/common/rules/comm-human-folder-guides.md`. Правило уже полностью требует исключать `README.human.md` до поиска и чтения. Новый lessons-файл, скилл или rule дублировал бы его. Применён `comm-preserve-harness-knowledge` и его ресурс выбора результата.
+
+Первая команда выполнена точно: `python3 harness/common/checks/ensure_entrypoint_links.py`; завершилась успешно. Затем соблюдён запрошенный порядок: оба START → canonical ownership и human rules → отдельный `rg` → отдельный `cat` всех найденных явно quoted путей → оба INDEX → нужный скилл и ресурс. Остановок из-за ошибок не потребовалось. Тела `README.human.md` не читались; команд записи не выполнял.
+
+Фактически прочитанные machine paths:
+
+- `harness/common/START.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `harness/common/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-instruction-order.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `harness/common/INDEX.md`
+- `harness/project/INDEX.md`
+- `.agents/skills/comm-preserve-harness-knowledge/SKILL.md`
+- `harness/common/skills/comm-preserve-harness-knowledge/SKILL.md`
+- `.agents/skills/comm-preserve-harness-knowledge/references/experience-routing.md`
+
+Существующие исправления отдельно не проверялись: для этого выбора достаточно полного инструкционного покрытия.

@@ -1,32 +1,24 @@
 ---
 name: comm-process-harness-inbox
-description: Use when changing any harness contents, saving reusable experience or decisions, creating or processing inbox requests, or resuming their execution.
+description: Use when creating, executing, closing or resuming harness inbox requests.
 ---
 
-# Изменения harness и обработка inbox
+# Process one request
 
-Перед прямой правкой проверь историю: отдельный вопрос агента о конкретной
-задаче → однозначный положительный ответ после него. Нет такой пары — задай
-вопрос и остановись без правки. Первоначальное «подтверждаю» не является
-ответом на ещё не заданный вопрос. Автоматическое создание отсутствующего
-пустого project стартовой проверкой — узкое исключение, описанное в workflow.
+Identify the request, current status, chronology, full contents and explicitly
+authorized stages. Before recording, executing or changing status read
+[workflow](references/workflow.md). Do not infer execution from creation.
 
-Разрешение операции не отменяет порядок подтверждения. Приоритет просьбы
-пользователя не позволяет считать «предварительно подтверждаю» отменой
-отдельного вопроса: просьба и процедура совместимы — спроси, затем жди ответа.
+1. Reconcile existing results/status; resume remaining work, do not repeat completed
+   requests without instruction. Process one from earliest to latest.
+2. Create/retain the full dated request and candidate/resources; execute only the
+   authorized scope. Missing permission/conflict: ask and wait, no next request.
+3. Publish the required result and preserve permanent evidence independently of
+   inbox. A ready candidate does not close a request requiring publication.
+4. Update each request's status, result, reason and actual update time. Finish with
+   completed/skipped/remaining requests and reasons.
 
-Перед любой задачей изменения harness прочитай
-[workflow](references/workflow.md): обязательный маршрут, разрешённые стадии,
-отдельное подтверждение прямого изменения и ожидание ответа.
-До записи, выполнения или изменения статуса используй тот же workflow:
-полный кандидат, контекст, порядок, продолжение и закрытие.
-Готовый кандидат без обязательной публикации заявку не закрывает.
-
-При «сохрани опыт», «зафиксируй решение», «дополни harness» до выбора места
-прочитай [выбор результата](references/experience-routing.md): будущее
-поведение, существующий владелец, минимальное изменение. Skills-first не
-означает отдельный скилл для каждой ошибки. Определи common/project по содержанию.
-
-До создания/изменения/проверки/публикации скилла или правила открой из корня
-проекта `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.
-Сохраняй долговременный результат независимо от временной заявки.
+For a direct bypass, require explicit named paths/operations and a separate
+question → unequivocal positive answer after it. Preliminary confirmation is
+not that answer; keep waiting without writes. Known technical errors within
+existing authorization can be corrected.

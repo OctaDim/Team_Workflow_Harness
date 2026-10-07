@@ -1,0 +1,24 @@
+Доступны нативные навыки: imagegen, openai-docs, skill-creator, skill-installer; comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Выполню чтение в указанном порядке и проверку без изменений, установки и публикации.
+Стартовая проверка прошла; история проекта недоступна для сравнения настроек. Выбран `comm-validate-harness-instructions`: прочитаю процедуру проверки и только необходимые для неё ресурсы.
+Владелец процедуры проверки — `comm-validate-harness-instructions`, канонический источник — `harness/common/skills/`; `.agents/skills/` содержит нативную копию. AGENTS.md принадлежит пользователю.
+
+Выполнены стартовая команда и чтение в заданном порядке. Проверка входов успешна; сравнение настроек с историей не выполнено: история отсутствует. `cmp` подтвердил равенство канонического и нативного SKILL.md. `plugin-eval` отсутствует в PATH и доступном каталоге инструментов. Установка и зависимые проверки остановлены; ничего не изменено, не опубликовано, отчёт не записан.
+
+**Структурного A и равенства копий недостаточно.** Они не доказывают нативное обнаружение, выбор и поведение. Полный статус остаётся «не проверено». Без настоящего manifest `evaluate-plugin` неприменим; фиктивный manifest недопустим.
+
+Выбран workflow **Validate the current version**. Нужны применимые content/profile и quick_validate, отдельные structural/budget/code результаты, затем Codex и Claude × common-only/common+project: нативный список, явный вызов собственных ресурсов, неявный выбор, отсутствие загрузки в посторонней задаче, фактическое поведение. Чтение правил, исключение human загрузчиками и поведение проверяются отдельно.
+
+Report fields: дата/версия, файлы/команды/инструменты/версии агентов, scope/contract, baseline/current startup+metadata, фактические чтения со всеми зависимостями, полный объём ресурсов, реальные пороги/различия/превышения, pass/fail/not-run/N/A с причинами, findings/missing tools/next steps; статусы отдельно по агентам и режимам.
+
+Фактически прочитанные machine paths:
+
+- `harness/{common,project}/{START,INDEX}.md` — все четыре.
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`.
+- `.claude/rules/comm-{skill-rule-ownership,package-independence,entrypoint-links-rule,instruction-order,dependencies-through-uv,human-folder-guides,user-owned-entrypoints}.md` — все семь.
+- `harness/common/skills/comm-validate-harness-instructions/SKILL.md` и `references/{validation,evaluation}.md`.
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`.
+- `.agents/skills/comm-validate-harness-instructions/SKILL.md` — побайтовое сравнение.
+
+Для проверки установки дополнительно нужны `comm-install-harness/SKILL.md`, условно его `references/testing.md`; для quick_validate — применимые инструкции skill-creator. Публикационные и inbox-ресурсы сейчас не нужны. README.human.md не читались.

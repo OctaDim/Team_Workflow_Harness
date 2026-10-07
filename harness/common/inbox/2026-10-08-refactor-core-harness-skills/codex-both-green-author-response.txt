@@ -1,0 +1,31 @@
+Доступны навыки: imagegen, openai-docs, skill-creator, skill-installer; comm-create-lazy-claude-codex-skills, comm-diagnose-harness-entrypoints, comm-install-harness, comm-preserve-harness-knowledge, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-publish-harness-instructions, comm-report-plugin-eval-budget, comm-resolve-permission-blockers, comm-validate-harness-instructions.
+
+Выполню чтение в указанном порядке, затем выберу навыки для проектирования. Файлы менять не буду.
+
+Стартовая проверка прошла; обязательные правила прочитаны полностью. Применяю comm-create-lazy-claude-codex-skills для проектирования рабочей процедуры. Архивную очистку рассмотрю как отдельную операцию с собственным результатом и проверкой.
+
+Владелец authoring — `comm-create-lazy-claude-codex-skills`. Архивная очистка требует отдельного владельца: у неё собственные запрос, результат и независимая проверка. Общая тема не основание объединять процедуры. Если очистка уже покрыта существующим навыком, переиспользовать его.
+
+Процедура создания/существенного расширения должна включать:
+
+- задачу, полезный результат, целевой harness и место размещения;
+- проверку существующих владельцев, правил, ресурсов и проверок;
+- входы → действия → результат → наблюдаемое завершение;
+- ограничения, недостающие данные, разрешения и условия остановки;
+- точные проверенные условия чтения каждого ресурса;
+- сохранение обязательств и зависимостей обоих режимов;
+- перед будущей записью — разрешённый inbox-маршрут; обоснование и evidence хранить постоянно вне рабочих инструкций и inbox.
+
+180 слов укладываются в ориентир ≤200. **1300 deferred превышают 1200:** бюджет нужно разрешить сокращением повторов и обоснованным разделением владельцев/ресурсов. Поднимать пороги, скрывать нужный ресурс или подделывать coverage ради A запрещено. A/no errors — цель фактической проверки, а не результат проектирования.
+
+Стартовая проверка успешна. Кандидат не написан, проверка и публикация не выполнялись, команды изменения файлов не запускались. Обязательный `using-superpowers` не найден в проверенных каталогах; authoring остановлен до устранения отсутствующей зависимости ([источник](harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md)).
+
+Фактически прочитанные machine paths:
+
+- `harness/{common,project}/{START,INDEX}.md` — все четыре файла;
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`;
+- `.claude/rules/comm-{instruction-order,skill-rule-ownership,dependencies-through-uv,user-owned-entrypoints,human-folder-guides,entrypoint-links-rule,package-independence}.md`;
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`;
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`.
+
+Тела `README.human.md` не читались.

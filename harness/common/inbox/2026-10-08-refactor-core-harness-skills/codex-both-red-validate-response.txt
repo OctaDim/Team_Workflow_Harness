@@ -1,0 +1,26 @@
+Доступные навыки нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-report-plugin-eval-budget, comm-resolve-permission-blockers.
+
+Проверю существующую инструкцию в режиме read-only, соблюдая заданный порядок чтения.
+
+Стартовая проверка прошла; сравнение с историей недоступно, поскольку истории проекта нет. Выбран comm-create-lazy-claude-codex-skills: он задаёт процедуру проверки инструкций и границы выводов при отсутствии реального manifest и installed tool.
+
+Владелец процедуры — **harness/common**, навык `comm-create-lazy-claude-codex-skills`; `.agents/skills/` содержит установочную копию. Выбран workflow **проверки существующей инструкции**, без авторства, установки и публикации.
+
+Выполнено: стартовая проверка — PASS; обязательные чтения — в заданном порядке; профиль name/description — PASS; тело SKILL — 166 слов; канонический SKILL и нативная копия побайтно равны. История проекта отсутствует, сравнение с ней не проверено. Файлы и отчёт не записывались; тела README.human.md не читались.
+
+**Структурный A и equal copies недостаточны.** A здесь не получен; равенство подтверждает только копирование. Без real plugin manifest `evaluate-plugin` неприменим; без installed plugin-eval остановлены зависимые start→analyze проверки. Итог: **полная верификация не выполнена**.
+
+Необходимы проверки содержания, конфликтов, ресурсов, компактности; RED→GREEN поведения; раздельные проверки чтения правил, исключения human-файлов загрузчиком и поведения. Для Codex/Claude отдельно, в common-only/common+project: discovery, явный вызов, собственные ресурсы, неявный выбор, отсутствие загрузки на посторонней задаче. Статические токены не доказывают фактическое использование.
+
+Report fields: дата/версия/файлы/команды/инструменты/версии агентов; контракт/компактность; пороги/baseline/рост/причины превышений; PASS/FAIL/not-run/N/A с причиной; findings/next steps; статусы агентов и режимов.
+
+Фактически прочитанные machine paths (общие префиксы сокращены):
+
+- `harness/{common,project}/{START.md,INDEX.md}`;
+- `harness/common/rules/comm-{skill-rule-ownership,human-folder-guides}.md`;
+- `.claude/rules/comm-{dependencies-through-uv,skill-rule-ownership,user-owned-entrypoints,human-folder-guides,entrypoint-links-rule,instruction-order,package-independence}.md`;
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md` и `references/{content-contract,validation-and-publication,evaluation}.md`;
+- `harness/common/skills/comm-install-harness/references/testing.md`;
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md` — побайтное сравнение.
+
+Для проверки достаточно этих условных ресурсов; placement, inbox workflow и experience-routing для текущего read-only scope не нужны.
