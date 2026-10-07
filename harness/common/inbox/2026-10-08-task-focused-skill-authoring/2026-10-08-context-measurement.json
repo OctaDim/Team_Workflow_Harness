@@ -1,0 +1,321 @@
+{
+  "method": "Observed completed command output bytes and explicit read paths; no tokenizer/price inference",
+  "versions": "before-version.json and final-version.json",
+  "baseline_startup_prompt_limit": "RED did not explicitly remind two canonical guards before listing; GREEN did; startup output sizes are not like-for-like usage",
+  "metadata_before_after_equal": true,
+  "metadata": [
+    {
+      "path": ".agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "name_description_chars": 183
+    },
+    {
+      "path": ".agents/skills/comm-install-harness/SKILL.md",
+      "name_description_chars": 162
+    },
+    {
+      "path": ".agents/skills/comm-preserve-text-line-endings/SKILL.md",
+      "name_description_chars": 212
+    },
+    {
+      "path": ".agents/skills/comm-process-harness-inbox/SKILL.md",
+      "name_description_chars": 174
+    },
+    {
+      "path": ".agents/skills/comm-protect-harness-evidence/SKILL.md",
+      "name_description_chars": 150
+    },
+    {
+      "path": ".agents/skills/comm-report-plugin-eval-budget/SKILL.md",
+      "name_description_chars": 161
+    },
+    {
+      "path": ".agents/skills/comm-resolve-permission-blockers/SKILL.md",
+      "name_description_chars": 201
+    }
+  ],
+  "mandatory_input_artifacts": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 1838,
+      "sha256": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11"
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 11,
+      "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49"
+    },
+    {
+      "path": "harness/common/START.md",
+      "bytes": 1491,
+      "sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2"
+    },
+    {
+      "path": "harness/common/INDEX.md",
+      "bytes": 3542,
+      "sha256": "1a390e6ea74a67f083eaedfd900766e53339f227a4bedb457ef634fe8bca2666"
+    },
+    {
+      "path": "harness/project/START.md",
+      "bytes": 853,
+      "sha256": "5be3d78b5b27ca323705aaae39a1f08e6108080cc2bf6816e36a57b652bc5d8f"
+    },
+    {
+      "path": "harness/project/INDEX.md",
+      "bytes": 2110,
+      "sha256": "ecbc5e8c644615d02b484cb13eb3c427400e7cba441e907afb13abdb0e1b6c5e"
+    },
+    {
+      "path": ".claude/rules/comm-human-folder-guides.md",
+      "bytes": 2573,
+      "sha256": "3a42b29fa2a86bb1df82567a840ae4229d448f6f7d2f3b40d6038a0bc69fc4e3"
+    },
+    {
+      "path": ".claude/rules/comm-user-owned-entrypoints.md",
+      "bytes": 2773,
+      "sha256": "c5be484a1e9e1e06079242ccaf5086b839ff322231d1faa5db123bc5288df857"
+    },
+    {
+      "path": ".claude/rules/comm-dependencies-through-uv.md",
+      "bytes": 1946,
+      "sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+    },
+    {
+      "path": ".claude/rules/comm-instruction-order.md",
+      "bytes": 3135,
+      "sha256": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824"
+    },
+    {
+      "path": ".claude/rules/comm-entrypoint-links-rule.md",
+      "bytes": 2794,
+      "sha256": "60bc44cb6d57342abc3b0da5bd3998b0437f68562675a9f81d3a7725f144769f"
+    },
+    {
+      "path": ".claude/rules/comm-package-independence.md",
+      "bytes": 2020,
+      "sha256": "3f6e71f7b941036fe78bd9f43dd9ae8b1cd7aff154aa3b48291854c6c24cde83"
+    },
+    {
+      "path": ".claude/rules/comm-skill-rule-ownership.md",
+      "bytes": 7031,
+      "sha256": "f3ddae384638dabe553892e46176e419989056f60af595501654d1c8c020dd28"
+    },
+    {
+      "path": "harness/common/rules/comm-skill-rule-ownership.md",
+      "bytes": 7031,
+      "sha256": "f3ddae384638dabe553892e46176e419989056f60af595501654d1c8c020dd28"
+    },
+    {
+      "path": "harness/common/rules/comm-human-folder-guides.md",
+      "bytes": 2573,
+      "sha256": "3a42b29fa2a86bb1df82567a840ae4229d448f6f7d2f3b40d6038a0bc69fc4e3"
+    }
+  ],
+  "reads": [
+    {
+      "phase": "red",
+      "mode": "common",
+      "startup_command_output_bytes": 30253,
+      "post_index_command_output_bytes": 44316,
+      "all_observed_dependency_reads": [
+        {
+          "command": "/bin/bash -lc 'cat /tmp/two-modes-native-j1kmew74/runtime/skills/.system/skill-creator/SKILL.md harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md"
+          ],
+          "external_skill_creator": true,
+          "observed_output_bytes": 17167
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md harness/common/skills/comm-process-harness-inbox/references/experience-routing.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+            "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 9982
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 4337
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md'",
+          "paths": [
+            "harness/common/skills/comm-process-harness-inbox/SKILL.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 2881
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+          "paths": [
+            "harness/common/skills/comm-process-harness-inbox/references/workflow.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 9949
+        }
+      ],
+      "distinct_owned_read_paths": [
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md"
+      ],
+      "owned_read_bytes": 12661,
+      "exit_code": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "red",
+      "mode": "both",
+      "startup_command_output_bytes": 40613,
+      "post_index_command_output_bytes": 31486,
+      "all_observed_dependency_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md /tmp/two-modes-native-pg19ufs_/runtime/skills/.system/skill-creator/SKILL.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md"
+          ],
+          "external_skill_creator": true,
+          "observed_output_bytes": 17167
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/experience-routing.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md'",
+          "paths": [
+            "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 9982
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 4337
+        }
+      ],
+      "distinct_owned_read_paths": [
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md"
+      ],
+      "owned_read_bytes": 12661,
+      "exit_code": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "green",
+      "mode": "common",
+      "startup_command_output_bytes": 39857,
+      "post_index_command_output_bytes": 25506,
+      "all_observed_dependency_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md /tmp/two-modes-native-s_u4ps3c/runtime/skills/.system/skill-creator/SKILL.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md"
+          ],
+          "external_skill_creator": true,
+          "observed_output_bytes": 17158
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md harness/common/skills/comm-process-harness-inbox/references/experience-routing.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+            "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 8348
+        }
+      ],
+      "distinct_owned_read_paths": [
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md"
+      ],
+      "owned_read_bytes": 6681,
+      "exit_code": 0,
+      "file_changes": {}
+    },
+    {
+      "phase": "green",
+      "mode": "both",
+      "startup_command_output_bytes": 40613,
+      "post_index_command_output_bytes": 38336,
+      "all_observed_dependency_reads": [
+        {
+          "command": "/bin/bash -lc 'cat /tmp/two-modes-native-6k9wxjlp/runtime/skills/.system/skill-creator/SKILL.md harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md"
+          ],
+          "external_skill_creator": true,
+          "observed_output_bytes": 17158
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md harness/common/skills/comm-process-harness-inbox/references/experience-routing.md'",
+          "paths": [
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+            "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+            "harness/common/skills/comm-process-harness-inbox/references/experience-routing.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 8348
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md'",
+          "paths": [
+            "harness/common/skills/comm-process-harness-inbox/SKILL.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 2881
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+          "paths": [
+            "harness/common/skills/comm-process-harness-inbox/references/workflow.md"
+          ],
+          "external_skill_creator": false,
+          "observed_output_bytes": 9949
+        }
+      ],
+      "distinct_owned_read_paths": [
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+        "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md"
+      ],
+      "owned_read_bytes": 6681,
+      "exit_code": 0,
+      "file_changes": {}
+    }
+  ],
+  "limits": [
+    "Same A/B/C task; GREEN answer length and sum interpretation explicitly requested. File reads may repeat native/source equivalent versions; all paths retained.",
+    "Observed outputs include helper results and possible truncation; unique files/bytes and static estimates are not actual tokens, cost or API usage.",
+    "External prerequisites absent from isolated catalog; system skill-creator and all borrowed dependency outputs counted when read.",
+    "Unrelated cases must independently have no task SKILL reads.",
+    "No numerical startup cap; installed authoring metadata and startup files unchanged.",
+    "Full available owned resources reduced2294→1200; target1000 still not met; split owner refactor next."
+  ]
+}

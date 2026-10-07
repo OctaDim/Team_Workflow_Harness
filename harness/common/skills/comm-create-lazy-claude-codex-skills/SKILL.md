@@ -3,17 +3,29 @@ name: comm-create-lazy-claude-codex-skills
 description: Use when creating, updating, migrating or publishing Codex and Claude skills or rules, or converting reusable experience into working instructions.
 ---
 
-# Create and publish Claude-Codex skills and rules
+# Author task-focused skills and rules
 
-For reusable experience first read from the project root
-`harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`: choose future behavior and an existing owner before creating a new artifact.
+Use using-superpowers before authoring. Establish task, useful result, target
+harness and destination; chat cwd is not proof of placement.
 
-Keep discovery in name/description; load resources for the selected task.
-Read named machine files explicitly; exclude README.human.md before reading.
+1. Before new work or substantial edits read [content](references/content-contract.md):
+   choose an owner and produce a procedure with inputs, actions and completion.
+   For experience routing first read from the project root
+   `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`.
+2. Before writing/processing a candidate read
+   `harness/common/skills/comm-process-harness-inbox/SKILL.md` and its workflow;
+   preserve stage permissions, a full dated candidate and permanent evidence.
+3. Before testing or publication read [validation](references/validation-and-publication.md).
+   Before plugin-eval read [evaluation](references/evaluation.md).
+   Before saving/installing a source or native copies read [placement](references/placement-contract.md).
+4. Repeat all mandatory checks for the final compact version; publish the authorized source and full
+   ordinary copies only after the gate. Missing/failed checks need permission
+   for this unverified version; transfer/prior success/deadline never waive it.
 
-1. Use superpowers:using-superpowers before authoring. Establish outcome, target environment and destination; a local chat cwd does not identify the project's harness. Read [content](references/content-contract.md) when writing or reviewing either format: applicability, required behavior and observable compliance; headings are optional.
-2. Read [validation](references/validation-and-publication.md) for tools, behavioral checks and publication; [placement](references/placement-contract.md) when saving or installing. Load only task-relevant resources. Preserve the full behavioral contract.
-3. Without explicit canonical placement keep context, required result and the full candidate in a separate dated inbox. Repeat final validation before publication; missing/failed checks require explicit permission for this **unverified** version. A transfer request is not permission; exceptions retain the status.
-4. After the gate save the canonical source and full ordinary native copies; verify resources, equality, Git visibility and each agent's native behavior.
+Applicable external/skill-creator checks are mandatory.
+Report date/version/files/commands/tools/agent versions, contract/compactness,
+actual thresholds/baseline differences/excess reasons,
+pass/fail/not-run/N/A+reason, findings/next steps, agent/mode statuses.
 
-Never use symlinks, edit protected entrypoints or let personal guidance skip canonical requirements. Stop dependent publication until permission arrives.
+Never edit protected entrypoints or let personal instructions skip canonical
+requirements. Stop dependent publication until permission arrives.

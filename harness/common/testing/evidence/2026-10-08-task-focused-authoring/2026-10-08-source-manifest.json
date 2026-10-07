@@ -1,0 +1,176 @@
+{
+  "created_at": "2026-10-08T00:11:24+02:00",
+  "timezone": "Europe/Berlin",
+  "order_in_current_request": 1,
+  "snapshot_kind": "complete-original-sources-not-final-candidate",
+  "files": [
+    {
+      "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/README.human.md",
+      "attachment": "source-skills/comm-create-lazy-claude-codex-skills/README.human.md",
+      "sha256": "cd200c0ff8370d59af77d8963d575a24b3193846869e083798cc43c7424fd31b",
+      "human_guide": true
+    },
+    {
+      "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "attachment": "source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "sha256": "9d2b7f31bd696d6aeeb6e5ffa2bcea98285169b120ddcdaa9206ffc725ed8f53",
+      "human_guide": false
+    },
+    {
+      "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/README.human.md",
+      "attachment": "source-skills/comm-create-lazy-claude-codex-skills/references/README.human.md",
+      "sha256": "cd200c0ff8370d59af77d8963d575a24b3193846869e083798cc43c7424fd31b",
+      "human_guide": true
+    },
+    {
+      "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+      "attachment": "source-skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+      "sha256": "437f09fc85c4c31d520bc5e7048031f0365bd1ffbafad3ecb131db332414914f",
+      "human_guide": false
+    },
+    {
+      "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+      "attachment": "source-skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+      "sha256": "77b41e3a99b9de21959e6216b0574afc8a5dd85140ae235c4dec7a2dc7546462",
+      "human_guide": false
+    },
+    {
+      "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+      "attachment": "source-skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+      "sha256": "ce78810af19e2dbc5e27df52d220d963c48231efd9eda584566cab0ea05373c8",
+      "human_guide": false
+    },
+    {
+      "source": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+      "attachment": "source-skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+      "sha256": "b2fa3f6e271d885bab84b4490cc87a59e32ff9ac08456a7999a9eb612d087a59",
+      "human_guide": false
+    }
+  ],
+  "static_evaluations": [
+    {
+      "skill": "comm-create-lazy-claude-codex-skills",
+      "source_version": "unchanged-source-snapshot",
+      "score": 86,
+      "grade": "B",
+      "tool": {
+        "name": "plugin-eval",
+        "version": "0.1.0"
+      },
+      "checks": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "category": "budget",
+          "severity": "error",
+          "status": "fail",
+          "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+          "evidence": [
+            "Value: 2294 tokens",
+            "Baseline samples: skills=1, plugins=0"
+          ],
+          "remediation": [
+            "Reduce repeated instruction text and move detail into deferred supporting files."
+          ],
+          "source": "core"
+        },
+        {
+          "id": "coverage-artifacts-unavailable",
+          "category": "coverage",
+          "severity": "info",
+          "status": "info",
+          "message": "No coverage artifacts were found for this target.",
+          "evidence": [
+            "harness/common/inbox/2026-10-08-task-focused-skill-authoring/source-skills/comm-create-lazy-claude-codex-skills"
+          ],
+          "remediation": [
+            "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+          ],
+          "source": "core"
+        }
+      ],
+      "budgets": {
+        "trigger_cost_tokens": {
+          "value": 46,
+          "band": "good",
+          "thresholds": {
+            "goodMax": 48,
+            "moderateMax": 92,
+            "heavyMax": 150
+          },
+          "components": [
+            {
+              "label": "skill-name",
+              "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-task-focused-skill-authoring/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+              "tokens": 9,
+              "note": "Always-loaded skill identifier"
+            },
+            {
+              "label": "skill-description",
+              "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-task-focused-skill-authoring/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+              "tokens": 37,
+              "note": "Always-loaded trigger description"
+            }
+          ]
+        },
+        "invoke_cost_tokens": {
+          "value": 464,
+          "band": "moderate",
+          "thresholds": {
+            "goodMax": 220,
+            "moderateMax": 480,
+            "heavyMax": 900
+          },
+          "components": [
+            {
+              "label": "skill-file",
+              "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-task-focused-skill-authoring/source-skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+              "tokens": 464,
+              "note": "Loaded when the skill is invoked"
+            }
+          ]
+        },
+        "deferred_cost_tokens": {
+          "value": 2294,
+          "band": "excessive",
+          "thresholds": {
+            "goodMax": 180,
+            "moderateMax": 520,
+            "heavyMax": 1200
+          },
+          "components": [
+            {
+              "label": "references/content-contract.md",
+              "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-task-focused-skill-authoring/source-skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+              "tokens": 387,
+              "note": "Deferred supporting file"
+            },
+            {
+              "label": "references/evaluation.md",
+              "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-task-focused-skill-authoring/source-skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+              "tokens": 683,
+              "note": "Deferred supporting file"
+            },
+            {
+              "label": "references/placement-contract.md",
+              "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-task-focused-skill-authoring/source-skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+              "tokens": 425,
+              "note": "Deferred supporting file"
+            },
+            {
+              "label": "references/validation-and-publication.md",
+              "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-08-task-focused-skill-authoring/source-skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+              "tokens": 799,
+              "note": "Deferred supporting file"
+            }
+          ]
+        }
+      },
+      "report": "2026-10-08-evaluate-skill-comm-create-lazy-claude-codex-skills.json"
+    }
+  ],
+  "new_version_validation": {
+    "Codex": "непроверенный",
+    "Claude": "непроверенный",
+    "overall": "непроверенный"
+  }
+}

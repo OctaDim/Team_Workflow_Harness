@@ -1,24 +1,24 @@
 # Content
 
-Contract: applicability, behavior, observable compliance. Keep limits/approvals/
-stops, missing-data handling/resource access. Optional headings; order only for
-correctness. Defer details; examples/reasons only prevent errors. History outside
-working instructions; no repeated metadata. Resources portable; separate platforms.
+Each new/substantial edit: name task/result; inspect existing skills/rules/
+resources/tests. Covered → reuse, no record. Own request/result/independent
+check → separate owner; one result's detail → conditional resource.
+Theme/old name ≠ ownership; no skill-count quota.
 
-Skills-first for reusable experience and recognizable tasks; reuse existing
-skills/rules/resources/checks. If an instruction already expresses everything
-needed, do not create another record. Independent repeated competence needs a
-precise trigger; keep reasons/evidence separate, not a story inside SKILL.md. Always-loaded additions
-must name a wrong action before selection; retain guard + when/how pointer.
-New requests or mandatory procedures alone do not justify rules. Record total
-startup (guards/pointers + metadata) before/after and explain growth. No agreed
-numeric budget: do not invent one. Test relevant selection and unrelated non-loading.
+Write inputs → actions → result → observable completion, when-read pointers,
+missing data/approvals/stops/limits. Headings optional; metadata selects.
+Remove repeats/advice/history; examples prevent mistakes.
+Rationale/evidence permanent outside instructions/inbox. Early guards in rules,
+algorithm one owner; duplicate critical boundary only with proven need.
+Preserve obligations/both-mode dependencies with tested pointers, no mandatory
+chain of all skills. Rules prevent a wrong action before skill selection.
 
-SKILL.md: nonempty YAML name/description + Markdown. Name 1–64 [a-z0-9-],
-no leading/trailing '-' or '--', matches folder, shared comm-/proj-. Description
-1–1024 chars: capability/trigger, not algorithm/constraints. SKILL.md suffices;
-optional references/=guidance, scripts/=actions, assets/=output; agents/openai.yaml
-for UI/description/icons, invocation policy/dependencies. Never load human guides.
+Goals: SKILL usually ≤200 words; resource sum ≤1000 static tokens,
+resolve >1200 deferred; evaluate-skill A/no errors. No raised thresholds, hidden resources or fake manifests/coverage.
 
-Rules: scope/behavior in body, no paths here. Claude strips metadata except paths;
-description cannot scope rules. Verify Codex loading separately.
+Profile: nonempty YAML name/description; name 1–64 [a-z0-9-], no edge hyphen/--,
+folder match, shared comm-/proj-; description 1–1024 chars, trigger/capability.
+SKILL alone suffices; references/scripts/assets optional guidance/actions/outputs;
+agents/openai.yaml UI/policy/deps. Exclude human bodies.
+Rules scope/behavior in body, no paths metadata; Claude ignores metadata
+except paths. Verify Codex loading separately.
