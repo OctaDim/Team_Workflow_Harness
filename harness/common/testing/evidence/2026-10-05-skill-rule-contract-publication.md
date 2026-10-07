@@ -4,7 +4,7 @@
 
 ## Выполнение и разрешение
 
-Выполнены две ожидавшие заявки: [подключение правил](../../inbox/2026-10-05-rules-entrypoint/request.md) и [WORKFLOW-43](../../inbox/2026-10-05-workflow-43-skills-rules/request.md). Пять ранее выполненных заявок пропущены; project/inbox пуст.
+Выполнены две ожидавшие заявки: подключение правил (`2026-10-05-rules-entrypoint`) и WORKFLOW-43 (`2026-10-05-workflow-43-skills-rules`). Пять ранее выполненных заявок пропущены; project/inbox пуст.
 
 Пользователь подтвердил: «Выполни inbox заявки. Подверждаю без проверки Claude Code». Разрешение относится к объединённой публикации этих двух ожидающих заявок. Claude не запускался повторно. Исключение сохраняет непроверенные статусы; полная приёмка не заявляется.
 
@@ -16,16 +16,16 @@
 - Пять канонических `harness/common/rules/comm-*.md` и пять обычных копий непосредственно в `.claude/rules/`. Удалены только пять прежних копий этих правил из `octadim/`; остальные материалы сохранены. Новая личная схема правил не вводилась.
 - Обновлены START, компактный порядок, владение, решение, документация входов и существующая проверка копий правил. Common/project версии проверки входа уже содержали согласованное подключение правил и не переписывались. Корневые AGENTS.md и CLAUDE.md не изменены.
 
-Полный перечень 15 источников, native paths, удалённых путей и SHA-256 — в [manifest](../../inbox/2026-10-05-workflow-43-skills-rules/publication-manifest.json). Прежние кандидаты и отчёты сохранены; окончательное объединение — в `merged/`, снимок перед установкой — в `publication-before/` той же заявки.
+Полный перечень 15 источников, native paths, удалённых путей и SHA-256 — в [manifest](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication-manifest.json). Состав изменения сохранён в [историческом diff](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication.diff). Имена `merged/` и `publication-before/` обозначают прежние снимки; для чтения этого отчёта они не требуются и не являются текущими инструкциями.
 
 ## Проверки текущей версии
 
-- `ensure_entrypoint_links.py`: exit 0, входы не изменены. [Вывод](../../inbox/2026-10-05-workflow-43-skills-rules/publication-entrypoint-check.txt).
-- `python3 -B -m unittest discover -s harness/common/checks -p 'test_*.py'`: 23/23 в common-only и common+project временных установках; после публикации 23/23 в исходном проекте. Существующие негативные контроли отсутствующей, отличающейся, лишней и симлинковой копии работают в трёх режимах. [Финальный вывод](../../inbox/2026-10-05-workflow-43-skills-rules/publication-checks.txt).
+- `ensure_entrypoint_links.py`: exit 0, входы не изменены. [Вывод](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication-entrypoint-check.txt).
+- `python3 -B -m unittest discover -s harness/common/checks -p 'test_*.py'`: 23/23 в common-only и common+project временных установках; после публикации 23/23 в исходном проекте. Существующие негативные контроли отсутствующей, отличающейся, лишней и симлинковой копии работают в трёх режимах. [Финальный вывод](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication-checks.txt).
 - skill-creator `quick_validate.py`: успешно; отдельно проверены непустые metadata, включительные границы, профиль имени и совпадение папки. Plain rules не запускались через skill-only валидатор.
 - Проверены равные составы/байты полных папок скилла, обычные файлы без симлинков, равенство пяти source/native правил, переносимые ссылки и Git visibility. `git apply --check` предустановочного diff и `git diff --check`: успешно.
 - Независимый review объединения: блокирующих противоречий между двумя заявками не найдено. Во время review ошибочный glob включил тело README.human.md; нарушение чтения зафиксировано и сообщено пользователю. Последующие чтения ограничены явно названными файлами; оценка выполнена на фильтрованной копии без человеческих файлов.
-- plugin-eval analyze/brief/compare повторены для итогового скилла. B, 86/100: один fail `deferred_cost_tokens-budget-high` (1572 против статического порога 1200). Trigger 47, invoke 397, total 2016 estimated-static tokens. Это не измеренный расход сессии. Структурных и ссылочных замечаний нет; обязательный контракт не удалялся ради порога. [Оценка](../../inbox/2026-10-05-workflow-43-skills-rules/publication-evaluation.json), [brief](../../inbox/2026-10-05-workflow-43-skills-rules/publication-brief.json), [сравнение](../../inbox/2026-10-05-workflow-43-skills-rules/publication-comparison.json).
+- plugin-eval analyze/brief/compare повторены для итогового скилла. B, 86/100: один fail `deferred_cost_tokens-budget-high` (1572 против статического порога 1200). Trigger 47, invoke 397, total 2016 estimated-static tokens. Это не измеренный расход сессии. Структурных и ссылочных замечаний нет; обязательный контракт не удалялся ради порога. [Оценка](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication-evaluation.json), [brief](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication-brief.json), [сравнение](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication-comparison.json).
 
 ## Нативные сценарии и статусы
 
@@ -37,12 +37,14 @@ Codex CLI 0.159.3: новые read-only запуски текущего комп
 | common+project | Явный вызов установленного скилла и своих ресурсов; те же решения, одинаковые статусы правил/скиллов и автоматическая копия после разрешения |
 | project-only | Общий authoring skill отсутствует в нативном каталоге и проектной .agents/skills |
 
-Все три запуска завершились exit 0. [Common](../../inbox/2026-10-05-workflow-43-skills-rules/publication-codex-common-response.txt), [оба пакета](../../inbox/2026-10-05-workflow-43-skills-rules/publication-codex-both-response.txt), [project](../../inbox/2026-10-05-workflow-43-skills-rules/publication-codex-project-response.txt); рядом сохранены prompts/events/stderr.
+Все три запуска завершились exit 0. [Common](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication-codex-common-response.txt), [оба пакета](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication-codex-both-response.txt), [project](2026-10-08-skill-rule-publication-evidence/2026-10-08-publication-codex-project-response.txt); рядом сохранены исходные prompts/events/stderr; project-prompt в исходном комплекте отсутствует и не реконструировался.
 
-Это проверки выбора, чтения и решений, не полный цикл создания нового материала. Изоляция рабочими папками, не ОС: глобальный системный skill-creator доступен; авторские plugin prerequisites отдельной CLI-сессии не доступны через отключённую пользовательскую конфигурацию. Полная end-to-end приёмка не выполнена, статический бюджетный fail остаётся. Предыдущие RED/GREEN доказательства сохранены в исходных заявках и не выданы за повторный полный прогон новой версии.
+Это проверки выбора, чтения и решений, не полный цикл создания нового материала. Изоляция рабочими папками, не ОС: глобальный системный skill-creator доступен; авторские plugin prerequisites отдельной CLI-сессии не доступны через отключённую пользовательскую конфигурацию. Полная end-to-end приёмка не выполнена, статический бюджетный fail остаётся. Предыдущие [RED](2026-10-08-skill-rule-publication-evidence/2026-10-08-red.md) и [GREEN](2026-10-08-skill-rule-publication-evidence/2026-10-08-green.md) отчёты сохранены отдельно и не выданы за повторный полный прогон новой версии. Упоминания путей в этих исторических данных не являются зависимостями текущего чтения или командами нового прогона.
 
 | Материал текущей версии | Codex | Claude | Итог |
 |---|---|---|---|
 | Скилл, его ресурсы и связанные правила/инструкции | не проверено полностью; ограниченные сценарии успешны | не проверено; пропущено по подтверждению, прежний OAuth expired | не полностью проверено; опубликовано по разрешённому исключению |
 
 Формальные отметки обоих агентов — **не проверено**. Завершение заявок и копирование не повышают статус. Для полной отметки нужны оставшаяся end-to-end приёмка Codex, разрешение бюджетного замечания и проверка Claude текущей версии в применимых режимах.
+
+Редакционная пометка 2026-10-08: навигация переведена на постоянные копии; результаты, даты и статусы исторических прогонов не пересматривались. [Карта сохранения и проверка](2026-10-08-skill-rule-publication-evidence/2026-10-08-migration-map.json).

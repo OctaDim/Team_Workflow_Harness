@@ -1,0 +1,213 @@
+{
+  "kind": "comparison",
+  "createdAt": "2026-10-05T19:52:34.192Z",
+  "target": {
+    "kind": "skill",
+    "path": "/tmp/inbox-final-eval/comm-create-lazy-claude-codex-skills",
+    "entryPath": "/tmp/inbox-final-eval/comm-create-lazy-claude-codex-skills/SKILL.md",
+    "name": "comm-create-lazy-claude-codex-skills",
+    "relativePath": "../../../../tmp/inbox-final-eval/comm-create-lazy-claude-codex-skills"
+  },
+  "scoreDelta": -9,
+  "gradeBefore": "A",
+  "gradeAfter": "B",
+  "riskBefore": "medium",
+  "riskAfter": "high",
+  "budgetDelta": {
+    "trigger_cost_tokens": -8,
+    "invoke_cost_tokens": -16,
+    "deferred_cost_tokens": 378
+  },
+  "resolvedFailures": [],
+  "newFailures": [
+    "deferred_cost_tokens-budget-high"
+  ],
+  "beforeSummary": {
+    "score": 95,
+    "grade": "A",
+    "riskLevel": "medium",
+    "riskReasons": [
+      "Contains 1 warning signal that still need attention."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 4.75,
+      "finalScore": 95,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 2,
+      "pass": 0,
+      "warn": 1,
+      "fail": 0,
+      "info": 2,
+      "error": 0,
+      "warning": 1
+    },
+    "deductions": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "penalty": 4.5,
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "budget",
+        "totalPenalty": 4.5,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [
+      "Reduce repeated instruction text and move detail into deferred supporting files."
+    ],
+    "whyBullets": [
+      "1 warning signal still need cleanup before this feels polished.",
+      "budget is the largest source of score loss at -4.5 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "why": "Budget pressure matters because always-loaded or frequently-loaded text can make the workflow feel expensive fast.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "penalty": 4.5,
+        "source": "core"
+      }
+    ],
+    "watchNext": []
+  },
+  "afterSummary": {
+    "score": 86,
+    "grade": "B",
+    "riskLevel": "high",
+    "riskReasons": [
+      "Contains 1 failing error check (deferred_cost_tokens-budget-high)."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 14.25,
+      "finalScore": 86,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 2,
+      "pass": 0,
+      "warn": 0,
+      "fail": 1,
+      "info": 2,
+      "error": 1,
+      "warning": 0
+    },
+    "deductions": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "error",
+        "status": "fail",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "penalty": 14,
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "budget",
+        "totalPenalty": 14,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [
+      "Reduce repeated instruction text and move detail into deferred supporting files."
+    ],
+    "whyBullets": [
+      "1 failing error check are driving the highest-confidence problems.",
+      "budget is the largest source of score loss at -14 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "error",
+        "status": "fail",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "why": "Budget pressure matters because always-loaded or frequently-loaded text can make the workflow feel expensive fast.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "penalty": 14,
+        "source": "core"
+      }
+    ],
+    "watchNext": []
+  },
+  "nextAction": {
+    "label": "Address the new failures first",
+    "why": "New failures block trust in the comparison, even if the score improved elsewhere.",
+    "command": "plugin-eval start /tmp/inbox-final-eval/comm-create-lazy-claude-codex-skills --request 'What should I fix first?' --format markdown",
+    "chatPrompt": "What should I fix first?"
+  }
+}
