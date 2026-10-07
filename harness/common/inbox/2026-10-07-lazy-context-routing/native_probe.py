@@ -39,6 +39,9 @@ def probe(agent, mode, invocation, analysis_cli=None, sandbox='read-only', captu
             shutil.copytree(CANDIDATE / native, root / native)
         shutil.copytree(CANDIDATE / '.claude/rules', root / '.claude/rules',
                         ignore=shutil.ignore_patterns('README.human.md'))
+        for name in ('AGENTS.md', 'CLAUDE.md'):
+            if (CANDIDATE / name).is_file():
+                shutil.copyfile(CANDIDATE / name, root / name)
         startup = subprocess.run(['python3', '-B', str(root / 'harness/common/checks/ensure_entrypoint_links.py'), str(root)],
                                  capture_output=True, text=True)
         if startup.returncode:

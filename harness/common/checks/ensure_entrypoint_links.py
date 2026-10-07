@@ -186,10 +186,13 @@ def repair_startup_blocks(content, resources, missing):
         missing_here = [path for path in resources if path not in links]
         # A repeated canonical block is repaired even if another copy has the missing link.
         complete_block = '.claude/rules' in links and any(path in links for path in resources)
-        if not missing_here or not (missing or complete_block):
+        missing_rules = set(resources).issubset(links) and '.claude/rules' not in links and (missing or list(links) == resources)
+        if (not missing_here and not missing_rules) or not (missing or complete_block or missing_rules):
             output.extend(block)
             continue
         newline = '\r\n' if any(line.endswith('\r\n') for line in block) else '\n'
+        if missing_rules:
+            links['.claude/rules'] = RULES_LINK + ' ' + RULES_READ + newline
         for path in missing_here:
             links[path] = f'- [{path}]({path})' + newline
         order = resources[:2] + (['.claude/rules'] if '.claude/rules' in links else []) + resources[2:]
@@ -235,12 +238,14 @@ def ensure(root):
         additions.append(RULES_LINK)
     if RULES_READ not in visible:
         additions.append(RULES_READ)
-    content, repaired_blocks = repair_startup_blocks(content, resources, missing)
+    content, repaired_blocks = repair_startup_blocks(content, resources, missing + (['.claude/rules'] if RULES_LINK in additions else []))
     if repaired_blocks:
         # The repaired blocks already contain all missing package links.
         additions = [line for line in additions if line in (RULES_LINK, RULES_READ)]
         if RULES_LINK in content:
             additions = [line for line in additions if line != RULES_LINK]
+        if RULES_READ in content:
+            additions = [line for line in additions if line != RULES_READ]
     if additions:
         ending = re.search(r'\r?\n', content)
         newline = ending.group() if ending else '\n'

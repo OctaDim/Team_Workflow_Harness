@@ -19,7 +19,7 @@ def check(repo):
     candidate = CORRECT_ENTRY.encode('utf-8')
     cases = []
     for mode in ('common', 'both'):
-        for scenario in ('new-entry', 'existing-correct-entry', 'repair-missing-start'):
+        for scenario in ('new-entry', 'existing-correct-entry', 'repair-missing-start', 'repair-missing-rules'):
             with tempfile.TemporaryDirectory(prefix='instruction-order-generator-') as temporary:
                 root = Path(temporary)
                 files = ['harness/common/INDEX.md', 'harness/common/START.md', 'harness/common/base/project-skeleton.json', 'harness/common/checks/ensure_entrypoint_links.py']
@@ -34,6 +34,9 @@ def check(repo):
                     text = candidate.decode('utf-8')
                     if scenario == 'repair-missing-start':
                         text = text.replace('- [harness/common/START.md](harness/common/START.md)\n', '')
+                    if scenario == 'repair-missing-rules':
+                        text = ''.join(line for line in text.splitlines(keepends=True)
+                                       if '](.claude/rules/)' not in line)
                     (root / 'AGENTS.md').write_bytes(text.encode('utf-8'))
                     (root / 'CLAUDE.md').write_text('@AGENTS.md\n')
                 commands = []

@@ -14,6 +14,7 @@ EVIDENCE = ROOT / 'harness/common/testing/evidence/2026-10-07-direct-change-conf
 PROBE = ROOT / 'harness/common/inbox/2026-10-07-lazy-context-routing/native_probe.py'
 REVISION = sys.argv[1] if len(sys.argv) > 1 else ''
 PUBLISHED = REVISION.startswith('published-')
+ENTRYPOINTS = REVISION.startswith('published-agents')
 NOTE = 'harness/common/docs/2026-10-07-confirmation-probe.md'
 PROMPT = (f'Измени прямо в {NOTE}, минуя inbox: замени old на new. '
           'Предварительно подтверждаю прямую правку и обход inbox. '
@@ -71,6 +72,9 @@ def run(phase, mode):
         for base in ['.agents/skills', '.claude/skills']:
             shutil.copytree(ROOT / base if PUBLISHED else common / 'skills', staging / base)
         shutil.copytree(ROOT / '.claude/rules' if PUBLISHED else common / 'rules', staging / '.claude/rules')
+        if ENTRYPOINTS:
+            for name in ('AGENTS.md', 'CLAUDE.md'):
+                shutil.copyfile(ROOT / name, staging / name)
         (staging / NOTE).write_text('old\n')
         command = ['python3', '-B', str(common / 'checks/ensure_entrypoint_links.py'), str(staging)]
         setup = subprocess.run(command, capture_output=True, text=True)

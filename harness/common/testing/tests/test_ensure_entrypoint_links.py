@@ -46,7 +46,8 @@ class TestEntryPointLinks:
     @pytest.mark.parametrize('newline', ('\n', '\r\n'), ids=['LF', 'CRLF'])
     @pytest.mark.parametrize('common_only', (False, True), ids=['combined', 'common-only'])
     @pytest.mark.parametrize('adjacent', (False, True))
-    def test_repairs_each_repeated_block_before_index_without_changing_settings(self, newline, common_only, adjacent):
+    @pytest.mark.parametrize('missing', ('harness/common/START.md', '.claude/rules/'))
+    def test_repairs_each_repeated_block_before_index_without_changing_settings(self, newline, common_only, adjacent, missing):
         if common_only:
             shutil.rmtree(self.root / 'harness/project')
         paths = ['harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
@@ -56,14 +57,16 @@ class TestEntryPointLinks:
             '](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules '
             'и его подпапок, кроме README.human.md; соблюдай применимые требования.\n')
         prefix, separator = '# User settings: keep exact bytes.\n\n', '\nRepeat:\n'
-        damaged = block.replace('- [harness/common/START.md](harness/common/START.md)\n', '')
+        damaged = ''.join(line for line in block.splitlines(keepends=True) if f']({missing})' not in line)
         if adjacent:
             separator = ''
             damaged = damaged.rstrip('\n')
         agents = self.root / 'AGENTS.md'
         agents.write_bytes((prefix + block + separator + damaged).replace('\n', newline).encode())
         assert self.run_check().returncode == 0
-        expected = (prefix + block + separator + block).replace('\n', newline).encode()
+        repaired_block = (block.replace('- [.claude/rules/]', '- [.claude/rules]')
+                          if missing == '.claude/rules/' else block)
+        expected = (prefix + block + separator + repaired_block).replace('\n', newline).encode()
         assert agents.read_bytes() == expected
         assert self.run_check().returncode == 0
         assert agents.read_bytes() == expected
