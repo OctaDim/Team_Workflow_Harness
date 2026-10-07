@@ -1,0 +1,45 @@
+В нативном каталоге предоставлены локальные скиллы:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — инструкции по продуктам, API и настройке OpenAI/Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — авторство скиллов и правил для Codex и Claude Code.
+- `comm-install-harness` — установка и диагностика пакетов harness и стартовых ссылок.
+- `comm-process-harness-inbox` — работа с опытом, запросами inbox и их статусами.
+
+Первой командой выполню обязательный старт. Затем прочитаю инструкции и применю `comm-create-lazy-claude-codex-skills` с его `references/content-contract.md`; проект подготовлю в ответе, без создания файлов.
+Формат — **lazy-скилл `proj-diagnose-csv`**, с алгоритмом в собственном ресурсе `references/csv-diagnostics.md`. Обязательность процедуры сама по себе не оправдывает always-loaded rule. Коллеге нужно назвать конкретное ошибочное действие **до выбора скилла**; только тогда оправдан короткий guard с указателем, без всего алгоритма.
+
+Стартовая проверка завершилась успешно. Файлы вручную не создавались и не изменялись; тела `README.human.md` не читались.
+
+Проект авторства:
+
+- **Метаданные:** имя совпадает с папкой; description описывает диагностику CSV и распознаваемые триггеры, без алгоритма.
+- **Контракт:** при диагностике CSV проверить кодировку/BOM, разделитель, кавычки, заголовок, число полей, пустые значения и проблемные записи. Не менять исходник. Отчёт содержит параметры чтения, обнаруженные нарушения с номерами записей, ограничения проверки и воспроизводимый способ повторения. При отсутствии файла запросить его; при неоднозначном формате явно указать неопределённость.
+- **Выбор и поведение:** RED без новой инструкции → компактный кандидат → GREEN. Проверить явный вызов с собственным ресурсом, неявный выбор по запросу о CSV и отсутствие загрузки деталей в посторонней задаче. После правок повторить проверки.
+- **Стартовая стоимость:** сравнить до/после сумму guards, pointers и всех name/description; отдельно оценить выбранное тело и открываемые ресурсы. Численный бюджет не выдумывать; статические токены не объявлять измеренным расходом.
+- **Средства оценки:** `skill-creator`/`quick_validate.py` для формата; `writing-skills` для RED–GREEN–REFACTOR; `plugin-eval` для выбора, анализа и бюджета — только через отдельный Node.js launcher `harness/common/scripts/plugin_eval_without_human.mjs`. Исключение README проверять отдельно на уровне чтения, загрузчиков и поведения. `evaluate-plugin` применим только к настоящему пакету с manifest. Никаких benchmark/config/output-записей в этом read-only задании.
+
+Обязательный помощник `superpowers:using-superpowers` отсутствует в предоставленном каталоге и найденных локальных скиллах. Поэтому это проект авторства, а не завершённый проверенный кандидат.
+
+**Публикация сейчас недопустима.** Codex — не проверено: кандидат и обязательные сценарии не запускались. Claude — не проверено: агент не запускался. Для каждого нужны проверки обоих режимов установки: common-only с нейтральным project и combined с сохранением существующего project; project-only должен отклоняться. Минутный срок не отменяет gate. Согласно [validation-and-publication.md](.agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md), “missing/failed checks require explicit permission for this **unverified** version”. Такого разрешения нет; публикация не выполнялась.
+
+Реально прочитаны файлы:
+
+- `harness/common/INDEX.md`, `harness/common/START.md`
+- `harness/project/INDEX.md`, `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- Его `references/content-contract.md`, `references/validation-and-publication.md`, `references/placement-contract.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/docs/2026-10-05-compact-authoring.md`
+- `harness/common/docs/2026-10-06-plugin-eval-without-human.md`
+
+`ensure_entrypoint_links.py` был исполнен, его исходник не открывался.

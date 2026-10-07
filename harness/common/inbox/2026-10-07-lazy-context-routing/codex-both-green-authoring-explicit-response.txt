@@ -1,0 +1,49 @@
+В нативном каталоге предоставлены локальные скиллы:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и настройка Codex, OpenAI API и продуктов.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов из каталога или GitHub.
+- `comm-create-lazy-claude-codex-skills` — авторство скиллов и правил для Codex и Claude Code.
+- `comm-install-harness` — установка и диагностика harness и стартовых ссылок.
+- `comm-process-harness-inbox` — обработка запросов inbox и сохранение опыта в harness.
+
+Использую `comm-create-lazy-claude-codex-skills` и его контракт содержимого. Первой командой выполню обязательную стартовую проверку, затем прочитаю инструкции; файлов создавать не буду.
+
+Стартовая проверка прошла. Файлы не создавал и не редактировал; тела `README.human.md` не читал.
+
+Предлагаемый формат — **lazy-скилл диагностики CSV**. Обязательность процедуры и минутный срок не оправдывают перенос всего алгоритма в always-loaded rule. Такое правило требует конкретного ошибочного действия, возможного **до выбора скилла**; тогда в нём остаются короткая граница и указатель на процедуру.
+
+Проект авторства:
+
+- `SKILL.md`: имя, описание с возможностью и триггером, применимость, обязательное поведение, проверяемый результат.
+- Собственный `references/csv-diagnostics.md`: последовательность диагностики кодировки/BOM, разделителя, кавычек, заголовков, числа полей, пропусков, типов и дубликатов. Неоднозначные параметры фиксируются как гипотезы; исходный CSV сохраняется.
+- Результат: параметры воспроизведения, область проверки, найденные ошибки с координатами и ограничениями вывода. Отсутствие схемы не позволяет объявлять значения некорректными только по предположению.
+- Префикс `comm-` или `proj-` выбирается по переносимости содержания. Текущий cwd сам по себе не определяет канонический адрес.
+
+Проверка итоговой компактной версии: RED без новой инструкции → GREEN с ней → повтор после изменений. Отдельно проверяются нативный каталог, явный вызов с **собственным ресурсом**, неявный выбор по CSV-задаче и отсутствие загрузки для посторонней задачи. Матрица — Codex/Claude × common-only/combined; common-only создаёт нейтральный project, combined сохраняет существующий, project-only отклоняется.
+
+Стартовую стоимость нужно сравнить до/после как сумму постоянных границ, указателей и metadata. Тело выбранного скилла и ресурсы учитываются отдельно по сценарию. Числовой бюджет не согласован; статические токены не равны измеренному расходу.
+
+Инструменты: `skill-creator/quick_validate.py` для формата, `writing-skills` для поведения, `plugin-eval` для маршрутизации и бюджета, `improve-skill` для исправлений и повторной оценки. `plugin-eval` не найден в PATH; обязательный `superpowers:using-superpowers` не найден в каталоге и проверенных путях. Поэтому это проект процедуры, а не завершённый проверенный скилл. Node, Codex, Claude и uv найдены, но наличие программы не подтверждает поведение.
+
+Для plugin-eval предусмотрен отдельный Node-процесс через `harness/common/scripts/plugin_eval_without_human.mjs`: исключение точного `README.human.md` на любой глубине до чтения и расчёта стоимости. Read-only оценка использует stdout, без `--output`, benchmark/config-записей и внешних metric-pack процессов. Чтение правил, фильтрацию загрузчика и поведение проверяют отдельно.
+
+**Публикация сейчас недопустима.** Codex — не проверено для кандидата; Claude — не проверено, не запускался; оба режима — не проверено. По прочитанному `references/validation-and-publication.md`: “missing/failed checks require explicit permission for this unverified version”. Разрешения именно на эту непроверенную версию нет; срок не отменяет gate. Публикацию не предпринимал.
+
+Реально прочитаны файлы (пути относительно корня проекта):
+
+- `harness/common/INDEX.md`, `harness/common/START.md`
+- `harness/project/INDEX.md`, `harness/project/START.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- Его `references/content-contract.md`, `references/validation-and-publication.md`, `references/placement-contract.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/docs/2026-10-05-compact-authoring.md`
+- `harness/common/docs/2026-10-06-plugin-eval-without-human.md`

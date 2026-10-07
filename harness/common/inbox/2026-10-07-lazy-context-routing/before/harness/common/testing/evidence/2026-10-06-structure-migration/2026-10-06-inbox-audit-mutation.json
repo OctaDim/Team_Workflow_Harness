@@ -1,0 +1,10 @@
+{
+  "mutation": "remove symlink rejection for entrypoint",
+  "scope": "temporary checker and current pytest test; production resources unchanged",
+  "baseline_exit": 0,
+  "mutated_exit": 1,
+  "test": "TestEntryPointLinks::test_refuses_symlinked_entrypoint_without_changing_target",
+  "detected": true,
+  "baseline_output": ".                                                                        [100%]\n1 passed in 0.06s\n",
+  "mutated_output": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_ TestEntryPointLinks.test_refuses_symlinked_entrypoint_without_changing_target _\n\nself = <test_ensure_entrypoint_links.TestEntryPointLinks object at 0x795e1895a6f0>\n\n    def test_refuses_symlinked_entrypoint_without_changing_target(self):\n        target = self.root / 'user.md'\n        target.write_text('User text\\n')\n        (self.root / 'AGENTS.md').symlink_to(target)\n>       assert self.run_check().returncode != 0\nE       AssertionError: assert 0 != 0\nE        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/.venv/bin/python', '-B', '/tmp/inbox-revie... и будут автоматически восстановлены.\\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\\n', stderr='').returncode\nE        +    where CompletedProcess(args=['/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/.venv/bin/python', '-B', '/tmp/inbox-revie... и будут автоматически восстановлены.\\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\\n', stderr='') = run_check()\nE        +      where run_check = <test_ensure_entrypoint_links.TestEntryPointLinks object at 0x795e1895a6f0>.run_check\n\nharness/common/testing/tests/test_ensure_entrypoint_links.py:233: AssertionError\n=========================== short test summary info ============================\nFAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_refuses_symlinked_entrypoint_without_changing_target\n1 failed in 0.08s\n"
+}

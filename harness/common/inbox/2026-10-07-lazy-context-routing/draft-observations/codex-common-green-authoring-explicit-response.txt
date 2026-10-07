@@ -1,0 +1,65 @@
+В нативном каталоге предоставлены локальные скиллы:
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — справка по продуктам, API и настройкам OpenAI/Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — авторство скиллов и правил Codex/Claude Code.
+- `comm-install-harness` — установка и диагностика harness и стартовых точек.
+- `comm-process-harness-inbox` — работа с запросами и памятью harness.
+
+Первой командой выполню обязательную стартовую проверку, затем прочитаю инструкции и применю `comm-create-lazy-claude-codex-skills`. Файлы создавать не буду.
+
+Выбор — **контекстный lazy skill `proj-diagnose-csv`**. Обязательность процедуры и минутный срок не оправдывают перенос алгоритма в always-loaded rule. По собственному [content-contract.md](.agents/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md) правило допустимо лишь для конкретной ошибки, возможной **до выбора скилла**; тогда оно содержит короткую границу и указатель. Такая ошибка здесь не установлена.
+
+Проект содержания `SKILL.md`:
+
+```markdown
+---
+name: proj-diagnose-csv
+description: Diagnose CSV parsing failures, encoding and delimiter issues, inconsistent rows, headers, and schema mismatches.
+---
+
+Применяй при диагностике CSV или подозрении на нарушение его структуры.
+
+1. Уточни файл, симптом, ожидаемый диалект и схему; неизвестное
+   явно отмечай. Не изменяй исходник.
+2. Проверь доступность файла, размер, BOM и признаки кодировки.
+   Не выдавай предположение о кодировке за подтверждённый факт.
+3. Проверь разделитель, кавычки, экранирование и окончания строк.
+   Диалект, определённый по выборке, подтвердить полным разбором.
+4. Разбирай CSV подходящим парсером; различай физические строки
+   и записи, учитывай переносы внутри кавычек.
+5. Проверь заголовок, число полей, пустые значения и требования
+   предоставленной схемы. Не придумывай типы или обязательные поля.
+6. Выдай отчёт: параметры разбора, объём проверки, ошибки с номерами
+   записей, доказательства, ограничения и предлагаемые исправления.
+   Чувствительные значения в примерах скрывай.
+
+Соблюдение: исходник не изменён; диагностика воспроизводима;
+гипотезы отделены от подтверждённых ошибок; частичная проверка
+явно обозначена. При недоступном файле или парсере сообщи препятствие.
+```
+
+Это проект в ответе, **не опубликованный и не проверенный скилл**. Целевой harness и место сохранения требуют отдельного определения; текущий cwd сам по себе их не устанавливает.
+
+Проверка выбора и стоимости:
+
+- Проверить явный вызов и неявный выбор на задачах CSV; на несвязанных задачах тело и ресурсы не должны загружаться.
+- Выполнить RED–GREEN–REFACTOR на повреждённых CSV, включая кавычки, многострочные поля, неверную кодировку и неодинаковое число полей.
+- Проверить Codex и Claude отдельно, в режимах common-only и common+project; project-only должен отклоняться.
+- Измеренный исходный объём правил и YAML-метаданных семи нативных скиллов — **15 144 байта**. Итоговый объём ещё не измерен: проект добавляет метаданные, алгоритм остаётся ленивым. Это статический размер, не расход токенов сессии; числовой бюджет не согласован.
+
+Инструменты: `skill-creator` и его `quick_validate.py` для формата; `writing-skills` для поведенческих проверок; `plugin-eval` для оценки скилла. `evaluate-plugin` неприменим без настоящего manifest; plain rule требует generic analysis, без skill validator. `using-superpowers` обязателен по выбранному скиллу, но в доступном каталоге и инструментах отсутствует; `plugin-eval` не найден в PATH. Установка не выполнялась.
+
+Оценку через plugin-eval следует запускать отдельным Node.js процессом через `harness/common/scripts/plugin_eval_without_human.mjs`: фильтр исключает `README.human.md` до чтения и расчёта стоимости, включая обход через симлинк. Проверки чтения правил, исключения загрузчиками и поведения агентов проводят отдельно. Benchmark/config, внешние metric-pack и запись отчётов здесь не разрешены.
+
+**Публикация недопустима:** Claude не запускался, обязательные проверки текущей версии не выполнены, разрешения именно на непроверенную версию нет. [Скилл](.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md) требует: “Stop dependent publication until permission arrives.” Срок не отменяет этот gate.
+
+Стартовая проверка завершилась успешно. Файлы я не создавал; тела `README.human.md` не читал. Реально прочитаны:
+
+- `harness/common/{INDEX.md,START.md}`, `harness/project/{INDEX.md,START.md}`;
+- все шесть правил `.claude/rules/`: `comm-skill-rule-ownership.md`, `comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-dependencies-through-uv.md`, `comm-user-owned-entrypoints.md`, `comm-human-folder-guides.md`;
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md` и его `references/{content-contract.md,validation-and-publication.md,placement-contract.md}`;
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`;
+- `harness/common/docs/2026-10-06-plugin-eval-without-human.md`;
+- для подсчёта метаданных скрипт также прочитал `.agents/skills/{comm-install-harness,comm-process-harness-inbox}/SKILL.md` и `/tmp/two-modes-native-z3rpq64s/runtime/skills/.system/{imagegen,openai-docs,skill-creator,skill-installer}/SKILL.md`; в контекст выведены только размеры.

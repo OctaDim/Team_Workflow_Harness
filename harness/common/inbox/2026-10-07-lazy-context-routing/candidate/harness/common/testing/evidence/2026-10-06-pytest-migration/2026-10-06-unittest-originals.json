@@ -1,0 +1,1447 @@
+{
+  "git_revision": "8119b603239ae66778056ecedac37e2ffd3a8849",
+  "files": {
+    "harness/common/checks/test_ensure_entrypoint_links.py": {
+      "sha256": "90daacd72ba034cc309abdb27f4b1a95dfb3518bef562539adf54f91323202a6",
+      "source": "\"\"\"Run with python3 -B <this-file>; uses only temporary projects.\"\"\"\nimport json\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nSCRIPT = Path(__file__).with_name('ensure_entrypoint_links.py')\n\n\nclass EntryPointLinksTest(unittest.TestCase):\n    def setUp(self):\n        self.temporary = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temporary.cleanup)\n        self.root = Path(self.temporary.name)\n        for package in ('common', 'project'):\n            directory = self.root / 'harness' / package\n            directory.mkdir(parents=True)\n            (directory / 'INDEX.md').write_text('# Index\\n')\n            (directory / 'START.md').touch()\n        template = SCRIPT.parent.parent / 'base/project-skeleton.json'\n        if template.exists():\n            destination = self.root / 'harness/common/base/project-skeleton.json'\n            destination.parent.mkdir()\n            shutil.copyfile(template, destination)\n\n    def run_check(self):\n        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)],\n                              text=True, capture_output=True)\n\n    def test_creates_four_links_and_import_then_preserves_bytes(self):\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        agents = self.root / 'AGENTS.md'\n        claude = self.root / 'CLAUDE.md'\n        for package in ('common', 'project'):\n            for name in ('INDEX.md', 'START.md'):\n                self.assertIn(f'](harness/{package}/{name})', agents.read_text())\n        self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\n')\n        before = (agents.read_bytes(), claude.read_bytes())\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(before, (agents.read_bytes(), claude.read_bytes()))\n        for file in self.root.glob('harness/*/START.md'):\n            self.assertEqual(file.read_bytes(), b'')\n\n    def test_only_appends_missing_links_preserving_user_text(self):\n        prefix = '# User configuration\\n\\nKeep this exact text.\\n[Existing](./harness/common/INDEX.md)\\n'\n        (self.root / 'AGENTS.md').write_text(prefix)\n        self.assertEqual(self.run_check().returncode, 0)\n        text = (self.root / 'AGENTS.md').read_text()\n        self.assertTrue(text.startswith(prefix))\n        self.assertEqual(text.count('harness/common/INDEX.md'), 1)\n\n    def test_link_examples_in_code_do_not_count_as_real_links(self):\n        examples = '\\n'.join(f'[Example](harness/{p}/{n})'\n                             for p in ('common', 'project') for n in ('INDEX.md', 'START.md'))\n        (self.root / 'AGENTS.md').write_text(f'```md\\n{examples}\\n```\\n')\n        self.assertEqual(self.run_check().returncode, 0)\n        text = (self.root / 'AGENTS.md').read_text()\n        self.assertEqual(text.count('](harness/common/INDEX.md)'), 2)\n\n    def test_repair_preserves_original_bytes_and_each_files_line_endings(self):\n        agents, claude = self.root / 'AGENTS.md', self.root / 'CLAUDE.md'\n        for newline in (b'\\n', b'\\r\\n'):\n            with self.subTest(newline=newline):\n                original = newline.join((b'# User settings', b'Keep exact bytes.', b'', b''))\n                bridge = b'User bridge text\\r\\n'\n                agents.write_bytes(original)\n                claude.write_bytes(bridge)\n                result = self.run_check()\n                self.assertEqual(result.returncode, 0, result.stderr)\n                repaired = agents.read_bytes()\n                self.assertTrue(repaired.startswith(original))\n                self.assertIn(b'](harness/common/START.md)' + newline, repaired)\n                if newline == b'\\r\\n':\n                    self.assertNotIn(b'\\n', repaired.replace(b'\\r\\n', b''))\n                self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\r\\n' + bridge)\n                before = agents.read_bytes(), claude.read_bytes()\n                second = self.run_check()\n                self.assertEqual(second.returncode, 0, second.stderr)\n                self.assertNotIn('будут автоматически восстановлены', second.stdout)\n                self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)\n\n    def test_valid_crlf_bridge_is_preserved_without_warning_or_repair(self):\n        self.assertEqual(self.run_check().returncode, 0)\n        agents, claude = self.root / 'AGENTS.md', self.root / 'CLAUDE.md'\n        agents.write_bytes(agents.read_bytes().replace(b'\\n', b'\\r\\n'))\n        claude.write_bytes(b'@AGENTS.md\\r\\n')\n        before = agents.read_bytes(), claude.read_bytes()\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertNotIn('будут автоматически восстановлены', result.stdout)\n        self.assertNotIn('требуется единственная строка', result.stdout)\n        self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)\n\n    def test_longer_fence_closers_do_not_turn_examples_into_installed_links(self):\n        examples = '\\n'.join(f'[Example](harness/{p}/{n})'\n                             for p in ('common', 'project') for n in ('INDEX.md', 'START.md'))\n        examples += ('\\n[Rules](.claude/rules/)\\n'\n                     'До выполнения задачи прочитай все Markdown-правила из .claude/rules '\n                     'и его подпапок, кроме README.human.md; соблюдай применимые требования.')\n        agents = self.root / 'AGENTS.md'\n        for opener, closer in (('~~~md', '~~~~'), ('```md', '````')):\n            with self.subTest(opener=opener):\n                prefix = f'# Keep user settings\\n{opener}\\n{examples}\\n{closer}\\n'\n                agents.write_text(prefix)\n                first = self.run_check()\n                self.assertEqual(first.returncode, 0, first.stderr)\n                text = agents.read_text()\n                self.assertTrue(text.startswith(prefix))\n                appended = text[len(prefix):]\n                for package in ('common', 'project'):\n                    for name in ('INDEX.md', 'START.md'):\n                        self.assertIn(f'](harness/{package}/{name})', appended)\n                self.assertIn('](.claude/rules/)', appended)\n                self.assertIn('прочитай все Markdown-правила', appended)\n                before = agents.read_bytes()\n                second = self.run_check()\n                self.assertEqual(second.returncode, 0, second.stderr)\n                self.assertEqual(agents.read_bytes(), before)\n\n    def test_unclosed_fence_fails_before_writing_either_entrypoint(self):\n        agents, claude = self.root / 'AGENTS.md', self.root / 'CLAUDE.md'\n        for name in ('AGENTS.md', 'CLAUDE.md'):\n            for opener in ('~~~md', '```md'):\n                with self.subTest(name=name, opener=opener):\n                    agents.write_text('# Keep user settings\\n')\n                    claude.write_text('Keep bridge text\\n')\n                    (self.root / name).write_text(f'# Keep user settings\\n{opener}\\nexample\\n')\n                    before = agents.read_bytes(), claude.read_bytes()\n                    result = self.run_check()\n                    self.assertEqual(result.returncode, 2, result.stderr)\n                    self.assertIn('Unclosed Markdown code fence', result.stderr)\n                    self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)\n                    self.assertFalse((self.root / '.claude').exists())\n\n    def test_damaged_package_is_reported_without_creating_dangling_links(self):\n        (self.root / 'harness/project/START.md').unlink()\n        result = self.run_check()\n        self.assertNotEqual(result.returncode, 0)\n        self.assertFalse((self.root / 'AGENTS.md').exists())\n        self.assertFalse((self.root / 'CLAUDE.md').exists())\n\n    def test_common_only_creates_neutral_project(self):\n        shutil.rmtree(self.root / 'harness/project')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        project = self.root / 'harness/project'\n        expected = {'base', 'decisions', 'lessons', 'testing', 'rules', 'skills',\n                    'checks', 'inbox', 'docs', 'handoffs'}\n        self.assertTrue(project.is_dir(), 'common-only must create project')\n        self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)\n        for directory in [project, *(project / name for name in expected)]:\n            self.assertTrue((directory / 'README.human.md').is_file())\n        self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())\n        self.assertNotIn('EPL', (project / 'INDEX.md').read_text())\n        self.assertIn('harness/common/checks/ensure_entrypoint_links.py',\n                      (project / 'START.md').read_text())\n        self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())\n        before = {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')}\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})\n\n    def test_existing_project_is_not_regenerated_or_exported(self):\n        project = self.root / 'harness/project'\n        task = project / 'docs/epl-import/notes.md'\n        task.parent.mkdir(parents=True)\n        task.write_bytes(b'project-specific material\\n')\n        before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})\n        self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')\n\n    def test_new_template_categories_apply_only_to_new_project(self):\n        template = self.root / 'harness/common/base/project-skeleton.json'\n        data = json.loads(template.read_text())\n        data['categories']['specs'] = {'purpose': 'Shared specifications', 'example': 'api.md describes an agreed API.'}\n        template.write_text(json.dumps(data))\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertFalse((self.root / 'harness/project/specs').exists())\n        shutil.rmtree(self.root / 'harness/project')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())\n\n    def test_project_only_is_rejected_before_writes(self):\n        shutil.rmtree(self.root / 'harness/common')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 2)\n        self.assertIn('common', result.stderr)\n        self.assertFalse((self.root / 'AGENTS.md').exists())\n        self.assertFalse((self.root / '.claude').exists())\n\n    def test_unsafe_project_path_is_rejected_without_writes(self):\n        project = self.root / 'harness/project'\n        shutil.rmtree(project)\n        for symlink in (False, True):\n            with self.subTest(symlink=symlink):\n                if symlink:\n                    project.symlink_to(self.root / 'missing-project')\n                else:\n                    project.write_text('keep this file')\n                result = self.run_check()\n                self.assertEqual(result.returncode, 2)\n                self.assertFalse((self.root / 'AGENTS.md').exists())\n                self.assertFalse((self.root / '.claude').exists())\n                project.unlink()\n\n    def test_invalid_template_does_not_create_project(self):\n        project = self.root / 'harness/project'\n        shutil.rmtree(project)\n        template = self.root / 'harness/common/base/project-skeleton.json'\n        for content in ('not json', '{}', '{\"categories\": {\"../outside\": {\"purpose\": \"bad\", \"example\": \"bad\"}}}'):\n            with self.subTest(content=content):\n                template.write_text(content)\n                result = self.run_check()\n                self.assertEqual(result.returncode, 2)\n                self.assertFalse(project.exists())\n                self.assertFalse((self.root / 'AGENTS.md').exists())\n\n    def test_invalid_entrypoint_prevents_project_creation(self):\n        shutil.rmtree(self.root / 'harness/project')\n        agents = self.root / 'AGENTS.md'\n        agents.write_text('# Keep\\n```md\\nunterminated')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 2)\n        self.assertFalse((self.root / 'harness/project').exists())\n        self.assertEqual(agents.read_text(), '# Keep\\n```md\\nunterminated')\n\n    def test_adds_import_and_warns_about_extra_claude_content_without_deleting_it(self):\n        (self.root / 'CLAUDE.md').write_text('User text\\n')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0)\n        self.assertIn('inbox', result.stdout)\n        self.assertIn('технически не заблокировано', result.stdout)\n        self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\\nUser text\\n')\n\n    def test_refuses_symlinked_entrypoint_without_changing_target(self):\n        target = self.root / 'user.md'\n        target.write_text('User text\\n')\n        (self.root / 'AGENTS.md').symlink_to(target)\n        self.assertNotEqual(self.run_check().returncode, 0)\n        self.assertEqual(target.read_text(), 'User text\\n')\n\n    def test_rules_link_is_restored_and_directory_created(self):\n        (self.root / 'AGENTS.md').write_text('# User settings\\n\\n```md\\n[Rules](.claude/rules/)\\n```\\n')\n        first = self.run_check()\n        self.assertEqual(first.returncode, 0, first.stderr)\n        agents = self.root / 'AGENTS.md'\n        self.assertEqual(agents.read_text().count('](.claude/rules/)'), 2)\n        self.assertIn('README.human.md', agents.read_text())\n        self.assertTrue((self.root / '.claude/rules').is_dir())\n        before = agents.read_bytes()\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(agents.read_bytes(), before)\n\n    def test_existing_relative_rules_links_are_not_duplicated(self):\n        for target in ('.claude/rules', '.claude/rules/', './.claude/rules/', '<./.claude/rules/>'):\n            with self.subTest(target=target):\n                (self.root / 'AGENTS.md').write_text(f'# User settings\\n[Rules]({target})\\n')\n                self.assertEqual(self.run_check().returncode, 0)\n                text = (self.root / 'AGENTS.md').read_text()\n                self.assertEqual(text.count('[Rules]'), 1)\n                self.assertNotIn('- [.claude/rules]', text)\n                self.assertIn('прочитай все Markdown-правила', text)\n\n    def test_unsafe_rules_directory_does_not_change_entrypoints(self):\n        (self.root / 'AGENTS.md').write_text('# Keep\\n')\n        for relative in ('.claude', '.claude/rules'):\n            for symlink in (False, True):\n                with self.subTest(relative=relative, symlink=symlink):\n                    path = self.root / relative\n                    path.parent.mkdir(exist_ok=True)\n                    if symlink:\n                        path.symlink_to(self.root / 'harness', target_is_directory=True)\n                    else:\n                        path.write_text('keep\\n')\n                    try:\n                        result = self.run_check()\n                        self.assertNotEqual(result.returncode, 0)\n                        self.assertEqual((self.root / 'AGENTS.md').read_text(), '# Keep\\n')\n                        self.assertFalse((self.root / 'CLAUDE.md').exists())\n                    finally:\n                        path.unlink()\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_creates_four_links_and_import_then_preserves_bytes": {
+          "line": 33,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\n')",
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(before, (agents.read_bytes(), claude.read_bytes()))",
+            "self.assertEqual(file.read_bytes(), b'')",
+            "self.assertIn(f'](harness/{package}/{name})', agents.read_text())"
+          ],
+          "subtests": []
+        },
+        "test_only_appends_missing_links_preserving_user_text": {
+          "line": 48,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertTrue(text.startswith(prefix))",
+            "self.assertEqual(text.count('harness/common/INDEX.md'), 1)"
+          ],
+          "subtests": []
+        },
+        "test_link_examples_in_code_do_not_count_as_real_links": {
+          "line": 56,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(text.count('](harness/common/INDEX.md)'), 2)"
+          ],
+          "subtests": []
+        },
+        "test_repair_preserves_original_bytes_and_each_files_line_endings": {
+          "line": 64,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue(repaired.startswith(original))",
+            "self.assertIn(b'](harness/common/START.md)' + newline, repaired)",
+            "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\r\\n' + bridge)",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+            "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+            "self.assertNotIn(b'\\n', repaired.replace(b'\\r\\n', b''))"
+          ],
+          "subtests": [
+            "self.subTest(newline=newline)"
+          ]
+        },
+        "test_valid_crlf_bridge_is_preserved_without_warning_or_repair": {
+          "line": 86,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertNotIn('будут автоматически восстановлены', result.stdout)",
+            "self.assertNotIn('требуется единственная строка', result.stdout)",
+            "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)"
+          ],
+          "subtests": []
+        },
+        "test_longer_fence_closers_do_not_turn_examples_into_installed_links": {
+          "line": 98,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertTrue(text.startswith(prefix))",
+            "self.assertIn('](.claude/rules/)', appended)",
+            "self.assertIn('прочитай все Markdown-правила', appended)",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertEqual(agents.read_bytes(), before)",
+            "self.assertIn(f'](harness/{package}/{name})', appended)"
+          ],
+          "subtests": [
+            "self.subTest(opener=opener)"
+          ]
+        },
+        "test_unclosed_fence_fails_before_writing_either_entrypoint": {
+          "line": 124,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2, result.stderr)",
+            "self.assertIn('Unclosed Markdown code fence', result.stderr)",
+            "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+            "self.assertFalse((self.root / '.claude').exists())"
+          ],
+          "subtests": [
+            "self.subTest(name=name, opener=opener)"
+          ]
+        },
+        "test_damaged_package_is_reported_without_creating_dangling_links": {
+          "line": 139,
+          "assertions": [
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())",
+            "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+          ],
+          "subtests": []
+        },
+        "test_common_only_creates_neutral_project": {
+          "line": 146,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue(project.is_dir(), 'common-only must create project')",
+            "self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)",
+            "self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())",
+            "self.assertNotIn('EPL', (project / 'INDEX.md').read_text())",
+            "self.assertIn('harness/common/checks/ensure_entrypoint_links.py', (project / 'START.md').read_text())",
+            "self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())",
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})",
+            "self.assertTrue((directory / 'README.human.md').is_file())"
+          ],
+          "subtests": []
+        },
+        "test_existing_project_is_not_regenerated_or_exported": {
+          "line": 166,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})",
+            "self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')"
+          ],
+          "subtests": []
+        },
+        "test_new_template_categories_apply_only_to_new_project": {
+          "line": 176,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertFalse((self.root / 'harness/project/specs').exists())",
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())"
+          ],
+          "subtests": []
+        },
+        "test_project_only_is_rejected_before_writes": {
+          "line": 188,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertIn('common', result.stderr)",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())",
+            "self.assertFalse((self.root / '.claude').exists())"
+          ],
+          "subtests": []
+        },
+        "test_unsafe_project_path_is_rejected_without_writes": {
+          "line": 196,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())",
+            "self.assertFalse((self.root / '.claude').exists())"
+          ],
+          "subtests": [
+            "self.subTest(symlink=symlink)"
+          ]
+        },
+        "test_invalid_template_does_not_create_project": {
+          "line": 211,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertFalse(project.exists())",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(content=content)"
+          ]
+        },
+        "test_invalid_entrypoint_prevents_project_creation": {
+          "line": 223,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertFalse((self.root / 'harness/project').exists())",
+            "self.assertEqual(agents.read_text(), '# Keep\\n```md\\nunterminated')"
+          ],
+          "subtests": []
+        },
+        "test_adds_import_and_warns_about_extra_claude_content_without_deleting_it": {
+          "line": 232,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0)",
+            "self.assertIn('inbox', result.stdout)",
+            "self.assertIn('технически не заблокировано', result.stdout)",
+            "self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\\nUser text\\n')"
+          ],
+          "subtests": []
+        },
+        "test_refuses_symlinked_entrypoint_without_changing_target": {
+          "line": 240,
+          "assertions": [
+            "self.assertNotEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(target.read_text(), 'User text\\n')"
+          ],
+          "subtests": []
+        },
+        "test_rules_link_is_restored_and_directory_created": {
+          "line": 247,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertEqual(agents.read_text().count('](.claude/rules/)'), 2)",
+            "self.assertIn('README.human.md', agents.read_text())",
+            "self.assertTrue((self.root / '.claude/rules').is_dir())",
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(agents.read_bytes(), before)"
+          ],
+          "subtests": []
+        },
+        "test_existing_relative_rules_links_are_not_duplicated": {
+          "line": 259,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(text.count('[Rules]'), 1)",
+            "self.assertNotIn('- [.claude/rules]', text)",
+            "self.assertIn('прочитай все Markdown-правила', text)"
+          ],
+          "subtests": [
+            "self.subTest(target=target)"
+          ]
+        },
+        "test_unsafe_rules_directory_does_not_change_entrypoints": {
+          "line": 269,
+          "assertions": [
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertEqual((self.root / 'AGENTS.md').read_text(), '# Keep\\n')",
+            "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(relative=relative, symlink=symlink)"
+          ]
+        }
+      }
+    },
+    "harness/common/checks/test_plugin_eval_without_human.py": {
+      "sha256": "133d16098c0f253e618298092eaab4dd7b35d3fd11e62d894d80a47d4c810e23",
+      "source": "\"\"\"Run the installed analyzer through the launcher; never print human bodies.\"\"\"\nimport hashlib\nimport json\nfrom pathlib import Path\nimport shutil\nimport subprocess\nimport tempfile\nimport unittest\n\n\nLAUNCHER = Path(__file__).with_name('plugin_eval_without_human.mjs')\n\n\nclass HumanFilterTest(unittest.TestCase):\n    def test_installed_analyzer_and_read_guards(self):\n        executable = shutil.which('plugin-eval')\n        self.assertIsNotNone(executable, 'Install plugin-eval before this integration check')\n        cli = Path(executable).resolve()\n        plugin_files = [cli, *cli.parent.parent.joinpath('src').rglob('*.js')]\n        digest = lambda files: {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}\n        plugin_before = digest(plugin_files)\n        with tempfile.TemporaryDirectory() as temp:\n            root = Path(temp)\n            for kind in ('skill', 'rule', 'plugin'):\n                target = root / kind\n                target.mkdir()\n                (target / 'details.md').write_text('Machine guidance.\\n')\n                if kind == 'skill':\n                    (target / 'SKILL.md').write_text('---\\nname: skill\\ndescription: Use when testing a skill.\\n---\\nRead details.md.\\n')\n                elif kind == 'rule':\n                    (target / 'comm-example.md').write_text('When testing, preserve the input.\\n')\n                else:\n                    manifest = target / '.codex-plugin'\n                    manifest.mkdir()\n                    (manifest / 'plugin.json').write_text(json.dumps({'name': 'example', 'version': '1.0.0', 'description': 'Example plugin'}))\n                nested = target / 'nested'\n                nested.mkdir()\n                for folder in (target, nested):\n                    (folder / 'README.human.md').write_text('HUMAN_CANARY_DO_NOT_READ\\n' * 400)\n                before = digest(p for p in target.rglob('*') if p.is_file())\n                result = subprocess.run(['node', str(LAUNCHER), str(cli), 'analyze', str(target), '--format', 'json'], capture_output=True, text=True)\n                self.assertEqual(result.returncode, 0, result.stderr)\n                report = json.loads(result.stdout)\n                self.assertEqual(report['target']['kind'], 'directory' if kind == 'rule' else kind)\n                components = report['budgets']['deferred_cost_tokens']['components']\n                self.assertTrue(any(c['path'].endswith('details.md') for c in components))\n                self.assertFalse(any(c['path'].endswith('README.human.md') for c in components))\n                self.assertNotIn('HUMAN_CANARY', result.stdout)\n                self.assertEqual(before, digest(p for p in target.rglob('*') if p.is_file()))\n            # A direct read must fail before the body reaches stdout, including an alias.\n            human = root / 'skill' / 'README.human.md'\n            alias = root / 'alias.md'\n            alias.symlink_to(human)\n            probe = root / 'probe.mjs'\n            for source in (human, alias):\n                probe.write_text(\"import fs from 'node:fs/promises';\\nconsole.log(await fs.readFile(\" + json.dumps(str(source)) + \", 'utf8'));\\n\")\n                result = subprocess.run(['node', str(LAUNCHER), str(probe)], capture_output=True, text=True)\n                self.assertNotEqual(result.returncode, 0)\n                self.assertIn('README.human.md', result.stderr)\n                self.assertNotIn('HUMAN_CANARY', result.stdout + result.stderr)\n            protected = root / 'protected.txt'\n            protected.write_text('unchanged')\n            probe.write_text(\"import fs from 'node:fs/promises';\\nawait fs.writeFile(\" + json.dumps(str(protected)) + \", 'changed');\\n\")\n            result = subprocess.run(['node', str(LAUNCHER), str(probe)], capture_output=True, text=True)\n            self.assertNotEqual(result.returncode, 0)\n            self.assertEqual(protected.read_text(), 'unchanged')\n        self.assertEqual(plugin_before, digest(plugin_files))\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_installed_analyzer_and_read_guards": {
+          "line": 15,
+          "assertions": [
+            "self.assertIsNotNone(executable, 'Install plugin-eval before this integration check')",
+            "self.assertEqual(plugin_before, digest(plugin_files))",
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertEqual(protected.read_text(), 'unchanged')",
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertEqual(report['target']['kind'], 'directory' if kind == 'rule' else kind)",
+            "self.assertTrue(any((c['path'].endswith('details.md') for c in components)))",
+            "self.assertFalse(any((c['path'].endswith('README.human.md') for c in components)))",
+            "self.assertNotIn('HUMAN_CANARY', result.stdout)",
+            "self.assertEqual(before, digest((p for p in target.rglob('*') if p.is_file())))",
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertIn('README.human.md', result.stderr)",
+            "self.assertNotIn('HUMAN_CANARY', result.stdout + result.stderr)"
+          ],
+          "subtests": []
+        }
+      }
+    },
+    "harness/common/checks/test_entrypoint_portability.py": {
+      "sha256": "6f30a48036b9524dcffdb06e55d878b9bb2b55c410783dbc78860dd9ebf4a41a",
+      "source": "\"\"\"Exercise two supported installations and reject missing common.\"\"\"\nimport os\nimport re\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nPACKAGES = Path(__file__).resolve().parents[2]\nMODES = [('common',), ('common', 'project')]\n\n\nclass PortabilityTest(unittest.TestCase):\n    def install(self, root, mode):\n        shutil.copytree(PACKAGES / 'common', root / 'harness/common',\n                        ignore=shutil.ignore_patterns('inbox', '__pycache__'))\n        if 'project' in mode:\n            project = root / 'harness/project'\n            if (PACKAGES / 'project').is_dir():\n                shutil.copytree(PACKAGES / 'project', project)\n            else:\n                project.mkdir()\n                (project / 'INDEX.md').write_text('# Existing project\\n')\n                (project / 'START.md').write_text('# Existing startup\\n')\n            material = project / 'docs/local-task/notes.md'\n            material.parent.mkdir(parents=True, exist_ok=True)\n            material.write_bytes(b'Existing project material\\n')\n\n    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py'):\n        return subprocess.run([sys.executable, '-I', '-B', script], cwd=root,\n                              env=dict(os.environ, PATH='/no-git-in-this-test'),\n                              capture_output=True, text=True)\n\n    def test_startup_command_runs_in_each_clean_mode_without_git(self):\n        for mode in MODES:\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                self.install(root, mode)\n                project = root / 'harness/project'\n                before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*')\n                          if p.is_file() and p.name != 'README.human.md'}\n                first = self.run_check(root)\n                self.assertEqual(first.returncode, 0, first.stderr)\n                if 'project' in mode:\n                    self.assertEqual(before, {p.relative_to(project): p.read_bytes()\n                                     for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'})\n                else:\n                    self.assertTrue((project / 'base/README.human.md').is_file())\n                    self.assertFalse((project / 'docs/local-task').exists())\n                text = (root / 'AGENTS.md').read_text()\n                self.assertIn('](.claude/rules/)', text)\n                self.assertIn('harness/project/START.md', text)\n                command = re.search(r'(?m)^python3(?: -B)? (harness/[^\\s]+\\.py)$', text)\n                self.assertIsNotNone(command)\n                self.assertEqual(command.group(1), 'harness/common/checks/ensure_entrypoint_links.py')\n                before_inputs = (root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()\n                second = self.run_check(root, command.group(1))\n                self.assertEqual(second.returncode, 0, second.stderr)\n                self.assertNotIn('будут автоматически восстановлены', second.stdout)\n                self.assertEqual(before_inputs, ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()))\n                self.assertFalse((root / '.git').exists())\n\n    def test_existing_settings_and_startup_command_are_never_rewritten(self):\n        with tempfile.TemporaryDirectory() as directory:\n            root = Path(directory)\n            self.install(root, ('common', 'project'))\n            legacy = root / 'harness/project/checks/ensure_entrypoint_links.py'\n            script = legacy.relative_to(root).as_posix() if legacy.exists() else 'harness/common/checks/ensure_entrypoint_links.py'\n            prefix = '# Existing settings\\n\\npython3 ' + script + '\\nKeep this setting.\\n'\n            (root / 'AGENTS.md').write_text(prefix)\n            result = self.run_check(root, script)\n            self.assertEqual(result.returncode, 0, result.stderr)\n            self.assertTrue((root / 'AGENTS.md').read_text().startswith(prefix))\n\n    def test_legacy_checker_rejects_symlinked_common_ancestors(self):\n        for relative in ('harness/common', 'harness/common/checks'):\n            with self.subTest(relative=relative), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                self.install(root, ('common', 'project'))\n                legacy = root / 'harness/project/checks/ensure_entrypoint_links.py'\n                if not legacy.exists():\n                    self.skipTest('No legacy shim in a common-only source installation.')\n                external = root / 'external'\n                checker = external / ('checks/ensure_entrypoint_links.py'\n                                      if relative == 'harness/common' else 'ensure_entrypoint_links.py')\n                checker.parent.mkdir(parents=True)\n                marker = root / 'external-code-executed'\n                checker.write_text('from pathlib import Path\\nPath(' + repr(str(marker)) + ').touch()\\n')\n                directory_path = root / relative\n                directory_path.rename(directory_path.with_name(directory_path.name + '-original'))\n                directory_path.symlink_to(external, target_is_directory=True)\n                result = self.run_check(root, str(legacy))\n                self.assertFalse(marker.exists(), 'shim must reject symlinked ancestors before execution')\n                self.assertEqual(result.returncode, 2, result.stderr)\n                self.assertFalse((root / 'AGENTS.md').exists())\n\n    def test_required_resource_damage_is_detected(self):\n        for mode in MODES:\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                self.install(root, mode)\n                (root / 'harness/common/START.md').unlink()\n                result = self.run_check(root)\n                self.assertEqual(result.returncode, 2)\n                self.assertIn('START.md', result.stderr)\n                self.assertFalse((root / 'AGENTS.md').exists())\n\n    def test_project_only_rejected_without_writes(self):\n        with tempfile.TemporaryDirectory() as directory:\n            root = Path(directory)\n            project = root / 'harness/project'\n            if (PACKAGES / 'project').is_dir():\n                shutil.copytree(PACKAGES / 'project', project)\n            else:\n                project.mkdir(parents=True)\n            legacy = project / 'checks/ensure_entrypoint_links.py'\n            checker = str(legacy) if legacy.exists() else str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')\n            result = self.run_check(root, checker)\n            self.assertEqual(result.returncode, 2)\n            self.assertIn('common', result.stderr)\n            self.assertFalse((root / 'AGENTS.md').exists())\n            self.assertFalse((root / 'harness/common').exists())\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_startup_command_runs_in_each_clean_mode_without_git": {
+          "line": 36,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn('](.claude/rules/)', text)",
+            "self.assertIn('harness/project/START.md', text)",
+            "self.assertIsNotNone(command)",
+            "self.assertEqual(command.group(1), 'harness/common/checks/ensure_entrypoint_links.py')",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+            "self.assertEqual(before_inputs, ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()))",
+            "self.assertFalse((root / '.git').exists())",
+            "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'})",
+            "self.assertTrue((project / 'base/README.human.md').is_file())",
+            "self.assertFalse((project / 'docs/local-task').exists())"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        },
+        "test_existing_settings_and_startup_command_are_never_rewritten": {
+          "line": 65,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue((root / 'AGENTS.md').read_text().startswith(prefix))"
+          ],
+          "subtests": []
+        },
+        "test_legacy_checker_rejects_symlinked_common_ancestors": {
+          "line": 77,
+          "assertions": [
+            "self.assertFalse(marker.exists(), 'shim must reject symlinked ancestors before execution')",
+            "self.assertEqual(result.returncode, 2, result.stderr)",
+            "self.assertFalse((root / 'AGENTS.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(relative=relative)"
+          ]
+        },
+        "test_required_resource_damage_is_detected": {
+          "line": 99,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertIn('START.md', result.stderr)",
+            "self.assertFalse((root / 'AGENTS.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        },
+        "test_project_only_rejected_without_writes": {
+          "line": 110,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertIn('common', result.stderr)",
+            "self.assertFalse((root / 'AGENTS.md').exists())",
+            "self.assertFalse((root / 'harness/common').exists())"
+          ],
+          "subtests": []
+        }
+      }
+    },
+    "harness/common/checks/test_entrypoint_notifications.py": {
+      "sha256": "0a407db4fa340c1e89c32b95dd8824d8db7f3d71698323c491bf17f3697c75b9",
+      "source": "\"\"\"Notification checks use temporary projects and need no configured hooks.\"\"\"\nimport contextlib\nimport importlib.util\nimport io\nimport os\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nSCRIPT = Path(__file__).with_name('ensure_entrypoint_links.py')\nPOLICY = 'технически не заблокировано'\nNOTICE = 'Стартовые ссылки повреждены и будут автоматически восстановлены.'\nRULES_LINES = ('- [.claude/rules](.claude/rules/)\\n'\n               'До выполнения задачи прочитай все Markdown-правила из .claude/rules '\n               'и его подпапок, кроме README.human.md; соблюдай применимые требования.\\n')\n\n\nclass NotificationTest(unittest.TestCase):\n    def setUp(self):\n        temporary = tempfile.TemporaryDirectory()\n        self.addCleanup(temporary.cleanup)\n        self.root = Path(temporary.name)\n        for package in ('common', 'project'):\n            directory = self.root / 'harness' / package\n            directory.mkdir(parents=True)\n            (directory / 'INDEX.md').write_text('# Index\\n')\n            (directory / 'START.md').touch()\n        template = self.root / 'harness/common/base/project-skeleton.json'\n        template.parent.mkdir()\n        shutil.copyfile(SCRIPT.parent.parent / 'base/project-skeleton.json', template)\n        (self.root / 'AGENTS.md').write_text('# Static settings\\n\\nKeep this setting.\\n\\n' + ''.join(\n            f'- [harness/{p}/{n}](harness/{p}/{n})\\n'\n            for p in ('common', 'project') for n in ('INDEX.md', 'START.md')) + RULES_LINES)\n        (self.root / 'CLAUDE.md').write_text('@AGENTS.md\\n')\n\n    def check(self, git_available=True):\n        environment = dict(os.environ)\n        if not git_available:\n            environment['PATH'] = '/nonexistent-for-this-test'\n        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)],\n                              capture_output=True, text=True, env=environment)\n\n    def git(self, *args):\n        result = subprocess.run(['git', *args], cwd=self.root, capture_output=True, text=True)\n        self.assertEqual(result.returncode, 0, result.stderr)\n        return result\n\n    def register_fixture(self):\n        self.git('init', '-q')\n        self.git('config', 'user.name', 'Harness Test')\n        self.git('config', 'user.email', 'harness-test@example.invalid')\n        self.git('add', 'AGENTS.md', 'CLAUDE.md')\n        self.git('commit', '-qm', 'Initial test fixture')\n\n    def test_no_git_binary_or_repository_or_baseline_is_required(self):\n        before = (self.root/'AGENTS.md').read_bytes(), (self.root/'CLAUDE.md').read_bytes()\n        result = self.check(git_available=False)\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn(POLICY, result.stdout)\n        self.assertEqual(before, ((self.root/'AGENTS.md').read_bytes(), (self.root/'CLAUDE.md').read_bytes()))\n\n    def test_instruction_change_is_reported_and_preserved_without_blocking(self):\n        self.register_fixture()\n        agents = self.root/'AGENTS.md'\n        changed = agents.read_text().replace('Keep this setting.', 'Changed setting.')\n        agents.write_text(changed)\n        result = self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn(POLICY, result.stdout)\n        self.assertIn('AGENTS.md', result.stdout)\n        self.assertIn('inbox', result.stdout)\n        self.assertIn('изменение настроек', result.stdout)\n        self.assertEqual(agents.read_text(), changed)\n\n    def test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change(self):\n        agents = self.root / 'AGENTS.md'\n        original = agents.read_text() + '\\n~~~md\\n~~~example\\n~~~\\n'\n        agents.write_text(original)\n        self.register_fixture()\n        instruction = RULES_LINES.splitlines(keepends=True)[1]\n        changed = original.replace('~~~example\\n', '~~~example\\n' + instruction)\n        agents.write_text(changed)\n        result = self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn('изменение настроек', result.stdout)\n        self.assertNotIn(NOTICE, result.stdout)\n        self.assertEqual(agents.read_text(), changed)\n\n    def test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file(self):\n        agents = self.root / 'AGENTS.md'\n        original = '# Keep user settings\\n~~~md\\nexample\\n'\n        agents.write_text(original)\n        self.register_fixture()\n        current = original + '~~~\\n'\n        agents.write_text(current)\n        result = self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn('изменение настроек', result.stdout)\n        self.assertIn(NOTICE, result.stdout)\n        repaired = agents.read_text()\n        self.assertTrue(repaired.startswith(current))\n        self.assertIn('](harness/common/START.md)', repaired[len(current):])\n        before = agents.read_bytes()\n        self.assertEqual(self.check().returncode, 0)\n        self.assertEqual(agents.read_bytes(), before)\n\n    def test_extra_bridge_text_warns_without_rewriting_or_blocking(self):\n        self.register_fixture()\n        bridge=self.root/'CLAUDE.md'\n        extra='@AGENTS.md\\nUser text\\n'\n        bridge.write_text(extra)\n        result=self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn('CLAUDE.md', result.stdout)\n        self.assertIn('inbox', result.stdout)\n        self.assertIn(POLICY, result.stdout)\n        self.assertEqual(bridge.read_text(), extra)\n\n    def test_repair_is_announced_and_next_run_has_no_damage_message(self):\n        agents=self.root/'AGENTS.md'\n        line='- [harness/common/START.md](harness/common/START.md)\\n'\n        agents.write_text(agents.read_text().replace(line,''))\n        first=self.check(git_available=False)\n        self.assertEqual(first.returncode,0,first.stderr)\n        self.assertIn(NOTICE,first.stdout)\n        self.assertIn(line,agents.read_text())\n        self.assertNotIn(NOTICE,self.check(git_available=False).stdout)\n\n    def test_repair_message_is_visible_before_the_first_write(self):\n        agents = self.root/'AGENTS.md'\n        line = '- [harness/common/START.md](harness/common/START.md)\\n'\n        agents.write_text(agents.read_text().replace(line, ''))\n        spec = importlib.util.spec_from_file_location('entrypoint_notifications', SCRIPT)\n        module = importlib.util.module_from_spec(spec)\n        spec.loader.exec_module(module)\n        output = io.StringIO()\n        original_write = Path.write_bytes\n        def write(path, data, *args, **kwargs):\n            self.assertIn(NOTICE, output.getvalue())\n            return original_write(path, data, *args, **kwargs)\n        from unittest.mock import patch\n        with contextlib.redirect_stdout(output), patch.object(Path, 'write_bytes', write):\n            module.ensure(self.root)\n        self.assertEqual(output.getvalue().count(NOTICE), 1)\n\n    def test_rules_repair_is_not_reported_as_a_settings_change(self):\n        agents = self.root / 'AGENTS.md'\n        agents.write_text(agents.read_text().replace(RULES_LINES, ''))\n        self.register_fixture()\n        first = self.check()\n        self.assertEqual(first.returncode, 0, first.stderr)\n        self.assertIn(NOTICE, first.stdout)\n        second = self.check()\n        self.assertNotIn(NOTICE, second.stdout)\n        self.assertNotIn('изменение настроек', second.stdout)\n\n    def test_check_installs_no_hooks_or_configuration_and_does_not_block_commit(self):\n        self.register_fixture()\n        config=(self.root/'.git/config').read_bytes()\n        agents=self.root/'AGENTS.md'\n        agents.write_text(agents.read_text()+'\\nDirect edit.\\n')\n        self.assertEqual(self.check().returncode,0)\n        self.assertEqual((self.root/'.git/config').read_bytes(),config)\n        self.assertFalse((self.root/'.git/hooks/pre-commit').exists())\n        self.git('add','AGENTS.md')\n        before=self.git('rev-parse','HEAD').stdout\n        self.git('commit','-qm','Commit is not mechanically blocked')\n        self.assertNotEqual(self.git('rev-parse','HEAD').stdout,before)\n\n    def test_crlf_link_repair_is_not_reported_as_a_settings_change(self):\n        agents = self.root / 'AGENTS.md'\n        original = agents.read_bytes().replace(b'\\n', b'\\r\\n')\n        line = b'- [harness/common/START.md](harness/common/START.md)\\r\\n'\n        original = original.replace(line, b'')\n        agents.write_bytes(original)\n        self.register_fixture()\n        first = self.check()\n        self.assertEqual(first.returncode, 0, first.stderr)\n        self.assertIn(NOTICE, first.stdout)\n        self.assertTrue(agents.read_bytes().startswith(original))\n        self.assertIn(line, agents.read_bytes())\n        second = self.check()\n        self.assertEqual(second.returncode, 0, second.stderr)\n        self.assertNotIn(NOTICE, second.stdout)\n        self.assertNotIn('изменение настроек', second.stdout)\n\n\nif __name__=='__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_no_git_binary_or_repository_or_baseline_is_required": {
+          "line": 58,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn(POLICY, result.stdout)",
+            "self.assertEqual(before, ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes()))"
+          ],
+          "subtests": []
+        },
+        "test_instruction_change_is_reported_and_preserved_without_blocking": {
+          "line": 65,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn(POLICY, result.stdout)",
+            "self.assertIn('AGENTS.md', result.stdout)",
+            "self.assertIn('inbox', result.stdout)",
+            "self.assertIn('изменение настроек', result.stdout)",
+            "self.assertEqual(agents.read_text(), changed)"
+          ],
+          "subtests": []
+        },
+        "test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change": {
+          "line": 78,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn('изменение настроек', result.stdout)",
+            "self.assertNotIn(NOTICE, result.stdout)",
+            "self.assertEqual(agents.read_text(), changed)"
+          ],
+          "subtests": []
+        },
+        "test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file": {
+          "line": 92,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn('изменение настроек', result.stdout)",
+            "self.assertIn(NOTICE, result.stdout)",
+            "self.assertTrue(repaired.startswith(current))",
+            "self.assertIn('](harness/common/START.md)', repaired[len(current):])",
+            "self.assertEqual(self.check().returncode, 0)",
+            "self.assertEqual(agents.read_bytes(), before)"
+          ],
+          "subtests": []
+        },
+        "test_extra_bridge_text_warns_without_rewriting_or_blocking": {
+          "line": 110,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn('CLAUDE.md', result.stdout)",
+            "self.assertIn('inbox', result.stdout)",
+            "self.assertIn(POLICY, result.stdout)",
+            "self.assertEqual(bridge.read_text(), extra)"
+          ],
+          "subtests": []
+        },
+        "test_repair_is_announced_and_next_run_has_no_damage_message": {
+          "line": 122,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn(NOTICE, first.stdout)",
+            "self.assertIn(line, agents.read_text())",
+            "self.assertNotIn(NOTICE, self.check(git_available=False).stdout)"
+          ],
+          "subtests": []
+        },
+        "test_repair_message_is_visible_before_the_first_write": {
+          "line": 132,
+          "assertions": [
+            "self.assertEqual(output.getvalue().count(NOTICE), 1)",
+            "self.assertIn(NOTICE, output.getvalue())"
+          ],
+          "subtests": []
+        },
+        "test_rules_repair_is_not_reported_as_a_settings_change": {
+          "line": 149,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn(NOTICE, first.stdout)",
+            "self.assertNotIn(NOTICE, second.stdout)",
+            "self.assertNotIn('изменение настроек', second.stdout)"
+          ],
+          "subtests": []
+        },
+        "test_check_installs_no_hooks_or_configuration_and_does_not_block_commit": {
+          "line": 160,
+          "assertions": [
+            "self.assertEqual(self.check().returncode, 0)",
+            "self.assertEqual((self.root / '.git/config').read_bytes(), config)",
+            "self.assertFalse((self.root / '.git/hooks/pre-commit').exists())",
+            "self.assertNotEqual(self.git('rev-parse', 'HEAD').stdout, before)"
+          ],
+          "subtests": []
+        },
+        "test_crlf_link_repair_is_not_reported_as_a_settings_change": {
+          "line": 173,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn(NOTICE, first.stdout)",
+            "self.assertTrue(agents.read_bytes().startswith(original))",
+            "self.assertIn(line, agents.read_bytes())",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertNotIn(NOTICE, second.stdout)",
+            "self.assertNotIn('изменение настроек', second.stdout)"
+          ],
+          "subtests": []
+        }
+      }
+    },
+    "harness/common/checks/test_rule_copies.py": {
+      "sha256": "d9238c864478f92316c2085a57b15f7d17856655aabd20bc13124b78bbf706dd",
+      "source": "\"\"\"Check installed shared rules and exercise copy-drift failures.\"\"\"\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\n\nROOT = Path(__file__).resolve().parents[3]\n\n\ndef check_rule_copies(root):\n    if not (root / 'harness/common').is_dir():\n        raise ValueError('harness/common is required; project-only is unsupported.')\n    native = root / '.claude/rules'\n    sources = {}\n    installed_prefixes = []\n    for package, prefix in (('common', 'comm-'), ('project', 'proj-')):\n        rules = root / 'harness' / package / 'rules'\n        if rules.is_dir():\n            installed_prefixes.append(prefix)\n            sources.update((file.name, file) for file in rules.glob(prefix + '*.md'))\n    if not sources:\n        raise ValueError('No canonical shared rules found; nothing checked.')\n    expected = set(sources)\n    actual = {file.name for prefix in installed_prefixes\n              for file in native.glob(prefix + '*.md')}\n    if expected != actual:\n        raise ValueError(f'Missing copies: {sorted(expected - actual)}; '\n                         f'extra copies: {sorted(actual - expected)}')\n    for name, source in sorted(sources.items()):\n        copy = native / name\n        for file in (source, copy):\n            if not file.is_file() or any(path.is_symlink() for path in (file, *file.parents)):\n                raise ValueError(f'Not an ordinary file: {file}')\n        if source.read_bytes() != copy.read_bytes():\n            raise ValueError(f'Different rule bytes: {name}')\n    return len(sources)\n\n\nclass RuleCopiesTest(unittest.TestCase):\n    def test_installed_rule_copies(self):\n        count = check_rule_copies(ROOT)\n        print(f'Checked {count} shared rule copies.')\n\n    def test_project_only_rules_are_rejected(self):\n        with tempfile.TemporaryDirectory() as directory:\n            root = Path(directory)\n            source = root / 'harness/project/rules'\n            native = root / '.claude/rules'\n            source.mkdir(parents=True)\n            native.mkdir(parents=True)\n            for folder in (source, native):\n                (folder / 'proj-example.md').write_bytes(b'canonical\\n')\n            with self.assertRaisesRegex(ValueError, 'common'):\n                check_rule_copies(root)\n\n    def test_copy_drift_is_detected(self):\n        for mode in (('common',), ('common', 'project')):\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                native = root / '.claude/rules'\n                native.mkdir(parents=True)\n                for package in mode:\n                    rules = root / 'harness' / package / 'rules'\n                    rules.mkdir(parents=True)\n                    prefix = 'comm-' if package == 'common' else 'proj-'\n                    (rules / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                    (rules / 'README.human.md').write_bytes(b'')\n                    (native / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                (native / 'personal.md').write_bytes(b'personal\\n')\n                self.assertEqual(check_rule_copies(root), len(mode))\n                source = next((root / 'harness' / mode[0] / 'rules').glob('*-example.md'))\n                copy = native / source.name\n                copy.unlink()\n                with self.assertRaisesRegex(ValueError, 'Missing copies'):\n                    check_rule_copies(root)\n                copy.write_bytes(b'changed\\n')\n                with self.assertRaisesRegex(ValueError, 'Different rule bytes'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.symlink_to(source)\n                with self.assertRaisesRegex(ValueError, 'Not an ordinary file'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.write_bytes(source.read_bytes())\n                extra = native / (source.name.split('-')[0] + '-stale.md')\n                extra.write_bytes(b'stale\\n')\n                with self.assertRaisesRegex(ValueError, 'extra copies'):\n                    check_rule_copies(root)\n                extra.unlink()\n                self.assertEqual(check_rule_copies(root), len(mode))\n        with tempfile.TemporaryDirectory() as directory:\n            with self.assertRaisesRegex(ValueError, 'common'):\n                check_rule_copies(Path(directory))\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_installed_rule_copies": {
+          "line": 40,
+          "assertions": [],
+          "subtests": []
+        },
+        "test_project_only_rules_are_rejected": {
+          "line": 44,
+          "assertions": [
+            "self.assertRaisesRegex(ValueError, 'common')"
+          ],
+          "subtests": []
+        },
+        "test_copy_drift_is_detected": {
+          "line": 56,
+          "assertions": [
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertRaisesRegex(ValueError, 'common')",
+            "self.assertRaisesRegex(ValueError, 'Missing copies')",
+            "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+            "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+            "self.assertRaisesRegex(ValueError, 'extra copies')"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py": {
+      "sha256": "90daacd72ba034cc309abdb27f4b1a95dfb3518bef562539adf54f91323202a6",
+      "source": "\"\"\"Run with python3 -B <this-file>; uses only temporary projects.\"\"\"\nimport json\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nSCRIPT = Path(__file__).with_name('ensure_entrypoint_links.py')\n\n\nclass EntryPointLinksTest(unittest.TestCase):\n    def setUp(self):\n        self.temporary = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temporary.cleanup)\n        self.root = Path(self.temporary.name)\n        for package in ('common', 'project'):\n            directory = self.root / 'harness' / package\n            directory.mkdir(parents=True)\n            (directory / 'INDEX.md').write_text('# Index\\n')\n            (directory / 'START.md').touch()\n        template = SCRIPT.parent.parent / 'base/project-skeleton.json'\n        if template.exists():\n            destination = self.root / 'harness/common/base/project-skeleton.json'\n            destination.parent.mkdir()\n            shutil.copyfile(template, destination)\n\n    def run_check(self):\n        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)],\n                              text=True, capture_output=True)\n\n    def test_creates_four_links_and_import_then_preserves_bytes(self):\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        agents = self.root / 'AGENTS.md'\n        claude = self.root / 'CLAUDE.md'\n        for package in ('common', 'project'):\n            for name in ('INDEX.md', 'START.md'):\n                self.assertIn(f'](harness/{package}/{name})', agents.read_text())\n        self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\n')\n        before = (agents.read_bytes(), claude.read_bytes())\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(before, (agents.read_bytes(), claude.read_bytes()))\n        for file in self.root.glob('harness/*/START.md'):\n            self.assertEqual(file.read_bytes(), b'')\n\n    def test_only_appends_missing_links_preserving_user_text(self):\n        prefix = '# User configuration\\n\\nKeep this exact text.\\n[Existing](./harness/common/INDEX.md)\\n'\n        (self.root / 'AGENTS.md').write_text(prefix)\n        self.assertEqual(self.run_check().returncode, 0)\n        text = (self.root / 'AGENTS.md').read_text()\n        self.assertTrue(text.startswith(prefix))\n        self.assertEqual(text.count('harness/common/INDEX.md'), 1)\n\n    def test_link_examples_in_code_do_not_count_as_real_links(self):\n        examples = '\\n'.join(f'[Example](harness/{p}/{n})'\n                             for p in ('common', 'project') for n in ('INDEX.md', 'START.md'))\n        (self.root / 'AGENTS.md').write_text(f'```md\\n{examples}\\n```\\n')\n        self.assertEqual(self.run_check().returncode, 0)\n        text = (self.root / 'AGENTS.md').read_text()\n        self.assertEqual(text.count('](harness/common/INDEX.md)'), 2)\n\n    def test_repair_preserves_original_bytes_and_each_files_line_endings(self):\n        agents, claude = self.root / 'AGENTS.md', self.root / 'CLAUDE.md'\n        for newline in (b'\\n', b'\\r\\n'):\n            with self.subTest(newline=newline):\n                original = newline.join((b'# User settings', b'Keep exact bytes.', b'', b''))\n                bridge = b'User bridge text\\r\\n'\n                agents.write_bytes(original)\n                claude.write_bytes(bridge)\n                result = self.run_check()\n                self.assertEqual(result.returncode, 0, result.stderr)\n                repaired = agents.read_bytes()\n                self.assertTrue(repaired.startswith(original))\n                self.assertIn(b'](harness/common/START.md)' + newline, repaired)\n                if newline == b'\\r\\n':\n                    self.assertNotIn(b'\\n', repaired.replace(b'\\r\\n', b''))\n                self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\r\\n' + bridge)\n                before = agents.read_bytes(), claude.read_bytes()\n                second = self.run_check()\n                self.assertEqual(second.returncode, 0, second.stderr)\n                self.assertNotIn('будут автоматически восстановлены', second.stdout)\n                self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)\n\n    def test_valid_crlf_bridge_is_preserved_without_warning_or_repair(self):\n        self.assertEqual(self.run_check().returncode, 0)\n        agents, claude = self.root / 'AGENTS.md', self.root / 'CLAUDE.md'\n        agents.write_bytes(agents.read_bytes().replace(b'\\n', b'\\r\\n'))\n        claude.write_bytes(b'@AGENTS.md\\r\\n')\n        before = agents.read_bytes(), claude.read_bytes()\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertNotIn('будут автоматически восстановлены', result.stdout)\n        self.assertNotIn('требуется единственная строка', result.stdout)\n        self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)\n\n    def test_longer_fence_closers_do_not_turn_examples_into_installed_links(self):\n        examples = '\\n'.join(f'[Example](harness/{p}/{n})'\n                             for p in ('common', 'project') for n in ('INDEX.md', 'START.md'))\n        examples += ('\\n[Rules](.claude/rules/)\\n'\n                     'До выполнения задачи прочитай все Markdown-правила из .claude/rules '\n                     'и его подпапок, кроме README.human.md; соблюдай применимые требования.')\n        agents = self.root / 'AGENTS.md'\n        for opener, closer in (('~~~md', '~~~~'), ('```md', '````')):\n            with self.subTest(opener=opener):\n                prefix = f'# Keep user settings\\n{opener}\\n{examples}\\n{closer}\\n'\n                agents.write_text(prefix)\n                first = self.run_check()\n                self.assertEqual(first.returncode, 0, first.stderr)\n                text = agents.read_text()\n                self.assertTrue(text.startswith(prefix))\n                appended = text[len(prefix):]\n                for package in ('common', 'project'):\n                    for name in ('INDEX.md', 'START.md'):\n                        self.assertIn(f'](harness/{package}/{name})', appended)\n                self.assertIn('](.claude/rules/)', appended)\n                self.assertIn('прочитай все Markdown-правила', appended)\n                before = agents.read_bytes()\n                second = self.run_check()\n                self.assertEqual(second.returncode, 0, second.stderr)\n                self.assertEqual(agents.read_bytes(), before)\n\n    def test_unclosed_fence_fails_before_writing_either_entrypoint(self):\n        agents, claude = self.root / 'AGENTS.md', self.root / 'CLAUDE.md'\n        for name in ('AGENTS.md', 'CLAUDE.md'):\n            for opener in ('~~~md', '```md'):\n                with self.subTest(name=name, opener=opener):\n                    agents.write_text('# Keep user settings\\n')\n                    claude.write_text('Keep bridge text\\n')\n                    (self.root / name).write_text(f'# Keep user settings\\n{opener}\\nexample\\n')\n                    before = agents.read_bytes(), claude.read_bytes()\n                    result = self.run_check()\n                    self.assertEqual(result.returncode, 2, result.stderr)\n                    self.assertIn('Unclosed Markdown code fence', result.stderr)\n                    self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)\n                    self.assertFalse((self.root / '.claude').exists())\n\n    def test_damaged_package_is_reported_without_creating_dangling_links(self):\n        (self.root / 'harness/project/START.md').unlink()\n        result = self.run_check()\n        self.assertNotEqual(result.returncode, 0)\n        self.assertFalse((self.root / 'AGENTS.md').exists())\n        self.assertFalse((self.root / 'CLAUDE.md').exists())\n\n    def test_common_only_creates_neutral_project(self):\n        shutil.rmtree(self.root / 'harness/project')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        project = self.root / 'harness/project'\n        expected = {'base', 'decisions', 'lessons', 'testing', 'rules', 'skills',\n                    'checks', 'inbox', 'docs', 'handoffs'}\n        self.assertTrue(project.is_dir(), 'common-only must create project')\n        self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)\n        for directory in [project, *(project / name for name in expected)]:\n            self.assertTrue((directory / 'README.human.md').is_file())\n        self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())\n        self.assertNotIn('EPL', (project / 'INDEX.md').read_text())\n        self.assertIn('harness/common/checks/ensure_entrypoint_links.py',\n                      (project / 'START.md').read_text())\n        self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())\n        before = {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')}\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})\n\n    def test_existing_project_is_not_regenerated_or_exported(self):\n        project = self.root / 'harness/project'\n        task = project / 'docs/epl-import/notes.md'\n        task.parent.mkdir(parents=True)\n        task.write_bytes(b'project-specific material\\n')\n        before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})\n        self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')\n\n    def test_new_template_categories_apply_only_to_new_project(self):\n        template = self.root / 'harness/common/base/project-skeleton.json'\n        data = json.loads(template.read_text())\n        data['categories']['specs'] = {'purpose': 'Shared specifications', 'example': 'api.md describes an agreed API.'}\n        template.write_text(json.dumps(data))\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertFalse((self.root / 'harness/project/specs').exists())\n        shutil.rmtree(self.root / 'harness/project')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())\n\n    def test_project_only_is_rejected_before_writes(self):\n        shutil.rmtree(self.root / 'harness/common')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 2)\n        self.assertIn('common', result.stderr)\n        self.assertFalse((self.root / 'AGENTS.md').exists())\n        self.assertFalse((self.root / '.claude').exists())\n\n    def test_unsafe_project_path_is_rejected_without_writes(self):\n        project = self.root / 'harness/project'\n        shutil.rmtree(project)\n        for symlink in (False, True):\n            with self.subTest(symlink=symlink):\n                if symlink:\n                    project.symlink_to(self.root / 'missing-project')\n                else:\n                    project.write_text('keep this file')\n                result = self.run_check()\n                self.assertEqual(result.returncode, 2)\n                self.assertFalse((self.root / 'AGENTS.md').exists())\n                self.assertFalse((self.root / '.claude').exists())\n                project.unlink()\n\n    def test_invalid_template_does_not_create_project(self):\n        project = self.root / 'harness/project'\n        shutil.rmtree(project)\n        template = self.root / 'harness/common/base/project-skeleton.json'\n        for content in ('not json', '{}', '{\"categories\": {\"../outside\": {\"purpose\": \"bad\", \"example\": \"bad\"}}}'):\n            with self.subTest(content=content):\n                template.write_text(content)\n                result = self.run_check()\n                self.assertEqual(result.returncode, 2)\n                self.assertFalse(project.exists())\n                self.assertFalse((self.root / 'AGENTS.md').exists())\n\n    def test_invalid_entrypoint_prevents_project_creation(self):\n        shutil.rmtree(self.root / 'harness/project')\n        agents = self.root / 'AGENTS.md'\n        agents.write_text('# Keep\\n```md\\nunterminated')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 2)\n        self.assertFalse((self.root / 'harness/project').exists())\n        self.assertEqual(agents.read_text(), '# Keep\\n```md\\nunterminated')\n\n    def test_adds_import_and_warns_about_extra_claude_content_without_deleting_it(self):\n        (self.root / 'CLAUDE.md').write_text('User text\\n')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0)\n        self.assertIn('inbox', result.stdout)\n        self.assertIn('технически не заблокировано', result.stdout)\n        self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\\nUser text\\n')\n\n    def test_refuses_symlinked_entrypoint_without_changing_target(self):\n        target = self.root / 'user.md'\n        target.write_text('User text\\n')\n        (self.root / 'AGENTS.md').symlink_to(target)\n        self.assertNotEqual(self.run_check().returncode, 0)\n        self.assertEqual(target.read_text(), 'User text\\n')\n\n    def test_rules_link_is_restored_and_directory_created(self):\n        (self.root / 'AGENTS.md').write_text('# User settings\\n\\n```md\\n[Rules](.claude/rules/)\\n```\\n')\n        first = self.run_check()\n        self.assertEqual(first.returncode, 0, first.stderr)\n        agents = self.root / 'AGENTS.md'\n        self.assertEqual(agents.read_text().count('](.claude/rules/)'), 2)\n        self.assertIn('README.human.md', agents.read_text())\n        self.assertTrue((self.root / '.claude/rules').is_dir())\n        before = agents.read_bytes()\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(agents.read_bytes(), before)\n\n    def test_existing_relative_rules_links_are_not_duplicated(self):\n        for target in ('.claude/rules', '.claude/rules/', './.claude/rules/', '<./.claude/rules/>'):\n            with self.subTest(target=target):\n                (self.root / 'AGENTS.md').write_text(f'# User settings\\n[Rules]({target})\\n')\n                self.assertEqual(self.run_check().returncode, 0)\n                text = (self.root / 'AGENTS.md').read_text()\n                self.assertEqual(text.count('[Rules]'), 1)\n                self.assertNotIn('- [.claude/rules]', text)\n                self.assertIn('прочитай все Markdown-правила', text)\n\n    def test_unsafe_rules_directory_does_not_change_entrypoints(self):\n        (self.root / 'AGENTS.md').write_text('# Keep\\n')\n        for relative in ('.claude', '.claude/rules'):\n            for symlink in (False, True):\n                with self.subTest(relative=relative, symlink=symlink):\n                    path = self.root / relative\n                    path.parent.mkdir(exist_ok=True)\n                    if symlink:\n                        path.symlink_to(self.root / 'harness', target_is_directory=True)\n                    else:\n                        path.write_text('keep\\n')\n                    try:\n                        result = self.run_check()\n                        self.assertNotEqual(result.returncode, 0)\n                        self.assertEqual((self.root / 'AGENTS.md').read_text(), '# Keep\\n')\n                        self.assertFalse((self.root / 'CLAUDE.md').exists())\n                    finally:\n                        path.unlink()\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_creates_four_links_and_import_then_preserves_bytes": {
+          "line": 33,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\n')",
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(before, (agents.read_bytes(), claude.read_bytes()))",
+            "self.assertEqual(file.read_bytes(), b'')",
+            "self.assertIn(f'](harness/{package}/{name})', agents.read_text())"
+          ],
+          "subtests": []
+        },
+        "test_only_appends_missing_links_preserving_user_text": {
+          "line": 48,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertTrue(text.startswith(prefix))",
+            "self.assertEqual(text.count('harness/common/INDEX.md'), 1)"
+          ],
+          "subtests": []
+        },
+        "test_link_examples_in_code_do_not_count_as_real_links": {
+          "line": 56,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(text.count('](harness/common/INDEX.md)'), 2)"
+          ],
+          "subtests": []
+        },
+        "test_repair_preserves_original_bytes_and_each_files_line_endings": {
+          "line": 64,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue(repaired.startswith(original))",
+            "self.assertIn(b'](harness/common/START.md)' + newline, repaired)",
+            "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\r\\n' + bridge)",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+            "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+            "self.assertNotIn(b'\\n', repaired.replace(b'\\r\\n', b''))"
+          ],
+          "subtests": [
+            "self.subTest(newline=newline)"
+          ]
+        },
+        "test_valid_crlf_bridge_is_preserved_without_warning_or_repair": {
+          "line": 86,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertNotIn('будут автоматически восстановлены', result.stdout)",
+            "self.assertNotIn('требуется единственная строка', result.stdout)",
+            "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)"
+          ],
+          "subtests": []
+        },
+        "test_longer_fence_closers_do_not_turn_examples_into_installed_links": {
+          "line": 98,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertTrue(text.startswith(prefix))",
+            "self.assertIn('](.claude/rules/)', appended)",
+            "self.assertIn('прочитай все Markdown-правила', appended)",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertEqual(agents.read_bytes(), before)",
+            "self.assertIn(f'](harness/{package}/{name})', appended)"
+          ],
+          "subtests": [
+            "self.subTest(opener=opener)"
+          ]
+        },
+        "test_unclosed_fence_fails_before_writing_either_entrypoint": {
+          "line": 124,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2, result.stderr)",
+            "self.assertIn('Unclosed Markdown code fence', result.stderr)",
+            "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+            "self.assertFalse((self.root / '.claude').exists())"
+          ],
+          "subtests": [
+            "self.subTest(name=name, opener=opener)"
+          ]
+        },
+        "test_damaged_package_is_reported_without_creating_dangling_links": {
+          "line": 139,
+          "assertions": [
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())",
+            "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+          ],
+          "subtests": []
+        },
+        "test_common_only_creates_neutral_project": {
+          "line": 146,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue(project.is_dir(), 'common-only must create project')",
+            "self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)",
+            "self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())",
+            "self.assertNotIn('EPL', (project / 'INDEX.md').read_text())",
+            "self.assertIn('harness/common/checks/ensure_entrypoint_links.py', (project / 'START.md').read_text())",
+            "self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())",
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})",
+            "self.assertTrue((directory / 'README.human.md').is_file())"
+          ],
+          "subtests": []
+        },
+        "test_existing_project_is_not_regenerated_or_exported": {
+          "line": 166,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})",
+            "self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')"
+          ],
+          "subtests": []
+        },
+        "test_new_template_categories_apply_only_to_new_project": {
+          "line": 176,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertFalse((self.root / 'harness/project/specs').exists())",
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())"
+          ],
+          "subtests": []
+        },
+        "test_project_only_is_rejected_before_writes": {
+          "line": 188,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertIn('common', result.stderr)",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())",
+            "self.assertFalse((self.root / '.claude').exists())"
+          ],
+          "subtests": []
+        },
+        "test_unsafe_project_path_is_rejected_without_writes": {
+          "line": 196,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())",
+            "self.assertFalse((self.root / '.claude').exists())"
+          ],
+          "subtests": [
+            "self.subTest(symlink=symlink)"
+          ]
+        },
+        "test_invalid_template_does_not_create_project": {
+          "line": 211,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertFalse(project.exists())",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(content=content)"
+          ]
+        },
+        "test_invalid_entrypoint_prevents_project_creation": {
+          "line": 223,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertFalse((self.root / 'harness/project').exists())",
+            "self.assertEqual(agents.read_text(), '# Keep\\n```md\\nunterminated')"
+          ],
+          "subtests": []
+        },
+        "test_adds_import_and_warns_about_extra_claude_content_without_deleting_it": {
+          "line": 232,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0)",
+            "self.assertIn('inbox', result.stdout)",
+            "self.assertIn('технически не заблокировано', result.stdout)",
+            "self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\\nUser text\\n')"
+          ],
+          "subtests": []
+        },
+        "test_refuses_symlinked_entrypoint_without_changing_target": {
+          "line": 240,
+          "assertions": [
+            "self.assertNotEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(target.read_text(), 'User text\\n')"
+          ],
+          "subtests": []
+        },
+        "test_rules_link_is_restored_and_directory_created": {
+          "line": 247,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertEqual(agents.read_text().count('](.claude/rules/)'), 2)",
+            "self.assertIn('README.human.md', agents.read_text())",
+            "self.assertTrue((self.root / '.claude/rules').is_dir())",
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(agents.read_bytes(), before)"
+          ],
+          "subtests": []
+        },
+        "test_existing_relative_rules_links_are_not_duplicated": {
+          "line": 259,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(text.count('[Rules]'), 1)",
+            "self.assertNotIn('- [.claude/rules]', text)",
+            "self.assertIn('прочитай все Markdown-правила', text)"
+          ],
+          "subtests": [
+            "self.subTest(target=target)"
+          ]
+        },
+        "test_unsafe_rules_directory_does_not_change_entrypoints": {
+          "line": 269,
+          "assertions": [
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertEqual((self.root / 'AGENTS.md').read_text(), '# Keep\\n')",
+            "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(relative=relative, symlink=symlink)"
+          ]
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_plugin_eval_without_human.py": {
+      "sha256": "133d16098c0f253e618298092eaab4dd7b35d3fd11e62d894d80a47d4c810e23",
+      "source": "\"\"\"Run the installed analyzer through the launcher; never print human bodies.\"\"\"\nimport hashlib\nimport json\nfrom pathlib import Path\nimport shutil\nimport subprocess\nimport tempfile\nimport unittest\n\n\nLAUNCHER = Path(__file__).with_name('plugin_eval_without_human.mjs')\n\n\nclass HumanFilterTest(unittest.TestCase):\n    def test_installed_analyzer_and_read_guards(self):\n        executable = shutil.which('plugin-eval')\n        self.assertIsNotNone(executable, 'Install plugin-eval before this integration check')\n        cli = Path(executable).resolve()\n        plugin_files = [cli, *cli.parent.parent.joinpath('src').rglob('*.js')]\n        digest = lambda files: {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}\n        plugin_before = digest(plugin_files)\n        with tempfile.TemporaryDirectory() as temp:\n            root = Path(temp)\n            for kind in ('skill', 'rule', 'plugin'):\n                target = root / kind\n                target.mkdir()\n                (target / 'details.md').write_text('Machine guidance.\\n')\n                if kind == 'skill':\n                    (target / 'SKILL.md').write_text('---\\nname: skill\\ndescription: Use when testing a skill.\\n---\\nRead details.md.\\n')\n                elif kind == 'rule':\n                    (target / 'comm-example.md').write_text('When testing, preserve the input.\\n')\n                else:\n                    manifest = target / '.codex-plugin'\n                    manifest.mkdir()\n                    (manifest / 'plugin.json').write_text(json.dumps({'name': 'example', 'version': '1.0.0', 'description': 'Example plugin'}))\n                nested = target / 'nested'\n                nested.mkdir()\n                for folder in (target, nested):\n                    (folder / 'README.human.md').write_text('HUMAN_CANARY_DO_NOT_READ\\n' * 400)\n                before = digest(p for p in target.rglob('*') if p.is_file())\n                result = subprocess.run(['node', str(LAUNCHER), str(cli), 'analyze', str(target), '--format', 'json'], capture_output=True, text=True)\n                self.assertEqual(result.returncode, 0, result.stderr)\n                report = json.loads(result.stdout)\n                self.assertEqual(report['target']['kind'], 'directory' if kind == 'rule' else kind)\n                components = report['budgets']['deferred_cost_tokens']['components']\n                self.assertTrue(any(c['path'].endswith('details.md') for c in components))\n                self.assertFalse(any(c['path'].endswith('README.human.md') for c in components))\n                self.assertNotIn('HUMAN_CANARY', result.stdout)\n                self.assertEqual(before, digest(p for p in target.rglob('*') if p.is_file()))\n            # A direct read must fail before the body reaches stdout, including an alias.\n            human = root / 'skill' / 'README.human.md'\n            alias = root / 'alias.md'\n            alias.symlink_to(human)\n            probe = root / 'probe.mjs'\n            for source in (human, alias):\n                probe.write_text(\"import fs from 'node:fs/promises';\\nconsole.log(await fs.readFile(\" + json.dumps(str(source)) + \", 'utf8'));\\n\")\n                result = subprocess.run(['node', str(LAUNCHER), str(probe)], capture_output=True, text=True)\n                self.assertNotEqual(result.returncode, 0)\n                self.assertIn('README.human.md', result.stderr)\n                self.assertNotIn('HUMAN_CANARY', result.stdout + result.stderr)\n            protected = root / 'protected.txt'\n            protected.write_text('unchanged')\n            probe.write_text(\"import fs from 'node:fs/promises';\\nawait fs.writeFile(\" + json.dumps(str(protected)) + \", 'changed');\\n\")\n            result = subprocess.run(['node', str(LAUNCHER), str(probe)], capture_output=True, text=True)\n            self.assertNotEqual(result.returncode, 0)\n            self.assertEqual(protected.read_text(), 'unchanged')\n        self.assertEqual(plugin_before, digest(plugin_files))\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_installed_analyzer_and_read_guards": {
+          "line": 15,
+          "assertions": [
+            "self.assertIsNotNone(executable, 'Install plugin-eval before this integration check')",
+            "self.assertEqual(plugin_before, digest(plugin_files))",
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertEqual(protected.read_text(), 'unchanged')",
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertEqual(report['target']['kind'], 'directory' if kind == 'rule' else kind)",
+            "self.assertTrue(any((c['path'].endswith('details.md') for c in components)))",
+            "self.assertFalse(any((c['path'].endswith('README.human.md') for c in components)))",
+            "self.assertNotIn('HUMAN_CANARY', result.stdout)",
+            "self.assertEqual(before, digest((p for p in target.rglob('*') if p.is_file())))",
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertIn('README.human.md', result.stderr)",
+            "self.assertNotIn('HUMAN_CANARY', result.stdout + result.stderr)"
+          ],
+          "subtests": []
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py": {
+      "sha256": "6f30a48036b9524dcffdb06e55d878b9bb2b55c410783dbc78860dd9ebf4a41a",
+      "source": "\"\"\"Exercise two supported installations and reject missing common.\"\"\"\nimport os\nimport re\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nPACKAGES = Path(__file__).resolve().parents[2]\nMODES = [('common',), ('common', 'project')]\n\n\nclass PortabilityTest(unittest.TestCase):\n    def install(self, root, mode):\n        shutil.copytree(PACKAGES / 'common', root / 'harness/common',\n                        ignore=shutil.ignore_patterns('inbox', '__pycache__'))\n        if 'project' in mode:\n            project = root / 'harness/project'\n            if (PACKAGES / 'project').is_dir():\n                shutil.copytree(PACKAGES / 'project', project)\n            else:\n                project.mkdir()\n                (project / 'INDEX.md').write_text('# Existing project\\n')\n                (project / 'START.md').write_text('# Existing startup\\n')\n            material = project / 'docs/local-task/notes.md'\n            material.parent.mkdir(parents=True, exist_ok=True)\n            material.write_bytes(b'Existing project material\\n')\n\n    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py'):\n        return subprocess.run([sys.executable, '-I', '-B', script], cwd=root,\n                              env=dict(os.environ, PATH='/no-git-in-this-test'),\n                              capture_output=True, text=True)\n\n    def test_startup_command_runs_in_each_clean_mode_without_git(self):\n        for mode in MODES:\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                self.install(root, mode)\n                project = root / 'harness/project'\n                before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*')\n                          if p.is_file() and p.name != 'README.human.md'}\n                first = self.run_check(root)\n                self.assertEqual(first.returncode, 0, first.stderr)\n                if 'project' in mode:\n                    self.assertEqual(before, {p.relative_to(project): p.read_bytes()\n                                     for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'})\n                else:\n                    self.assertTrue((project / 'base/README.human.md').is_file())\n                    self.assertFalse((project / 'docs/local-task').exists())\n                text = (root / 'AGENTS.md').read_text()\n                self.assertIn('](.claude/rules/)', text)\n                self.assertIn('harness/project/START.md', text)\n                command = re.search(r'(?m)^python3(?: -B)? (harness/[^\\s]+\\.py)$', text)\n                self.assertIsNotNone(command)\n                self.assertEqual(command.group(1), 'harness/common/checks/ensure_entrypoint_links.py')\n                before_inputs = (root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()\n                second = self.run_check(root, command.group(1))\n                self.assertEqual(second.returncode, 0, second.stderr)\n                self.assertNotIn('будут автоматически восстановлены', second.stdout)\n                self.assertEqual(before_inputs, ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()))\n                self.assertFalse((root / '.git').exists())\n\n    def test_existing_settings_and_startup_command_are_never_rewritten(self):\n        with tempfile.TemporaryDirectory() as directory:\n            root = Path(directory)\n            self.install(root, ('common', 'project'))\n            legacy = root / 'harness/project/checks/ensure_entrypoint_links.py'\n            script = legacy.relative_to(root).as_posix() if legacy.exists() else 'harness/common/checks/ensure_entrypoint_links.py'\n            prefix = '# Existing settings\\n\\npython3 ' + script + '\\nKeep this setting.\\n'\n            (root / 'AGENTS.md').write_text(prefix)\n            result = self.run_check(root, script)\n            self.assertEqual(result.returncode, 0, result.stderr)\n            self.assertTrue((root / 'AGENTS.md').read_text().startswith(prefix))\n\n    def test_legacy_checker_rejects_symlinked_common_ancestors(self):\n        for relative in ('harness/common', 'harness/common/checks'):\n            with self.subTest(relative=relative), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                self.install(root, ('common', 'project'))\n                legacy = root / 'harness/project/checks/ensure_entrypoint_links.py'\n                if not legacy.exists():\n                    self.skipTest('No legacy shim in a common-only source installation.')\n                external = root / 'external'\n                checker = external / ('checks/ensure_entrypoint_links.py'\n                                      if relative == 'harness/common' else 'ensure_entrypoint_links.py')\n                checker.parent.mkdir(parents=True)\n                marker = root / 'external-code-executed'\n                checker.write_text('from pathlib import Path\\nPath(' + repr(str(marker)) + ').touch()\\n')\n                directory_path = root / relative\n                directory_path.rename(directory_path.with_name(directory_path.name + '-original'))\n                directory_path.symlink_to(external, target_is_directory=True)\n                result = self.run_check(root, str(legacy))\n                self.assertFalse(marker.exists(), 'shim must reject symlinked ancestors before execution')\n                self.assertEqual(result.returncode, 2, result.stderr)\n                self.assertFalse((root / 'AGENTS.md').exists())\n\n    def test_required_resource_damage_is_detected(self):\n        for mode in MODES:\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                self.install(root, mode)\n                (root / 'harness/common/START.md').unlink()\n                result = self.run_check(root)\n                self.assertEqual(result.returncode, 2)\n                self.assertIn('START.md', result.stderr)\n                self.assertFalse((root / 'AGENTS.md').exists())\n\n    def test_project_only_rejected_without_writes(self):\n        with tempfile.TemporaryDirectory() as directory:\n            root = Path(directory)\n            project = root / 'harness/project'\n            if (PACKAGES / 'project').is_dir():\n                shutil.copytree(PACKAGES / 'project', project)\n            else:\n                project.mkdir(parents=True)\n            legacy = project / 'checks/ensure_entrypoint_links.py'\n            checker = str(legacy) if legacy.exists() else str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')\n            result = self.run_check(root, checker)\n            self.assertEqual(result.returncode, 2)\n            self.assertIn('common', result.stderr)\n            self.assertFalse((root / 'AGENTS.md').exists())\n            self.assertFalse((root / 'harness/common').exists())\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_startup_command_runs_in_each_clean_mode_without_git": {
+          "line": 36,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn('](.claude/rules/)', text)",
+            "self.assertIn('harness/project/START.md', text)",
+            "self.assertIsNotNone(command)",
+            "self.assertEqual(command.group(1), 'harness/common/checks/ensure_entrypoint_links.py')",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+            "self.assertEqual(before_inputs, ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()))",
+            "self.assertFalse((root / '.git').exists())",
+            "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'})",
+            "self.assertTrue((project / 'base/README.human.md').is_file())",
+            "self.assertFalse((project / 'docs/local-task').exists())"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        },
+        "test_existing_settings_and_startup_command_are_never_rewritten": {
+          "line": 65,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue((root / 'AGENTS.md').read_text().startswith(prefix))"
+          ],
+          "subtests": []
+        },
+        "test_legacy_checker_rejects_symlinked_common_ancestors": {
+          "line": 77,
+          "assertions": [
+            "self.assertFalse(marker.exists(), 'shim must reject symlinked ancestors before execution')",
+            "self.assertEqual(result.returncode, 2, result.stderr)",
+            "self.assertFalse((root / 'AGENTS.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(relative=relative)"
+          ]
+        },
+        "test_required_resource_damage_is_detected": {
+          "line": 99,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertIn('START.md', result.stderr)",
+            "self.assertFalse((root / 'AGENTS.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        },
+        "test_project_only_rejected_without_writes": {
+          "line": 110,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertIn('common', result.stderr)",
+            "self.assertFalse((root / 'AGENTS.md').exists())",
+            "self.assertFalse((root / 'harness/common').exists())"
+          ],
+          "subtests": []
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py": {
+      "sha256": "0a407db4fa340c1e89c32b95dd8824d8db7f3d71698323c491bf17f3697c75b9",
+      "source": "\"\"\"Notification checks use temporary projects and need no configured hooks.\"\"\"\nimport contextlib\nimport importlib.util\nimport io\nimport os\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nSCRIPT = Path(__file__).with_name('ensure_entrypoint_links.py')\nPOLICY = 'технически не заблокировано'\nNOTICE = 'Стартовые ссылки повреждены и будут автоматически восстановлены.'\nRULES_LINES = ('- [.claude/rules](.claude/rules/)\\n'\n               'До выполнения задачи прочитай все Markdown-правила из .claude/rules '\n               'и его подпапок, кроме README.human.md; соблюдай применимые требования.\\n')\n\n\nclass NotificationTest(unittest.TestCase):\n    def setUp(self):\n        temporary = tempfile.TemporaryDirectory()\n        self.addCleanup(temporary.cleanup)\n        self.root = Path(temporary.name)\n        for package in ('common', 'project'):\n            directory = self.root / 'harness' / package\n            directory.mkdir(parents=True)\n            (directory / 'INDEX.md').write_text('# Index\\n')\n            (directory / 'START.md').touch()\n        template = self.root / 'harness/common/base/project-skeleton.json'\n        template.parent.mkdir()\n        shutil.copyfile(SCRIPT.parent.parent / 'base/project-skeleton.json', template)\n        (self.root / 'AGENTS.md').write_text('# Static settings\\n\\nKeep this setting.\\n\\n' + ''.join(\n            f'- [harness/{p}/{n}](harness/{p}/{n})\\n'\n            for p in ('common', 'project') for n in ('INDEX.md', 'START.md')) + RULES_LINES)\n        (self.root / 'CLAUDE.md').write_text('@AGENTS.md\\n')\n\n    def check(self, git_available=True):\n        environment = dict(os.environ)\n        if not git_available:\n            environment['PATH'] = '/nonexistent-for-this-test'\n        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)],\n                              capture_output=True, text=True, env=environment)\n\n    def git(self, *args):\n        result = subprocess.run(['git', *args], cwd=self.root, capture_output=True, text=True)\n        self.assertEqual(result.returncode, 0, result.stderr)\n        return result\n\n    def register_fixture(self):\n        self.git('init', '-q')\n        self.git('config', 'user.name', 'Harness Test')\n        self.git('config', 'user.email', 'harness-test@example.invalid')\n        self.git('add', 'AGENTS.md', 'CLAUDE.md')\n        self.git('commit', '-qm', 'Initial test fixture')\n\n    def test_no_git_binary_or_repository_or_baseline_is_required(self):\n        before = (self.root/'AGENTS.md').read_bytes(), (self.root/'CLAUDE.md').read_bytes()\n        result = self.check(git_available=False)\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn(POLICY, result.stdout)\n        self.assertEqual(before, ((self.root/'AGENTS.md').read_bytes(), (self.root/'CLAUDE.md').read_bytes()))\n\n    def test_instruction_change_is_reported_and_preserved_without_blocking(self):\n        self.register_fixture()\n        agents = self.root/'AGENTS.md'\n        changed = agents.read_text().replace('Keep this setting.', 'Changed setting.')\n        agents.write_text(changed)\n        result = self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn(POLICY, result.stdout)\n        self.assertIn('AGENTS.md', result.stdout)\n        self.assertIn('inbox', result.stdout)\n        self.assertIn('изменение настроек', result.stdout)\n        self.assertEqual(agents.read_text(), changed)\n\n    def test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change(self):\n        agents = self.root / 'AGENTS.md'\n        original = agents.read_text() + '\\n~~~md\\n~~~example\\n~~~\\n'\n        agents.write_text(original)\n        self.register_fixture()\n        instruction = RULES_LINES.splitlines(keepends=True)[1]\n        changed = original.replace('~~~example\\n', '~~~example\\n' + instruction)\n        agents.write_text(changed)\n        result = self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn('изменение настроек', result.stdout)\n        self.assertNotIn(NOTICE, result.stdout)\n        self.assertEqual(agents.read_text(), changed)\n\n    def test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file(self):\n        agents = self.root / 'AGENTS.md'\n        original = '# Keep user settings\\n~~~md\\nexample\\n'\n        agents.write_text(original)\n        self.register_fixture()\n        current = original + '~~~\\n'\n        agents.write_text(current)\n        result = self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn('изменение настроек', result.stdout)\n        self.assertIn(NOTICE, result.stdout)\n        repaired = agents.read_text()\n        self.assertTrue(repaired.startswith(current))\n        self.assertIn('](harness/common/START.md)', repaired[len(current):])\n        before = agents.read_bytes()\n        self.assertEqual(self.check().returncode, 0)\n        self.assertEqual(agents.read_bytes(), before)\n\n    def test_extra_bridge_text_warns_without_rewriting_or_blocking(self):\n        self.register_fixture()\n        bridge=self.root/'CLAUDE.md'\n        extra='@AGENTS.md\\nUser text\\n'\n        bridge.write_text(extra)\n        result=self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn('CLAUDE.md', result.stdout)\n        self.assertIn('inbox', result.stdout)\n        self.assertIn(POLICY, result.stdout)\n        self.assertEqual(bridge.read_text(), extra)\n\n    def test_repair_is_announced_and_next_run_has_no_damage_message(self):\n        agents=self.root/'AGENTS.md'\n        line='- [harness/common/START.md](harness/common/START.md)\\n'\n        agents.write_text(agents.read_text().replace(line,''))\n        first=self.check(git_available=False)\n        self.assertEqual(first.returncode,0,first.stderr)\n        self.assertIn(NOTICE,first.stdout)\n        self.assertIn(line,agents.read_text())\n        self.assertNotIn(NOTICE,self.check(git_available=False).stdout)\n\n    def test_repair_message_is_visible_before_the_first_write(self):\n        agents = self.root/'AGENTS.md'\n        line = '- [harness/common/START.md](harness/common/START.md)\\n'\n        agents.write_text(agents.read_text().replace(line, ''))\n        spec = importlib.util.spec_from_file_location('entrypoint_notifications', SCRIPT)\n        module = importlib.util.module_from_spec(spec)\n        spec.loader.exec_module(module)\n        output = io.StringIO()\n        original_write = Path.write_bytes\n        def write(path, data, *args, **kwargs):\n            self.assertIn(NOTICE, output.getvalue())\n            return original_write(path, data, *args, **kwargs)\n        from unittest.mock import patch\n        with contextlib.redirect_stdout(output), patch.object(Path, 'write_bytes', write):\n            module.ensure(self.root)\n        self.assertEqual(output.getvalue().count(NOTICE), 1)\n\n    def test_rules_repair_is_not_reported_as_a_settings_change(self):\n        agents = self.root / 'AGENTS.md'\n        agents.write_text(agents.read_text().replace(RULES_LINES, ''))\n        self.register_fixture()\n        first = self.check()\n        self.assertEqual(first.returncode, 0, first.stderr)\n        self.assertIn(NOTICE, first.stdout)\n        second = self.check()\n        self.assertNotIn(NOTICE, second.stdout)\n        self.assertNotIn('изменение настроек', second.stdout)\n\n    def test_check_installs_no_hooks_or_configuration_and_does_not_block_commit(self):\n        self.register_fixture()\n        config=(self.root/'.git/config').read_bytes()\n        agents=self.root/'AGENTS.md'\n        agents.write_text(agents.read_text()+'\\nDirect edit.\\n')\n        self.assertEqual(self.check().returncode,0)\n        self.assertEqual((self.root/'.git/config').read_bytes(),config)\n        self.assertFalse((self.root/'.git/hooks/pre-commit').exists())\n        self.git('add','AGENTS.md')\n        before=self.git('rev-parse','HEAD').stdout\n        self.git('commit','-qm','Commit is not mechanically blocked')\n        self.assertNotEqual(self.git('rev-parse','HEAD').stdout,before)\n\n    def test_crlf_link_repair_is_not_reported_as_a_settings_change(self):\n        agents = self.root / 'AGENTS.md'\n        original = agents.read_bytes().replace(b'\\n', b'\\r\\n')\n        line = b'- [harness/common/START.md](harness/common/START.md)\\r\\n'\n        original = original.replace(line, b'')\n        agents.write_bytes(original)\n        self.register_fixture()\n        first = self.check()\n        self.assertEqual(first.returncode, 0, first.stderr)\n        self.assertIn(NOTICE, first.stdout)\n        self.assertTrue(agents.read_bytes().startswith(original))\n        self.assertIn(line, agents.read_bytes())\n        second = self.check()\n        self.assertEqual(second.returncode, 0, second.stderr)\n        self.assertNotIn(NOTICE, second.stdout)\n        self.assertNotIn('изменение настроек', second.stdout)\n\n\nif __name__=='__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_no_git_binary_or_repository_or_baseline_is_required": {
+          "line": 58,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn(POLICY, result.stdout)",
+            "self.assertEqual(before, ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes()))"
+          ],
+          "subtests": []
+        },
+        "test_instruction_change_is_reported_and_preserved_without_blocking": {
+          "line": 65,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn(POLICY, result.stdout)",
+            "self.assertIn('AGENTS.md', result.stdout)",
+            "self.assertIn('inbox', result.stdout)",
+            "self.assertIn('изменение настроек', result.stdout)",
+            "self.assertEqual(agents.read_text(), changed)"
+          ],
+          "subtests": []
+        },
+        "test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change": {
+          "line": 78,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn('изменение настроек', result.stdout)",
+            "self.assertNotIn(NOTICE, result.stdout)",
+            "self.assertEqual(agents.read_text(), changed)"
+          ],
+          "subtests": []
+        },
+        "test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file": {
+          "line": 92,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn('изменение настроек', result.stdout)",
+            "self.assertIn(NOTICE, result.stdout)",
+            "self.assertTrue(repaired.startswith(current))",
+            "self.assertIn('](harness/common/START.md)', repaired[len(current):])",
+            "self.assertEqual(self.check().returncode, 0)",
+            "self.assertEqual(agents.read_bytes(), before)"
+          ],
+          "subtests": []
+        },
+        "test_extra_bridge_text_warns_without_rewriting_or_blocking": {
+          "line": 110,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn('CLAUDE.md', result.stdout)",
+            "self.assertIn('inbox', result.stdout)",
+            "self.assertIn(POLICY, result.stdout)",
+            "self.assertEqual(bridge.read_text(), extra)"
+          ],
+          "subtests": []
+        },
+        "test_repair_is_announced_and_next_run_has_no_damage_message": {
+          "line": 122,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn(NOTICE, first.stdout)",
+            "self.assertIn(line, agents.read_text())",
+            "self.assertNotIn(NOTICE, self.check(git_available=False).stdout)"
+          ],
+          "subtests": []
+        },
+        "test_repair_message_is_visible_before_the_first_write": {
+          "line": 132,
+          "assertions": [
+            "self.assertEqual(output.getvalue().count(NOTICE), 1)",
+            "self.assertIn(NOTICE, output.getvalue())"
+          ],
+          "subtests": []
+        },
+        "test_rules_repair_is_not_reported_as_a_settings_change": {
+          "line": 149,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn(NOTICE, first.stdout)",
+            "self.assertNotIn(NOTICE, second.stdout)",
+            "self.assertNotIn('изменение настроек', second.stdout)"
+          ],
+          "subtests": []
+        },
+        "test_check_installs_no_hooks_or_configuration_and_does_not_block_commit": {
+          "line": 160,
+          "assertions": [
+            "self.assertEqual(self.check().returncode, 0)",
+            "self.assertEqual((self.root / '.git/config').read_bytes(), config)",
+            "self.assertFalse((self.root / '.git/hooks/pre-commit').exists())",
+            "self.assertNotEqual(self.git('rev-parse', 'HEAD').stdout, before)"
+          ],
+          "subtests": []
+        },
+        "test_crlf_link_repair_is_not_reported_as_a_settings_change": {
+          "line": 173,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn(NOTICE, first.stdout)",
+            "self.assertTrue(agents.read_bytes().startswith(original))",
+            "self.assertIn(line, agents.read_bytes())",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertNotIn(NOTICE, second.stdout)",
+            "self.assertNotIn('изменение настроек', second.stdout)"
+          ],
+          "subtests": []
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_rule_copies.py": {
+      "sha256": "d9238c864478f92316c2085a57b15f7d17856655aabd20bc13124b78bbf706dd",
+      "source": "\"\"\"Check installed shared rules and exercise copy-drift failures.\"\"\"\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\n\nROOT = Path(__file__).resolve().parents[3]\n\n\ndef check_rule_copies(root):\n    if not (root / 'harness/common').is_dir():\n        raise ValueError('harness/common is required; project-only is unsupported.')\n    native = root / '.claude/rules'\n    sources = {}\n    installed_prefixes = []\n    for package, prefix in (('common', 'comm-'), ('project', 'proj-')):\n        rules = root / 'harness' / package / 'rules'\n        if rules.is_dir():\n            installed_prefixes.append(prefix)\n            sources.update((file.name, file) for file in rules.glob(prefix + '*.md'))\n    if not sources:\n        raise ValueError('No canonical shared rules found; nothing checked.')\n    expected = set(sources)\n    actual = {file.name for prefix in installed_prefixes\n              for file in native.glob(prefix + '*.md')}\n    if expected != actual:\n        raise ValueError(f'Missing copies: {sorted(expected - actual)}; '\n                         f'extra copies: {sorted(actual - expected)}')\n    for name, source in sorted(sources.items()):\n        copy = native / name\n        for file in (source, copy):\n            if not file.is_file() or any(path.is_symlink() for path in (file, *file.parents)):\n                raise ValueError(f'Not an ordinary file: {file}')\n        if source.read_bytes() != copy.read_bytes():\n            raise ValueError(f'Different rule bytes: {name}')\n    return len(sources)\n\n\nclass RuleCopiesTest(unittest.TestCase):\n    def test_installed_rule_copies(self):\n        count = check_rule_copies(ROOT)\n        print(f'Checked {count} shared rule copies.')\n\n    def test_project_only_rules_are_rejected(self):\n        with tempfile.TemporaryDirectory() as directory:\n            root = Path(directory)\n            source = root / 'harness/project/rules'\n            native = root / '.claude/rules'\n            source.mkdir(parents=True)\n            native.mkdir(parents=True)\n            for folder in (source, native):\n                (folder / 'proj-example.md').write_bytes(b'canonical\\n')\n            with self.assertRaisesRegex(ValueError, 'common'):\n                check_rule_copies(root)\n\n    def test_copy_drift_is_detected(self):\n        for mode in (('common',), ('common', 'project')):\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                native = root / '.claude/rules'\n                native.mkdir(parents=True)\n                for package in mode:\n                    rules = root / 'harness' / package / 'rules'\n                    rules.mkdir(parents=True)\n                    prefix = 'comm-' if package == 'common' else 'proj-'\n                    (rules / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                    (rules / 'README.human.md').write_bytes(b'')\n                    (native / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                (native / 'personal.md').write_bytes(b'personal\\n')\n                self.assertEqual(check_rule_copies(root), len(mode))\n                source = next((root / 'harness' / mode[0] / 'rules').glob('*-example.md'))\n                copy = native / source.name\n                copy.unlink()\n                with self.assertRaisesRegex(ValueError, 'Missing copies'):\n                    check_rule_copies(root)\n                copy.write_bytes(b'changed\\n')\n                with self.assertRaisesRegex(ValueError, 'Different rule bytes'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.symlink_to(source)\n                with self.assertRaisesRegex(ValueError, 'Not an ordinary file'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.write_bytes(source.read_bytes())\n                extra = native / (source.name.split('-')[0] + '-stale.md')\n                extra.write_bytes(b'stale\\n')\n                with self.assertRaisesRegex(ValueError, 'extra copies'):\n                    check_rule_copies(root)\n                extra.unlink()\n                self.assertEqual(check_rule_copies(root), len(mode))\n        with tempfile.TemporaryDirectory() as directory:\n            with self.assertRaisesRegex(ValueError, 'common'):\n                check_rule_copies(Path(directory))\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_installed_rule_copies": {
+          "line": 40,
+          "assertions": [],
+          "subtests": []
+        },
+        "test_project_only_rules_are_rejected": {
+          "line": 44,
+          "assertions": [
+            "self.assertRaisesRegex(ValueError, 'common')"
+          ],
+          "subtests": []
+        },
+        "test_copy_drift_is_detected": {
+          "line": 56,
+          "assertions": [
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertRaisesRegex(ValueError, 'common')",
+            "self.assertRaisesRegex(ValueError, 'Missing copies')",
+            "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+            "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+            "self.assertRaisesRegex(ValueError, 'extra copies')"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-05-workflow-43-skills-rules/publication-before/harness/common/checks/test_rule_copies.py": {
+      "sha256": "1cd3c10022f241b9ef7c8d341d02a6677d3f25d8d328213f0ce437a84c26fbdd",
+      "source": "\"\"\"Check installed shared rules and exercise copy-drift failures.\"\"\"\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\n\nROOT = Path(__file__).resolve().parents[3]\n\n\ndef check_rule_copies(root):\n    native = root / '.claude/rules/octadim'\n    sources = {}\n    installed_prefixes = []\n    for package, prefix in (('common', 'comm-'), ('project', 'proj-')):\n        rules = root / 'harness' / package / 'rules'\n        if rules.is_dir():\n            installed_prefixes.append(prefix)\n            sources.update((file.name, file) for file in rules.glob(prefix + '*.md'))\n    if not sources:\n        raise ValueError('No canonical shared rules found; nothing checked.')\n    expected = set(sources)\n    actual = {file.name for prefix in installed_prefixes\n              for file in native.glob(prefix + '*.md')}\n    if expected != actual:\n        raise ValueError(f'Missing copies: {sorted(expected - actual)}; '\n                         f'extra copies: {sorted(actual - expected)}')\n    for name, source in sorted(sources.items()):\n        copy = native / name\n        for file in (source, copy):\n            if not file.is_file() or any(path.is_symlink() for path in (file, *file.parents)):\n                raise ValueError(f'Not an ordinary file: {file}')\n        if source.read_bytes() != copy.read_bytes():\n            raise ValueError(f'Different rule bytes: {name}')\n    return len(sources)\n\n\nclass RuleCopiesTest(unittest.TestCase):\n    def test_installed_rule_copies(self):\n        count = check_rule_copies(ROOT)\n        print(f'Checked {count} shared rule copies.')\n\n    def test_copy_drift_is_detected(self):\n        for mode in (('common',), ('project',), ('common', 'project')):\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                native = root / '.claude/rules/octadim'\n                native.mkdir(parents=True)\n                for package in mode:\n                    rules = root / 'harness' / package / 'rules'\n                    rules.mkdir(parents=True)\n                    prefix = 'comm-' if package == 'common' else 'proj-'\n                    (rules / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                    (rules / 'README.human.md').write_bytes(b'')\n                    (native / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                (native / 'personal.md').write_bytes(b'personal\\n')\n                self.assertEqual(check_rule_copies(root), len(mode))\n                source = next((root / 'harness' / mode[0] / 'rules').glob('*-example.md'))\n                copy = native / source.name\n                copy.unlink()\n                with self.assertRaisesRegex(ValueError, 'Missing copies'):\n                    check_rule_copies(root)\n                copy.write_bytes(b'changed\\n')\n                with self.assertRaisesRegex(ValueError, 'Different rule bytes'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.symlink_to(source)\n                with self.assertRaisesRegex(ValueError, 'Not an ordinary file'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.write_bytes(source.read_bytes())\n                extra = native / (source.name.split('-')[0] + '-stale.md')\n                extra.write_bytes(b'stale\\n')\n                with self.assertRaisesRegex(ValueError, 'extra copies'):\n                    check_rule_copies(root)\n                extra.unlink()\n                self.assertEqual(check_rule_copies(root), len(mode))\n        with tempfile.TemporaryDirectory() as directory:\n            with self.assertRaisesRegex(ValueError, 'nothing checked'):\n                check_rule_copies(Path(directory))\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_installed_rule_copies": {
+          "line": 38,
+          "assertions": [],
+          "subtests": []
+        },
+        "test_copy_drift_is_detected": {
+          "line": 42,
+          "assertions": [
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertRaisesRegex(ValueError, 'nothing checked')",
+            "self.assertRaisesRegex(ValueError, 'Missing copies')",
+            "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+            "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+            "self.assertRaisesRegex(ValueError, 'extra copies')"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-05-workflow-43-skills-rules/merged/harness/common/checks/test_rule_copies.py": {
+      "sha256": "26d2cd188d148c5c930d2787090d700d4fb37b5318f5e7992ab6e9f0bba27206",
+      "source": "\"\"\"Check installed shared rules and exercise copy-drift failures.\"\"\"\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\n\nROOT = Path(__file__).resolve().parents[3]\n\n\ndef check_rule_copies(root):\n    native = root / '.claude/rules'\n    sources = {}\n    installed_prefixes = []\n    for package, prefix in (('common', 'comm-'), ('project', 'proj-')):\n        rules = root / 'harness' / package / 'rules'\n        if rules.is_dir():\n            installed_prefixes.append(prefix)\n            sources.update((file.name, file) for file in rules.glob(prefix + '*.md'))\n    if not sources:\n        raise ValueError('No canonical shared rules found; nothing checked.')\n    expected = set(sources)\n    actual = {file.name for prefix in installed_prefixes\n              for file in native.glob(prefix + '*.md')}\n    if expected != actual:\n        raise ValueError(f'Missing copies: {sorted(expected - actual)}; '\n                         f'extra copies: {sorted(actual - expected)}')\n    for name, source in sorted(sources.items()):\n        copy = native / name\n        for file in (source, copy):\n            if not file.is_file() or any(path.is_symlink() for path in (file, *file.parents)):\n                raise ValueError(f'Not an ordinary file: {file}')\n        if source.read_bytes() != copy.read_bytes():\n            raise ValueError(f'Different rule bytes: {name}')\n    return len(sources)\n\n\nclass RuleCopiesTest(unittest.TestCase):\n    def test_installed_rule_copies(self):\n        count = check_rule_copies(ROOT)\n        print(f'Checked {count} shared rule copies.')\n\n    def test_copy_drift_is_detected(self):\n        for mode in (('common',), ('project',), ('common', 'project')):\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                native = root / '.claude/rules'\n                native.mkdir(parents=True)\n                for package in mode:\n                    rules = root / 'harness' / package / 'rules'\n                    rules.mkdir(parents=True)\n                    prefix = 'comm-' if package == 'common' else 'proj-'\n                    (rules / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                    (rules / 'README.human.md').write_bytes(b'')\n                    (native / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                (native / 'personal.md').write_bytes(b'personal\\n')\n                self.assertEqual(check_rule_copies(root), len(mode))\n                source = next((root / 'harness' / mode[0] / 'rules').glob('*-example.md'))\n                copy = native / source.name\n                copy.unlink()\n                with self.assertRaisesRegex(ValueError, 'Missing copies'):\n                    check_rule_copies(root)\n                copy.write_bytes(b'changed\\n')\n                with self.assertRaisesRegex(ValueError, 'Different rule bytes'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.symlink_to(source)\n                with self.assertRaisesRegex(ValueError, 'Not an ordinary file'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.write_bytes(source.read_bytes())\n                extra = native / (source.name.split('-')[0] + '-stale.md')\n                extra.write_bytes(b'stale\\n')\n                with self.assertRaisesRegex(ValueError, 'extra copies'):\n                    check_rule_copies(root)\n                extra.unlink()\n                self.assertEqual(check_rule_copies(root), len(mode))\n        with tempfile.TemporaryDirectory() as directory:\n            with self.assertRaisesRegex(ValueError, 'nothing checked'):\n                check_rule_copies(Path(directory))\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_installed_rule_copies": {
+          "line": 38,
+          "assertions": [],
+          "subtests": []
+        },
+        "test_copy_drift_is_detected": {
+          "line": 42,
+          "assertions": [
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertRaisesRegex(ValueError, 'nothing checked')",
+            "self.assertRaisesRegex(ValueError, 'Missing copies')",
+            "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+            "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+            "self.assertRaisesRegex(ValueError, 'extra copies')"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-05-rules-entrypoint/candidate/harness/common/checks/test_rule_copies.py": {
+      "sha256": "26d2cd188d148c5c930d2787090d700d4fb37b5318f5e7992ab6e9f0bba27206",
+      "source": "\"\"\"Check installed shared rules and exercise copy-drift failures.\"\"\"\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\n\nROOT = Path(__file__).resolve().parents[3]\n\n\ndef check_rule_copies(root):\n    native = root / '.claude/rules'\n    sources = {}\n    installed_prefixes = []\n    for package, prefix in (('common', 'comm-'), ('project', 'proj-')):\n        rules = root / 'harness' / package / 'rules'\n        if rules.is_dir():\n            installed_prefixes.append(prefix)\n            sources.update((file.name, file) for file in rules.glob(prefix + '*.md'))\n    if not sources:\n        raise ValueError('No canonical shared rules found; nothing checked.')\n    expected = set(sources)\n    actual = {file.name for prefix in installed_prefixes\n              for file in native.glob(prefix + '*.md')}\n    if expected != actual:\n        raise ValueError(f'Missing copies: {sorted(expected - actual)}; '\n                         f'extra copies: {sorted(actual - expected)}')\n    for name, source in sorted(sources.items()):\n        copy = native / name\n        for file in (source, copy):\n            if not file.is_file() or any(path.is_symlink() for path in (file, *file.parents)):\n                raise ValueError(f'Not an ordinary file: {file}')\n        if source.read_bytes() != copy.read_bytes():\n            raise ValueError(f'Different rule bytes: {name}')\n    return len(sources)\n\n\nclass RuleCopiesTest(unittest.TestCase):\n    def test_installed_rule_copies(self):\n        count = check_rule_copies(ROOT)\n        print(f'Checked {count} shared rule copies.')\n\n    def test_copy_drift_is_detected(self):\n        for mode in (('common',), ('project',), ('common', 'project')):\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                native = root / '.claude/rules'\n                native.mkdir(parents=True)\n                for package in mode:\n                    rules = root / 'harness' / package / 'rules'\n                    rules.mkdir(parents=True)\n                    prefix = 'comm-' if package == 'common' else 'proj-'\n                    (rules / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                    (rules / 'README.human.md').write_bytes(b'')\n                    (native / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                (native / 'personal.md').write_bytes(b'personal\\n')\n                self.assertEqual(check_rule_copies(root), len(mode))\n                source = next((root / 'harness' / mode[0] / 'rules').glob('*-example.md'))\n                copy = native / source.name\n                copy.unlink()\n                with self.assertRaisesRegex(ValueError, 'Missing copies'):\n                    check_rule_copies(root)\n                copy.write_bytes(b'changed\\n')\n                with self.assertRaisesRegex(ValueError, 'Different rule bytes'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.symlink_to(source)\n                with self.assertRaisesRegex(ValueError, 'Not an ordinary file'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.write_bytes(source.read_bytes())\n                extra = native / (source.name.split('-')[0] + '-stale.md')\n                extra.write_bytes(b'stale\\n')\n                with self.assertRaisesRegex(ValueError, 'extra copies'):\n                    check_rule_copies(root)\n                extra.unlink()\n                self.assertEqual(check_rule_copies(root), len(mode))\n        with tempfile.TemporaryDirectory() as directory:\n            with self.assertRaisesRegex(ValueError, 'nothing checked'):\n                check_rule_copies(Path(directory))\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_installed_rule_copies": {
+          "line": 38,
+          "assertions": [],
+          "subtests": []
+        },
+        "test_copy_drift_is_detected": {
+          "line": 42,
+          "assertions": [
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertRaisesRegex(ValueError, 'nothing checked')",
+            "self.assertRaisesRegex(ValueError, 'Missing copies')",
+            "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+            "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+            "self.assertRaisesRegex(ValueError, 'extra copies')"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py": {
+      "sha256": "90daacd72ba034cc309abdb27f4b1a95dfb3518bef562539adf54f91323202a6",
+      "source": "\"\"\"Run with python3 -B <this-file>; uses only temporary projects.\"\"\"\nimport json\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nSCRIPT = Path(__file__).with_name('ensure_entrypoint_links.py')\n\n\nclass EntryPointLinksTest(unittest.TestCase):\n    def setUp(self):\n        self.temporary = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temporary.cleanup)\n        self.root = Path(self.temporary.name)\n        for package in ('common', 'project'):\n            directory = self.root / 'harness' / package\n            directory.mkdir(parents=True)\n            (directory / 'INDEX.md').write_text('# Index\\n')\n            (directory / 'START.md').touch()\n        template = SCRIPT.parent.parent / 'base/project-skeleton.json'\n        if template.exists():\n            destination = self.root / 'harness/common/base/project-skeleton.json'\n            destination.parent.mkdir()\n            shutil.copyfile(template, destination)\n\n    def run_check(self):\n        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)],\n                              text=True, capture_output=True)\n\n    def test_creates_four_links_and_import_then_preserves_bytes(self):\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        agents = self.root / 'AGENTS.md'\n        claude = self.root / 'CLAUDE.md'\n        for package in ('common', 'project'):\n            for name in ('INDEX.md', 'START.md'):\n                self.assertIn(f'](harness/{package}/{name})', agents.read_text())\n        self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\n')\n        before = (agents.read_bytes(), claude.read_bytes())\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(before, (agents.read_bytes(), claude.read_bytes()))\n        for file in self.root.glob('harness/*/START.md'):\n            self.assertEqual(file.read_bytes(), b'')\n\n    def test_only_appends_missing_links_preserving_user_text(self):\n        prefix = '# User configuration\\n\\nKeep this exact text.\\n[Existing](./harness/common/INDEX.md)\\n'\n        (self.root / 'AGENTS.md').write_text(prefix)\n        self.assertEqual(self.run_check().returncode, 0)\n        text = (self.root / 'AGENTS.md').read_text()\n        self.assertTrue(text.startswith(prefix))\n        self.assertEqual(text.count('harness/common/INDEX.md'), 1)\n\n    def test_link_examples_in_code_do_not_count_as_real_links(self):\n        examples = '\\n'.join(f'[Example](harness/{p}/{n})'\n                             for p in ('common', 'project') for n in ('INDEX.md', 'START.md'))\n        (self.root / 'AGENTS.md').write_text(f'```md\\n{examples}\\n```\\n')\n        self.assertEqual(self.run_check().returncode, 0)\n        text = (self.root / 'AGENTS.md').read_text()\n        self.assertEqual(text.count('](harness/common/INDEX.md)'), 2)\n\n    def test_repair_preserves_original_bytes_and_each_files_line_endings(self):\n        agents, claude = self.root / 'AGENTS.md', self.root / 'CLAUDE.md'\n        for newline in (b'\\n', b'\\r\\n'):\n            with self.subTest(newline=newline):\n                original = newline.join((b'# User settings', b'Keep exact bytes.', b'', b''))\n                bridge = b'User bridge text\\r\\n'\n                agents.write_bytes(original)\n                claude.write_bytes(bridge)\n                result = self.run_check()\n                self.assertEqual(result.returncode, 0, result.stderr)\n                repaired = agents.read_bytes()\n                self.assertTrue(repaired.startswith(original))\n                self.assertIn(b'](harness/common/START.md)' + newline, repaired)\n                if newline == b'\\r\\n':\n                    self.assertNotIn(b'\\n', repaired.replace(b'\\r\\n', b''))\n                self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\r\\n' + bridge)\n                before = agents.read_bytes(), claude.read_bytes()\n                second = self.run_check()\n                self.assertEqual(second.returncode, 0, second.stderr)\n                self.assertNotIn('будут автоматически восстановлены', second.stdout)\n                self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)\n\n    def test_valid_crlf_bridge_is_preserved_without_warning_or_repair(self):\n        self.assertEqual(self.run_check().returncode, 0)\n        agents, claude = self.root / 'AGENTS.md', self.root / 'CLAUDE.md'\n        agents.write_bytes(agents.read_bytes().replace(b'\\n', b'\\r\\n'))\n        claude.write_bytes(b'@AGENTS.md\\r\\n')\n        before = agents.read_bytes(), claude.read_bytes()\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertNotIn('будут автоматически восстановлены', result.stdout)\n        self.assertNotIn('требуется единственная строка', result.stdout)\n        self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)\n\n    def test_longer_fence_closers_do_not_turn_examples_into_installed_links(self):\n        examples = '\\n'.join(f'[Example](harness/{p}/{n})'\n                             for p in ('common', 'project') for n in ('INDEX.md', 'START.md'))\n        examples += ('\\n[Rules](.claude/rules/)\\n'\n                     'До выполнения задачи прочитай все Markdown-правила из .claude/rules '\n                     'и его подпапок, кроме README.human.md; соблюдай применимые требования.')\n        agents = self.root / 'AGENTS.md'\n        for opener, closer in (('~~~md', '~~~~'), ('```md', '````')):\n            with self.subTest(opener=opener):\n                prefix = f'# Keep user settings\\n{opener}\\n{examples}\\n{closer}\\n'\n                agents.write_text(prefix)\n                first = self.run_check()\n                self.assertEqual(first.returncode, 0, first.stderr)\n                text = agents.read_text()\n                self.assertTrue(text.startswith(prefix))\n                appended = text[len(prefix):]\n                for package in ('common', 'project'):\n                    for name in ('INDEX.md', 'START.md'):\n                        self.assertIn(f'](harness/{package}/{name})', appended)\n                self.assertIn('](.claude/rules/)', appended)\n                self.assertIn('прочитай все Markdown-правила', appended)\n                before = agents.read_bytes()\n                second = self.run_check()\n                self.assertEqual(second.returncode, 0, second.stderr)\n                self.assertEqual(agents.read_bytes(), before)\n\n    def test_unclosed_fence_fails_before_writing_either_entrypoint(self):\n        agents, claude = self.root / 'AGENTS.md', self.root / 'CLAUDE.md'\n        for name in ('AGENTS.md', 'CLAUDE.md'):\n            for opener in ('~~~md', '```md'):\n                with self.subTest(name=name, opener=opener):\n                    agents.write_text('# Keep user settings\\n')\n                    claude.write_text('Keep bridge text\\n')\n                    (self.root / name).write_text(f'# Keep user settings\\n{opener}\\nexample\\n')\n                    before = agents.read_bytes(), claude.read_bytes()\n                    result = self.run_check()\n                    self.assertEqual(result.returncode, 2, result.stderr)\n                    self.assertIn('Unclosed Markdown code fence', result.stderr)\n                    self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)\n                    self.assertFalse((self.root / '.claude').exists())\n\n    def test_damaged_package_is_reported_without_creating_dangling_links(self):\n        (self.root / 'harness/project/START.md').unlink()\n        result = self.run_check()\n        self.assertNotEqual(result.returncode, 0)\n        self.assertFalse((self.root / 'AGENTS.md').exists())\n        self.assertFalse((self.root / 'CLAUDE.md').exists())\n\n    def test_common_only_creates_neutral_project(self):\n        shutil.rmtree(self.root / 'harness/project')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        project = self.root / 'harness/project'\n        expected = {'base', 'decisions', 'lessons', 'testing', 'rules', 'skills',\n                    'checks', 'inbox', 'docs', 'handoffs'}\n        self.assertTrue(project.is_dir(), 'common-only must create project')\n        self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)\n        for directory in [project, *(project / name for name in expected)]:\n            self.assertTrue((directory / 'README.human.md').is_file())\n        self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())\n        self.assertNotIn('EPL', (project / 'INDEX.md').read_text())\n        self.assertIn('harness/common/checks/ensure_entrypoint_links.py',\n                      (project / 'START.md').read_text())\n        self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())\n        before = {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')}\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})\n\n    def test_existing_project_is_not_regenerated_or_exported(self):\n        project = self.root / 'harness/project'\n        task = project / 'docs/epl-import/notes.md'\n        task.parent.mkdir(parents=True)\n        task.write_bytes(b'project-specific material\\n')\n        before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})\n        self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')\n\n    def test_new_template_categories_apply_only_to_new_project(self):\n        template = self.root / 'harness/common/base/project-skeleton.json'\n        data = json.loads(template.read_text())\n        data['categories']['specs'] = {'purpose': 'Shared specifications', 'example': 'api.md describes an agreed API.'}\n        template.write_text(json.dumps(data))\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertFalse((self.root / 'harness/project/specs').exists())\n        shutil.rmtree(self.root / 'harness/project')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())\n\n    def test_project_only_is_rejected_before_writes(self):\n        shutil.rmtree(self.root / 'harness/common')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 2)\n        self.assertIn('common', result.stderr)\n        self.assertFalse((self.root / 'AGENTS.md').exists())\n        self.assertFalse((self.root / '.claude').exists())\n\n    def test_unsafe_project_path_is_rejected_without_writes(self):\n        project = self.root / 'harness/project'\n        shutil.rmtree(project)\n        for symlink in (False, True):\n            with self.subTest(symlink=symlink):\n                if symlink:\n                    project.symlink_to(self.root / 'missing-project')\n                else:\n                    project.write_text('keep this file')\n                result = self.run_check()\n                self.assertEqual(result.returncode, 2)\n                self.assertFalse((self.root / 'AGENTS.md').exists())\n                self.assertFalse((self.root / '.claude').exists())\n                project.unlink()\n\n    def test_invalid_template_does_not_create_project(self):\n        project = self.root / 'harness/project'\n        shutil.rmtree(project)\n        template = self.root / 'harness/common/base/project-skeleton.json'\n        for content in ('not json', '{}', '{\"categories\": {\"../outside\": {\"purpose\": \"bad\", \"example\": \"bad\"}}}'):\n            with self.subTest(content=content):\n                template.write_text(content)\n                result = self.run_check()\n                self.assertEqual(result.returncode, 2)\n                self.assertFalse(project.exists())\n                self.assertFalse((self.root / 'AGENTS.md').exists())\n\n    def test_invalid_entrypoint_prevents_project_creation(self):\n        shutil.rmtree(self.root / 'harness/project')\n        agents = self.root / 'AGENTS.md'\n        agents.write_text('# Keep\\n```md\\nunterminated')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 2)\n        self.assertFalse((self.root / 'harness/project').exists())\n        self.assertEqual(agents.read_text(), '# Keep\\n```md\\nunterminated')\n\n    def test_adds_import_and_warns_about_extra_claude_content_without_deleting_it(self):\n        (self.root / 'CLAUDE.md').write_text('User text\\n')\n        result = self.run_check()\n        self.assertEqual(result.returncode, 0)\n        self.assertIn('inbox', result.stdout)\n        self.assertIn('технически не заблокировано', result.stdout)\n        self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\\nUser text\\n')\n\n    def test_refuses_symlinked_entrypoint_without_changing_target(self):\n        target = self.root / 'user.md'\n        target.write_text('User text\\n')\n        (self.root / 'AGENTS.md').symlink_to(target)\n        self.assertNotEqual(self.run_check().returncode, 0)\n        self.assertEqual(target.read_text(), 'User text\\n')\n\n    def test_rules_link_is_restored_and_directory_created(self):\n        (self.root / 'AGENTS.md').write_text('# User settings\\n\\n```md\\n[Rules](.claude/rules/)\\n```\\n')\n        first = self.run_check()\n        self.assertEqual(first.returncode, 0, first.stderr)\n        agents = self.root / 'AGENTS.md'\n        self.assertEqual(agents.read_text().count('](.claude/rules/)'), 2)\n        self.assertIn('README.human.md', agents.read_text())\n        self.assertTrue((self.root / '.claude/rules').is_dir())\n        before = agents.read_bytes()\n        self.assertEqual(self.run_check().returncode, 0)\n        self.assertEqual(agents.read_bytes(), before)\n\n    def test_existing_relative_rules_links_are_not_duplicated(self):\n        for target in ('.claude/rules', '.claude/rules/', './.claude/rules/', '<./.claude/rules/>'):\n            with self.subTest(target=target):\n                (self.root / 'AGENTS.md').write_text(f'# User settings\\n[Rules]({target})\\n')\n                self.assertEqual(self.run_check().returncode, 0)\n                text = (self.root / 'AGENTS.md').read_text()\n                self.assertEqual(text.count('[Rules]'), 1)\n                self.assertNotIn('- [.claude/rules]', text)\n                self.assertIn('прочитай все Markdown-правила', text)\n\n    def test_unsafe_rules_directory_does_not_change_entrypoints(self):\n        (self.root / 'AGENTS.md').write_text('# Keep\\n')\n        for relative in ('.claude', '.claude/rules'):\n            for symlink in (False, True):\n                with self.subTest(relative=relative, symlink=symlink):\n                    path = self.root / relative\n                    path.parent.mkdir(exist_ok=True)\n                    if symlink:\n                        path.symlink_to(self.root / 'harness', target_is_directory=True)\n                    else:\n                        path.write_text('keep\\n')\n                    try:\n                        result = self.run_check()\n                        self.assertNotEqual(result.returncode, 0)\n                        self.assertEqual((self.root / 'AGENTS.md').read_text(), '# Keep\\n')\n                        self.assertFalse((self.root / 'CLAUDE.md').exists())\n                    finally:\n                        path.unlink()\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_creates_four_links_and_import_then_preserves_bytes": {
+          "line": 33,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\n')",
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(before, (agents.read_bytes(), claude.read_bytes()))",
+            "self.assertEqual(file.read_bytes(), b'')",
+            "self.assertIn(f'](harness/{package}/{name})', agents.read_text())"
+          ],
+          "subtests": []
+        },
+        "test_only_appends_missing_links_preserving_user_text": {
+          "line": 48,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertTrue(text.startswith(prefix))",
+            "self.assertEqual(text.count('harness/common/INDEX.md'), 1)"
+          ],
+          "subtests": []
+        },
+        "test_link_examples_in_code_do_not_count_as_real_links": {
+          "line": 56,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(text.count('](harness/common/INDEX.md)'), 2)"
+          ],
+          "subtests": []
+        },
+        "test_repair_preserves_original_bytes_and_each_files_line_endings": {
+          "line": 64,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue(repaired.startswith(original))",
+            "self.assertIn(b'](harness/common/START.md)' + newline, repaired)",
+            "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\r\\n' + bridge)",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+            "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+            "self.assertNotIn(b'\\n', repaired.replace(b'\\r\\n', b''))"
+          ],
+          "subtests": [
+            "self.subTest(newline=newline)"
+          ]
+        },
+        "test_valid_crlf_bridge_is_preserved_without_warning_or_repair": {
+          "line": 86,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertNotIn('будут автоматически восстановлены', result.stdout)",
+            "self.assertNotIn('требуется единственная строка', result.stdout)",
+            "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)"
+          ],
+          "subtests": []
+        },
+        "test_longer_fence_closers_do_not_turn_examples_into_installed_links": {
+          "line": 98,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertTrue(text.startswith(prefix))",
+            "self.assertIn('](.claude/rules/)', appended)",
+            "self.assertIn('прочитай все Markdown-правила', appended)",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertEqual(agents.read_bytes(), before)",
+            "self.assertIn(f'](harness/{package}/{name})', appended)"
+          ],
+          "subtests": [
+            "self.subTest(opener=opener)"
+          ]
+        },
+        "test_unclosed_fence_fails_before_writing_either_entrypoint": {
+          "line": 124,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2, result.stderr)",
+            "self.assertIn('Unclosed Markdown code fence', result.stderr)",
+            "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+            "self.assertFalse((self.root / '.claude').exists())"
+          ],
+          "subtests": [
+            "self.subTest(name=name, opener=opener)"
+          ]
+        },
+        "test_damaged_package_is_reported_without_creating_dangling_links": {
+          "line": 139,
+          "assertions": [
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())",
+            "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+          ],
+          "subtests": []
+        },
+        "test_common_only_creates_neutral_project": {
+          "line": 146,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue(project.is_dir(), 'common-only must create project')",
+            "self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)",
+            "self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())",
+            "self.assertNotIn('EPL', (project / 'INDEX.md').read_text())",
+            "self.assertIn('harness/common/checks/ensure_entrypoint_links.py', (project / 'START.md').read_text())",
+            "self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())",
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})",
+            "self.assertTrue((directory / 'README.human.md').is_file())"
+          ],
+          "subtests": []
+        },
+        "test_existing_project_is_not_regenerated_or_exported": {
+          "line": 166,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})",
+            "self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')"
+          ],
+          "subtests": []
+        },
+        "test_new_template_categories_apply_only_to_new_project": {
+          "line": 176,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertFalse((self.root / 'harness/project/specs').exists())",
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())"
+          ],
+          "subtests": []
+        },
+        "test_project_only_is_rejected_before_writes": {
+          "line": 188,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertIn('common', result.stderr)",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())",
+            "self.assertFalse((self.root / '.claude').exists())"
+          ],
+          "subtests": []
+        },
+        "test_unsafe_project_path_is_rejected_without_writes": {
+          "line": 196,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())",
+            "self.assertFalse((self.root / '.claude').exists())"
+          ],
+          "subtests": [
+            "self.subTest(symlink=symlink)"
+          ]
+        },
+        "test_invalid_template_does_not_create_project": {
+          "line": 211,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertFalse(project.exists())",
+            "self.assertFalse((self.root / 'AGENTS.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(content=content)"
+          ]
+        },
+        "test_invalid_entrypoint_prevents_project_creation": {
+          "line": 223,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertFalse((self.root / 'harness/project').exists())",
+            "self.assertEqual(agents.read_text(), '# Keep\\n```md\\nunterminated')"
+          ],
+          "subtests": []
+        },
+        "test_adds_import_and_warns_about_extra_claude_content_without_deleting_it": {
+          "line": 232,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0)",
+            "self.assertIn('inbox', result.stdout)",
+            "self.assertIn('технически не заблокировано', result.stdout)",
+            "self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\\nUser text\\n')"
+          ],
+          "subtests": []
+        },
+        "test_refuses_symlinked_entrypoint_without_changing_target": {
+          "line": 240,
+          "assertions": [
+            "self.assertNotEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(target.read_text(), 'User text\\n')"
+          ],
+          "subtests": []
+        },
+        "test_rules_link_is_restored_and_directory_created": {
+          "line": 247,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertEqual(agents.read_text().count('](.claude/rules/)'), 2)",
+            "self.assertIn('README.human.md', agents.read_text())",
+            "self.assertTrue((self.root / '.claude/rules').is_dir())",
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(agents.read_bytes(), before)"
+          ],
+          "subtests": []
+        },
+        "test_existing_relative_rules_links_are_not_duplicated": {
+          "line": 259,
+          "assertions": [
+            "self.assertEqual(self.run_check().returncode, 0)",
+            "self.assertEqual(text.count('[Rules]'), 1)",
+            "self.assertNotIn('- [.claude/rules]', text)",
+            "self.assertIn('прочитай все Markdown-правила', text)"
+          ],
+          "subtests": [
+            "self.subTest(target=target)"
+          ]
+        },
+        "test_unsafe_rules_directory_does_not_change_entrypoints": {
+          "line": 269,
+          "assertions": [
+            "self.assertNotEqual(result.returncode, 0)",
+            "self.assertEqual((self.root / 'AGENTS.md').read_text(), '# Keep\\n')",
+            "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(relative=relative, symlink=symlink)"
+          ]
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py": {
+      "sha256": "6f30a48036b9524dcffdb06e55d878b9bb2b55c410783dbc78860dd9ebf4a41a",
+      "source": "\"\"\"Exercise two supported installations and reject missing common.\"\"\"\nimport os\nimport re\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nPACKAGES = Path(__file__).resolve().parents[2]\nMODES = [('common',), ('common', 'project')]\n\n\nclass PortabilityTest(unittest.TestCase):\n    def install(self, root, mode):\n        shutil.copytree(PACKAGES / 'common', root / 'harness/common',\n                        ignore=shutil.ignore_patterns('inbox', '__pycache__'))\n        if 'project' in mode:\n            project = root / 'harness/project'\n            if (PACKAGES / 'project').is_dir():\n                shutil.copytree(PACKAGES / 'project', project)\n            else:\n                project.mkdir()\n                (project / 'INDEX.md').write_text('# Existing project\\n')\n                (project / 'START.md').write_text('# Existing startup\\n')\n            material = project / 'docs/local-task/notes.md'\n            material.parent.mkdir(parents=True, exist_ok=True)\n            material.write_bytes(b'Existing project material\\n')\n\n    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py'):\n        return subprocess.run([sys.executable, '-I', '-B', script], cwd=root,\n                              env=dict(os.environ, PATH='/no-git-in-this-test'),\n                              capture_output=True, text=True)\n\n    def test_startup_command_runs_in_each_clean_mode_without_git(self):\n        for mode in MODES:\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                self.install(root, mode)\n                project = root / 'harness/project'\n                before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*')\n                          if p.is_file() and p.name != 'README.human.md'}\n                first = self.run_check(root)\n                self.assertEqual(first.returncode, 0, first.stderr)\n                if 'project' in mode:\n                    self.assertEqual(before, {p.relative_to(project): p.read_bytes()\n                                     for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'})\n                else:\n                    self.assertTrue((project / 'base/README.human.md').is_file())\n                    self.assertFalse((project / 'docs/local-task').exists())\n                text = (root / 'AGENTS.md').read_text()\n                self.assertIn('](.claude/rules/)', text)\n                self.assertIn('harness/project/START.md', text)\n                command = re.search(r'(?m)^python3(?: -B)? (harness/[^\\s]+\\.py)$', text)\n                self.assertIsNotNone(command)\n                self.assertEqual(command.group(1), 'harness/common/checks/ensure_entrypoint_links.py')\n                before_inputs = (root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()\n                second = self.run_check(root, command.group(1))\n                self.assertEqual(second.returncode, 0, second.stderr)\n                self.assertNotIn('будут автоматически восстановлены', second.stdout)\n                self.assertEqual(before_inputs, ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()))\n                self.assertFalse((root / '.git').exists())\n\n    def test_existing_settings_and_startup_command_are_never_rewritten(self):\n        with tempfile.TemporaryDirectory() as directory:\n            root = Path(directory)\n            self.install(root, ('common', 'project'))\n            legacy = root / 'harness/project/checks/ensure_entrypoint_links.py'\n            script = legacy.relative_to(root).as_posix() if legacy.exists() else 'harness/common/checks/ensure_entrypoint_links.py'\n            prefix = '# Existing settings\\n\\npython3 ' + script + '\\nKeep this setting.\\n'\n            (root / 'AGENTS.md').write_text(prefix)\n            result = self.run_check(root, script)\n            self.assertEqual(result.returncode, 0, result.stderr)\n            self.assertTrue((root / 'AGENTS.md').read_text().startswith(prefix))\n\n    def test_legacy_checker_rejects_symlinked_common_ancestors(self):\n        for relative in ('harness/common', 'harness/common/checks'):\n            with self.subTest(relative=relative), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                self.install(root, ('common', 'project'))\n                legacy = root / 'harness/project/checks/ensure_entrypoint_links.py'\n                if not legacy.exists():\n                    self.skipTest('No legacy shim in a common-only source installation.')\n                external = root / 'external'\n                checker = external / ('checks/ensure_entrypoint_links.py'\n                                      if relative == 'harness/common' else 'ensure_entrypoint_links.py')\n                checker.parent.mkdir(parents=True)\n                marker = root / 'external-code-executed'\n                checker.write_text('from pathlib import Path\\nPath(' + repr(str(marker)) + ').touch()\\n')\n                directory_path = root / relative\n                directory_path.rename(directory_path.with_name(directory_path.name + '-original'))\n                directory_path.symlink_to(external, target_is_directory=True)\n                result = self.run_check(root, str(legacy))\n                self.assertFalse(marker.exists(), 'shim must reject symlinked ancestors before execution')\n                self.assertEqual(result.returncode, 2, result.stderr)\n                self.assertFalse((root / 'AGENTS.md').exists())\n\n    def test_required_resource_damage_is_detected(self):\n        for mode in MODES:\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                self.install(root, mode)\n                (root / 'harness/common/START.md').unlink()\n                result = self.run_check(root)\n                self.assertEqual(result.returncode, 2)\n                self.assertIn('START.md', result.stderr)\n                self.assertFalse((root / 'AGENTS.md').exists())\n\n    def test_project_only_rejected_without_writes(self):\n        with tempfile.TemporaryDirectory() as directory:\n            root = Path(directory)\n            project = root / 'harness/project'\n            if (PACKAGES / 'project').is_dir():\n                shutil.copytree(PACKAGES / 'project', project)\n            else:\n                project.mkdir(parents=True)\n            legacy = project / 'checks/ensure_entrypoint_links.py'\n            checker = str(legacy) if legacy.exists() else str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')\n            result = self.run_check(root, checker)\n            self.assertEqual(result.returncode, 2)\n            self.assertIn('common', result.stderr)\n            self.assertFalse((root / 'AGENTS.md').exists())\n            self.assertFalse((root / 'harness/common').exists())\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_startup_command_runs_in_each_clean_mode_without_git": {
+          "line": 36,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn('](.claude/rules/)', text)",
+            "self.assertIn('harness/project/START.md', text)",
+            "self.assertIsNotNone(command)",
+            "self.assertEqual(command.group(1), 'harness/common/checks/ensure_entrypoint_links.py')",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+            "self.assertEqual(before_inputs, ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()))",
+            "self.assertFalse((root / '.git').exists())",
+            "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'})",
+            "self.assertTrue((project / 'base/README.human.md').is_file())",
+            "self.assertFalse((project / 'docs/local-task').exists())"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        },
+        "test_existing_settings_and_startup_command_are_never_rewritten": {
+          "line": 65,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertTrue((root / 'AGENTS.md').read_text().startswith(prefix))"
+          ],
+          "subtests": []
+        },
+        "test_legacy_checker_rejects_symlinked_common_ancestors": {
+          "line": 77,
+          "assertions": [
+            "self.assertFalse(marker.exists(), 'shim must reject symlinked ancestors before execution')",
+            "self.assertEqual(result.returncode, 2, result.stderr)",
+            "self.assertFalse((root / 'AGENTS.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(relative=relative)"
+          ]
+        },
+        "test_required_resource_damage_is_detected": {
+          "line": 99,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertIn('START.md', result.stderr)",
+            "self.assertFalse((root / 'AGENTS.md').exists())"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        },
+        "test_project_only_rejected_without_writes": {
+          "line": 110,
+          "assertions": [
+            "self.assertEqual(result.returncode, 2)",
+            "self.assertIn('common', result.stderr)",
+            "self.assertFalse((root / 'AGENTS.md').exists())",
+            "self.assertFalse((root / 'harness/common').exists())"
+          ],
+          "subtests": []
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py": {
+      "sha256": "0a407db4fa340c1e89c32b95dd8824d8db7f3d71698323c491bf17f3697c75b9",
+      "source": "\"\"\"Notification checks use temporary projects and need no configured hooks.\"\"\"\nimport contextlib\nimport importlib.util\nimport io\nimport os\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nSCRIPT = Path(__file__).with_name('ensure_entrypoint_links.py')\nPOLICY = 'технически не заблокировано'\nNOTICE = 'Стартовые ссылки повреждены и будут автоматически восстановлены.'\nRULES_LINES = ('- [.claude/rules](.claude/rules/)\\n'\n               'До выполнения задачи прочитай все Markdown-правила из .claude/rules '\n               'и его подпапок, кроме README.human.md; соблюдай применимые требования.\\n')\n\n\nclass NotificationTest(unittest.TestCase):\n    def setUp(self):\n        temporary = tempfile.TemporaryDirectory()\n        self.addCleanup(temporary.cleanup)\n        self.root = Path(temporary.name)\n        for package in ('common', 'project'):\n            directory = self.root / 'harness' / package\n            directory.mkdir(parents=True)\n            (directory / 'INDEX.md').write_text('# Index\\n')\n            (directory / 'START.md').touch()\n        template = self.root / 'harness/common/base/project-skeleton.json'\n        template.parent.mkdir()\n        shutil.copyfile(SCRIPT.parent.parent / 'base/project-skeleton.json', template)\n        (self.root / 'AGENTS.md').write_text('# Static settings\\n\\nKeep this setting.\\n\\n' + ''.join(\n            f'- [harness/{p}/{n}](harness/{p}/{n})\\n'\n            for p in ('common', 'project') for n in ('INDEX.md', 'START.md')) + RULES_LINES)\n        (self.root / 'CLAUDE.md').write_text('@AGENTS.md\\n')\n\n    def check(self, git_available=True):\n        environment = dict(os.environ)\n        if not git_available:\n            environment['PATH'] = '/nonexistent-for-this-test'\n        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)],\n                              capture_output=True, text=True, env=environment)\n\n    def git(self, *args):\n        result = subprocess.run(['git', *args], cwd=self.root, capture_output=True, text=True)\n        self.assertEqual(result.returncode, 0, result.stderr)\n        return result\n\n    def register_fixture(self):\n        self.git('init', '-q')\n        self.git('config', 'user.name', 'Harness Test')\n        self.git('config', 'user.email', 'harness-test@example.invalid')\n        self.git('add', 'AGENTS.md', 'CLAUDE.md')\n        self.git('commit', '-qm', 'Initial test fixture')\n\n    def test_no_git_binary_or_repository_or_baseline_is_required(self):\n        before = (self.root/'AGENTS.md').read_bytes(), (self.root/'CLAUDE.md').read_bytes()\n        result = self.check(git_available=False)\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn(POLICY, result.stdout)\n        self.assertEqual(before, ((self.root/'AGENTS.md').read_bytes(), (self.root/'CLAUDE.md').read_bytes()))\n\n    def test_instruction_change_is_reported_and_preserved_without_blocking(self):\n        self.register_fixture()\n        agents = self.root/'AGENTS.md'\n        changed = agents.read_text().replace('Keep this setting.', 'Changed setting.')\n        agents.write_text(changed)\n        result = self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn(POLICY, result.stdout)\n        self.assertIn('AGENTS.md', result.stdout)\n        self.assertIn('inbox', result.stdout)\n        self.assertIn('изменение настроек', result.stdout)\n        self.assertEqual(agents.read_text(), changed)\n\n    def test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change(self):\n        agents = self.root / 'AGENTS.md'\n        original = agents.read_text() + '\\n~~~md\\n~~~example\\n~~~\\n'\n        agents.write_text(original)\n        self.register_fixture()\n        instruction = RULES_LINES.splitlines(keepends=True)[1]\n        changed = original.replace('~~~example\\n', '~~~example\\n' + instruction)\n        agents.write_text(changed)\n        result = self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn('изменение настроек', result.stdout)\n        self.assertNotIn(NOTICE, result.stdout)\n        self.assertEqual(agents.read_text(), changed)\n\n    def test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file(self):\n        agents = self.root / 'AGENTS.md'\n        original = '# Keep user settings\\n~~~md\\nexample\\n'\n        agents.write_text(original)\n        self.register_fixture()\n        current = original + '~~~\\n'\n        agents.write_text(current)\n        result = self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn('изменение настроек', result.stdout)\n        self.assertIn(NOTICE, result.stdout)\n        repaired = agents.read_text()\n        self.assertTrue(repaired.startswith(current))\n        self.assertIn('](harness/common/START.md)', repaired[len(current):])\n        before = agents.read_bytes()\n        self.assertEqual(self.check().returncode, 0)\n        self.assertEqual(agents.read_bytes(), before)\n\n    def test_extra_bridge_text_warns_without_rewriting_or_blocking(self):\n        self.register_fixture()\n        bridge=self.root/'CLAUDE.md'\n        extra='@AGENTS.md\\nUser text\\n'\n        bridge.write_text(extra)\n        result=self.check()\n        self.assertEqual(result.returncode, 0, result.stderr)\n        self.assertIn('CLAUDE.md', result.stdout)\n        self.assertIn('inbox', result.stdout)\n        self.assertIn(POLICY, result.stdout)\n        self.assertEqual(bridge.read_text(), extra)\n\n    def test_repair_is_announced_and_next_run_has_no_damage_message(self):\n        agents=self.root/'AGENTS.md'\n        line='- [harness/common/START.md](harness/common/START.md)\\n'\n        agents.write_text(agents.read_text().replace(line,''))\n        first=self.check(git_available=False)\n        self.assertEqual(first.returncode,0,first.stderr)\n        self.assertIn(NOTICE,first.stdout)\n        self.assertIn(line,agents.read_text())\n        self.assertNotIn(NOTICE,self.check(git_available=False).stdout)\n\n    def test_repair_message_is_visible_before_the_first_write(self):\n        agents = self.root/'AGENTS.md'\n        line = '- [harness/common/START.md](harness/common/START.md)\\n'\n        agents.write_text(agents.read_text().replace(line, ''))\n        spec = importlib.util.spec_from_file_location('entrypoint_notifications', SCRIPT)\n        module = importlib.util.module_from_spec(spec)\n        spec.loader.exec_module(module)\n        output = io.StringIO()\n        original_write = Path.write_bytes\n        def write(path, data, *args, **kwargs):\n            self.assertIn(NOTICE, output.getvalue())\n            return original_write(path, data, *args, **kwargs)\n        from unittest.mock import patch\n        with contextlib.redirect_stdout(output), patch.object(Path, 'write_bytes', write):\n            module.ensure(self.root)\n        self.assertEqual(output.getvalue().count(NOTICE), 1)\n\n    def test_rules_repair_is_not_reported_as_a_settings_change(self):\n        agents = self.root / 'AGENTS.md'\n        agents.write_text(agents.read_text().replace(RULES_LINES, ''))\n        self.register_fixture()\n        first = self.check()\n        self.assertEqual(first.returncode, 0, first.stderr)\n        self.assertIn(NOTICE, first.stdout)\n        second = self.check()\n        self.assertNotIn(NOTICE, second.stdout)\n        self.assertNotIn('изменение настроек', second.stdout)\n\n    def test_check_installs_no_hooks_or_configuration_and_does_not_block_commit(self):\n        self.register_fixture()\n        config=(self.root/'.git/config').read_bytes()\n        agents=self.root/'AGENTS.md'\n        agents.write_text(agents.read_text()+'\\nDirect edit.\\n')\n        self.assertEqual(self.check().returncode,0)\n        self.assertEqual((self.root/'.git/config').read_bytes(),config)\n        self.assertFalse((self.root/'.git/hooks/pre-commit').exists())\n        self.git('add','AGENTS.md')\n        before=self.git('rev-parse','HEAD').stdout\n        self.git('commit','-qm','Commit is not mechanically blocked')\n        self.assertNotEqual(self.git('rev-parse','HEAD').stdout,before)\n\n    def test_crlf_link_repair_is_not_reported_as_a_settings_change(self):\n        agents = self.root / 'AGENTS.md'\n        original = agents.read_bytes().replace(b'\\n', b'\\r\\n')\n        line = b'- [harness/common/START.md](harness/common/START.md)\\r\\n'\n        original = original.replace(line, b'')\n        agents.write_bytes(original)\n        self.register_fixture()\n        first = self.check()\n        self.assertEqual(first.returncode, 0, first.stderr)\n        self.assertIn(NOTICE, first.stdout)\n        self.assertTrue(agents.read_bytes().startswith(original))\n        self.assertIn(line, agents.read_bytes())\n        second = self.check()\n        self.assertEqual(second.returncode, 0, second.stderr)\n        self.assertNotIn(NOTICE, second.stdout)\n        self.assertNotIn('изменение настроек', second.stdout)\n\n\nif __name__=='__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_no_git_binary_or_repository_or_baseline_is_required": {
+          "line": 58,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn(POLICY, result.stdout)",
+            "self.assertEqual(before, ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes()))"
+          ],
+          "subtests": []
+        },
+        "test_instruction_change_is_reported_and_preserved_without_blocking": {
+          "line": 65,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn(POLICY, result.stdout)",
+            "self.assertIn('AGENTS.md', result.stdout)",
+            "self.assertIn('inbox', result.stdout)",
+            "self.assertIn('изменение настроек', result.stdout)",
+            "self.assertEqual(agents.read_text(), changed)"
+          ],
+          "subtests": []
+        },
+        "test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change": {
+          "line": 78,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn('изменение настроек', result.stdout)",
+            "self.assertNotIn(NOTICE, result.stdout)",
+            "self.assertEqual(agents.read_text(), changed)"
+          ],
+          "subtests": []
+        },
+        "test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file": {
+          "line": 92,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn('изменение настроек', result.stdout)",
+            "self.assertIn(NOTICE, result.stdout)",
+            "self.assertTrue(repaired.startswith(current))",
+            "self.assertIn('](harness/common/START.md)', repaired[len(current):])",
+            "self.assertEqual(self.check().returncode, 0)",
+            "self.assertEqual(agents.read_bytes(), before)"
+          ],
+          "subtests": []
+        },
+        "test_extra_bridge_text_warns_without_rewriting_or_blocking": {
+          "line": 110,
+          "assertions": [
+            "self.assertEqual(result.returncode, 0, result.stderr)",
+            "self.assertIn('CLAUDE.md', result.stdout)",
+            "self.assertIn('inbox', result.stdout)",
+            "self.assertIn(POLICY, result.stdout)",
+            "self.assertEqual(bridge.read_text(), extra)"
+          ],
+          "subtests": []
+        },
+        "test_repair_is_announced_and_next_run_has_no_damage_message": {
+          "line": 122,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn(NOTICE, first.stdout)",
+            "self.assertIn(line, agents.read_text())",
+            "self.assertNotIn(NOTICE, self.check(git_available=False).stdout)"
+          ],
+          "subtests": []
+        },
+        "test_repair_message_is_visible_before_the_first_write": {
+          "line": 132,
+          "assertions": [
+            "self.assertEqual(output.getvalue().count(NOTICE), 1)",
+            "self.assertIn(NOTICE, output.getvalue())"
+          ],
+          "subtests": []
+        },
+        "test_rules_repair_is_not_reported_as_a_settings_change": {
+          "line": 149,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn(NOTICE, first.stdout)",
+            "self.assertNotIn(NOTICE, second.stdout)",
+            "self.assertNotIn('изменение настроек', second.stdout)"
+          ],
+          "subtests": []
+        },
+        "test_check_installs_no_hooks_or_configuration_and_does_not_block_commit": {
+          "line": 160,
+          "assertions": [
+            "self.assertEqual(self.check().returncode, 0)",
+            "self.assertEqual((self.root / '.git/config').read_bytes(), config)",
+            "self.assertFalse((self.root / '.git/hooks/pre-commit').exists())",
+            "self.assertNotEqual(self.git('rev-parse', 'HEAD').stdout, before)"
+          ],
+          "subtests": []
+        },
+        "test_crlf_link_repair_is_not_reported_as_a_settings_change": {
+          "line": 173,
+          "assertions": [
+            "self.assertEqual(first.returncode, 0, first.stderr)",
+            "self.assertIn(NOTICE, first.stdout)",
+            "self.assertTrue(agents.read_bytes().startswith(original))",
+            "self.assertIn(line, agents.read_bytes())",
+            "self.assertEqual(second.returncode, 0, second.stderr)",
+            "self.assertNotIn(NOTICE, second.stdout)",
+            "self.assertNotIn('изменение настроек', second.stdout)"
+          ],
+          "subtests": []
+        }
+      }
+    },
+    "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_rule_copies.py": {
+      "sha256": "d9238c864478f92316c2085a57b15f7d17856655aabd20bc13124b78bbf706dd",
+      "source": "\"\"\"Check installed shared rules and exercise copy-drift failures.\"\"\"\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\n\nROOT = Path(__file__).resolve().parents[3]\n\n\ndef check_rule_copies(root):\n    if not (root / 'harness/common').is_dir():\n        raise ValueError('harness/common is required; project-only is unsupported.')\n    native = root / '.claude/rules'\n    sources = {}\n    installed_prefixes = []\n    for package, prefix in (('common', 'comm-'), ('project', 'proj-')):\n        rules = root / 'harness' / package / 'rules'\n        if rules.is_dir():\n            installed_prefixes.append(prefix)\n            sources.update((file.name, file) for file in rules.glob(prefix + '*.md'))\n    if not sources:\n        raise ValueError('No canonical shared rules found; nothing checked.')\n    expected = set(sources)\n    actual = {file.name for prefix in installed_prefixes\n              for file in native.glob(prefix + '*.md')}\n    if expected != actual:\n        raise ValueError(f'Missing copies: {sorted(expected - actual)}; '\n                         f'extra copies: {sorted(actual - expected)}')\n    for name, source in sorted(sources.items()):\n        copy = native / name\n        for file in (source, copy):\n            if not file.is_file() or any(path.is_symlink() for path in (file, *file.parents)):\n                raise ValueError(f'Not an ordinary file: {file}')\n        if source.read_bytes() != copy.read_bytes():\n            raise ValueError(f'Different rule bytes: {name}')\n    return len(sources)\n\n\nclass RuleCopiesTest(unittest.TestCase):\n    def test_installed_rule_copies(self):\n        count = check_rule_copies(ROOT)\n        print(f'Checked {count} shared rule copies.')\n\n    def test_project_only_rules_are_rejected(self):\n        with tempfile.TemporaryDirectory() as directory:\n            root = Path(directory)\n            source = root / 'harness/project/rules'\n            native = root / '.claude/rules'\n            source.mkdir(parents=True)\n            native.mkdir(parents=True)\n            for folder in (source, native):\n                (folder / 'proj-example.md').write_bytes(b'canonical\\n')\n            with self.assertRaisesRegex(ValueError, 'common'):\n                check_rule_copies(root)\n\n    def test_copy_drift_is_detected(self):\n        for mode in (('common',), ('common', 'project')):\n            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:\n                root = Path(directory)\n                native = root / '.claude/rules'\n                native.mkdir(parents=True)\n                for package in mode:\n                    rules = root / 'harness' / package / 'rules'\n                    rules.mkdir(parents=True)\n                    prefix = 'comm-' if package == 'common' else 'proj-'\n                    (rules / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                    (rules / 'README.human.md').write_bytes(b'')\n                    (native / (prefix + 'example.md')).write_bytes(b'canonical\\n')\n                (native / 'personal.md').write_bytes(b'personal\\n')\n                self.assertEqual(check_rule_copies(root), len(mode))\n                source = next((root / 'harness' / mode[0] / 'rules').glob('*-example.md'))\n                copy = native / source.name\n                copy.unlink()\n                with self.assertRaisesRegex(ValueError, 'Missing copies'):\n                    check_rule_copies(root)\n                copy.write_bytes(b'changed\\n')\n                with self.assertRaisesRegex(ValueError, 'Different rule bytes'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.symlink_to(source)\n                with self.assertRaisesRegex(ValueError, 'Not an ordinary file'):\n                    check_rule_copies(root)\n                copy.unlink()\n                copy.write_bytes(source.read_bytes())\n                extra = native / (source.name.split('-')[0] + '-stale.md')\n                extra.write_bytes(b'stale\\n')\n                with self.assertRaisesRegex(ValueError, 'extra copies'):\n                    check_rule_copies(root)\n                extra.unlink()\n                self.assertEqual(check_rule_copies(root), len(mode))\n        with tempfile.TemporaryDirectory() as directory:\n            with self.assertRaisesRegex(ValueError, 'common'):\n                check_rule_copies(Path(directory))\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+      "tests": {
+        "test_installed_rule_copies": {
+          "line": 40,
+          "assertions": [],
+          "subtests": []
+        },
+        "test_project_only_rules_are_rejected": {
+          "line": 44,
+          "assertions": [
+            "self.assertRaisesRegex(ValueError, 'common')"
+          ],
+          "subtests": []
+        },
+        "test_copy_drift_is_detected": {
+          "line": 56,
+          "assertions": [
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertEqual(check_rule_copies(root), len(mode))",
+            "self.assertRaisesRegex(ValueError, 'common')",
+            "self.assertRaisesRegex(ValueError, 'Missing copies')",
+            "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+            "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+            "self.assertRaisesRegex(ValueError, 'extra copies')"
+          ],
+          "subtests": [
+            "self.subTest(mode=mode)"
+          ]
+        }
+      }
+    }
+  }
+}

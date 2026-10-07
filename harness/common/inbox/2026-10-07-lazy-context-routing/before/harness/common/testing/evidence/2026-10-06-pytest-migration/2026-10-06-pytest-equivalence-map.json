@@ -1,0 +1,3069 @@
+{
+  "harness/common/checks/test_ensure_entrypoint_links.py": {
+    "EntryPointLinksTest::test_creates_four_links_and_import_then_preserves_bytes": {
+      "pytest_test": "TestEntryPointLinks::test_creates_four_links_and_import_then_preserves_bytes",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\n')",
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(before, (agents.read_bytes(), claude.read_bytes()))",
+        "self.assertEqual(file.read_bytes(), b'')",
+        "self.assertIn(f'](harness/{package}/{name})', agents.read_text())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert claude.read_bytes() == b'@AGENTS.md\\n'",
+        "assert self.run_check().returncode == 0",
+        "assert before == (agents.read_bytes(), claude.read_bytes())",
+        "assert file.read_bytes() == b''",
+        "assert f'](harness/{package}/{name})' in agents.read_text()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_creates_four_links_and_import_then_preserves_bytes"
+      ]
+    },
+    "EntryPointLinksTest::test_only_appends_missing_links_preserving_user_text": {
+      "pytest_test": "TestEntryPointLinks::test_only_appends_missing_links_preserving_user_text",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertTrue(text.startswith(prefix))",
+        "self.assertEqual(text.count('harness/common/INDEX.md'), 1)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert text.startswith(prefix)",
+        "assert text.count('harness/common/INDEX.md') == 1"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_only_appends_missing_links_preserving_user_text"
+      ]
+    },
+    "EntryPointLinksTest::test_link_examples_in_code_do_not_count_as_real_links": {
+      "pytest_test": "TestEntryPointLinks::test_link_examples_in_code_do_not_count_as_real_links",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(text.count('](harness/common/INDEX.md)'), 2)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert text.count('](harness/common/INDEX.md)') == 2"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_link_examples_in_code_do_not_count_as_real_links"
+      ]
+    },
+    "EntryPointLinksTest::test_repair_preserves_original_bytes_and_each_files_line_endings": {
+      "pytest_test": "TestEntryPointLinks::test_repair_preserves_original_bytes_and_each_files_line_endings",
+      "parameter_names": [
+        [
+          "newline"
+        ]
+      ],
+      "parameter_values": [
+        "(b'\\n', b'\\r\\n')"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue(repaired.startswith(original))",
+        "self.assertIn(b'](harness/common/START.md)' + newline, repaired)",
+        "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\r\\n' + bridge)",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+        "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+        "self.assertNotIn(b'\\n', repaired.replace(b'\\r\\n', b''))"
+      ],
+      "subtests": [
+        "self.subTest(newline=newline)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert repaired.startswith(original)",
+        "assert b'](harness/common/START.md)' + newline in repaired",
+        "assert claude.read_bytes() == b'@AGENTS.md\\r\\n' + bridge",
+        "assert second.returncode == 0, second.stderr",
+        "assert 'будут автоматически восстановлены' not in second.stdout",
+        "assert (agents.read_bytes(), claude.read_bytes()) == before",
+        "assert b'\\n' not in repaired.replace(b'\\r\\n', b'')"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_repair_preserves_original_bytes_and_each_files_line_endings[LF]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_repair_preserves_original_bytes_and_each_files_line_endings[CRLF]"
+      ]
+    },
+    "EntryPointLinksTest::test_valid_crlf_bridge_is_preserved_without_warning_or_repair": {
+      "pytest_test": "TestEntryPointLinks::test_valid_crlf_bridge_is_preserved_without_warning_or_repair",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertNotIn('будут автоматически восстановлены', result.stdout)",
+        "self.assertNotIn('требуется единственная строка', result.stdout)",
+        "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert result.returncode == 0, result.stderr",
+        "assert 'будут автоматически восстановлены' not in result.stdout",
+        "assert 'требуется единственная строка' not in result.stdout",
+        "assert (agents.read_bytes(), claude.read_bytes()) == before"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_valid_crlf_bridge_is_preserved_without_warning_or_repair"
+      ]
+    },
+    "EntryPointLinksTest::test_longer_fence_closers_do_not_turn_examples_into_installed_links": {
+      "pytest_test": "TestEntryPointLinks::test_longer_fence_closers_do_not_turn_examples_into_installed_links",
+      "parameter_names": [
+        [
+          "opener",
+          "closer"
+        ]
+      ],
+      "parameter_values": [
+        "(('~~~md', '~~~~'), ('```md', '````'))"
+      ],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertTrue(text.startswith(prefix))",
+        "self.assertIn('](.claude/rules/)', appended)",
+        "self.assertIn('прочитай все Markdown-правила', appended)",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertEqual(agents.read_bytes(), before)",
+        "self.assertIn(f'](harness/{package}/{name})', appended)"
+      ],
+      "subtests": [
+        "self.subTest(opener=opener)"
+      ],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert text.startswith(prefix)",
+        "assert '](.claude/rules/)' in appended",
+        "assert 'прочитай все Markdown-правила' in appended",
+        "assert second.returncode == 0, second.stderr",
+        "assert agents.read_bytes() == before",
+        "assert f'](harness/{package}/{name})' in appended"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_longer_fence_closers_do_not_turn_examples_into_installed_links[tilde]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_longer_fence_closers_do_not_turn_examples_into_installed_links[backtick]"
+      ]
+    },
+    "EntryPointLinksTest::test_unclosed_fence_fails_before_writing_either_entrypoint": {
+      "pytest_test": "TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint",
+      "parameter_names": [
+        [
+          "name"
+        ],
+        [
+          "opener"
+        ]
+      ],
+      "parameter_values": [
+        "('AGENTS.md', 'CLAUDE.md')",
+        "('~~~md', '```md')"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2, result.stderr)",
+        "self.assertIn('Unclosed Markdown code fence', result.stderr)",
+        "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+        "self.assertFalse((self.root / '.claude').exists())"
+      ],
+      "subtests": [
+        "self.subTest(name=name, opener=opener)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2, result.stderr",
+        "assert 'Unclosed Markdown code fence' in result.stderr",
+        "assert (agents.read_bytes(), claude.read_bytes()) == before",
+        "assert not (self.root / '.claude').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[tilde-AGENTS.md]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[tilde-CLAUDE.md]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[backtick-AGENTS.md]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[backtick-CLAUDE.md]"
+      ]
+    },
+    "EntryPointLinksTest::test_damaged_package_is_reported_without_creating_dangling_links": {
+      "pytest_test": "TestEntryPointLinks::test_damaged_package_is_reported_without_creating_dangling_links",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())",
+        "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode != 0",
+        "assert not (self.root / 'AGENTS.md').exists()",
+        "assert not (self.root / 'CLAUDE.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_damaged_package_is_reported_without_creating_dangling_links"
+      ]
+    },
+    "EntryPointLinksTest::test_common_only_creates_neutral_project": {
+      "pytest_test": "TestEntryPointLinks::test_common_only_creates_neutral_project",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue(project.is_dir(), 'common-only must create project')",
+        "self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)",
+        "self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())",
+        "self.assertNotIn('EPL', (project / 'INDEX.md').read_text())",
+        "self.assertIn('harness/common/checks/ensure_entrypoint_links.py', (project / 'START.md').read_text())",
+        "self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())",
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})",
+        "self.assertTrue((directory / 'README.human.md').is_file())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert project.is_dir(), 'common-only must create project'",
+        "assert {p.name for p in project.iterdir() if p.is_dir()} == expected",
+        "assert not (project / 'checks/ensure_entrypoint_links.py').exists()",
+        "assert 'EPL' not in (project / 'INDEX.md').read_text()",
+        "assert 'harness/common/checks/ensure_entrypoint_links.py' in (project / 'START.md').read_text()",
+        "assert 'harness/project/START.md' in (self.root / 'AGENTS.md').read_text()",
+        "assert self.run_check().returncode == 0",
+        "assert before == {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')}",
+        "assert (directory / 'README.human.md').is_file()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_common_only_creates_neutral_project"
+      ]
+    },
+    "EntryPointLinksTest::test_existing_project_is_not_regenerated_or_exported": {
+      "pytest_test": "TestEntryPointLinks::test_existing_project_is_not_regenerated_or_exported",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})",
+        "self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}",
+        "assert not (project / 'base').exists(), 'existing project is not filled with a new skeleton'"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_project_is_not_regenerated_or_exported"
+      ]
+    },
+    "EntryPointLinksTest::test_new_template_categories_apply_only_to_new_project": {
+      "pytest_test": "TestEntryPointLinks::test_new_template_categories_apply_only_to_new_project",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertFalse((self.root / 'harness/project/specs').exists())",
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert not (self.root / 'harness/project/specs').exists()",
+        "assert result.returncode == 0, result.stderr",
+        "assert (self.root / 'harness/project/specs/README.human.md').is_file()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_new_template_categories_apply_only_to_new_project"
+      ]
+    },
+    "EntryPointLinksTest::test_project_only_is_rejected_before_writes": {
+      "pytest_test": "TestEntryPointLinks::test_project_only_is_rejected_before_writes",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertIn('common', result.stderr)",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())",
+        "self.assertFalse((self.root / '.claude').exists())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert 'common' in result.stderr",
+        "assert not (self.root / 'AGENTS.md').exists()",
+        "assert not (self.root / '.claude').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_project_only_is_rejected_before_writes"
+      ]
+    },
+    "EntryPointLinksTest::test_unsafe_project_path_is_rejected_without_writes": {
+      "pytest_test": "TestEntryPointLinks::test_unsafe_project_path_is_rejected_without_writes",
+      "parameter_names": [
+        [
+          "symlink"
+        ]
+      ],
+      "parameter_values": [
+        "(False, True)"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())",
+        "self.assertFalse((self.root / '.claude').exists())"
+      ],
+      "subtests": [
+        "self.subTest(symlink=symlink)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert not (self.root / 'AGENTS.md').exists()",
+        "assert not (self.root / '.claude').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_project_path_is_rejected_without_writes[regular-file]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_project_path_is_rejected_without_writes[symlink]"
+      ]
+    },
+    "EntryPointLinksTest::test_invalid_template_does_not_create_project": {
+      "pytest_test": "TestEntryPointLinks::test_invalid_template_does_not_create_project",
+      "parameter_names": [
+        [
+          "content"
+        ]
+      ],
+      "parameter_values": [
+        "('not json', '{}', '{\"categories\": {\"../outside\": {\"purpose\": \"bad\", \"example\": \"bad\"}}}')"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertFalse(project.exists())",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(content=content)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert not project.exists()",
+        "assert not (self.root / 'AGENTS.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_template_does_not_create_project[invalid-json]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_template_does_not_create_project[missing-categories]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_template_does_not_create_project[path-traversal]"
+      ]
+    },
+    "EntryPointLinksTest::test_invalid_entrypoint_prevents_project_creation": {
+      "pytest_test": "TestEntryPointLinks::test_invalid_entrypoint_prevents_project_creation",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertFalse((self.root / 'harness/project').exists())",
+        "self.assertEqual(agents.read_text(), '# Keep\\n```md\\nunterminated')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert not (self.root / 'harness/project').exists()",
+        "assert agents.read_text() == '# Keep\\n```md\\nunterminated'"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_entrypoint_prevents_project_creation"
+      ]
+    },
+    "EntryPointLinksTest::test_adds_import_and_warns_about_extra_claude_content_without_deleting_it": {
+      "pytest_test": "TestEntryPointLinks::test_adds_import_and_warns_about_extra_claude_content_without_deleting_it",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0)",
+        "self.assertIn('inbox', result.stdout)",
+        "self.assertIn('технически не заблокировано', result.stdout)",
+        "self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\\nUser text\\n')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0",
+        "assert 'inbox' in result.stdout",
+        "assert 'технически не заблокировано' in result.stdout",
+        "assert (self.root / 'CLAUDE.md').read_text() == '@AGENTS.md\\nUser text\\n'"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_adds_import_and_warns_about_extra_claude_content_without_deleting_it"
+      ]
+    },
+    "EntryPointLinksTest::test_refuses_symlinked_entrypoint_without_changing_target": {
+      "pytest_test": "TestEntryPointLinks::test_refuses_symlinked_entrypoint_without_changing_target",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertNotEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(target.read_text(), 'User text\\n')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode != 0",
+        "assert target.read_text() == 'User text\\n'"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_refuses_symlinked_entrypoint_without_changing_target"
+      ]
+    },
+    "EntryPointLinksTest::test_rules_link_is_restored_and_directory_created": {
+      "pytest_test": "TestEntryPointLinks::test_rules_link_is_restored_and_directory_created",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertEqual(agents.read_text().count('](.claude/rules/)'), 2)",
+        "self.assertIn('README.human.md', agents.read_text())",
+        "self.assertTrue((self.root / '.claude/rules').is_dir())",
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(agents.read_bytes(), before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert agents.read_text().count('](.claude/rules/)') == 2",
+        "assert 'README.human.md' in agents.read_text()",
+        "assert (self.root / '.claude/rules').is_dir()",
+        "assert self.run_check().returncode == 0",
+        "assert agents.read_bytes() == before"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_rules_link_is_restored_and_directory_created"
+      ]
+    },
+    "EntryPointLinksTest::test_existing_relative_rules_links_are_not_duplicated": {
+      "pytest_test": "TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated",
+      "parameter_names": [
+        [
+          "target"
+        ]
+      ],
+      "parameter_values": [
+        "('.claude/rules', '.claude/rules/', './.claude/rules/', '<./.claude/rules/>')"
+      ],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(text.count('[Rules]'), 1)",
+        "self.assertNotIn('- [.claude/rules]', text)",
+        "self.assertIn('прочитай все Markdown-правила', text)"
+      ],
+      "subtests": [
+        "self.subTest(target=target)"
+      ],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert text.count('[Rules]') == 1",
+        "assert '- [.claude/rules]' not in text",
+        "assert 'прочитай все Markdown-правила' in text"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[.claude/rules]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[.claude/rules/]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[./.claude/rules/]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[<./.claude/rules/>]"
+      ]
+    },
+    "EntryPointLinksTest::test_unsafe_rules_directory_does_not_change_entrypoints": {
+      "pytest_test": "TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints",
+      "parameter_names": [
+        [
+          "relative"
+        ],
+        [
+          "symlink"
+        ]
+      ],
+      "parameter_values": [
+        "('.claude', '.claude/rules')",
+        "(False, True)"
+      ],
+      "assertions": [
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertEqual((self.root / 'AGENTS.md').read_text(), '# Keep\\n')",
+        "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(relative=relative, symlink=symlink)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode != 0",
+        "assert (self.root / 'AGENTS.md').read_text() == '# Keep\\n'",
+        "assert not (self.root / 'CLAUDE.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[regular-file-.claude]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[regular-file-.claude-rules]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[symlink-.claude]",
+        "harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[symlink-.claude-rules]"
+      ]
+    }
+  },
+  "harness/common/checks/test_plugin_eval_without_human.py": {
+    "HumanFilterTest::test_installed_analyzer_and_read_guards": {
+      "pytest_test": "TestHumanFilter::test_installed_analyzer_and_read_guards",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertIsNotNone(executable, 'Install plugin-eval before this integration check')",
+        "self.assertEqual(plugin_before, digest(plugin_files))",
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertEqual(protected.read_text(), 'unchanged')",
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertEqual(report['target']['kind'], 'directory' if kind == 'rule' else kind)",
+        "self.assertTrue(any((c['path'].endswith('details.md') for c in components)))",
+        "self.assertFalse(any((c['path'].endswith('README.human.md') for c in components)))",
+        "self.assertNotIn('HUMAN_CANARY', result.stdout)",
+        "self.assertEqual(before, digest((p for p in target.rglob('*') if p.is_file())))",
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertIn('README.human.md', result.stderr)",
+        "self.assertNotIn('HUMAN_CANARY', result.stdout + result.stderr)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert executable is not None, 'Install plugin-eval before this integration check'",
+        "assert plugin_before == digest(plugin_files)",
+        "assert result.returncode != 0",
+        "assert protected.read_text() == 'unchanged'",
+        "assert result.returncode == 0, result.stderr",
+        "assert report['target']['kind'] == ('directory' if kind == 'rule' else kind)",
+        "assert any((c['path'].endswith('details.md') for c in components))",
+        "assert not any((c['path'].endswith('README.human.md') for c in components))",
+        "assert 'HUMAN_CANARY' not in result.stdout",
+        "assert before == digest((p for p in target.rglob('*') if p.is_file()))",
+        "assert result.returncode != 0",
+        "assert 'README.human.md' in result.stderr",
+        "assert 'HUMAN_CANARY' not in result.stdout + result.stderr"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_plugin_eval_without_human.py::TestHumanFilter::test_installed_analyzer_and_read_guards"
+      ]
+    }
+  },
+  "harness/common/checks/test_entrypoint_portability.py": {
+    "PortabilityTest::test_startup_command_runs_in_each_clean_mode_without_git": {
+      "pytest_test": "TestPortability::test_startup_command_runs_in_each_clean_mode_without_git",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "MODES"
+      ],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn('](.claude/rules/)', text)",
+        "self.assertIn('harness/project/START.md', text)",
+        "self.assertIsNotNone(command)",
+        "self.assertEqual(command.group(1), 'harness/common/checks/ensure_entrypoint_links.py')",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+        "self.assertEqual(before_inputs, ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()))",
+        "self.assertFalse((root / '.git').exists())",
+        "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'})",
+        "self.assertTrue((project / 'base/README.human.md').is_file())",
+        "self.assertFalse((project / 'docs/local-task').exists())"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert '](.claude/rules/)' in text",
+        "assert 'harness/project/START.md' in text",
+        "assert command is not None",
+        "assert command.group(1) == 'harness/common/checks/ensure_entrypoint_links.py'",
+        "assert second.returncode == 0, second.stderr",
+        "assert 'будут автоматически восстановлены' not in second.stdout",
+        "assert before_inputs == ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())",
+        "assert not (root / '.git').exists()",
+        "assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}",
+        "assert (project / 'base/README.human.md').is_file()",
+        "assert not (project / 'docs/local-task').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_portability.py::TestPortability::test_startup_command_runs_in_each_clean_mode_without_git[common-only]",
+        "harness/common/checks/test_entrypoint_portability.py::TestPortability::test_startup_command_runs_in_each_clean_mode_without_git[common-and-project]"
+      ]
+    },
+    "PortabilityTest::test_existing_settings_and_startup_command_are_never_rewritten": {
+      "pytest_test": "TestPortability::test_existing_settings_and_startup_command_are_never_rewritten",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue((root / 'AGENTS.md').read_text().startswith(prefix))"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert (root / 'AGENTS.md').read_text().startswith(prefix)"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_portability.py::TestPortability::test_existing_settings_and_startup_command_are_never_rewritten"
+      ]
+    },
+    "PortabilityTest::test_legacy_checker_rejects_symlinked_common_ancestors": {
+      "pytest_test": "TestPortability::test_legacy_checker_rejects_symlinked_common_ancestors",
+      "parameter_names": [
+        [
+          "relative"
+        ]
+      ],
+      "parameter_values": [
+        "('harness/common', 'harness/common/checks')"
+      ],
+      "assertions": [
+        "self.assertFalse(marker.exists(), 'shim must reject symlinked ancestors before execution')",
+        "self.assertEqual(result.returncode, 2, result.stderr)",
+        "self.assertFalse((root / 'AGENTS.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(relative=relative)"
+      ],
+      "equivalent_assertions": [
+        "assert not marker.exists(), 'shim must reject symlinked ancestors before execution'",
+        "assert result.returncode == 2, result.stderr",
+        "assert not (root / 'AGENTS.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_portability.py::TestPortability::test_legacy_checker_rejects_symlinked_common_ancestors[harness-common]",
+        "harness/common/checks/test_entrypoint_portability.py::TestPortability::test_legacy_checker_rejects_symlinked_common_ancestors[harness-common-checks]"
+      ]
+    },
+    "PortabilityTest::test_required_resource_damage_is_detected": {
+      "pytest_test": "TestPortability::test_required_resource_damage_is_detected",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "MODES"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertIn('START.md', result.stderr)",
+        "self.assertFalse((root / 'AGENTS.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert 'START.md' in result.stderr",
+        "assert not (root / 'AGENTS.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_portability.py::TestPortability::test_required_resource_damage_is_detected[common-only]",
+        "harness/common/checks/test_entrypoint_portability.py::TestPortability::test_required_resource_damage_is_detected[common-and-project]"
+      ]
+    },
+    "PortabilityTest::test_project_only_rejected_without_writes": {
+      "pytest_test": "TestPortability::test_project_only_rejected_without_writes",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertIn('common', result.stderr)",
+        "self.assertFalse((root / 'AGENTS.md').exists())",
+        "self.assertFalse((root / 'harness/common').exists())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert 'common' in result.stderr",
+        "assert not (root / 'AGENTS.md').exists()",
+        "assert not (root / 'harness/common').exists()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_portability.py::TestPortability::test_project_only_rejected_without_writes"
+      ]
+    }
+  },
+  "harness/common/checks/test_entrypoint_notifications.py": {
+    "NotificationTest::test_no_git_binary_or_repository_or_baseline_is_required": {
+      "pytest_test": "TestNotification::test_no_git_binary_or_repository_or_baseline_is_required",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn(POLICY, result.stdout)",
+        "self.assertEqual(before, ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes()))"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert POLICY in result.stdout",
+        "assert before == ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes())"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_no_git_binary_or_repository_or_baseline_is_required"
+      ]
+    },
+    "NotificationTest::test_instruction_change_is_reported_and_preserved_without_blocking": {
+      "pytest_test": "TestNotification::test_instruction_change_is_reported_and_preserved_without_blocking",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn(POLICY, result.stdout)",
+        "self.assertIn('AGENTS.md', result.stdout)",
+        "self.assertIn('inbox', result.stdout)",
+        "self.assertIn('изменение настроек', result.stdout)",
+        "self.assertEqual(agents.read_text(), changed)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert POLICY in result.stdout",
+        "assert 'AGENTS.md' in result.stdout",
+        "assert 'inbox' in result.stdout",
+        "assert 'изменение настроек' in result.stdout",
+        "assert agents.read_text() == changed"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_instruction_change_is_reported_and_preserved_without_blocking"
+      ]
+    },
+    "NotificationTest::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change": {
+      "pytest_test": "TestNotification::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('изменение настроек', result.stdout)",
+        "self.assertNotIn(NOTICE, result.stdout)",
+        "self.assertEqual(agents.read_text(), changed)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert 'изменение настроек' in result.stdout",
+        "assert NOTICE not in result.stdout",
+        "assert agents.read_text() == changed"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change"
+      ]
+    },
+    "NotificationTest::test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file": {
+      "pytest_test": "TestNotification::test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('изменение настроек', result.stdout)",
+        "self.assertIn(NOTICE, result.stdout)",
+        "self.assertTrue(repaired.startswith(current))",
+        "self.assertIn('](harness/common/START.md)', repaired[len(current):])",
+        "self.assertEqual(self.check().returncode, 0)",
+        "self.assertEqual(agents.read_bytes(), before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert 'изменение настроек' in result.stdout",
+        "assert NOTICE in result.stdout",
+        "assert repaired.startswith(current)",
+        "assert '](harness/common/START.md)' in repaired[len(current):]",
+        "assert self.check().returncode == 0",
+        "assert agents.read_bytes() == before"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file"
+      ]
+    },
+    "NotificationTest::test_extra_bridge_text_warns_without_rewriting_or_blocking": {
+      "pytest_test": "TestNotification::test_extra_bridge_text_warns_without_rewriting_or_blocking",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('CLAUDE.md', result.stdout)",
+        "self.assertIn('inbox', result.stdout)",
+        "self.assertIn(POLICY, result.stdout)",
+        "self.assertEqual(bridge.read_text(), extra)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert 'CLAUDE.md' in result.stdout",
+        "assert 'inbox' in result.stdout",
+        "assert POLICY in result.stdout",
+        "assert bridge.read_text() == extra"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_extra_bridge_text_warns_without_rewriting_or_blocking"
+      ]
+    },
+    "NotificationTest::test_repair_is_announced_and_next_run_has_no_damage_message": {
+      "pytest_test": "TestNotification::test_repair_is_announced_and_next_run_has_no_damage_message",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn(NOTICE, first.stdout)",
+        "self.assertIn(line, agents.read_text())",
+        "self.assertNotIn(NOTICE, self.check(git_available=False).stdout)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert NOTICE in first.stdout",
+        "assert line in agents.read_text()",
+        "assert NOTICE not in self.check(git_available=False).stdout"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_repair_is_announced_and_next_run_has_no_damage_message"
+      ]
+    },
+    "NotificationTest::test_repair_message_is_visible_before_the_first_write": {
+      "pytest_test": "TestNotification::test_repair_message_is_visible_before_the_first_write",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(output.getvalue().count(NOTICE), 1)",
+        "self.assertIn(NOTICE, output.getvalue())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert output.getvalue().count(NOTICE) == 1",
+        "assert NOTICE in output.getvalue()"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_repair_message_is_visible_before_the_first_write"
+      ]
+    },
+    "NotificationTest::test_rules_repair_is_not_reported_as_a_settings_change": {
+      "pytest_test": "TestNotification::test_rules_repair_is_not_reported_as_a_settings_change",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn(NOTICE, first.stdout)",
+        "self.assertNotIn(NOTICE, second.stdout)",
+        "self.assertNotIn('изменение настроек', second.stdout)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert NOTICE in first.stdout",
+        "assert NOTICE not in second.stdout",
+        "assert 'изменение настроек' not in second.stdout"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_rules_repair_is_not_reported_as_a_settings_change"
+      ]
+    },
+    "NotificationTest::test_check_installs_no_hooks_or_configuration_and_does_not_block_commit": {
+      "pytest_test": "TestNotification::test_check_installs_no_hooks_or_configuration_and_does_not_block_commit",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.check().returncode, 0)",
+        "self.assertEqual((self.root / '.git/config').read_bytes(), config)",
+        "self.assertFalse((self.root / '.git/hooks/pre-commit').exists())",
+        "self.assertNotEqual(self.git('rev-parse', 'HEAD').stdout, before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.check().returncode == 0",
+        "assert (self.root / '.git/config').read_bytes() == config",
+        "assert not (self.root / '.git/hooks/pre-commit').exists()",
+        "assert self.git('rev-parse', 'HEAD').stdout != before"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_check_installs_no_hooks_or_configuration_and_does_not_block_commit"
+      ]
+    },
+    "NotificationTest::test_crlf_link_repair_is_not_reported_as_a_settings_change": {
+      "pytest_test": "TestNotification::test_crlf_link_repair_is_not_reported_as_a_settings_change",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn(NOTICE, first.stdout)",
+        "self.assertTrue(agents.read_bytes().startswith(original))",
+        "self.assertIn(line, agents.read_bytes())",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertNotIn(NOTICE, second.stdout)",
+        "self.assertNotIn('изменение настроек', second.stdout)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert NOTICE in first.stdout",
+        "assert agents.read_bytes().startswith(original)",
+        "assert line in agents.read_bytes()",
+        "assert second.returncode == 0, second.stderr",
+        "assert NOTICE not in second.stdout",
+        "assert 'изменение настроек' not in second.stdout"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_crlf_link_repair_is_not_reported_as_a_settings_change"
+      ]
+    }
+  },
+  "harness/common/checks/test_rule_copies.py": {
+    "RuleCopiesTest::test_installed_rule_copies": {
+      "pytest_test": "TestRuleCopies::test_installed_rule_copies",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [],
+      "subtests": [],
+      "equivalent_assertions": [],
+      "node_ids": [
+        "harness/common/checks/test_rule_copies.py::TestRuleCopies::test_installed_rule_copies"
+      ]
+    },
+    "RuleCopiesTest::test_project_only_rules_are_rejected": {
+      "pytest_test": "TestRuleCopies::test_project_only_rules_are_rejected",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, 'common')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "pytest.raises(ValueError, match='common')"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_rule_copies.py::TestRuleCopies::test_project_only_rules_are_rejected"
+      ]
+    },
+    "RuleCopiesTest::test_copy_drift_is_detected": {
+      "pytest_test": "TestRuleCopies::test_copy_drift_is_detected",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "(('common',), ('common', 'project'))"
+      ],
+      "assertions": [
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertRaisesRegex(ValueError, 'common')",
+        "self.assertRaisesRegex(ValueError, 'Missing copies')",
+        "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+        "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+        "self.assertRaisesRegex(ValueError, 'extra copies')"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert check_rule_copies(root) == len(mode)",
+        "assert check_rule_copies(root) == len(mode)",
+        "pytest.raises(ValueError, match='Missing copies')",
+        "pytest.raises(ValueError, match='Different rule bytes')",
+        "pytest.raises(ValueError, match='Not an ordinary file')",
+        "pytest.raises(ValueError, match='extra copies')",
+        "pytest.raises(ValueError, match='common')"
+      ],
+      "node_ids": [
+        "harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common]",
+        "harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common-project]"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py": {
+    "EntryPointLinksTest::test_creates_four_links_and_import_then_preserves_bytes": {
+      "pytest_test": "TestEntryPointLinks::test_creates_four_links_and_import_then_preserves_bytes",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\n')",
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(before, (agents.read_bytes(), claude.read_bytes()))",
+        "self.assertEqual(file.read_bytes(), b'')",
+        "self.assertIn(f'](harness/{package}/{name})', agents.read_text())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert claude.read_bytes() == b'@AGENTS.md\\n'",
+        "assert self.run_check().returncode == 0",
+        "assert before == (agents.read_bytes(), claude.read_bytes())",
+        "assert file.read_bytes() == b''",
+        "assert f'](harness/{package}/{name})' in agents.read_text()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_creates_four_links_and_import_then_preserves_bytes"
+      ]
+    },
+    "EntryPointLinksTest::test_only_appends_missing_links_preserving_user_text": {
+      "pytest_test": "TestEntryPointLinks::test_only_appends_missing_links_preserving_user_text",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertTrue(text.startswith(prefix))",
+        "self.assertEqual(text.count('harness/common/INDEX.md'), 1)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert text.startswith(prefix)",
+        "assert text.count('harness/common/INDEX.md') == 1"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_only_appends_missing_links_preserving_user_text"
+      ]
+    },
+    "EntryPointLinksTest::test_link_examples_in_code_do_not_count_as_real_links": {
+      "pytest_test": "TestEntryPointLinks::test_link_examples_in_code_do_not_count_as_real_links",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(text.count('](harness/common/INDEX.md)'), 2)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert text.count('](harness/common/INDEX.md)') == 2"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_link_examples_in_code_do_not_count_as_real_links"
+      ]
+    },
+    "EntryPointLinksTest::test_repair_preserves_original_bytes_and_each_files_line_endings": {
+      "pytest_test": "TestEntryPointLinks::test_repair_preserves_original_bytes_and_each_files_line_endings",
+      "parameter_names": [
+        [
+          "newline"
+        ]
+      ],
+      "parameter_values": [
+        "(b'\\n', b'\\r\\n')"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue(repaired.startswith(original))",
+        "self.assertIn(b'](harness/common/START.md)' + newline, repaired)",
+        "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\r\\n' + bridge)",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+        "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+        "self.assertNotIn(b'\\n', repaired.replace(b'\\r\\n', b''))"
+      ],
+      "subtests": [
+        "self.subTest(newline=newline)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert repaired.startswith(original)",
+        "assert b'](harness/common/START.md)' + newline in repaired",
+        "assert claude.read_bytes() == b'@AGENTS.md\\r\\n' + bridge",
+        "assert second.returncode == 0, second.stderr",
+        "assert 'будут автоматически восстановлены' not in second.stdout",
+        "assert (agents.read_bytes(), claude.read_bytes()) == before",
+        "assert b'\\n' not in repaired.replace(b'\\r\\n', b'')"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_repair_preserves_original_bytes_and_each_files_line_endings[LF]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_repair_preserves_original_bytes_and_each_files_line_endings[CRLF]"
+      ]
+    },
+    "EntryPointLinksTest::test_valid_crlf_bridge_is_preserved_without_warning_or_repair": {
+      "pytest_test": "TestEntryPointLinks::test_valid_crlf_bridge_is_preserved_without_warning_or_repair",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertNotIn('будут автоматически восстановлены', result.stdout)",
+        "self.assertNotIn('требуется единственная строка', result.stdout)",
+        "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert result.returncode == 0, result.stderr",
+        "assert 'будут автоматически восстановлены' not in result.stdout",
+        "assert 'требуется единственная строка' not in result.stdout",
+        "assert (agents.read_bytes(), claude.read_bytes()) == before"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_valid_crlf_bridge_is_preserved_without_warning_or_repair"
+      ]
+    },
+    "EntryPointLinksTest::test_longer_fence_closers_do_not_turn_examples_into_installed_links": {
+      "pytest_test": "TestEntryPointLinks::test_longer_fence_closers_do_not_turn_examples_into_installed_links",
+      "parameter_names": [
+        [
+          "opener",
+          "closer"
+        ]
+      ],
+      "parameter_values": [
+        "(('~~~md', '~~~~'), ('```md', '````'))"
+      ],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertTrue(text.startswith(prefix))",
+        "self.assertIn('](.claude/rules/)', appended)",
+        "self.assertIn('прочитай все Markdown-правила', appended)",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertEqual(agents.read_bytes(), before)",
+        "self.assertIn(f'](harness/{package}/{name})', appended)"
+      ],
+      "subtests": [
+        "self.subTest(opener=opener)"
+      ],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert text.startswith(prefix)",
+        "assert '](.claude/rules/)' in appended",
+        "assert 'прочитай все Markdown-правила' in appended",
+        "assert second.returncode == 0, second.stderr",
+        "assert agents.read_bytes() == before",
+        "assert f'](harness/{package}/{name})' in appended"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_longer_fence_closers_do_not_turn_examples_into_installed_links[tilde]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_longer_fence_closers_do_not_turn_examples_into_installed_links[backtick]"
+      ]
+    },
+    "EntryPointLinksTest::test_unclosed_fence_fails_before_writing_either_entrypoint": {
+      "pytest_test": "TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint",
+      "parameter_names": [
+        [
+          "name"
+        ],
+        [
+          "opener"
+        ]
+      ],
+      "parameter_values": [
+        "('AGENTS.md', 'CLAUDE.md')",
+        "('~~~md', '```md')"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2, result.stderr)",
+        "self.assertIn('Unclosed Markdown code fence', result.stderr)",
+        "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+        "self.assertFalse((self.root / '.claude').exists())"
+      ],
+      "subtests": [
+        "self.subTest(name=name, opener=opener)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2, result.stderr",
+        "assert 'Unclosed Markdown code fence' in result.stderr",
+        "assert (agents.read_bytes(), claude.read_bytes()) == before",
+        "assert not (self.root / '.claude').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[tilde-AGENTS.md]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[tilde-CLAUDE.md]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[backtick-AGENTS.md]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[backtick-CLAUDE.md]"
+      ]
+    },
+    "EntryPointLinksTest::test_damaged_package_is_reported_without_creating_dangling_links": {
+      "pytest_test": "TestEntryPointLinks::test_damaged_package_is_reported_without_creating_dangling_links",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())",
+        "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode != 0",
+        "assert not (self.root / 'AGENTS.md').exists()",
+        "assert not (self.root / 'CLAUDE.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_damaged_package_is_reported_without_creating_dangling_links"
+      ]
+    },
+    "EntryPointLinksTest::test_common_only_creates_neutral_project": {
+      "pytest_test": "TestEntryPointLinks::test_common_only_creates_neutral_project",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue(project.is_dir(), 'common-only must create project')",
+        "self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)",
+        "self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())",
+        "self.assertNotIn('EPL', (project / 'INDEX.md').read_text())",
+        "self.assertIn('harness/common/checks/ensure_entrypoint_links.py', (project / 'START.md').read_text())",
+        "self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())",
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})",
+        "self.assertTrue((directory / 'README.human.md').is_file())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert project.is_dir(), 'common-only must create project'",
+        "assert {p.name for p in project.iterdir() if p.is_dir()} == expected",
+        "assert not (project / 'checks/ensure_entrypoint_links.py').exists()",
+        "assert 'EPL' not in (project / 'INDEX.md').read_text()",
+        "assert 'harness/common/checks/ensure_entrypoint_links.py' in (project / 'START.md').read_text()",
+        "assert 'harness/project/START.md' in (self.root / 'AGENTS.md').read_text()",
+        "assert self.run_check().returncode == 0",
+        "assert before == {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')}",
+        "assert (directory / 'README.human.md').is_file()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_common_only_creates_neutral_project"
+      ]
+    },
+    "EntryPointLinksTest::test_existing_project_is_not_regenerated_or_exported": {
+      "pytest_test": "TestEntryPointLinks::test_existing_project_is_not_regenerated_or_exported",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})",
+        "self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}",
+        "assert not (project / 'base').exists(), 'existing project is not filled with a new skeleton'"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_project_is_not_regenerated_or_exported"
+      ]
+    },
+    "EntryPointLinksTest::test_new_template_categories_apply_only_to_new_project": {
+      "pytest_test": "TestEntryPointLinks::test_new_template_categories_apply_only_to_new_project",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertFalse((self.root / 'harness/project/specs').exists())",
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert not (self.root / 'harness/project/specs').exists()",
+        "assert result.returncode == 0, result.stderr",
+        "assert (self.root / 'harness/project/specs/README.human.md').is_file()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_new_template_categories_apply_only_to_new_project"
+      ]
+    },
+    "EntryPointLinksTest::test_project_only_is_rejected_before_writes": {
+      "pytest_test": "TestEntryPointLinks::test_project_only_is_rejected_before_writes",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertIn('common', result.stderr)",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())",
+        "self.assertFalse((self.root / '.claude').exists())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert 'common' in result.stderr",
+        "assert not (self.root / 'AGENTS.md').exists()",
+        "assert not (self.root / '.claude').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_project_only_is_rejected_before_writes"
+      ]
+    },
+    "EntryPointLinksTest::test_unsafe_project_path_is_rejected_without_writes": {
+      "pytest_test": "TestEntryPointLinks::test_unsafe_project_path_is_rejected_without_writes",
+      "parameter_names": [
+        [
+          "symlink"
+        ]
+      ],
+      "parameter_values": [
+        "(False, True)"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())",
+        "self.assertFalse((self.root / '.claude').exists())"
+      ],
+      "subtests": [
+        "self.subTest(symlink=symlink)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert not (self.root / 'AGENTS.md').exists()",
+        "assert not (self.root / '.claude').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_project_path_is_rejected_without_writes[regular-file]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_project_path_is_rejected_without_writes[symlink]"
+      ]
+    },
+    "EntryPointLinksTest::test_invalid_template_does_not_create_project": {
+      "pytest_test": "TestEntryPointLinks::test_invalid_template_does_not_create_project",
+      "parameter_names": [
+        [
+          "content"
+        ]
+      ],
+      "parameter_values": [
+        "('not json', '{}', '{\"categories\": {\"../outside\": {\"purpose\": \"bad\", \"example\": \"bad\"}}}')"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertFalse(project.exists())",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(content=content)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert not project.exists()",
+        "assert not (self.root / 'AGENTS.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_template_does_not_create_project[invalid-json]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_template_does_not_create_project[missing-categories]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_template_does_not_create_project[path-traversal]"
+      ]
+    },
+    "EntryPointLinksTest::test_invalid_entrypoint_prevents_project_creation": {
+      "pytest_test": "TestEntryPointLinks::test_invalid_entrypoint_prevents_project_creation",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertFalse((self.root / 'harness/project').exists())",
+        "self.assertEqual(agents.read_text(), '# Keep\\n```md\\nunterminated')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert not (self.root / 'harness/project').exists()",
+        "assert agents.read_text() == '# Keep\\n```md\\nunterminated'"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_entrypoint_prevents_project_creation"
+      ]
+    },
+    "EntryPointLinksTest::test_adds_import_and_warns_about_extra_claude_content_without_deleting_it": {
+      "pytest_test": "TestEntryPointLinks::test_adds_import_and_warns_about_extra_claude_content_without_deleting_it",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0)",
+        "self.assertIn('inbox', result.stdout)",
+        "self.assertIn('технически не заблокировано', result.stdout)",
+        "self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\\nUser text\\n')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0",
+        "assert 'inbox' in result.stdout",
+        "assert 'технически не заблокировано' in result.stdout",
+        "assert (self.root / 'CLAUDE.md').read_text() == '@AGENTS.md\\nUser text\\n'"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_adds_import_and_warns_about_extra_claude_content_without_deleting_it"
+      ]
+    },
+    "EntryPointLinksTest::test_refuses_symlinked_entrypoint_without_changing_target": {
+      "pytest_test": "TestEntryPointLinks::test_refuses_symlinked_entrypoint_without_changing_target",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertNotEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(target.read_text(), 'User text\\n')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode != 0",
+        "assert target.read_text() == 'User text\\n'"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_refuses_symlinked_entrypoint_without_changing_target"
+      ]
+    },
+    "EntryPointLinksTest::test_rules_link_is_restored_and_directory_created": {
+      "pytest_test": "TestEntryPointLinks::test_rules_link_is_restored_and_directory_created",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertEqual(agents.read_text().count('](.claude/rules/)'), 2)",
+        "self.assertIn('README.human.md', agents.read_text())",
+        "self.assertTrue((self.root / '.claude/rules').is_dir())",
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(agents.read_bytes(), before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert agents.read_text().count('](.claude/rules/)') == 2",
+        "assert 'README.human.md' in agents.read_text()",
+        "assert (self.root / '.claude/rules').is_dir()",
+        "assert self.run_check().returncode == 0",
+        "assert agents.read_bytes() == before"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_rules_link_is_restored_and_directory_created"
+      ]
+    },
+    "EntryPointLinksTest::test_existing_relative_rules_links_are_not_duplicated": {
+      "pytest_test": "TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated",
+      "parameter_names": [
+        [
+          "target"
+        ]
+      ],
+      "parameter_values": [
+        "('.claude/rules', '.claude/rules/', './.claude/rules/', '<./.claude/rules/>')"
+      ],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(text.count('[Rules]'), 1)",
+        "self.assertNotIn('- [.claude/rules]', text)",
+        "self.assertIn('прочитай все Markdown-правила', text)"
+      ],
+      "subtests": [
+        "self.subTest(target=target)"
+      ],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert text.count('[Rules]') == 1",
+        "assert '- [.claude/rules]' not in text",
+        "assert 'прочитай все Markdown-правила' in text"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[.claude/rules]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[.claude/rules/]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[./.claude/rules/]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[<./.claude/rules/>]"
+      ]
+    },
+    "EntryPointLinksTest::test_unsafe_rules_directory_does_not_change_entrypoints": {
+      "pytest_test": "TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints",
+      "parameter_names": [
+        [
+          "relative"
+        ],
+        [
+          "symlink"
+        ]
+      ],
+      "parameter_values": [
+        "('.claude', '.claude/rules')",
+        "(False, True)"
+      ],
+      "assertions": [
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertEqual((self.root / 'AGENTS.md').read_text(), '# Keep\\n')",
+        "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(relative=relative, symlink=symlink)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode != 0",
+        "assert (self.root / 'AGENTS.md').read_text() == '# Keep\\n'",
+        "assert not (self.root / 'CLAUDE.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[regular-file-.claude]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[regular-file-.claude-rules]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[symlink-.claude]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[symlink-.claude-rules]"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_plugin_eval_without_human.py": {
+    "HumanFilterTest::test_installed_analyzer_and_read_guards": {
+      "pytest_test": "TestHumanFilter::test_installed_analyzer_and_read_guards",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertIsNotNone(executable, 'Install plugin-eval before this integration check')",
+        "self.assertEqual(plugin_before, digest(plugin_files))",
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertEqual(protected.read_text(), 'unchanged')",
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertEqual(report['target']['kind'], 'directory' if kind == 'rule' else kind)",
+        "self.assertTrue(any((c['path'].endswith('details.md') for c in components)))",
+        "self.assertFalse(any((c['path'].endswith('README.human.md') for c in components)))",
+        "self.assertNotIn('HUMAN_CANARY', result.stdout)",
+        "self.assertEqual(before, digest((p for p in target.rglob('*') if p.is_file())))",
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertIn('README.human.md', result.stderr)",
+        "self.assertNotIn('HUMAN_CANARY', result.stdout + result.stderr)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert executable is not None, 'Install plugin-eval before this integration check'",
+        "assert plugin_before == digest(plugin_files)",
+        "assert result.returncode != 0",
+        "assert protected.read_text() == 'unchanged'",
+        "assert result.returncode == 0, result.stderr",
+        "assert report['target']['kind'] == ('directory' if kind == 'rule' else kind)",
+        "assert any((c['path'].endswith('details.md') for c in components))",
+        "assert not any((c['path'].endswith('README.human.md') for c in components))",
+        "assert 'HUMAN_CANARY' not in result.stdout",
+        "assert before == digest((p for p in target.rglob('*') if p.is_file()))",
+        "assert result.returncode != 0",
+        "assert 'README.human.md' in result.stderr",
+        "assert 'HUMAN_CANARY' not in result.stdout + result.stderr"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_plugin_eval_without_human.py::TestHumanFilter::test_installed_analyzer_and_read_guards"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py": {
+    "PortabilityTest::test_startup_command_runs_in_each_clean_mode_without_git": {
+      "pytest_test": "TestPortability::test_startup_command_runs_in_each_clean_mode_without_git",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "MODES"
+      ],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn('](.claude/rules/)', text)",
+        "self.assertIn('harness/project/START.md', text)",
+        "self.assertIsNotNone(command)",
+        "self.assertEqual(command.group(1), 'harness/common/checks/ensure_entrypoint_links.py')",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+        "self.assertEqual(before_inputs, ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()))",
+        "self.assertFalse((root / '.git').exists())",
+        "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'})",
+        "self.assertTrue((project / 'base/README.human.md').is_file())",
+        "self.assertFalse((project / 'docs/local-task').exists())"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert '](.claude/rules/)' in text",
+        "assert 'harness/project/START.md' in text",
+        "assert command is not None",
+        "assert command.group(1) == 'harness/common/checks/ensure_entrypoint_links.py'",
+        "assert second.returncode == 0, second.stderr",
+        "assert 'будут автоматически восстановлены' not in second.stdout",
+        "assert before_inputs == ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())",
+        "assert not (root / '.git').exists()",
+        "assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}",
+        "assert (project / 'base/README.human.md').is_file()",
+        "assert not (project / 'docs/local-task').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_startup_command_runs_in_each_clean_mode_without_git[common-only]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_startup_command_runs_in_each_clean_mode_without_git[common-and-project]"
+      ]
+    },
+    "PortabilityTest::test_existing_settings_and_startup_command_are_never_rewritten": {
+      "pytest_test": "TestPortability::test_existing_settings_and_startup_command_are_never_rewritten",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue((root / 'AGENTS.md').read_text().startswith(prefix))"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert (root / 'AGENTS.md').read_text().startswith(prefix)"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_existing_settings_and_startup_command_are_never_rewritten"
+      ]
+    },
+    "PortabilityTest::test_legacy_checker_rejects_symlinked_common_ancestors": {
+      "pytest_test": "TestPortability::test_legacy_checker_rejects_symlinked_common_ancestors",
+      "parameter_names": [
+        [
+          "relative"
+        ]
+      ],
+      "parameter_values": [
+        "('harness/common', 'harness/common/checks')"
+      ],
+      "assertions": [
+        "self.assertFalse(marker.exists(), 'shim must reject symlinked ancestors before execution')",
+        "self.assertEqual(result.returncode, 2, result.stderr)",
+        "self.assertFalse((root / 'AGENTS.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(relative=relative)"
+      ],
+      "equivalent_assertions": [
+        "assert not marker.exists(), 'shim must reject symlinked ancestors before execution'",
+        "assert result.returncode == 2, result.stderr",
+        "assert not (root / 'AGENTS.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_legacy_checker_rejects_symlinked_common_ancestors[harness-common]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_legacy_checker_rejects_symlinked_common_ancestors[harness-common-checks]"
+      ]
+    },
+    "PortabilityTest::test_required_resource_damage_is_detected": {
+      "pytest_test": "TestPortability::test_required_resource_damage_is_detected",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "MODES"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertIn('START.md', result.stderr)",
+        "self.assertFalse((root / 'AGENTS.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert 'START.md' in result.stderr",
+        "assert not (root / 'AGENTS.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_required_resource_damage_is_detected[common-only]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_required_resource_damage_is_detected[common-and-project]"
+      ]
+    },
+    "PortabilityTest::test_project_only_rejected_without_writes": {
+      "pytest_test": "TestPortability::test_project_only_rejected_without_writes",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertIn('common', result.stderr)",
+        "self.assertFalse((root / 'AGENTS.md').exists())",
+        "self.assertFalse((root / 'harness/common').exists())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert 'common' in result.stderr",
+        "assert not (root / 'AGENTS.md').exists()",
+        "assert not (root / 'harness/common').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_project_only_rejected_without_writes"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py": {
+    "NotificationTest::test_no_git_binary_or_repository_or_baseline_is_required": {
+      "pytest_test": "TestNotification::test_no_git_binary_or_repository_or_baseline_is_required",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn(POLICY, result.stdout)",
+        "self.assertEqual(before, ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes()))"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert POLICY in result.stdout",
+        "assert before == ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes())"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_no_git_binary_or_repository_or_baseline_is_required"
+      ]
+    },
+    "NotificationTest::test_instruction_change_is_reported_and_preserved_without_blocking": {
+      "pytest_test": "TestNotification::test_instruction_change_is_reported_and_preserved_without_blocking",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn(POLICY, result.stdout)",
+        "self.assertIn('AGENTS.md', result.stdout)",
+        "self.assertIn('inbox', result.stdout)",
+        "self.assertIn('изменение настроек', result.stdout)",
+        "self.assertEqual(agents.read_text(), changed)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert POLICY in result.stdout",
+        "assert 'AGENTS.md' in result.stdout",
+        "assert 'inbox' in result.stdout",
+        "assert 'изменение настроек' in result.stdout",
+        "assert agents.read_text() == changed"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_instruction_change_is_reported_and_preserved_without_blocking"
+      ]
+    },
+    "NotificationTest::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change": {
+      "pytest_test": "TestNotification::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('изменение настроек', result.stdout)",
+        "self.assertNotIn(NOTICE, result.stdout)",
+        "self.assertEqual(agents.read_text(), changed)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert 'изменение настроек' in result.stdout",
+        "assert NOTICE not in result.stdout",
+        "assert agents.read_text() == changed"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change"
+      ]
+    },
+    "NotificationTest::test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file": {
+      "pytest_test": "TestNotification::test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('изменение настроек', result.stdout)",
+        "self.assertIn(NOTICE, result.stdout)",
+        "self.assertTrue(repaired.startswith(current))",
+        "self.assertIn('](harness/common/START.md)', repaired[len(current):])",
+        "self.assertEqual(self.check().returncode, 0)",
+        "self.assertEqual(agents.read_bytes(), before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert 'изменение настроек' in result.stdout",
+        "assert NOTICE in result.stdout",
+        "assert repaired.startswith(current)",
+        "assert '](harness/common/START.md)' in repaired[len(current):]",
+        "assert self.check().returncode == 0",
+        "assert agents.read_bytes() == before"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file"
+      ]
+    },
+    "NotificationTest::test_extra_bridge_text_warns_without_rewriting_or_blocking": {
+      "pytest_test": "TestNotification::test_extra_bridge_text_warns_without_rewriting_or_blocking",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('CLAUDE.md', result.stdout)",
+        "self.assertIn('inbox', result.stdout)",
+        "self.assertIn(POLICY, result.stdout)",
+        "self.assertEqual(bridge.read_text(), extra)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert 'CLAUDE.md' in result.stdout",
+        "assert 'inbox' in result.stdout",
+        "assert POLICY in result.stdout",
+        "assert bridge.read_text() == extra"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_extra_bridge_text_warns_without_rewriting_or_blocking"
+      ]
+    },
+    "NotificationTest::test_repair_is_announced_and_next_run_has_no_damage_message": {
+      "pytest_test": "TestNotification::test_repair_is_announced_and_next_run_has_no_damage_message",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn(NOTICE, first.stdout)",
+        "self.assertIn(line, agents.read_text())",
+        "self.assertNotIn(NOTICE, self.check(git_available=False).stdout)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert NOTICE in first.stdout",
+        "assert line in agents.read_text()",
+        "assert NOTICE not in self.check(git_available=False).stdout"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_repair_is_announced_and_next_run_has_no_damage_message"
+      ]
+    },
+    "NotificationTest::test_repair_message_is_visible_before_the_first_write": {
+      "pytest_test": "TestNotification::test_repair_message_is_visible_before_the_first_write",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(output.getvalue().count(NOTICE), 1)",
+        "self.assertIn(NOTICE, output.getvalue())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert output.getvalue().count(NOTICE) == 1",
+        "assert NOTICE in output.getvalue()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_repair_message_is_visible_before_the_first_write"
+      ]
+    },
+    "NotificationTest::test_rules_repair_is_not_reported_as_a_settings_change": {
+      "pytest_test": "TestNotification::test_rules_repair_is_not_reported_as_a_settings_change",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn(NOTICE, first.stdout)",
+        "self.assertNotIn(NOTICE, second.stdout)",
+        "self.assertNotIn('изменение настроек', second.stdout)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert NOTICE in first.stdout",
+        "assert NOTICE not in second.stdout",
+        "assert 'изменение настроек' not in second.stdout"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_rules_repair_is_not_reported_as_a_settings_change"
+      ]
+    },
+    "NotificationTest::test_check_installs_no_hooks_or_configuration_and_does_not_block_commit": {
+      "pytest_test": "TestNotification::test_check_installs_no_hooks_or_configuration_and_does_not_block_commit",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.check().returncode, 0)",
+        "self.assertEqual((self.root / '.git/config').read_bytes(), config)",
+        "self.assertFalse((self.root / '.git/hooks/pre-commit').exists())",
+        "self.assertNotEqual(self.git('rev-parse', 'HEAD').stdout, before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.check().returncode == 0",
+        "assert (self.root / '.git/config').read_bytes() == config",
+        "assert not (self.root / '.git/hooks/pre-commit').exists()",
+        "assert self.git('rev-parse', 'HEAD').stdout != before"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_check_installs_no_hooks_or_configuration_and_does_not_block_commit"
+      ]
+    },
+    "NotificationTest::test_crlf_link_repair_is_not_reported_as_a_settings_change": {
+      "pytest_test": "TestNotification::test_crlf_link_repair_is_not_reported_as_a_settings_change",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn(NOTICE, first.stdout)",
+        "self.assertTrue(agents.read_bytes().startswith(original))",
+        "self.assertIn(line, agents.read_bytes())",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertNotIn(NOTICE, second.stdout)",
+        "self.assertNotIn('изменение настроек', second.stdout)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert NOTICE in first.stdout",
+        "assert agents.read_bytes().startswith(original)",
+        "assert line in agents.read_bytes()",
+        "assert second.returncode == 0, second.stderr",
+        "assert NOTICE not in second.stdout",
+        "assert 'изменение настроек' not in second.stdout"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_crlf_link_repair_is_not_reported_as_a_settings_change"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_rule_copies.py": {
+    "RuleCopiesTest::test_installed_rule_copies": {
+      "pytest_test": "TestRuleCopies::test_installed_rule_copies",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [],
+      "subtests": [],
+      "equivalent_assertions": [],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_installed_rule_copies"
+      ]
+    },
+    "RuleCopiesTest::test_project_only_rules_are_rejected": {
+      "pytest_test": "TestRuleCopies::test_project_only_rules_are_rejected",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, 'common')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "pytest.raises(ValueError, match='common')"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_project_only_rules_are_rejected"
+      ]
+    },
+    "RuleCopiesTest::test_copy_drift_is_detected": {
+      "pytest_test": "TestRuleCopies::test_copy_drift_is_detected",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "(('common',), ('common', 'project'))"
+      ],
+      "assertions": [
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertRaisesRegex(ValueError, 'common')",
+        "self.assertRaisesRegex(ValueError, 'Missing copies')",
+        "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+        "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+        "self.assertRaisesRegex(ValueError, 'extra copies')"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert check_rule_copies(root) == len(mode)",
+        "assert check_rule_copies(root) == len(mode)",
+        "pytest.raises(ValueError, match='Missing copies')",
+        "pytest.raises(ValueError, match='Different rule bytes')",
+        "pytest.raises(ValueError, match='Not an ordinary file')",
+        "pytest.raises(ValueError, match='extra copies')",
+        "pytest.raises(ValueError, match='common')"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common]",
+        "harness/common/inbox/2026-10-06-inbox-authorization-interpretation/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common-project]"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-05-workflow-43-skills-rules/publication-before/harness/common/checks/test_rule_copies.py": {
+    "RuleCopiesTest::test_installed_rule_copies": {
+      "pytest_test": "TestRuleCopies::test_installed_rule_copies",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [],
+      "subtests": [],
+      "equivalent_assertions": [],
+      "node_ids": [
+        "harness/common/inbox/2026-10-05-workflow-43-skills-rules/publication-before/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_installed_rule_copies"
+      ]
+    },
+    "RuleCopiesTest::test_copy_drift_is_detected": {
+      "pytest_test": "TestRuleCopies::test_copy_drift_is_detected",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "(('common',), ('project',), ('common', 'project'))"
+      ],
+      "assertions": [
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertRaisesRegex(ValueError, 'nothing checked')",
+        "self.assertRaisesRegex(ValueError, 'Missing copies')",
+        "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+        "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+        "self.assertRaisesRegex(ValueError, 'extra copies')"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert check_rule_copies(root) == len(mode)",
+        "assert check_rule_copies(root) == len(mode)",
+        "pytest.raises(ValueError, match='Missing copies')",
+        "pytest.raises(ValueError, match='Different rule bytes')",
+        "pytest.raises(ValueError, match='Not an ordinary file')",
+        "pytest.raises(ValueError, match='extra copies')",
+        "pytest.raises(ValueError, match='nothing checked')"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-05-workflow-43-skills-rules/publication-before/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common]",
+        "harness/common/inbox/2026-10-05-workflow-43-skills-rules/publication-before/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[project]",
+        "harness/common/inbox/2026-10-05-workflow-43-skills-rules/publication-before/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common-project]"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-05-workflow-43-skills-rules/merged/harness/common/checks/test_rule_copies.py": {
+    "RuleCopiesTest::test_installed_rule_copies": {
+      "pytest_test": "TestRuleCopies::test_installed_rule_copies",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [],
+      "subtests": [],
+      "equivalent_assertions": [],
+      "node_ids": [
+        "harness/common/inbox/2026-10-05-workflow-43-skills-rules/merged/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_installed_rule_copies"
+      ]
+    },
+    "RuleCopiesTest::test_copy_drift_is_detected": {
+      "pytest_test": "TestRuleCopies::test_copy_drift_is_detected",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "(('common',), ('project',), ('common', 'project'))"
+      ],
+      "assertions": [
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertRaisesRegex(ValueError, 'nothing checked')",
+        "self.assertRaisesRegex(ValueError, 'Missing copies')",
+        "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+        "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+        "self.assertRaisesRegex(ValueError, 'extra copies')"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert check_rule_copies(root) == len(mode)",
+        "assert check_rule_copies(root) == len(mode)",
+        "pytest.raises(ValueError, match='Missing copies')",
+        "pytest.raises(ValueError, match='Different rule bytes')",
+        "pytest.raises(ValueError, match='Not an ordinary file')",
+        "pytest.raises(ValueError, match='extra copies')",
+        "pytest.raises(ValueError, match='nothing checked')"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-05-workflow-43-skills-rules/merged/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common]",
+        "harness/common/inbox/2026-10-05-workflow-43-skills-rules/merged/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[project]",
+        "harness/common/inbox/2026-10-05-workflow-43-skills-rules/merged/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common-project]"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-05-rules-entrypoint/candidate/harness/common/checks/test_rule_copies.py": {
+    "RuleCopiesTest::test_installed_rule_copies": {
+      "pytest_test": "TestRuleCopies::test_installed_rule_copies",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [],
+      "subtests": [],
+      "equivalent_assertions": [],
+      "node_ids": [
+        "harness/common/inbox/2026-10-05-rules-entrypoint/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_installed_rule_copies"
+      ]
+    },
+    "RuleCopiesTest::test_copy_drift_is_detected": {
+      "pytest_test": "TestRuleCopies::test_copy_drift_is_detected",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "(('common',), ('project',), ('common', 'project'))"
+      ],
+      "assertions": [
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertRaisesRegex(ValueError, 'nothing checked')",
+        "self.assertRaisesRegex(ValueError, 'Missing copies')",
+        "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+        "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+        "self.assertRaisesRegex(ValueError, 'extra copies')"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert check_rule_copies(root) == len(mode)",
+        "assert check_rule_copies(root) == len(mode)",
+        "pytest.raises(ValueError, match='Missing copies')",
+        "pytest.raises(ValueError, match='Different rule bytes')",
+        "pytest.raises(ValueError, match='Not an ordinary file')",
+        "pytest.raises(ValueError, match='extra copies')",
+        "pytest.raises(ValueError, match='nothing checked')"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-05-rules-entrypoint/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common]",
+        "harness/common/inbox/2026-10-05-rules-entrypoint/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[project]",
+        "harness/common/inbox/2026-10-05-rules-entrypoint/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common-project]"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py": {
+    "EntryPointLinksTest::test_creates_four_links_and_import_then_preserves_bytes": {
+      "pytest_test": "TestEntryPointLinks::test_creates_four_links_and_import_then_preserves_bytes",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\n')",
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(before, (agents.read_bytes(), claude.read_bytes()))",
+        "self.assertEqual(file.read_bytes(), b'')",
+        "self.assertIn(f'](harness/{package}/{name})', agents.read_text())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert claude.read_bytes() == b'@AGENTS.md\\n'",
+        "assert self.run_check().returncode == 0",
+        "assert before == (agents.read_bytes(), claude.read_bytes())",
+        "assert file.read_bytes() == b''",
+        "assert f'](harness/{package}/{name})' in agents.read_text()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_creates_four_links_and_import_then_preserves_bytes"
+      ]
+    },
+    "EntryPointLinksTest::test_only_appends_missing_links_preserving_user_text": {
+      "pytest_test": "TestEntryPointLinks::test_only_appends_missing_links_preserving_user_text",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertTrue(text.startswith(prefix))",
+        "self.assertEqual(text.count('harness/common/INDEX.md'), 1)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert text.startswith(prefix)",
+        "assert text.count('harness/common/INDEX.md') == 1"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_only_appends_missing_links_preserving_user_text"
+      ]
+    },
+    "EntryPointLinksTest::test_link_examples_in_code_do_not_count_as_real_links": {
+      "pytest_test": "TestEntryPointLinks::test_link_examples_in_code_do_not_count_as_real_links",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(text.count('](harness/common/INDEX.md)'), 2)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert text.count('](harness/common/INDEX.md)') == 2"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_link_examples_in_code_do_not_count_as_real_links"
+      ]
+    },
+    "EntryPointLinksTest::test_repair_preserves_original_bytes_and_each_files_line_endings": {
+      "pytest_test": "TestEntryPointLinks::test_repair_preserves_original_bytes_and_each_files_line_endings",
+      "parameter_names": [
+        [
+          "newline"
+        ]
+      ],
+      "parameter_values": [
+        "(b'\\n', b'\\r\\n')"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue(repaired.startswith(original))",
+        "self.assertIn(b'](harness/common/START.md)' + newline, repaired)",
+        "self.assertEqual(claude.read_bytes(), b'@AGENTS.md\\r\\n' + bridge)",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+        "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+        "self.assertNotIn(b'\\n', repaired.replace(b'\\r\\n', b''))"
+      ],
+      "subtests": [
+        "self.subTest(newline=newline)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert repaired.startswith(original)",
+        "assert b'](harness/common/START.md)' + newline in repaired",
+        "assert claude.read_bytes() == b'@AGENTS.md\\r\\n' + bridge",
+        "assert second.returncode == 0, second.stderr",
+        "assert 'будут автоматически восстановлены' not in second.stdout",
+        "assert (agents.read_bytes(), claude.read_bytes()) == before",
+        "assert b'\\n' not in repaired.replace(b'\\r\\n', b'')"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_repair_preserves_original_bytes_and_each_files_line_endings[LF]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_repair_preserves_original_bytes_and_each_files_line_endings[CRLF]"
+      ]
+    },
+    "EntryPointLinksTest::test_valid_crlf_bridge_is_preserved_without_warning_or_repair": {
+      "pytest_test": "TestEntryPointLinks::test_valid_crlf_bridge_is_preserved_without_warning_or_repair",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertNotIn('будут автоматически восстановлены', result.stdout)",
+        "self.assertNotIn('требуется единственная строка', result.stdout)",
+        "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert result.returncode == 0, result.stderr",
+        "assert 'будут автоматически восстановлены' not in result.stdout",
+        "assert 'требуется единственная строка' not in result.stdout",
+        "assert (agents.read_bytes(), claude.read_bytes()) == before"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_valid_crlf_bridge_is_preserved_without_warning_or_repair"
+      ]
+    },
+    "EntryPointLinksTest::test_longer_fence_closers_do_not_turn_examples_into_installed_links": {
+      "pytest_test": "TestEntryPointLinks::test_longer_fence_closers_do_not_turn_examples_into_installed_links",
+      "parameter_names": [
+        [
+          "opener",
+          "closer"
+        ]
+      ],
+      "parameter_values": [
+        "(('~~~md', '~~~~'), ('```md', '````'))"
+      ],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertTrue(text.startswith(prefix))",
+        "self.assertIn('](.claude/rules/)', appended)",
+        "self.assertIn('прочитай все Markdown-правила', appended)",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertEqual(agents.read_bytes(), before)",
+        "self.assertIn(f'](harness/{package}/{name})', appended)"
+      ],
+      "subtests": [
+        "self.subTest(opener=opener)"
+      ],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert text.startswith(prefix)",
+        "assert '](.claude/rules/)' in appended",
+        "assert 'прочитай все Markdown-правила' in appended",
+        "assert second.returncode == 0, second.stderr",
+        "assert agents.read_bytes() == before",
+        "assert f'](harness/{package}/{name})' in appended"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_longer_fence_closers_do_not_turn_examples_into_installed_links[tilde]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_longer_fence_closers_do_not_turn_examples_into_installed_links[backtick]"
+      ]
+    },
+    "EntryPointLinksTest::test_unclosed_fence_fails_before_writing_either_entrypoint": {
+      "pytest_test": "TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint",
+      "parameter_names": [
+        [
+          "name"
+        ],
+        [
+          "opener"
+        ]
+      ],
+      "parameter_values": [
+        "('AGENTS.md', 'CLAUDE.md')",
+        "('~~~md', '```md')"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2, result.stderr)",
+        "self.assertIn('Unclosed Markdown code fence', result.stderr)",
+        "self.assertEqual((agents.read_bytes(), claude.read_bytes()), before)",
+        "self.assertFalse((self.root / '.claude').exists())"
+      ],
+      "subtests": [
+        "self.subTest(name=name, opener=opener)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2, result.stderr",
+        "assert 'Unclosed Markdown code fence' in result.stderr",
+        "assert (agents.read_bytes(), claude.read_bytes()) == before",
+        "assert not (self.root / '.claude').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[tilde-AGENTS.md]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[tilde-CLAUDE.md]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[backtick-AGENTS.md]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_fence_fails_before_writing_either_entrypoint[backtick-CLAUDE.md]"
+      ]
+    },
+    "EntryPointLinksTest::test_damaged_package_is_reported_without_creating_dangling_links": {
+      "pytest_test": "TestEntryPointLinks::test_damaged_package_is_reported_without_creating_dangling_links",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())",
+        "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode != 0",
+        "assert not (self.root / 'AGENTS.md').exists()",
+        "assert not (self.root / 'CLAUDE.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_damaged_package_is_reported_without_creating_dangling_links"
+      ]
+    },
+    "EntryPointLinksTest::test_common_only_creates_neutral_project": {
+      "pytest_test": "TestEntryPointLinks::test_common_only_creates_neutral_project",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue(project.is_dir(), 'common-only must create project')",
+        "self.assertEqual({p.name for p in project.iterdir() if p.is_dir()}, expected)",
+        "self.assertFalse((project / 'checks/ensure_entrypoint_links.py').exists())",
+        "self.assertNotIn('EPL', (project / 'INDEX.md').read_text())",
+        "self.assertIn('harness/common/checks/ensure_entrypoint_links.py', (project / 'START.md').read_text())",
+        "self.assertIn('harness/project/START.md', (self.root / 'AGENTS.md').read_text())",
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(before, {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')})",
+        "self.assertTrue((directory / 'README.human.md').is_file())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert project.is_dir(), 'common-only must create project'",
+        "assert {p.name for p in project.iterdir() if p.is_dir()} == expected",
+        "assert not (project / 'checks/ensure_entrypoint_links.py').exists()",
+        "assert 'EPL' not in (project / 'INDEX.md').read_text()",
+        "assert 'harness/common/checks/ensure_entrypoint_links.py' in (project / 'START.md').read_text()",
+        "assert 'harness/project/START.md' in (self.root / 'AGENTS.md').read_text()",
+        "assert self.run_check().returncode == 0",
+        "assert before == {p.relative_to(project): p.stat().st_mtime_ns for p in project.rglob('*')}",
+        "assert (directory / 'README.human.md').is_file()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_common_only_creates_neutral_project"
+      ]
+    },
+    "EntryPointLinksTest::test_existing_project_is_not_regenerated_or_exported": {
+      "pytest_test": "TestEntryPointLinks::test_existing_project_is_not_regenerated_or_exported",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()})",
+        "self.assertFalse((project / 'base').exists(), 'existing project is not filled with a new skeleton')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}",
+        "assert not (project / 'base').exists(), 'existing project is not filled with a new skeleton'"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_project_is_not_regenerated_or_exported"
+      ]
+    },
+    "EntryPointLinksTest::test_new_template_categories_apply_only_to_new_project": {
+      "pytest_test": "TestEntryPointLinks::test_new_template_categories_apply_only_to_new_project",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertFalse((self.root / 'harness/project/specs').exists())",
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue((self.root / 'harness/project/specs/README.human.md').is_file())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert not (self.root / 'harness/project/specs').exists()",
+        "assert result.returncode == 0, result.stderr",
+        "assert (self.root / 'harness/project/specs/README.human.md').is_file()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_new_template_categories_apply_only_to_new_project"
+      ]
+    },
+    "EntryPointLinksTest::test_project_only_is_rejected_before_writes": {
+      "pytest_test": "TestEntryPointLinks::test_project_only_is_rejected_before_writes",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertIn('common', result.stderr)",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())",
+        "self.assertFalse((self.root / '.claude').exists())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert 'common' in result.stderr",
+        "assert not (self.root / 'AGENTS.md').exists()",
+        "assert not (self.root / '.claude').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_project_only_is_rejected_before_writes"
+      ]
+    },
+    "EntryPointLinksTest::test_unsafe_project_path_is_rejected_without_writes": {
+      "pytest_test": "TestEntryPointLinks::test_unsafe_project_path_is_rejected_without_writes",
+      "parameter_names": [
+        [
+          "symlink"
+        ]
+      ],
+      "parameter_values": [
+        "(False, True)"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())",
+        "self.assertFalse((self.root / '.claude').exists())"
+      ],
+      "subtests": [
+        "self.subTest(symlink=symlink)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert not (self.root / 'AGENTS.md').exists()",
+        "assert not (self.root / '.claude').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_project_path_is_rejected_without_writes[regular-file]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_project_path_is_rejected_without_writes[symlink]"
+      ]
+    },
+    "EntryPointLinksTest::test_invalid_template_does_not_create_project": {
+      "pytest_test": "TestEntryPointLinks::test_invalid_template_does_not_create_project",
+      "parameter_names": [
+        [
+          "content"
+        ]
+      ],
+      "parameter_values": [
+        "('not json', '{}', '{\"categories\": {\"../outside\": {\"purpose\": \"bad\", \"example\": \"bad\"}}}')"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertFalse(project.exists())",
+        "self.assertFalse((self.root / 'AGENTS.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(content=content)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert not project.exists()",
+        "assert not (self.root / 'AGENTS.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_template_does_not_create_project[invalid-json]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_template_does_not_create_project[missing-categories]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_template_does_not_create_project[path-traversal]"
+      ]
+    },
+    "EntryPointLinksTest::test_invalid_entrypoint_prevents_project_creation": {
+      "pytest_test": "TestEntryPointLinks::test_invalid_entrypoint_prevents_project_creation",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertFalse((self.root / 'harness/project').exists())",
+        "self.assertEqual(agents.read_text(), '# Keep\\n```md\\nunterminated')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert not (self.root / 'harness/project').exists()",
+        "assert agents.read_text() == '# Keep\\n```md\\nunterminated'"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_entrypoint_prevents_project_creation"
+      ]
+    },
+    "EntryPointLinksTest::test_adds_import_and_warns_about_extra_claude_content_without_deleting_it": {
+      "pytest_test": "TestEntryPointLinks::test_adds_import_and_warns_about_extra_claude_content_without_deleting_it",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0)",
+        "self.assertIn('inbox', result.stdout)",
+        "self.assertIn('технически не заблокировано', result.stdout)",
+        "self.assertEqual((self.root / 'CLAUDE.md').read_text(), '@AGENTS.md\\nUser text\\n')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0",
+        "assert 'inbox' in result.stdout",
+        "assert 'технически не заблокировано' in result.stdout",
+        "assert (self.root / 'CLAUDE.md').read_text() == '@AGENTS.md\\nUser text\\n'"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_adds_import_and_warns_about_extra_claude_content_without_deleting_it"
+      ]
+    },
+    "EntryPointLinksTest::test_refuses_symlinked_entrypoint_without_changing_target": {
+      "pytest_test": "TestEntryPointLinks::test_refuses_symlinked_entrypoint_without_changing_target",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertNotEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(target.read_text(), 'User text\\n')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode != 0",
+        "assert target.read_text() == 'User text\\n'"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_refuses_symlinked_entrypoint_without_changing_target"
+      ]
+    },
+    "EntryPointLinksTest::test_rules_link_is_restored_and_directory_created": {
+      "pytest_test": "TestEntryPointLinks::test_rules_link_is_restored_and_directory_created",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertEqual(agents.read_text().count('](.claude/rules/)'), 2)",
+        "self.assertIn('README.human.md', agents.read_text())",
+        "self.assertTrue((self.root / '.claude/rules').is_dir())",
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(agents.read_bytes(), before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert agents.read_text().count('](.claude/rules/)') == 2",
+        "assert 'README.human.md' in agents.read_text()",
+        "assert (self.root / '.claude/rules').is_dir()",
+        "assert self.run_check().returncode == 0",
+        "assert agents.read_bytes() == before"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_rules_link_is_restored_and_directory_created"
+      ]
+    },
+    "EntryPointLinksTest::test_existing_relative_rules_links_are_not_duplicated": {
+      "pytest_test": "TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated",
+      "parameter_names": [
+        [
+          "target"
+        ]
+      ],
+      "parameter_values": [
+        "('.claude/rules', '.claude/rules/', './.claude/rules/', '<./.claude/rules/>')"
+      ],
+      "assertions": [
+        "self.assertEqual(self.run_check().returncode, 0)",
+        "self.assertEqual(text.count('[Rules]'), 1)",
+        "self.assertNotIn('- [.claude/rules]', text)",
+        "self.assertIn('прочитай все Markdown-правила', text)"
+      ],
+      "subtests": [
+        "self.subTest(target=target)"
+      ],
+      "equivalent_assertions": [
+        "assert self.run_check().returncode == 0",
+        "assert text.count('[Rules]') == 1",
+        "assert '- [.claude/rules]' not in text",
+        "assert 'прочитай все Markdown-правила' in text"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[.claude/rules]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[.claude/rules/]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[./.claude/rules/]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_existing_relative_rules_links_are_not_duplicated[<./.claude/rules/>]"
+      ]
+    },
+    "EntryPointLinksTest::test_unsafe_rules_directory_does_not_change_entrypoints": {
+      "pytest_test": "TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints",
+      "parameter_names": [
+        [
+          "relative"
+        ],
+        [
+          "symlink"
+        ]
+      ],
+      "parameter_values": [
+        "('.claude', '.claude/rules')",
+        "(False, True)"
+      ],
+      "assertions": [
+        "self.assertNotEqual(result.returncode, 0)",
+        "self.assertEqual((self.root / 'AGENTS.md').read_text(), '# Keep\\n')",
+        "self.assertFalse((self.root / 'CLAUDE.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(relative=relative, symlink=symlink)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode != 0",
+        "assert (self.root / 'AGENTS.md').read_text() == '# Keep\\n'",
+        "assert not (self.root / 'CLAUDE.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[regular-file-.claude]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[regular-file-.claude-rules]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[symlink-.claude]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unsafe_rules_directory_does_not_change_entrypoints[symlink-.claude-rules]"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py": {
+    "PortabilityTest::test_startup_command_runs_in_each_clean_mode_without_git": {
+      "pytest_test": "TestPortability::test_startup_command_runs_in_each_clean_mode_without_git",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "MODES"
+      ],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn('](.claude/rules/)', text)",
+        "self.assertIn('harness/project/START.md', text)",
+        "self.assertIsNotNone(command)",
+        "self.assertEqual(command.group(1), 'harness/common/checks/ensure_entrypoint_links.py')",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertNotIn('будут автоматически восстановлены', second.stdout)",
+        "self.assertEqual(before_inputs, ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes()))",
+        "self.assertFalse((root / '.git').exists())",
+        "self.assertEqual(before, {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'})",
+        "self.assertTrue((project / 'base/README.human.md').is_file())",
+        "self.assertFalse((project / 'docs/local-task').exists())"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert '](.claude/rules/)' in text",
+        "assert 'harness/project/START.md' in text",
+        "assert command is not None",
+        "assert command.group(1) == 'harness/common/checks/ensure_entrypoint_links.py'",
+        "assert second.returncode == 0, second.stderr",
+        "assert 'будут автоматически восстановлены' not in second.stdout",
+        "assert before_inputs == ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())",
+        "assert not (root / '.git').exists()",
+        "assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}",
+        "assert (project / 'base/README.human.md').is_file()",
+        "assert not (project / 'docs/local-task').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_startup_command_runs_in_each_clean_mode_without_git[common-only]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_startup_command_runs_in_each_clean_mode_without_git[common-and-project]"
+      ]
+    },
+    "PortabilityTest::test_existing_settings_and_startup_command_are_never_rewritten": {
+      "pytest_test": "TestPortability::test_existing_settings_and_startup_command_are_never_rewritten",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertTrue((root / 'AGENTS.md').read_text().startswith(prefix))"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert (root / 'AGENTS.md').read_text().startswith(prefix)"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_existing_settings_and_startup_command_are_never_rewritten"
+      ]
+    },
+    "PortabilityTest::test_legacy_checker_rejects_symlinked_common_ancestors": {
+      "pytest_test": "TestPortability::test_legacy_checker_rejects_symlinked_common_ancestors",
+      "parameter_names": [
+        [
+          "relative"
+        ]
+      ],
+      "parameter_values": [
+        "('harness/common', 'harness/common/checks')"
+      ],
+      "assertions": [
+        "self.assertFalse(marker.exists(), 'shim must reject symlinked ancestors before execution')",
+        "self.assertEqual(result.returncode, 2, result.stderr)",
+        "self.assertFalse((root / 'AGENTS.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(relative=relative)"
+      ],
+      "equivalent_assertions": [
+        "assert not marker.exists(), 'shim must reject symlinked ancestors before execution'",
+        "assert result.returncode == 2, result.stderr",
+        "assert not (root / 'AGENTS.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_legacy_checker_rejects_symlinked_common_ancestors[harness-common]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_legacy_checker_rejects_symlinked_common_ancestors[harness-common-checks]"
+      ]
+    },
+    "PortabilityTest::test_required_resource_damage_is_detected": {
+      "pytest_test": "TestPortability::test_required_resource_damage_is_detected",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "MODES"
+      ],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertIn('START.md', result.stderr)",
+        "self.assertFalse((root / 'AGENTS.md').exists())"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert 'START.md' in result.stderr",
+        "assert not (root / 'AGENTS.md').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_required_resource_damage_is_detected[common-only]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_required_resource_damage_is_detected[common-and-project]"
+      ]
+    },
+    "PortabilityTest::test_project_only_rejected_without_writes": {
+      "pytest_test": "TestPortability::test_project_only_rejected_without_writes",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 2)",
+        "self.assertIn('common', result.stderr)",
+        "self.assertFalse((root / 'AGENTS.md').exists())",
+        "self.assertFalse((root / 'harness/common').exists())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 2",
+        "assert 'common' in result.stderr",
+        "assert not (root / 'AGENTS.md').exists()",
+        "assert not (root / 'harness/common').exists()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_portability.py::TestPortability::test_project_only_rejected_without_writes"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py": {
+    "NotificationTest::test_no_git_binary_or_repository_or_baseline_is_required": {
+      "pytest_test": "TestNotification::test_no_git_binary_or_repository_or_baseline_is_required",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn(POLICY, result.stdout)",
+        "self.assertEqual(before, ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes()))"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert POLICY in result.stdout",
+        "assert before == ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes())"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_no_git_binary_or_repository_or_baseline_is_required"
+      ]
+    },
+    "NotificationTest::test_instruction_change_is_reported_and_preserved_without_blocking": {
+      "pytest_test": "TestNotification::test_instruction_change_is_reported_and_preserved_without_blocking",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn(POLICY, result.stdout)",
+        "self.assertIn('AGENTS.md', result.stdout)",
+        "self.assertIn('inbox', result.stdout)",
+        "self.assertIn('изменение настроек', result.stdout)",
+        "self.assertEqual(agents.read_text(), changed)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert POLICY in result.stdout",
+        "assert 'AGENTS.md' in result.stdout",
+        "assert 'inbox' in result.stdout",
+        "assert 'изменение настроек' in result.stdout",
+        "assert agents.read_text() == changed"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_instruction_change_is_reported_and_preserved_without_blocking"
+      ]
+    },
+    "NotificationTest::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change": {
+      "pytest_test": "TestNotification::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('изменение настроек', result.stdout)",
+        "self.assertNotIn(NOTICE, result.stdout)",
+        "self.assertEqual(agents.read_text(), changed)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert 'изменение настроек' in result.stdout",
+        "assert NOTICE not in result.stdout",
+        "assert agents.read_text() == changed"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change"
+      ]
+    },
+    "NotificationTest::test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file": {
+      "pytest_test": "TestNotification::test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('изменение настроек', result.stdout)",
+        "self.assertIn(NOTICE, result.stdout)",
+        "self.assertTrue(repaired.startswith(current))",
+        "self.assertIn('](harness/common/START.md)', repaired[len(current):])",
+        "self.assertEqual(self.check().returncode, 0)",
+        "self.assertEqual(agents.read_bytes(), before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert 'изменение настроек' in result.stdout",
+        "assert NOTICE in result.stdout",
+        "assert repaired.startswith(current)",
+        "assert '](harness/common/START.md)' in repaired[len(current):]",
+        "assert self.check().returncode == 0",
+        "assert agents.read_bytes() == before"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file"
+      ]
+    },
+    "NotificationTest::test_extra_bridge_text_warns_without_rewriting_or_blocking": {
+      "pytest_test": "TestNotification::test_extra_bridge_text_warns_without_rewriting_or_blocking",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('CLAUDE.md', result.stdout)",
+        "self.assertIn('inbox', result.stdout)",
+        "self.assertIn(POLICY, result.stdout)",
+        "self.assertEqual(bridge.read_text(), extra)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert result.returncode == 0, result.stderr",
+        "assert 'CLAUDE.md' in result.stdout",
+        "assert 'inbox' in result.stdout",
+        "assert POLICY in result.stdout",
+        "assert bridge.read_text() == extra"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_extra_bridge_text_warns_without_rewriting_or_blocking"
+      ]
+    },
+    "NotificationTest::test_repair_is_announced_and_next_run_has_no_damage_message": {
+      "pytest_test": "TestNotification::test_repair_is_announced_and_next_run_has_no_damage_message",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn(NOTICE, first.stdout)",
+        "self.assertIn(line, agents.read_text())",
+        "self.assertNotIn(NOTICE, self.check(git_available=False).stdout)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert NOTICE in first.stdout",
+        "assert line in agents.read_text()",
+        "assert NOTICE not in self.check(git_available=False).stdout"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_repair_is_announced_and_next_run_has_no_damage_message"
+      ]
+    },
+    "NotificationTest::test_repair_message_is_visible_before_the_first_write": {
+      "pytest_test": "TestNotification::test_repair_message_is_visible_before_the_first_write",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(output.getvalue().count(NOTICE), 1)",
+        "self.assertIn(NOTICE, output.getvalue())"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert output.getvalue().count(NOTICE) == 1",
+        "assert NOTICE in output.getvalue()"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_repair_message_is_visible_before_the_first_write"
+      ]
+    },
+    "NotificationTest::test_rules_repair_is_not_reported_as_a_settings_change": {
+      "pytest_test": "TestNotification::test_rules_repair_is_not_reported_as_a_settings_change",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn(NOTICE, first.stdout)",
+        "self.assertNotIn(NOTICE, second.stdout)",
+        "self.assertNotIn('изменение настроек', second.stdout)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert NOTICE in first.stdout",
+        "assert NOTICE not in second.stdout",
+        "assert 'изменение настроек' not in second.stdout"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_rules_repair_is_not_reported_as_a_settings_change"
+      ]
+    },
+    "NotificationTest::test_check_installs_no_hooks_or_configuration_and_does_not_block_commit": {
+      "pytest_test": "TestNotification::test_check_installs_no_hooks_or_configuration_and_does_not_block_commit",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(self.check().returncode, 0)",
+        "self.assertEqual((self.root / '.git/config').read_bytes(), config)",
+        "self.assertFalse((self.root / '.git/hooks/pre-commit').exists())",
+        "self.assertNotEqual(self.git('rev-parse', 'HEAD').stdout, before)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert self.check().returncode == 0",
+        "assert (self.root / '.git/config').read_bytes() == config",
+        "assert not (self.root / '.git/hooks/pre-commit').exists()",
+        "assert self.git('rev-parse', 'HEAD').stdout != before"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_check_installs_no_hooks_or_configuration_and_does_not_block_commit"
+      ]
+    },
+    "NotificationTest::test_crlf_link_repair_is_not_reported_as_a_settings_change": {
+      "pytest_test": "TestNotification::test_crlf_link_repair_is_not_reported_as_a_settings_change",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertEqual(first.returncode, 0, first.stderr)",
+        "self.assertIn(NOTICE, first.stdout)",
+        "self.assertTrue(agents.read_bytes().startswith(original))",
+        "self.assertIn(line, agents.read_bytes())",
+        "self.assertEqual(second.returncode, 0, second.stderr)",
+        "self.assertNotIn(NOTICE, second.stdout)",
+        "self.assertNotIn('изменение настроек', second.stdout)"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "assert first.returncode == 0, first.stderr",
+        "assert NOTICE in first.stdout",
+        "assert agents.read_bytes().startswith(original)",
+        "assert line in agents.read_bytes()",
+        "assert second.returncode == 0, second.stderr",
+        "assert NOTICE not in second.stdout",
+        "assert 'изменение настроек' not in second.stdout"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_entrypoint_notifications.py::TestNotification::test_crlf_link_repair_is_not_reported_as_a_settings_change"
+      ]
+    }
+  },
+  "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_rule_copies.py": {
+    "RuleCopiesTest::test_installed_rule_copies": {
+      "pytest_test": "TestRuleCopies::test_installed_rule_copies",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [],
+      "subtests": [],
+      "equivalent_assertions": [],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_installed_rule_copies"
+      ]
+    },
+    "RuleCopiesTest::test_project_only_rules_are_rejected": {
+      "pytest_test": "TestRuleCopies::test_project_only_rules_are_rejected",
+      "parameter_names": [],
+      "parameter_values": [],
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, 'common')"
+      ],
+      "subtests": [],
+      "equivalent_assertions": [
+        "pytest.raises(ValueError, match='common')"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_project_only_rules_are_rejected"
+      ]
+    },
+    "RuleCopiesTest::test_copy_drift_is_detected": {
+      "pytest_test": "TestRuleCopies::test_copy_drift_is_detected",
+      "parameter_names": [
+        [
+          "mode"
+        ]
+      ],
+      "parameter_values": [
+        "(('common',), ('common', 'project'))"
+      ],
+      "assertions": [
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertEqual(check_rule_copies(root), len(mode))",
+        "self.assertRaisesRegex(ValueError, 'common')",
+        "self.assertRaisesRegex(ValueError, 'Missing copies')",
+        "self.assertRaisesRegex(ValueError, 'Different rule bytes')",
+        "self.assertRaisesRegex(ValueError, 'Not an ordinary file')",
+        "self.assertRaisesRegex(ValueError, 'extra copies')"
+      ],
+      "subtests": [
+        "self.subTest(mode=mode)"
+      ],
+      "equivalent_assertions": [
+        "assert check_rule_copies(root) == len(mode)",
+        "assert check_rule_copies(root) == len(mode)",
+        "pytest.raises(ValueError, match='Missing copies')",
+        "pytest.raises(ValueError, match='Different rule bytes')",
+        "pytest.raises(ValueError, match='Not an ordinary file')",
+        "pytest.raises(ValueError, match='extra copies')",
+        "pytest.raises(ValueError, match='common')"
+      ],
+      "node_ids": [
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common]",
+        "harness/common/inbox/2026-10-06-two-installation-modes/candidate/harness/common/checks/test_rule_copies.py::TestRuleCopies::test_copy_drift_is_detected[common-project]"
+      ]
+    }
+  }
+}
