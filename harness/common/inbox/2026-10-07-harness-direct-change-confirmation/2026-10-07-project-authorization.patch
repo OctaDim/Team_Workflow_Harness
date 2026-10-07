@@ -1,0 +1,340 @@
+--- a/harness/common/INDEX.md
++++ b/harness/common/INDEX.md
+@@ -1,6 +1,6 @@
+ # Общий harness
+ 
+-Обязательный переносимый пакет; полнота нативного подключения ещё не проверена. Перенос только common создаёт пустой project по base/project-skeleton.json; перенос обоих пакетов сохраняет существующий project.
++Обязательный переносимый пакет; полнота нативного подключения ещё не проверена. При переносе только common пустой project по base/project-skeleton.json создаётся лишь в разрешённой обработке inbox либо после отдельного подтверждения прямой задачи; перенос обоих пакетов сохраняет существующий project.
+ 
+ | Задача | Каталог |
+ |---|---|
+@@ -25,4 +25,4 @@
+ 
+ Заявки inbox могут быть удалены. Опыт, знания, решения, контракты, найденные решения и межсессионную память сохраняй вне inbox в соответствующих категориях; запись только в заявке не считается сохранением.
+ 
+-До выбора процедуры: канонические требования приоритетнее индивидуальных; skip/override запрещены. Общий опыт — через подтверждённый inbox; конечная папка и просьба сохранить не разрешают обход. Прямое создание — только по явно подтверждённому исключению маршрута inbox, определённому в обязательном правиле владения. Прямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически не заблокированы; изменения — через inbox. Согласованное создание и восстановление стартовых ссылок — узкое исключение.
++До выбора процедуры: канонические требования приоритетнее индивидуальных; skip/override запрещены. Любые изменения harness — через подтверждённый inbox; конечный путь и общая просьба не разрешают обход. Прямой путь требует явного указания и отдельного положительного ответа после вопроса агента; перед задачей изменения открой skills/comm-process-harness-inbox/SKILL.md. Прямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически не заблокированы; изменения — через inbox. Согласованное создание и восстановление стартовых ссылок — узкое исключение.
+--- a/harness/common/checks/ensure_entrypoint_links.py
++++ b/harness/common/checks/ensure_entrypoint_links.py
+@@ -1,4 +1,5 @@
+ """Restore entrypoint links; run from the project root or pass that root."""
++import argparse
+ import json
+ import re
+ import subprocess
+@@ -157,7 +158,7 @@
+         staging.rename(project)
+ 
+ 
+-def ensure(root):
++def ensure(root, *, allow_create_project=False):
+     print(WARNING)
+     common, project = root / 'harness/common', root / 'harness/project'
+     for directory in (common, project):
+@@ -166,6 +167,9 @@
+         raise ValueError('harness/common is required; project-only is unsupported.')
+     categories = load_project_skeleton(common, root)
+     create_project = not project.exists()
++    if create_project and not allow_create_project:
++        raise ValueError("harness/project is missing. Stop and obtain authorization through "
++                         "inbox or explicit direct-change confirmation before using --create-project.")
+     resources = [f'harness/{package}/{name}' for package in ('common', 'project')
+                  for name in ('INDEX.md', 'START.md')]
+     for relative in resources:
+@@ -222,12 +226,14 @@
+ 
+ 
+ def main():
+-    if len(sys.argv) > 2:
+-        print('Usage: python3 ensure_entrypoint_links.py [project-root]', file=sys.stderr)
+-        return 2
+-    root = Path(sys.argv[1] if len(sys.argv) == 2 else '.').resolve()
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('project_root', nargs='?', default='.')
++    parser.add_argument('--create-project', action='store_true',
++                        help='Create missing project only after inbox authorization or direct-change confirmation.')
++    args = parser.parse_args()
++    root = Path(args.project_root).resolve()
+     try:
+-        changed = ensure(root)
++        changed = ensure(root, allow_create_project=args.create_project)
+     except (OSError, UnicodeError, ValueError) as error:
+         print(f'Entrypoint check failed: {error}', file=sys.stderr)
+         return 2
+--- a/harness/common/rules/comm-entrypoint-links-rule.md
++++ b/harness/common/rules/comm-entrypoint-links-rule.md
+@@ -15,4 +15,4 @@
+ 
+ Нужен Python 3.9+. При диагностике из корня проекта открыть
+ `harness/common/skills/comm-install-harness/references/entrypoints.md`.
+-Поддерживаются два режима по [контракту установки](comm-package-independence.md): перенос только common автоматически создаёт отсутствующий project из явного общего описания; при переносе обоих пакетов существующий project сохраняется. Common обязателен. Старый проектный путь проверки может вызывать common для совместимости; отдельный project-only не поддерживается. Стартовую команду существующего AGENTS.md не переписывать.
++Поддерживаются два режима по [контракту установки](comm-package-independence.md): при переносе только common отсутствующий project создаётся из явного общего описания только через разрешённую обработку inbox либо после отдельного подтверждения прямого изменения; без разрешения старт останавливается до записи; при переносе обоих пакетов существующий project сохраняется. Common обязателен. Старый проектный путь проверки может вызывать common для совместимости; отдельный project-only не поддерживается. Стартовую команду существующего AGENTS.md не переписывать.
+--- a/harness/common/rules/comm-package-independence.md
++++ b/harness/common/rules/comm-package-independence.md
+@@ -1,4 +1,9 @@
+ # Границы установки harness
++
++Создание отсутствующего project требует разрешённой обработки inbox либо
++явного прямого указания и отдельного подтверждения после вопроса агента.
++Обычный старт без project останавливается до записи; установка использует
++`--create-project` только после разрешения.
+ 
+ Common обязателен и независим от прежнего приложения/project; project требует
+ common. Project-only не поддерживается. Существующий project нельзя заменять
+--- a/harness/common/rules/comm-skill-rule-ownership.md
++++ b/harness/common/rules/comm-skill-rule-ownership.md
+@@ -3,11 +3,17 @@
+ До выбора процедуры соблюдай применимые comm-/proj- требования; личный скилл
+ не разрешает skip/override. Конфликт common/project согласуй до зависимого действия.
+ 
+-- Обычную просьбу сохранить сначала направляй в inbox. Создание, выполнение
+-  и публикация требуют явных разрешений; одно сообщение может разрешить несколько
+-  стадий, уже разрешённое повторно не согласовывай. Конечный путь не разрешение.
+-  Прямой путь — только явно разрешённый и подтверждённый обход inbox для названного
+-  материала/категории. Недостающее разрешение запроси и жди; молчание не ответ.
++- По умолчанию категорически запрещены любые прямые изменения harness;
++  изменения — только через подтверждённый маршрут inbox. Исключение требует
++  явного и однозначного указания пользователя изменить названный материал прямо
++  в harness и отдельного положительного подтверждения после вопроса агента.
++  Агент обязан запросить его до начала любой такой задачи, остановиться и ждать.
++  Предварительное «подтверждаю» и явный вызов скилла не заменяют этот вопрос.
++  Молчание, неоднозначный ответ или ответ с вариантами не разрешают выполнение.
++  Перед любой задачей изменения harness открой из корня проекта
++  `harness/common/skills/comm-process-harness-inbox/SKILL.md`.
++  Создание заявки, выполнение и публикация требуют явных разрешений; уже
++  полученное разрешение соответствующей стадии повторно не согласовывай.
+ - При «сохрани опыт», «зафиксируй решение», «дополни harness» до записи
+   сначала определи будущее поведение и подходящий существующий скилл.
+   Не создавать новый материал, если всё уже выражено инструкцией.
+--- a/harness/common/skills/comm-install-harness/references/checks.md
++++ b/harness/common/skills/comm-install-harness/references/checks.md
+@@ -3,7 +3,9 @@
+ Identify the destination and existing files before copying. Common is portable
+ and independent of the old application/project; project requires common.
+ 
+-- Common-only: copy common; the common entrypoint check creates a missing
++- Common-only: copy common; after authorized inbox processing or explicit direct-change
++  instruction and a separate positive answer to the agent's confirmation,
++  run the common entrypoint check with `--create-project` to create a missing
+   project from `harness/common/base/project-skeleton.json`. It creates the
+   agreed categories, neutral INDEX/START and human guides, never old work.
+ - Common+project: preserve existing project files byte-for-byte; do not replace
+@@ -11,8 +13,12 @@
+   mandatory resources fail the check.
+ - Project-only is unsupported; refusal is a negative control, not a third mode.
+ 
+-Run `python3 -B harness/common/checks/ensure_entrypoint_links.py` from the target
+-root. It restores startup links and the recursive rules-reading instruction,
++Ordinary startup uses `python3 -B harness/common/checks/ensure_entrypoint_links.py`
++from the target root. If project is missing, it stops before writes. Do not
++retry with `--create-project` until the inbox route or separate direct-change
++confirmation authorizes creation; the flag itself is not permission. During
++authorized installation only, use
++`python3 -B harness/common/checks/ensure_entrypoint_links.py --create-project`. It restores startup links and the recursive rules-reading instruction,
+ not publications/copies; notify before repairs. Keep an existing AGENTS startup
+ command. The old project check may delegate to common for compatibility; do
+ not create an independent implementation or add this wrapper to the neutral
+--- a/harness/common/skills/comm-install-harness/references/entrypoints.md
++++ b/harness/common/skills/comm-install-harness/references/entrypoints.md
+@@ -11,6 +11,11 @@
+ ```
+ 
+ Не требуются Git, hooks, hooksPath, изменения конфигурации машины или предварительная регистрация входов. Скрипт не запускается сам: его запускает агент по стартовой инструкции. Он не изменяет Git-настройки и не блокирует запись или коммит.
++
++При отсутствующем project обычная команда останавливается до записи.
++Создание — через разрешённую обработку inbox либо явное прямое указание
++и отдельный положительный ответ после вопроса агента; только затем разрешён
++вызов с `--create-project`. Сам флаг не является разрешением.
+ 
+ ## Что проверяется
+ 
+--- a/harness/common/skills/comm-process-harness-inbox/SKILL.md
++++ b/harness/common/skills/comm-process-harness-inbox/SKILL.md
+@@ -1,20 +1,25 @@
+ ---
+ name: comm-process-harness-inbox
+-description: Use when saving reusable experience or a decision in harness, choosing its permanent form, creating or processing inbox requests, or resuming their execution.
++description: Use when changing any harness contents, saving reusable experience or decisions, creating or processing inbox requests, or resuming their execution.
+ ---
+ 
+-# Сохранение опыта и обработка inbox
++# Изменения harness и обработка inbox
++
++При прямой правке harness сначала задай отдельный вопрос и дождись ответа:
++предварительное «подтверждаю» и явный вызов скилла этот шаг не заменяют.
++
++Перед любой задачей изменения harness прочитай
++[workflow](references/workflow.md): обязательный маршрут, разрешённые стадии,
++отдельное подтверждение прямого изменения и ожидание ответа.
++До записи, выполнения или изменения статуса используй тот же workflow:
++полный кандидат, контекст, порядок, продолжение и закрытие.
++Готовый кандидат без обязательной публикации заявку не закрывает.
+ 
+ При «сохрани опыт», «зафиксируй решение», «дополни harness» до выбора места
+ прочитай [выбор результата](references/experience-routing.md): будущее
+ поведение, существующий владелец, минимальное изменение. Skills-first не
+ означает отдельный скилл для каждой ошибки. Определи common/project по содержанию.
+ 
+-До записи, выполнения или изменения статуса прочитай
+-[workflow](references/workflow.md): разрешённые стадии, полный кандидат,
+-контекст, порядок, продолжение и закрытие. Обычный маршрут — подтверждённый inbox;
+-готовый кандидат без обязательной публикации заявку не закрывает.
+-
+ До создания/изменения/проверки/публикации скилла или правила открой из корня
+ проекта `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.
+ Сохраняй долговременный результат независимо от временной заявки.
+--- a/harness/common/skills/comm-process-harness-inbox/references/workflow.md
++++ b/harness/common/skills/comm-process-harness-inbox/references/workflow.md
+@@ -10,9 +10,41 @@
+ стадии. Номер определяет решение; при требовании отдельного согласования до
+ разрешения не создавать заявку и не выполнять её, включая тесты. Создание
+ не разрешает выполнение. Обычную просьбу сохранить сначала направляй в inbox.
+-Прямой путь требует явного разрешения и подтверждения записи названного
+-материала в указанную категорию, минуя inbox; обязательной буквальной фразы
+-нет. Этот обход не отменяет проверок, gate и защиты AGENTS/CLAUDE.
++
++## Любая задача изменения harness
++
++По умолчанию категорически запрещены прямые изменения действующего harness:
++создание, редактирование, удаление, переименование и перенос файлов или папок
++проводятся только через согласованный маршрут inbox. Это касается любой задачи
++и любого материала: правил, скиллов, ресурсов, кода, тестов, конфигураций,
++документов, отчётов и памяти. Способ записи не создаёт исключение.
++Согласованные создание заявки в inbox и её обработка проходят этим маршрутом;
++запись результата обработки вне inbox не является обходом маршрута.
++
++Прямой путь требует двух отдельных условий: явного однозначного указания
++изменить названный материал прямо, минуя inbox, и положительного ответа
++на отдельный вопрос агента, заданный после этого указания до начала задачи.
++Конечный путь, «сохрани», «исправь» и общее разрешение работать не задают обход.
++
++Даже при «предварительно подтверждаю» или явном вызове этого скилла сначала
++задай вопрос о названных материалах/путях, операциях и обходе inbox; затем
++остановись и жди ответа. Первоначальная просьба не является ответом на вопрос,
++который ещё не задан. Это обязательное первое подтверждение, а не повторный
++запрос уже полученного разрешения стадии. До него прямую задачу не выполнять.
++
++Ответ оценивай по смыслу и контексту; буквальная фраза не требуется. Только
++однозначный положительный ответ именно на этот вопрос разрешает заданный состав.
++Молчание, время, условный/неоднозначный ответ, несколько вариантов или неясная
++область не разрешают выполнение: уточни и снова жди; при отказе не выполняй.
++Не выбирай разрешающий вариант сам. После ответа для той же неизменной задачи
++вопрос не повторяй; новая задача или расширение требуют нового указания
++и нового подтверждения после вопроса агента.
++
++Обход inbox не отменяет проверки, gate публикации, отдельные решения о шаблоне
++и защиту AGENTS/CLAUDE. При несовместимости с другим обязательным требованием
++останови зависимое действие и согласуй конфликт, не вводя молчаливое исключение.
++
++## Создание и обработка заявок
+ 
+ После ошибки/конфликта/найденного решения предложи сохранение контекста и
+ требуемого результата в заявку. Запись и обработку выполняй лишь в разрешённых
+--- a/harness/common/testing/acceptance/acceptance.md
++++ b/harness/common/testing/acceptance/acceptance.md
+@@ -5,7 +5,7 @@
+ 
+ | Режим | Условия проверки | Требуемый результат |
+ |---|---|---|
+-| Только common | В чистый проект скопирован только common, project отсутствует; исходный проект недоступен | Стартовая проверка создаёт полный нейтральный project из общего описания, без рабочих материалов прежнего проекта |
++| Только common | В чистый проект скопирован только common, project отсутствует; исходный проект недоступен | Обычный старт останавливается до записи; после разрешённой обработки inbox либо отдельного подтверждения прямой задачи вызов с --create-project создаёт полный нейтральный project из общего описания |
+ | Common+project | Перенесены оба пакета, project содержит рабочие материалы | Проверка сохраняет существующий project побайтно и не создаёт вместо него пустой каркас |
+ | Нарушенная комплектность | В изолированной копии удалён обязательный локальный ресурс или повреждена ссылка | Соответствующая проверка замечает повреждение и даёт диагностируемый отказ; зелёный результат на пустой выборке не считается доказательством |
+ 
+--- a/harness/common/testing/tests/test_ensure_entrypoint_links.py
++++ b/harness/common/testing/tests/test_ensure_entrypoint_links.py
+@@ -25,8 +25,8 @@
+             destination.parent.mkdir()
+             shutil.copyfile(template, destination)
+ 
+-    def run_check(self):
+-        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)], text=True, capture_output=True)
++    def run_check(self, *args):
++        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root), *args], text=True, capture_output=True)
+ 
+     def test_creates_four_links_and_import_then_preserves_bytes(self):
+         result = self.run_check()
+@@ -136,7 +136,7 @@
+ 
+     def test_common_only_creates_neutral_project(self):
+         shutil.rmtree(self.root / 'harness/project')
+-        result = self.run_check()
++        result = self.run_check('--create-project')
+         assert result.returncode == 0, result.stderr
+         project = self.root / 'harness/project'
+         expected = {'base', 'decisions', 'testing', 'rules', 'skills', 'checks', 'scripts', 'specs', 'inbox', 'docs', 'handoffs'}
+@@ -177,7 +177,7 @@
+         assert self.run_check().returncode == 0
+         assert not (self.root / 'harness/project/specs').exists()
+         shutil.rmtree(self.root / 'harness/project')
+-        result = self.run_check()
++        result = self.run_check('--create-project')
+         assert result.returncode == 0, result.stderr
+         assert (self.root / 'harness/project/specs/README.human.md').is_file()
+ 
+@@ -209,7 +209,7 @@
+         shutil.rmtree(project)
+         template = self.root / 'harness/common/base/project-skeleton.json'
+         template.write_text(content)
+-        result = self.run_check()
++        result = self.run_check('--create-project')
+         assert result.returncode == 2
+         assert not project.exists()
+         assert not (self.root / 'AGENTS.md').exists()
+@@ -218,7 +218,7 @@
+         shutil.rmtree(self.root / 'harness/project')
+         agents = self.root / 'AGENTS.md'
+         agents.write_text('# Keep\n```md\nunterminated')
+-        result = self.run_check()
++        result = self.run_check('--create-project')
+         assert result.returncode == 2
+         assert not (self.root / 'harness/project').exists()
+         assert agents.read_text() == '# Keep\n```md\nunterminated'
+@@ -276,3 +276,16 @@
+             assert not (self.root / 'CLAUDE.md').exists()
+         finally:
+             path.unlink()
++
++
++    def test_missing_project_requires_authorization_before_any_write(self):
++        shutil.rmtree(self.root / 'harness/project')
++        before = {p.relative_to(self.root): p.read_bytes()
++                  for p in self.root.rglob('*') if p.is_file()}
++        result = self.run_check()
++        assert result.returncode == 2
++        assert '--create-project' in result.stderr
++        assert not (self.root / 'harness/project').exists()
++        assert before == {p.relative_to(self.root): p.read_bytes()
++                          for p in self.root.rglob('*') if p.is_file()}
++        assert not (self.root / '.claude').exists()
+--- a/harness/common/testing/tests/test_entrypoint_portability.py
++++ b/harness/common/testing/tests/test_entrypoint_portability.py
+@@ -28,8 +28,8 @@
+             material.parent.mkdir(parents=True, exist_ok=True)
+             material.write_bytes(b'Existing project material\n')
+ 
+-    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py'):
+-        return subprocess.run([sys.executable, '-I', '-B', script], cwd=root, env=dict(os.environ, PATH='/no-git-in-this-test'), capture_output=True, text=True)
++    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py', *args):
++        return subprocess.run([sys.executable, '-I', '-B', script, *args], cwd=root, env=dict(os.environ, PATH='/no-git-in-this-test'), capture_output=True, text=True)
+ 
+     @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
+     def test_startup_command_runs_in_each_clean_mode_without_git(self, mode):
+@@ -38,7 +38,7 @@
+             self.install(root, mode)
+             project = root / 'harness/project'
+             before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}
+-            first = self.run_check(root)
++            first = self.run_check(root, 'harness/common/checks/ensure_entrypoint_links.py', '--create-project')
+             assert first.returncode == 0, first.stderr
+             if 'project' in mode:
+                 assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}
+@@ -97,7 +97,7 @@
+             root = Path(directory)
+             self.install(root, mode)
+             (root / 'harness/common/START.md').unlink()
+-            result = self.run_check(root)
++            result = self.run_check(root, 'harness/common/checks/ensure_entrypoint_links.py', '--create-project')
+             assert result.returncode == 2
+             assert 'START.md' in result.stderr
+             assert not (root / 'AGENTS.md').exists()

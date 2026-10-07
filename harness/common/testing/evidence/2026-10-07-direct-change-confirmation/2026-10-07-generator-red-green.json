@@ -1,0 +1,12 @@
+{
+  "red": {
+    "exit_code": 1,
+    "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_ TestEntryPointLinks.test_missing_project_requires_authorization_before_any_write _\n\nself = <tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x78f95cfaa330>\n\n    def test_missing_project_requires_authorization_before_any_write(self):\n        shutil.rmtree(self.root / 'harness/project')\n        before = {p.relative_to(self.root): p.read_bytes()\n                  for p in self.root.rglob('*') if p.is_file()}\n        result = self.run_check()\n>       assert result.returncode == 2\nE       AssertionError: assert 0 == 2\nE        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/.venv/bin/python', '-B', '/tmp/project-aut...т: создаётся пустой каркас из common.\\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\\n', stderr='').returncode\n\n/tmp/project-authorization-0g0z0qd9/harness/common/testing/tests/test_ensure_entrypoint_links.py:286: AssertionError\n=========================== short test summary info ============================\nFAILED ../../../../tmp/project-authorization-0g0z0qd9/harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_missing_project_requires_authorization_before_any_write\n1 failed in 0.13s\n",
+    "stderr": ""
+  },
+  "green": {
+    "exit_code": 0,
+    "stdout": ".....................................................                    [100%]\n53 passed in 4.19s\n",
+    "stderr": ""
+  }
+}
