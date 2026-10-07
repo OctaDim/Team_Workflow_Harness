@@ -1,0 +1,380 @@
+{
+  "version": {
+    "date": "2026-10-07",
+    "files": {
+      "comm-human-folder-guides.md": "3a42b29fa2a86bb1df82567a840ae4229d448f6f7d2f3b40d6038a0bc69fc4e3",
+      "check_human_guide_search.py": "e1def616645bcfa3d16e22d417ccc3b81ac864ed0bd93ebe2a60c834f455b7ec",
+      "START.md": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2",
+      "test_human_guide_reader.py": "662d350f291522e0ef3c92f0e95f098b4866221c92b527ab9818919bd13cb67c"
+    },
+    "startup_boundary_files": [
+      {
+        "path": "AGENTS.md",
+        "before_characters": 1316,
+        "candidate_characters": 1316,
+        "delta_characters": 0
+      },
+      {
+        "path": "CLAUDE.md",
+        "before_characters": 11,
+        "candidate_characters": 11,
+        "delta_characters": 0
+      },
+      {
+        "path": "harness/common/START.md",
+        "before_characters": 704,
+        "candidate_characters": 859,
+        "delta_characters": 155
+      },
+      {
+        "path": "harness/project/START.md",
+        "before_characters": 514,
+        "candidate_characters": 514,
+        "delta_characters": 0
+      },
+      {
+        "path": "harness/common/INDEX.md",
+        "before_characters": 2206,
+        "candidate_characters": 2206,
+        "delta_characters": 0
+      },
+      {
+        "path": "harness/project/INDEX.md",
+        "before_characters": 1364,
+        "candidate_characters": 1364,
+        "delta_characters": 0
+      },
+      {
+        "path": ".claude/rules/comm-dependencies-through-uv.md",
+        "before_characters": 1154,
+        "candidate_characters": 1154,
+        "delta_characters": 0
+      },
+      {
+        "path": ".claude/rules/comm-entrypoint-links-rule.md",
+        "before_characters": 1709,
+        "candidate_characters": 1709,
+        "delta_characters": 0
+      },
+      {
+        "path": ".claude/rules/comm-human-folder-guides.md",
+        "before_characters": 1027,
+        "candidate_characters": 1538,
+        "delta_characters": 511
+      },
+      {
+        "path": ".claude/rules/comm-instruction-order.md",
+        "before_characters": 1812,
+        "candidate_characters": 1812,
+        "delta_characters": 0
+      },
+      {
+        "path": ".claude/rules/comm-package-independence.md",
+        "before_characters": 1241,
+        "candidate_characters": 1241,
+        "delta_characters": 0
+      },
+      {
+        "path": ".claude/rules/comm-skill-rule-ownership.md",
+        "before_characters": 3549,
+        "candidate_characters": 3549,
+        "delta_characters": 0
+      },
+      {
+        "path": ".claude/rules/comm-user-owned-entrypoints.md",
+        "before_characters": 1626,
+        "candidate_characters": 1626,
+        "delta_characters": 0
+      }
+    ],
+    "before_characters": 18233,
+    "candidate_characters": 18899,
+    "note": "Exact characters, not measured token use; entrypoint/START/INDEX/native-rule set. Skill metadata unchanged."
+  },
+  "codex_status": "проверенный",
+  "claude_status": "непроверенный",
+  "overall_status": "непроверенный",
+  "publication": "awaiting explicit approval of this version and START extension",
+  "full_native": [
+    {
+      "mode": "common",
+      "invocation": "explicit",
+      "checks": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "startup_first": true,
+        "all_rules_before_indexes": true,
+        "native_completed": true,
+        "files_preserved": true,
+        "human_canary_absent": true,
+        "skill_catalog_listed": true,
+        "full_rules_before_skill": true,
+        "own_resource_fully_read": true,
+        "task_behavior": true
+      },
+      "passed": true,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "usage": [
+        {
+          "input_tokens": 175070,
+          "cached_input_tokens": 152192,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 970,
+          "reasoning_output_tokens": 44
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "invocation": "implicit",
+      "checks": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "startup_first": true,
+        "all_rules_before_indexes": true,
+        "native_completed": true,
+        "files_preserved": true,
+        "human_canary_absent": true,
+        "skill_catalog_listed": true,
+        "full_rules_before_skill": true,
+        "own_resource_fully_read": true,
+        "task_behavior": true
+      },
+      "passed": true,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md'"
+      ],
+      "usage": [
+        {
+          "input_tokens": 173222,
+          "cached_input_tokens": 140160,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 914,
+          "reasoning_output_tokens": 15
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "invocation": "unrelated",
+      "checks": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "startup_first": true,
+        "all_rules_before_indexes": true,
+        "native_completed": true,
+        "files_preserved": true,
+        "human_canary_absent": true,
+        "skill_catalog_listed": true,
+        "no_unrelated_skill_loading": true,
+        "task_behavior": true
+      },
+      "passed": true,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'"
+      ],
+      "usage": [
+        {
+          "input_tokens": 123325,
+          "cached_input_tokens": 104448,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 589,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "invocation": "explicit",
+      "checks": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "startup_first": true,
+        "all_rules_before_indexes": true,
+        "native_completed": true,
+        "files_preserved": true,
+        "human_canary_absent": true,
+        "skill_catalog_listed": true,
+        "full_rules_before_skill": true,
+        "own_resource_fully_read": true,
+        "task_behavior": true
+      },
+      "passed": true,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md'"
+      ],
+      "usage": [
+        {
+          "input_tokens": 187537,
+          "cached_input_tokens": 162816,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 876,
+          "reasoning_output_tokens": 49
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "invocation": "implicit",
+      "checks": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "startup_first": true,
+        "all_rules_before_indexes": true,
+        "native_completed": true,
+        "files_preserved": true,
+        "human_canary_absent": true,
+        "skill_catalog_listed": true,
+        "full_rules_before_skill": true,
+        "own_resource_fully_read": true,
+        "task_behavior": true
+      },
+      "passed": true,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-process-harness-inbox/references/experience-routing.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "usage": [
+        {
+          "input_tokens": 130073,
+          "cached_input_tokens": 107008,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 889,
+          "reasoning_output_tokens": 11
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "invocation": "unrelated",
+      "checks": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "startup_first": true,
+        "all_rules_before_indexes": true,
+        "native_completed": true,
+        "files_preserved": true,
+        "human_canary_absent": true,
+        "skill_catalog_listed": true,
+        "no_unrelated_skill_loading": true,
+        "task_behavior": true
+      },
+      "passed": true,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'"
+      ],
+      "usage": [
+        {
+          "input_tokens": 161563,
+          "cached_input_tokens": 142336,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 664,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    }
+  ],
+  "focused": [
+    {
+      "task": "read",
+      "mode": "common",
+      "pass": true,
+      "candidate_sha256": "3a42b29fa2a86bb1df82567a840ae4229d448f6f7d2f3b40d6038a0bc69fc4e3",
+      "check_sha256": "e1def616645bcfa3d16e22d417ccc3b81ac864ed0bd93ebe2a60c834f455b7ec",
+      "human_canary_in_any_native_event": false,
+      "elapsed_seconds": 43.39
+    },
+    {
+      "task": "read",
+      "mode": "both",
+      "pass": true,
+      "candidate_sha256": "3a42b29fa2a86bb1df82567a840ae4229d448f6f7d2f3b40d6038a0bc69fc4e3",
+      "check_sha256": "e1def616645bcfa3d16e22d417ccc3b81ac864ed0bd93ebe2a60c834f455b7ec",
+      "human_canary_in_any_native_event": false,
+      "elapsed_seconds": 47.29
+    },
+    {
+      "task": "search",
+      "mode": "common",
+      "pass": true,
+      "candidate_sha256": "3a42b29fa2a86bb1df82567a840ae4229d448f6f7d2f3b40d6038a0bc69fc4e3",
+      "check_sha256": "e1def616645bcfa3d16e22d417ccc3b81ac864ed0bd93ebe2a60c834f455b7ec",
+      "human_canary_in_any_native_event": false,
+      "elapsed_seconds": 36.79
+    },
+    {
+      "task": "search",
+      "mode": "both",
+      "pass": true,
+      "candidate_sha256": "3a42b29fa2a86bb1df82567a840ae4229d448f6f7d2f3b40d6038a0bc69fc4e3",
+      "check_sha256": "e1def616645bcfa3d16e22d417ccc3b81ac864ed0bd93ebe2a60c834f455b7ec",
+      "human_canary_in_any_native_event": false,
+      "elapsed_seconds": 36.77
+    }
+  ],
+  "archive_sha256": "144124161350d60fad283f552a741e885e438d527c9562c257cb482bded80eeb"
+}
