@@ -27,7 +27,9 @@ def assess_rule_reading(tools, expected):
     listed=listing is not None
     explicit=not any('cat' in tokens and any('.claude/rules' in t and any(c in t for c in '*?[') for t in tokens)
                      for tokens in commands[:first_skill])
-    separate=not any('cat' in tokens and '--files' in tokens for tokens in commands[:first_skill])
+    separate=not any('cat' in tokens and '--files' in tokens
+                     and any(t==path or t.endswith('/'+path) for path in expected for t in tokens)
+                     for tokens in commands[:first_skill])
     report={'rule_listing_completed':listed,'all_rule_bodies_read':complete,
             'explicit_rule_paths':explicit,'separate_rule_reads':separate,
             'full_rule_read_before_skill':complete and first_skill<len(tools) and tools[first_skill].get('exit_code')==0,
