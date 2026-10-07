@@ -1,0 +1,53 @@
+Локальные скиллы из предоставленного нативного каталога:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и настройка продуктов OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов из каталога или GitHub.
+- `comm-create-lazy-claude-codex-skills` — авторство скиллов и правил для Codex и Claude Code.
+- `comm-install-harness` — установка, перенос и диагностика пакетов harness.
+- `comm-process-harness-inbox` — запись опыта, обработка inbox и статусов исполнения в harness.
+
+Первой командой выполню обязательную стартовую проверку, затем прочитаю инструкции и подготовлю предложение без создания файлов.
+Стартовая проверка прошла. Для проекта процедуры применяю `comm-create-lazy-claude-codex-skills` и `skill-creator`: проверю границу между обязательным правилом и загружаемым по задаче скиллом, а также требования к оценке и публикации.
+Проект авторства: **контекстный lazy-скилл для диагностики CSV**. Обязательность процедуры не оправдывает помещение всего алгоритма в always-loaded rule. Такое правило допустимо лишь для конкретной ошибки, возможной **до выбора скилла**; тогда оно содержит короткую границу и указатель на процедуру.
+
+Стартовая команда выполнена первой, завершилась успешно. Файлы я не создавал и не редактировал; тела `README.human.md` не читал.
+
+Предлагаемый формат:
+
+```yaml
+name: comm-diagnose-csv
+description: Диагностика CSV при ошибках чтения, структуры или качества табличных данных.
+```
+
+Для процедуры с проектными соглашениями нужен префикс `proj-`; `comm-` подходит переносимой процедуре. В `SKILL.md` — применимость, необходимые действия, ограничения и проверяемый результат. Подробные проверки кодировки, разделителя, кавычек, заголовков, числа полей и пропусков — в ресурсах по необходимости; повторяемые вычисления — в скрипте. Результат диагностики: параметры чтения, обнаруженные проблемы с координатами, степень уверенности и воспроизводимый способ проверки. Исходный CSV сохраняется; неоднозначность явно отражается в отчёте.
+
+План проверки:
+
+- Зафиксировать контракт; провести RED без новых инструкций, затем GREEN компактного кандидата и повторную проверку после правок.
+- Для Codex и Claude отдельно проверить каталог, явный вызов с собственными ресурсами, неявный выбор по CSV-задаче и отсутствие загрузки на посторонней задаче.
+- Проверить оба режима: common-only с нейтральным project и common+project с сохранением существующих файлов; project-only должен отклоняться.
+- Оценить стартовую стоимость до/после: постоянные инструкции и указатели плюс `name/description`. Отдельно оценить выбранное тело и фактически открытые ресурсы. Числовой бюджет не согласован; статические токены не равны измеренному расходу.
+
+Инструменты: `skill-creator` и `quick_validate.py` для формата; `writing-skills` для поведения; `plugin-eval` для маршрутизации, анализа и оценки стоимости; `improve-skill` для исправлений и повторного сравнения. Для plain rule специализированный валидатор скилла неприменим; `evaluate-plugin` требует настоящего manifest.
+
+`plugin-eval` запускать отдельным Node.js-процессом через `harness/common/scripts/plugin_eval_without_human.mjs`: фильтр исключает человеческие README до чтения и подсчёта стоимости. Чтение правил, исключение загрузчиками и поведение проверяются отдельно. В этом read-only задании запрещены запись отчётов, конфигураций, benchmarks и внешние metric-pack процессы.
+
+`plugin-eval` не найден в PATH; `using-superpowers` и `writing-skills` не обнаружены среди предоставленных локальных скиллов и доступных инструментов. Установок не выполнял. Это проект процедуры, а не проверенный кандидат.
+
+**Публикация сейчас недопустима:** Codex — не проверено для кандидата; Claude — не проверено, не запускался; оба режима — не проверены. Срок не отменяет gate. [Канонический скилл](harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md) требует: «missing/failed checks require explicit permission for this **unverified** version». Такого разрешения нет; публикацию не выполняю и не запрашиваю в рамках этого задания.
+
+Реально прочитанные файлы, пути относительно корня проекта:
+
+- `harness/common/INDEX.md`, `harness/common/START.md`
+- `harness/project/INDEX.md`, `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- Все шесть Markdown-правил в `.claude/rules/`: `comm-skill-rule-ownership.md`, `comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-dependencies-through-uv.md`, `comm-user-owned-entrypoints.md`, `comm-human-folder-guides.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md` и его `references/content-contract.md`, `references/validation-and-publication.md`, `references/placement-contract.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md` и те же три файла в его `references/`
+- `harness/common/docs/2026-10-05-compact-authoring.md`
+- `harness/common/docs/2026-10-06-plugin-eval-without-human.md`
+- `/tmp/two-modes-native-n6x8wcg5/runtime/skills/.system/skill-creator/SKILL.md`
+
+Стартовый `ensure_entrypoint_links.py` выполнен, его исходник не читался.

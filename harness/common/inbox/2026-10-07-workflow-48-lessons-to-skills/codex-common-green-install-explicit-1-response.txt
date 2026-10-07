@@ -1,0 +1,49 @@
+## Каталог
+
+Локальные скиллы из нативного каталога:
+
+- **comm-create-lazy-claude-codex-skills** — создание, обновление и миграция скиллов и правил Codex/Claude.
+- **comm-install-harness** — установка, перемещение и диагностика пакетов harness, стартовых ссылок и общего каркаса проекта.
+- **comm-preserve-text-line-endings** — узкое исправление UTF-8 текста с сохранением нетронутых байтов и окончаний строк.
+- **comm-process-harness-inbox** — сохранение опыта и решений, создание и обработка запросов inbox.
+- **comm-resolve-permission-blockers** — разрешение блокировок доступа и автоматического отказа в одобрении.
+
+Применю **comm-install-harness** и его `references/checks.md`. Сначала выполню обязательную стартовую команду, затем прочитаю подключённые инструкции. Работаю только на чтение.
+
+Заменять существующий `project` пустым и удалять `lessons` при каждом старте нельзя. Срок в минуту не меняет контракт: [checks.md](harness/common/skills/comm-install-harness/references/checks.md) требует сохранять legacy-каталоги до отдельно разрешённой адресной миграции с сопоставлением требований и актуальными проверками.
+
+| Режим | Поведение |
+|---|---|
+| **common-only** | Создать **отсутствующий** `project` по утверждённому шаблону: без `lessons`, планы в `docs/plans`, нейтральные INDEX/START. Существующий `project` сохранить. |
+| **common+project** | Сохранить существующий `project` побайтно, включая legacy `lessons` и полезные файлы. Не дополнять автоматически по новому шаблону. |
+| **project-only** | Отказать: common обязателен. |
+
+Нужны следующие проверки:
+
+- Две чистые изолированные установки без доступа к исходному project и глобальным авторским материалам.
+- Полнота нового нейтрального каркаса: отсутствие `lessons`, наличие `docs/plans`, согласованных категорий и human guides.
+- Совпадение состава файлов и хешей существующего project, включая полезные файлы и legacy `lessons`; повторный старт ничего не меняет.
+- Повреждённые или небезопасные обязательные ресурсы дают отказ; отсутствие common — отказ до записи.
+- Корректность стартовых ссылок, ресурсов, нативных копий; сохранение существующей стартовой команды и совместимости старого wrapper.
+- Отдельные проверки поведения **Codex и Claude в обоих режимах**, бюджета стартовой загрузки и исключения `README.human.md`. Фиксировать версию, команды, результаты и ограничения; структурная проверка не доказывает нативное поведение.
+
+Обязательная первая команда завершилась успешно. Сравнение настроек с историей осталось непроверенным: истории проекта нет. Установочные проверки не запускал: они требуют создания временных установок. Ничего не создавал, не переносил и не публиковал.
+
+Реально прочитанные файлы:
+
+- `harness/common/INDEX.md`, `harness/common/START.md`
+- `harness/project/INDEX.md`, `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.agents/skills/comm-install-harness/SKILL.md`
+- `.agents/skills/comm-install-harness/references/checks.md`
+- `harness/common/skills/comm-install-harness/SKILL.md`
+- `harness/common/skills/comm-install-harness/references/checks.md`
+- `harness/common/base/project-skeleton.json`
+
+`README.human.md` не читал.

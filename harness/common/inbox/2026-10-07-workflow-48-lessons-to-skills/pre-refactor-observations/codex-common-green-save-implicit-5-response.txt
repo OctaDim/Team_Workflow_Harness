@@ -1,0 +1,51 @@
+Сначала выполню обязательную стартовую проверку. Затем перечислю скиллы из нативного каталога, прочитаю подключённые инструкции и предложу место для опыта диагностики CSV. Работаю только на чтение.
+
+Стартовая проверка прошла. Нативный каталог скиллов доступен; в нём перечислены:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и работа с продуктами OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и публикация скиллов и правил; превращение опыта в инструкции.
+- `comm-install-harness` — установка и диагностика пакетов harness и стартовых ссылок.
+- `comm-preserve-text-line-endings` — диагностика CRLF/LF и узкие исправления UTF-8 с сохранением байтов.
+- `comm-process-harness-inbox` — выбор постоянной формы для повторяемого опыта и обработка inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласований.
+
+Для выбора места применю `comm-process-harness-inbox`; если инструкции направят к скиллу, учту также правила его создания.
+
+В доступном каталоге нет отдельного скилла диагностики CSV; поиск по скиллам и правилам harness также не нашёл такого владельца. Проверю близкий скилл сохранения байтов и переводов строк: он может покрывать часть сценария. Срок и предложение коллеги не меняют режим read-only; отдельный lesson создавать не буду.
+
+Предлагаю постоянное место **в скилле и его условно читаемых ресурсах**, а не в отдельном lesson:
+
+- Для переносимой диагностики CSV — `harness/common/skills/<имя-скилла>/`.
+- Для диагностики, зависящей от схемы, экспортёра или контрактов проекта — `harness/project/skills/<имя-скилла>/`.
+
+Перед выбором проверю будущее требуемое поведение, descriptions существующих скиллов, применимые правила, затем подходящие инструкции, ресурсы, исправления и тесты. Важны кодировка/BOM, разделитель, кавычки, многострочные поля, окончания строк и проектная схема.
+
+**Если сценарий уже покрыт**, использую существующую инструкцию; при пробеле предложу минимальное дополнение её ресурса. Если всё выражено — новой записи не нужно. `comm-preserve-text-line-endings` уже покрывает сохранение байтов и CRLF/LF, но не всю диагностику CSV.
+
+**Если это независимая повторяемая компетенция**, предложу компактный lazy skill с распознаваемым trigger; примеры и подробности вынесу в ресурс. Существенные доказательства отдельно относятся к `testing/evidence/`.
+
+Стартовая проверка прошла. Ничего не создавал и не публиковал; `README.human.md` не читал. Минутный срок и предложение коллеги не дают разрешения на запись. При будущем сохранении обычный маршрут — согласованный inbox; он временный, а не постоянное хранилище опыта.
+
+Реально прочитанные файлы (пути относительно корня; совпадающие копии указаны отдельно):
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-install-harness/references/material-placement.md`
+- `harness/common/skills/comm-preserve-text-line-endings/SKILL.md`
+
+Стартовый `ensure_entrypoint_links.py` исполнялся; его исходник отдельно не открывал.

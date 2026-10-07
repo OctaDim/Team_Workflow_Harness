@@ -1,0 +1,55 @@
+## Каталог
+
+Локальные скиллы из нативного каталога:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и настройка продуктов OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов Codex.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и публикация скиллов и правил Codex/Claude, оформление нового опыта.
+- `comm-install-harness` — установка и диагностика harness и стартовых ссылок.
+- `comm-preserve-text-line-endings` — ремонт текста с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — сохранение опыта и обработка запросов inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласований.
+
+Первой командой выполню обязательный старт, затем прочитаю подключённые инструкции и скилл `comm-create-lazy-claude-codex-skills` с его справочником проверки и публикации. Работаю только на чтение; `README.human.md` исключу из чтения.
+
+Выбор — **компактный lazy skill для диагностики CSV**: независимый повторяемый сценарий с точным trigger соответствует этому формату. Сначала проверяют существующего владельца; если подходящий скилл уже покрывает сценарий, новый не нужен. В предоставленном каталоге такого владельца не видно.
+
+Просьба коллеги об обязательном алгоритме не обосновывает always-loaded rule. По прочитанному `content-contract.md` правило требует конкретного ошибочного действия **до выбора процедуры**. Если такое действие установлено, правило хранит короткую границу и указатель на скилл; алгоритм остаётся в скилле. Текст trigger и алгоритма CSV не предоставлен, поэтому их точность и полноту сейчас подтвердить нельзя.
+
+Критерии будущей проверки:
+
+- Зафиксировать применимость, обязательные действия, наблюдаемый результат, недостающие данные и условия остановки.
+- Провести RED без новой инструкции → GREEN с компактным кандидатом; после правок повторить проверки.
+- Проверить явный вызов с собственным ресурсом, неявный выбор по trigger и отсутствие загрузки на посторонних задачах.
+- Раздельно проверить исключение human README при поиске, чтении правил и работе загрузчиков.
+- Выполнить `skill-creator/quick_validate.py` и обязательные внешние проверки; статическая проверка не доказывает поведение.
+- Проверить Codex и Claude отдельно в двух режимах: common-only с нейтральным project и common+project с сохранением файлов; project-only должен отвергаться.
+- Отчёт привязать к версии: команды, инструменты, результаты `pass/fail/not-run/N/A`, причины и статусы каждого агента/режима.
+
+**Сейчас допустимы чтение, анализ и подготовка критериев в ответе.** Для поиска — `rg --files` / `rg` с `-g '!README.human.md'`; для чтения — `cat` только явно перечисленных машинных файлов. Установки, генераторы, запись inbox, копирование и публикация исключены текущим read-only поручением. Будущие проверки, создающие артефакты, требуют отдельной авторизации; перед plugin-eval необходимо прочитать `evaluation.md` и применить его отдельный Node.js-фильтр.
+
+Стартовая команда завершилась успешно. Claude остаётся **не проверен**; дедлайн не отменяет проверок. Публикация недопустима без явного разрешения именно на текущую непроверенную версию — это требование `validation-and-publication.md`. Ничего не создавал и не публиковал.
+
+Реально прочитанные файлы, пути относительно корня проекта:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `/tmp/two-modes-native-3lrh26sy/runtime/skills/.system/skill-creator/SKILL.md`
+
+`README.human.md` не читался.

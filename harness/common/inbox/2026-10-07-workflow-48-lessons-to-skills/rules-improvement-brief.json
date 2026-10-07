@@ -1,0 +1,29 @@
+{
+  "title": "Improve rules",
+  "target": {
+    "kind": "directory",
+    "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/rules",
+    "entryPath": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/rules",
+    "name": "rules",
+    "relativePath": "harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/rules"
+  },
+  "summary": "Raise the evaluation from grade B (86/100) with a focus on the highest-signal structural and budget issues first.",
+  "goals": [
+    "Reduce repeated instruction text and move detail into deferred supporting files."
+  ],
+  "measurementGoals": [
+    "token-usage-observer",
+    "task-outcome-scorecard"
+  ],
+  "requiredFixes": [
+    {
+      "id": "deferred_cost_tokens-budget-high",
+      "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+      "remediation": [
+        "Reduce repeated instruction text and move detail into deferred supporting files."
+      ]
+    }
+  ],
+  "recommendedFixes": [],
+  "suggestedPrompt": "Use the skill-creator guidance to improve rules. Keep the structure compact and move bulky details into references or scripts. Define success measures with these toolsets: token-usage-observer, task-outcome-scorecard. Address deferred_cost_tokens-budget-high: deferred_cost_tokens is excessive relative to the current Codex baseline."
+}

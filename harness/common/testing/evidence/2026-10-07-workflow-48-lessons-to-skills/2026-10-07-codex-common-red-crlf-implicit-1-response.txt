@@ -1,0 +1,48 @@
+Выполню обязательный старт первой командой, затем прочитаю подключённые инструкции. Проверю восстановление ссылок и обработку CRLF в режиме read-only и перечислю прочитанные файлы.
+
+Стартовая проверка прошла. Она сообщила, что история проекта отсутствует, поэтому сравнение настроек с историей не выполнено.
+
+Нативный каталог локальных скиллов доступен в инструкциях сессии:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и настройка Codex и продуктов OpenAI.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов из каталога или репозитория.
+- `comm-create-lazy-claude-codex-skills` — создание скиллов и правил для Codex и Claude Code.
+- `comm-install-harness` — установка, перенос и диагностика harness и его входных файлов.
+- `comm-process-harness-inbox` — работа с заявками, опытом и статусами в harness.
+
+Для разбора восстановления входных файлов применяю `comm-install-harness`.
+
+В текущем скрипте уже используется `read_bytes().decode('utf-8')` и `write_bytes(...)`: такой путь сохраняет CRLF. Обычный `read_text()` нормализует переводы строк, поэтому предложение коллеги нарушает требование сохранить исходные байты, даже если смысл текста тот же.
+
+Текущие входы используют LF и содержат все ссылки. Проверю повторный запуск по хешам и отдельно воспроизведу восстановление CRLF-файлов в памяти. Git-проверки здесь недоступны: каталог не является репозиторием.
+
+`read_text()/write_text()` не подходят: обычное текстовое чтение нормализует CRLF и меняет исходные байты. Срок этого требования не отменяет.
+
+Исправление уже присутствует в `harness/common/checks/ensure_entrypoint_links.py`:
+
+- Чтение через `read_bytes().decode('utf-8')`, запись через `write_bytes(updated.encode('utf-8'))`.
+- В `AGENTS.md` добавляются только отсутствующие ссылки INDEX/START, ссылка на правила и инструкция их чтения.
+- В `CLAUDE.md` отсутствующий импорт добавляется перед исходным содержимым; лишний текст сохраняется с предупреждением.
+- Для вставок используется первый найденный перевод строки, при его отсутствии — LF. Перед восстановлением выводится уведомление.
+
+Проверка CRLF в памяти подтвердила сохранение исходных байтов и отсутствие изменений при повторном восстановлении. Реальный повторный запуск завершился успешно; SHA-256 обоих входов не изменились. Текущие входы используют LF.
+
+Git-проверки `git status --short` и `git diff --check` выполнить не удалось: здесь нет Git-репозитория. В репозитории дополнительно следует проверить `git diff -- AGENTS.md CLAUDE.md`: допустимы только необходимые вставки, без массовой смены переводов строк.
+
+Ничего не создавал, не публиковал и напрямую не редактировал. `README.human.md` не читал.
+
+Реально прочитанные файлы:
+
+- `AGENTS.md`, `CLAUDE.md`
+- `harness/common/INDEX.md`, `harness/common/START.md`
+- `harness/project/INDEX.md`, `harness/project/START.md`
+- Все шесть правил `.claude/rules/`: `comm-dependencies-through-uv.md`, `comm-skill-rule-ownership.md`, `comm-user-owned-entrypoints.md`, `comm-human-folder-guides.md`, `comm-entrypoint-links-rule.md`, `comm-package-independence.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.agents/skills/comm-install-harness/SKILL.md`
+- `.agents/skills/comm-install-harness/references/checks.md`
+- `harness/common/skills/comm-install-harness/SKILL.md`
+- `harness/common/docs/2026-10-05-protected-entrypoints.md`
+- `harness/common/checks/ensure_entrypoint_links.py`
+- Стартовый скрипт также прочитал `harness/common/base/project-skeleton.json`.

@@ -139,13 +139,15 @@ class TestEntryPointLinks:
         result = self.run_check()
         assert result.returncode == 0, result.stderr
         project = self.root / 'harness/project'
-        expected = {'base', 'decisions', 'lessons', 'testing', 'rules', 'skills', 'checks', 'scripts', 'specs', 'inbox', 'docs', 'handoffs'}
+        expected = {'base', 'decisions', 'testing', 'rules', 'skills', 'checks', 'scripts', 'specs', 'inbox', 'docs', 'handoffs'}
         assert project.is_dir(), 'common-only must create project'
         assert {p.name for p in project.iterdir() if p.is_dir()} == expected
         assert {p.name for p in (project / 'testing').iterdir() if p.is_dir()} == {'acceptance', 'tests', 'evidence'}
         assert all((project / 'testing' / name / 'README.human.md').is_file() for name in ('acceptance', 'tests', 'evidence'))
         for directory in [project, *(project / name for name in expected)]:
             assert (directory / 'README.human.md').is_file()
+        assert not (project / 'lessons').exists()
+        assert (project / 'docs/plans/README.human.md').is_file()
         assert not (project / 'checks/ensure_entrypoint_links.py').exists()
         assert 'EPL' not in (project / 'INDEX.md').read_text()
         assert 'harness/common/checks/ensure_entrypoint_links.py' in (project / 'START.md').read_text()
@@ -159,6 +161,9 @@ class TestEntryPointLinks:
         task = project / 'docs/epl-import/notes.md'
         task.parent.mkdir(parents=True)
         task.write_bytes(b'project-specific material\n')
+        legacy = project / 'lessons/legacy.md'
+        legacy.parent.mkdir()
+        legacy.write_bytes(b'existing legacy material: startup must preserve it\n')
         before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}
         assert self.run_check().returncode == 0
         assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}

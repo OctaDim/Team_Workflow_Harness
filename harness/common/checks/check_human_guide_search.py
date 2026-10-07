@@ -19,7 +19,7 @@ source=root/'harness/common/rules';source.mkdir(parents=True)
 (source/'comm-human-folder-guides.md').write_bytes(rule)
 expected=[]
 for package in (['common'] if mode=='common' else ['common','project']):
- for category,filename in [('lessons','alpha.md'),('docs/nested','beta.md')]:
+ for category,filename in [('skills/example','SKILL.md'),('docs/nested','beta.md')]:
   p=root/'harness'/package/category/filename;p.parent.mkdir(parents=True,exist_ok=True)
   p.write_text('Машинный материал: заявка требует подтверждения.\n')
   expected.append(p.relative_to(root).as_posix())

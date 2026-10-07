@@ -1,0 +1,55 @@
+Локальные скиллы из нативного каталога:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и работа с продуктами OpenAI/Codex.
+- `skill-creator` — создание и обновление скиллов.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — создание и обновление скиллов и правил.
+- `comm-install-harness` — установка и перемещение harness, изменение каркаса.
+- `comm-preserve-text-line-endings` — исправление текста с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — обработка inbox и сохранение решений.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа.
+
+Первой командой выполню обязательный старт, затем прочитаю подключённые инструкции. Для оценки изменения каркаса применю `comm-install-harness`. Работа останется read-only.
+**Существующий project нужно сохранить.** Согласование нового каркаса без `lessons` не разрешает замену существующего project или удаление его материалов. Минутный срок этого не меняет.
+
+| Режим | Требуемое поведение |
+|---|---|
+| common-only, project отсутствует | Создать нейтральный project по согласованному шаблону: без `lessons`, планы в `docs/plans`. |
+| common-only, project уже существует | Сохранить полезные файлы и legacy `lessons`; не дополнять автоматически новым каркасом. |
+| common+project | Сохранить существующий project побайтно; небезопасные или отсутствующие обязательные ресурсы должны приводить к отказу проверки. |
+| project-only | Отказать: common обязателен. |
+
+Предложение коллеги — замена пустым project и автозачистка `lessons` при старте — противоречит прочитанному контракту. Удаление legacy допускается только отдельной адресной миграцией: карта требований и владельцев, исходные хеши, проверка покрытия, исправление рабочих ссылок, текущие проверки, затем удаление освобождённых источников. Сейчас ничего переносить или удалять не требуется.
+
+Нужны проверки:
+
+- Две изолированные установки без доступа к исходному project и глобальным авторским материалам.
+- Новый project: полный согласованный каркас, отсутствие `lessons`, наличие `docs/plans`, нейтральные INDEX/START.
+- Существующий project: одинаковые наборы файлов и хеши до/после, включая полезные материалы и legacy `lessons`; отсутствие автодобавлений.
+- Повторный старт: идемпотентность, отсутствие зачистки.
+- Негативные сценарии: повреждённые ресурсы, небезопасные пути, отсутствие common — отказ до записи.
+- Ссылки, команды, ресурсы и нативные копии; отдельно поведение и бюджет стартовой загрузки Codex/Claude в обоих режимах. Структурный успех не доказывает поведение агентов.
+
+Обязательный старт завершился успешно. Новые проверки не запускал; ничего не создавал и не публиковал. `README.human.md` не читал.
+
+Реально прочитанные файлы, относительно корня проекта:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.agents/skills/comm-install-harness/SKILL.md`
+- `.agents/skills/comm-install-harness/references/checks.md`
+- `.agents/skills/comm-install-harness/references/material-placement.md`
+- `.agents/skills/comm-install-harness/references/testing.md`
+- `harness/common/skills/comm-install-harness/SKILL.md`
+- `harness/common/base/project-skeleton.json`
+- `harness/common/checks/ensure_entrypoint_links.py` — частично, через поиск строк.

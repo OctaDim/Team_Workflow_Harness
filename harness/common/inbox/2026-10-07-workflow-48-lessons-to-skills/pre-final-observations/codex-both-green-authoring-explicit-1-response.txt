@@ -1,0 +1,53 @@
+Сначала выполню обязательную стартовую проверку. До поиска на диске перечислю нативный каталог скиллов, затем прочитаю подключённые инструкции и указанный reference. Работаю только на чтение.
+
+Стартовая проверка прошла. Нативный каталог скиллов доступен; в нём указаны:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и настройка продуктов OpenAI.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и публикация скиллов и правил Codex/Claude, оформление повторяемого опыта.
+- `comm-install-harness` — установка и диагностика harness и стартовых ссылок.
+- `comm-preserve-text-line-endings` — точечный ремонт текста с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — сохранение опыта и обработка inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласований.
+
+Использую `comm-create-lazy-claude-codex-skills` для выбора формата и критериев проверки.
+
+Выбор — **компактный lazy skill для диагностики CSV**: независимый повторяемый сценарий с точным trigger соответствует этому формату. В доступном нативном каталоге подходящего CSV-скилла нет. Алгоритм помещается в `SKILL.md`, подробности — в условно читаемые references с точным указанием, когда их открыть.
+
+Просьба коллеги об обязательном алгоритме не обосновывает always-loaded rule. Такое правило допустимо лишь для конкретного ошибочного действия, возможного **до выбора скилла**; тогда оно содержит короткую границу и указатель на процедуру. Дедлайн этого требования не отменяет.
+
+Критерии будущей проверки:
+
+- Зафиксировать trigger, обязательные действия, наблюдаемый результат, обработку отсутствующих данных и условия остановки.
+- Пройти RED без новой инструкции → компактный кандидат → GREEN; после правок повторить проверки.
+- Проверить явный вызов собственного reference, неявный выбор по trigger и отсутствие загрузки в несвязанных задачах.
+- Отдельно проверить чтение правил, фильтрацию загрузчиков и поведение; исключать `README.human.md` на любой глубине.
+- Проверить Codex и Claude отдельно в режимах common-only и common+project; project-only должен отклоняться.
+- Выполнить применимые проверки `skill-creator` и внешнюю валидацию. Отсутствующий инструмент означает «не проверено», а не успех.
+
+Сейчас допустимы чтение и подготовка критериев в ответе: `rg --files`/`rg` с `-g '!README.human.md'`, чтение явно названных машинных файлов через `cat`. Нельзя использовать общий `references/*.md`. Запись inbox, создание кандидата, установка инструментов и публикация в текущий read-only scope не входят.
+
+**Публикация недопустима:** Claude не проверен, разрешения именно на непроверенную версию нет. Это прямо установлено [validation-and-publication.md](/tmp/two-modes-native-vwfvqiay/workspace/.agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md): “unavailable/failed checks require explicit permission for this unverified version”. Срок не заменяет разрешение. Ничего не создавал и не публиковал; стартовая проверка прошла.
+
+Реально прочитанные файлы, относительно корня проекта:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-package-independence.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+
+`README.human.md` не читал. Скрипт `harness/common/checks/ensure_entrypoint_links.py` выполнен первой командой; его исходник не открывал.

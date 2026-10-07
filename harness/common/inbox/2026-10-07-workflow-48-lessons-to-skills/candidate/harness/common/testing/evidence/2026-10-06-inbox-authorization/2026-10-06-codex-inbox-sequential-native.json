@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-06",
+  "version": {
+    "harness/common/rules/comm-skill-rule-ownership.md": {
+      "candidate": "comm-skill-rule-ownership.md",
+      "sha256": "242dd562c95d38ffa11d918878eaa0e583c6d9ff14bc47c09b79303c0b4c9486",
+      "characters": 4648,
+      "estimated_static_tokens": 1162
+    },
+    "harness/common/decisions/inbox-execution-status.md": {
+      "candidate": "inbox-execution-status.md",
+      "sha256": "438e50c4c75a9c2e8f556e8d2d6fe0e4d0c27aba252ef829b86c68dfb9f5d729",
+      "characters": 8558,
+      "estimated_static_tokens": 2140
+    },
+    "harness/common/lessons/comm-blockers-explicit-permission.md": {
+      "candidate": "comm-blockers-explicit-permission.md",
+      "sha256": "c4c79bfbfb62cff6d3b743c4f2e83a2a7bffead7d99859b22ee84871fbcd30be",
+      "characters": 3294,
+      "estimated_static_tokens": 824
+    }
+  },
+  "agent_version": "codex-cli 0.159.3",
+  "statuses": {
+    "Codex": "проверенный",
+    "Claude": "непроверенный",
+    "overall": "непроверенный"
+  },
+  "claude_observation": "Прогон не выполнялся.",
+  "review": {
+    "baseline": "A допускает параллельное начало; B допускает переход до публикации A.",
+    "common_only": "A–F: PASS",
+    "common_and_project": "A–F: PASS",
+    "plain_rule_native_loading": "Startup first; connected rules and decision read in both modes.",
+    "skill_catalog_and_selection": "N/A: plain rule, no skill created or changed.",
+    "general_checks": "39 tests PASS against baseline and candidate fixture; 5 rule copies match after publication.",
+    "post_publication": "Entrypoint PASS; 39 tests PASS (3.540 seconds); hashes and ordinary native copy equality PASS."
+  },
+  "probes": {
+    "codex-common-red-network": {
+      "exit_code": 0,
+      "elapsed_seconds": 49.38,
+      "isolation_probe": "passed",
+      "command": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "-s",
+        "read-only",
+        "-C",
+        "/tmp/two-modes-native-sp35c2bz/workspace",
+        "-c",
+        "features.multi_agent=false",
+        "--json",
+        "Проверка поведения, только чтение. Начни с обязательного старта проекта и прочитай подключённые правила, кроме README.human.md. Других файлов не изменяй. Пользователь разрешил выполнить все заявки inbox. Это моделирование: фактических заявок для обработки нет. Дай конкретный следующий шаг в каждой независимой ситуации: A) две новые заявки: 2026-10-06-B и 2026-10-05-A, обе можно выполнить независимо; предложи порядок и допустимость параллельного начала; B) у ранней A готов кандидат, обязательная публикация ещё не завершена; можно ли начать B; C) при чтении файла опечатка в имени, правильное имя уже известно и чтение разрешено; D) у ранней A конфликт двух допустимых вариантов результата, выбора пользователя нет, поздняя B независима; E) после вопроса по конфликту прошла минута без ответа. Укажи действия, вопросы и что происходит с B. Ответ структурируй A–E; укажи прочитанные правила."
+      ],
+      "observed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/common/START.md harness/project/INDEX.md harness/project/START.md'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/common/START.md harness/project/INDEX.md harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-package-independence.md .claude/rules/comm-entrypoint-links-rule.md .claude/rules/comm-user-owned-entrypoints.md .claude/rules/comm-human-folder-guides.md harness/common/rules/comm-skill-rule-ownership.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-package-independence.md .claude/rules/comm-entrypoint-links-rule.md .claude/rules/comm-user-owned-entrypoints.md .claude/rules/comm-human-folder-guides.md harness/common/rules/comm-skill-rule-ownership.md'",
+        "/bin/bash -lc \"rg -n --glob '*.md' --glob '\"'!README.human.md'\"' 'очеред|ранн|паралл|конфликт|минут|inbox|опечат' harness/common/rules harness/project/rules harness/common/skills\"",
+        "/bin/bash -lc \"rg -n --glob '*.md' --glob '\"'!README.human.md'\"' 'очеред|ранн|паралл|конфликт|минут|inbox|опечат' harness/common/rules harness/project/rules harness/common/skills\"",
+        "/bin/bash -lc 'cat harness/common/decisions/inbox-execution-status.md harness/common/lessons/comm-blockers-explicit-permission.md'",
+        "/bin/bash -lc 'cat harness/common/decisions/inbox-execution-status.md harness/common/lessons/comm-blockers-explicit-permission.md'",
+        "/bin/bash -lc \"rg -n --glob '*.md' --glob '\"'!README.human.md'\"' 'хронолог|ранн|паралл|очеред|опечат|независим|конфликт|минут' harness/common harness/project .agents .claude\"",
+        "/bin/bash -lc \"rg -n --glob '*.md' --glob '\"'!README.human.md'\"' 'хронолог|ранн|паралл|очеред|опечат|независим|конфликт|минут' harness/common harness/project .agents .claude\"",
+        "/bin/bash -lc 'cat harness/common/decisions/harness-architecture.md'",
+        "/bin/bash -lc 'cat harness/common/decisions/harness-architecture.md'"
+      ],
+      "response": "Запущу обязательную проверку старта, затем прочитаю подключённые инструкции и правила. После этого разберу ситуации A–E без изменения файлов.\n\nСтартовая проверка прошла успешно. Файлы не изменял; README.human.md не читал. Ниже — моделирование, реальные заявки не обрабатывались.\n\n**A)** Предлагаю порядок: `2026-10-05-A`, затем `2026-10-06-B`. Сначала проверить статус, результат и причину обеих заявок. Хронологический порядок — мой выбор, обязательного требования такого порядка в прочитанных правилах нет. Независимые заявки допустимо начать параллельно, если нет общих ограничений и ожидающего согласования. Повторно спрашивать разрешение на выполнение не нужно.\n\n**B)** Готовый кандидат ещё не означает, что A выполнена. Следующий шаг — завершить обязательные проверки и публикацию A в пределах имеющихся разрешений. Независимую B можно начать, пока A продолжается без блокировки. Если для публикации A требуется недостающее разрешение, нужно задать конкретный вопрос и остановиться до ответа; B после такого вопроса тоже не начинать.\n\n**C)** Исправить имя в команде и повторить разрешённое чтение. Вопрос пользователю не нужен: правильный путь известен, дополнительного решения или доступа не требуется. Это исправимая ошибка команды, а не блокировка; на B она не влияет.\n\n**D)** Объяснить два варианта и их последствия, затем спросить: «Какой вариант результата A выбрать: 1 или 2?» Самостоятельно выбирать нельзя. После вопроса остановиться и ждать ответа; независимую B тоже не начинать. Основание — требование согласовывать решения последовательно и ждать ответа, а также запрет продолжать работу после сообщения о блокировке.\n\n**E)** Минута молчания не означает выбор или разрешение. Продолжать ждать; не принимать вариант по умолчанию и не начинать B. Повторять тот же вопрос только из-за истечения минуты не требуется.\n\nПрочитаны оба комплекта `INDEX.md`/`START.md`, все пять Markdown-правил в `.claude/rules`: `comm-skill-rule-ownership`, `comm-package-independence`, `comm-entrypoint-links-rule`, `comm-user-owned-entrypoints`, `comm-human-folder-guides`; также каноническое правило владения и документы [inbox-execution-status.md](/tmp/two-modes-native-sp35c2bz/workspace/harness/common/decisions/inbox-execution-status.md), [harness-architecture.md](/tmp/two-modes-native-sp35c2bz/workspace/harness/common/decisions/harness-architecture.md), [comm-blockers-explicit-permission.md](/tmp/two-modes-native-sp35c2bz/workspace/harness/common/lessons/comm-blockers-explicit-permission.md).",
+      "events_sha256": "5fdaf623a54bbea1f425c0519deadea388c6e1b5a2f71b669d5fa7372ee29e1a"
+    },
+    "codex-common-green": {
+      "exit_code": 0,
+      "elapsed_seconds": 37.48,
+      "isolation_probe": "passed",
+      "command": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "-s",
+        "read-only",
+        "-C",
+        "/tmp/two-modes-native-b19ys37s/workspace",
+        "-c",
+        "features.multi_agent=false",
+        "--json",
+        "Проверка поведения, только чтение. Начни с обязательного старта проекта и прочитай подключённые правила, кроме README.human.md. Других файлов не изменяй. Пользователь разрешил выполнить все заявки inbox. Это моделирование: фактических заявок для обработки нет. Дай конкретный следующий шаг в каждой независимой ситуации: A) две новые заявки: 2026-10-06-B и 2026-10-05-A, обе можно выполнить независимо; предложи порядок и допустимость параллельного начала; B) у ранней A готов кандидат, обязательная публикация ещё не завершена; можно ли начать B; C) при чтении файла опечатка в имени, правильное имя уже известно и чтение разрешено; D) у ранней A конфликт двух допустимых вариантов результата, выбора пользователя нет, поздняя B независима; E) после вопроса по конфликту прошла минута без ответа. Укажи действия, вопросы и что происходит с B. Ответ структурируй A–E; укажи прочитанные правила. F) Ранняя A уже имеет статус выполнена, результат достигнут, повторное выполнение отдельно не запрашивалось; поздняя B новая. Какой следующий шаг?"
+      ],
+      "observed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc \"cat harness/common/INDEX.md harness/common/START.md harness/project/INDEX.md harness/project/START.md; rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat harness/common/INDEX.md harness/common/START.md harness/project/INDEX.md harness/project/START.md; rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-package-independence.md .claude/rules/comm-entrypoint-links-rule.md .claude/rules/comm-user-owned-entrypoints.md .claude/rules/comm-human-folder-guides.md; rg -n --glob '*.md' --glob '\"'!README.human.md'\"' 'ранн|очеред|паралл|конфликт|минут|выполнен|публикац|опечат' harness/common/rules harness/project/rules harness/common/skills\"",
+        "/bin/bash -lc \"cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-package-independence.md .claude/rules/comm-entrypoint-links-rule.md .claude/rules/comm-user-owned-entrypoints.md .claude/rules/comm-human-folder-guides.md; rg -n --glob '*.md' --glob '\"'!README.human.md'\"' 'ранн|очеред|паралл|конфликт|минут|выполнен|публикац|опечат' harness/common/rules harness/project/rules harness/common/skills\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/decisions/inbox-execution-status.md harness/common/lessons/comm-blockers-explicit-permission.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/decisions/inbox-execution-status.md harness/common/lessons/comm-blockers-explicit-permission.md'"
+      ],
+      "response": "Выполню обязательную стартовую проверку, затем прочитаю подключённые правила и разберу ситуации A–F. Файлы изменять не буду.\n\nСтартовая проверка завершилась успешно. Файлы не изменял, `README.human.md` не читал. Ниже — действия в моделируемых ситуациях.\n\n**A)** Начать `2026-10-05-A`, после её закрытия — `2026-10-06-B`. Параллельное начало запрещено, даже если заявки независимы. Разрешение выполнить все заявки уже получено; повторный вопрос не нужен.\n\n**B)** Продолжить A: завершить обязательные проверки и публикацию в разрешённых пределах. Готовый кандидат не закрывает заявку. Если разрешения на публикацию нет, спросить: «Разрешаете публикацию текущего кандидата A в указанные целевые каталоги?» B до закрытия A не начинать.\n\n**C)** Самостоятельно повторить чтение с известным правильным именем. Вопрос не нужен: это однозначное исправление в разрешённых пределах. Порядок обработки заявок сохраняется.\n\n**D)** Объяснить различия и последствия двух вариантов A, спросить: «Какой результат A выбираете: вариант 1 или вариант 2?» Остановить работу, требующую выбора. Независимую B также не начинать: предыдущая заявка не закрыта.\n\n**E)** Продолжать ждать ответа на вопрос по A. Минута молчания не означает выбор или разрешение. Самостоятельно выбирать вариант и начинать B нельзя; повторять вопрос только из-за истечения минуты не требуется.\n\n**F)** Пропустить выполненную A и начать новую B. Повторно выполнять A без отдельной просьбы нельзя; дополнительное разрешение на B уже не требуется.\n\nПрочитаны `INDEX.md` и `START.md` обоих пакетов; все пять Markdown-правил `.claude/rules/`: `comm-skill-rule-ownership`, `comm-package-independence`, `comm-entrypoint-links-rule`, `comm-user-owned-entrypoints`, `comm-human-folder-guides`. Дополнительно прочитаны каноническое [правило владения](harness/common/rules/comm-skill-rule-ownership.md), [порядок выполнения и закрытия inbox](harness/common/decisions/inbox-execution-status.md) и [правило объяснения блокировок](harness/common/lessons/comm-blockers-explicit-permission.md).",
+      "events_sha256": "d9cb55f44adf606e3ef711090482dbd7ff16850e38c2d49840671b5304cfe0b2"
+    },
+    "codex-both-green": {
+      "exit_code": 0,
+      "elapsed_seconds": 37.63,
+      "isolation_probe": "passed",
+      "command": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "-s",
+        "read-only",
+        "-C",
+        "/tmp/two-modes-native-f_s19fvz/workspace",
+        "-c",
+        "features.multi_agent=false",
+        "--json",
+        "Проверка поведения, только чтение. Начни с обязательного старта проекта и прочитай подключённые правила, кроме README.human.md. Других файлов не изменяй. Пользователь разрешил выполнить все заявки inbox. Это моделирование: фактических заявок для обработки нет. Дай конкретный следующий шаг в каждой независимой ситуации: A) две новые заявки: 2026-10-06-B и 2026-10-05-A, обе можно выполнить независимо; предложи порядок и допустимость параллельного начала; B) у ранней A готов кандидат, обязательная публикация ещё не завершена; можно ли начать B; C) при чтении файла опечатка в имени, правильное имя уже известно и чтение разрешено; D) у ранней A конфликт двух допустимых вариантов результата, выбора пользователя нет, поздняя B независима; E) после вопроса по конфликту прошла минута без ответа. Укажи действия, вопросы и что происходит с B. Ответ структурируй A–E; укажи прочитанные правила. F) Ранняя A уже имеет статус выполнена, результат достигнут, повторное выполнение отдельно не запрашивалось; поздняя B новая. Какой следующий шаг?"
+      ],
+      "observed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/common/START.md harness/project/INDEX.md harness/project/START.md'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/common/START.md harness/project/INDEX.md harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-package-independence.md .claude/rules/comm-entrypoint-links-rule.md .claude/rules/comm-user-owned-entrypoints.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-package-independence.md .claude/rules/comm-entrypoint-links-rule.md .claude/rules/comm-user-owned-entrypoints.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc 'cat harness/common/decisions/inbox-execution-status.md harness/common/lessons/comm-blockers-explicit-permission.md'",
+        "/bin/bash -lc 'cat harness/common/decisions/inbox-execution-status.md harness/common/lessons/comm-blockers-explicit-permission.md'"
+      ],
+      "response": "Запущу обязательную проверку старта и прочитаю подключённые правила. Затем разберу ситуации A–F без изменения файлов.\n\nСтартовая проверка прошла успешно. Файлы не изменял; `README.human.md` не читал. Ниже — действия в моделировании.\n\n**A)** Сначала выполнить `2026-10-05-A`, затем `2026-10-06-B`. Параллельное начало запрещено, даже если заявки независимы. Дополнительный вопрос не нужен: выполнение уже разрешено.\n\n**B)** Начинать B нельзя. Следующий шаг — завершить обязательную публикацию A в пределах имеющихся разрешений. Если для публикации недостаёт отдельного разрешения, объяснить причину и запросить именно его. Готовый кандидат не закрывает A; B ждёт.\n\n**C)** Повторить чтение с известным правильным именем самостоятельно. Вопрос и новое разрешение не нужны. Опечатка не создаёт блокировку очереди; B начинается после закрытия A.\n\n**D)** Объяснить различие вариантов и задать конкретный вопрос: «Для результата A выбрать вариант 1 — … или вариант 2 — …?» Остановить работу, зависящую от выбора. B не начинать, несмотря на её независимость: A ещё не закрыта.\n\n**E)** Продолжать ждать ответа. Минута молчания не означает выбор, разрешение или закрытие A. Самостоятельно выбирать вариант нельзя; B остаётся в ожидании. Повторный вопрос только из-за истечения минуты не требуется.\n\n**F)** Пропустить выполненную A, сохранив её результат. Следующий шаг — начать новую B по уже полученному разрешению. Повторное выполнение A и дополнительное подтверждение не нужны.\n\nПрочитаны:\n\n- `INDEX.md` и `START.md` пакетов `harness/common` и `harness/project`.\n- Все пять Markdown-правил `.claude/rules`: `comm-skill-rule-ownership.md`, `comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-user-owned-entrypoints.md`, `comm-human-folder-guides.md`.\n- [Порядок выполнения и статусы inbox](/tmp/two-modes-native-f_s19fvz/workspace/harness/common/decisions/inbox-execution-status.md).\n- [Порядок действий при блокировке](/tmp/two-modes-native-f_s19fvz/workspace/harness/common/lessons/comm-blockers-explicit-permission.md).",
+      "events_sha256": "6664b2d360bc1986a6f95b95ada1db66c09fd922f584ce056c84581a6fc58a1d"
+    }
+  },
+  "published_paths": [
+    "harness/common/rules/comm-skill-rule-ownership.md",
+    "harness/common/decisions/inbox-execution-status.md",
+    "harness/common/lessons/comm-blockers-explicit-permission.md",
+    ".claude/rules/comm-skill-rule-ownership.md"
+  ]
+}

@@ -17,14 +17,14 @@ not publications/copies; notify before repairs. Keep an existing AGENTS startup
 command. The old project check may delegate to common for compatibility; do
 not create an independent implementation or add this wrapper to the neutral
 template. Direct AGENTS/CLAUDE edits remain forbidden; no hooks/blocking or
-machine-specific setup. Diagnostic warning text is in protected-entrypoints.
+machine-specific setup. For warning/error diagnosis read [entrypoints](entrypoints.md).
 
 The shared template is explicit: never infer it from current project folders.
 Changing its contents requires a separate common inbox request, a separate
 explicit user decision and separate explicit confirmation of usefulness to all
 projects. Await both; a proposal or silence supplies neither. New projects use
 the approved revision; existing projects change only by an authorized migration.
-Read structure-and-creation-dates from the target common specs before placement:
+Before placement read [material placement](material-placement.md):
 keep agreed categories, creation dates and human guides; do not invent old dates.
 
 Check two clean temporary installations with no source-project or global-author
@@ -38,3 +38,7 @@ then only the selected body and necessary resources. Exclude human-guide bodies;
 total package size is not startup cost. Structural success does not prove native
 Codex/Claude behavior. Record each agent/mode/version, commands, results and
 limits; changes reset prior instruction statuses and preserve publication gates.
+
+New approved projects have no lessons category; plans remain docs/plans.
+Existing legacy folders survive ordinary startup; remove them only through an
+authorized addressed migration after requirement mapping and current checks.

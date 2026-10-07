@@ -5,7 +5,10 @@ stops, missing-data handling/resource access. Optional headings; order only for
 correctness. Defer details; examples/reasons only prevent errors. History outside
 working instructions; no repeated metadata. Resources portable; separate platforms.
 
-Lazy-first for recognizable tasks; reuse skills/resources. Always-loaded additions
+Skills-first for reusable experience and recognizable tasks; reuse existing
+skills/rules/resources/checks. If an instruction already expresses everything
+needed, do not create another record. Independent repeated competence needs a
+precise trigger; keep reasons/evidence separate, not a story inside SKILL.md. Always-loaded additions
 must name a wrong action before selection; retain guard + when/how pointer.
 New requests or mandatory procedures alone do not justify rules. Record total
 startup (guards/pointers + metadata) before/after and explain growth. No agreed

@@ -1,0 +1,45 @@
+Сначала выполню обязательную стартовую проверку. Затем перечислю доступные локальные скиллы из нативного каталога и прочитаю подключённые инструкции, чтобы предложить место для опыта диагностики CSV. Работаю только на чтение.
+
+
+Стартовая проверка прошла. Нативный каталог локальных скиллов доступен в контексте:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — инструкции и документация по продуктам OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — создание, изменение и публикация скиллов и правил.
+- `comm-install-harness` — установка и диагностика пакетов harness и стартовых ссылок.
+- `comm-preserve-text-line-endings` — узкое исправление UTF-8 текста с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — выбор постоянной формы для опыта и обработка inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласования.
+
+Для выбора постоянного места применю `comm-process-harness-inbox`.
+
+Постоянное место — **скилл и его условно читаемые ресурсы в harness**: `common/skills/` для переносимой диагностики CSV, `project/skills/` для процедуры, зависящей от формата и контрактов проекта.
+
+Перед выбором проверю ожидаемое поведение при следующем сбое, descriptions существующих скиллов, применимые правила, затем подходящие инструкции, ресурсы и существующие исправления/тесты. Отдельного CSV-скилла в доступном нативном каталоге нет; скилл сохранения окончаний строк может покрывать лишь соответствующую часть диагностики.
+
+- **Сценарий уже покрыт:** использовать существующую инструкцию; при пробеле предложить минимальное дополнение её ресурса. Если всё выражено — новая запись не нужна.
+- **Независимая повторяемая компетенция:** предложить компактный lazy skill с понятным условием применения; примеры и подробности вынести в ресурсы. Существенные свидетельства — в `testing/evidence/`.
+
+Срок в минуту и предложение коллеги не разрешают создавать отдельный lesson. Ничего не создавал и не публиковал; стартовая проверка прошла. Для будущего сохранения действует подтверждённый маршрут inbox по [правилу владения](harness/common/rules/comm-skill-rule-ownership.md); inbox — временная заявка, а не постоянное хранилище опыта.
+
+Реально прочитанные файлы, без `README.human.md`:
+
+- `harness/common/INDEX.md`, `harness/common/START.md`
+- `harness/project/INDEX.md`, `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-preserve-text-line-endings/SKILL.md`
+- `harness/common/skills/comm-install-harness/references/material-placement.md`
+
+`harness/common/checks/ensure_entrypoint_links.py` выполнен первой командой; его исходник отдельно не читал.

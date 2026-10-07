@@ -1,9 +1,12 @@
 ---
 name: comm-create-lazy-claude-codex-skills
-description: Author skills and agent rules for Codex and Claude Code. Use when creating, updating, migrating or publishing them, including harness inbox candidates.
+description: Use when creating, updating, migrating or publishing Codex and Claude skills or rules, or converting reusable experience into working instructions.
 ---
 
 # Create and publish Claude-Codex skills and rules
+
+For reusable experience first read from the project root
+`harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`: choose future behavior and an existing owner before creating a new artifact.
 
 Keep discovery in name/description; load resources for the selected task.
 Read named machine files explicitly; exclude README.human.md before reading.

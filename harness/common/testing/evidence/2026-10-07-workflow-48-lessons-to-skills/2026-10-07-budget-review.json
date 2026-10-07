@@ -1,0 +1,821 @@
+[
+  {
+    "target": "comm-create-lazy-claude-codex-skills",
+    "tool_version": "0.1.0",
+    "score": 86,
+    "risk": "high",
+    "budgets": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 46,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+            "tokens": 9,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+            "tokens": 37,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 464,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+            "tokens": 464,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 2294,
+        "band": "excessive",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/content-contract.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+            "tokens": 387,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/evaluation.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md",
+            "tokens": 683,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/placement-contract.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+            "tokens": 425,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/validation-and-publication.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+            "tokens": 799,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 2804,
+        "band": "excessive"
+      }
+    },
+    "before_budgets": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 47,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+            "tokens": 9,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+            "tokens": 38,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 410,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+            "tokens": 410,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 1200,
+        "band": "heavy",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/content-contract.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+            "tokens": 324,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/placement-contract.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md",
+            "tokens": 255,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/validation-and-publication.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md",
+            "tokens": 621,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 1657,
+        "band": "heavy"
+      }
+    },
+    "required": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ]
+      }
+    ],
+    "recommended": [],
+    "disposition": "Budget flags retained unresolved: aggregate deferred resources exceed generic static baseline. Procedures split into conditional resources and hidden document actions moved to owners; removing requirements or inventing a higher budget would conceal the finding. Runtime traces reviewed separately. Coverage artifact info is N/A for Markdown instructions; actual runnable regressions and behavioral traces are linked in final report."
+  },
+  {
+    "target": "comm-process-harness-inbox",
+    "tool_version": "0.1.0",
+    "score": 86,
+    "risk": "high",
+    "budgets": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 47,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-process-harness-inbox/SKILL.md",
+            "tokens": 7,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-process-harness-inbox/SKILL.md",
+            "tokens": 40,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 264,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-process-harness-inbox/SKILL.md",
+            "tokens": 264,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 1469,
+        "band": "excessive",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/experience-routing.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-process-harness-inbox/references/experience-routing.md",
+            "tokens": 526,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/workflow.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+            "tokens": 943,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 1780,
+        "band": "excessive"
+      }
+    },
+    "before_budgets": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 65,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-process-harness-inbox/SKILL.md",
+            "tokens": 7,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-process-harness-inbox/SKILL.md",
+            "tokens": 58,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 304,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-process-harness-inbox/SKILL.md",
+            "tokens": 304,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 609,
+        "band": "heavy",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/workflow.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+            "tokens": 609,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 978,
+        "band": "heavy"
+      }
+    },
+    "required": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ]
+      }
+    ],
+    "recommended": [],
+    "disposition": "Budget flags retained unresolved: aggregate deferred resources exceed generic static baseline. Procedures split into conditional resources and hidden document actions moved to owners; removing requirements or inventing a higher budget would conceal the finding. Runtime traces reviewed separately. Coverage artifact info is N/A for Markdown instructions; actual runnable regressions and behavioral traces are linked in final report."
+  },
+  {
+    "target": "comm-preserve-text-line-endings",
+    "tool_version": "0.1.0",
+    "score": 100,
+    "risk": "low",
+    "budgets": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 54,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-preserve-text-line-endings/SKILL.md",
+            "tokens": 8,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-preserve-text-line-endings/SKILL.md",
+            "tokens": 46,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 465,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-preserve-text-line-endings/SKILL.md",
+            "tokens": 465,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 390,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/regressions.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-preserve-text-line-endings/references/regressions.md",
+            "tokens": 390,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 909,
+        "band": "moderate"
+      }
+    },
+    "before_budgets": null,
+    "required": [],
+    "recommended": [],
+    "disposition": "Budget flags retained unresolved: aggregate deferred resources exceed generic static baseline. Procedures split into conditional resources and hidden document actions moved to owners; removing requirements or inventing a higher budget would conceal the finding. Runtime traces reviewed separately. Coverage artifact info is N/A for Markdown instructions; actual runnable regressions and behavioral traces are linked in final report."
+  },
+  {
+    "target": "comm-resolve-permission-blockers",
+    "tool_version": "0.1.0",
+    "score": 100,
+    "risk": "low",
+    "budgets": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 51,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-resolve-permission-blockers/SKILL.md",
+            "tokens": 8,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-resolve-permission-blockers/SKILL.md",
+            "tokens": 43,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 473,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-resolve-permission-blockers/SKILL.md",
+            "tokens": 473,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 0,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": []
+      },
+      "total_tokens": {
+        "value": 524,
+        "band": "moderate"
+      }
+    },
+    "before_budgets": null,
+    "required": [],
+    "recommended": [],
+    "disposition": "Budget flags retained unresolved: aggregate deferred resources exceed generic static baseline. Procedures split into conditional resources and hidden document actions moved to owners; removing requirements or inventing a higher budget would conceal the finding. Runtime traces reviewed separately. Coverage artifact info is N/A for Markdown instructions; actual runnable regressions and behavioral traces are linked in final report."
+  },
+  {
+    "target": "comm-install-harness",
+    "tool_version": "0.1.0",
+    "score": 86,
+    "risk": "high",
+    "budgets": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 41,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-install-harness/SKILL.md",
+            "tokens": 5,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-install-harness/SKILL.md",
+            "tokens": 36,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 291,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-install-harness/SKILL.md",
+            "tokens": 291,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 2560,
+        "band": "excessive",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/checks.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-install-harness/references/checks.md",
+            "tokens": 700,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/entrypoints.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-install-harness/references/entrypoints.md",
+            "tokens": 1026,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/material-placement.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-install-harness/references/material-placement.md",
+            "tokens": 521,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/testing.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/skills/comm-install-harness/references/testing.md",
+            "tokens": 313,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 2892,
+        "band": "excessive"
+      }
+    },
+    "before_budgets": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 34,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-install-harness/SKILL.md",
+            "tokens": 5,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-install-harness/SKILL.md",
+            "tokens": 29,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 282,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-install-harness/SKILL.md",
+            "tokens": 282,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 643,
+        "band": "heavy",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/checks.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/skills/comm-install-harness/references/checks.md",
+            "tokens": 643,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 959,
+        "band": "heavy"
+      }
+    },
+    "required": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ]
+      }
+    ],
+    "recommended": [],
+    "disposition": "Budget flags retained unresolved: aggregate deferred resources exceed generic static baseline. Procedures split into conditional resources and hidden document actions moved to owners; removing requirements or inventing a higher budget would conceal the finding. Runtime traces reviewed separately. Coverage artifact info is N/A for Markdown instructions; actual runnable regressions and behavioral traces are linked in final report."
+  },
+  {
+    "target": "rules",
+    "tool_version": "0.1.0",
+    "score": 86,
+    "risk": "high",
+    "budgets": {
+      "method": "estimated-static",
+      "trigger_cost_tokens": {
+        "value": 0,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 1,
+          "moderateMax": 1,
+          "heavyMax": 1
+        },
+        "components": []
+      },
+      "invoke_cost_tokens": {
+        "value": 0,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 1,
+          "moderateMax": 1,
+          "heavyMax": 1
+        },
+        "components": []
+      },
+      "deferred_cost_tokens": {
+        "value": 2099,
+        "band": "excessive",
+        "thresholds": {
+          "goodMax": 240,
+          "moderateMax": 640,
+          "heavyMax": 1600
+        },
+        "components": [
+          {
+            "label": "comm-dependencies-through-uv.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/rules/comm-dependencies-through-uv.md",
+            "tokens": 289,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-entrypoint-links-rule.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/rules/comm-entrypoint-links-rule.md",
+            "tokens": 332,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-human-folder-guides.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/rules/comm-human-folder-guides.md",
+            "tokens": 257,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-package-independence.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/rules/comm-package-independence.md",
+            "tokens": 215,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-skill-rule-ownership.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/rules/comm-skill-rule-ownership.md",
+            "tokens": 599,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-user-owned-entrypoints.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/candidate/harness/common/rules/comm-user-owned-entrypoints.md",
+            "tokens": 407,
+            "note": "Generic text file budget"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 2099,
+        "band": "excessive"
+      }
+    },
+    "before_budgets": {
+      "method": "estimated-static",
+      "trigger_cost_tokens": {
+        "value": 0,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 1,
+          "moderateMax": 1,
+          "heavyMax": 1
+        },
+        "components": []
+      },
+      "invoke_cost_tokens": {
+        "value": 0,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 1,
+          "moderateMax": 1,
+          "heavyMax": 1
+        },
+        "components": []
+      },
+      "deferred_cost_tokens": {
+        "value": 1954,
+        "band": "excessive",
+        "thresholds": {
+          "goodMax": 240,
+          "moderateMax": 640,
+          "heavyMax": 1600
+        },
+        "components": [
+          {
+            "label": "comm-dependencies-through-uv.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/rules/comm-dependencies-through-uv.md",
+            "tokens": 289,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-entrypoint-links-rule.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/rules/comm-entrypoint-links-rule.md",
+            "tokens": 329,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-human-folder-guides.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/rules/comm-human-folder-guides.md",
+            "tokens": 228,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-package-independence.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/rules/comm-package-independence.md",
+            "tokens": 212,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-skill-rule-ownership.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/rules/comm-skill-rule-ownership.md",
+            "tokens": 492,
+            "note": "Generic text file budget"
+          },
+          {
+            "label": "comm-user-owned-entrypoints.md",
+            "path": "/home/octadim/MyProjects/GLOBAL_HARNESS_ENVIRONMENT/harness/common/inbox/2026-10-07-workflow-48-lessons-to-skills/before/harness/common/rules/comm-user-owned-entrypoints.md",
+            "tokens": 404,
+            "note": "Generic text file budget"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 1954,
+        "band": "excessive"
+      }
+    },
+    "required": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ]
+      }
+    ],
+    "recommended": [],
+    "disposition": "Budget flags retained unresolved: aggregate deferred resources exceed generic static baseline. Procedures split into conditional resources and hidden document actions moved to owners; removing requirements or inventing a higher budget would conceal the finding. Runtime traces reviewed separately. Coverage artifact info is N/A for Markdown instructions; actual runnable regressions and behavioral traces are linked in final report."
+  }
+]

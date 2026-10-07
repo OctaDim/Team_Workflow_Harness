@@ -1,0 +1,44 @@
+## Каталог
+
+Локальные скиллы из нативного каталога:
+
+- **imagegen** — создание и редактирование растровых изображений.
+- **openai-docs** — документация и работа с продуктами OpenAI и Codex.
+- **skill-creator** — создание и обновление скиллов Codex.
+- **skill-installer** — установка скиллов.
+- **comm-create-lazy-claude-codex-skills** — создание, обновление и перенос скиллов и правил Codex/Claude.
+- **comm-install-harness** — установка и диагностика пакетов и точек входа harness.
+- **comm-preserve-text-line-endings** — ремонт UTF-8 текста с сохранением байтов и окончаний строк.
+- **comm-process-harness-inbox** — выбор постоянной формы для повторяемого опыта и обработка inbox.
+- **comm-resolve-permission-blockers** — разрешение блокировок доступа и согласований.
+
+Первой командой выполню обязательный старт, затем прочитаю подключённые инструкции. Для выбора места опыта применю **comm-process-harness-inbox**. Работа остаётся read-only.
+
+Стартовая проверка прошла. Ничего не создавал и не публиковал; `README.human.md` не читал.
+
+Предлагаю хранить повторяемую процедуру диагностики CSV в **скилле и его условно читаемых ресурсах**: переносимую — в `harness/common/skills/`, зависящую от схемы и импорта проекта — в `harness/project/skills/`. Отдельный lesson заранее выбирать не следует.
+
+Перед выбором проверю будущее поведение, descriptions существующих скиллов, применимые правила, подходящие инструкции и ресурсы, имеющиеся исправления и тесты. В нативном каталоге нет отдельного CSV-скилла; целевой поиск по harness также не выявил CSV-процедуры, но это ещё не доказывает независимость компетенции.
+
+- **Сценарий уже покрыт:** использовать существующую инструкцию; при пробеле предложить минимальное дополнение владельцу. Если инструкция полна — новой записи не нужно.
+- **Независимая повторяемая компетенция:** предложить компактный lazy skill с узнаваемым trigger; примеры и подробности вынести в ресурс. Существенные свидетельства — в `testing/evidence/`.
+- **Срок и предложение коллеги:** не разрешают запись. Сейчас результат — только рекомендация; возможное сохранение позже проходит через явно разрешённые стадии inbox.
+
+Реально прочитанные файлы:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-package-independence.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+
+Дополнительно поиском прочитана совпавшая строка 23 из `harness/common/skills/comm-install-harness/references/entrypoints.md`; файл целиком не открывал.

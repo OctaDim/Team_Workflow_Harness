@@ -1,0 +1,49 @@
+## Каталог
+
+Локальные скиллы из нативного каталога:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и работа с продуктами OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов Codex.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и публикация скиллов и правил.
+- `comm-install-harness` — установка и диагностика пакетов и стартовых файлов harness.
+- `comm-preserve-text-line-endings` — исправления UTF-8 с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — выбор постоянной формы опыта, сохранение решений и обработка inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и автоматического согласования.
+
+Первой командой выполню обязательный старт, затем прочитаю подключённые инструкции. Для выбора места опыта применю `comm-process-harness-inbox`. Работаю read-only; предложение коллеги создать lesson не считаю разрешением на запись.
+Стартовая проверка прошла. Ничего не создавал и не публиковал; `README.human.md` не читал.
+
+Повторяемую диагностику CSV предлагаю хранить в **скилле и его условно читаемых ресурсах**, а не в отдельном lesson. Общую процедуру — в `harness/common/skills/`, специфичную для проекта — в `harness/project/skills/`. Поиск по CSV в существующих skills/rules не выявил готовой процедуры; скилл сохранения окончаний строк покрывает лишь возможную часть сценария.
+
+Перед окончательным выбором проверю:
+
+- какое поведение нужно повторять: диагностику кодировки, BOM, разделителя, кавычек, переносов строк или структуры записей;
+- descriptions, подходящие инструкции и ресурсы существующих владельцев;
+- применимые правила, уже имеющиеся исправления, проверки и свидетельства;
+- относится ли опыт ко всем проектам или только к текущему.
+
+Если сценарий уже покрыт, использую существующую инструкцию; при пробеле предложу минимальное дополнение её ресурса. Если всё выражено, новая запись не нужна. Если это независимая повторяемая компетенция с узнаваемым условием применения, предложу компактный lazy skill, вынеся примеры в ресурсы. Существенные доказательства отдельно относятся к `testing/evidence/`.
+
+Минутный срок и предложение коллеги не разрешают запись. Будущее сохранение пойдёт через явно согласованный inbox; inbox — временная заявка, а не постоянное место опыта.
+
+Реально прочитанные файлы, относительно корня проекта:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-package-independence.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-preserve-text-line-endings/SKILL.md`
+
+Поиском также прочитаны совпавшие строки из `comm-install-harness/references/entrypoints.md` в `harness/common/skills/` и `.agents/skills/`; целиком эти файлы не открывал.

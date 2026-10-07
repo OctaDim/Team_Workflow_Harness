@@ -1,0 +1,44 @@
+## Каталог
+
+В нативном каталоге доступны следующие локальные скиллы:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и настройка продуктов OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов из каталога или GitHub.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и перенос скиллов и правил.
+- `comm-install-harness` — установка и диагностика пакетов harness и стартовых входов.
+- `comm-preserve-text-line-endings` — узкое исправление UTF-8 с сохранением исходных байтов и окончаний строк.
+- `comm-process-harness-inbox` — сохранение опыта и обработка запросов через inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и автоматического согласования.
+
+Использую `comm-preserve-text-line-endings` и его `references/regressions.md`. Первой командой выполню обязательный старт, затем прочитаю инструкции. Работа останется read-only.
+Стартовая проверка прошла; повреждённых ссылок она не обнаружила. Скилл требует сохранять исходные байты: обычный `read_text()` может преобразовать CRLF в LF, поэтому равенства смысла недостаточно. Прочитаю реализацию и критерии повторного запуска; тесты с созданием временных файлов в этом read-only сеансе запускать не буду.
+`read_text()/write_text()` для этого ремонта непригодны: чтение может нормализовать CRLF вне разрешённых вставок. Срок и равенство смысла этого не меняют.
+
+Исправление уже реализовано в `harness/common/checks/ensure_entrypoint_links.py`:
+
+- Читать через `read_bytes().decode('utf-8')`, записывать через `write_bytes(text.encode('utf-8'))`.
+- Сохранять исходные байты, включая смешанные окончания строк.
+- Для вставок выбирать первый LF/CRLF каждого файла отдельно; при отсутствии — LF.
+- В `AGENTS.md` добавлять только отсутствующие стартовые ссылки и указание чтения правил.
+- В `CLAUDE.md` распознавать существующий CRLF-импорт; отсутствующий импорт добавлять с EOL этого файла, сохраняя остальной текст.
+- Повторный запуск должен сохранять байты, не дублировать подключения и не выдавать ложное сообщение о повреждении.
+
+Обязательный старт и повторный запуск завершились с кодом `0`; при повторе байты обоих входов совпали. Текущие входы используют LF. Прямых правок, создания файлов и публикации не выполнял.
+
+Git-репозитория здесь нет: сравнение с HEAD и проверки рабочего diff **не проверены**. Вывод сравнения `AGENTS.md` с `CLAUDE.md` вне репозитория не является проверкой изменений. Регрессионные тесты прочитаны частично, но не запускались: они создают временные fixtures. Для проверки ремонта нужны байтовые сравнения вставок и исходного содержимого, повторный запуск, затем `git status`, `git diff --check` и сравнение с HEAD; одного diff недостаточно.
+
+Реально прочитаны:
+
+- `AGENTS.md`, `CLAUDE.md`.
+- `harness/common/INDEX.md`, `START.md`; `harness/project/INDEX.md`, `START.md`.
+- `harness/common/rules/comm-skill-rule-ownership.md`.
+- Все шесть правил `.claude/rules/`: `comm-skill-rule-ownership.md`, `comm-dependencies-through-uv.md`, `comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-user-owned-entrypoints.md`, `comm-human-folder-guides.md`.
+- `.agents/skills/comm-preserve-text-line-endings/SKILL.md` и собственный `references/regressions.md`.
+- `harness/common/skills/comm-preserve-text-line-endings/SKILL.md`.
+- `harness/common/skills/comm-install-harness/SKILL.md` и `references/entrypoints.md`.
+- `harness/common/checks/ensure_entrypoint_links.py`.
+- Фрагменты `harness/common/testing/tests/test_ensure_entrypoint_links.py` и `test_entrypoint_notifications.py`.
+
+`README.human.md` не читал.

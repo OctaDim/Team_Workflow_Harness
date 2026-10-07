@@ -1,0 +1,65 @@
+В нативном каталоге предоставлены локальные скиллы:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и работа с продуктами OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов из каталога или GitHub.
+- `comm-create-lazy-claude-codex-skills` — создание и сопровождение скиллов и правил Codex/Claude Code.
+- `comm-install-harness` — установка, перенос и диагностика пакетов harness, изменение общего каркаса.
+- `comm-process-harness-inbox` — обработка inbox harness и статусов запросов.
+
+Использую `comm-install-harness` и его `references/checks.md`. Первой командой выполню обязательную стартовую проверку; затем прочитаю инструкции и подготовлю рекомендации без фактического переноса.
+
+Стартовая проверка прошла. Контракт прямо запрещает заменять существующий `project` пустым каркасом. Общий шаблон берётся из `common/base/project-skeleton.json`; локальную категорию нельзя включать в него без отдельного решения пользователя и подтверждения пользы всем проектам. Уточню состав материалов EPL и доступные проверки; переносы и прогоны с записью выполнять не буду.
+
+Перенос подготовлен как план; фактически ничего не переносил и правок не выполнял. Первой командой запущен обязательный `python3 harness/common/checks/ensure_entrypoint_links.py`: код завершения `0`. Сравнение входных настроек с историей осталось непроверенным — истории проекта нет. Тела `README.human.md` не читал.
+
+| Назначение | Допустимое действие при будущем переносе |
+|---|---|
+| Новый проект из одного `common` | Перенести `common`; стартовая проверка создаст **отсутствующий** нейтральный `project` из `harness/common/base/project-skeleton.json`, без прежних рабочих материалов. |
+| Проект из `common+project` | Сохранить существующий `project` побайтно, включая рабочие материалы `docs/epl-import`. Изменение общего шаблона не должно автоматически дополнять существующий пакет. |
+| Только `project` | Не поддерживается. Проверить отказ из-за отсутствия `common` до любых записей. |
+
+Просьбу коллеги заменить рабочий пакет пустым выполнять нельзя. Четыре часа подготовки и минутный срок не меняют контракт сохранения. Источник каркаса — явный JSON в `common`, а не папки текущего `project`.
+
+Включение локальной категории в общий каркас тоже недопустимо сейчас. [Скилл и его checks](.agents/skills/comm-install-harness/references/checks.md) требуют: “a separate common inbox request, a separate explicit user decision and separate explicit confirmation of usefulness to all projects”. До двух явных ответов включение останавливается. Для существующих проектов затем нужна отдельно разрешённая миграция. В рамках текущего read-only запроса заявку не создавал.
+
+В текущем workspace нет ни `harness/project/docs/epl-import`, ни корневого `docs/epl-import`; наличие материалов во втором целевом проекте принимаю как условие задачи. Перед реальным переносом нужно установить точные корни назначения, инвентаризировать файлы и сохранить карту путей и исходные хеши.
+
+Проверки будущего переноса:
+
+- Две чистые временные установки: `common-only` и `common+project`, без доступа к исходному проекту и глобальным авторским скиллам.
+- Для первой — полнота нейтральных категорий, INDEX/START и человеческих пояснений, отсутствие старой работы. Для второй — совпадение хешей всех существующих проектных файлов, особенно EPL.
+- Повторный старт — неизменные файлы, настройки и проектные материалы; отсутствие повторного восстановления исправных ссылок.
+- Повреждённые обязательные ресурсы и небезопасные пути — отказ; отсутствие `common` — отказ до записи.
+- Проверка ссылок, ресурсов, команд и обычных нативных копий. Существующую стартовую команду AGENTS сохранять; старый проектный checker допустим только как делегирование в `common`.
+- Codex и Claude проверять отдельно в обоих режимах для конкретной версии. Равенство копий и структурный успех не доказывают нативное поведение. Фиксировать команды, результаты и ограничения; изменение инструкций сбрасывает прежние статусы.
+
+Эти проверки здесь **не запускались**, поскольку создают временные установки. Прочитан существующий `test_entrypoint_portability.py`; его наличие не означает успешного прогона.
+
+Контекст загружать постепенно: стартовые указатели и обязательные правила, нативные `name/description`, затем выбранный SKILL и необходимые ресурсы. Материалы EPL читать по задаче, исключая `README.human.md` на любой глубине. Стартовый бюджет измерять отдельно для двух режимов; общий размер пакетов не равен стоимости старта.
+
+Реально прочитанные файлы, относительно корня workspace:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.agents/skills/comm-install-harness/SKILL.md`
+- `.agents/skills/comm-install-harness/references/checks.md`
+- `harness/common/skills/comm-install-harness/SKILL.md`
+- `harness/common/skills/comm-install-harness/references/checks.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/base/project-skeleton.json`
+- `harness/common/specs/2026-10-06-structure-and-creation-dates.md`
+- `harness/common/docs/2026-10-05-protected-entrypoints.md`
+- `harness/common/testing/tests/test_entrypoint_portability.py`
+
+Стартовый скрипт был исполнен; его исходный текст отдельно не читал.

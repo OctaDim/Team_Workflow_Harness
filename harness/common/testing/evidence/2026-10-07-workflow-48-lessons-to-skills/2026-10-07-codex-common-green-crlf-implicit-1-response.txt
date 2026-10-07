@@ -1,0 +1,40 @@
+## Каталог
+
+В нативном каталоге доступны следующие локальные скиллы:
+
+- **imagegen** — генерация и редактирование растровых изображений.
+- **openai-docs** — документация и настройка продуктов OpenAI и Codex.
+- **skill-creator** — создание и обновление скиллов Codex.
+- **skill-installer** — установка скиллов из каталога или репозитория.
+- **comm-create-lazy-claude-codex-skills** — создание, миграция и публикация скиллов и правил Codex/Claude.
+- **comm-install-harness** — установка и диагностика harness, его пакетов и стартовых входов.
+- **comm-preserve-text-line-endings** — узкое исправление UTF-8 с сохранением неизменённых байтов и окончаний строк.
+- **comm-process-harness-inbox** — сохранение опыта и обработка запросов через inbox harness.
+- **comm-resolve-permission-blockers** — разбор блокировок доступа и разрешений.
+
+Первой командой запущу обязательную стартовую проверку. Затем прочитаю подключённые инструкции и применимые скиллы для диагностики восстановления и сохранения CRLF. Работа будет только на чтение.
+
+Стартовая проверка прошла, восстановления не потребовалось. Применяю скиллы `comm-install-harness` и `comm-preserve-text-line-endings`: они требуют сохранить исходные байты и выбрать EOL вставок отдельно для каждого файла. Предложение `read_text()/write_text()` этому требованию не соответствует. Git-истории в текущем каталоге нет; сравнение с HEAD здесь не проверено.
+
+`read_text()/write_text()` не подходит: универсальное чтение нормализует CRLF и меняет байты вне разрешённых вставок. Срок и одинаковый смысл этого не оправдывают.
+
+Исправление уже реализовано в `harness/common/checks/ensure_entrypoint_links.py`:
+
+- Чтение через `read_bytes().decode('utf-8')`, запись через `write_bytes(...encode('utf-8'))`.
+- Для вставок выбирается первый LF/CRLF **каждого файла отдельно**; без перевода строки — LF. Смешанные окончания сохраняются.
+- В AGENTS добавляются только недостающие подключения; в CLAUDE импорт вставляется перед исходным содержимым. Лишний текст сохраняется с предупреждением.
+- Распознавание импорта и исключение стартовых строк при сравнении с Git учитывают CRLF.
+
+Первый и повторный запуск завершились с кодом 0. Байты AGENTS.md и CLAUDE.md после повтора совпали; сообщения о восстановлении не было. Проверка CRLF-сравнения в памяти прошла. Git-репозитория здесь нет: сравнение с HEAD **не проверено**. Регрессионные тесты с временными файлами не запускал из-за требования ничего не создавать.
+
+Ничего не правил и не публиковал; README.human.md не читал.
+
+Реально прочитанные файлы (относительно корня проекта):
+
+- `harness/{common,project}/INDEX.md` и `START.md` — четыре файла.
+- `harness/common/rules/comm-skill-rule-ownership.md`.
+- Все шесть Markdown-файлов `.claude/rules/`: `comm-skill-rule-ownership.md`, `comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-dependencies-through-uv.md`, `comm-user-owned-entrypoints.md`, `comm-human-folder-guides.md`.
+- В `.agents/skills/` и `harness/common/skills/` — `comm-install-harness/SKILL.md`, его `references/entrypoints.md`, `comm-preserve-text-line-endings/SKILL.md`, его `references/regressions.md` — восемь файлов.
+- `harness/common/checks/ensure_entrypoint_links.py`.
+- `AGENTS.md`, `CLAUDE.md` — прочитаны как байты для сравнения.
+- Фрагменты трёх тестов в `harness/common/testing/tests/`: `test_ensure_entrypoint_links.py`, `test_entrypoint_notifications.py`, `test_entrypoint_portability.py`.

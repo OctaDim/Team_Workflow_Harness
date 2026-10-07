@@ -1,9 +1,9 @@
 # Карта сохранения WORKFLOW-48
 
 Дата создания: 2026-10-07. Это проверяемая карта кандидата, не новая процедура.
-Исходные bytes: temporary before; hashes: baseline-hashes.json; коммит до задачи: 99027e8.
+Исходные bytes: temporary before; hashes: baseline-hashes.json; каноническая версия до миграции: a3ce223 (новый план исключён из behavioral control).
 Долговременные сырые доказательства остаются в testing/evidence; отдельного архива lessons не создаётся.
-Пункты ниже пока **планируются**, удаление исходников ещё не разрешено gate.
+Карта сверена независимым review по полным текстам четырёх lessons и действующих документов. Два найденных пропуска исправлены и повторно проверены; оставшихся потерь review не выявил. Это проверяемое покрытие, а не утверждение абсолютной гарантии. Удаление выполняется только после финальных локальных проверок и разрешённой публикации текущей непроверенной версии.
 
 | Источник / требование | Владелец в candidate | Проверка / доказательство |
 |---|---|---|
@@ -14,8 +14,8 @@
 | Copy drift: полный набор comm/proj, missing/extra, ordinary files/no symlinks, byte equality, исключение personal/human, пустой набор отказ | authoring placement-contract; installation check pointer | test_rule_copies.py текущая версия, negative controls |
 | Copy drift: startup links ≠ copy completeness ≠ native load; restore проходит current gate, waiver сохраняет реальные статусы | authoring validation/placement + install checks | raw CLI traces, validator не native proof, current per-agent gate |
 | Blockers: любые sandbox/access/filesystem/data-transfer/other блокировки, требующие нового разрешения или решения | short ownership guard + comm-resolve-permission-blockers | explicit/implicit native blocker scenario |
-| Blockers: действие/факт/место/причина/источник/существенная ошибка; unknown vs hypothesis | blocker skill | auto-review отказ текущего RED сохранён; manual trace review |
-| Blockers: конкретное продолжение/пути/access; какие материалы какому сервису; UI location если нужны действия | blocker skill | observed конкретный async вопрос передачи Codex/Claude |
+| Blockers: действие/факт/место/причина/источник/существенная ошибка; unknown vs hypothesis | blocker skill | raw RED failure/provenance + final native blocker manual review |
+| Blockers: конкретное продолжение/пути/access; какие материалы какому сервису; UI location если нужны действия | blocker skill | native blocker outputs: конкретные материалы, получатель, источник и вопрос |
 | Blockers: остановка, без обхода/подмены; только granted scope; silence/time/old assignment не grant; отказ соблюдается, new blocker требует new decision | short guard + blocker skill | native pressure с deadline/старым waiver/другим каналом, no writes check |
 | Blockers: auto-review назвать именно auto-review, не обычными файловыми правами; запрос/ответ не повышает статусы | blocker skill + authoring gate | raw rejection + current statuses |
 | Blockers exception: известное однозначное техническое исправление в разрешённых пределах делается самостоятельно | ownership rule + blocker skill | typo vs decision fork scenario |
@@ -38,6 +38,6 @@
 ## Проверка перед удалением
 
 Нужны coverage review каждого пункта по итоговым bytes, current regression suite,
-проверка ссылок/полных копий/оба режима, реальные Codex/Claude сценарии либо
+проверка ссылок/полных копий/оба режима, реальные отдельные native сценарии либо
 отдельное подтверждённое исключение текущей непроверенной версии.
 Структурная проверка не подтверждает агентское соблюдение.

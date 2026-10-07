@@ -11,5 +11,5 @@ common inbox-заявки, отдельного явного решения по
 подтверждения пользы для всех проектов; до обоих ответов останови включение.
 
 При размещении материалов до записи открой
-`harness/common/specs/2026-10-06-structure-and-creation-dates.md`.
+`harness/common/skills/comm-install-harness/references/material-placement.md`.
 Два режима, проверки, совместимость старой команды и бюджет загрузки — в скилле.

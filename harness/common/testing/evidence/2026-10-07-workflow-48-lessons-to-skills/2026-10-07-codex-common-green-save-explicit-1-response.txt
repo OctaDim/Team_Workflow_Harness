@@ -1,0 +1,48 @@
+## Каталог
+
+Локальные скиллы из нативного каталога:
+
+- **imagegen** — создание и редактирование растровых изображений.
+- **openai-docs** — инструкции и справка по продуктам OpenAI и Codex.
+- **skill-creator** — создание и обновление скиллов.
+- **skill-installer** — установка скиллов.
+- **comm-create-lazy-claude-codex-skills** — создание и обновление скиллов и правил Codex/Claude.
+- **comm-install-harness** — установка и диагностика пакетов и точек входа harness.
+- **comm-preserve-text-line-endings** — исправление UTF-8 текста с сохранением байтов и окончаний строк.
+- **comm-process-harness-inbox** — выбор постоянной формы опыта и обработка запросов inbox.
+- **comm-resolve-permission-blockers** — разрешение блокировок доступа и согласований.
+
+Использую **comm-process-harness-inbox** и его `references/experience-routing.md`. Первой командой выполню обязательную стартовую проверку; далее прочитаю инструкции. Работаю только на чтение.
+
+Постоянное место повторяемой диагностики CSV — **скилл и его условно читаемые ресурсы** в `harness/common/skills/`, если процедура переносима между проектами; в `harness/project/skills/`, если зависит от конкретного проекта.
+
+Перед выбором проверю:
+
+- какое поведение нужно при следующем сбое CSV;
+- descriptions существующих скиллов и применимые rules, затем подходящие тела, ресурсы и исполняемые проверки;
+- есть ли уже исправление или тест и достаточно ли инструкции для повторного применения;
+- переносима ли процедура и есть ли самостоятельный распознаваемый trigger.
+
+Если сценарий покрыт, использую существующую инструкцию; при пробеле предложу минимальное дополнение её ресурса. Если всё уже выражено, новая запись не нужна.
+
+Если это независимая повторяемая компетенция, предложу компактный lazy skill диагностики CSV; подробные примеры — в его `references/`. Перед подготовкой открою канонический скилл авторства. Свидетельства проверок относятся к `testing/evidence/`, существенные основания решений — к `decisions/`.
+
+**Отдельный lesson ради минутного срока создавать не следует.** Предложение коллеги и срочность не разрешают запись. Ничего не создавал и не публиковал; стартовая проверка завершилась успешно. В нативном каталоге отдельного CSV-скилла нет; текстовый поиск также не выявил процедуры CSV, но этого недостаточно для окончательного вывода о покрытии.
+
+Реально прочитанные файлы, без `README.human.md`:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+
+Поиск также прочитал текст двух файлов свидетельств и вернул совпавшие строки: `harness/common/testing/evidence/2026-10-05-skill-authoring-publication.md` и `harness/common/testing/evidence/2026-10-07-lazy-context-routing/2026-10-07-validation.md`. Полностью их не открывал.

@@ -1,0 +1,54 @@
+Сначала выполню обязательную стартовую проверку. Затем перечислю скиллы из нативного каталога и прочитаю подключённые инструкции, исключая README.human.md. Работу ограничу чтением и подготовкой решения.
+
+
+Стартовая проверка прошла. Нативный каталог скиллов доступен:
+
+- `imagegen` — генерация и редактирование растровых изображений.
+- `openai-docs` — документация и настройка продуктов OpenAI, включая Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов из каталога или репозитория.
+- `comm-create-lazy-claude-codex-skills` — создание, миграция и публикация скиллов и правил Codex/Claude.
+- `comm-install-harness` — установка и диагностика пакетов harness и стартовых ссылок.
+- `comm-preserve-text-line-endings` — узкое исправление UTF-8 с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — выбор постоянной формы опыта, заявки inbox и их обработка.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласований.
+
+Для выбора формата опыта применю `comm-process-harness-inbox` и `comm-create-lazy-claude-codex-skills`.
+
+Выбор — **компактный lazy skill** с точным trigger в `description`. Среди просмотренных локальных descriptions CSV-сценарий не найден. Общая диагностика относится к common; зависимость от EPL — к project. Подробный алгоритм и примеры можно вынести в ресурс с явным условием чтения.
+
+Просьба коллеги сделать алгоритм обязательным не обосновывает always-loaded rule. По [experience-routing.md](harness/common/skills/comm-process-harness-inbox/references/experience-routing.md) правило допустимо для конкретного ошибочного действия **до выбора скилла**. Такого действия в исходных данных нет.
+
+Критерии проверки будущего кандидата:
+
+- Зафиксированы точный trigger, необходимые данные, обязательные действия, остановки и наблюдаемый результат.
+- Выполнены RED без инструкции → GREEN с компактным кандидатом; после правок проверки повторены.
+- Проверены явный вызов, неявный выбор по trigger и отсутствие загрузки в посторонней задаче.
+- Отдельно проверены исключение human README при поиске, загрузчиками и в поведении.
+- Codex и Claude проверены отдельно в режимах common-only и common+project; project-only отклоняется.
+- Проверены формат, ресурсы, переносимость и применимые обязательные валидаторы. Недоступные проверки отмечены «не проверено».
+
+**Сейчас допустимы:** чтение явно названных машинных файлов, поиск через `rg` с `-g '!README.human.md'`, анализ и кандидат в ответе. Проверки допустимы лишь без записи, установки и побочных изменений. Не допустимы создание inbox/скилла/правила, правки входов, установка инструментов и публикация. Claude не проверен; минутный дедлайн не снимает gate из [validation-and-publication.md](harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md). Разрешение на непроверенную публикацию отсутствует; публикацию не выполнял.
+
+Первая команда — обязательная стартовая проверка — завершилась успешно. README.human.md не читал; команд создания и публикации не выполнял.
+
+Реально прочитаны полностью:
+
+- `harness/common/{INDEX.md, START.md}`
+- `harness/project/{INDEX.md, START.md}`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md`
+
+Дополнительно прочитаны только строки `name`/`description` остальных четырёх `comm-*` скиллов в `.agents/skills/` и `harness/common/skills/`: `comm-install-harness`, `comm-preserve-text-line-endings`, `comm-resolve-permission-blockers` и уже перечисленных владельцев.

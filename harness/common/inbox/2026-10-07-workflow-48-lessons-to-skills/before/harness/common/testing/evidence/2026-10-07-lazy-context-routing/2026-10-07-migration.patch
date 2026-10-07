@@ -1,0 +1,358 @@
+--- before/harness/common/rules/comm-human-folder-guides.md
++++ candidate/harness/common/rules/comm-human-folder-guides.md
+@@ -1,11 +1,16 @@
+-# Человеческие пояснения harness
++# Человеческие пояснения
+ 
+-При создании категорий/подпапок harness, подключении контекста или поиске знаний:
++До поиска/чтения/подключения контекста исключи README.human.md на любой глубине:
++это человеческие пояснения, не агентские инструкции. Не загружай тела в старт,
++индексы, импорты, description, общий cat или сборщики; при поиске используй
++-g '!README.human.md'. Перечисляй машинные Markdown явно, не references/*.md.
++Личная процедура не отменяет исключение.
+ 
+-- Создавай согласованную структуру заранее, даже пустые категории. Каждой папке harness, включая корни пакетов, нужен README.human.md; новой подпапке — сразу. Просто объясни назначение и материалы, дай наглядный пример с пояснением; для пустой категории отметь иллюстративность примера. README не подтверждает наполненность или проверенность.
+-- Эти файлы — только для человека, не источник правил; агентские инструкции храни отдельно. Не читай тела и не загружай в контекст при старте, маршрутизации, поиске или сборке материалов. Исключай из агентских индексов, импортов, описаний скиллов, стартовых инструкций, общего cat и сборщиков контекста; при поиске используй -g '!README.human.md'. Индивидуальные процедуры не отменяют этот запрет и исключение из поиска.
+-- Программная проверка наличия/структуры может читать файлы, возвращая агенту только результат, пути и ошибки. Создание пояснения не требует чтения других.
+-- При чтении Markdown перечисляй машинные файлы явно либо предварительно исключай README.human.md; `cat references/*.md` включает его и запрещён.
+-- Отдельно проверяй чтение правила, исключение файлов из загрузчиков и поведение агентов. Инструкция не блокирует файловый доступ и не доказывает технический запрет чтения.
++Согласованные категории создавай заранее, даже пустые; каждой новой папке
++harness сразу нужен README.human.md с простым пояснением и понятным примером
++(в пустой — иллюстративным). Наличие README не доказывает наполненность/проверку.
++Программная проверка может читать тела, возвращая только пути/ошибки/результат.
+ 
+-- При оценке скилла, правила или инструкции через plugin-eval до запуска открой из корня проекта `harness/common/docs/2026-10-06-plugin-eval-without-human.md` и используй описанный отдельный Node.js процесс. Он исключает README.human.md из обхода в памяти без изменения человеческих файлов и кода plugin-eval; обычный CLI сам их не исключает.
++Для оценки/изменения инструкций до запуска инструментов открой
++`harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`:
++там процедура human-фильтра и отдельных проверок чтения, загрузчиков и поведения.
+--- before/harness/common/rules/comm-package-independence.md
++++ candidate/harness/common/rules/comm-package-independence.md
+@@ -1,15 +1,15 @@
+-# Два режима установки и проектный каркас
++# Границы установки harness
+ 
+-Применяется при создании, изменении, подключении или переносе harness.
++Common обязателен и независим от прежнего приложения/project; project требует
++common. Project-only не поддерживается. Существующий project нельзя заменять
++пустым каркасом или автоматически дополнять по изменившемуся шаблону.
+ 
+-1. Common — обязательный переносимый пакет; он не требует исходного приложения или материалов прежнего project. Project использует процедуры и проверки common и отдельно не устанавливается.
+-2. Режим 1: перенести только harness/common/. Стартовая проверка из common проверяет сохранённое описание base/project-skeleton.json и автоматически создаёт отсутствующий harness/project/: согласованные пустые категории, нейтральные INDEX.md/START.md и пояснения README.human.md. Рабочие материалы старого проекта не копируются.
+-3. Режим 2: перенести harness/common/ и harness/project/. Существующий project проверяется, пустой каркас вместо него не создаётся; его файлы не перезаписываются и состав по новой редакции шаблона автоматически не дополняется. Повреждённые обязательные ресурсы дают отказ.
+-4. Состав каркаса задаётся явно в common, не выводится из папок текущего проекта. Его изменение — через отдельную common inbox-заявку, отдельное явное решение пользователя и отдельное явное подтверждение пользователя о пользе папки для всех проектов. Агент может предложить категорию, но до обоих ответов останавливает её включение; отсутствие ответа не заменяет решение. Следующие новые проекты получают актуальную разрешённую редакцию.
+-5. Проверять оба режима в чистых временных установках без доступа к исходному проекту и авторским глобальным материалам. Для первого режима доказать создание полного нейтрального project, для второго — сохранение существующих файлов; отдельно проверять повторный запуск и отказ при отсутствии common. Отказ project-only — негативный контроль, не третий режим.
+-6. Ограничивать и проверять стартовый контекст отдельно для двух установок, включая автоматически созданный project в первом режиме. На старте — короткие ограничения и указатели; подробности — по задаче. Комплектность не означает чтения всего пакета. README.human.md в контекст не включать.
+-7. Знания между пакетами не дублировать. Конфликт common/project согласовать с пользователем и ждать ответа перед зависимым действием. Сохранять команды, результаты и ограничения; структурная проверка не доказывает нативное поведение Codex/Claude.
++До создания/изменения установки, подключения/переноса harness или диагностики
++входов открой из корня проекта `harness/common/skills/comm-install-harness/SKILL.md`.
++Изменение общего `harness/common/base/project-skeleton.json` требует отдельной
++common inbox-заявки, отдельного явного решения пользователя и отдельного явного
++подтверждения пользы для всех проектов; до обоих ответов останови включение.
+ 
+-Основная проверка — common/checks/ensure_entrypoint_links.py. Старый путь project/checks/ensure_entrypoint_links.py может сохраняться как короткий вызов обязательной проверки common для совместимости существующих статичных входов; это не автономная копия и не поддержка project-only. В новом пустом каркасе этот старый путь не создаётся.
+-
+-При размещении или переносе материалов открой из корня проекта `harness/common/specs/2026-10-06-structure-and-creation-dates.md`: категории, постоянные даты создания, технические исключения и согласование неизвестных дат. Даты при правках не обновлять.
++При размещении материалов до записи открой
++`harness/common/specs/2026-10-06-structure-and-creation-dates.md`.
++Два режима, проверки, совместимость старой команды и бюджет загрузки — в скилле.
+--- before/harness/common/rules/comm-skill-rule-ownership.md
++++ candidate/harness/common/rules/comm-skill-rule-ownership.md
+@@ -1,17 +1,31 @@
+-# Обязательные границы создания и публикации
++# Обязательные границы и выбор процедур
+ 
+-Применяется до выбора процедуры, при создании, изменении или проверке скилла/правила, записи заявки и публикации harness.
++До выбора процедуры соблюдай применимые comm-/proj- требования; личный скилл
++не разрешает skip/override. Конфликт common/project согласуй до зависимого действия.
+ 
+-- Несколько или все заявки inbox выполнять строго по одной, от ранней к поздней; следующую не начинать до закрытия предыдущей. Если для решения развилки или конфликта нужен ответ либо подтверждение пользователя, объяснить проблему, задать вопрос и остановить зависимую работу, включая переход к следующей заявке, до ответа. Молчание и истечение времени не считать ответом. Однозначную техническую ошибку исправлять самостоятельно в уже разрешённых пределах; новые разрешения и выбор пользователя не предполагать. Подробности закрытия и порядка — `harness/common/decisions/2026-10-05-inbox-execution-status.md`.
+-- Перед записью заявки прочитай из корня проекта `harness/common/decisions/2026-10-05-inbox-execution-status.md`; соблюдай дату и поля Статус/Результат/Причина. Каждая новая заявка: отдельная `inbox/YYYY-MM-DD-суть-заявки/`. Контекст обязателен: когда возникла потребность, обстоятельства, причина, что решит выполнение, требуемый результат.
+-- Для обычной просьбы сохранить сначала предложи создание inbox-заявки; прямой маршрут не предлагай вместо неё без явного выбора пользователя. Просьбы «сохрани/зафиксируй в опыте», «дополни harness» и конечная папка задают результат, не разрешение на стадию или обход inbox. До записи установи явное разрешение на создание заявки; до её выполнения — на обработку; до публикации — на перенос текущего материала. Недостающее разрешение запроси с объяснением и остановись до ответа. Одно сообщение может явно разрешать несколько стадий; уже разрешённое повторно не согласовывай.
+-- Без явно подтверждённого прямого маршрута сохраняй в разрешённой заявке контекст, результат и **полную папку скилла со всеми ресурсами либо полный файл правила**. Прямое каноническое создание требует явного разрешения записать названный материал непосредственно в указанную категорию, минуя inbox, и подтверждения этого исключения; одно сообщение может содержать оба. Конечный путь сам по себе не исключение. Подробные примеры — `harness/common/decisions/2026-10-05-inbox-execution-status.md` из корня проекта. Gate проверок и защиты входов сохраняются.
+-- При блокировке работы, включая отказ автоматической проверки разрешений, прочитай из корня проекта `harness/common/lessons/2026-10-06-comm-blockers-explicit-permission.md`: объясни действие, причину, источник и получателя передачи; запроси конкретное недостающее разрешение и останови зависимые действия до ответа. Само объяснение отказа без запроса разрешения не завершает этот порядок.
+-- `skill-creator` и внешние проверки обязательны во всех проектах. Нет инструмента — предупредить, предложить установку в окружение разработчика, статус «непроверен». Установка сама по себе не означает проверку.
+-- Правила: общие переносимые — harness/common/rules/comm-<name>.md; проектные переносимые — harness/project/rules/proj-<name>.md. После gate при переносе из inbox автоматически сохранить источник и обычную копию в .claude/rules/<то же имя>.md; схема octadim/ отменена.
+-- Для скиллов и правил перед переносом в harness и нативные каталоги проверять повторно; статусы Codex и Claude фиксировать отдельно. Полная проверка — успех у обоих и общих проверок для текущей версии. Неуспех, недоступность или пропуск — «не проверено»; правка отменяет прежние статусы. До разрешённого переноса кандидат остаётся в inbox; копирование статус не меняет. Недоступная/красная проверка требует явного разрешения на публикацию **непроверенной текущей версии**. Обычный запрос о переносе не является разрешением пропустить проверку; исключение не меняет статус на «проверен».
+-- При создании скилла/правила: сначала сохраняемый контракт и RED без новых инструкций, затем компактная версия и проверка итогового поведения. После правок повторить проверки; подробный порядок — `harness/common/docs/2026-10-05-compact-authoring.md`. Уже компактный материал искусственно не ужимать.
+-- Инструкция однозначно задаёт применимость, обязательное поведение и проверяемое соблюдение; сохраняет существенные границы и доступ к ресурсам. Форма и объём — по задаче, обязательного шаблона разделов нет; детали загружаются по необходимости.
+-- Применимые канонические comm-/proj- требования приоритетнее индивидуальных; skip/override запрещены. Конфликт common/project — согласовать и ждать ответа.
++- Обычную просьбу сохранить сначала направляй в inbox. Создание, выполнение
++  и публикация требуют явных разрешений; одно сообщение может разрешить несколько
++  стадий, уже разрешённое повторно не согласовывай. Конечный путь не разрешение.
++  Прямой путь — только явно разрешённый и подтверждённый обход inbox для названного
++  материала/категории. Недостающее разрешение запроси и жди; молчание не ответ.
++- До записи/обработки заявки или памяти открой из корня проекта
++  `harness/common/skills/comm-process-harness-inbox/SKILL.md`.
++  Выбранные заявки выполняй последовательно, от ранней к поздней; до закрытия
++  предыдущей следующую не начинай. Развилка/конфликт требует ответа; однозначную
++  техническую ошибку исправляй в уже разрешённых пределах.
++- До создания/изменения/проверки/переноса скилла или правила открой
++  `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.
++  Выбирай lazy-first; постоянное правило требует причины до выбора процедуры.
++- Публикуй правила/скиллы только после повторных обязательных проверок текущей
++  компактной версии: Codex и Claude отдельно, оба режима установки. Правка
++  сбрасывает статусы. Недоступность/неуспех — «не проверено»; публикация требует
++  явного разрешения и подтверждения именно этой непроверенной версии. Обычный
++  запрос переноса не исключение. Копирование и разрешение не повышают статус.
+ 
+-При создании, изменении, проверке или переносе скилла/правила открыть lazy-процедуру из корня проекта: `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`; контракт размещения — `harness/common/docs/2026-10-05-skill-rule-ownership-contract.md`. Подробности на старте не читать.
++При блокировке любого действия, включая auto-review, до продолжения открой
++`harness/common/lessons/2026-10-06-comm-blockers-explicit-permission.md`:
++объясни действие/причину/источник/получателя передачи, запроси конкретное
++недостающее разрешение и жди ответа.
++
++Границы нужны до записи, выбора процедуры и публикации; состав заявки,
++инструменты, RED/GREEN, отчёт, размещение и копии — в выбранных скиллах.
+--- before/harness/common/START.md
++++ candidate/harness/common/START.md
+@@ -1,20 +1,9 @@
+ # Обязательные границы
+ 
+-AGENTS.md и CLAUDE.md напрямую не редактировать, включая ручные правки владельцем:
+-изменения — через согласованную отдельную обработку inbox. Исключение — согласованное
+-создание статичного входа и восстановление стартовых ссылок (включая .claude/rules/ и указание их чтения) с предупреждением до записи.
+-Прямое редактирование запрещено договорённостью harness, но технически не заблокировано;
+-проверка предупреждает, не блокируя запись или коммит. Индивидуальные настройки не нужны.
++После стартовой проверки прочитай `rules/comm-skill-rule-ownership.md` до выбора
++процедуры. AGENTS.md/CLAUDE.md напрямую не редактировать; согласованное создание
++и восстановление стартовых ссылок — узкое исключение. Динамическая память — harness.
+ 
+-При создании скилла или правила сразу готовить компактную версию с сохранением
+-обязательного поведения. Проверять итоговый комплект; после изменений инструкций
+-или ресурсов повторять проверки. Статусы «Codex — проверено/не проверено» и
+-«Claude — проверено/не проверено» фиксировать отдельно для итоговой компактной версии.
+-Полная проверка требует успеха у обоих. Без неё перенос в канонические папки harness
+-и нативные папки — только с явным разрешением и подтверждением пользователя;
+-непроверенные статусы сохраняются. [Порядок](docs/2026-10-05-compact-authoring.md) читать по этой задаче.
+-
+-До выбора процедуры и перед созданием любой заявки прочитать
+-[rules/comm-skill-rule-ownership.md](rules/comm-skill-rule-ownership.md). Это короткое обязательное правило; подробную процедуру открывать при создании, изменении, проверке или переносе скилла либо правила.
+-
+-Установка: только common с автоматическим созданием отсутствующего project либо common+project с сохранением проектных материалов. Описание каркаса — base/project-skeleton.json; его состав меняется только через common inbox и отдельное решение с отдельным подтверждением пользователя по rules/comm-package-independence.md.
++Прочитай установленные правила: они задают короткие границы и когда открыть
++скилл. Тела скиллов и ресурсы загружай только для соответствующего действия;
++обычный старт не является задачей установки или авторства. INDEX — карта категорий.
+--- before/harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md
++++ candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md
+@@ -6,10 +6,10 @@
+ # Create and publish Claude-Codex skills and rules
+ 
+ Keep discovery in name/description; load resources for the selected task.
+-Read named machine files explicitly, never `references/*.md`; exclude README.human.md before reading.
++Read named machine files explicitly; exclude README.human.md before reading.
+ 
+ 1. Use superpowers:using-superpowers before authoring. Establish outcome, target environment and destination; a local chat cwd does not identify the project's harness. Read [content](references/content-contract.md) when writing or reviewing either format: applicability, required behavior and observable compliance; headings are optional.
+-2. Read [validation](references/validation-and-publication.md) for tools, behavioral checks and publication; [placement](references/placement-contract.md) when saving or installing. Keep details deferred and the complete behavioral contract intact.
++2. Read [validation](references/validation-and-publication.md) for tools, behavioral checks and publication; [placement](references/placement-contract.md) when saving or installing. Load only task-relevant resources. Preserve the full behavioral contract.
+ 3. Without explicit canonical placement keep context, required result and the full candidate in a separate dated inbox. Repeat final validation before publication; missing/failed checks require explicit permission for this **unverified** version. A transfer request is not permission; exceptions retain the status.
+ 4. After the gate save the canonical source and full ordinary native copies; verify resources, equality, Git visibility and each agent's native behavior.
+ 
+--- before/harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md
++++ candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md
+@@ -1,9 +1,21 @@
+ # Content
+ 
+-Skills/rules: applicability, required behavior, observable compliance. Preserve limits/approvals/stops, missing-data handling/resource access. Do not repeat metadata. Headings optional; order only for correctness. Defer details; examples/reasons only to prevent errors. Explain violations separately only if ambiguous. Corrections: behavior; history/rationale in inbox/lessons.
++Contract: applicability, behavior, observable compliance. Keep limits/approvals/
++stops, missing-data handling/resource access. Optional headings; order only for
++correctness. Defer details; examples/reasons only prevent errors. History outside
++working instructions; no repeated metadata. Resources portable; separate platforms.
+ 
+-Tools/resources survive install: portable when/how links; separate platforms.
++Lazy-first for recognizable tasks; reuse skills/resources. Always-loaded additions
++must name a wrong action before selection; retain guard + when/how pointer.
++New requests or mandatory procedures alone do not justify rules. Record total
++startup (guards/pointers + metadata) before/after and explain growth. No agreed
++numeric budget: do not invent one. Test relevant selection and unrelated non-loading.
+ 
+-SKILL.md: YAML nonempty name/description + Markdown. Name: 1–64 [a-z0-9-], no leading/trailing '-' or '--'; matches folder, shared comm-/proj-. Description: 1–1024 chars, capability/activation; algorithms/constraints in body. SKILL.md suffices; define optional references/=guidance, scripts/=actions, assets/=outputs. Optional agents/openai.yaml: UI name/description/icons, invocation policy/dependencies. Keep harness human README rules; never load bodies.
++SKILL.md: nonempty YAML name/description + Markdown. Name 1–64 [a-z0-9-],
++no leading/trailing '-' or '--', matches folder, shared comm-/proj-. Description
++1–1024 chars: capability/trigger, not algorithm/constraints. SKILL.md suffices;
++optional references/=guidance, scripts/=actions, assets/=output; agents/openai.yaml
++for UI/description/icons, invocation policy/dependencies. Never load human guides.
+ 
+-Rules: applicability/behavior in Markdown body, no paths here. Always-loaded placement needs a pre-selection requirement. Claude uses only paths frontmatter, strips it; metadata cannot express scope. Check Codex loading separately.
++Rules: scope/behavior in body, no paths here. Claude strips metadata except paths;
++description cannot scope rules. Verify Codex loading separately.
+--- before/harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md
++++ candidate/harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md
+@@ -1,16 +1,34 @@
+ # Validation/publication
+ 
+-Own dated inbox/YYYY-MM-DD-purpose/ (suffix collisions). request.md: when/context/reason/problem/result; clarify unknowns; invent nothing. Without canonical instruction retain validation.md/full skill/resources or rule. Saving/final path ≠ stage permission. Explicitly authorize creation/execution/publication; one message may cover stages. Ask+stop for missing grants; never re-ask existing ones. Direct creation: confirmed explicit inbox bypass for named material/place; gates remain. New harness folders need explanatory/example README.human.md; exclude bodies from reading/context/imports/evaluation.
++Before inbox recording/processing read
++`harness/common/skills/comm-process-harness-inbox/SKILL.md`: stage permissions,
++full candidate, context, status and permanent storage. New folders: immediate human guides; exclude bodies.
+ 
+-Helpers, no home/cache dependencies: using-superpowers; openai-docs official search+fetch; skill-creator design/final quick_validate.py, metadata/folder equality; writing-skills RED–GREEN–REFACTOR; plugin-eval routing/evaluate-skill analyze for skills/evaluate-plugin only actual manifests; improve-skill brief→required/recommended fixes via skill-creator→re-evaluate/compare; plugin-management integration/install.
++Authoring/testing: read `harness/common/docs/2026-10-05-compact-authoring.md`:
++saved contract → RED without new instructions → compact candidate → GREEN;
++retest after edits, never shrink already-compact material artificially.
++Before plugin-eval read `harness/common/docs/2026-10-06-plugin-eval-without-human.md`:
++use its separate Node.js filter. Check rule reading, loader exclusion and behavior separately; instructions
++do not block file access.
+ 
+-Plain rules: skill-creator scope/no duplication, [content](content-contract.md), conventions/conflicts/resources/compactness/both agents; no skill validator. Generic analysis ≠ skill/plugin/native proof. Plugin rules: evaluate-plugin; recheck fixes.
+-Missing tools: warn/offer authorized install; mark unverified; installed ≠ verified. Benchmark/config/dependency writes need authorization.
++Helpers (portable): using-superpowers;
++openai-docs official sources; skill-creator design/final quick_validate.py;
++writing-skills behavioral RED–GREEN–REFACTOR; plugin-eval start/evaluate-skill
++analyze; improve-skill brief→required/recommended fixes→re-evaluate/compare;
++plugin-management for integration/install. Evaluate-plugin only real manifests.
++Plain rules: skill-creator scope/no duplication, [content](content-contract.md),
++conventions/conflicts/resources/compactness; no skill-only validator. Generic
++analysis is not skill/plugin/native proof. Missing tools: warn, offer authorized
++install, unverified; installed ≠ verified. Authorize benchmark/config/dependency writes.
+ 
+-Inbox processing: ownership/necessity/name. Edits reset statuses; repeat format/resources/helpers/RED–GREEN–REFACTOR/evaluation. Codex/Claude: native listing, explicit own resources, implicit selection in both modes. Common-only: neutral project from common template; common+project: preserve files. Project-only: unsupported rejection test.
++Each final version: both agents/modes, listing, explicit own-resource invocation,
++implicit selection, unrelated non-loading and preserved behavior. Common-only:
++neutral project; combined: preserve files; project-only: refusal. Installation/template changes: open
++`harness/common/skills/comm-install-harness/SKILL.md`; never infer a shared template.
+ 
+-Template: harness/common/base/project-skeleton.json; never infer from project. Changes: common inbox + separate explicit decision + separate explicit all-project usefulness confirmation; await both. Proposal/silence ≠ approval.
+-
+-Report date/version/files/commands/tools/agent versions/scope/contract/compactness; pass/fail/not-run/N/A+reasons/findings/missing tools/next steps/agent-mode statuses. Static tokens ≠ measured usage; equality ≠ native proof.
+-
+-Verified: all mandatory checks, no correctness/discovery/behavior findings. Keep in inbox until explicit permission for this version/named source+native paths; transfer/prior success/deadline ≠ waiver. Exceptions retain statuses. After gate [placement](placement-contract.md), Git/native checks; new failures reset gate/exception. Evidence: testing/evidence; history: inbox.
++Report date/version/files/commands/tools/agent versions/scope/contract/compactness;
++pass/fail/not-run/N/A+reasons, findings/missing tools/next steps, agent-mode statuses. Static tokens ≠ measured usage; equality ≠ native proof. Verified: all mandatory current checks pass, no correctness/discovery/behavior gaps.
++Edits reset statuses; repeat all current checks before publication. Keep in inbox until this version/source/native paths are authorized; unavailable/failed checks require explicit permission for
++this unverified version. Transfer/prior success/deadline is not a waiver;
++exceptions retain statuses. After gate [placement](placement-contract.md) and
++Git/native checks; new failures reset gate. Evidence: testing/evidence; history: inbox.
+--- before/harness/common/skills/comm-install-harness/SKILL.md
++++ candidate/harness/common/skills/comm-install-harness/SKILL.md
+@@ -0,0 +1,22 @@
++---
++name: comm-install-harness
++description: Use when installing, moving or diagnosing harness packages or entrypoints, or changing the shared project skeleton.
++---
++
++# Install or migrate harness
++
++Before changing an installation read [checks](references/checks.md): the two
++supported modes, preservation, isolation and shared-template approvals.
++Common is mandatory; never replace an existing project with an empty skeleton.
++
++For entrypoint diagnosis read `harness/common/docs/2026-10-05-protected-entrypoints.md`
++from the target project root. A chat cwd does not establish the destination.
++Do not edit protected entrypoints or rewrite an existing startup command.
++
++For material placement read `harness/common/specs/2026-10-06-structure-and-creation-dates.md`.
++Skill/rule changes and native installation also require
++`harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md` before action.
++Do not treat copy equality as native behavior verification.
++
++Example: common-only creates a missing neutral project; common+project preserves
++its working files. Test both without access to the source or global author skills.
+--- before/harness/common/skills/comm-install-harness/references/checks.md
++++ candidate/harness/common/skills/comm-install-harness/references/checks.md
+@@ -0,0 +1,40 @@
++# Installation contract
++
++Identify the destination and existing files before copying. Common is portable
++and independent of the old application/project; project requires common.
++
++- Common-only: copy common; the common entrypoint check creates a missing
++  project from `harness/common/base/project-skeleton.json`. It creates the
++  agreed categories, neutral INDEX/START and human guides, never old work.
++- Common+project: preserve existing project files byte-for-byte; do not replace
++  it or add categories merely because the template changed. Missing/unsafe
++  mandatory resources fail the check.
++- Project-only is unsupported; refusal is a negative control, not a third mode.
++
++Run `python3 -B harness/common/checks/ensure_entrypoint_links.py` from the target
++root. It restores startup links and the recursive rules-reading instruction,
++not publications/copies; notify before repairs. Keep an existing AGENTS startup
++command. The old project check may delegate to common for compatibility; do
++not create an independent implementation or add this wrapper to the neutral
++template. Direct AGENTS/CLAUDE edits remain forbidden; no hooks/blocking or
++machine-specific setup. Diagnostic warning text is in protected-entrypoints.
++
++The shared template is explicit: never infer it from current project folders.
++Changing its contents requires a separate common inbox request, a separate
++explicit user decision and separate explicit confirmation of usefulness to all
++projects. Await both; a proposal or silence supplies neither. New projects use
++the approved revision; existing projects change only by an authorized migration.
++Read structure-and-creation-dates from the target common specs before placement:
++keep agreed categories, creation dates and human guides; do not invent old dates.
++
++Check two clean temporary installations with no source-project or global-author
++access: neutral complete project creation; existing project hashes preserved;
++repeated startup unchanged; damaged resources rejected; common absence refused
++before writes. Verify links, resources, commands and ordinary native copies.
++Do not duplicate common/project knowledge; stop conflicting actions for the user.
++
++Measure startup separately for both modes: pointers/guards + skill metadata,
++then only the selected body and necessary resources. Exclude human-guide bodies;
++total package size is not startup cost. Structural success does not prove native
++Codex/Claude behavior. Record each agent/mode/version, commands, results and
++limits; changes reset prior instruction statuses and preserve publication gates.
+--- before/harness/common/skills/comm-process-harness-inbox/SKILL.md
++++ candidate/harness/common/skills/comm-process-harness-inbox/SKILL.md
+@@ -0,0 +1,21 @@
++---
++name: comm-process-harness-inbox
++description: Use when recording experience in harness, creating an inbox request, processing one or several requests, or updating their execution status. Handles permission stages and closure; skill/rule authoring also uses its authoring skill.
++---
++
++# Обработка harness inbox
++
++До записи или начала обработки прочитай [workflow](references/workflow.md):
++разрешения, состав заявки, статусы и закрытие. Определи пакет common/project
++по содержанию; обычную просьбу сохранить сначала направляй в inbox.
++
++Выбранные заявки выполняй по одной от ранней к поздней, учитывая прежние
++статусы. Не начинай следующую до закрытия предыдущей. Если для развилки или
++конфликта нужен ответ, останови зависимые действия; молчание не ответ.
++Однозначную техническую ошибку исправляй в уже разрешённых пределах.
++
++Для создания/изменения/проверки/публикации скилла или правила до действия
++открой из корня проекта `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.
++Готовый кандидат без обязательной публикации не закрывает заявку.
++Пример: «создай заявку и выполни» разрешает обе стадии, но не публикацию
++непроверенной версии. Сохраняй результат вне inbox и обновляй учёт по workflow.
+--- before/harness/common/skills/comm-process-harness-inbox/references/workflow.md
++++ candidate/harness/common/skills/comm-process-harness-inbox/references/workflow.md
+@@ -0,0 +1,39 @@
++# Разрешения и учёт
++
++Различай создание, выполнение, публикацию и исключение маршрута. Для каждой
++стадии установи явное разрешение из запроса/ответа пользователя; одно сообщение
++может разрешить несколько стадий, разрешённое повторно не согласовывай.
++«Сохрани», конечный путь или номер варианта не разрешают недостающие стадии.
++Для обычной просьбы сохранить сначала предложи inbox. Прямой путь требует
++явного разрешения и подтверждения записи названного материала в указанную
++категорию, минуя inbox; это не отменяет проверок и защиты входов.
++
++До записи открой из корня проекта
++`harness/common/decisions/2026-10-05-inbox-execution-status.md`.
++Создай отдельную `harness/<пакет>/inbox/YYYY-MM-DD-суть/` с фактической датой
++создания; совпадение имени разреши смысловым уточнением. В request.md укажи:
++когда возникла потребность, обстоятельства, причину, что решит выполнение,
++требуемый результат. Не выдумывай неизвестные даты. Для скилла/правила без
++подтверждённого прямого пути приложи полную папку/ресурсы либо полный файл.
++
++В разделе «Выполнение» сохраняй Статус, Результат, Причину и дату обновления.
++Статусы: новая/в работе/выполнена/заблокирована/отклонена. До начала результат
++«не выполнялась»; при начале — «в работе»; после работы или остановки обнови
++все поля. Сохраняй прежние результаты и ссылки. Выполненную заявку пропусти;
++неизвестный порядок согласуй до зависимой работы. Закрытие — достигнутый
++результат и завершённая обязательная работа либо явное решение пользователя.
++«Заблокирована», «в работе» и готовый неопубликованный кандидат не закрытие.
++
++Недостающее разрешение или решение запроси и жди, не переходя к следующей
++заявке. При блокировке, включая auto-review, до ответа открой
++`harness/common/lessons/2026-10-06-comm-blockers-explicit-permission.md`:
++объясни действие, причину, источник ограничения, получателя передачи и
++запроси конкретное разрешение. Техническую опечатку исправь самостоятельно,
++если это однозначно и не расширяет разрешённую работу.
++
++Inbox временный. Долговременный результат сохраняй независимо от заявки:
++решения — decisions, опыт/найденное решение — lessons, контракты — base/specs,
++знания — docs, доказательства — testing/evidence, продолжение — handoffs.
++Для размещения открой `harness/common/specs/2026-10-06-structure-and-creation-dates.md`.
++Ссылка на заявку допустима как происхождение, не единственное хранилище.
++Статус выполнения не повышает отдельные статусы проверки Codex/Claude.

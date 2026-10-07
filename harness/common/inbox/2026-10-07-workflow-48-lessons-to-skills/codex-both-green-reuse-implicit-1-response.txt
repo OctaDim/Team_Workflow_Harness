@@ -1,0 +1,54 @@
+## Каталог
+
+Локальные скиллы из нативного каталога, предоставленного в контексте:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — инструкции по Codex и продуктам/API OpenAI.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и публикация скиллов и правил Codex/Claude.
+- `comm-install-harness` — установка и диагностика harness и стартовых ссылок.
+- `comm-preserve-text-line-endings` — ремонт UTF-8 текста с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — сохранение опыта и решений, выбор постоянной формы, обработка inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и автоматического согласования.
+
+Первой командой выполню обязательную стартовую проверку, затем прочитаю подключённые инструкции и найду существующие skill и тест. Работаю только на чтение.
+
+Стартовая проверка прошла. Применяю `comm-process-harness-inbox` для выбора минимального постоянного результата и `comm-create-lazy-claude-codex-skills` для оценки существующей инструкции и проверки. Сначала установлю, есть ли пробел в поведении; затраченное на рассказ время само по себе не требует нового материала.
+
+**Минимальное постоянное изменение — никакого.** Решение уже выражено в существующем authoring skill и его [placement-contract.md](/tmp/two-modes-native-5648mmv3/workspace/harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md:14). Новый skill или длинный документ продублирует инструкцию. Три часа рассказа не создают нового требования к будущему поведению.
+
+Существенные доказательства:
+
+- Контракт прямо требует проверять **весь** канонический набор `comm-/proj-` установленных пакетов: отсутствие пропусков и лишних копий, обычные файлы во всех компонентах пути, равенство байтов. Пустой набор считается ошибкой.
+- [test_rule_copies.py](/tmp/two-modes-native-5648mmv3/workspace/harness/common/testing/tests/test_rule_copies.py:10) реализует эту проверку. Контрольные сценарии проверяют пропущенную, изменённую, симлинковую и лишнюю копию в режимах common-only и common+project; project-only отклоняется.
+- `experience-routing.md` и `content-contract.md` прямо запрещают создавать дополнительную запись, когда необходимое поведение уже выражено.
+
+Если появится **новое существенное свидетельство**, достаточно короткого результата в `testing/evidence`: версия, команда, область проверки, результат и ограничения. Основание или существенную альтернативу можно сохранить отдельно в `decisions`. Полный рассказ переносить не нужно.
+
+Стартовая проверка прошла. Исполняемый тест прочитан, **не запускался**: его сценарии создают временные файлы, что противоречит вашему запрету. Успех стартовой проверки не доказывает полноту копий или нативную загрузку агентами. Ничего не записывал и не публиковал.
+
+Полностью прочитанные файлы — пути относительно корня проекта:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md`
+- `harness/common/testing/tests/test_rule_copies.py`
+
+Дополнительно `rg` сканировал содержимое `harness/common/testing`, `harness/common/checks` и каталога authoring skill; это поиск, а не полное чтение найденных файлов. `README.human.md` был исключён.

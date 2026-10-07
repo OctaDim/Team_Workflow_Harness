@@ -1,0 +1,47 @@
+## Каталог
+
+Локальные скиллы из нативного каталога:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и вопросы о продуктах OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и перенос скиллов и правил.
+- `comm-install-harness` — установка и диагностика пакетов и стартовых точек harness.
+- `comm-preserve-text-line-endings` — исправление текста с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — выбор постоянного места для опыта, работа с inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласований.
+
+Первой командой выполню обязательный старт, затем прочитаю подключённые инструкции. Для выбора места опыта применю `comm-process-harness-inbox`. Работаю только на чтение.
+
+Стартовая проверка прошла. Ничего не создавал и не публиковал; `README.human.md` не читал. В нативных descriptions нет CSV-скилла; поиск по skills/rules обоих пакетов не выявил владельца диагностики CSV.
+
+Для повторяемой диагностики CSV предлагаю компактный lazy skill в `harness/common/skills/`, если процедура переносима между проектами; для особенностей конкретного проекта — в `harness/project/skills/`. Примеры и подробности — в условно читаемом ресурсе этого скилла.
+
+Перед окончательным выбором проверю:
+
+- какое поведение нужно в следующем случае и как распознать его trigger;
+- descriptions, применимые rules, затем подходящие тела скиллов и ресурсы;
+- существующие исправления и проверки, переносимость между проектами.
+
+Если сценарий уже покрыт, использую существующую инструкцию; при пробеле предложу минимальное дополнение владельцу. Если всё уже выражено, новой записи не нужно. Если это независимая повторяемая компетенция, предложу отдельный скилл. Сам по себе срок в минуту не оправдывает отдельный lesson.
+
+Предложение коллеги не разрешает запись. Сейчас результат — рекомендация; возможное последующее сохранение идёт через подтверждённый inbox согласно [правилу владения](harness/common/rules/comm-skill-rule-ownership.md).
+
+Реально прочитанные файлы, относительно корня проекта:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-package-independence.md`
+
+Поиск также вернул один фрагмент `harness/common/skills/comm-install-harness/references/entrypoints.md`; целиком этот файл не открывал.

@@ -1,0 +1,47 @@
+Выполню обязательный старт и прочитаю инструкции в режиме read-only. Нативный каталог содержит локальные скиллы:
+
+- `imagegen` — генерация и редактирование растровых изображений.
+- `openai-docs` — документация по Codex и продуктам OpenAI.
+- `skill-creator` — создание и обновление скиллов.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — создание и обновление скиллов и правил Codex/Claude.
+- `comm-install-harness` — установка и диагностика harness.
+- `comm-preserve-text-line-endings` — ремонт текста с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — сохранение опыта, выбор постоянной формы и обработка inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласований.
+
+Использую `comm-process-harness-inbox` и его `references/experience-routing.md`, чтобы предложить место для опыта диагностики CSV. Ничего создавать или публиковать не буду.
+
+Обязательный старт прошёл успешно. Нативный каталог скиллов доступен; имена и описания перечислены до поиска на диске. Ничего не создавал и не публиковал; `README.human.md` не читал.
+
+Для повторяемой диагностики CSV предлагаю условно читаемый ресурс существующего подходящего скилла. Если диагностика окажется самостоятельной компетенцией с чётким trigger — компактный lazy skill: общий в `harness/common/skills/`, специфичный для EPL в `harness/project/skills/`. Отдельный `lesson` заранее выбирать не следует.
+
+Перед выбором проверю:
+
+- Какое поведение требуется при следующем похожем случае.
+- Descriptions существующих скиллов, применимые rules, затем подходящие инструкции, ресурсы и исполняемые проверки.
+- Наличие исправления и теста, переносимость опыта между проектами.
+
+Поиск по CSV в skills/rules common и project не нашёл явного владельца; это ещё не доказывает независимость компетенции.
+
+Если сценарий уже покрыт, использую существующую инструкцию; при пробеле предложу минимальное дополнение её ресурса. Если всё выражено — новая запись не нужна. При независимой компетенции предложу новый lazy skill с условно загружаемыми подробностями. Существенные доказательства относятся к `testing/evidence`, основания решения — к `decisions`.
+
+Минутный срок и предложение коллеги не разрешают запись. Согласно [правилу владения](harness/common/rules/comm-skill-rule-ownership.md), обычное сохранение проходит через подтверждённый inbox; он временный, а постоянный результат хранится вне него.
+
+Реально прочитанные файлы:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+
+Дополнительно поиск вернул отдельную строку из `harness/common/skills/comm-install-harness/references/testing.md`; целиком файл не читал. Стартовый скрипт `harness/common/checks/ensure_entrypoint_links.py` выполнял, исходник не открывал.

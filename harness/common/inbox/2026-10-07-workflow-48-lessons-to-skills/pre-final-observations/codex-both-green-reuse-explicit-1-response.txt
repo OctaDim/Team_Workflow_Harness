@@ -1,0 +1,57 @@
+Сначала выполню обязательную стартовую проверку. Затем перечислю скиллы из предоставленного нативного каталога, прочитаю подключённые инструкции и указанный skill с его контрактом размещения. Ничего записывать не буду.
+
+Стартовая проверка прошла. Нативный каталог скиллов предоставлен в контексте:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и настройка продуктов OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов Codex.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и размещение скиллов и правил; превращение опыта в инструкции.
+- `comm-install-harness` — установка и диагностика пакетов harness и стартовых ссылок.
+- `comm-preserve-text-line-endings` — точечное исправление текста с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — сохранение опыта и решений, выбор постоянной формы, обработка inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласований.
+
+Применяю `comm-create-lazy-claude-codex-skills` для оценки минимального постоянного изменения.
+
+Требование уже полностью выражено в `placement-contract.md`: проверить весь набор `comm-/proj-`, обычные файлы во всех компонентах пути, равенство байтов и отсутствие лишних копий. Существующий тест содержит проверки пропущенной, отличающейся, символьной и лишней копии для обоих режимов. Новый skill или длинный рассказ не добавят будущего поведения.
+
+Полный тест создаёт временные файлы, поэтому при вашем запрете на запись его запускать не буду. Проверю только существующие копии без создания файлов.
+
+Минимальное постоянное изменение — **никакого**. Решение уже закреплено в существующем `comm-create-lazy-claude-codex-skills`, его `references/placement-contract.md` и исполняемом тесте. Три часа рассказа не обосновывают новый skill или длинный документ опыта.
+
+Существенные доказательства:
+
+- Контракт требует проверять полный канонический набор `comm-/proj-`: отсутствие пропусков и лишних копий, обычные файлы во всех компонентах пути, одинаковые байты. Пустой набор считается ошибкой.
+- `test_rule_copies.py` содержит отрицательные сценарии для пропущенной, изменённой, символьной и лишней копии в обоих режимах установки.
+- Прямой запуск проверяющей функции без записи прошёл: **6 копий**.
+- Запуск через pytest недоступен: `No module named pytest`. Полные отрицательные сценарии не запускались, поскольку создают временные файлы. Нативная загрузка агентами не проверена; стартовая проверка её не доказывает.
+
+Если впоследствии понадобится сохранить свидетельство, достаточно краткого результата и ограничений в `testing/evidence`, при наличии нового существенного факта. Дублировать инструкцию не требуется.
+
+Ничего не создавал и не публиковал. `README.human.md` не читал.
+
+Реально прочитанные файлы, относительно корня проекта:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/placement-contract.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-install-harness/references/testing.md`
+- `harness/common/testing/tests/test_rule_copies.py`
+
+Проверяющая функция дополнительно прочитала байты шести канонических правил в `harness/common/rules/` и соответствующих шести файлов `.claude/rules/`, перечисленных выше.

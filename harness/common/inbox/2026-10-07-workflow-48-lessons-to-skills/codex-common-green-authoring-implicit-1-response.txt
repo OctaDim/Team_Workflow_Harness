@@ -1,0 +1,56 @@
+## Каталог
+
+Локальные скиллы из нативного каталога:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и работа с продуктами OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов Codex.
+- `comm-create-lazy-claude-codex-skills` — создание, миграция и публикация скиллов и правил Codex/Claude.
+- `comm-install-harness` — установка и диагностика пакетов и точек входа harness.
+- `comm-preserve-text-line-endings` — узкие исправления UTF-8 с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — выбор формы нового опыта и работа с inbox harness.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и автоматического согласования.
+
+Первой командой выполню обязательный старт, затем прочитаю подключённые инструкции, исключая `README.human.md`. Использую скиллы выбора формы опыта и создания правил/скиллов; подготовлю решение без записи и публикации.
+
+Выбор: **компактный lazy skill для диагностики CSV**. Независимый повторяемый сценарий с точным trigger соответствует этому формату. В нативном каталоге подходящего CSV-скилла нет; перед будущим созданием нужно проверить существующего владельца в целевом harness. Общая процедура относится к common, особенности конкретного проекта — к project.
+
+Просьба коллеги об обязательном алгоритме не обосновывает always-loaded rule. По [критериям выбора](harness/common/skills/comm-process-harness-inbox/references/experience-routing.md) rule допустим для конкретного ошибочного действия **до выбора процедуры**; такой риск здесь не назван. Алгоритм остаётся в скилле, подробности — в условно загружаемых ресурсах.
+
+Критерии будущей проверки:
+
+- Точный trigger вызывает скилл; посторонний запрос не загружает его.
+- Зафиксированы применимость, действия, наблюдаемый результат, остановки и обработка недостающих данных.
+- RED без новой инструкции → GREEN с компактным кандидатом; после правок проверки повторяются.
+- Codex и Claude проверяются отдельно: обнаружение, явный вызов собственных ресурсов, неявный выбор, сохранение поведения.
+- Проверены оба режима: common-only с нейтральным project и common+project с сохранением файлов; project-only отклоняется.
+- Чтение правил, исключение human README загрузчиками и поведение проверяются отдельно. Статическая оценка объёма не доказывает нативное поведение.
+
+Сейчас допустимы чтение, поиск с `rg … -g '!README.human.md'`, явный `cat` машинных файлов и подготовка решения в ответе. Для будущего read-only анализа plugin-eval предусмотрен отдельный Node.js процесс через `harness/common/scripts/plugin_eval_without_human.mjs`; запрещены внешние metric-pack процессы, файловые output-параметры и создание benchmark/config. Обязательные проверки включают `skill-creator`, поведенческие RED/GREEN и внешнюю оценку; их доступность и результаты здесь не подтверждены.
+
+**Публикация недопустима:** Claude не проверен, разрешения именно на непроверенную версию нет. [Контракт проверки](harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md) прямо устанавливает: «Transfer/prior success/deadline is not a waiver». Дедлайн не меняет статус. Запись inbox, установка, публикация и правки входов не выполнялись.
+
+Обязательная первая команда завершилась успешно, восстановления ссылок не сообщала. `README.human.md` не читался.
+
+Реально прочитанные файлы, пути относительно корня проекта:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/validation-and-publication.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md`

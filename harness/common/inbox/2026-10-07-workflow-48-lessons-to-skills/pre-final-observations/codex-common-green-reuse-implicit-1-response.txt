@@ -1,0 +1,32 @@
+Сначала выполню обязательный старт, затем перечислю локальные скиллы из доступного нативного каталога и прочитаю подключённые инструкции. После этого определю минимальное постоянное изменение и подтверждающие его доказательства, без записи файлов.
+
+Применяю `comm-process-harness-inbox` для выбора постоянной формы и `comm-create-lazy-claude-codex-skills` для оценки существующей инструкции и проверки. Стартовая проверка прошла; все найденные Markdown-правила `.claude/rules` прочитаны.
+
+Минимальное постоянное изменение — **никакого**: решение уже полностью закреплено.
+
+В `comm-create-lazy-claude-codex-skills/references/placement-contract.md` прямо требуется проверять весь канонический набор comm-/proj- правил установленных пакетов: отсутствие пропущенных и лишних копий, обычные файлы без симлинков во всех компонентах пути, равенство байтов, отказ на пустой выборке.
+
+Существенное подтверждение — `harness/common/testing/tests/test_rule_copies.py`: проверяет наборы имён, типы путей и байты; содержит негативные контроли пропуска, изменения, симлинка и лишней копии для common-only и common+project. Тест прочитан, **не запускался**: он создаёт временные файлы. Успешный старт не доказывает полноту копий или нативную загрузку агентами.
+
+Новый skill и длинный документ опыта дублировали бы существующую инструкцию. Три часа рассказа не создают нового постоянного требования. При будущем прогоне достаточно сохранить существенные результаты и ограничения в `testing/evidence`, если это будет разрешено.
+
+Ничего не создавал и не публиковал. `README.human.md` не читал.
+
+Полностью прочитаны:
+
+- `harness/common/{INDEX.md,START.md}`
+- `harness/project/{INDEX.md,START.md}`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- Его `references/experience-routing.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- Его `references/content-contract.md`, `validation-and-publication.md`, `placement-contract.md`
+- `harness/common/testing/tests/test_rule_copies.py`
+
+Дополнительно поиск показал фрагменты файлов из `harness/common/checks` и `harness/common/testing`; большой вывод был усечён, поэтому эти файлы не заявляю полностью прочитанными.

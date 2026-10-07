@@ -14,5 +14,5 @@ python3 -B harness/common/checks/ensure_entrypoint_links.py
 при обнаружении — предупреждение и направление в inbox, без hooks.
 
 Нужен Python 3.9+. При диагностике из корня проекта открыть
-`harness/common/docs/2026-10-05-protected-entrypoints.md`.
+`harness/common/skills/comm-install-harness/references/entrypoints.md`.
 Поддерживаются два режима по [контракту установки](comm-package-independence.md): перенос только common автоматически создаёт отсутствующий project из явного общего описания; при переносе обоих пакетов существующий project сохраняется. Common обязателен. Старый проектный путь проверки может вызывать common для совместимости; отдельный project-only не поддерживается. Стартовую команду существующего AGENTS.md не переписывать.

@@ -1,0 +1,40 @@
+Выполню обязательный старт первой командой, затем прочитаю подключённые инструкции и проверю правила сохранения окончаний строк. Работа останется read-only; в конце перечислю прочитанные файлы.
+
+В нативном каталоге доступны: `imagegen` — создание и редактирование растровых изображений; `openai-docs` — документация OpenAI и Codex; `skill-creator` — создание и обновление скиллов; `skill-installer` — установка скиллов; `comm-create-lazy-claude-codex-skills` — авторство скиллов и правил; `comm-install-harness` — установка и диагностика harness; `comm-process-harness-inbox` — обработка inbox harness. `comm-preserve-text-line-endings` в этом каталоге не указан; после старта проверю его наличие на диске.
+
+Старт прошёл успешно, восстановление ссылок не потребовалось. Применяю `comm-install-harness` для диагностики входов. Текущий скрипт уже читает и пишет входы через байты и выбирает CRLF для вставок по первому переводу строки; замена на обычные `read_text/write_text` может нормализовать исходный текст. Git-репозитория здесь нет. Запрошенный скилл и `references/regressions.md` пока не найдены в проекте.
+
+Обязательный старт выполнен первой командой, успешно, без восстановления ссылок. Ничего не создавал, не правил и не публиковал. `README.human.md` не читал.
+
+`comm-preserve-text-line-endings` и его `references/regressions.md` отсутствуют в проверенных локальных каталогах. Поэтому выполнить требование об их использовании не удалось.
+
+Обычные `read_text/write_text` применять нельзя: универсальное чтение нормализует CRLF в LF. Одинаковый смысл не гарантирует сохранения байтов.
+
+В проверенном `ensure_entrypoint_links.py` исправление уже реализовано:
+
+- Входы читаются через `read_bytes().decode('utf-8')`, записываются через `write_bytes()`.
+- Недостающие ссылки дописываются с первым найденным окончанием строки; при отсутствии используется LF.
+- Импорт `@AGENTS.md` вставляется перед существующим содержимым с выбранным окончанием строки.
+- Постороннее содержимое сохраняется.
+
+Для CRLF-регрессии нужны проверки сохранности исходных байтов, CRLF во вставках и побайтовой неизменности после второго запуска. Здесь входы имеют LF; CRLF-сценарий и повторный запуск не проверены. Прямые правки входов не нужны.
+
+В Git следует проверить `git status --short`, `git diff --check` и `git diff -- AGENTS.md CLAUDE.md`; побайтовая проверка нужна отдельно, поскольку Git может нормализовать окончания строк. Здесь `git status` завершился ошибкой: каталог не является репозиторием.
+
+Реально прочитаны:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `harness/common/skills/comm-install-harness/SKILL.md`
+- `harness/common/docs/2026-10-05-protected-entrypoints.md`
+- `harness/common/checks/ensure_entrypoint_links.py`
+- `AGENTS.md`, `CLAUDE.md` — байты для проверки окончаний строк.

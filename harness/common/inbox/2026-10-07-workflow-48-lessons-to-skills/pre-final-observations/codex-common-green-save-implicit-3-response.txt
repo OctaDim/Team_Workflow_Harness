@@ -1,0 +1,46 @@
+Сначала выполню обязательный старт, затем перечислю скиллы из предоставленного нативного каталога и прочитаю подключённые инструкции. Работу проведу без записи; в конце предложу место для опыта диагностики CSV и перечислю прочитанные файлы.
+
+Обязательный старт завершился успешно. В нативном каталоге доступны:
+
+- `imagegen` — создание и редактирование растровых изображений.
+- `openai-docs` — документация и работа с продуктами OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и перенос скиллов и правил, оформление повторяемого опыта.
+- `comm-install-harness` — установка и диагностика пакетов harness и стартовых ссылок.
+- `comm-preserve-text-line-endings` — узкие исправления UTF-8 с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — выбор постоянной формы опыта, сохранение решений и обработка inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласований.
+
+Для выбора постоянного места применю `comm-process-harness-inbox` и `comm-create-lazy-claude-codex-skills`; сначала прочитаю их требования.
+
+Стартовая проверка прошла. Нативный каталог скиллов перечислен до поиска на диске. Ничего не создавал и не публиковал; `README.human.md` не читал.
+
+Для повторяемой диагностики CSV предлагаю постоянное место **в скилле и его условно читаемых ресурсах**:
+
+- Сначала определю нужное поведение при следующем случае, проверю descriptions существующих скиллов, применимые правила, затем подходящие инструкции, ресурсы и проверки. Учту, переносим ли опыт между проектами.
+- Если сценарий уже покрыт, использую существующую инструкцию. При пробеле предложу минимальное дополнение владельцу; при полном покрытии новая запись не нужна.
+- Если это независимая компетенция с понятным триггером, предложу компактный lazy skill: `harness/common/skills/comm-diagnose-csv/` для общего опыта либо `harness/project/skills/proj-diagnose-csv/` для проектного. Примеры и подробности — в ресурсах скилла, существенные свидетельства — в `testing/evidence/`.
+
+В просмотренных skills/rules совпадений по CSV не найдено; это ещё не доказывает отсутствие подходящего владельца. Отдельный `lesson` сейчас не обоснован. Минутный срок и предложение коллеги не разрешают запись. Inbox — временный маршрут согласования, а не постоянное хранилище опыта.
+
+Реально прочитанные файлы (пути относительно корня проекта):
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`
+- `harness/common/skills/comm-process-harness-inbox/references/experience-routing.md`
+
+Дополнительно поиск прочитал совпавшие строки из `harness/common/rules/comm-package-independence.md`, `comm-entrypoint-links-rule.md`, `comm-user-owned-entrypoints.md` и `harness/common/skills/comm-install-harness/references/testing.md`; целиком эти файлы не открывал.

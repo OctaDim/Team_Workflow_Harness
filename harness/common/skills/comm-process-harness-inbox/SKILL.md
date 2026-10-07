@@ -1,21 +1,20 @@
 ---
 name: comm-process-harness-inbox
-description: Use when recording experience in harness, creating an inbox request, processing one or several requests, or updating their execution status. Handles permission stages and closure; skill/rule authoring also uses its authoring skill.
+description: Use when saving reusable experience or a decision in harness, choosing its permanent form, creating or processing inbox requests, or resuming their execution.
 ---
 
-# Обработка harness inbox
+# Сохранение опыта и обработка inbox
 
-До записи или начала обработки прочитай [workflow](references/workflow.md):
-разрешения, состав заявки, статусы и закрытие. Определи пакет common/project
-по содержанию; обычную просьбу сохранить сначала направляй в inbox.
+При «сохрани опыт», «зафиксируй решение», «дополни harness» до выбора места
+прочитай [выбор результата](references/experience-routing.md): будущее
+поведение, существующий владелец, минимальное изменение. Skills-first не
+означает отдельный скилл для каждой ошибки. Определи common/project по содержанию.
 
-Выбранные заявки выполняй по одной от ранней к поздней, учитывая прежние
-статусы. Не начинай следующую до закрытия предыдущей. Если для развилки или
-конфликта нужен ответ, останови зависимые действия; молчание не ответ.
-Однозначную техническую ошибку исправляй в уже разрешённых пределах.
+До записи, выполнения или изменения статуса прочитай
+[workflow](references/workflow.md): разрешённые стадии, полный кандидат,
+контекст, порядок, продолжение и закрытие. Обычный маршрут — подтверждённый inbox;
+готовый кандидат без обязательной публикации заявку не закрывает.
 
-Для создания/изменения/проверки/публикации скилла или правила до действия
-открой из корня проекта `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.
-Готовый кандидат без обязательной публикации не закрывает заявку.
-Пример: «создай заявку и выполни» разрешает обе стадии, но не публикацию
-непроверенной версии. Сохраняй результат вне inbox и обновляй учёт по workflow.
+До создания/изменения/проверки/публикации скилла или правила открой из корня
+проекта `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.
+Сохраняй долговременный результат независимо от временной заявки.

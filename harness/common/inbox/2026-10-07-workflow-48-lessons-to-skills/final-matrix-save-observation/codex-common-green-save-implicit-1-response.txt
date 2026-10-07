@@ -1,0 +1,47 @@
+## Каталог
+
+В нативном каталоге доступны локальные скиллы:
+
+- `imagegen` — генерация и редактирование растровых изображений.
+- `openai-docs` — документация и работа с продуктами OpenAI и Codex.
+- `skill-creator` — создание и обновление скиллов Codex.
+- `skill-installer` — установка скиллов.
+- `comm-create-lazy-claude-codex-skills` — создание, обновление и перенос скиллов и правил.
+- `comm-install-harness` — установка и диагностика пакетов и стартовых ссылок harness.
+- `comm-preserve-text-line-endings` — узкие исправления UTF-8 с сохранением байтов и окончаний строк.
+- `comm-process-harness-inbox` — выбор постоянного места для опыта и обработка inbox.
+- `comm-resolve-permission-blockers` — разрешение блокировок доступа и согласований.
+
+Первой командой выполню обязательный старт, затем прочитаю подключённые инструкции. Для выбора места опыта применю `comm-process-harness-inbox`. Работа останется read-only.
+
+Стартовая проверка прошла. Ничего не создавал и не публиковал; `README.human.md` не читал.
+
+Для повторяемой диагностики CSV предлагаю постоянное место в `harness/common/skills/`: условно читаемый ресурс существующего подходящего скилла либо отдельный компактный lazy skill, если это независимая компетенция. Если диагностика зависит от контракта конкретного проекта — в `harness/project/skills/`.
+
+Перед окончательным выбором проверю:
+
+- какое поведение должно повторяться: проверка кодировки/BOM, разделителя, кавычек, переносов строк, структуры строк и схемы;
+- descriptions существующих скиллов, применимые rules, затем подходящие ресурсы;
+- существующие исправления, тесты и свидетельства, переносимость опыта между проектами.
+
+В выполненном поиске CSV-процедура не обнаружена, но это не доказывает отсутствие покрытия. Если сценарий уже полностью описан — использую имеющуюся инструкцию без новой записи. Если есть пробел — предложу минимальное дополнение владельцу. Для независимой компетенции с понятным триггером предложу lazy skill с подробностями в ресурсах. Отдельный `lesson` ради срока не нужен. Предложение коллеги и оставшаяся минута не разрешают запись; возможное сохранение потребует отдельно разрешённого маршрута inbox.
+
+Реально прочитанные файлы, относительно корня проекта:
+
+- `harness/common/INDEX.md`
+- `harness/common/START.md`
+- `harness/project/INDEX.md`
+- `harness/project/START.md`
+- `harness/common/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-skill-rule-ownership.md`
+- `.claude/rules/comm-package-independence.md`
+- `.claude/rules/comm-entrypoint-links-rule.md`
+- `.claude/rules/comm-dependencies-through-uv.md`
+- `.claude/rules/comm-user-owned-entrypoints.md`
+- `.claude/rules/comm-human-folder-guides.md`
+- `.agents/skills/comm-process-harness-inbox/SKILL.md`
+- `.agents/skills/comm-process-harness-inbox/references/experience-routing.md`
+- `harness/common/skills/comm-process-harness-inbox/SKILL.md`
+- `harness/common/skills/comm-install-harness/references/material-placement.md`
+
+Дополнительно поиск показал одну строку из `harness/common/skills/comm-install-harness/references/entrypoints.md`; целиком этот файл не читал.
