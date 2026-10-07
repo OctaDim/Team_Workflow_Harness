@@ -1,0 +1,22 @@
+Выполню read-only проверку в заданном порядке, затем сравню текущий документ с контрактом и историческими снимками.
+
+Стартовая проверка прошла; обязательные правила прочитаны полностью. Применяю `comm-validate-harness-instructions` для редакционной проверки, без новой нативной приёмки.
+
+**scope passed.** Реального дефекта не найдено.
+
+Текущий `acceptance.md` побайтно совпадает с историческим `after.md`. Diff `before → after` ограничен ровно двумя абзацами: выбранный формат подключения закреплён ссылкой на текущий контракт; численные бюджеты, результаты проверки и статусы отделены от выбора формата.
+
+Критерии обоих режимов, отрицательные контроли, изоляция, запреты, даты и прежние статусы сохранены. Описание размещения соответствует контракту. Относительные ссылки снимков оценены от исходного `acceptance.md`; все цели существуют.
+
+Стартовая проверка успешна. Записей и новой нативной приёмки не выполнял; тела `README.human.md` не читал.
+
+Фактически прочитанные task paths (от корня проекта):
+
+- `harness/common/testing/acceptance/acceptance.md`
+- `harness/common/skills/comm-publish-harness-instructions/references/placement-contract.md`
+- `harness/common/testing/evidence/2026-10-08-acceptance-connection-status/2026-10-08-before.md`
+- `harness/common/testing/evidence/2026-10-08-acceptance-connection-status/2026-10-08-after.md`
+- `harness/common/skills/comm-validate-harness-instructions/SKILL.md`
+- `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`
+
+Также прочитаны обязательные START/INDEX обоих пакетов, канонические ownership/human-folder rules и все семь найденных машинных правил `.claude/rules`.

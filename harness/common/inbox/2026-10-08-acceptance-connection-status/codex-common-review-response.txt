@@ -1,0 +1,20 @@
+Выполню read-only проверку в указанном порядке, затем сравню текущий документ с контрактом и историческими снимками.
+
+Применяю скилл `comm-validate-harness-instructions` для редакционной проверки существующего документа.
+
+**Scope passed.** Реального дефекта в пределах редакционной проверки не найдено.
+
+Текущий `acceptance.md` побайтно совпадает с историческим `after`. Между `before` и `after` изменены ровно два абзаца: выбранный формат подключения согласован с текущим placement contract; нативная проверка и статусы отделены от выбора схемы, численные бюджеты остаются несогласованными.
+
+Критерии обоих режимов, отрицательные контроли, изоляция, запреты, даты и прежние статусы сохранены. Относительные ссылки снимков проверены относительно исходного `acceptance.md`; цели существуют.
+
+Фактически прочитанные task paths:
+
+- `harness/common/testing/acceptance/acceptance.md`
+- `harness/common/skills/comm-publish-harness-instructions/references/placement-contract.md`
+- `harness/common/testing/evidence/2026-10-08-acceptance-connection-status/2026-10-08-before.md`
+- `harness/common/testing/evidence/2026-10-08-acceptance-connection-status/2026-10-08-after.md`
+- `harness/common/skills/comm-validate-harness-instructions/SKILL.md`
+- `harness/common/skills/comm-validate-harness-instructions/references/validation.md`
+
+Стартовая проверка успешна; обязательные START, правила и INDEX прочитаны в заданном порядке. Тела `README.human.md` не читались. Записей не выполнялось. Новая нативная приёмка не проводилась; статусы пакета не повышены.
