@@ -1,0 +1,214 @@
+{
+  "date": "2026-10-07",
+  "generator": "harness/common/checks/ensure_entrypoint_links.py",
+  "generator_sha256": "04bd79b41f38034d99cfd605751b2a5235af70eb27ae7e4b9541b8768855f4d1",
+  "scope": "Local generator diagnosis only; not native Codex/Claude validation of the proposed rule.",
+  "cases": [
+    {
+      "mode": "common",
+      "scenario": "new-entry",
+      "link_order": [
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "required_link_order": true,
+      "legacy_bootstrap_phrase_present": false,
+      "idempotent": true,
+      "project_preserved": true,
+      "existing_correct_entry_preserved": null,
+      "generated_entry_text": "# Harness\n\nВ начале каждой сессии до выполнения задачи запусти из корня проекта:\n\n```sh\npython3 harness/common/checks/ensure_entrypoint_links.py\n```\n\nПри ошибке проверки остановись и сообщи причину.\nПрочитай в следующем порядке (точный порядок очень важен): START.md обоих\nпакетов, все Markdown-правила .claude/rules и подпапок, затем INDEX.md обоих\nпакетов. В каждой группе сначала common, затем project. Все правила получи\nзавершёнными вызовами до чтения тела скилла; не объединяй правила и скилл\nв одном вызове. Подробности открывай по задаче; README.human.md не читай.\nИндивидуальные инструкции не отменяют применимые канонические требования.\nПрямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически\nне заблокированы; изменения предлагай через inbox. Согласованное создание и восстановление\nстартовых ссылок — узкое исключение. Динамическую память сохраняй внутри harness.\n\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n",
+      "commands": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nСтартовые ссылки повреждены и будут автоматически восстановлены.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n",
+          "stderr": ""
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "scenario": "existing-correct-entry",
+      "link_order": [
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md",
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "required_link_order": true,
+      "legacy_bootstrap_phrase_present": false,
+      "idempotent": true,
+      "project_preserved": true,
+      "existing_correct_entry_preserved": true,
+      "generated_entry_text": "# Harness\n\nВ начале каждой сессии до выполнения задачи запусти из корня проекта:\n\n```sh\npython3 harness/common/checks/ensure_entrypoint_links.py\n```\n\nПри ошибке проверки остановись и сообщи причину. \nПрочитай в следующем порядке (точный порядок очень важен):\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования правил.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n\n. Подробности открывай по задаче; README.human.md не читай.\nИндивидуальные инструкции не отменяют применимые канонические требования.\nAGENTS.md принадлежит пользователю; разрешено только восстановление указанных ниже\nссылок:\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n\nДинамическую память сохраняй внутри harness.\n",
+      "commands": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed\n",
+          "stderr": ""
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "scenario": "repair-missing-start",
+      "link_order": [
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md",
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "required_link_order": true,
+      "legacy_bootstrap_phrase_present": false,
+      "idempotent": true,
+      "project_preserved": true,
+      "existing_correct_entry_preserved": null,
+      "generated_entry_text": "# Harness\n\nВ начале каждой сессии до выполнения задачи запусти из корня проекта:\n\n```sh\npython3 harness/common/checks/ensure_entrypoint_links.py\n```\n\nПри ошибке проверки остановись и сообщи причину. \nПрочитай в следующем порядке (точный порядок очень важен):\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования правил.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n\n. Подробности открывай по задаче; README.human.md не читай.\nИндивидуальные инструкции не отменяют применимые канонические требования.\nAGENTS.md принадлежит пользователю; разрешено только восстановление указанных ниже\nссылок:\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n\nДинамическую память сохраняй внутри harness.\n",
+      "commands": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nСтартовые ссылки повреждены и будут автоматически восстановлены.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: updated links in AGENTS.md\n",
+          "stderr": ""
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "scenario": "new-entry",
+      "link_order": [
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "required_link_order": true,
+      "legacy_bootstrap_phrase_present": false,
+      "idempotent": true,
+      "project_preserved": true,
+      "existing_correct_entry_preserved": null,
+      "generated_entry_text": "# Harness\n\nВ начале каждой сессии до выполнения задачи запусти из корня проекта:\n\n```sh\npython3 harness/common/checks/ensure_entrypoint_links.py\n```\n\nПри ошибке проверки остановись и сообщи причину.\nПрочитай в следующем порядке (точный порядок очень важен): START.md обоих\nпакетов, все Markdown-правила .claude/rules и подпапок, затем INDEX.md обоих\nпакетов. В каждой группе сначала common, затем project. Все правила получи\nзавершёнными вызовами до чтения тела скилла; не объединяй правила и скилл\nв одном вызове. Подробности открывай по задаче; README.human.md не читай.\nИндивидуальные инструкции не отменяют применимые канонические требования.\nПрямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически\nне заблокированы; изменения предлагай через inbox. Согласованное создание и восстановление\nстартовых ссылок — узкое исключение. Динамическую память сохраняй внутри harness.\n\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n",
+      "commands": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nСтартовые ссылки повреждены и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n",
+          "stderr": ""
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "scenario": "existing-correct-entry",
+      "link_order": [
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md",
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "required_link_order": true,
+      "legacy_bootstrap_phrase_present": false,
+      "idempotent": true,
+      "project_preserved": true,
+      "existing_correct_entry_preserved": true,
+      "generated_entry_text": "# Harness\n\nВ начале каждой сессии до выполнения задачи запусти из корня проекта:\n\n```sh\npython3 harness/common/checks/ensure_entrypoint_links.py\n```\n\nПри ошибке проверки остановись и сообщи причину. \nПрочитай в следующем порядке (точный порядок очень важен):\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования правил.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n\n. Подробности открывай по задаче; README.human.md не читай.\nИндивидуальные инструкции не отменяют применимые канонические требования.\nAGENTS.md принадлежит пользователю; разрешено только восстановление указанных ниже\nссылок:\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n\nДинамическую память сохраняй внутри harness.\n",
+      "commands": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "scenario": "repair-missing-start",
+      "link_order": [
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md",
+        "harness/common/START.md",
+        "harness/project/START.md",
+        ".claude/rules/",
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "required_link_order": true,
+      "legacy_bootstrap_phrase_present": false,
+      "idempotent": true,
+      "project_preserved": true,
+      "existing_correct_entry_preserved": null,
+      "generated_entry_text": "# Harness\n\nВ начале каждой сессии до выполнения задачи запусти из корня проекта:\n\n```sh\npython3 harness/common/checks/ensure_entrypoint_links.py\n```\n\nПри ошибке проверки остановись и сообщи причину. \nПрочитай в следующем порядке (точный порядок очень важен):\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования правил.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n\n. Подробности открывай по задаче; README.human.md не читай.\nИндивидуальные инструкции не отменяют применимые канонические требования.\nAGENTS.md принадлежит пользователю; разрешено только восстановление указанных ниже\nссылок:\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harness/project/INDEX.md](harness/project/INDEX.md)\n\nДинамическую память сохраняй внутри harness.\n",
+      "commands": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nСтартовые ссылки повреждены и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md\n",
+          "stderr": ""
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}

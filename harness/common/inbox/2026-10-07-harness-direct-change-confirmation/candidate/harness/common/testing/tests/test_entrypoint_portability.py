@@ -28,8 +28,8 @@ class TestPortability:
             material.parent.mkdir(parents=True, exist_ok=True)
             material.write_bytes(b'Existing project material\n')
 
-    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py', *args):
-        return subprocess.run([sys.executable, '-I', '-B', script, *args], cwd=root, env=dict(os.environ, PATH='/no-git-in-this-test'), capture_output=True, text=True)
+    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py'):
+        return subprocess.run([sys.executable, '-I', '-B', script], cwd=root, env=dict(os.environ, PATH='/no-git-in-this-test'), capture_output=True, text=True)
 
     @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
     def test_startup_command_runs_in_each_clean_mode_without_git(self, mode):
@@ -38,7 +38,7 @@ class TestPortability:
             self.install(root, mode)
             project = root / 'harness/project'
             before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}
-            first = self.run_check(root, 'harness/common/checks/ensure_entrypoint_links.py', '--create-project')
+            first = self.run_check(root)
             assert first.returncode == 0, first.stderr
             if 'project' in mode:
                 assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}
@@ -97,7 +97,7 @@ class TestPortability:
             root = Path(directory)
             self.install(root, mode)
             (root / 'harness/common/START.md').unlink()
-            result = self.run_check(root, 'harness/common/checks/ensure_entrypoint_links.py', '--create-project')
+            result = self.run_check(root)
             assert result.returncode == 2
             assert 'START.md' in result.stderr
             assert not (root / 'AGENTS.md').exists()

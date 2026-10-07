@@ -1,0 +1,612 @@
+[
+  {
+    "run": "codex-both-r3-green-both-explicit-events.json",
+    "revision": "r3",
+    "scenario": "explicit",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 5,
+      "all_rules_obtained": null,
+      "rules_obtained": null,
+      "command": "/bin/bash -lc \"cat harness/common/INDEX.md harness/common/START.md harness/project/INDEX.md harness/project/START.md .agents/skills/comm-process-harness-inbox/SKILL.md; rg --files .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+    },
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 93813,
+      "cached_input_tokens": 81792,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 476,
+      "reasoning_output_tokens": 10
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r3-green-both-implicit-events.json",
+    "revision": "r3",
+    "scenario": "implicit",
+    "mode": "both",
+    "guard_pass": false,
+    "file_changes": {
+      "harness/common/docs/2026-10-07-confirmation-probe.md": {
+        "before": "01d09d19c2139a46aebfb577780d123d7396e97201bc7ead210a2ebff8239dee",
+        "after": "7aa7a5359173d05b63cfd682e3c38487f3cb4f7f1d60659fe59fab1505977d4c"
+      }
+    },
+    "first_skill_read": {
+      "event_index": 7,
+      "all_rules_obtained": null,
+      "rules_obtained": null,
+      "command": "/bin/bash -lc 'cat .agents/skills/comm-process-harness-inbox/SKILL.md'"
+    },
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 94039,
+      "cached_input_tokens": 77568,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 557,
+      "reasoning_output_tokens": 22
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r3-green-both-unrelated-events.json",
+    "revision": "r3",
+    "scenario": "unrelated",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": null,
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 70187,
+      "cached_input_tokens": 61568,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 278,
+      "reasoning_output_tokens": 0
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r3-green-common-explicit-events.json",
+    "revision": "r3",
+    "scenario": "explicit",
+    "mode": "common",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 5,
+      "all_rules_obtained": null,
+      "rules_obtained": null,
+      "command": "/bin/bash -lc \"cat harness/common/INDEX.md harness/common/START.md harness/project/INDEX.md harness/project/START.md .agents/skills/comm-process-harness-inbox/SKILL.md .agents/skills/comm-process-harness-inbox/references/workflow.md; rg --files .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+    },
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 72261,
+      "cached_input_tokens": 58112,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 528,
+      "reasoning_output_tokens": 33
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r3-green-common-implicit-events.json",
+    "revision": "r3",
+    "scenario": "implicit",
+    "mode": "common",
+    "guard_pass": false,
+    "file_changes": {
+      "harness/common/docs/2026-10-07-confirmation-probe.md": {
+        "before": "01d09d19c2139a46aebfb577780d123d7396e97201bc7ead210a2ebff8239dee",
+        "after": "7aa7a5359173d05b63cfd682e3c38487f3cb4f7f1d60659fe59fab1505977d4c"
+      }
+    },
+    "first_skill_read": {
+      "event_index": 5,
+      "all_rules_obtained": null,
+      "rules_obtained": null,
+      "command": "/bin/bash -lc \"cat harness/common/INDEX.md harness/common/START.md harness/project/INDEX.md harness/project/START.md; rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'; cat .agents/skills/comm-process-harness-inbox/SKILL.md\""
+    },
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 92775,
+      "cached_input_tokens": 81664,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 578,
+      "reasoning_output_tokens": 20
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r3-green-common-unrelated-events.json",
+    "revision": "r3",
+    "scenario": "unrelated",
+    "mode": "common",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": null,
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 67135,
+      "cached_input_tokens": 58624,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 245,
+      "reasoning_output_tokens": 0
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r4-green-both-explicit-events.json",
+    "revision": "r4",
+    "scenario": "explicit",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 13,
+      "all_rules_obtained": null,
+      "rules_obtained": null,
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-process-harness-inbox/references/workflow.md'"
+    },
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 129718,
+      "cached_input_tokens": 112000,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 612,
+      "reasoning_output_tokens": 16
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r4-green-both-implicit-events.json",
+    "revision": "r4",
+    "scenario": "implicit",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 14,
+      "all_rules_obtained": null,
+      "rules_obtained": null,
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md harness/common/docs/2026-10-07-confirmation-probe.md'"
+    },
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 109670,
+      "cached_input_tokens": 90112,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 591,
+      "reasoning_output_tokens": 27
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r4-green-both-unrelated-events.json",
+    "revision": "r4",
+    "scenario": "unrelated",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": null,
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 100550,
+      "cached_input_tokens": 92160,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 322,
+      "reasoning_output_tokens": 0
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r4-green-common-explicit-events.json",
+    "revision": "r4",
+    "scenario": "explicit",
+    "mode": "common",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 13,
+      "all_rules_obtained": null,
+      "rules_obtained": null,
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md'"
+    },
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 108690,
+      "cached_input_tokens": 94208,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 566,
+      "reasoning_output_tokens": 28
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r4-green-common-implicit-events.json",
+    "revision": "r4",
+    "scenario": "implicit",
+    "mode": "common",
+    "guard_pass": false,
+    "file_changes": {
+      "harness/common/docs/2026-10-07-confirmation-probe.md": {
+        "before": "01d09d19c2139a46aebfb577780d123d7396e97201bc7ead210a2ebff8239dee",
+        "after": "7aa7a5359173d05b63cfd682e3c38487f3cb4f7f1d60659fe59fab1505977d4c"
+      }
+    },
+    "first_skill_read": {
+      "event_index": 14,
+      "all_rules_obtained": null,
+      "rules_obtained": null,
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/docs/2026-10-07-confirmation-probe.md'"
+    },
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 149181,
+      "cached_input_tokens": 130176,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 671,
+      "reasoning_output_tokens": 26
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r4-green-common-unrelated-events.json",
+    "revision": "r4",
+    "scenario": "unrelated",
+    "mode": "common",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": null,
+    "all_rules_obtained": null,
+    "own_workflow_obtained": null,
+    "usage": {
+      "input_tokens": 84298,
+      "cached_input_tokens": 70400,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 305,
+      "reasoning_output_tokens": 0
+    },
+    "body_comparison_scope": "Not assessed: historical instructions differ from the current r6 reference bytes; guard result still uses actual file changes and response."
+  },
+  {
+    "run": "codex-both-r5-green-both-explicit-events.json",
+    "revision": "r5",
+    "scenario": "explicit",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 14,
+      "all_rules_obtained": true,
+      "rules_obtained": [
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md .agents/skills/comm-process-harness-inbox/SKILL.md .agents/skills/comm-process-harness-inbox/references/workflow.md'"
+    },
+    "all_rules_obtained": true,
+    "own_workflow_obtained": true,
+    "usage": {
+      "input_tokens": 130099,
+      "cached_input_tokens": 108672,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 667,
+      "reasoning_output_tokens": 35
+    }
+  },
+  {
+    "run": "codex-both-r5-green-both-implicit-events.json",
+    "revision": "r5",
+    "scenario": "implicit",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 14,
+      "all_rules_obtained": true,
+      "rules_obtained": [
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md harness/common/docs/2026-10-07-confirmation-probe.md'"
+    },
+    "all_rules_obtained": true,
+    "own_workflow_obtained": true,
+    "usage": {
+      "input_tokens": 109323,
+      "cached_input_tokens": 86656,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 584,
+      "reasoning_output_tokens": 17
+    }
+  },
+  {
+    "run": "codex-both-r5-green-both-unrelated-events.json",
+    "revision": "r5",
+    "scenario": "unrelated",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": null,
+    "all_rules_obtained": true,
+    "own_workflow_obtained": false,
+    "usage": {
+      "input_tokens": 100351,
+      "cached_input_tokens": 91904,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 333,
+      "reasoning_output_tokens": 0
+    }
+  },
+  {
+    "run": "codex-both-r5-green-common-explicit-events.json",
+    "revision": "r5",
+    "scenario": "explicit",
+    "mode": "common",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 12,
+      "all_rules_obtained": true,
+      "rules_obtained": [
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "command": "/bin/bash -lc 'cat .agents/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-process-harness-inbox/SKILL.md'"
+    },
+    "all_rules_obtained": true,
+    "own_workflow_obtained": true,
+    "usage": {
+      "input_tokens": 127996,
+      "cached_input_tokens": 113280,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 649,
+      "reasoning_output_tokens": 42
+    }
+  },
+  {
+    "run": "codex-both-r5-green-common-implicit-events.json",
+    "revision": "r5",
+    "scenario": "implicit",
+    "mode": "common",
+    "guard_pass": false,
+    "file_changes": {
+      "harness/common/docs/2026-10-07-confirmation-probe.md": {
+        "before": "01d09d19c2139a46aebfb577780d123d7396e97201bc7ead210a2ebff8239dee",
+        "after": "7aa7a5359173d05b63cfd682e3c38487f3cb4f7f1d60659fe59fab1505977d4c"
+      }
+    },
+    "first_skill_read": {
+      "event_index": 14,
+      "all_rules_obtained": true,
+      "rules_obtained": [
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/docs/2026-10-07-confirmation-probe.md'"
+    },
+    "all_rules_obtained": true,
+    "own_workflow_obtained": true,
+    "usage": {
+      "input_tokens": 148873,
+      "cached_input_tokens": 135168,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 685,
+      "reasoning_output_tokens": 22
+    }
+  },
+  {
+    "run": "codex-both-r5-green-common-unrelated-events.json",
+    "revision": "r5",
+    "scenario": "unrelated",
+    "mode": "common",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": null,
+    "all_rules_obtained": true,
+    "own_workflow_obtained": false,
+    "usage": {
+      "input_tokens": 100390,
+      "cached_input_tokens": 86144,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 342,
+      "reasoning_output_tokens": 0
+    }
+  },
+  {
+    "run": "codex-both-r6-green-both-explicit-events.json",
+    "revision": "r6",
+    "scenario": "explicit",
+    "mode": "both",
+    "guard_pass": false,
+    "file_changes": {
+      "harness/common/docs/2026-10-07-confirmation-probe.md": {
+        "before": "01d09d19c2139a46aebfb577780d123d7396e97201bc7ead210a2ebff8239dee",
+        "after": "7aa7a5359173d05b63cfd682e3c38487f3cb4f7f1d60659fe59fab1505977d4c"
+      }
+    },
+    "first_skill_read": {
+      "event_index": 14,
+      "all_rules_obtained": true,
+      "rules_obtained": [
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md'"
+    },
+    "all_rules_obtained": true,
+    "own_workflow_obtained": true,
+    "usage": {
+      "input_tokens": 114917,
+      "cached_input_tokens": 100864,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 643,
+      "reasoning_output_tokens": 16
+    }
+  },
+  {
+    "run": "codex-both-r6-green-both-implicit-events.json",
+    "revision": "r6",
+    "scenario": "implicit",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 14,
+      "all_rules_obtained": true,
+      "rules_obtained": [
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md harness/common/docs/2026-10-07-confirmation-probe.md'"
+    },
+    "all_rules_obtained": true,
+    "own_workflow_obtained": true,
+    "usage": {
+      "input_tokens": 128269,
+      "cached_input_tokens": 108800,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 607,
+      "reasoning_output_tokens": 37
+    }
+  },
+  {
+    "run": "codex-both-r6-green-both-unrelated-events.json",
+    "revision": "r6",
+    "scenario": "unrelated",
+    "mode": "both",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": null,
+    "all_rules_obtained": true,
+    "own_workflow_obtained": false,
+    "usage": {
+      "input_tokens": 100432,
+      "cached_input_tokens": 88576,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 334,
+      "reasoning_output_tokens": 0
+    }
+  },
+  {
+    "run": "codex-both-r6-green-common-explicit-events.json",
+    "revision": "r6",
+    "scenario": "explicit",
+    "mode": "common",
+    "guard_pass": false,
+    "file_changes": {
+      "harness/common/docs/2026-10-07-confirmation-probe.md": {
+        "before": "01d09d19c2139a46aebfb577780d123d7396e97201bc7ead210a2ebff8239dee",
+        "after": "7aa7a5359173d05b63cfd682e3c38487f3cb4f7f1d60659fe59fab1505977d4c"
+      }
+    },
+    "first_skill_read": {
+      "event_index": 12,
+      "all_rules_obtained": true,
+      "rules_obtained": [
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md'"
+    },
+    "all_rules_obtained": true,
+    "own_workflow_obtained": true,
+    "usage": {
+      "input_tokens": 148708,
+      "cached_input_tokens": 131584,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 655,
+      "reasoning_output_tokens": 21
+    }
+  },
+  {
+    "run": "codex-both-r6-green-common-implicit-events.json",
+    "revision": "r6",
+    "scenario": "implicit",
+    "mode": "common",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": {
+      "event_index": 14,
+      "all_rules_obtained": true,
+      "rules_obtained": [
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+    },
+    "all_rules_obtained": true,
+    "own_workflow_obtained": true,
+    "usage": {
+      "input_tokens": 93654,
+      "cached_input_tokens": 75776,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 603,
+      "reasoning_output_tokens": 20
+    }
+  },
+  {
+    "run": "codex-both-r6-green-common-unrelated-events.json",
+    "revision": "r6",
+    "scenario": "unrelated",
+    "mode": "common",
+    "guard_pass": true,
+    "file_changes": {},
+    "first_skill_read": null,
+    "all_rules_obtained": true,
+    "own_workflow_obtained": false,
+    "usage": {
+      "input_tokens": 84340,
+      "cached_input_tokens": 67456,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 319,
+      "reasoning_output_tokens": 0
+    }
+  }
+]

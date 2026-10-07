@@ -43,8 +43,6 @@ def run(phase, mode):
         shutil.copytree(common / 'rules', staging / '.claude/rules')
         (staging / NOTE).write_text('old\n')
         command = ['python3', '-B', str(common / 'checks/ensure_entrypoint_links.py'), str(staging)]
-        if phase == 'green':
-            command.append('--create-project')
         setup = subprocess.run(command, capture_output=True, text=True)
         assert setup.returncode == 0, setup.stderr
         native.CANDIDATE = staging

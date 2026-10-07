@@ -3,9 +3,7 @@
 Identify the destination and existing files before copying. Common is portable
 and independent of the old application/project; project requires common.
 
-- Common-only: copy common; after authorized inbox processing or explicit direct-change
-  instruction and a separate positive answer to the agent's confirmation,
-  run the common entrypoint check with `--create-project` to create a missing
+- Common-only: copy common; the common entrypoint check creates a missing
   project from `harness/common/base/project-skeleton.json`. It creates the
   agreed categories, neutral INDEX/START and human guides, never old work.
 - Common+project: preserve existing project files byte-for-byte; do not replace
@@ -13,12 +11,8 @@ and independent of the old application/project; project requires common.
   mandatory resources fail the check.
 - Project-only is unsupported; refusal is a negative control, not a third mode.
 
-Ordinary startup uses `python3 -B harness/common/checks/ensure_entrypoint_links.py`
-from the target root. If project is missing, it stops before writes. Do not
-retry with `--create-project` until the inbox route or separate direct-change
-confirmation authorizes creation; the flag itself is not permission. During
-authorized installation only, use
-`python3 -B harness/common/checks/ensure_entrypoint_links.py --create-project`. It restores startup links and the recursive rules-reading instruction,
+Run `python3 -B harness/common/checks/ensure_entrypoint_links.py` from the target
+root. It restores startup links and the recursive rules-reading instruction,
 not publications/copies; notify before repairs. Keep an existing AGENTS startup
 command. The old project check may delegate to common for compatibility; do
 not create an independent implementation or add this wrapper to the neutral
@@ -48,3 +42,10 @@ limits; changes reset prior instruction statuses and preserve publication gates.
 New approved projects have no lessons category; plans remain docs/plans.
 Existing legacy folders survive ordinary startup; remove them only through an
 authorized addressed migration after requirement mapping and current checks.
+
+Разрешённое узкое исключение: обязательная стартовая проверка автоматически
+создаёт только отсутствующий harness/project как пустой нейтральный каркас
+из согласованного harness/common/base/project-skeleton.json, без inbox
+и отдельного подтверждения. Существующий project сохраняется побайтно;
+его правка, дополнение, пересоздание и изменение шаблона этим исключением
+не разрешены.

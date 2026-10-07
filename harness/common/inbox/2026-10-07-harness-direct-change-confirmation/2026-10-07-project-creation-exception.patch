@@ -1,0 +1,438 @@
+--- a/harness/common/INDEX.md
++++ b/harness/common/INDEX.md
+@@ -25,4 +25,4 @@
+ 
+ Заявки inbox могут быть удалены. Опыт, знания, решения, контракты, найденные решения и межсессионную память сохраняй вне inbox в соответствующих категориях; запись только в заявке не считается сохранением.
+ 
+-До выбора процедуры: канонические требования приоритетнее индивидуальных; skip/override запрещены. Общий опыт — через подтверждённый inbox; конечная папка и просьба сохранить не разрешают обход. Прямое создание — только по явно подтверждённому исключению маршрута inbox, определённому в обязательном правиле владения. Прямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически не заблокированы; изменения — через inbox. Согласованное создание и восстановление стартовых ссылок — узкое исключение.
++До выбора процедуры: канонические требования приоритетнее индивидуальных; skip/override запрещены. Любые изменения harness — через подтверждённый inbox; прямой путь требует явного указания и отдельного положительного ответа после вопроса агента. Перед изменением открой skills/comm-process-harness-inbox/SKILL.md. Автоматическое создание только отсутствующего пустого project стартовой проверкой из согласованного шаблона — узкое разрешённое исключение; существующий project не меняется. Прямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически не заблокированы; изменения — через inbox. Согласованное создание и восстановление стартовых ссылок — узкое исключение.
+--- a/harness/common/checks/ensure_entrypoint_links.py
++++ b/harness/common/checks/ensure_entrypoint_links.py
+@@ -15,8 +15,12 @@
+ python3 harness/{package}/checks/ensure_entrypoint_links.py
+ ```
+ 
+-При ошибке проверки остановись и сообщи причину. Затем прочитай INDEX.md и START.md
+-подключённых пакетов. Подробности открывай по задаче; README.human.md не читай.
++При ошибке проверки остановись и сообщи причину.
++Прочитай в следующем порядке (точный порядок очень важен): START.md обоих
++пакетов, все Markdown-правила .claude/rules и подпапок, затем INDEX.md обоих
++пакетов. В каждой группе сначала common, затем project. Все правила получи
++завершёнными вызовами до чтения тела скилла; не объединяй правила и скилл
++в одном вызове. Подробности открывай по задаче; README.human.md не читай.
+ Индивидуальные инструкции не отменяют применимые канонические требования.
+ Прямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически
+ не заблокированы; изменения предлагай через inbox. Согласованное создание и восстановление
+@@ -58,7 +62,7 @@
+ RULES_READ = ('До выполнения задачи прочитай все Markdown-правила из .claude/rules '
+               'и его подпапок, кроме README.human.md; соблюдай применимые требования.')
+ LINK_LINES = {f'- [harness/{p}/{n}](harness/{p}/{n})'
+-              for p in ('common', 'project') for n in ('INDEX.md', 'START.md')} | {RULES_LINK, RULES_READ}
++              for p in ('common', 'project') for n in ('INDEX.md', 'START.md')} | {RULES_LINK, RULES_READ, RULES_LINK + ' ' + RULES_READ}
+ 
+ 
+ def without_startup_links(text):
+@@ -157,6 +161,44 @@
+         staging.rename(project)
+ 
+ 
++
++def repair_startup_blocks(content, resources, missing):
++    """Repair only incomplete generated link blocks, retaining labels and user text."""
++    pattern = re.compile(r'^- \[[^\]\n]+\]\((harness/(?:common|project)/(?:START|INDEX)\.md|\.claude/rules/?)\)')
++    lines = list(fenced_lines(content))
++    output, changed = [], False
++    index = 0
++    while index < len(lines):
++        line, inside = lines[index]
++        if inside or not pattern.match(line):
++            output.append(line)
++            index += 1
++            continue
++        block, seen = [], set()
++        while index < len(lines) and not lines[index][1] and pattern.match(lines[index][0]):
++            target = pattern.match(lines[index][0]).group(1).rstrip('/')
++            if target in seen:
++                break
++            seen.add(target)
++            block.append(lines[index][0])
++            index += 1
++        links = {pattern.match(line).group(1).rstrip('/'): line for line in block}
++        missing_here = [path for path in resources if path not in links]
++        # A repeated canonical block is repaired even if another copy has the missing link.
++        complete_block = '.claude/rules' in links and any(path in links for path in resources)
++        if not missing_here or not (missing or complete_block):
++            output.extend(block)
++            continue
++        newline = '\r\n' if any(line.endswith('\r\n') for line in block) else '\n'
++        for path in missing_here:
++            links[path] = f'- [{path}]({path})' + newline
++        order = resources[:2] + (['.claude/rules'] if '.claude/rules' in links else []) + resources[2:]
++        output.extend(links[path] if links[path].endswith('\n') else links[path] + newline
++                      for path in order)
++        changed = True
++    return ''.join(output), changed
++
++
+ def ensure(root):
+     print(WARNING)
+     common, project = root / 'harness/common', root / 'harness/project'
+@@ -166,8 +208,8 @@
+         raise ValueError('harness/common is required; project-only is unsupported.')
+     categories = load_project_skeleton(common, root)
+     create_project = not project.exists()
+-    resources = [f'harness/{package}/{name}' for package in ('common', 'project')
+-                 for name in ('INDEX.md', 'START.md')]
++    resources = [f'harness/{package}/{name}' for name in ('START.md', 'INDEX.md')
++                 for package in ('common', 'project')]
+     for relative in resources:
+         if create_project and relative.startswith('harness/project/'):
+             continue
+@@ -193,9 +235,23 @@
+         additions.append(RULES_LINK)
+     if RULES_READ not in visible:
+         additions.append(RULES_READ)
++    content, repaired_blocks = repair_startup_blocks(content, resources, missing)
++    if repaired_blocks:
++        # The repaired blocks already contain all missing package links.
++        additions = [line for line in additions if line in (RULES_LINK, RULES_READ)]
++        if RULES_LINK in content:
++            additions = [line for line in additions if line != RULES_LINK]
+     if additions:
+         ending = re.search(r'\r?\n', content)
+         newline = ending.group() if ending else '\n'
++        order = {f'- [{relative}]({relative})': index
++                 for index, relative in enumerate(resources[:2] + ['.claude/rules/'] + resources[2:])}
++        order[RULES_LINK] = 2
++        order[RULES_READ] = 2.5
++        additions.sort(key=lambda line: order[line])
++        if RULES_LINK in additions and RULES_READ in additions:
++            additions[additions.index(RULES_LINK)] += ' ' + RULES_READ
++            additions.remove(RULES_READ)
+         content += ('' if content.endswith('\n') else newline) + newline + newline.join(additions) + newline
+     original_claude = claude.read_bytes().decode('utf-8') if claude.exists() else ''
+     bridge = original_claude
+@@ -204,7 +260,7 @@
+         newline = ending.group() if ending else '\n'
+         bridge = '@AGENTS.md' + newline + bridge
+     changed = []
+-    if additions or bridge != original_claude:
++    if additions or repaired_blocks or bridge != original_claude:
+         print(NOTICE, flush=True)
+     if create_project:
+         print('harness/project отсутствует: создаётся пустой каркас из common.', flush=True)
+--- a/harness/common/rules/comm-entrypoint-links-rule.md
++++ b/harness/common/rules/comm-entrypoint-links-rule.md
+@@ -16,3 +16,10 @@
+ Нужен Python 3.9+. При диагностике из корня проекта открыть
+ `harness/common/skills/comm-install-harness/references/entrypoints.md`.
+ Поддерживаются два режима по [контракту установки](comm-package-independence.md): перенос только common автоматически создаёт отсутствующий project из явного общего описания; при переносе обоих пакетов существующий project сохраняется. Common обязателен. Старый проектный путь проверки может вызывать common для совместимости; отдельный project-only не поддерживается. Стартовую команду существующего AGENTS.md не переписывать.
++
++Разрешённое узкое исключение: обязательная стартовая проверка автоматически
++создаёт только отсутствующий harness/project как пустой нейтральный каркас
++из согласованного harness/common/base/project-skeleton.json, без inbox
++и отдельного подтверждения. Существующий project сохраняется побайтно;
++его правка, дополнение, пересоздание и изменение шаблона этим исключением
++не разрешены.
+--- a/harness/common/rules/comm-package-independence.md
++++ b/harness/common/rules/comm-package-independence.md
+@@ -13,3 +13,10 @@
+ При размещении материалов до записи открой
+ `harness/common/skills/comm-install-harness/references/material-placement.md`.
+ Два режима, проверки, совместимость старой команды и бюджет загрузки — в скилле.
++
++Разрешённое узкое исключение: обязательная стартовая проверка автоматически
++создаёт только отсутствующий harness/project как пустой нейтральный каркас
++из согласованного harness/common/base/project-skeleton.json, без inbox
++и отдельного подтверждения. Существующий project сохраняется побайтно;
++его правка, дополнение, пересоздание и изменение шаблона этим исключением
++не разрешены.
+--- a/harness/common/rules/comm-skill-rule-ownership.md
++++ b/harness/common/rules/comm-skill-rule-ownership.md
+@@ -3,11 +3,28 @@
+ До выбора процедуры соблюдай применимые comm-/proj- требования; личный скилл
+ не разрешает skip/override. Конфликт common/project согласуй до зависимого действия.
+ 
+-- Обычную просьбу сохранить сначала направляй в inbox. Создание, выполнение
+-  и публикация требуют явных разрешений; одно сообщение может разрешить несколько
+-  стадий, уже разрешённое повторно не согласовывай. Конечный путь не разрешение.
+-  Прямой путь — только явно разрешённый и подтверждённый обход inbox для названного
+-  материала/категории. Недостающее разрешение запроси и жди; молчание не ответ.
++- По умолчанию категорически запрещены любые прямые изменения harness;
++  изменения — только через подтверждённый маршрут inbox. Исключение требует
++  явного и однозначного указания пользователя изменить названный материал прямо
++  в harness и отдельного положительного подтверждения после вопроса агента.
++  До прямой правки проверь историю этой задачи: есть ли отдельный вопрос агента
++  о конкретной правке и однозначный положительный ответ после него?
++  Если такой пары нет, задай вопрос и остановись без правок до ответа.
++  Первоначальное «подтверждаю» и явный вызов скилла этой пары не создают.
++  Молчание, неоднозначный ответ или ответ с вариантами не разрешают выполнение.
++  Перед любой задачей изменения harness открой из корня проекта
++  `harness/common/skills/comm-process-harness-inbox/SKILL.md`.
++  Создание заявки, выполнение и публикация требуют явных разрешений; уже
++  полученное разрешение стадии повторно не согласовывай. Для прямого обхода
++  таким разрешением считается только ответ после отдельного вопроса агента.
++
++Разрешённое узкое исключение: обязательная стартовая проверка автоматически
++создаёт только отсутствующий harness/project как пустой нейтральный каркас
++из согласованного harness/common/base/project-skeleton.json, без inbox
++и отдельного подтверждения. Существующий project сохраняется побайтно;
++его правка, дополнение, пересоздание и изменение шаблона этим исключением
++не разрешены.
++
+ - При «сохрани опыт», «зафиксируй решение», «дополни harness» до записи
+   сначала определи будущее поведение и подходящий существующий скилл.
+   Не создавать новый материал, если всё уже выражено инструкцией.
+--- a/harness/common/skills/comm-install-harness/references/checks.md
++++ b/harness/common/skills/comm-install-harness/references/checks.md
+@@ -42,3 +42,10 @@
+ New approved projects have no lessons category; plans remain docs/plans.
+ Existing legacy folders survive ordinary startup; remove them only through an
+ authorized addressed migration after requirement mapping and current checks.
++
++Разрешённое узкое исключение: обязательная стартовая проверка автоматически
++создаёт только отсутствующий harness/project как пустой нейтральный каркас
++из согласованного harness/common/base/project-skeleton.json, без inbox
++и отдельного подтверждения. Существующий project сохраняется побайтно;
++его правка, дополнение, пересоздание и изменение шаблона этим исключением
++не разрешены.
+--- a/harness/common/skills/comm-install-harness/references/entrypoints.md
++++ b/harness/common/skills/comm-install-harness/references/entrypoints.md
+@@ -48,3 +48,10 @@
+ Проверяются работа без Git, сохранение прямых правок и лишнего текста, предупреждение до записи восстановленных ссылок, отсутствие ложного сообщения о повреждении, отсутствие установленных hooks/новых настроек и возможность обычного коммита после предупреждения.
+ 
+ В целевом проекте удалён только hook, установленный в этой задаче; чужие hooks не трогались. Старое описание блокировки и старые тесты блокирующей политики сохраняются в истории Git; они не являются действующим контрактом.
++
++Разрешённое узкое исключение: обязательная стартовая проверка автоматически
++создаёт только отсутствующий harness/project как пустой нейтральный каркас
++из согласованного harness/common/base/project-skeleton.json, без inbox
++и отдельного подтверждения. Существующий project сохраняется побайтно;
++его правка, дополнение, пересоздание и изменение шаблона этим исключением
++не разрешены.
+--- a/harness/common/skills/comm-process-harness-inbox/SKILL.md
++++ b/harness/common/skills/comm-process-harness-inbox/SKILL.md
+@@ -1,20 +1,28 @@
+ ---
+ name: comm-process-harness-inbox
+-description: Use when saving reusable experience or a decision in harness, choosing its permanent form, creating or processing inbox requests, or resuming their execution.
++description: Use when changing any harness contents, saving reusable experience or decisions, creating or processing inbox requests, or resuming their execution.
+ ---
+ 
+-# Сохранение опыта и обработка inbox
++# Изменения harness и обработка inbox
++
++Перед прямой правкой проверь историю: отдельный вопрос агента о конкретной
++задаче → однозначный положительный ответ после него. Нет такой пары — задай
++вопрос и остановись без правки. Первоначальное «подтверждаю» не является
++ответом на ещё не заданный вопрос. Автоматическое создание отсутствующего
++пустого project стартовой проверкой — узкое исключение, описанное в workflow.
++
++Перед любой задачей изменения harness прочитай
++[workflow](references/workflow.md): обязательный маршрут, разрешённые стадии,
++отдельное подтверждение прямого изменения и ожидание ответа.
++До записи, выполнения или изменения статуса используй тот же workflow:
++полный кандидат, контекст, порядок, продолжение и закрытие.
++Готовый кандидат без обязательной публикации заявку не закрывает.
+ 
+ При «сохрани опыт», «зафиксируй решение», «дополни harness» до выбора места
+ прочитай [выбор результата](references/experience-routing.md): будущее
+ поведение, существующий владелец, минимальное изменение. Skills-first не
+ означает отдельный скилл для каждой ошибки. Определи common/project по содержанию.
+ 
+-До записи, выполнения или изменения статуса прочитай
+-[workflow](references/workflow.md): разрешённые стадии, полный кандидат,
+-контекст, порядок, продолжение и закрытие. Обычный маршрут — подтверждённый inbox;
+-готовый кандидат без обязательной публикации заявку не закрывает.
+-
+ До создания/изменения/проверки/публикации скилла или правила открой из корня
+ проекта `harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md`.
+ Сохраняй долговременный результат независимо от временной заявки.
+--- a/harness/common/skills/comm-process-harness-inbox/references/workflow.md
++++ b/harness/common/skills/comm-process-harness-inbox/references/workflow.md
+@@ -1,60 +1,88 @@
+-# Разрешения, выполнение и учёт
++# Маршрут, разрешения и учёт
+ 
+-До действий различай создание заявки, выполнение (включая добавление тестов),
+-публикацию и исключение маршрута. Установи явное разрешение каждой нужной стадии
+-из запроса или ответа на конкретный предложенный состав действий. Не расширяй
+-«разрешаю» на непредложенное. Одно сообщение может разрешить несколько стадий;
+-уже полученное разрешение сохраняется, повторного вопроса не требует.
++## Перед изменением harness
+ 
+-«Сохрани», конечный путь, срок или номер варианта не разрешают недостающие
+-стадии. Номер определяет решение; при требовании отдельного согласования до
+-разрешения не создавать заявку и не выполнять её, включая тесты. Создание
+-не разрешает выполнение. Обычную просьбу сохранить сначала направляй в inbox.
+-Прямой путь требует явного разрешения и подтверждения записи названного
+-материала в указанную категорию, минуя inbox; обязательной буквальной фразы
+-нет. Этот обход не отменяет проверок, gate и защиты AGENTS/CLAUDE.
++По умолчанию любые создание, правка, удаление, переименование и перенос
++материалов harness проходят через согласованный inbox. Это включает правила,
++скиллы, ресурсы, код, тесты, настройки, документы, отчёты и память; способ
++записи не меняет маршрут. Создание одобренной заявки и запись результата её
++обработки в постоянные категории — обычный маршрут, а не прямой обход.
+ 
+-После ошибки/конфликта/найденного решения предложи сохранение контекста и
+-требуемого результата в заявку. Запись и обработку выполняй лишь в разрешённых
+-пределах; не считать ошибку новым разрешением. Выбор постоянной формы —
+-[experience-routing](experience-routing.md), не автоматическая отдельная история.
++Прямая задача требует явного однозначного указания изменить названный материал
++напрямую, минуя inbox. Путь, «сохрани», «исправь» и общее разрешение работать
++не задают обход. При таком указании проверь историю:
+ 
+-Создай отдельную `harness/<пакет>/inbox/YYYY-MM-DD-суть/` с фактической датой
+-создания. Совпадение имени уточни смыслом. Request содержит когда возникла
+-потребность, обстоятельства, причину, что решит выполнение, требуемый результат.
+-Не выдумывай неизвестные даты. Для скилла/правила без подтверждённого прямого
+-пути приложи полную папку со всеми ресурсами либо полный файл правила.
++- Нет отдельного вопроса агента о конкретных путях, операциях и обходе inbox:
++  задай этот вопрос и остановись без выполнения задачи.
++- Вопрос есть, ответа нет: жди. Первоначальное «разрешаю/подтверждаю», явный
++  вызов скилла, срок и молчание не являются ответом после вопроса.
++- Ответ условный, неоднозначный или с вариантами: уточни и снова жди;
++  не выбирай разрешающий вариант. При отказе не выполняй прямую задачу.
++- Есть однозначный положительный ответ после вопроса: выполняй только
++  подтверждённый состав. Буквальная фраза не нужна. Для той же неизменной
++  задачи повторный вопрос не нужен; новая задача или расширение требуют
++  нового указания и ответа после нового вопроса.
+ 
+-В «Выполнение» каждой заявки сохраняй Статус, Результат, Причину и дату
+-обновления; старой одиночной Markdown-заявки — в её собственном файле.
+-Статусы: новая/в работе/выполнена/заблокирована/отклонена. До начала результат
+-«не выполнялась», при начале — «в работе». После работы/остановки обновляй
+-все поля: фактические артефакты и оставшееся, причина состояния. Сохраняй
+-прежние результаты и ссылки. При групповой обработке учёт отдельный.
++Первоначальное разрешение не считается «уже полученным» подтверждением
++прямого обхода: оно появляется только после отдельного вопроса агента.
++Обход не отменяет проверки, gate, защиту AGENTS/CLAUDE и решения о шаблоне.
++Конфликт обязательных требований согласуй до зависимого действия.
+ 
+-До обработки выбранных заявок прочитай их статус/результат/причину:
+-- Выполнена: пропустить, повторить только по явной просьбе.
+-- В работе: сверить фактические артефакты и продолжить оставшееся.
+-- Заблокирована: проверить препятствие; если осталось — обновить причину и
+-  сообщить, если устранено — продолжить разрешённое.
+-- Отклонена: учитывать отказ, возобновить только по явному запросу.
+-- Нет статуса: сверить прежние отчёты и фактический результат; поле отсутствует
+-  не значит выполнено или нужно повторение. Неясность явно записать.
++Узкое исключение: обязательная стартовая проверка автоматически создаёт только
++отсутствующий harness/project как пустой нейтральный каркас из согласованного
++harness/common/base/project-skeleton.json, без inbox и отдельного подтверждения.
++Существующий project сохраняется побайтно; правка, дополнение, пересоздание
++существующего project и изменение шаблона этим исключением не разрешены.
+ 
+-Выполняй выбранные заявки по одной от ранней к поздней. Не запускать разные
+-заявки одновременно и не начинать следующую до закрытия предыдущей. Неясный
+-порядок согласуй до зависимой работы, не придумывая даты. Закрытие — достигнутый
+-результат и завершённая обязательная работа либо явное решение пользователя.
+-Готовый неопубликованный кандидат, «в работе», «заблокирована» — не закрытие.
++## Разрешённая обработка
+ 
+-Недостающее разрешение/развилка/конфликт: конкретный вопрос, ожидание ответа,
+-без следующей заявки и зависимых действий. Молчание/время/старое общее поручение
+-не ответ. При permission blocker, включая auto-review, до продолжения открой
+-из корня проекта `harness/common/skills/comm-resolve-permission-blockers/SKILL.md`.
+-Известную однозначную техническую ошибку исправляй в разрешённых пределах;
+-это не позволяет выбирать за пользователя или обходить отказ.
++Различай создание заявки, выполнение (включая тесты), публикацию и обход.
++Установи явное разрешение каждой нужной стадии из запроса или ответа на
++конкретный предложенный состав. Не расширяй «разрешаю» на непредложенное.
++Одно сообщение может разрешить несколько стадий; уже разрешённую стадию
++повторно не согласовывай. Прямой обход проверяй по истории выше.
++«Сохрани», путь, срок и номер варианта не разрешают недостающие стадии.
++Номер выбирает решение; создание не разрешает выполнение. При требовании
++отдельного согласования до ответа не создавай заявку и не выполняй её,
++включая тесты. Обычное сохранение направляй в inbox.
+ 
+-Постоянный результат по [experience-routing](experience-routing.md) понятен без
+-заявки; ссылка на неё лишь provenance. В итоговом ответе перечисли выполненные,
+-пропущенные завершённые и оставшиеся заявки с причинами. Учёт выполнения не
+-повышает отдельные статусы Codex/Claude, включая непроверенную публикацию.
++После ошибки, конфликта или решения предложи заявку с контекстом и результатом;
++ошибка не даёт нового разрешения. Постоянную форму выбери по
++[experience-routing](experience-routing.md), без автоматической отдельной истории.
++Создай harness/<пакет>/inbox/YYYY-MM-DD-суть/ с фактической датой создания;
++совпадение имени уточни смыслом. Request содержит время возникновения потребности,
++обстоятельства, причину, решаемую проблему и требуемый результат. Не выдумывай
++даты. Для скилла/правила без подтверждённого прямого пути приложи полную папку
++со всеми ресурсами либо полный файл правила.
++
++В «Выполнение» каждой заявки (старой одиночной — в её файле) сохраняй Статус,
++Результат, Причину, дату обновления. Статусы: новая/в работе/выполнена/
++заблокирована/отклонена. До начала результат «не выполнялась», при начале —
++«в работе». После работы/остановки обнови все поля: артефакты, оставшееся,
++причина состояния. Прежние результаты и ссылки сохраняй; групповой учёт
++не заменяет индивидуальный. До обработки сверяй состояние:
++
++- Выполнена: пропусти; повторяй только по явной просьбе.
++- В работе: сверяй артефакты, продолжай оставшееся.
++- Заблокирована: проверь препятствие; осталось — обнови причину и сообщи,
++  устранено — продолжай разрешённое.
++- Отклонена: возобновляй только по явному запросу.
++- Нет статуса: сверяй отчёты и фактический результат; отсутствие поля не
++  означает выполнение или повторение. Неясность запиши.
++
++Обрабатывай по одной от ранней к поздней; не запускай заявки одновременно
++и не начинай следующую до закрытия предыдущей. Неясный порядок согласуй,
++дат не придумывай. Закрытие — достигнутый результат с завершённой обязательной
++работой либо явное решение пользователя; кандидат без публикации,
++«в работе» или «заблокирована» не закрытие.
++
++При недостающем разрешении, развилке или конфликте задай конкретный вопрос
++и жди без следующей заявки и зависимых действий. Молчание, время и старое
++общее поручение не ответ. При permission blocker, включая auto-review, открой
++из корня harness/common/skills/comm-resolve-permission-blockers/SKILL.md.
++Однозначную техническую ошибку исправляй в разрешённых пределах; это не
++разрешает выбирать за пользователя или обходить отказ.
++
++Постоянный результат понятен без заявки; ссылка на неё — provenance.
++В итоге перечисли выполненные, пропущенные завершённые и оставшиеся заявки
++с причинами. Учёт и непроверенная публикация не повышают статусы Codex/Claude.
+--- a/harness/common/testing/tests/test_ensure_entrypoint_links.py
++++ b/harness/common/testing/tests/test_ensure_entrypoint_links.py
+@@ -42,6 +42,31 @@
+         assert before == (agents.read_bytes(), claude.read_bytes())
+         for file in self.root.glob('harness/*/START.md'):
+             assert file.read_bytes() == b''
++
++    @pytest.mark.parametrize('newline', ('\n', '\r\n'), ids=['LF', 'CRLF'])
++    @pytest.mark.parametrize('common_only', (False, True), ids=['combined', 'common-only'])
++    @pytest.mark.parametrize('adjacent', (False, True))
++    def test_repairs_each_repeated_block_before_index_without_changing_settings(self, newline, common_only, adjacent):
++        if common_only:
++            shutil.rmtree(self.root / 'harness/project')
++        paths = ['harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
++                 'harness/common/INDEX.md', 'harness/project/INDEX.md']
++        block = ''.join(f'- [{path}]({path})\n' for path in paths)
++        block = block.replace('](.claude/rules/)\n',
++            '](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules '
++            'и его подпапок, кроме README.human.md; соблюдай применимые требования.\n')
++        prefix, separator = '# User settings: keep exact bytes.\n\n', '\nRepeat:\n'
++        damaged = block.replace('- [harness/common/START.md](harness/common/START.md)\n', '')
++        if adjacent:
++            separator = ''
++            damaged = damaged.rstrip('\n')
++        agents = self.root / 'AGENTS.md'
++        agents.write_bytes((prefix + block + separator + damaged).replace('\n', newline).encode())
++        assert self.run_check().returncode == 0
++        expected = (prefix + block + separator + block).replace('\n', newline).encode()
++        assert agents.read_bytes() == expected
++        assert self.run_check().returncode == 0
++        assert agents.read_bytes() == expected
+ 
+     def test_only_appends_missing_links_preserving_user_text(self):
+         prefix = '# User configuration\n\nKeep this exact text.\n[Existing](./harness/common/INDEX.md)\n'
+--- a/harness/common/testing/tests/test_entrypoint_notifications.py
++++ b/harness/common/testing/tests/test_entrypoint_notifications.py
+@@ -178,7 +178,9 @@
+         first = self.check()
+         assert first.returncode == 0, first.stderr
+         assert NOTICE in first.stdout
+-        assert agents.read_bytes().startswith(original)
++        repaired = agents.read_bytes()
++        assert repaired.startswith(b'# Static settings\r\n\r\nKeep this setting.\r\n\r\n')
++        assert b'\n' not in repaired.replace(b'\r\n', b'')
+         assert line in agents.read_bytes()
+         second = self.check()
+         assert second.returncode == 0, second.stderr

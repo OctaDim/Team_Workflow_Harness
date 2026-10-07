@@ -25,8 +25,8 @@ class TestEntryPointLinks:
             destination.parent.mkdir()
             shutil.copyfile(template, destination)
 
-    def run_check(self, *args):
-        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root), *args], text=True, capture_output=True)
+    def run_check(self):
+        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)], text=True, capture_output=True)
 
     def test_creates_four_links_and_import_then_preserves_bytes(self):
         result = self.run_check()
@@ -42,6 +42,31 @@ class TestEntryPointLinks:
         assert before == (agents.read_bytes(), claude.read_bytes())
         for file in self.root.glob('harness/*/START.md'):
             assert file.read_bytes() == b''
+
+    @pytest.mark.parametrize('newline', ('\n', '\r\n'), ids=['LF', 'CRLF'])
+    @pytest.mark.parametrize('common_only', (False, True), ids=['combined', 'common-only'])
+    @pytest.mark.parametrize('adjacent', (False, True))
+    def test_repairs_each_repeated_block_before_index_without_changing_settings(self, newline, common_only, adjacent):
+        if common_only:
+            shutil.rmtree(self.root / 'harness/project')
+        paths = ['harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
+                 'harness/common/INDEX.md', 'harness/project/INDEX.md']
+        block = ''.join(f'- [{path}]({path})\n' for path in paths)
+        block = block.replace('](.claude/rules/)\n',
+            '](.claude/rules/) До выполнения задачи прочитай все Markdown-правила из .claude/rules '
+            'и его подпапок, кроме README.human.md; соблюдай применимые требования.\n')
+        prefix, separator = '# User settings: keep exact bytes.\n\n', '\nRepeat:\n'
+        damaged = block.replace('- [harness/common/START.md](harness/common/START.md)\n', '')
+        if adjacent:
+            separator = ''
+            damaged = damaged.rstrip('\n')
+        agents = self.root / 'AGENTS.md'
+        agents.write_bytes((prefix + block + separator + damaged).replace('\n', newline).encode())
+        assert self.run_check().returncode == 0
+        expected = (prefix + block + separator + block).replace('\n', newline).encode()
+        assert agents.read_bytes() == expected
+        assert self.run_check().returncode == 0
+        assert agents.read_bytes() == expected
 
     def test_only_appends_missing_links_preserving_user_text(self):
         prefix = '# User configuration\n\nKeep this exact text.\n[Existing](./harness/common/INDEX.md)\n'
@@ -136,7 +161,7 @@ class TestEntryPointLinks:
 
     def test_common_only_creates_neutral_project(self):
         shutil.rmtree(self.root / 'harness/project')
-        result = self.run_check('--create-project')
+        result = self.run_check()
         assert result.returncode == 0, result.stderr
         project = self.root / 'harness/project'
         expected = {'base', 'decisions', 'testing', 'rules', 'skills', 'checks', 'scripts', 'specs', 'inbox', 'docs', 'handoffs'}
@@ -177,7 +202,7 @@ class TestEntryPointLinks:
         assert self.run_check().returncode == 0
         assert not (self.root / 'harness/project/specs').exists()
         shutil.rmtree(self.root / 'harness/project')
-        result = self.run_check('--create-project')
+        result = self.run_check()
         assert result.returncode == 0, result.stderr
         assert (self.root / 'harness/project/specs/README.human.md').is_file()
 
@@ -209,7 +234,7 @@ class TestEntryPointLinks:
         shutil.rmtree(project)
         template = self.root / 'harness/common/base/project-skeleton.json'
         template.write_text(content)
-        result = self.run_check('--create-project')
+        result = self.run_check()
         assert result.returncode == 2
         assert not project.exists()
         assert not (self.root / 'AGENTS.md').exists()
@@ -218,7 +243,7 @@ class TestEntryPointLinks:
         shutil.rmtree(self.root / 'harness/project')
         agents = self.root / 'AGENTS.md'
         agents.write_text('# Keep\n```md\nunterminated')
-        result = self.run_check('--create-project')
+        result = self.run_check()
         assert result.returncode == 2
         assert not (self.root / 'harness/project').exists()
         assert agents.read_text() == '# Keep\n```md\nunterminated'
@@ -276,16 +301,3 @@ class TestEntryPointLinks:
             assert not (self.root / 'CLAUDE.md').exists()
         finally:
             path.unlink()
-
-
-    def test_missing_project_requires_authorization_before_any_write(self):
-        shutil.rmtree(self.root / 'harness/project')
-        before = {p.relative_to(self.root): p.read_bytes()
-                  for p in self.root.rglob('*') if p.is_file()}
-        result = self.run_check()
-        assert result.returncode == 2
-        assert '--create-project' in result.stderr
-        assert not (self.root / 'harness/project').exists()
-        assert before == {p.relative_to(self.root): p.read_bytes()
-                          for p in self.root.rglob('*') if p.is_file()}
-        assert not (self.root / '.claude').exists()
