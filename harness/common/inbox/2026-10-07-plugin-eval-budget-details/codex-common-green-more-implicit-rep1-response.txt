@@ -1,0 +1,40 @@
+Нативный каталог содержит навыки: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-report-plugin-eval-budget, comm-resolve-permission-blockers.
+
+Выполню указанную последовательность чтения. Для отчёта применю comm-report-plugin-eval-budget, поскольку deferred=1850 превышает порог 1200 для skill. Файлы не буду изменять.
+
+По предоставленным синтетическим данным выполненного plugin-eval: **86, B**, `target.kind=skill`; путь не указан. Новый анализ не запускал.
+
+- Check: `deferred_cost_tokens-budget-high: fail`.
+- Бюджеты: trigger=40, invoke=150 (весь SKILL.md), deferred=1850, total=2040.
+- Фактические пороги deferred: **180/520/1200**; band=`excessive`.
+
+Дополнительная разбивка по каждому reference:
+
+```text
+SKILL.md=150/references/a/example.md=350 /Texts=500 --> 1000 (heavy-warn)
+SKILL.md=150/references/b/example.md=1000 /Texts=500 --> 1650 (excessive-fail)
+```
+
+Texts, по убыванию:
+
+| Файл | Токены |
+|---|---:|
+| scripts/check.py | 300 |
+| assets/template.txt | 150 |
+| agents/openai.yaml | 50 |
+| **Texts** | **500** |
+
+Полный deferred: `350+1000+500=1850`. Строки references не складываются: каждая повторно включает SKILL.md и Texts. Их категории — дополнительная шкала, исходный band и check сохранены.
+
+Рекомендация: **уменьшить повторы без потери обязательного поведения**. Крупнейший ресурс — `references/b/example.md` (1000), затем `references/a/example.md` (350) и `scripts/check.py` (300). Токены здесь — статическая оценка, не расход сессии.
+
+Фактически прочитал, в порядке выполнения:
+
+1. Оба START: common, затем project.
+2. По требованиям common START — `harness/common/rules/comm-skill-rule-ownership.md` и `comm-human-folder-guides.md`.
+3. Получил отдельным recursive-вызовом полный список `.claude/rules`, затем следующим отдельным `cat` прочитал все 7 файлов: `comm-skill-rule-ownership`, `comm-package-independence`, `comm-entrypoint-links-rule`, `comm-instruction-order`, `comm-dependencies-through-uv`, `comm-user-owned-entrypoints`, `comm-human-folder-guides` — все с расширением `.md`.
+4. Оба INDEX: common, затем project.
+5. Выбранный из нативного каталога [.agents/skills/comm-report-plugin-eval-budget/SKILL.md](/tmp/two-modes-native-sdaig612/workspace/.agents/skills/comm-report-plugin-eval-budget/SKILL.md).
+6. Указанный им ресурс `harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md`.
+
+Тело навыка `comm-create-lazy-claude-codex-skills` не читал: задача — отчёт по готовым данным. Остальные навыки не открывал. Первая команда проверки завершилась успешно; записи файлов не выполнял, тела README.human.md не читал.

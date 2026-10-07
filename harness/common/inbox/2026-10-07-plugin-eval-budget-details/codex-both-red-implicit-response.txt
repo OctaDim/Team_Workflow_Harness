@@ -1,0 +1,31 @@
+Нативный каталог содержит навыки: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-resolve-permission-blockers.
+
+Выполню проверку первой командой, затем прочитаю инструкции в указанном порядке. Результат plugin-eval представлю по вашим данным, без нового анализа файлов.
+
+По переданным данным уже выполненного plugin-eval: **86 баллов, B**, `target.kind=skill`. Проверка `deferred_cost_tokens-budget-high` — **fail**; deferred band — **excessive**, пороги — **180/520/1200** токенов.
+
+| Загрузка | Токены |
+|---|---:|
+| trigger | 40 |
+| invoke — целый SKILL.md | 150 |
+| deferred | 1850 |
+| total | 2040 |
+
+| Deferred-компонент | Токены |
+|---|---:|
+| references/a/example.md | 350 |
+| references/b/example.md | 1000 |
+| scripts/check.py | 300 |
+| assets/template.txt | 150 |
+| agents/openai.yaml | 50 |
+
+Рекомендация: **уменьшить повторы без потери обязательного поведения**. Новый анализ файлов и повторный plugin-eval не выполнялись.
+
+Фактически прочитал:
+
+- оба START — common, затем project;
+- предварительно `comm-skill-rule-ownership.md` и `comm-human-folder-guides.md`, как требует START;
+- после отдельного полного recursive списка — следующим отдельным `cat` все семь правил: `comm-skill-rule-ownership`, `comm-package-independence`, `comm-entrypoint-links-rule`, `comm-instruction-order`, `comm-dependencies-through-uv`, `comm-user-owned-entrypoints`, `comm-human-folder-guides`;
+- оба INDEX — common, затем project.
+
+**Скиллы не выбирал и тела SKILL.md не читал:** задача ограничена представлением готового результата. Нативный каталог перечислил до чтения, без поиска на диске. Первая команда проверки завершилась успешно. Тела README.human.md не читал; команд записи не выполнял.

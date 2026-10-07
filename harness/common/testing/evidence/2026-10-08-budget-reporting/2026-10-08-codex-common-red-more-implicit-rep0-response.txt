@@ -1,0 +1,48 @@
+В нативном каталоге доступны навыки: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-resolve-permission-blockers.
+
+Выполню проверку первой командой, затем прочитаю инструкции в указанном порядке. Результат plugin-eval представлю по вашим данным.
+
+По предоставленному результату уже выполненного **plugin-eval**: `target.kind=skill`, **86 баллов, B**. Новый анализ и повторный eval не выполнял.
+
+| Проверка | Результат |
+|---|---|
+| `deferred_cost_tokens-budget-high` | **fail** |
+| Фактические пороги deferred | 180 / 520 / 1200 |
+| Категория нагрузки | `excessive` |
+
+| Слой | Токены |
+|---|---:|
+| trigger | 40 |
+| invoke — целый SKILL.md | 150 |
+| deferred | 1850 |
+| **total** | **2040** |
+
+Состав deferred:
+
+| Компонент | Токены |
+|---|---:|
+| `references/a/example.md` | 350 |
+| `references/b/example.md` | 1000 |
+| `scripts/check.py` | 300 |
+| `assets/template.txt` | 150 |
+| `agents/openai.yaml` | 50 |
+
+Рекомендация: **уменьшить повторы без потери обязательного поведения**.
+
+Фактически прочитал в следующем порядке:
+
+1. `harness/common/START.md`, затем `harness/project/START.md`.
+2. По требованиям START — `harness/common/rules/comm-skill-rule-ownership.md` и `comm-human-folder-guides.md`.
+3. Получил отдельным вызовом полный recursive список `.claude/rules`, исключая `README.human.md`. Следующим отдельным вызовом `cat` прочитал все семь найденных правил:
+   - `comm-instruction-order.md`
+   - `comm-dependencies-through-uv.md`
+   - `comm-user-owned-entrypoints.md`
+   - `comm-human-folder-guides.md`
+   - `comm-entrypoint-links-rule.md`
+   - `comm-package-independence.md`
+   - `comm-skill-rule-ownership.md`
+4. `harness/common/INDEX.md`, затем `harness/project/INDEX.md`.
+
+**Навыки для задачи не выбирал, тела SKILL.md не читал:** задача состоит в представлении готового результата. Нативный каталог перечислил до чтения, без поиска на диске.
+
+Первая команда была строго указанной; проверка завершилась успешно (`exit_code=0`). Тела `README.human.md` не читал, операций записи файлов не выполнял.

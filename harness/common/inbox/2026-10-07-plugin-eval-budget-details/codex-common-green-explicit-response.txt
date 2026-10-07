@@ -1,0 +1,70 @@
+В нативном каталоге доступны навыки: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-report-plugin-eval-budget, comm-resolve-permission-blockers.
+
+Использую comm-report-plugin-eval-budget. Выполню чтение в указанном порядке, затем разберу предоставленные результаты без новой оценки и записи файлов.
+
+Стартовая проверка прошла. Все семь правил прочитаны полностью; список дополнительно проверен с `--no-ignore`, состав совпал. Скилл задаёт отдельную шкалу строк детализации: она не заменяет штатные bands и checks plugin-eval.
+
+По предоставленным синтетическим данным результат уже выполненного plugin-eval: **86, B**, `target.kind=skill`, check `deferred_cost_tokens-budget-high: fail`. Новый анализ не запускал, файлы не записывал, тела `README.human.md` не читал.
+
+| Штатный показатель | Значение |
+|---|---:|
+| trigger | 40 |
+| invoke — целый SKILL.md | 150 |
+| deferred | 1850 |
+| total | 2040 |
+| deferred thresholds | 180 / 520 / 1200 |
+| deferred band | excessive |
+
+`target.path` не предоставлен — не подставляю вымышленный путь. Рекомендация: **уменьшить повторы без потери обязательного поведения**.
+
+Детализация: `S=150`; `T=300+150+50=500`.
+
+```text
+SKILL.md=150/references/a/example.md=350 /Texts=500 --> 1000 (heavy-warn)
+SKILL.md=150/references/b/example.md=1000 /Texts=500 --> 1650 (excessive-fail)
+```
+
+Texts по убыванию:
+
+| Файл | Токены |
+|---|---:|
+| scripts/check.py | 300 |
+| assets/template.txt | 150 |
+| agents/openai.yaml | 50 |
+
+Полный deferred: `350+1000+500=1850`; total: `40+150+1850=2040`. Другие references не входят в Texts; строки детализации не складываются. Крупнейший кандидат на сжатие или разделение — `references/b/example.md` (1000), затем `references/a/example.md` (350) и `scripts/check.py` (300). Содержание этих файлов не анализировалось, поэтому конкретные повторы не установлены.
+
+Решения по границам:
+
+| Условие | Нужна детализация |
+|---|---|
+| skill deferred=1200 | Автоматически нет |
+| skill deferred=1201 | Да |
+| generic deferred=1600 | Автоматически нет |
+| generic deferred=1601 | Да |
+| Явный запрос ниже порога | Да |
+
+При фактическом baseline `heavyMax=2000`, `deferred=1601`, `band=moderate` нужно сохранить штатный **moderate** и исходные checks. Порог 1600 включает дополнительный отчёт; он не меняет baseline анализатора.
+
+Категории **суммы отдельной строки**:
+
+| Сумма | Категория |
+|---:|---|
+| 180 | good |
+| 181 | moderate |
+| 520 | moderate |
+| 521 | heavy-warn |
+| 1200 | heavy-warn |
+| 1201 | excessive-fail |
+
+Дополнительные случаи:
+
+- **Нет references и Texts, полный JSON доступен:** если он подтверждает отсутствие учитываемых компонентов и deferred=0, вывести `SKILL.md=S/references=нет /Texts=0 --> S (категория по S)`. Объяснить, что Texts полностью известен и пуст; числовое S взять из JSON.
+- **JSON недоступен, известен deferred=100, компоненты дают 90:** сообщить о недоступности исходных данных и расхождении на 10 токенов. Детализация неполна; нельзя объявлять отсутствующие компоненты нулём или придумывать файл на 10 токенов.
+- **Generic-папка с двумя skill roots:** сохранить общий результат и порог 1600; дать отдельную детализацию каждого root с его собственными S, references и Texts.
+- **Папка без SKILL.md:** общий generic-отчёт и учитываемые компоненты по файлам; `SKILL.md=N/A`, references скиллу не назначать.
+- Human guides, бинарные и остальные неучитываемые файлы не добавлять. Внешние linked-файлы не считать локальными ресурсами.
+
+Фактически прочитаны: оба START, все семь Markdown-правил `.claude/rules` — `comm-dependencies-through-uv`, `comm-entrypoint-links-rule`, `comm-human-folder-guides`, `comm-instruction-order`, `comm-package-independence`, `comm-skill-rule-ownership`, `comm-user-owned-entrypoints` — затем оба INDEX. Первый список правил был без `--no-ignore`; после чтения требования повторил отдельные список и явный `cat` с этим флагом, состав совпал.
+
+Для задачи выбран и прочитан [comm-report-plugin-eval-budget/SKILL.md](/tmp/two-modes-native-nhtvqpms/workspace/.agents/skills/comm-report-plugin-eval-budget/SKILL.md), затем указанный им [evaluation.md](/tmp/two-modes-native-nhtvqpms/workspace/harness/common/skills/comm-create-lazy-claude-codex-skills/references/evaluation.md). Это ресурс другого скилла; собственные references отчётного скилла не искал. Другие тела скиллов не читал. Все токены выше — статические оценки предоставленного результата, а не расход сессии.

@@ -1,0 +1,42 @@
+Навыки из нативного каталога: `imagegen`, `openai-docs`, `skill-creator`, `skill-installer`, `comm-create-lazy-claude-codex-skills`, `comm-install-harness`, `comm-preserve-text-line-endings`, `comm-process-harness-inbox`, `comm-protect-harness-evidence`, `comm-report-plugin-eval-budget`, `comm-resolve-permission-blockers`.
+
+Выполню заданную последовательность чтения. Для отчёта применю `comm-report-plugin-eval-budget`: deferred-бюджет навыка превышает 1200 токенов, и предоставлена разбивка по файлам. Новый анализ файлов проводить не буду.
+
+По предоставленным синтетическим данным уже выполненного plugin-eval:
+
+- `target.kind=skill`; путь цели не указан.
+- `summary.score=86`, `grade=B`.
+- `checks=[deferred_cost_tokens-budget-high:fail]`.
+- Фактические deferred thresholds: **180 / 520 / 1200**; `band=excessive`.
+- Бюджет: trigger **40**, invoke **150** (весь `SKILL.md`), deferred **1850**, total **2040**.
+
+Дополнительная разбивка: `Texts=300+150+50=500`.
+
+```text
+SKILL.md=150/references/a/example.md=350 /Texts=500 --> 1000 (heavy-warn)
+SKILL.md=150/references/b/example.md=1000 /Texts=500 --> 1650 (excessive-fail)
+```
+
+Это дополнительная шкала строк; исходный `band=excessive` и проверка `fail` сохраняются. Строки не складываются.
+
+| Deferred-компонент | Токены |
+|---|---:|
+| references/b/example.md | 1000 |
+| references/a/example.md | 350 |
+| scripts/check.py | 300 |
+| assets/template.txt | 150 |
+| agents/openai.yaml | 50 |
+| **Всего deferred** | **1850** |
+
+Рекомендация: **уменьшить повторы без потери обязательного поведения**. Приоритет для сжатия или разделения — `references/b/example.md`, затем `references/a/example.md` и `scripts/check.py`. Токены здесь — статическая оценка, не расход сессии.
+
+Фактически прочитал:
+
+- `harness/common/START.md`, затем `harness/project/START.md`.
+- Все семь правил `.claude/rules`: `comm-dependencies-through-uv.md`, `comm-entrypoint-links-rule.md`, `comm-human-folder-guides.md`, `comm-instruction-order.md`, `comm-package-independence.md`, `comm-skill-rule-ownership.md`, `comm-user-owned-entrypoints.md`.
+- `harness/common/INDEX.md`, затем `harness/project/INDEX.md`.
+- Выбранный по нативному описанию [comm-report-plugin-eval-budget/SKILL.md](/tmp/two-modes-native-rbnbpm_y/workspace/.agents/skills/comm-report-plugin-eval-budget/SKILL.md).
+
+Первоначальный список правил получил без `--no-ignore`; затем повторил отдельный полный список с этим флагом и следующим вызовом явно прочитал все найденные файлы. Состав совпал.
+
+Первая команда была заданной проверкой; она завершилась с кодом **0**. `README.human.md` не читал, записи файлов не выполнял, новый анализ и plugin-eval не запускал. Остальные тела навыков и `evaluation.md` не открывал: задача состояла в представлении готового результата.

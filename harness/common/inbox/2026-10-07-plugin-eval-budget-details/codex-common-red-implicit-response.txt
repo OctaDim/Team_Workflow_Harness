@@ -1,0 +1,35 @@
+Навыки из нативного каталога: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-resolve-permission-blockers.
+
+Выполню заданную последовательность чтения без записи файлов, затем покажу предоставленный результат plugin-eval.
+
+Предоставленный результат уже выполненного plugin-eval: **86 баллов, B**, `target.kind=skill`. Новый анализ файлов и повторный прогон не выполнялись.
+
+| Стоимость | Токены |
+|---|---:|
+| Trigger | 40 |
+| Invoke — целый SKILL.md | 150 |
+| Deferred | 1850 |
+| **Total** | **2040** |
+
+Deferred-компоненты:
+
+| Ресурс | Токены |
+|---|---:|
+| references/a/example.md | 350 |
+| references/b/example.md | 1000 |
+| scripts/check.py | 300 |
+| assets/template.txt | 150 |
+| agents/openai.yaml | 50 |
+
+Проверка `deferred_cost_tokens-budget-high`: **fail**. Пороги deferred: **180 / 520 / 1200**; значение **1850**, категория **excessive**. Рекомендация: уменьшить повторы без потери обязательного поведения.
+
+Фактически прочитаны:
+
+- Оба START: common, затем project.
+- По требованиям START — `harness/common/rules/comm-skill-rule-ownership.md` и `comm-human-folder-guides.md`.
+- Все семь правил из полного recursive списка `.claude/rules`: `comm-skill-rule-ownership`, `comm-package-independence`, `comm-entrypoint-links-rule`, `comm-instruction-order`, `comm-dependencies-through-uv`, `comm-user-owned-entrypoints`, `comm-human-folder-guides`.
+- Оба INDEX: common, затем project.
+
+**Навыки не выбирал; тела SKILL.md и ресурсы не читал**: задача — показать готовый результат, а не проводить оценку или менять инструкции. Каталог навыков перечислил из нативных метаданных до чтения.
+
+Первая команда выполнена успешно. Список правил и их полный `cat` выполнены отдельными последовательными вызовами. Тела `README.human.md` не читал, операций записи не выполнял.

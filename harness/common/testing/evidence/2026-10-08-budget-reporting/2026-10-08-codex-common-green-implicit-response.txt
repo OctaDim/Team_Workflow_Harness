@@ -1,0 +1,40 @@
+В нативном каталоге доступны навыки: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-report-plugin-eval-budget, comm-resolve-permission-blockers.
+
+Выполню чтение в указанном порядке. Для представления готового результата применю comm-report-plugin-eval-budget; новый анализ файлов проводить не буду.
+
+По предоставленному готовому plugin-eval: **score=86, grade=B**, `target.kind=skill`; путь цели не указан. Проверка `deferred_cost_tokens-budget-high`: **fail**. Фактические пороги deferred: **180/520/1200**, band: **excessive**.
+
+| Бюджет | Токены |
+|---|---:|
+| trigger | 40 |
+| invoke — целый SKILL.md | 150 |
+| deferred | 1850 |
+| total | 2040 |
+
+Дополнительная детализация по прочитанному навыку:
+
+```text
+SKILL.md=150/references/a/example.md=350 /Texts=500 --> 1000 (heavy-warn)
+SKILL.md=150/references/b/example.md=1000 /Texts=500 --> 1650 (excessive-fail)
+```
+
+`Texts` по убыванию:
+
+| Файл | Токены |
+|---|---:|
+| scripts/check.py | 300 |
+| assets/template.txt | 150 |
+| agents/openai.yaml | 50 |
+
+Полный deferred: **350+1000+300+150+50=1850**. Строки references не складываются; их категории дополняют исходную оценку анализатора. Токены здесь — статическая оценка, не расход сессии.
+
+Рекомендация: **уменьшить повторы без потери обязательного поведения**. Крупнейший ресурс — `references/b/example.md` (1000), затем `references/a/example.md` (350) и `scripts/check.py` (300).
+
+Фактически прочитал:
+
+- оба `START.md`, common → project;
+- все семь правил `.claude/rules`: `comm-dependencies-through-uv`, `comm-entrypoint-links-rule`, `comm-human-folder-guides`, `comm-instruction-order`, `comm-package-independence`, `comm-skill-rule-ownership`, `comm-user-owned-entrypoints`;
+- оба `INDEX.md`, common → project;
+- единственный выбранный навык — [comm-report-plugin-eval-budget/SKILL.md](/tmp/two-modes-native-mjxgq_ub/workspace/.agents/skills/comm-report-plugin-eval-budget/SKILL.md).
+
+Первая команда была ровно указанной; проверка завершилась успешно. Первоначальный список правил получил без `--no-ignore`, затем исправил это и повторил отдельные полные список и `cat` до INDEX. Остальные навыки только перечислил из нативного каталога. `README.human.md` не читал, записи не выполнял, новую оценку не запускал.

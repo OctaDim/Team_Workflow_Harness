@@ -1,0 +1,40 @@
+В нативном каталоге доступны навыки: imagegen, openai-docs, skill-creator, skill-installer, comm-create-lazy-claude-codex-skills, comm-install-harness, comm-preserve-text-line-endings, comm-process-harness-inbox, comm-protect-harness-evidence, comm-resolve-permission-blockers.
+
+Выполню чтение в указанном порядке, без записи файлов. Результат plugin-eval покажу по предоставленным данным.
+
+Стартовая проверка завершилась успешно. Правила требуют включать игнорируемые файлы через `--no-ignore`; повторю полный список и явный `cat` с этим флагом, затем прочитаю INDEX.
+
+По предоставленному результату уже выполненного plugin-eval: **skill — 86 баллов, B**. Новый анализ файлов и повторный eval не выполнял.
+
+| Загрузка | Токены |
+|---|---:|
+| Trigger | 40 |
+| Invoke — целый SKILL.md | 150 |
+| Deferred | 1850 |
+| Всего | **2040** |
+
+Deferred при порогах **180 / 520 / 1200** получил band **excessive**. Проверка `deferred_cost_tokens-budget-high` — **fail**.
+
+| Deferred-компонент | Токены |
+|---|---:|
+| references/a/example.md | 350 |
+| references/b/example.md | 1000 |
+| scripts/check.py | 300 |
+| assets/template.txt | 150 |
+| agents/openai.yaml | 50 |
+
+Рекомендация: **уменьшить повторы без потери обязательного поведения**.
+
+Фактически прочитал оба START, затем полностью семь правил `.claude/rules`:
+
+- `comm-dependencies-through-uv.md`
+- `comm-entrypoint-links-rule.md`
+- `comm-human-folder-guides.md`
+- `comm-instruction-order.md`
+- `comm-package-independence.md`
+- `comm-skill-rule-ownership.md`
+- `comm-user-owned-entrypoints.md`
+
+После них прочитал оба INDEX. Первый список правил получил без `--no-ignore`; исправил это повторным полным рекурсивным списком и следующим отдельным вызовом `cat` всех явно указанных путей.
+
+**Навыки не выбирал и тела SKILL.md не читал**: задача — показать готовый результат, без новой проверки или изменения инструкций. Нативный каталог перечислил до чтения, без поиска на диске. Первая команда была указанной стартовой проверкой; она завершилась успешно. Тела README.human.md не читал, команд записи не выполнял.
