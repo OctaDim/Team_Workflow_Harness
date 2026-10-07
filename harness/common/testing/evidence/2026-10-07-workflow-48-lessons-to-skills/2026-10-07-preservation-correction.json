@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-07",
+  "scope": "Correction of the final WORKFLOW-48 historical-file preservation attestation",
+  "baseline_source": "2026-10-07-historical-evidence-preservation.json",
+  "baseline_source_sha256": "0d4d6ef24a899a9d1a01963cb4238ded31a0f78c48dddc774dc93a97b595dda0",
+  "original_record_disposition": "Retained byte-for-byte as a historical erroneous result; its all_unchanged assertion does not describe the published state.",
+  "publication_manifest": "2026-10-07-publication-files.json",
+  "publication_manifest_sha256": "8f3258cda37440c921f63d900387df750a376d15f5b65469ca9b0373a2ec6637",
+  "publication_version": "53a5d7f5f922739698299be4aad4f8d5546e1d792dc2808e6b4a2edd1255422f",
+  "method": "Recompute SHA-256 for every unique path in the 186-file baseline; classify each difference against the publication manifest before/after hashes and update action. Human guide bodies are not returned.",
+  "summary": {
+    "baseline_files": 186,
+    "unchanged": 185,
+    "manifested_changes": 1,
+    "unexpected_changes": 0,
+    "missing": 0
+  },
+  "exceptions": [
+    {
+      "path": "harness/project/docs/README.human.md",
+      "baseline_sha256": "274e84f5072c60d8c131170805a3cf217bb54b187b73f0324aa375bcc98d7f7a",
+      "current_sha256": "3688fb24afe1c7c059da5f062a706a539f5c7b900e297e62af6b87b81f5328b5",
+      "action": "update",
+      "matches_publication_manifest": true
+    }
+  ],
+  "all_unchanged": false,
+  "preservation_matches_publication_manifest": true,
+  "limitations": "This result covers the recorded 186-file baseline only. It does not certify all harness files, authorize changes or elevate existing Codex, Claude or overall verification statuses."
+}
