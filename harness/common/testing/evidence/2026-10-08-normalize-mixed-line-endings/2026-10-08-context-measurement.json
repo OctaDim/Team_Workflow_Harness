@@ -1,0 +1,740 @@
+{
+  "method": "Actual completed native command outputs in bytes and native usage events; static plugin-eval estimates separately",
+  "startup_cap": "none agreed; not inferred",
+  "startup_guards_before_and_after_identical": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 1838
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 11
+    },
+    {
+      "path": "harness/common/START.md",
+      "bytes": 1491
+    },
+    {
+      "path": "harness/project/START.md",
+      "bytes": 853
+    },
+    {
+      "path": "harness/common/INDEX.md",
+      "bytes": 3542
+    },
+    {
+      "path": "harness/project/INDEX.md",
+      "bytes": 2110
+    },
+    {
+      "path": ".claude/rules/comm-dependencies-through-uv.md",
+      "bytes": 1946
+    },
+    {
+      "path": ".claude/rules/comm-entrypoint-links-rule.md",
+      "bytes": 2790
+    },
+    {
+      "path": ".claude/rules/comm-human-folder-guides.md",
+      "bytes": 2552
+    },
+    {
+      "path": ".claude/rules/comm-instruction-order.md",
+      "bytes": 3135
+    },
+    {
+      "path": ".claude/rules/comm-package-independence.md",
+      "bytes": 1994
+    },
+    {
+      "path": ".claude/rules/comm-skill-rule-ownership.md",
+      "bytes": 7460
+    },
+    {
+      "path": ".claude/rules/comm-user-owned-entrypoints.md",
+      "bytes": 2769
+    }
+  ],
+  "baseline_metadata": [
+    {
+      "path": ".agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "metadata_bytes": 153
+    },
+    {
+      "path": ".agents/skills/comm-diagnose-harness-entrypoints/SKILL.md",
+      "metadata_bytes": 173
+    },
+    {
+      "path": ".agents/skills/comm-install-harness/SKILL.md",
+      "metadata_bytes": 171
+    },
+    {
+      "path": ".agents/skills/comm-preserve-harness-knowledge/SKILL.md",
+      "metadata_bytes": 181
+    },
+    {
+      "path": ".agents/skills/comm-preserve-text-line-endings/SKILL.md",
+      "metadata_bytes": 234
+    },
+    {
+      "path": ".agents/skills/comm-process-harness-inbox/SKILL.md",
+      "metadata_bytes": 121
+    },
+    {
+      "path": ".agents/skills/comm-protect-harness-evidence/SKILL.md",
+      "metadata_bytes": 172
+    },
+    {
+      "path": ".agents/skills/comm-publish-harness-instructions/SKILL.md",
+      "metadata_bytes": 173
+    },
+    {
+      "path": ".agents/skills/comm-report-plugin-eval-budget/SKILL.md",
+      "metadata_bytes": 183
+    },
+    {
+      "path": ".agents/skills/comm-resolve-permission-blockers/SKILL.md",
+      "metadata_bytes": 223
+    },
+    {
+      "path": ".agents/skills/comm-validate-harness-instructions/SKILL.md",
+      "metadata_bytes": 203
+    }
+  ],
+  "candidate_added_metadata": {
+    "path": ".agents/skills/comm-normalize-text-line-endings/SKILL.md",
+    "plugin_eval_estimated_tokens": 40
+  },
+  "candidate_full_available_machine_resources": [
+    {
+      "path": "SKILL.md",
+      "bytes": 1436,
+      "estimated_invoke_tokens": 359
+    }
+  ],
+  "deferred_resources_tokens": 0,
+  "scenarios": [
+    {
+      "mode": "common",
+      "case": "red",
+      "phase": "baseline",
+      "all_observed_command_output_bytes": 50624,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 2273
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-skill-rule-ownership.md'\"",
+          "paths": [
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-user-owned-entrypoints.md",
+            ".claude/rules/comm-human-folder-guides.md",
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-skill-rule-ownership.md"
+          ],
+          "output_bytes": 22646
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5270
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/comm-preserve-text-line-endings/SKILL.md; rg --files --hidden --no-ignore fixtures -g '\"'!README.human.md'\"'; git status --short\"",
+          "paths": [
+            ".agents/skills/comm-preserve-text-line-endings/SKILL.md"
+          ],
+          "output_bytes": 4209
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/comm-preserve-text-line-endings/references/regressions.md; python3 -B - <<'PY'\nfrom pathlib import Path\nfor p in sorted(Path('fixtures').iterdir()):\n if p.name == 'README.human.md': continue\n b=p.read_bytes()\n try: b.decode('utf-8'); enc='UTF-8'\n except UnicodeDecodeError: enc='not UTF-8'\n print(p.name, len(b), enc, 'BOM='+str(b.startswith(b'\\\\xef\\\\xbb\\\\xbf')), 'CRLF='+str(b.count(b'\\\\r\\\\n')), 'LF='+str(b.count(b'\\\\n')-b.count(b'\\\\r\\\\n')), 'CR='+str(b.count(b'\\\\r')-b.count(b'\\\\r\\\\n')), 'NUL='+str(b.count(b'\\\\0')))\n if p.suffix=='.txt': print(repr(b))\nPY\"",
+          "paths": [
+            ".agents/skills/comm-preserve-text-line-endings/references/regressions.md"
+          ],
+          "output_bytes": 5291
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 209648,
+          "cached_input_tokens": 183168,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1959,
+          "reasoning_output_tokens": 19
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "red",
+      "phase": "baseline",
+      "all_observed_command_output_bytes": 51339,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 2344
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-human-folder-guides.md",
+            ".claude/rules/comm-user-owned-entrypoints.md"
+          ],
+          "output_bytes": 22646
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5652
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-preserve-text-line-endings/SKILL.md'",
+          "paths": [
+            ".agents/skills/comm-preserve-text-line-endings/SKILL.md"
+          ],
+          "output_bytes": 2902
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-preserve-text-line-endings/references/regressions.md'",
+          "paths": [
+            ".agents/skills/comm-preserve-text-line-endings/references/regressions.md"
+          ],
+          "output_bytes": 2351
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 211164,
+          "cached_input_tokens": 173312,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2087,
+          "reasoning_output_tokens": 28
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "implicit",
+      "phase": "candidate",
+      "all_observed_command_output_bytes": 45020,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 2273
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md'",
+          "paths": [
+            ".claude/rules/comm-human-folder-guides.md",
+            ".claude/rules/comm-skill-rule-ownership.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-human-folder-guides.md",
+            ".claude/rules/comm-user-owned-entrypoints.md"
+          ],
+          "output_bytes": 22646
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5270
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-normalize-text-line-endings/SKILL.md'",
+          "paths": [
+            ".agents/skills/comm-normalize-text-line-endings/SKILL.md"
+          ],
+          "output_bytes": 1436
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 231030,
+          "cached_input_tokens": 208512,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2120,
+          "reasoning_output_tokens": 30
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "explicit",
+      "phase": "candidate",
+      "all_observed_command_output_bytes": 44745,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 1970
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-user-owned-entrypoints.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 22646
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5270
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-normalize-text-line-endings/SKILL.md'",
+          "paths": [
+            ".agents/skills/comm-normalize-text-line-endings/SKILL.md"
+          ],
+          "output_bytes": 1436
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 185927,
+          "cached_input_tokens": 158976,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2073,
+          "reasoning_output_tokens": 23
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "unrelated",
+      "phase": "candidate",
+      "all_observed_command_output_bytes": 40942,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 1970
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-human-folder-guides.md",
+            ".claude/rules/comm-user-owned-entrypoints.md"
+          ],
+          "output_bytes": 22646
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5270
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 130794,
+          "cached_input_tokens": 112384,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 906,
+          "reasoning_output_tokens": 15
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "narrow",
+      "phase": "candidate",
+      "all_observed_command_output_bytes": 46317,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 1970
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-user-owned-entrypoints.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 22646
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5270
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-preserve-text-line-endings/SKILL.md'",
+          "paths": [
+            ".agents/skills/comm-preserve-text-line-endings/SKILL.md"
+          ],
+          "output_bytes": 2902
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-preserve-text-line-endings/references/regressions.md'",
+          "paths": [
+            ".agents/skills/comm-preserve-text-line-endings/references/regressions.md"
+          ],
+          "output_bytes": 2351
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 204024,
+          "cached_input_tokens": 178432,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1253,
+          "reasoning_output_tokens": 6
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "implicit",
+      "phase": "candidate",
+      "all_observed_command_output_bytes": 44935,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 2344
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-human-folder-guides.md",
+            ".claude/rules/comm-user-owned-entrypoints.md"
+          ],
+          "output_bytes": 22646
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5652
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-normalize-text-line-endings/SKILL.md'",
+          "paths": [
+            ".agents/skills/comm-normalize-text-line-endings/SKILL.md"
+          ],
+          "output_bytes": 1436
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 143321,
+          "cached_input_tokens": 119424,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1971,
+          "reasoning_output_tokens": 56
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "explicit",
+      "phase": "candidate",
+      "all_observed_command_output_bytes": 44676,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 2344
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-user-owned-entrypoints.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 22646
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5652
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-normalize-text-line-endings/SKILL.md'",
+          "paths": [
+            ".agents/skills/comm-normalize-text-line-endings/SKILL.md"
+          ],
+          "output_bytes": 1436
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 168875,
+          "cached_input_tokens": 137728,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2003,
+          "reasoning_output_tokens": 23
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "unrelated",
+      "phase": "candidate",
+      "all_observed_command_output_bytes": 31686,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 2344
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "paths": [
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-user-owned-entrypoints.md"
+          ],
+          "output_bytes": 12634
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5652
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 127958,
+          "cached_input_tokens": 111360,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 815,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "narrow",
+      "phase": "candidate",
+      "all_observed_command_output_bytes": 47091,
+      "complete_machine_body_reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "paths": [
+            "harness/common/START.md",
+            "harness/project/START.md"
+          ],
+          "output_bytes": 2344
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "paths": [
+            "harness/common/rules/comm-skill-rule-ownership.md",
+            "harness/common/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 10012
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "paths": [
+            ".claude/rules/comm-skill-rule-ownership.md",
+            ".claude/rules/comm-package-independence.md",
+            ".claude/rules/comm-entrypoint-links-rule.md",
+            ".claude/rules/comm-instruction-order.md",
+            ".claude/rules/comm-dependencies-through-uv.md",
+            ".claude/rules/comm-user-owned-entrypoints.md",
+            ".claude/rules/comm-human-folder-guides.md"
+          ],
+          "output_bytes": 22646
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "paths": [
+            "harness/common/INDEX.md",
+            "harness/project/INDEX.md"
+          ],
+          "output_bytes": 5652
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-preserve-text-line-endings/SKILL.md'",
+          "paths": [
+            ".agents/skills/comm-preserve-text-line-endings/SKILL.md"
+          ],
+          "output_bytes": 2902
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-preserve-text-line-endings/references/regressions.md'",
+          "paths": [
+            ".agents/skills/comm-preserve-text-line-endings/references/regressions.md"
+          ],
+          "output_bytes": 2351
+        }
+      ],
+      "actual_usage_events": [
+        {
+          "input_tokens": 205192,
+          "cached_input_tokens": 190720,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1265,
+          "reasoning_output_tokens": 12
+        }
+      ]
+    }
+  ]
+}
