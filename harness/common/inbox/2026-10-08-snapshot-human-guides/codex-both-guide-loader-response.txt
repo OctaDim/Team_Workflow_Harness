@@ -1,0 +1,24 @@
+- **imagegen** — Generate or edit raster images, including photos, illustrations, textures, sprites, mockups, and transparent cutouts.
+- **openai-docs** — Guidance for Codex, OpenAI products and APIs, setup, troubleshooting, models, prompting, and SDKs.
+- **skill-creator** — Create or update Codex skills and supporting resources.
+- **skill-installer** — Install Codex skills from a curated list or GitHub repository.
+- **comm-create-lazy-claude-codex-skills** — Author, update, migrate, or publish skills and agent rules for Codex and Claude Code.
+- **comm-install-harness** — Install, move, or diagnose harness packages and entrypoints, or change the shared project skeleton.
+- **comm-process-harness-inbox** — Record harness experience, create or process inbox requests, and update their execution status.
+
+The entrypoint check passed; it reported that project history comparison was unavailable. I’ll use the installed **comm-install-harness** skill and its `references/checks.md` to explain the installation contract.
+
+Project-only must be refused because **common is mandatory** and project depends on it. The installed skill calls refusal a negative control, not a third installation mode.
+
+The neutral project skeleton comes explicitly from `harness/common/base/project-skeleton.json`, never from current project folders. In common-only mode, the common entrypoint check creates a missing project with agreed categories, neutral INDEX/START, and human guides. Common+project preserves existing project files byte-for-byte. I read this contract; I did not inspect the JSON itself.
+
+Actually read:
+
+- `harness/common/START.md` and `harness/project/START.md`
+- Canonical `harness/common/rules/comm-skill-rule-ownership.md` and `comm-human-folder-guides.md`
+- All six files returned by the separate rules listing, through a separate explicitly quoted `cat`: ownership, dependencies-through-uv, package-independence, entrypoint-links-rule, human-folder-guides, and user-owned-entrypoints under `.claude/rules/`
+- `harness/common/INDEX.md` and `harness/project/INDEX.md`
+- `.agents/skills/comm-install-harness/SKILL.md`
+- `.agents/skills/comm-install-harness/references/checks.md`
+
+The requested initial check exited **0**; project history comparison was unavailable. No `README.human.md` bodies were read. No writes or installations were performed, and neither clean installation modes nor native Codex/Claude behavior were tested. This was a fresh loader decision against the historical snapshot.
