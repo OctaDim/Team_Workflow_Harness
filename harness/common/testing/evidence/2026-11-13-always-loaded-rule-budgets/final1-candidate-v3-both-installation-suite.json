@@ -1,0 +1,53 @@
+{
+  "command": [
+    "/tmp/harness-inbox-20261113-venv/bin/python",
+    "-m",
+    "pytest",
+    "-q"
+  ],
+  "exit_code": 0,
+  "stdout": "........................................................................ [ 42%]\n........................................................................ [ 85%]\n........................                                                 [100%]\n168 passed in 10.33s\n",
+  "stderr": "",
+  "elapsed_seconds": 10.69,
+  "startup": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+      "stderr": "",
+      "elapsed_seconds": 0.05
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+      "stderr": "",
+      "elapsed_seconds": 0.04
+    }
+  ],
+  "mode": "both",
+  "sources": {
+    "comm-create-lazy-claude-codex-skills": {
+      "SKILL.md": "909a097a37781b329068ca281eb0c1ef24e235150272584d132745adbc43670c",
+      "README.human.md": "4b7875ec969eaa303557f76ddb01acfe5dd8c17719ec9832db6fe6a5dd68b50f",
+      "references/content-contract.md": "efcafa74774bc9241e8c8c70a4eb66b9b66cb47d4a1b7469d6894cd22109a96c",
+      "references/README.human.md": "d836dc9339025e065bfb6078fb470ad745a43342a79f3e7d882d0c57d2718e45"
+    },
+    "comm-validate-harness-instructions": {
+      "SKILL.md": "40ba6bf8aabf49f933122001922a473d2447484df2a46e3c47e621b598760df9",
+      "README.human.md": "ea9014c7118b459b68f51ac04a91ee6a93299d0218c2151a24cfaa569a8adfd2",
+      "references/evaluation.md": "36d7a79002c72a65328e84f2e6509587b27d56e6a4a4b022f0068ee7f92589d9",
+      "references/README.human.md": "d836dc9339025e065bfb6078fb470ad745a43342a79f3e7d882d0c57d2718e45",
+      "references/validation.md": "50ab7fa68fc1f3e878b1e9e54be2e7d35cc1ab5b7de2116a779177414aa3e251",
+      "references/rule-budgets.md": "d2058bc9a41308263a7f19d816acaa64e6a9fe252c07f2c45756c4b1188b974b"
+    }
+  }
+}
