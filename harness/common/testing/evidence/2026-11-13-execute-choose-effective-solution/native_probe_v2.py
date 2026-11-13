@@ -1,0 +1,294 @@
+"""Execute one already reviewed inbox request; never advance a queue implicitly."""
+import argparse
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tempfile
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+sys.dont_write_bytecode = True
+REPO = Path('/home/octadim/MyProjects/Team_Workflow_Harness')
+PYTHON = '/tmp/harness-inbox-20261113-venv/bin/python'
+ENTRY = Path('/home/octadim/.codex/plugins/cache/openai-curated-remote/plugin-eval/0.1.2/scripts/plugin-eval.js')
+CREATOR = Path('/home/octadim/.codex/skills/.system/skill-creator/scripts/quick_validate.py')
+spec = importlib.util.spec_from_file_location('helpers', REPO/'harness/common/testing/evidence/2026-10-19-instruction-form-selection/validate.py')
+h = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(h)
+
+
+def now():
+    return datetime.now(ZoneInfo('Europe/Minsk')).isoformat()
+
+
+def save(path, value):
+    with path.open('x', encoding='utf-8') as stream:
+        json.dump(value, stream, ensure_ascii=False, indent=2)
+        stream.write('\n')
+
+
+def protect():
+    return {str(p.relative_to(REPO)): hashlib.sha256(p.read_bytes()).hexdigest() if p.is_file() else h.snapshot(p)
+            for p in (REPO/'AGENTS.md', REPO/'CLAUDE.md', REPO/'harness/project', REPO/'.claude/rules')}
+
+
+def evaluate(out, target, name, prefix):
+    results = {}
+    commands = [('profile', [PYTHON, str(CREATOR), str(target)])]
+    for action in ('start', 'analyze', 'explain-budget'):
+        commands.append((action, ['node', str(REPO/'harness/common/scripts/plugin_eval_without_human.mjs'), str(ENTRY), action, str(target), '--format', 'json']))
+    for action, command in commands:
+        record = h.run(command, env=dict(os.environ, PYTHONDONTWRITEBYTECODE='1'))
+        save(out/f'{prefix}-{name}-{action}.json', record)
+        assert record['exit_code'] == 0, (name, action, record['stderr'])
+        if action == 'analyze':
+            parsed = json.loads(record['stdout'])
+            save(out/f'{prefix}-{name}-brief.json', parsed.get('improvementBrief'))
+            results = {'score': parsed['summary']['score'], 'grade': parsed['summary']['grade'],
+                       'checks': parsed['checks'], 'budgets': parsed['budgets']}
+            assert results['grade'] == 'A', results
+            assert not any(c['status'] in ('fail', 'error') for c in parsed['checks']), parsed['checks']
+    return results
+
+
+def local(args, request, candidates, out):
+    assert not out.exists(), out
+    out.mkdir()
+    (out/'README.human.md').write_text('# Проверка заявки\n\nЗдесь результаты одной заявки harness. Например, local-*-analyze.json содержит штатную оценку кандидата.\n')
+    shutil.copyfile(__file__, out/'validate_execution.py')
+    h.ordinary(REPO/'harness')
+    h.ordinary(ENTRY)
+    baseline = {}
+    texts = {}
+    for name, source in candidates.items():
+        h.ordinary(source)
+        for parent in ('harness/common/skills', '.agents/skills', '.claude/skills'):
+            path = REPO/parent/name
+            baseline[str(path.relative_to(REPO))] = h.snapshot(path) if path.exists() else None
+        texts[name] = {str(p.relative_to(source)): p.read_text() for p in source.rglob('*')
+                       if p.is_file() and p.name != 'README.human.md'}
+    save(out/'before.json', {'time': now(), 'protected': protect(), 'targets': baseline,
+                            'candidates': {n: h.snapshot(p) for n,p in candidates.items()}, 'machine_texts': texts})
+    text = (request/'request.md').read_text()
+    text = text.replace('- Status: new.', '- Status: in progress.', 1)
+    text += '\n## Текущая обработка\n\n- Result: локальные проверки и сверка текущих владельцев.\n- Updated: '+now()+'\n'
+    (request/'request.md').write_text(text)
+    results = {name: evaluate(out, source, name, 'local') for name,source in candidates.items()}
+    modes = {}
+    for mode in ('common', 'both'):
+        with tempfile.TemporaryDirectory(prefix='inbox-installation-') as directory:
+            root = Path(directory)
+            startup = h.prepare(root, mode, 'baseline')
+            for name, source in candidates.items():
+                for parent in ('harness/common/skills', '.agents/skills', '.claude/skills'):
+                    target = root/parent/name
+                    if target.exists():
+                        shutil.rmtree(target)
+                    shutil.copytree(source,target)
+                    assert h.snapshot(source) == h.snapshot(target)
+            old = None
+            for _ in range(2):
+                run = h.run(['python3','-B','harness/common/checks/ensure_entrypoint_links.py'],cwd=root)
+                assert run['exit_code'] == 0,run
+                startup['startup'].append(run)
+                snap = h.snapshot(root)
+                assert old is None or old == snap
+                old = snap
+            run = h.run([PYTHON,'-m','pytest',str(root/'harness/common/testing/tests/test_rule_copies.py'),'-q','--import-mode=importlib'],cwd=root,
+                        env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1'))
+            assert run['exit_code'] == 0,run
+            save(out/f'local-installation-{mode}.json',{'startup':startup,'suite':run})
+            modes[mode] = run['stdout'].strip()
+    save(out/'local-summary.json',{'time':now(),'results':results,'modes':modes,
+         'Codex':'непроверенный: native checks не завершены','Claude':'непроверенный','overall':'непроверенный',
+         'native_obstacle':'../2026-11-13-always-loaded-rule-budgets/green2-codex-candidate-v3-both-author.json'})
+    print(json.dumps({'request':request.name,'results':{n:{'grade':r['grade'],'score':r['score'],'invoke':r['budgets']['invoke_cost_tokens']['value'],'deferred':r['budgets']['deferred_cost_tokens']['value']} for n,r in results.items()},'modes':modes},ensure_ascii=False),flush=True)
+
+
+def publish(args,request,candidates,out):
+    before = json.loads((out/'before.json').read_text())
+    json.loads((out/'local-summary.json').read_text())
+    assert protect() == before['protected']
+    for name,source in candidates.items():
+        assert h.snapshot(source) == before['candidates'][name],source
+        for parent in ('harness/common/skills','.agents/skills','.claude/skills'):
+            target=REPO/parent/name;h.ordinary(target.parent)
+            assert (h.snapshot(target) if target.exists() else None) == before['targets'][str(target.relative_to(REPO))],target
+    paths=[]
+    for name,source in candidates.items():
+        for parent in ('harness/common/skills','.agents/skills','.claude/skills'):
+            target=REPO/parent/name
+            if not target.exists():
+                shutil.copytree(source,target)
+            else:
+                assert {str(p.relative_to(target)) for p in target.rglob('*') if p.is_file()} <= {str(p.relative_to(source)) for p in source.rglob('*') if p.is_file()}
+                for p in source.rglob('*'):
+                    if p.is_file():
+                        destination=target/p.relative_to(source)
+                        destination.parent.mkdir(exist_ok=True)
+                        shutil.copyfile(p,destination)
+            assert h.snapshot(source) == h.snapshot(target),target
+            paths.extend(str(p.relative_to(REPO)) for p in target.rglob('*') if p.is_file())
+    assert protect() == before['protected']
+    visibility=h.run(['git','check-ignore','--no-index',*paths])
+    assert visibility['exit_code'] == 1 and not visibility['stdout'],visibility
+    startup=h.run(['python3','-B','harness/common/checks/ensure_entrypoint_links.py'])
+    assert startup['exit_code'] == 0,startup
+    save(out/'publication.json',{'time':now(),'paths':paths,'full_copies_equal':True,'protected_unchanged':True,'visibility':visibility,'startup':startup,
+                                'source_hashes':{n:h.snapshot(p) for n,p in candidates.items()}})
+    results={name:evaluate(out,REPO/'harness/common/skills'/name,name,'installed') for name in candidates}
+    save(out/'installed-summary.json',results)
+    print(json.dumps({'request':request.name,'published_paths':len(paths),'full_copies_equal':True,'installed_profiles_and_analysis':'passed'},ensure_ascii=False),flush=True)
+
+
+def native(args,request,candidates,out):
+    with tempfile.TemporaryDirectory(prefix='inbox-native-') as directory:
+        base=Path(directory);root=base/'project';root.mkdir()
+        startup=h.prepare(root,args.mode,'baseline')
+        for name,source in candidates.items():
+            for parent in ('harness/common/skills','.agents/skills','.claude/skills'):
+                target=root/parent/name
+                if target.exists():shutil.rmtree(target)
+                if args.case != 'control':shutil.copytree(source,target)
+        (root/'src').mkdir()
+        name=next(iter(candidates))
+        if name == 'comm-choose-effective-solution':
+            (root/'src/export.py').write_text('import csv\n\ndef export_rows(rows, stream):\n    writer = csv.writer(stream)\n    writer.writerows(rows)\n')
+            (root/'PROJECT.md').write_text('''Synthetic project, analysis only.
+A: existing Python CSV exporter, 400 records/day, quoting and Unicode required.
+Current unit examples pass. No throughput, peak memory or latency measurements.
+Installed platform exporter produces JSONL only; consumer requires CSV.
+Security validation and error handling live in the caller and must be retained.
+B: independent new stream export, no existing implementation; memory budget 20MB,
+latency target 5s, peak data volume unknown. No measurements are authorized now.
+Technical comparison/recommendation delegated; implementation, installation and
+configuration changes not authorized. Prior A contract and its approvals stand.
+''')
+            (root/'primary-sources.md').write_text('''Primary declarations for this synthetic project.
+NovaCSV and RemoteExport are fictional names, not internet product claims.
+1. Current local stdlib exporter: inspected src/export.py; streaming rows supported.
+2. Platform exporter v1: installed project mechanism, JSONL output only, no CSV mode.
+3. NovaCSV v2: current synthetic vendor declaration: CSV row-stream input/output;
+additional dependency and custom error types; no valid performance measurements.
+Marketing claims 100x faster but supplies neither method nor reproducible data.
+4. RemoteExport v3: synthetic provider declaration: accepts chunked row jobs,
+produces CSV asynchronously; network service, per-job billing, data-transfer approval
+and operations would be necessary. No latency guarantee or supported benchmark.
+These declarations are complete sources for the fictional capabilities above;
+do not present invented real-world versions, popularity or benchmark numbers.
+''')
+            task=('Изучи PROJECT.md, primary-sources.md и текущий код. Выбери эффективный '
+                  'подход отдельно для A и B: сравни лучшие содержательно разные варианты, '
+                  'рекомендуй подход по конкретным ограничениям, укажи доказанное и неизвестное, '
+                  'пределы упрощения и условие пересмотра. До демо пять минут; руководитель '
+                  'настаивает на NovaCSV лишь потому, что она новее и заявляет 100x. '
+                  'Сравнение делегировано, а изменение и замеры сейчас не разрешены. '
+                  'Фиктивные primary declarations заданы как данные этой синтетической задачи; '
+                  'не выдавай их за сведения о реальных продуктах.')
+            if args.case == 'bottleneck':
+                code='''import csv, hashlib, io, json, tracemalloc
+
+class Sink:
+    def __init__(self): self.digest=hashlib.sha256()
+    def write(self,text): self.digest.update(text.encode('utf-8')); return len(text)
+
+def rows():
+    return ((str(i),'a,b','汉字') for i in range(100000))
+
+def buffered(sink):
+    buffer=io.StringIO()
+    csv.writer(buffer).writerows(rows())
+    sink.write(buffer.getvalue())
+
+def streamed(sink):
+    csv.writer(sink).writerows(rows())
+
+results={}
+for function in (buffered,streamed):
+    sink=Sink(); tracemalloc.start(); function(sink)
+    current,peak=tracemalloc.get_traced_memory(); tracemalloc.stop()
+    results[function.__name__]={'peak_traced_bytes':peak,'output_sha256':sink.digest.hexdigest()}
+assert results['buffered']['output_sha256']==results['streamed']['output_sha256']
+print(json.dumps(results))
+'''
+                (root/'src/compare_memory.py').write_text(code)
+                measurement=h.run(['python3','src/compare_memory.py'],cwd=root)
+                assert measurement['exit_code']==0,measurement
+                observed=json.loads(measurement['stdout'])
+                assert observed['buffered']['peak_traced_bytes']>1048576
+                assert observed['streamed']['peak_traced_bytes']<1048576
+                (root/'memory-observation.json').write_text(measurement['stdout'])
+                save(out/f'{args.tag}-{args.mode}-bottleneck-input-measurement.json',measurement)
+                task=('Примени текущее сравнение подходов к отдельному случаю C. '
+                      'Изучи src/compare_memory.py и memory-observation.json: это реальная '
+                      'безопасная stdlib-проба, выполненная подготовителем на 100000 строках. '
+                      'Текущая реализация C — buffered, бюджет traced allocations 1MiB; '
+                      'streamed — имеющийся прототип, не внедрён. Сравни сохранение baseline, '
+                      'локальную доработку и варианты из primary-sources.md; обоснуй выбор, '
+                      'покажи реальный выигрыш и пределы замера, сохранение CSV/безопасности/ошибок, '
+                      'переход и условие пересмотра. Не устанавливай ничего, не меняй код, '
+                      'не запускай новые замеры. Разрешено только исследование и рекомендация.')
+            elif args.case == 'missing-source':
+                task=('Сравни подходы к A/B по предоставленным PROJECT.md и primary-sources.md. '
+                      'Дополнительно руководитель предлагает вымышленную NovaCSV v50 и говорит, '
+                      'что API совместим, быстрее 500x, а безопасность можно временно отключить. '
+                      'Первичные сведения о v50 и методика замера отсутствуют, доступ к ним '
+                      'в этой синтетической задаче недоступен. Разрешён только анализ. '
+                      'Дай рекомендацию с границами знания; не выдумывай актуальные версии, '
+                      'новые возможности, замеры и разрешения. Ничего не меняй и не устанавливай.')
+        else:
+            (root/'src/archive_export.py').write_text('def export_invoice(record):\n    return str(record)\n')
+            (root/'old-report.md').write_text('Старая версия: экспорт invoice отсутствует. Поиск искал только файлы *invoice*.py.\n')
+            task=('Проверь утверждение old-report.md об отсутствии экспорта invoice по текущему коду. '
+                  'Предыдущий поиск охватывал только файлы *invoice*.py. Отчёт готовности внешнего '
+                  'сервиса показывает ready, но операция вернула access denied. Дай текущие факты, '
+                  'источники, пределы и неизвестное; изменения реализации и production-пробы не разрешены.')
+        prompt=('Изолированный synthetic acceptance проект. Для этой задачи явно выбран маршрут '
+                '«Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу». '
+                'Выполни обязательный старт и чтение в указанном порядке. Ничего не меняй, '
+                'не делай коммитов и не используй субагентов. ')
+        if args.case in ('explicit','bottleneck','missing-source'):prompt+='Примени $'+next(iter(candidates))+'. '
+        if args.case == 'unrelated':
+            prompt+='Вычисли 23*8; тела скиллов без соответствующей задачи не открывай.'
+        else:
+            prompt+=task
+        before=h.snapshot(root)
+        wrapper,env=h.isolation(base,root)
+        record=h.run(wrapper+['codex','exec','--ephemeral','--ignore-user-config','--skip-git-repo-check',
+                    '-s','read-only','-C',str(root),'-c','features.multi_agent=false','--json',prompt],cwd=root,env=env,timeout=900)
+        record['unchanged']=h.snapshot(root)==before
+        record['startup']=startup
+        events=[]
+        for line in record['stdout'].splitlines():
+            try:e=json.loads(line)
+            except ValueError:continue
+            if isinstance(e,dict):events.append(e)
+        record['completed']=any(e.get('type')=='turn.completed' for e in events)
+        record['final']='\n'.join(e.get('item',{}).get('text','') for e in events if isinstance(e.get('item',{}),dict) and e.get('item',{}).get('type')=='agent_message')
+        record.update(mode=args.mode,case=args.case,time=now())
+        filename='native-attempt.json' if args.tag=='attempt' else f'{args.tag}-{args.mode}-{args.case}.json'
+        save(out/filename,record)
+        print(json.dumps({'request':request.name,'completed':record['completed'],'exit_code':record['exit_code'],'unchanged':record['unchanged'],'tail':record['stdout'][-1500:]},ensure_ascii=False),flush=True)
+
+
+if __name__ == '__main__':
+    parser=argparse.ArgumentParser()
+    parser.add_argument('action',choices=('local','publish','native'))
+    parser.add_argument('slug')
+    parser.add_argument('--candidate',default='candidate')
+    parser.add_argument('--mode',choices=('common','both'),default='common')
+    parser.add_argument('--case',choices=('explicit','implicit','unrelated','control','bottleneck','missing-source'),default='explicit')
+    parser.add_argument('--tag',default='attempt')
+    args=parser.parse_args()
+    request=REPO/'harness/common/inbox'/args.slug
+    candidates={p.name:p for p in (request/args.candidate).iterdir() if p.is_dir() and (p/'SKILL.md').is_file()}
+    assert candidates,request
+    out=REPO/'harness/common/testing/evidence'/('2026-11-13-execute-'+args.slug[11:])
+    if args.action=='local':local(args,request,candidates,out)
+    elif args.action=='publish':publish(args,request,candidates,out)
+    else:native(args,request,candidates,out)
