@@ -1,0 +1,194 @@
+{
+  "baseline-both-control-audit.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [],
+    "usage": [
+      {
+        "input_tokens": 229051,
+        "cached_input_tokens": 205568,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1725,
+        "reasoning_output_tokens": 10
+      }
+    ]
+  },
+  "baseline-common-control-audit.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [],
+    "usage": [
+      {
+        "input_tokens": 229222,
+        "cached_input_tokens": 203904,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1626,
+        "reasoning_output_tokens": 7
+      }
+    ]
+  },
+  "current-both-explicit-audit.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [
+      "/bin/bash -lc 'cat .agents/skills/comm-assess-project-tests/SKILL.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 232521,
+        "cached_input_tokens": 191616,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1589,
+        "reasoning_output_tokens": 15
+      }
+    ]
+  },
+  "current-both-explicit-mutations.json": {
+    "completed": true,
+    "unchanged": false,
+    "target_read_commands": [
+      "/bin/bash -lc \"cat .agents/skills/comm-assess-project-tests/SKILL.md; rg --files src tests -g '\"'!README.human.md'\"'; cat .agents/skills/comm-assess-project-tests/references/isolated-mutations.md\""
+    ],
+    "usage": [
+      {
+        "input_tokens": 291968,
+        "cached_input_tokens": 255616,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2906,
+        "reasoning_output_tokens": 102
+      }
+    ]
+  },
+  "current-both-explicit-unavailable.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [
+      "/bin/bash -lc 'cat .agents/skills/comm-assess-project-tests/SKILL.md .agents/skills/comm-assess-project-tests/references/isolated-mutations.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 295988,
+        "cached_input_tokens": 272896,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1490,
+        "reasoning_output_tokens": 29
+      }
+    ]
+  },
+  "current-both-implicit-audit.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [
+      "/bin/bash -lc 'cat .agents/skills/comm-assess-project-tests/SKILL.md .agents/skills/comm-verify-project-facts/SKILL.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 288615,
+        "cached_input_tokens": 258560,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1912,
+        "reasoning_output_tokens": 38
+      }
+    ]
+  },
+  "current-both-unrelated-audit.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [],
+    "usage": [
+      {
+        "input_tokens": 206626,
+        "cached_input_tokens": 176256,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 573,
+        "reasoning_output_tokens": 0
+      }
+    ]
+  },
+  "current-common-explicit-audit.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [
+      "/bin/bash -lc 'cat .agents/skills/comm-assess-project-tests/SKILL.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 228589,
+        "cached_input_tokens": 203520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1755,
+        "reasoning_output_tokens": 14
+      }
+    ]
+  },
+  "current-common-explicit-mutations.json": {
+    "completed": true,
+    "unchanged": false,
+    "target_read_commands": [
+      "/bin/bash -lc \"cat .agents/skills/comm-assess-project-tests/SKILL.md .agents/skills/comm-assess-project-tests/references/isolated-mutations.md; rg --files -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\""
+    ],
+    "usage": [
+      {
+        "input_tokens": 303428,
+        "cached_input_tokens": 273536,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3074,
+        "reasoning_output_tokens": 176
+      }
+    ]
+  },
+  "current-common-explicit-unavailable.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [
+      "/bin/bash -lc \"cat .agents/skills/comm-assess-project-tests/SKILL.md; cat .agents/skills/comm-assess-project-tests/references/isolated-mutations.md; rg --files -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"'\""
+    ],
+    "usage": [
+      {
+        "input_tokens": 261102,
+        "cached_input_tokens": 241024,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1256,
+        "reasoning_output_tokens": 13
+      }
+    ]
+  },
+  "current-common-implicit-audit.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [
+      "/bin/bash -lc 'cat .agents/skills/comm-assess-project-tests/SKILL.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 256540,
+        "cached_input_tokens": 237568,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1675,
+        "reasoning_output_tokens": 22
+      }
+    ]
+  },
+  "current-common-unrelated-audit.json": {
+    "completed": true,
+    "unchanged": true,
+    "target_read_commands": [],
+    "usage": [
+      {
+        "input_tokens": 166616,
+        "cached_input_tokens": 146176,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 593,
+        "reasoning_output_tokens": 0
+      }
+    ]
+  },
+  "focused-both-explicit-mutations.json": {
+    "completed": false,
+    "unchanged": false,
+    "target_read_commands": [
+      "/bin/bash -lc \"cat .agents/skills/comm-assess-project-tests/SKILL.md .agents/skills/comm-assess-project-tests/references/isolated-mutations.md; rg --files -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.*'\"' src tests\""
+    ],
+    "usage": []
+  }
+}
