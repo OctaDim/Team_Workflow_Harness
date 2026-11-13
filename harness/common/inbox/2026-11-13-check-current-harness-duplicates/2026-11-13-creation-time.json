@@ -1,0 +1,16 @@
+{
+  "observed_at": "2026-11-13T10:39:30.357362+03:00",
+  "command": [
+    "stat",
+    "-c",
+    "%n | birth=%w | modified=%y",
+    "harness/common/inbox/2026-11-13-check-current-harness-duplicates",
+    "harness/common/inbox/2026-11-13-check-current-harness-duplicates/request.md"
+  ],
+  "stdout": "harness/common/inbox/2026-11-13-check-current-harness-duplicates | birth=2026-11-13 00:23:52.801677531 +0300 | modified=2026-11-13 00:23:54.061676660 +0300\nharness/common/inbox/2026-11-13-check-current-harness-duplicates/request.md | birth=2026-11-13 00:23:54.061676660 +0300 | modified=2026-11-13 00:23:54.061676660 +0300\n",
+  "source": "filesystem birth time, not modification time",
+  "request_before_sha256": "12f7d3bad421b99ed2c69fe15c20f962e3b486babe1a6b480ca8baba3c0eb6bc",
+  "request_directory_created": "2026-11-13T00:23:52.801677531+03:00",
+  "request_file_created": "2026-11-13T00:23:54.061676660+03:00",
+  "recorded_creation_time_uses": "request directory birth time; request file was written two seconds later"
+}
