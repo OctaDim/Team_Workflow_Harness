@@ -1,0 +1,20 @@
+{
+  "reviewer": "parent inline, not independent",
+  "outcomes": [
+    {
+      "case": "approved",
+      "semantic": "pass",
+      "reason": "Actual PLAN covers prior decisions, direct bound SQL read, deployment-only schema, one connection per operation closed by owner on success/error; no class/global/session/pool or new commit boundary. No repeats of settled architecture."
+    },
+    {
+      "case": "partial",
+      "semantic": "pass",
+      "reason": "Keeps SQLAlchemy/Alembic approval and asks only open query/lifecycle decisions with distinct options. Recommendation is not treated as consent; PLAN absent."
+    },
+    {
+      "case": "unrelated",
+      "semantic": "pass",
+      "reason": "Correct 148, no SQL loading or writes."
+    }
+  ]
+}

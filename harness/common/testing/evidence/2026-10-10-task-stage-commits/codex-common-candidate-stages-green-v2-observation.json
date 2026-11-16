@@ -1,0 +1,89 @@
+{
+  "agent": "codex",
+  "mode": "common",
+  "invocation": "candidate-stages-green-v2",
+  "exit_code": 0,
+  "elapsed_seconds": 60.18,
+  "isolation_probe": "passed",
+  "completed": true,
+  "resource_name_in_events": false,
+  "response_file": "codex-common-candidate-stages-green-v2-response.txt",
+  "events_file": "codex-common-candidate-stages-green-v2-events.json",
+  "git_observation": {
+    "commits": [
+      {
+        "hash": "17f181d6ec98737647caa9e9c1939b4fe5aed593",
+        "subject": "chore: Preserve approved checkpoint change",
+        "files": [
+          "checkpoint.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": null,
+          "task-b.md": null,
+          "user.txt": "unrelated-before\n"
+        }
+      },
+      {
+        "hash": "ea7520673547cf448a1960f48d1173e1e610e48a",
+        "subject": "chore: Record task A draft",
+        "files": [
+          "task-a.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": "draft-a\n",
+          "task-b.md": null,
+          "user.txt": "unrelated-before\n"
+        }
+      },
+      {
+        "hash": "71b0dae51ea9b82a4cd7d3c33a595fb7a81832f4",
+        "subject": "chore: Finalize task A",
+        "files": [
+          "task-a.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": "final-a\n",
+          "task-b.md": null,
+          "user.txt": "unrelated-before\n"
+        }
+      },
+      {
+        "hash": "b283152f4c9887a01962408e4975e767acca512a",
+        "subject": "chore: Record task B draft",
+        "files": [
+          "task-b.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": "final-a\n",
+          "task-b.md": "draft-b\n",
+          "user.txt": "unrelated-before\n"
+        }
+      },
+      {
+        "hash": "615eb01abe2857282dd23e93e72fc6c687f1867f",
+        "subject": "chore: Finalize task B",
+        "files": [
+          "task-b.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": "final-a\n",
+          "task-b.md": "final-b\n",
+          "user.txt": "unrelated-before\n"
+        }
+      }
+    ],
+    "staged": [
+      "user.txt"
+    ],
+    "branch": "acceptance-tasks",
+    "owned_status": "",
+    "main_head": "739ead504efdc2c58e3113f0c6db042a1571356d",
+    "initial_head": "739ead504efdc2c58e3113f0c6db042a1571356d"
+  },
+  "boundaries_passed": true
+}

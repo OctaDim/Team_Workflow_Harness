@@ -1,0 +1,124 @@
+........................................................................ [ 44%]
+........................................................................ [ 89%]
+...........F...FF                                                        [100%]
+=================================== FAILURES ===================================
+__________________ TestRuleCopies.test_installed_rule_copies ___________________
+
+self = <test_rule_copies.TestRuleCopies object at 0x731921255730>
+
+    def test_installed_rule_copies(self):
+>       count = check_rule_copies(ROOT)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+
+harness/common/testing/tests/test_rule_copies.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/harness-symlinks-stage')
+
+    def check_rule_copies(root):
+        """Check the complete installed canonical set without publishing missing copies."""
+        common = root / 'harness/common'
+        ordinary_directory(common, root)
+        if not common.is_dir():
+            raise ValueError('harness/common is required; project-only is unsupported.')
+        native = root / '.claude/rules'
+        ordinary_directory(native, root)
+        sources = {}
+        for package, prefix in (('common', 'comm-'), ('project', 'proj-')):
+            rules = root / 'harness' / package / 'rules'
+            ordinary_directory(rules, root)
+            if rules.is_dir():
+                for path in (rules, *rules.rglob('*')):
+                    if path.is_symlink():
+                        raise ValueError(f'Not an ordinary file: {path}')
+                    if path.is_dir():
+                        tuple(path.iterdir())  # glob may silently omit unreadable directories.
+                    if path.name.startswith(prefix) and path.suffix == '.md' and path.parent != rules:
+                        raise ValueError(f'Canonical rules must be direct ordinary files: {path}')
+                sources.update((file.name, file) for file in rules.glob(prefix + '*.md'))
+        if not any(name.startswith('comm-') for name in sources):
+            raise ValueError('No canonical shared rules found; nothing checked.')
+        for path in (native, *native.rglob('*')):
+            if path.is_symlink():
+                raise ValueError(f'Not an ordinary file: {path}')
+            if path.is_dir():
+                tuple(path.iterdir())
+        actual = {file.relative_to(native).as_posix() for file in native.rglob('*.md')
+                  if file.name.startswith(('comm-', 'proj-'))}
+        expected = set(sources)
+        if expected != actual:
+>           raise ValueError(f'Missing copies: {sorted(expected - actual)}; '
+                             f'extra copies: {sorted(actual - expected)}')
+E           ValueError: Missing copies: ['comm-commit-result-boundaries.md', 'comm-confirm-development-workflow.md', 'comm-dependencies-through-uv.md', 'comm-entrypoint-links-rule.md', 'comm-human-folder-guides.md', 'comm-instruction-order.md', 'comm-package-independence.md', 'comm-skill-rule-ownership.md', 'comm-user-owned-entrypoints.md']; extra copies: []
+
+harness/common/checks/ensure_entrypoint_links.py:196: ValueError
+__________ test_active_skill_resources_and_native_copies_are_complete __________
+
+    def test_active_skill_resources_and_native_copies_are_complete():
+        common = ROOT / 'harness/common'
+        sources = sorted((common / 'skills').glob('comm-*/SKILL.md'))
+        assert sources, 'An empty selection proves nothing'
+        for entry in sources:
+            files = {p.relative_to(entry.parent): p.read_bytes()
+                     for p in entry.parent.rglob('*') if p.is_file()}
+            for native in ['.agents/skills', '.claude/skills']:
+                folder = ROOT / native / entry.parent.name
+                assert all(not p.is_symlink() for p in [folder, *folder.rglob('*')])
+                copies = {p.relative_to(folder): p.read_bytes()
+                          for p in folder.rglob('*') if p.is_file()}
+>               assert copies == files, (entry.parent.name, native)
+E               AssertionError: ('comm-commit-task-stages', '.agents/skills')
+E               assert {} == {PosixPath('R...n upgrade.\n'}
+E                 
+E                 Right contains 2 more items:
+E                 {PosixPath('README.human.md'): b'# \xd0\x9d\xd0\xb0\xd0\xb2\xd1\x8b\xd0\xba'
+E                                                b' \xd0\xb3\xd1\x80\xd0\xb0\xd0\xbd\xd0\xb8\xd1'
+E                                                b'\x86 \xd0\xba\xd0\xbe\xd0\xbc\xd0\xbc\xd0\xb8'
+E                                                b'\xd1\x82\xd0\xbe\xd0\xb2\n\nSKILL.md'
+E                                                b' \xd0\xbe\xd0\xbf\xd1\x80\xd0\xb5\xd0\xb4\xd0'...
+E                 
+E                 ...Full output truncated (69 lines hidden), use '-vv' to show
+
+harness/common/testing/tests/test_skills_first_knowledge.py:21: AssertionError
+____________ test_active_maps_and_approved_template_have_no_lessons ____________
+
+    def test_active_maps_and_approved_template_have_no_lessons():
+        common = ROOT / 'harness/common'
+        categories = json.loads((common / 'base/project-skeleton.json').read_text())['categories']
+        assert 'lessons' not in categories
+        assert 'plans' not in categories
+        assert 'docs/plans' in categories
+        for package in ['common', 'project']:
+            folder = ROOT / 'harness' / package
+            assert not (folder / 'lessons').exists()
+>           text = (folder / 'INDEX.md').read_text()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+harness/common/testing/tests/test_skills_first_knowledge.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/octadim/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/harness-symlinks-stage/harness/project/INDEX.md')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/harness-symlinks-stage/harness/project/INDEX.md'
+
+/home/octadim/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/pathlib.py:1013: FileNotFoundError
+=========================== short test summary info ============================
+FAILED harness/common/testing/tests/test_rule_copies.py::TestRuleCopies::test_installed_rule_copies
+FAILED harness/common/testing/tests/test_skills_first_knowledge.py::test_active_skill_resources_and_native_copies_are_complete
+FAILED harness/common/testing/tests/test_skills_first_knowledge.py::test_active_maps_and_approved_template_have_no_lessons
+3 failed, 158 passed in 10.04s

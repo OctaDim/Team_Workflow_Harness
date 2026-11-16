@@ -14,11 +14,15 @@ class TestEntryPointLinks:
     @pytest.fixture(autouse=True)
     def _project(self, tmp_path):
         self.root = tmp_path
+        for folder in ('harness/common/rules', '.claude/rules'):
+            rules = self.root / folder
+            rules.mkdir(parents=True)
+            (rules / 'comm-fixture.md').write_bytes(b'# Rule fixture\n')
         for package in ('common', 'project'):
             directory = self.root / 'harness' / package
-            directory.mkdir(parents=True)
+            directory.mkdir(parents=True, exist_ok=True)
             (directory / 'INDEX.md').write_text('# Index\n')
-            (directory / 'START.md').touch()
+            (directory / 'START.md').write_bytes(b'# Start\n')
         template = SCRIPT.parent.parent / 'base/project-skeleton.json'
         if template.exists():
             destination = self.root / 'harness/common/base/project-skeleton.json'
@@ -41,7 +45,7 @@ class TestEntryPointLinks:
         assert self.run_check().returncode == 0
         assert before == (agents.read_bytes(), claude.read_bytes())
         for file in self.root.glob('harness/*/START.md'):
-            assert file.read_bytes() == b''
+            assert file.read_bytes() == b'# Start\n'
 
     @pytest.mark.parametrize('newline', ('\n', '\r\n'), ids=['LF', 'CRLF'])
     @pytest.mark.parametrize('common_only', (False, True), ids=['combined', 'common-only'])
@@ -78,6 +82,9 @@ class TestEntryPointLinks:
         text = (self.root / 'AGENTS.md').read_text()
         assert text.startswith(prefix)
         assert text.count('harness/common/INDEX.md') == 1
+        before = (self.root / 'AGENTS.md').read_bytes()
+        assert self.run_check().returncode == 0
+        assert (self.root / 'AGENTS.md').read_bytes() == before
 
     def test_link_examples_in_code_do_not_count_as_real_links(self):
         examples = '\n'.join((f'[Example](harness/{p}/{n})' for p in ('common', 'project') for n in ('INDEX.md', 'START.md')))
@@ -153,7 +160,7 @@ class TestEntryPointLinks:
         assert result.returncode == 2, result.stderr
         assert 'Unclosed Markdown code fence' in result.stderr
         assert (agents.read_bytes(), claude.read_bytes()) == before
-        assert not (self.root / '.claude').exists()
+        assert (self.root / '.claude/rules/comm-fixture.md').read_bytes() == b'# Rule fixture\n'
 
     def test_damaged_package_is_reported_without_creating_dangling_links(self):
         (self.root / 'harness/project/START.md').unlink()
@@ -177,6 +184,9 @@ class TestEntryPointLinks:
         assert not (project / 'lessons').exists()
         assert (project / 'docs/plans/README.human.md').is_file()
         assert not (project / 'checks/ensure_entrypoint_links.py').exists()
+        for branch in ('work', 'harness'):
+            assert (project / 'testing/evidence' / branch / 'README.human.md').is_file()
+            assert f'testing/evidence/{branch}/' in (project / 'INDEX.md').read_text()
         assert 'EPL' not in (project / 'INDEX.md').read_text()
         assert 'harness/common/checks/ensure_entrypoint_links.py' in (project / 'START.md').read_text()
         assert 'harness/project/START.md' in (self.root / 'AGENTS.md').read_text()
@@ -215,7 +225,7 @@ class TestEntryPointLinks:
         assert result.returncode == 2
         assert 'common' in result.stderr
         assert not (self.root / 'AGENTS.md').exists()
-        assert not (self.root / '.claude').exists()
+        assert (self.root / '.claude/rules/comm-fixture.md').read_bytes() == b'# Rule fixture\n'
 
     @pytest.mark.parametrize('symlink', (False, True), ids=['regular-file', 'symlink'])
     def test_unsafe_project_path_is_rejected_without_writes(self, symlink):
@@ -228,7 +238,7 @@ class TestEntryPointLinks:
         result = self.run_check()
         assert result.returncode == 2
         assert not (self.root / 'AGENTS.md').exists()
-        assert not (self.root / '.claude').exists()
+        assert (self.root / '.claude/rules/comm-fixture.md').read_bytes() == b'# Rule fixture\n'
         project.unlink()
 
     @pytest.mark.parametrize('content', ('not json', '{}', '{"categories": {"../outside": {"purpose": "bad", "example": "bad"}}}'), ids=['invalid-json', 'missing-categories', 'path-traversal'])
@@ -266,7 +276,7 @@ class TestEntryPointLinks:
         assert self.run_check().returncode != 0
         assert target.read_text() == 'User text\n'
 
-    def test_rules_link_is_restored_and_directory_created(self):
+    def test_rules_link_is_restored_with_existing_valid_copies(self):
         (self.root / 'AGENTS.md').write_text('# User settings\n\n```md\n[Rules](.claude/rules/)\n```\n')
         first = self.run_check()
         assert first.returncode == 0, first.stderr
@@ -293,6 +303,7 @@ class TestEntryPointLinks:
         (self.root / 'AGENTS.md').write_text('# Keep\n')
         path = self.root / relative
         path.parent.mkdir(exist_ok=True)
+        shutil.rmtree(path)
         if symlink:
             path.symlink_to(self.root / 'harness', target_is_directory=True)
         else:
@@ -304,3 +315,181 @@ class TestEntryPointLinks:
             assert not (self.root / 'CLAUDE.md').exists()
         finally:
             path.unlink()
+
+
+    def test_deleted_project_recreates_neutral_skeleton_without_history(self):
+        project = self.root / 'harness/project'
+        shutil.rmtree(project)
+        assert self.run_check().returncode == 0
+        skeleton = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}
+        (project / 'testing/evidence/work/old-run.log').write_bytes(b'old raw result')
+        shutil.rmtree(project)
+        assert self.run_check().returncode == 0
+        assert skeleton == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}
+
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    def test_partial_project_missing_entrypoint_fails_without_replacement(self, name):
+        project = self.root / 'harness/project'
+        (project / name).unlink()
+        before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}
+        assert self.run_check().returncode == 2
+        assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}
+        assert not (self.root / 'AGENTS.md').exists()
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+        assert result.returncode == 2, result.stderr
+        assert str(Path('harness') / package / name) in result.stderr
+        assert not (self.root / 'AGENTS.md').exists()
+        assert not (self.root / 'CLAUDE.md').exists()
+
+    @pytest.mark.parametrize('damage', ('missing-directory', 'missing-copy', 'different-copy',
+                                      'extra-copy', 'empty-source', 'invalid-utf8-source', 'nested-canonical'))
+    def test_invalid_rule_copies_are_refused_without_automatic_publication(self, damage):
+        native = self.root / '.claude/rules'
+        source = self.root / 'harness/common/rules/comm-fixture.md'
+        copy = native / source.name
+        if damage == 'missing-directory':
+            shutil.rmtree(native)
+        elif damage == 'missing-copy':
+            copy.unlink()
+        elif damage == 'different-copy':
+            copy.write_bytes(b'different\n')
+        elif damage == 'extra-copy':
+            (native / 'proj-extra.md').write_bytes(b'extra\n')
+        elif damage == 'empty-source':
+            source.write_bytes(b' \n')
+            copy.write_bytes(source.read_bytes())
+        elif damage == 'invalid-utf8-source':
+            source.write_bytes(b'\xff')
+            copy.write_bytes(source.read_bytes())
+        else:
+            (native / 'nested').mkdir()
+            (native / 'nested/comm-fixture.md').write_bytes(source.read_bytes())
+        before = {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = self.run_check()
+        assert result.returncode == 2, result.stderr
+        assert before == {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        assert native.exists() == (damage != 'missing-directory')
+
+    def test_personal_nested_rules_and_human_bodies_are_not_canonical_copies(self):
+        native = self.root / '.claude/rules'
+        (native / 'personal').mkdir()
+        (native / 'personal/local.md').write_bytes(b'# Personal rule\n')
+        (native / 'README.human.md').write_bytes(b'\xff')
+        (self.root / 'harness/common/rules/README.human.md').write_bytes(b'\xff')
+        assert self.run_check().returncode == 0
+
+    def test_complete_block_in_wrong_order_refuses_without_reordering_user_file(self):
+        paths = ('harness/common/INDEX.md', 'harness/common/START.md',
+                 'harness/project/START.md', '.claude/rules/', 'harness/project/INDEX.md')
+        agents = self.root / 'AGENTS.md'
+        original = ''.join(f'- [{p}]({p})\n' for p in paths).encode()
+        agents.write_bytes(original)
+        result = self.run_check()
+        assert result.returncode == 2, result.stderr
+        assert 'order' in result.stderr.lower()
+        assert agents.read_bytes() == original
+        assert not (self.root / 'CLAUDE.md').exists()
+
+    def test_repeated_block_with_two_missing_links_is_repaired_locally(self):
+        paths = ('harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
+                 'harness/common/INDEX.md', 'harness/project/INDEX.md')
+        block = ''.join(f'- [{p}]({p})\n' for p in paths)
+        damaged = ''.join(line for line in block.splitlines(keepends=True)
+                          if 'common/START.md' not in line and '.claude/rules/' not in line)
+        agents = self.root / 'AGENTS.md'
+        agents.write_text(block + '\nRepeat:\n' + damaged)
+        result = self.run_check()
+        assert result.returncode == 0, result.stderr
+        repaired = agents.read_text().split('\nRepeat:\n')[1]
+        for path in paths:
+            assert f']({path})' in repaired
+        assert repaired.index('common/START') < repaired.index('project/START') < repaired.index('.claude/rules') < repaired.index('common/INDEX')
+        before = agents.read_bytes()
+        assert self.run_check().returncode == 0
+        assert agents.read_bytes() == before
+
+    def test_ambiguous_partial_link_list_refuses_without_adding_to_user_list(self):
+        agents = self.root / 'AGENTS.md'
+        original = b'- [My note](harness/common/START.md)\n- [Another note](harness/common/INDEX.md)\n'
+        agents.write_bytes(original)
+        result = self.run_check()
+        assert result.returncode == 2, result.stderr
+        assert 'ambiguous' in result.stderr.lower()
+        assert agents.read_bytes() == original
+
+    def test_three_custom_user_links_are_not_assumed_to_be_a_generated_block(self):
+        agents = self.root / 'AGENTS.md'
+        original = (b'- [My note](harness/common/START.md)\n'
+                    b'- [Project note](harness/project/START.md)\n'
+                    b'- [Another note](harness/common/INDEX.md)\n')
+        agents.write_bytes(original)
+        result = self.run_check()
+        assert result.returncode == 2, result.stderr
+        assert 'ambiguous' in result.stderr.lower()
+        assert agents.read_bytes() == original
+
+    def test_relative_anchored_complete_block_order_is_checked_without_rewriting(self):
+        paths = ('harness/common/INDEX.md', 'harness/common/START.md',
+                 'harness/project/START.md', '.claude/rules/', 'harness/project/INDEX.md')
+        agents = self.root / 'AGENTS.md'
+        original = ''.join(f'- [Custom {i}](<./{path}#section>)\n' for i, path in enumerate(paths)).encode()
+        agents.write_bytes(original)
+        result = self.run_check()
+        assert result.returncode == 2, result.stderr
+        assert 'order' in result.stderr.lower()
+        assert agents.read_bytes() == original
+
+    @pytest.mark.parametrize('prefix,continuation', (('> ', '> '), ('> > ', '> > '), ('- ', '  '), ('> - ', '>   ')))
+    def test_container_fenced_examples_do_not_supply_startup_connections(self, prefix, continuation):
+        paths = ('harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
+                 'harness/common/INDEX.md', 'harness/project/INDEX.md')
+        examples = ''.join(continuation + f'[Example]({p})\n' for p in paths)
+        text = prefix + '~~~md\n' + examples + continuation + '~~~~\n'
+        agents = self.root / 'AGENTS.md'
+        agents.write_text(text)
+        result = self.run_check()
+        assert result.returncode == 0, result.stderr
+        assert agents.read_text().startswith(text)
+        for path in paths:
+            assert f']({path})' in agents.read_text()[len(text):]
+
+    def test_unclosed_quote_fence_refuses_without_autoclosing(self):
+        agents = self.root / 'AGENTS.md'
+        original = b'> ~~~md\n> [Example](harness/common/START.md)\n'
+        agents.write_bytes(original)
+        result = self.run_check()
+        assert result.returncode == 2, result.stderr
+        assert 'Unclosed Markdown code fence' in result.stderr
+        assert agents.read_bytes() == original
+        assert not (self.root / 'CLAUDE.md').exists()
+
+    @pytest.mark.parametrize('folder', ('harness/common/rules', '.claude/rules'))
+    def test_unreadable_nested_rule_directory_refuses_before_repairs(self, folder):
+        private = self.root / folder / 'private'
+        private.mkdir()
+        (private / 'local.md').write_bytes(b'# Private rule\n')
+        private.chmod(0)
+        try:
+            result = self.run_check()
+            assert result.returncode == 2, result.stderr
+            assert not (self.root / 'AGENTS.md').exists()
+            assert not (self.root / 'CLAUDE.md').exists()
+        finally:
+            private.chmod(0o700)
+
+    @pytest.mark.parametrize('prefix', ('- > ', '- - '))
+    def test_unsupported_recursive_container_fence_refuses_without_writes(self, prefix):
+        agents = self.root / 'AGENTS.md'
+        original = (prefix + '~~~md\n    [Example](harness/common/START.md)\n').encode()
+        agents.write_bytes(original)
+        result = self.run_check()
+        assert result.returncode == 2, result.stderr
+        assert 'Unsupported nested Markdown fence' in result.stderr
+        assert agents.read_bytes() == original
+        assert not (self.root / 'CLAUDE.md').exists()

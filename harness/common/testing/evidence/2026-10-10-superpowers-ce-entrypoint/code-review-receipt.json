@@ -1,0 +1,77 @@
+{
+  "status": "complete",
+  "verdict": "Ready to merge",
+  "scope": {
+    "mode": "standalone",
+    "base": "18df9bf65bd4fcccd694abac1b22c50f8fb4b190",
+    "branch": "octadim/review-joint-route",
+    "head_sha": "18df9bf65bd4fcccd694abac1b22c50f8fb4b190",
+    "pr_url": null,
+    "files_changed": 1,
+    "candidate_sha256": "28f7237998f2e5c4202b7b970a843290c84507b6a6271ed8a30c6782da7de7a0"
+  },
+  "intent": "Add a separate using-superpowers -> ce-brainstorm -> ce-plan -> ce-work option when the user jointly explicitly invokes using-superpowers and ce-brainstorm before a task. Preserve ordinary CE, the latest conditional missing-recommendation menu, explicit route selection and sequential CE execution without substituting Superpowers stages.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness"
+  ],
+  "findings": [],
+  "actionable_findings": [],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": null,
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "lite",
+    "depth_reason": "Only a visible menu addition and its explicit sequential route definition change. Wrong route options are observable at the selection point; existing route confirmation, stage permissions and environment guards remain intact. Scope helper has no floor or silent-pass class.",
+    "scope_facts": {
+      "changed_lines": 15,
+      "exec_nontest_lines": 0,
+      "size_band": "small",
+      "unclassified_lines": {
+        ".md": 15
+      },
+      "hard_block_full": false,
+      "silent_pass_classes": []
+    },
+    "criteria_files": [
+      "AGENTS.md",
+      "CLAUDE.md"
+    ],
+    "instruction_file_fallback": true,
+    "criteria_mapping": {
+      "harness/common/rules/comm-confirm-development-workflow.md": [
+        "AGENTS.md",
+        "CLAUDE.md"
+      ]
+    },
+    "criteria_search": "complete; no governing CODING_STANDARDS.md",
+    "plan_discovery": "No explicit plan or PR; no matching plan at the resolved docs root. Exact inbox request and current task define intent.",
+    "source_checks": [
+      "The canonical candidate matches the requested SHA-256; its untracked native fixture copy is byte-identical.",
+      "Both CE routes are shown separately only on the joint explicit invocation condition; one skill and quoted/historical mentions do not qualify.",
+      "Joint invocation is neither route selection nor stage authorization; choosing the additional route applies using-superpowers first, then CE brainstorm, plan and work sequentially.",
+      "Ordinary CE remains available; using-superpowers cannot replace selected CE stages with Superpowers stages.",
+      "Existing known-short, known-full and missing-recommendation menus, executor explanation, confirmation and route persistence are unchanged."
+    ],
+    "reviewer_agents_dispatched": false,
+    "declared_compound_packs_applied": false,
+    "untracked_excluded": [
+      "All 583 untracked fixture support files, including the native copy; exact inventory: /tmp/compound-engineering-1000/ce-code-review/joint-ce-route-91nvl6jj/untracked-excluded.txt"
+    ],
+    "not_assessed": [
+      "learnings",
+      "agent-native gaps",
+      "deployment notes",
+      "cross-model review",
+      "independent native runtime validation"
+    ],
+    "validation_limit": "This is source-only review. No tests or native runs were performed; parent owns their evidence and publication. Source review does not upgrade verification statuses."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/joint-ce-route-91nvl6jj",
+  "run_id": "joint-ce-route-91nvl6jj"
+}

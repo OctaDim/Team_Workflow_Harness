@@ -1,0 +1,318 @@
+{
+  "timestamp": "2026-10-16T03:37:50.564022+03:00",
+  "version": "v1",
+  "agent": "codex-cli 0.161.0",
+  "scenarios": [
+    {
+      "mode": "common",
+      "case": "implicit",
+      "raw": "native-codex-common-candidate-implicit-publication-v1-20261016.json",
+      "assertions": {
+        "turn_completed": true,
+        "working_local_files_preserved": true,
+        "unrelated_index_preserved": true,
+        "native_skill_announced": true,
+        "profile_body_loaded_or_unrelated_body_not_loaded": true,
+        "local_configs_untracked": true,
+        "templates_created": true,
+        "defaults_still_tracked": true,
+        "defaults_unchanged": true,
+        "only_authorized_files_changed": true,
+        "synthetic_secret_absent_from_full_stdout": true,
+        "synthetic_secret_absent_from_templates": true,
+        "rule_read": true
+      },
+      "status": "passed",
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-separate-application-config/SKILL.md'",
+        "/bin/bash -lc \"git status --short; rg --files --hidden backend/config frontend/config -g '\"'!README.human.md'\"'; git ls-files backend/config frontend/config .gitignore unrelated.txt\"",
+        "/bin/bash -lc \"python3 - <<'PY'\nimport pathlib,tomllib\nfor name in ['backend/config/app.local.toml','frontend/config/app.local.toml','backend/config/limits.toml']:\n p=pathlib.Path(name)\n print(name)\n def show(d,prefix=''):\n  for k,v in d.items():\n   if isinstance(v,dict): show(v,prefix+k+'.')\n   else: print(prefix+k, '<string redacted>' if isinstance(v,str) else repr(v))\n show(tomllib.loads(p.read_text()))\nprint('.gitignore:')\nprint(pathlib.Path('.gitignore').read_text())\nPY\nrg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+        "/bin/bash -lc 'cat frontend/index.html; git diff --cached --stat'",
+        "/bin/bash -lc \"python3 - <<'PY'\nimport hashlib,json,pathlib,subprocess\npaths=['backend/config/app.local.toml','frontend/config/app.local.toml','backend/config/limits.toml','unrelated.txt','frontend/index.html']\nprint(json.dumps({'files':{p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in paths},'index':{p:subprocess.check_output(['git','ls-files','--stage','--',p],text=True) for p in paths}}))\nPY\"",
+        "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\np=Path('.gitignore')\ns=p.read_text()\nif '/frontend/config/app.local.toml' not in s.splitlines():\n p.write_text(s+('' if s.endswith('\\\\n') else '\\\\n')+'/frontend/config/app.local.toml\\\\n')\nPath('backend/config/app.example.toml').write_text('''# Shared limits remain in limits.toml and are versioned separately.\n# Copy this template to app.local.toml for installation-specific settings.\n# app.local.toml is ignored by Git; keep it private and outside static serving.\n# The application must load local settings and reject a missing/placeholder password.\n# This synthetic fixture does not implement a configuration loader.\n[database]\npassword = \\\"CHANGE_ME\\\"\n''')\nPath('frontend/config/app.example.toml').write_text('''# Copy this template to app.local.toml for installation-specific settings.\n# app.local.toml is ignored by Git. Browser configuration must contain public values only.\n# The application must load local settings and reject a missing API origin.\n# This synthetic fixture does not implement a configuration loader.\n[api]\norigin = \\\"https://api.example.invalid\\\"\n''')\nPY\ngit rm --cached -- backend/config/app.local.toml frontend/config/app.local.toml\"",
+        "/bin/bash -lc \"git add -- .gitignore backend/config/app.example.toml frontend/config/app.example.toml\npython3 - <<'PY'\nimport pathlib,tomllib,subprocess\nfor p in ['backend/config/app.local.toml','frontend/config/app.local.toml','backend/config/app.example.toml','frontend/config/app.example.toml','backend/config/limits.toml']:\n with open(p,'rb') as f: tomllib.load(f)\nfor p in ['backend/config/app.local.toml','frontend/config/app.local.toml']:\n assert pathlib.Path(p).is_file()\n assert subprocess.run(['git','check-ignore','--quiet','--no-index','--',p]).returncode==0\n assert subprocess.run(['git','ls-files','--error-unmatch','--',p],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode\"'!=0\nfor p in ['\"'backend/config/app.example.toml','frontend/config/app.example.toml','backend/config/limits.toml']:\n assert subprocess.run(['git','check-ignore','--quiet','--no-index','--',p]).returncode==1\n assert subprocess.run(['git','ls-files','--error-unmatch','--',p],stdout=subprocess.DEVNULL).returncode==0\nprint('PASS: TOML parsing, local files preserved/ignored/untracked, templates and limits tracked/visible')\nPY\ngit diff --cached --check\ngit diff --check\ngit status --short\"",
+        "/bin/bash -lc \"python3 - <<'PY'\nimport hashlib,json,pathlib,subprocess\npaths=['backend/config/app.local.toml','frontend/config/app.local.toml','backend/config/limits.toml','unrelated.txt','frontend/index.html']\nprint(json.dumps({'files':{p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in paths},'index':{p:subprocess.check_output(['git','ls-files','--stage','--',p],text=True) for p in paths}}))\nPY\""
+      ],
+      "agent_replies": [
+        "Релевантные скиллы из нативного каталога: `comm-separate-application-config` и `comm-commit-task-stages`. Сначала выполню обязательную стартовую проверку и прочитаю инструкции в указанном порядке. Субагентов запускать не буду.",
+        "Стартовая проверка прошла, инструкции прочитаны. Применяю `comm-separate-application-config`: локальные конфиги обоих разделов уже находятся в индексе, поэтому исключу из него только два разрешённых файла, сохранив рабочие копии. Общие лимиты оставлю доступными для Git.",
+        "Созданы `app.example.toml` с заглушками, локальные файлы сохранены и удалены из индекса. В проекте нет загрузчика конфигурации: комментарии в шаблонах описывают требования к загрузке локальных параметров и проверке обязательных значений. Проверю TOML, исключения Git и неизменность лимитов и посторонних файлов.",
+        "Готово:\n\n- В обоих разделах созданы и добавлены в индекс `app.example.toml` с заглушками.\n- Оба `app.local.toml` исключены через корневой `.gitignore` и удалены только из индекса; рабочие файлы побайтно сохранены.\n- Общие лимиты остались версионируемыми и неизменными.\n- `unrelated.txt` и его состояние в индексе сохранены.\n\nПроверены синтаксис TOML, исключения и фактический индекс Git, контрольные суммы и отсутствие ошибок whitespace. Коммитов и переписывания истории не было. Значения секретов не выводились."
+      ],
+      "usage": [
+        {
+          "input_tokens": 278332,
+          "cached_input_tokens": 234752,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2506,
+          "reasoning_output_tokens": 173
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "explicit",
+      "raw": "native-codex-common-candidate-explicit-publication-v1-20261016.json",
+      "assertions": {
+        "turn_completed": true,
+        "working_local_files_preserved": true,
+        "unrelated_index_preserved": true,
+        "native_skill_announced": true,
+        "profile_body_loaded_or_unrelated_body_not_loaded": true,
+        "local_configs_untracked": true,
+        "templates_created": true,
+        "defaults_still_tracked": true,
+        "defaults_unchanged": true,
+        "only_authorized_files_changed": true,
+        "synthetic_secret_absent_from_full_stdout": true,
+        "synthetic_secret_absent_from_templates": true,
+        "rule_read": true
+      },
+      "status": "passed",
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat .agents/skills/comm-separate-application-config/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'",
+        "/bin/bash -lc \"git status --short; rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+        "/bin/bash -lc 'cat .gitignore backend/config/limits.toml frontend/index.html; git ls-files --stage'",
+        "/bin/bash -lc \"python3 - <<'PY'\nimport pathlib,tomllib,hashlib\nfor name in ['backend/config/app.local.toml','frontend/config/app.local.toml']:\n p=pathlib.Path(name)\n d=tomllib.loads(p.read_text())\n print(name)\n def show(d,prefix=''):\n  for k,v in d.items():\n   if isinstance(v,dict): show(v,prefix+k+'.')\n   else: print(prefix+k, type(v).__name__, '<redacted>')\n show(d)\n print('line structure:')\n for line in p.read_text().splitlines():\n  if line.lstrip().startswith('#') or line.startswith('[') or not line.strip(): print(line)\n  elif '=' in line: print(line.split('=',1)[0]+'= <redacted>')\nPY\"",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore backend frontend -g '\"'!README.human.md'\"'; git log -1 --format=%h\"",
+        "/bin/bash -lc \"python3 - <<'PY'\nimport hashlib,json,pathlib,subprocess\npaths=['backend/config/app.local.toml','frontend/config/app.local.toml','backend/config/limits.toml','unrelated.txt','frontend/index.html']\nprint(json.dumps({'files':{p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in paths},'index':{p:subprocess.check_output(['git','ls-files','--stage','--',p],text=True) for p in paths[2:]}}))\nPY\"",
+        "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\np=Path('.gitignore')\nb=p.read_bytes()\nrule=b'/frontend/config/app.local.toml'\nif rule not in b.splitlines():\n p.write_bytes(b+(b'' if not b or b.endswith(b'\\\\n') else b'\\\\n')+rule+b'\\\\n')\nPath('backend/config/app.example.toml').write_text('''# Configuration contract for a future loader (none exists in this fixture).\n# Load shared limits.toml, then installation values from app.local.toml.\n# Copy this template to app.local.toml and supply the required password.\n# Reject a missing or empty database.password without logging its value.\n# Keep backend config outside browser assets and static serving roots.\n[database]\npassword = \\\"\\\"\n''')\nPath('frontend/config/app.example.toml').write_text('''# Configuration contract for a future loader (none exists in this fixture).\n# Copy this template to app.local.toml; local installation values override it.\n# Require a nonempty api.origin; reject missing values or this placeholder.\n# Only explicitly selected public values may be exposed to the browser.\n# Never put backend credentials in frontend configuration.\n[api]\norigin = \\\"https://api.example.invalid\\\"\n''')\nPY\"",
+        "/bin/bash -lc 'git rm --cached -- backend/config/app.local.toml frontend/config/app.local.toml'",
+        "/bin/bash -lc 'git add -- .gitignore backend/config/app.example.toml frontend/config/app.example.toml; git check-ignore -v --no-index -- backend/config/app.local.toml frontend/config/app.local.toml; git ls-files --error-unmatch -- backend/config/app.local.toml frontend/config/app.local.toml'",
+        "/bin/bash -lc \"python3 - <<'PY'\nimport hashlib,json,pathlib,subprocess,tomllib\npaths=['backend/config/app.local.toml','frontend/config/app.local.toml','backend/config/limits.toml','unrelated.txt','frontend/index.html']\nprint(json.dumps({'files':{p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in paths},'index':{p:subprocess.check_output(['git','ls-files','--stage','--',p],text=True) for p in paths[2:]}}))\nfor p in paths[:3]+['backend/config/app.example.toml','frontend/config/app.example.toml']:\n tomllib.loads(pathlib.Path(p).read_text())\nPY\"",
+        "/bin/bash -lc 'git check-ignore -v --no-index -- backend/config/app.example.toml frontend/config/app.example.toml backend/config/limits.toml; git ls-files --error-unmatch -- backend/config/app.example.toml frontend/config/app.example.toml backend/config/limits.toml; git diff --cached --check; git diff --cached --stat; git status --short'"
+      ],
+      "agent_replies": [
+        "Релевантный скилл из нативного каталога — `comm-separate-application-config`; применю его. Сначала выполню обязательную стартовую проверку и прочитаю инструкции в заданном порядке. Субагентов запускать не буду.\n",
+        "Стартовая проверка прошла. Оба локальных конфига уже добавлены в индекс; уберу из него только эти два файла, сохранив рабочие копии. Проверю структуру настроек и способ их загрузки без вывода секретов.\n",
+        "В проекте нет загрузчика конфигурации — только статическая frontend-страница. Добавлю шаблоны с заглушками и комментариями о порядке источников и обязательных значениях. Общие лимиты и локальные файлы сохраню побайтно. Во frontend-шаблоне будет только публичный адрес API. Коммитов пока нет, но локальные настройки уже находились в индексе.\n",
+        "Готово:\n\n- Добавлены в индекс `backend/config/app.example.toml` и `frontend/config/app.example.toml` с безопасными заглушками.\n- Оба `app.local.toml` исключены точными правилами `.gitignore` и удалены только из индекса. Рабочие файлы сохранены побайтно.\n- Общие лимиты, `unrelated.txt` и остальные ранее staged-файлы сохранены без изменений.\n\nПроверены TOML, игнорирование, состав индекса и отсутствие ошибок пробелов. Загрузчика в синтетическом проекте нет; ожидаемое поведение описано комментариями в шаблонах.\n\nСекреты не выводились. Коммиты не создавались, история не переписывалась."
+      ],
+      "usage": [
+        {
+          "input_tokens": 280241,
+          "cached_input_tokens": 236160,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2398,
+          "reasoning_output_tokens": 182
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "unrelated",
+      "raw": "native-codex-common-candidate-unrelated-publication-v1-20261016.json",
+      "assertions": {
+        "turn_completed": true,
+        "working_local_files_preserved": true,
+        "unrelated_index_preserved": true,
+        "native_skill_announced": true,
+        "profile_body_loaded_or_unrelated_body_not_loaded": true,
+        "no_file_changes": true,
+        "answer_148": true
+      },
+      "status": "passed",
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'"
+      ],
+      "agent_replies": [
+        "Релевантных скиллов для вычисления нет. Выполню обязательную стартовую проверку и прочитаю инструкции в указанном порядке, без README.human.md и без субагентов.",
+        "Обязательный старт выполнен, инструкции прочитаны в установленном порядке.\n\n37 × 4 = **148**."
+      ],
+      "usage": [
+        {
+          "input_tokens": 210822,
+          "cached_input_tokens": 182912,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 589,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "implicit",
+      "raw": "native-codex-both-candidate-implicit-publication-v1-20261016.json",
+      "assertions": {
+        "turn_completed": true,
+        "working_local_files_preserved": true,
+        "unrelated_index_preserved": true,
+        "native_skill_announced": true,
+        "profile_body_loaded_or_unrelated_body_not_loaded": true,
+        "local_configs_untracked": true,
+        "templates_created": true,
+        "defaults_still_tracked": true,
+        "defaults_unchanged": true,
+        "only_authorized_files_changed": true,
+        "synthetic_secret_absent_from_full_stdout": true,
+        "synthetic_secret_absent_from_templates": true,
+        "rule_read": true
+      },
+      "status": "passed",
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/skills/comm-separate-application-config/SKILL.md'",
+        "/bin/bash -lc \"git status --short; git ls-files backend/config frontend/config .gitignore unrelated.txt; rg --files --hidden --no-ignore backend/config frontend/config -g '\"'!README.human.md'\"'; cat .gitignore\"",
+        "/bin/bash -lc \"python3 - <<'PY'\nimport pathlib,tomllib,subprocess,hashlib\nfor p in sorted(pathlib.Path('.').glob('*/config/*.toml')):\n d=tomllib.loads(p.read_text()); print(p)\n def show(d,prefix=''):\n  for k,v in d.items():\n   if isinstance(v,dict): show(v,prefix+k+'.')\n   else: print(' ',prefix+k, type(v).__name__, '(value withheld)')\n show(d)\nprint('Application source paths:')\nprint(subprocess.check_output(['git','ls-files'],text=True))\nfor p in ['frontend/index.html']:\n print(p); print(pathlib.Path(p).read_text())\nPY\"",
+        "/bin/bash -lc \"python3 - <<'PY'\nimport hashlib,json,subprocess\nfrom pathlib import Path\npaths=['backend/config/app.local.toml','frontend/config/app.local.toml','backend/config/limits.toml','unrelated.txt','frontend/index.html']\nprint(json.dumps({'files':{p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths},'index':subprocess.check_output(['git','ls-files','--stage'],text=True)}))\nPY\"",
+        "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\np=Path('.gitignore'); data=p.read_bytes(); line=b'/frontend/config/app.local.toml'\nif line not in data.splitlines(): p.write_bytes(data+(b'\\\\n' if data and not data.endswith(b'\\\\n') else b'')+line+b'\\\\n')\nPath('backend/config/app.example.toml').write_text('# Template: copy to app.local.toml and set installation values.\\\\n# Required: database.password; the empty placeholder must be replaced.\\\\n# Shared limits remain in limits.toml under version control.\\\\n# This fixture has no configuration loader or override validation.\\\\n[database]\\\\npassword = \\\"\\\"\\\\n')\nPath('frontend/config/app.example.toml').write_text('# Template: copy to app.local.toml and set the public API origin.\\\\n# Required: api.origin; the empty placeholder must be replaced.\\\\n# Browser configuration must contain public values only, never backend secrets.\\\\n# This fixture has no configuration loader or override validation.\\\\n[api]\\\\norigin = \\\"\\\"\\\\n')\nPY\"",
+        "/bin/bash -lc 'git rm --cached -- backend/config/app.local.toml frontend/config/app.local.toml'",
+        "/bin/bash -lc \"python3 - <<'PY'\nimport hashlib,json,subprocess,tomllib\nfrom pathlib import Path\nbaseline=json.loads(\\\"{\\\\\\\"files\\\\\\\":{\\\\\\\"backend/config/app.local.toml\\\\\\\":\\\\\\\"634383d403bfad7d60d29087fcf289261acb7ce6a86f49106676bec0bf9b59f7\\\\\\\",\\\\\\\"frontend/config/app.local.toml\\\\\\\":\\\\\\\"1e293450595aaeed7834099a671e5c8a5b4f5dcb5667fad582296f45e415bcf0\\\\\\\",\\\\\\\"backend/config/limits.toml\\\\\\\":\\\\\\\"19cac97ce8581cca1f6dc75d70d39eaab3176cb3c3900ff1806226aa9509843c\\\\\\\",\\\\\\\"unrelated.txt\\\\\\\":\\\\\\\"d0a59f56a0712a152a53e032ffd0aeb9ddd2cfa6d9f3db69e6971911371163e1\\\\\\\",\\\\\\\"frontend/index.html\\\\\\\":\\\\\\\"8cbe089b346cebc4e3088500d4861d88290fb48514f3f2d348e159ca46c816a1\\\\\\\"},\\\\\\\"index\\\\\\\":\\\\\\\"100644 8e49763b7fb0f0e3676f35600fe3ba8429cabffa 0\\\\\\\\t.gitignore\\\\\\\\n100644 c23616e0c84f778f5d8c5406dffd3a4574676a6f 0\\\\\\\\tbackend/config/app.local.toml\\\\\\\\n100644 cbe242bff67c78c53ede6f0427797b6f3c4a8b30 0\\\\\\\\tbackend/config/limits.toml\\\\\\\\n100644 9c08cd6761527dd1c3fd08189e545cb13ef1139c 0\\\\\\\\tfrontend/config/app.local.toml\\\\\\\\n100644 3f098dbea39f2d5767b962bd3a88b9c1de8e4566 0\\\\\\\\tfrontend/index.html\\\\\\\\n100644 4487559266aee1a266df5c76d28db35fbeb52a11 0\\\\\\\\tunrelated.txt\\\\\\\\n\\\\\\\"}\\\")\nfor p,h in baseline['files'].items():\n assert hashlib.sha256(Path(p).read_bytes()).hexdigest()==h,p\nprint('PASS: local files, shared limits and unrelated files unchanged')\nlocal=['backend/config/app.local.toml','frontend/config/app.local.toml']\nvisible=['backend/config/app.example.toml','frontend/config/app.example.toml','backend/config/limits.toml']\nfor p in local:\n assert subprocess.run(['git','check-ignore','--no-index','-q','--',p]).returncode==0\n assert subprocess.run(['git','ls-files','--error-unmatch','--',p],capture_output=True).returncode\"'!=0\nfor p in visible:\n assert subprocess.run(['\"'git','check-ignore','--no-index','-q','--',p]).returncode==1\nfor p in local+visible:\n tomllib.loads(Path(p).read_text())\nfor p in visible[:2]:\n d=tomllib.loads(Path(p).read_text()); assert all(v=='' for section in d.values() for v in section.values())\nexpected=''.join(line+'\\\\n' for line in baseline['index'].splitlines() if line.split('\\\\t',1)[1] not in local)\nassert subprocess.check_output(['git','ls-files','--stage'],text=True)==expected\nprint('PASS: TOML valid; templates contain empty placeholders; locals ignored and untracked; shared/template files Git-visible')\nprint('PASS: all other index entries unchanged')\nPY\"",
+        "/bin/bash -lc 'git diff --check; git check-ignore -v --no-index -- backend/config/app.local.toml frontend/config/app.local.toml; git status --short'"
+      ],
+      "agent_replies": [
+        "Релевантный скилл из нативного каталога: `comm-separate-application-config` — разделение шаблонов и локальных параметров установки. Сначала выполню обязательную стартовую проверку и прочитаю инструкции в заданном порядке. Субагентов запускать не буду.",
+        "Стартовая проверка прошла. Применяю `comm-separate-application-config`: проверю структуру конфигов и состояние индекса, затем отделю шаблоны от локальных параметров. Значения секретов в вывод включать не буду.",
+        "Созданы два `app.example.toml` с пустыми заглушками. Локальные конфиги удалены только из индекса, рабочие файлы сохранены; `limits.toml` остаётся отслеживаемым. В проекте нет загрузчика конфигурации, поэтому это отмечено в комментариях шаблонов. Проверю TOML, правила игнорирования и сохранность остальных файлов и записей индекса.",
+        "Готово.\n\n- В обоих разделах созданы `app.example.toml` с пустыми заглушками и комментариями.\n- Оба `app.local.toml` исключены через `.gitignore` и удалены только из индекса. Рабочие файлы сохранены побайтно.\n- Общие лимиты в `backend/config/limits.toml` остаются версионируемыми.\n- TOML, правила игнорирования и сохранность остальных записей индекса проверены. `unrelated.txt` не изменён.\n- Шаблоны и правка `.gitignore` не добавлены в индекс. Коммитов и переписывания истории не было.\n\nЗагрузчика конфигурации в синтетическом проекте нет; это указано в шаблонах. Значения секретов не выводились."
+      ],
+      "usage": [
+        {
+          "input_tokens": 240025,
+          "cached_input_tokens": 203648,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2213,
+          "reasoning_output_tokens": 102
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "explicit",
+      "raw": "native-codex-both-candidate-explicit-publication-v1-20261016.json",
+      "assertions": {
+        "turn_completed": true,
+        "working_local_files_preserved": true,
+        "unrelated_index_preserved": true,
+        "native_skill_announced": true,
+        "profile_body_loaded_or_unrelated_body_not_loaded": true,
+        "local_configs_untracked": true,
+        "templates_created": true,
+        "defaults_still_tracked": true,
+        "defaults_unchanged": true,
+        "only_authorized_files_changed": true,
+        "synthetic_secret_absent_from_full_stdout": true,
+        "synthetic_secret_absent_from_templates": true,
+        "rule_read": true
+      },
+      "status": "passed",
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-separate-application-config/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'",
+        "/bin/bash -lc \"git status --short; rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+        "/bin/bash -lc \"cat .gitignore backend/config/limits.toml frontend/index.html; python3 - <<'PY'\nimport pathlib,tomllib,subprocess\nfor name in ['backend/config/app.local.toml','frontend/config/app.local.toml']:\n p=pathlib.Path(name)\n print(name,'exists:',p.exists())\n raw=p.read_bytes() if p.exists() else subprocess.check_output(['git','show',':'+name])\n d=tomllib.loads(raw.decode())\n def walk(d,prefix=''):\n  for k,v in d.items():\n   key=prefix+k\n   if isinstance(v,dict): walk(v,key+'.')\n   else: print(key, type(v).__name__, '[redacted]')\n walk(d)\nPY\"",
+        "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib,subprocess,json\npaths=['backend/config/app.local.toml','frontend/config/app.local.toml','backend/config/limits.toml','unrelated.txt']\nsnapshot={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths}\nsnapshot['index'] = subprocess.check_output(['git','ls-files','--stage']).decode().splitlines()\nPath('/tmp/application-config-before.json').write_text(json.dumps(snapshot))\nfor directory in ['backend','frontend']:\n for p in Path(directory).rglob('*'):\n  if p.is_file() and p.name\"'!='\"'README.human.md': print(p)\nfor p in paths[:2]:\n print(p)\n for line in Path(p).read_text().splitlines():\n  print(line.split('=',1)[0]+'= \\\"<redacted>\\\"' if '=' in line else line)\nPY\"",
+        "/bin/bash -lc 'git rm --cached -- backend/config/app.local.toml frontend/config/app.local.toml'",
+        "/bin/bash -lc \"git check-ignore -v --no-index -- backend/config/app.local.toml frontend/config/app.local.toml; python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib,json,subprocess,tomllib\nbefore=json.loads(Path('/tmp/application-config-before.json').read_text())\nlocals=['backend/config/app.local.toml','frontend/config/app.local.toml']\nfor p in locals+['backend/config/limits.toml','unrelated.txt']:\n assert hashlib.sha256(Path(p).read_bytes()).hexdigest()==before[p],p\n print(p+': working bytes preserved')\nfor p in locals:\n r=subprocess.run(['git','ls-files','--error-unmatch','--',p],capture_output=True)\n assert r.returncode\"'!=0\n print(p+'\"': untracked')\nfor p in ['backend/config/app.example.toml','frontend/config/app.example.toml','backend/config/limits.toml']:\n tomllib.loads(Path(p).read_text())\n r=subprocess.run(['git','check-ignore','--no-index','--',p],capture_output=True)\n assert r.returncode==1\n print(p+': valid TOML, Git-visible')\nnow=subprocess.check_output(['git','ls-files','--stage']).decode().splitlines()\nexpected=[s for s in before['index'] if s.split('\\\\t',1)[1] not in locals]\nassert now==expected,'Unexpected index modification'\nprint('Index: only the two authorized entries removed; all other staged entries unchanged')\nfor p in locals: tomllib.loads(Path(p).read_text())\nprint('Local TOML: valid')\nPY\n git diff --check; git diff --cached --check; git status --short\""
+      ],
+      "agent_replies": [
+        "Релевантный скилл: `comm-separate-application-config`; применю его для разделения общих и локальных настроек. Сначала выполню обязательный старт и прочитаю инструкции в заданном порядке. Субагентов запускать не буду.\n",
+        "Стартовая проверка прошла, инструкции прочитаны. Оба локальных конфига уже добавлены в индекс; удалю из него только эти два файла, сохранив рабочие копии. Проверю состав настроек и правила игнорирования без вывода секретов.\n",
+        "Готово.\n\n- Созданы `app.example.toml` с заглушками в `backend/config` и `frontend/config`.\n- Оба `app.local.toml` исключены через `.gitignore` и удалены только из индекса; рабочие файлы сохранены побайтно.\n- Общие лимиты и `unrelated.txt` не изменены.\n- Проверены TOML, игнорирование, видимость шаблонов для Git и точный состав изменений индекса. Проверки прошли.\n\nШаблоны и правка `.gitignore` пока не добавлены в индекс. Загрузчика в синтетическом проекте нет; требования к локальным настройкам описаны комментариями в шаблонах.\n\nЛокальные настройки ранее находились в индексе. Историю не переписывал, коммитов не делал, значения секретов не выводил."
+      ],
+      "usage": [
+        {
+          "input_tokens": 295546,
+          "cached_input_tokens": 267648,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2169,
+          "reasoning_output_tokens": 79
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "unrelated",
+      "raw": "native-codex-both-candidate-unrelated-publication-v1-20261016.json",
+      "assertions": {
+        "turn_completed": true,
+        "working_local_files_preserved": true,
+        "unrelated_index_preserved": true,
+        "native_skill_announced": true,
+        "profile_body_loaded_or_unrelated_body_not_loaded": true,
+        "no_file_changes": true,
+        "answer_148": true
+      },
+      "status": "passed",
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc \"cat 'harness/common/INDEX.md'\"",
+        "/bin/bash -lc \"cat 'harness/project/INDEX.md'\""
+      ],
+      "agent_replies": [
+        "Релевантных скиллов для вычисления нет. Выполню обязательную стартовую проверку и прочитаю инструкции в указанном порядке; README.human.md читать не буду.\n",
+        "Обязательный старт выполнен, инструкции прочитаны. 37 × 4 = **148**."
+      ],
+      "usage": [
+        {
+          "input_tokens": 139335,
+          "cached_input_tokens": 111872,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 596,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    }
+  ],
+  "codex": "verified in these six synthetic scenarios",
+  "claude": {
+    "check": "skip",
+    "status": "unverified"
+  },
+  "overall": "unverified",
+  "limits": "Synthetic configuration task only; no claim of RED-GREEN superiority or technical access prevention. Actual commands/replies retained for review."
+}

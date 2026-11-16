@@ -1,0 +1,48 @@
+{
+  "created_date": "2026-10-16",
+  "original_full_diff_check": "Flags five single-space context markers in three immutable unified-diff evidence artifacts. Source/document text has no trailing whitespace.",
+  "immutable_evidence_preserved": true,
+  "validated_context_markers": [
+    {
+      "path": "harness/common/testing/evidence/2026-10-16-confirm-database-design/candidate-v4-to-v6.diff",
+      "line": 27,
+      "kind": "Standard unified-diff blank context line: single context marker space."
+    },
+    {
+      "path": "harness/common/testing/evidence/2026-10-16-confirm-database-design/code-review-v6/incremental-v4-v6.diff",
+      "line": 8,
+      "kind": "Standard unified-diff blank context line: single context marker space."
+    },
+    {
+      "path": "harness/common/testing/evidence/2026-10-16-confirm-database-design/code-review-v6/incremental-v4-v6.diff",
+      "line": 10,
+      "kind": "Standard unified-diff blank context line: single context marker space."
+    },
+    {
+      "path": "harness/common/testing/evidence/2026-10-16-confirm-database-design/code-review-v6/incremental-v4-v6.diff",
+      "line": 36,
+      "kind": "Standard unified-diff blank context line: single context marker space."
+    },
+    {
+      "path": "harness/common/testing/evidence/2026-10-16-confirm-database-design/code-review/incremental-v4.diff",
+      "line": 6,
+      "kind": "Standard unified-diff blank context line: single context marker space."
+    }
+  ],
+  "source_and_other_artifact_check": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)harness/common/testing/evidence/2026-10-16-confirm-database-design/candidate-v4-to-v6.diff",
+      ":(exclude)harness/common/testing/evidence/2026-10-16-confirm-database-design/code-review-v6/incremental-v4-v6.diff",
+      ":(exclude)harness/common/testing/evidence/2026-10-16-confirm-database-design/code-review/incremental-v4.diff"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

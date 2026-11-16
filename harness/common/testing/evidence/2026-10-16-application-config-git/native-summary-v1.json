@@ -1,0 +1,217 @@
+{
+  "version": "v1",
+  "agent": "Codex CLI 0.161.0",
+  "scenarios": [
+    {
+      "mode": "common",
+      "case": "implicit",
+      "status": "passed",
+      "checks": {
+        "turn_completed": true,
+        "local_files_unchanged": true,
+        "unrelated_index_preserved": true,
+        "no_secret_in_agent_messages": true,
+        "skill_body_loaded": true,
+        "rule_read": true,
+        "native_catalog_name_reported": true,
+        "local_files_untracked": true,
+        "shared_defaults_still_tracked": true,
+        "templates_created": true,
+        "no_secret_in_templates": true,
+        "changes_scoped": true
+      },
+      "evidence": "native-codex-common-candidate-implicit-v1-explicit-fixture-index.json",
+      "command_count": 24,
+      "skill_read_command_count": 2,
+      "rule_read_command_count": 2,
+      "skill_read_commands": [
+        "/bin/bash -lc \"cat harness/common/skills/comm-separate-application-config/SKILL.md; git status --short; rg --files --hidden --no-ignore backend/config frontend/config -g '\"'!README.human.md'\"'; cat .gitignore\"",
+        "/bin/bash -lc \"cat harness/common/skills/comm-separate-application-config/SKILL.md; git status --short; rg --files --hidden --no-ignore backend/config frontend/config -g '\"'!README.human.md'\"'; cat .gitignore\""
+      ],
+      "usage": [
+        {
+          "input_tokens": 319847,
+          "cached_input_tokens": 281088,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2233,
+          "reasoning_output_tokens": 81
+        }
+      ],
+      "elapsed_seconds": 67.06
+    },
+    {
+      "mode": "common",
+      "case": "explicit",
+      "status": "passed",
+      "checks": {
+        "turn_completed": true,
+        "local_files_unchanged": true,
+        "unrelated_index_preserved": true,
+        "no_secret_in_agent_messages": true,
+        "skill_body_loaded": true,
+        "rule_read": true,
+        "native_catalog_name_reported": true,
+        "local_files_untracked": true,
+        "shared_defaults_still_tracked": true,
+        "templates_created": true,
+        "no_secret_in_templates": true,
+        "changes_scoped": true
+      },
+      "evidence": "native-codex-common-candidate-explicit-v1-explicit-fixture-index.json",
+      "command_count": 32,
+      "skill_read_command_count": 2,
+      "rule_read_command_count": 2,
+      "skill_read_commands": [
+        "/bin/bash -lc 'cat .agents/skills/comm-separate-application-config/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-separate-application-config/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'"
+      ],
+      "usage": [
+        {
+          "input_tokens": 251428,
+          "cached_input_tokens": 230144,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2182,
+          "reasoning_output_tokens": 59
+        }
+      ],
+      "elapsed_seconds": 58.25
+    },
+    {
+      "mode": "common",
+      "case": "unrelated",
+      "status": "passed",
+      "checks": {
+        "turn_completed": true,
+        "local_files_unchanged": true,
+        "unrelated_index_preserved": true,
+        "no_secret_in_agent_messages": true,
+        "skill_body_not_loaded": true,
+        "no_file_changes": true,
+        "correct_answer": true
+      },
+      "evidence": "native-codex-common-candidate-unrelated-v1-outside.json",
+      "command_count": 18,
+      "skill_read_command_count": 0,
+      "rule_read_command_count": 2,
+      "skill_read_commands": [],
+      "usage": [
+        {
+          "input_tokens": 207843,
+          "cached_input_tokens": 184704,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 591,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "elapsed_seconds": 31.14
+    },
+    {
+      "mode": "both",
+      "case": "implicit",
+      "status": "passed",
+      "checks": {
+        "turn_completed": true,
+        "local_files_unchanged": true,
+        "unrelated_index_preserved": true,
+        "no_secret_in_agent_messages": true,
+        "skill_body_loaded": true,
+        "rule_read": true,
+        "native_catalog_name_reported": true,
+        "local_files_untracked": true,
+        "shared_defaults_still_tracked": true,
+        "templates_created": true,
+        "no_secret_in_templates": true,
+        "changes_scoped": true
+      },
+      "evidence": "native-codex-both-candidate-implicit-v1-explicit-fixture-index.json",
+      "command_count": 36,
+      "skill_read_command_count": 2,
+      "rule_read_command_count": 2,
+      "skill_read_commands": [
+        "/bin/bash -lc 'cat .agents/skills/comm-separate-application-config/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-separate-application-config/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'"
+      ],
+      "usage": [
+        {
+          "input_tokens": 293348,
+          "cached_input_tokens": 252928,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2470,
+          "reasoning_output_tokens": 100
+        }
+      ],
+      "elapsed_seconds": 63.25
+    },
+    {
+      "mode": "both",
+      "case": "explicit",
+      "status": "passed",
+      "checks": {
+        "turn_completed": true,
+        "local_files_unchanged": true,
+        "unrelated_index_preserved": true,
+        "no_secret_in_agent_messages": true,
+        "skill_body_loaded": true,
+        "rule_read": true,
+        "native_catalog_name_reported": true,
+        "local_files_untracked": true,
+        "shared_defaults_still_tracked": true,
+        "templates_created": true,
+        "no_secret_in_templates": true,
+        "changes_scoped": true
+      },
+      "evidence": "native-codex-both-candidate-explicit-v1-explicit-fixture-index.json",
+      "command_count": 32,
+      "skill_read_command_count": 2,
+      "rule_read_command_count": 2,
+      "skill_read_commands": [
+        "/bin/bash -lc 'cat .agents/skills/comm-separate-application-config/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-separate-application-config/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'"
+      ],
+      "usage": [
+        {
+          "input_tokens": 265499,
+          "cached_input_tokens": 244352,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2288,
+          "reasoning_output_tokens": 88
+        }
+      ],
+      "elapsed_seconds": 61.35
+    },
+    {
+      "mode": "both",
+      "case": "unrelated",
+      "status": "passed",
+      "checks": {
+        "turn_completed": true,
+        "local_files_unchanged": true,
+        "unrelated_index_preserved": true,
+        "no_secret_in_agent_messages": true,
+        "skill_body_not_loaded": true,
+        "no_file_changes": true,
+        "correct_answer": true
+      },
+      "evidence": "native-codex-both-candidate-unrelated-v1-outside.json",
+      "command_count": 18,
+      "skill_read_command_count": 0,
+      "rule_read_command_count": 2,
+      "skill_read_commands": [],
+      "usage": [
+        {
+          "input_tokens": 208306,
+          "cached_input_tokens": 191104,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 600,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "elapsed_seconds": 28.53
+    }
+  ],
+  "status_for_six_scenarios": "passed",
+  "claude": "not checked (skip)",
+  "overall": "unverified",
+  "scope": "Synthetic local configuration and Git workflows; two isolated harness modes. Not a general secrecy audit or proof for all future tasks.",
+  "behavioral_baseline_limit": "Earlier baseline reached partial completion because the fixture index was read-only; it is not evidence of a skill-caused improvement."
+}

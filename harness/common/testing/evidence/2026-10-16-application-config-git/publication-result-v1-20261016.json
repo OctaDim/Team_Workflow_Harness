@@ -1,0 +1,175 @@
+{
+  "timestamp": "2026-10-16T03:38:05.936092+03:00",
+  "version": "v1",
+  "status": "published",
+  "hashes": {
+    "rules/comm-application-config-git.md": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333",
+    "skills/comm-separate-application-config/SKILL.md": "e9c43d44cb7a3714f7a18e71587af732ef72cf009d1e04957261506335732af0"
+  },
+  "paths": [
+    "harness/common/rules/comm-application-config-git.md",
+    ".claude/rules/comm-application-config-git.md",
+    "harness/common/skills/comm-separate-application-config/SKILL.md",
+    "harness/common/skills/comm-separate-application-config/README.human.md",
+    ".agents/skills/comm-separate-application-config/SKILL.md",
+    ".agents/skills/comm-separate-application-config/README.human.md",
+    ".claude/skills/comm-separate-application-config/SKILL.md",
+    ".claude/skills/comm-separate-application-config/README.human.md"
+  ],
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/backend/.venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-c",
+        "harness/common/testing/pytest.ini",
+        "harness/common/testing/tests/test_rule_copies.py::TestRuleCopies::test_installed_rule_copies",
+        "harness/common/testing/tests/test_human_guide_reader.py",
+        "harness/common/testing/tests/test_skills_first_knowledge.py",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "exit_code": 0,
+      "stdout": "....                                                                     [100%]\n4 passed in 0.13s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "--no-index",
+        "--",
+        "harness/common/rules/comm-application-config-git.md"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "--no-index",
+        "--",
+        ".claude/rules/comm-application-config-git.md"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "--no-index",
+        "--",
+        "harness/common/skills/comm-separate-application-config/SKILL.md"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "--no-index",
+        "--",
+        "harness/common/skills/comm-separate-application-config/README.human.md"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "--no-index",
+        "--",
+        ".agents/skills/comm-separate-application-config/SKILL.md"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "--no-index",
+        "--",
+        ".agents/skills/comm-separate-application-config/README.human.md"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "--no-index",
+        "--",
+        ".claude/skills/comm-separate-application-config/SKILL.md"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "--no-index",
+        "--",
+        ".claude/skills/comm-separate-application-config/README.human.md"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "full_candidate_native_equality": "passed",
+  "protected_file_count": 7792,
+  "prior_evidence_unchanged": "passed",
+  "codex": "verified in these six synthetic scenarios",
+  "claude": {
+    "check": "skip",
+    "status": "unverified"
+  },
+  "overall": "unverified"
+}

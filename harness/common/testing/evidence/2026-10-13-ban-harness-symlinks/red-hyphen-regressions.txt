@@ -1,0 +1,63 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_installed_analyzer_rejects_original_target_before_normalizing[True-False] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-21/test_installed_analyzer_reject2/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-21/test_installed_analyzer_reject2')
+dotdot = False, leading_hyphen = True
+
+    @pytest.mark.parametrize('dotdot', [False, True])
+    @pytest.mark.parametrize('leading_hyphen', [False, True])
+    def test_installed_analyzer_rejects_original_target_before_normalizing(installation, tmp_path, dotdot, leading_hyphen):
+        root = installation
+        skill = tmp_path / 'skill'
+        skill.mkdir()
+        (skill / 'SKILL.md').write_text('---\nname: fixture\ndescription: Use for test fixture tasks.\n---\nReport the result.\n')
+        target = tmp_path / 'outside'
+        target.mkdir()
+        link = tmp_path / ('-alias' if leading_hyphen else 'alias')
+        link.symlink_to(target, target_is_directory=True)
+        raw = link.name if leading_hyphen else str(link)
+        original = raw + '/../skill' if dotdot else raw
+        cli = Path(shutil.which('plugin-eval')).resolve()
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'),
+                                 str(cli), 'analyze', original, '--format', 'json'],
+                                cwd=tmp_path, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink forbidden' in result.stderr and str(link) in result.stderr
+E       AssertionError: assert ('Symlink forbidden' in 'Target path does not exist: /tmp/pytest-of-octadim/pytest-21/test_installed_analyzer_reject2/-alias\n')
+E        +  where 'Target path does not exist: /tmp/pytest-of-octadim/pytest-21/test_installed_analyzer_reject2/-alias\n' = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-21/test_installed_analyzer_reject2/installation/harness/...out='', stderr='Target path does not exist: /tmp/pytest-of-octadim/pytest-21/test_installed_analyzer_reject2/-alias\n').stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:161: AssertionError
+_ test_installed_analyzer_rejects_original_target_before_normalizing[True-True] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-21/test_installed_analyzer_reject3/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-21/test_installed_analyzer_reject3')
+dotdot = True, leading_hyphen = True
+
+    @pytest.mark.parametrize('dotdot', [False, True])
+    @pytest.mark.parametrize('leading_hyphen', [False, True])
+    def test_installed_analyzer_rejects_original_target_before_normalizing(installation, tmp_path, dotdot, leading_hyphen):
+        root = installation
+        skill = tmp_path / 'skill'
+        skill.mkdir()
+        (skill / 'SKILL.md').write_text('---\nname: fixture\ndescription: Use for test fixture tasks.\n---\nReport the result.\n')
+        target = tmp_path / 'outside'
+        target.mkdir()
+        link = tmp_path / ('-alias' if leading_hyphen else 'alias')
+        link.symlink_to(target, target_is_directory=True)
+        raw = link.name if leading_hyphen else str(link)
+        original = raw + '/../skill' if dotdot else raw
+        cli = Path(shutil.which('plugin-eval')).resolve()
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'),
+                                 str(cli), 'analyze', original, '--format', 'json'],
+                                cwd=tmp_path, capture_output=True, text=True)
+>       assert result.returncode != 0
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-21/test_installed_analyzer_reject3/installation/harness/...plugin-eval analyze skill --format markdown",\n      "chatPrompt": "Evaluate this skill."\n    }\n  }\n}\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:160: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_installed_analyzer_rejects_original_target_before_normalizing[True-False]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_installed_analyzer_rejects_original_target_before_normalizing[True-True]
+2 failed, 2 passed, 35 deselected in 0.40s

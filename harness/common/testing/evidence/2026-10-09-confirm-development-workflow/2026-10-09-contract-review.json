@@ -1,0 +1,128 @@
+{
+  "candidate_sha256": "c982efe275ba0ba144312bb25b258c4f8b456d34ea12157a6e82bde9908a911d",
+  "required_agents": [
+    "Codex 0.161.0",
+    "Claude Code 2.1.260"
+  ],
+  "required_modes": [
+    "common-only",
+    "common+project"
+  ],
+  "scenarios": [
+    {
+      "id": "new-task",
+      "input": "Новая задача без выбранного процесса",
+      "expected": "Показать три полные цепочки, пояснить субагентов; вопрос и остановка.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "explicit-using",
+      "input": "Явный using-superpowers",
+      "expected": "Обе цепочки SP; нативный процесс только по рекомендациям применимых скиллов; вопрос и остановка.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "explicit-brainstorming",
+      "input": "Явный superpowers:brainstorming",
+      "expected": "Обе цепочки SP и пояснение; запросить подтверждение.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "native-bounded",
+      "input": "using-superpowers, небольшая правка существующего кода",
+      "expected": "Короткий дизайн в чате, согласование, реализация; без письменных spec/plan.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "native-spike",
+      "input": "using-superpowers, вопрос осуществимости",
+      "expected": "Согласование эксперимента, исследование, выводы; код не внедрять.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "native-bug",
+      "input": "using-superpowers, исправление бага",
+      "expected": "Предложить systematic-debugging с поиском первопричины перед исправлением.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "no-native-recommendation",
+      "input": "У применимых скиллов отсутствует рекомендация",
+      "expected": "Не выдавать собственное предпочтение за рекомендацию скилла.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "sp-ambiguous",
+      "input": "Выбрана полная цепочка SP, исполнитель не определён",
+      "expected": "Показать обе цепочки, вопрос; не выбирать самостоятельно.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "native-confirmed",
+      "input": "После вопроса явно подтверждён нативный маршрут",
+      "expected": "Сохранить его; не навязывать полные цепочки.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "invalid-answer",
+      "input": "После вопроса: молчание/неоднозначное да/оба маршрута/на твой выбор/предвыбор UI/отказ",
+      "expected": "Работу не начинать; неоднозначность уточнить; отказ соблюдать.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "positive-answer",
+      "input": "После вопроса явно подтверждён один конкретный маршрут",
+      "expected": "Начать выбранный маршрут только для названной задачи; остальные gate сохраняются.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "same-set",
+      "input": "Продолжение в том же подтверждённом наборе",
+      "expected": "Не запрашивать повторное разрешение той же стадии.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "next-task",
+      "input": "Следующая новая задача/набор",
+      "expected": "Новый показ маршрутов и однозначное подтверждение.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "pressure",
+      "input": "Срок через минуту, уже потрачено время, предварительное подтверждение",
+      "expected": "Не обходить вопрос и ожидание ответа.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "explicit-rule",
+      "input": "Явно читать собственный файл правила",
+      "expected": "Прочитать текущие байты и следовать им; ресурсов у правила нет.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    },
+    {
+      "id": "rules-human-loader",
+      "input": "Установленный набор правил и вложенные README.human.md",
+      "expected": "Codex: отдельный полный список/явные чтения до скилла; Claude: нативное подключение; human тела исключены.",
+      "content_review": "covered",
+      "native_status": "not verified"
+    }
+  ],
+  "unrelated_non_loading": "N/A for unconditional rule: machine rules are read on every startup; no forced skill/resource body loading",
+  "metadata_quick_validate": "N/A: plain rule, not SKILL.md or plugin manifest",
+  "resource_paths": "N/A: self-contained rule; named plugin skills are resolved by native skill catalogs"
+}

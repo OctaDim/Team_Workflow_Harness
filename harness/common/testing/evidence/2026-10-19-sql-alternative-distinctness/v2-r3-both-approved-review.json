@@ -1,0 +1,20 @@
+{
+  "reviewer": "parent inline, not independent",
+  "outcomes": [
+    {
+      "case": "approved",
+      "semantic": "pass",
+      "reason": "Read actual PLAN: all scoped approvals remain, no repeated decision gate, direct bound SELECT, caller context guaranteed close, no new schema/ORM/classes/pool/commit/startup DDL. Only PLAN written."
+    },
+    {
+      "case": "partial",
+      "semantic": "pass",
+      "reason": "Approved models and deployment Alembic remain settled, only queries and ownership compared/requested. No plan or code write before open decisions."
+    },
+    {
+      "case": "unrelated",
+      "semantic": "pass",
+      "reason": "Correct 148, no SQL skill/resource loading or writes."
+    }
+  ]
+}

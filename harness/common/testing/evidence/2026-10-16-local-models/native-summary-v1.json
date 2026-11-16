@@ -1,0 +1,752 @@
+{
+  "created": "2026-10-16T12:51:45+03:00",
+  "codex_version": "0.161.0",
+  "runs": [
+    {
+      "file": "native-codex-both-baseline-implicit-v1.json",
+      "mode": "both",
+      "phase": "baseline",
+      "case": "implicit",
+      "completed": true,
+      "exit_code": 0,
+      "changed_files": [],
+      "skill_read": false,
+      "own_resource_read": false,
+      "human_read_candidates": [],
+      "direct_human_read_candidates": [],
+      "all_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 329
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 886
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "output_characters": 3338
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2886
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-separate-application-config/SKILL.md .agents/skills/comm-verify-application-startup/SKILL.md LAUNCH.md'",
+          "exit_code": 0,
+          "output_characters": 4288
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 30
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 30
+        },
+        {
+          "command": "/bin/bash -lc 'git status --short; git ls-files; git check-ignore -v --no-index -- config/service.local.toml rag/local_models .venv/models'",
+          "exit_code": 1,
+          "output_characters": 75
+        }
+      ],
+      "tool_output_characters": 45748,
+      "usage": {
+        "input_tokens": 195095,
+        "cached_input_tokens": 166784,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1472,
+        "reasoning_output_tokens": 12
+      },
+      "elapsed_seconds": 53.99,
+      "final": "Обязательный старт прошёл; START → все правила → INDEX прочитаны в заданном порядке. Применены `comm-separate-application-config` и `comm-verify-application-startup` из нативного каталога. README.human.md не читал, ничего не менял, приложение не запускал.\n\nПо `LAUNCH.md` и полному списку доступных файлов отсутствуют код загрузчика, `config/service.local.toml`, lock-файл uv, веса, манифест и команда подготовки. Заявленную блокировку зависимостей проверить нельзя. Git не отслеживает файлы; исключения для локального конфига и моделей не обнаружены.\n\nРекомендую следующую воспроизводимую подготовку:\n\n1. Добавить версионируемый `rag/models.lock.json`: роли generation/embedding/OCR, доверенный источник, неизменяемая ревизия, перечень файлов с размерами и SHA-256, лицензия, формат и совместимые версии runtime/tokenizer. Сейчас эти данные не предоставлены.\n2. Предусмотреть `scripts/prepare_models.py`: скачивание в `rag/local_models/.staging/`, проверка полного состава и доверенных checksum, затем атомарное перемещение в `rag/local_models/<role>/<revision>/`. При ошибке — остановка без изменения активной версии. Python-зависимости устанавливать через uv по lock-файлу.\n3. Хранить в Git шаблон `config/service.example.toml`; рабочий `config/service.local.toml`, веса и staging исключить точными правилами `.gitignore`. Пути в конфиге задавать относительно корня проекта; загрузчик должен разрешать их от корня независимо от текущего каталога.\n4. Перед production проверять загрузку без сети, совместимость runtime, generation/OCR на фиксированных примерах и embedding на контрольном наборе. Зафиксировать версии, хеши и результаты.\n\nДля безопасной замены готовить новую неизменяемую директорию рядом со старой, проверять отдельно, затем переключать конфигурацию контролируемым перезапуском; прежние веса и конфигурацию сохранять для отката. **Одинаковая размерность embedding не означает совместимость векторов**: нужны проверка retrieval-качества и план отдельного индекса/переиндексации с согласованным переключением модели и индекса.\n\nЭто рекомендация, а не подтверждение готовности: скачивание, runtime-проверки, production и переиндексация не выполнялись и не разрешены.",
+      "native_check_passed": true
+    },
+    {
+      "file": "native-codex-both-candidate-explicit-v1.json",
+      "mode": "both",
+      "phase": "candidate",
+      "case": "explicit",
+      "completed": true,
+      "exit_code": 0,
+      "changed_files": [],
+      "skill_read": true,
+      "own_resource_read": true,
+      "human_read_candidates": [],
+      "direct_human_read_candidates": [],
+      "all_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 329
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 27
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 23
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-manage-local-models/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 1348
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'! .git'\"' -g 'LAUNCH.md' -g '*lifecycle*' .agents/skills/comm-manage-local-models .\"",
+          "exit_code": 0,
+          "output_characters": 281
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-manage-local-models/references/lifecycle.md LAUNCH.md'",
+          "exit_code": 0,
+          "output_characters": 4032
+        },
+        {
+          "command": "/bin/bash -lc \"git status --short; git ls-files 'rag/*' '*manifest*' '*profile*' '.gitignore'; rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!harness/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 105
+        }
+      ],
+      "tool_output_characters": 51030,
+      "usage": {
+        "input_tokens": 201279,
+        "cached_input_tokens": 182016,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1991,
+        "reasoning_output_tokens": 49
+      },
+      "elapsed_seconds": 95.92,
+      "final": "Обязательная стартовая проверка прошла; START, все машинные Markdown-правила и INDEX прочитаны в установленном порядке. `README.human.md` не читал. Применён `comm-manage-local-models`, включая его собственный ресурс `references/lifecycle.md`. Ничего не изменял, коммитов, скачиваний, запуска приложения и субагентов не было.\n\nИз нативного каталога релевантны:\n\n- `comm-manage-local-models` — хранение, подготовка и замена моделей.\n- `comm-separate-application-config` — при последующем изменении конфигурации и Git-видимости.\n- `comm-verify-application-startup` — для последующего подтверждения готовности обычного запуска.\n\nТела последних двух ради перечисления не открывал.\n\nПо [LAUNCH.md](/tmp/local-models-native-_kqcfbri/project/LAUNCH.md) подготовка **пока невоспроизводима**: веса находятся в `.venv/models/`, манифеста и команды подготовки нет, источники, точные ревизии и доверенные контрольные суммы не определены. Это сведения документа; фактическую установку и модели я не проверял.\n\nПредлагаемое оформление:\n\n| Область | Что требуется |\n|---|---|\n| Хранение | Каталог `rag/local_models/` относительно корня проекта, независимо от `.venv` и текущего рабочего каталога оболочки. Сохранить существующую семантику путей конфигурации. |\n| Git | Отслеживать `rag/local_models/.gitignore` с содержимым `*` и `!.gitignore` на отдельных строках. Исключать веса и все сопутствующие файлы. Манифест, код подготовки, профили и тесты хранить вне исключённого поддерева. |\n| Манифест | Для generation, embedding и OCR указать источник, неизменяемую ревизию, точный набор файлов, доверенные SHA-256, формат/квантизацию и совместимые runtime/профили. Включить необходимые tokenizer, projector и другие зависимости. Идентичность текущего манифеста отсутствует. |\n| Конфигурация | Общие профили и шаблон без секретов отслеживать; рабочие пути и credentials оставлять в исключённом `config/service.local.toml`. |\n| Подготовка | Отдельная явная команда установки: подготовка во временный каталог, проверка полного набора и только затем его выбор. Использовать существующий lock и `uv` для Python-зависимостей. Повторное использование набора — после проверки идентичности. |\n| Обычный запуск | Проверять наличие, целостность и совместимость моделей; сообщать конкретный отсутствующий ресурс. Подготовка должна завершаться заранее, без неявного скачивания при старте. |\n\nПеренос существующих весов из `.venv/models/` требует отдельного разрешения. Один Git checkout не обеспечит модельные файлы: целевой установке потребуется подготовленное постоянное хранилище.\n\n**Замену генерации** следует выпускать согласованным набором: код, манифест, профиль и тесты. Кандидат готовится рядом с текущей моделью; проверяются runtime, tokenizer, шаблон диалога, prompts, adapters и projector, если применимы. На фиксированных задачах сравниваются корректность, качество, задержка и память по заранее заданным порогам.\n\n**Замену embedding** нельзя считать совместимой по совпадению размерности. Нужно проверить document/query encoders, tokenizer, pooling, нормализацию и само векторное пространство. При его изменении требуется пересчёт затронутых векторов; query encoder и соответствующий индекс переключаются вместе. Сейчас переиндексация не разрешена. Изменения OCR и preprocessing отдельно оцениваются на необходимость повторной обработки документов.\n\n**Проверки и откат:** проверить Git-видимость весов, JSON/tokenizer и вложенных файлов, отдельно — каркаса и манифеста, включая фактический индекс Git. Далее нужны проверки целостности, загрузки, обычного запуска и затронутых функций на целевой установке. Для отката сохраняются прежние артефакты, код, конфигурация и совместимый индекс/данные; обратное переключение также проверяется. Эти проверки моделей и отката сейчас **не выполнены**, готовность запуска не подтверждена.\n\nНедостающие входные данные:\n\n- Реестр/источники, лицензии, условия доступа, точные ревизии и доверенные SHA-256 всех файлов.\n- Текущие модели, runtime и версии, профили, конфигурационные соглашения и аппаратные ограничения.\n- Репрезентативные задания, эталоны и пороги качества, задержки и памяти.\n- Параметры embedding-пайплайна, идентичность действующего индекса и способ его восстановления.\n- Целевая установка, объём постоянного хранилища и разрешения на подготовку, перенос, развёртывание и возможную переиндексацию.",
+      "native_check_passed": true
+    },
+    {
+      "file": "native-codex-both-candidate-implicit-v1.json",
+      "mode": "both",
+      "phase": "candidate",
+      "case": "implicit",
+      "completed": true,
+      "exit_code": 0,
+      "changed_files": [],
+      "skill_read": true,
+      "own_resource_read": true,
+      "human_read_candidates": [],
+      "direct_human_read_candidates": [],
+      "all_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 329
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 27
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 10615
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 23
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-manage-local-models/SKILL.md LAUNCH.md'",
+          "exit_code": 0,
+          "output_characters": 1950
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 30
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-manage-local-models/references/lifecycle.md'",
+          "exit_code": 0,
+          "output_characters": 3430
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'; git status --short; git ls-files; git status --short --ignored rag/local_models config .venv\"",
+          "exit_code": 0,
+          "output_characters": 105
+        }
+      ],
+      "tool_output_characters": 54117,
+      "usage": {
+        "input_tokens": 201236,
+        "cached_input_tokens": 164224,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1487,
+        "reasoning_output_tokens": 0
+      },
+      "elapsed_seconds": 65.05,
+      "final": "Стартовая проверка прошла; START, все машинные правила и INDEX прочитаны в установленном порядке. `README.human.md` не читал. Применён нативный скилл `comm-manage-local-models` и его `references/lifecycle.md`. Ничего не изменял, коммитов, запусков приложения и скачиваний не выполнял.\n\nПо доступным файлам найден только `LAUNCH.md` и инструкции: код, lock-файл uv, конфигурация, модели и тесты отсутствуют. Поэтому сведения о `.venv/models/` и `config/service.local.toml` подтверждены только описанием. Индекс Git пуст.\n\nРекомендую подготовить:\n\n- `rag/local_models/.gitignore` с `*` и `!.gitignore`: каркас отслеживать, все скачанные файлы исключать.\n- `config/models.manifest.toml` вне каталога моделей: роли generation/embedding/OCR, источник, неизменяемая revision, полный список файлов и доверенные SHA-256, формат, quantization, лицензия и совместимый runtime/profile. Включить tokenizer, projector и прочие сопутствующие файлы.\n- `scripts/prepare_models.py`: отдельная команда подготовки с зависимостями из lock-файла через uv. Загружать в staging внутри `rag/local_models/`, проверять весь комплект и лишь затем выбирать версию. Повторное использование — после проверки идентичности.\n- `config/service.example.toml`: отслеживаемый шаблон; рабочий `config/service.local.toml` — исключён из Git. Пути разрешать от корня проекта независимо от текущего каталога. Обычный запуск должен проверять наличие, целостность и совместимость без скачивания.\n\nДля безопасной замены держать кандидат рядом с действующим комплектом. Выпускать согласованно код, manifest, профили и тесты; сравнивать фиксированные задачи по качеству, задержке и памяти. Переключать только проверенный комплект, сохраняя предыдущие модели, код, конфигурацию и совместимые данные для отката.\n\n**Для embeddings одинаковая размерность не доказывает совместимость.** При изменении пространства нужны пересчёт документов и согласованное переключение query encoder с индексом. Изменение OCR может потребовать повторной обработки документов.\n\nПока не хватает реестра моделей, точных revisions, доверенных хешей, runtime-профилей, критериев приёмки и проверенного отката. В дальнейшем нужны проверки Git-видимости весов/tokenizer/вложенных файлов, целостности, загрузки без сети, обычного запуска и затронутых функций на целевой установке. Production-готовность не подтверждена; скачивание, перенос существующих весов, production-доступ и переиндексация требуют отдельных разрешений.",
+      "native_check_passed": true
+    },
+    {
+      "file": "native-codex-both-candidate-unrelated-v1.json",
+      "mode": "both",
+      "phase": "candidate",
+      "case": "unrelated",
+      "completed": true,
+      "exit_code": 0,
+      "changed_files": [],
+      "skill_read": false,
+      "own_resource_read": false,
+      "human_read_candidates": [],
+      "direct_human_read_candidates": [],
+      "all_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 329
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 27
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 23
+        }
+      ],
+      "tool_output_characters": 44677,
+      "usage": {
+        "input_tokens": 209344,
+        "cached_input_tokens": 181888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 639,
+        "reasoning_output_tokens": 0
+      },
+      "elapsed_seconds": 40.33,
+      "final": "37 × 4 = **148**.\n\nОбязательный старт прошёл успешно, инструкции прочитаны в установленном порядке. Релевантных скиллов в нативном каталоге для этой задачи нет. README.human.md не читал, изменений и коммитов не делал, субагентов не использовал.",
+      "native_check_passed": true
+    },
+    {
+      "file": "native-codex-common-baseline-implicit-v1.json",
+      "mode": "common",
+      "phase": "baseline",
+      "case": "implicit",
+      "completed": true,
+      "exit_code": 0,
+      "changed_files": [],
+      "skill_read": false,
+      "own_resource_read": false,
+      "human_read_candidates": [],
+      "direct_human_read_candidates": [],
+      "all_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 329
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 1159
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 4336
+        },
+        {
+          "command": "/bin/bash -lc 'cat LAUNCH.md'",
+          "exit_code": 0,
+          "output_characters": 602
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 30
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-verify-application-startup/SKILL.md .agents/skills/comm-separate-application-config/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 3686
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"' -g '\"'!.aws/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 30
+        },
+        {
+          "command": "/bin/bash -lc 'git ls-files -- .gitignore uv.lock pyproject.toml config rag scripts tests LAUNCH.md'",
+          "exit_code": 0,
+          "output_characters": 0
+        },
+        {
+          "command": "/bin/bash -lc 'git check-ignore -v --no-index -- config/service.local.toml rag/local_models/ .venv/models/'",
+          "exit_code": 1,
+          "output_characters": 0
+        },
+        {
+          "command": "/bin/bash -lc 'ls -ld .gitignore uv.lock pyproject.toml config/service.local.toml rag/local_models .venv/models scripts tests'",
+          "exit_code": 2,
+          "output_characters": 480
+        }
+      ],
+      "tool_output_characters": 51815,
+      "usage": {
+        "input_tokens": 227972,
+        "cached_input_tokens": 184320,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1637,
+        "reasoning_output_tokens": 48
+      },
+      "elapsed_seconds": 61.23,
+      "final": "Стартовая проверка успешна; обязательные файлы прочитаны в заданном порядке. Применены нативные скиллы `comm-verify-application-startup` и `comm-separate-application-config`. Изменений, коммитов, запусков приложения, скачиваний и субагентов не было.\n\nПо `LAUNCH.md` предлагаю такую подготовку — перечисленные ниже файлы ещё предстоит создать:\n\n- `rag/models.lock.json`: для generation, embedding и OCR зафиксировать источник, неизменяемую revision, полный список файлов, размеры, доверенные SHA-256, лицензию и совместимый runtime.\n- `scripts/prepare_models.py`: повторяемая команда `uv run --frozen python scripts/prepare_models.py --manifest rag/models.lock.json`. Загрузка во временный каталог внутри `rag/local_models/`, проверка комплекта и хешей, затем атомарная публикация в `rag/local_models/<role>/<revision>/`. Проверенный комплект повторно не скачивать; при ошибке останавливать подготовку.\n- `config/service.example.toml`: общий шаблон с путями относительно корня проекта. Рабочий `config/service.local.toml` должен выбирать конкретные версии; загрузчик должен разрешать пути от корня независимо от текущего каталога.\n- `.gitignore`: исключить рабочий конфиг и скачанные веса, сохранив manifest, шаблон и скрипт в Git. Зависимости фиксировать в `pyproject.toml` и `uv.lock`, устанавливать через `uv sync --frozen`.\n\nБезопасная замена: подготовить новую версию рядом со старой, проверить загрузку без сети, контрольные ответы/эмбеддинги/OCR, качество, память и задержку. Затем согласованно переключить комплект путей и перезапустить сервис; старую версию сохранить для отката. Хеши повторно проверить уже на целевой машине.\n\n**Для embedding одинаковая размерность не означает совместимость.** При изменении модели, токенизатора, pooling или нормализации нужен отдельный индекс и согласованная переиндексация; модель запросов и соответствующий индекс переключаются вместе.\n\nПо доступным файлам отсутствуют `pyproject.toml`, `uv.lock`, `.gitignore`, `config/service.local.toml`, `.venv/models/`, `rag/local_models/`, код launcher, скрипты и тесты. Правила игнорирования также не подтверждены. Поэтому утверждения `LAUNCH.md` о текущей установке проверить нельзя.\n\nНе хватает registry, точных revisions, доверенных хешей, требований к оборудованию, команды запуска и критериев качества. Сейчас проверено только содержимое файлов и наличие путей; production-готовность, автономная загрузка и откат остаются непроверенными.",
+      "native_check_passed": true
+    },
+    {
+      "file": "native-codex-common-candidate-explicit-v1.json",
+      "mode": "common",
+      "phase": "candidate",
+      "case": "explicit",
+      "completed": true,
+      "exit_code": 0,
+      "changed_files": [],
+      "skill_read": true,
+      "own_resource_read": true,
+      "human_read_candidates": [],
+      "direct_human_read_candidates": [],
+      "all_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 329
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 300
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '*.md' -g '\"'!README.human.md'\"' .claude/rules | sort\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-commit-result-boundaries.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-database-design.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 1473
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\"'",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 4336
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-manage-local-models/SKILL.md .agents/skills/comm-manage-local-models/references/lifecycle.md'",
+          "exit_code": 0,
+          "output_characters": 4778
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'! .git/**'\"' | head -80\"",
+          "exit_code": 0,
+          "output_characters": 4619
+        },
+        {
+          "command": "/bin/bash -lc 'cat LAUNCH.md'",
+          "exit_code": 0,
+          "output_characters": 602
+        },
+        {
+          "command": "/bin/bash -lc 'git status --short; git ls-files -- LAUNCH.md rag config .gitignore pyproject.toml uv.lock; git check-ignore -v --no-index rag/local_models/.gitignore rag/local_models/example.gguf rag/local_models/tokenizer.json rag/local_models/nested/config.json config/service.local.toml'",
+          "exit_code": 1,
+          "output_characters": 75
+        }
+      ],
+      "tool_output_characters": 61397,
+      "usage": {
+        "input_tokens": 190726,
+        "cached_input_tokens": 169600,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2120,
+        "reasoning_output_tokens": 11
+      },
+      "elapsed_seconds": 60.38,
+      "final": "По [LAUNCH.md](/tmp/local-models-native-ylkalxxy/project/LAUNCH.md) подготовка моделей пока невоспроизводима: веса находятся в `.venv/models/`, манифеста и команды подготовки нет, источники и идентичность артефактов не определены.\n\nОбязательная стартовая проверка прошла; START, машинные правила и INDEX прочитаны, обрезанный фрагмент правил дочитан. Применён `comm-manage-local-models`, прочитаны его тело и собственный ресурс `references/lifecycle.md`. `README.human.md` не читал.\n\nРелевантные скиллы нативного каталога: `comm-manage-local-models`, `comm-separate-application-config`, `comm-verify-application-startup`. Последние два понадобятся при изменениях конфигурации/Git-видимости и подтверждении готовности запуска.\n\nПредлагаемое оформление:\n\n| Область | Требование |\n|---|---|\n| Хранение | Модели генерации, embedding и OCR вместе со всеми сопутствующими файлами хранить в проектном `rag/local_models/`, вне `.venv`. Пути разрешать относительно корня проекта, независимо от текущего каталога запуска. |\n| Git | Отслеживать `rag/local_models/.gitignore` с содержимым `*` и `!.gitignore`. Манифест, код подготовки, совместимые профили и тесты держать вне исключённого поддерева. Проверять игнорирование весов, JSON, токенизаторов и вложенных файлов, а также фактический индекс Git. |\n| Манифест | Для каждой роли указать источник, неизменяемую ревизию, точный список файлов, доверенные SHA-256, формат/квантизацию, совместимый runtime и профиль. Включить токенизаторы, проекторы и другие обязательные компоненты. Учётные данные оставить в локальной конфигурации. |\n| Установка | Ввести явную команду подготовки отдельно от обычного запуска. Использовать существующий uv lock; получать файлы во временный каталог, проверять весь комплект и только затем выбирать его активным. Повторное использование тоже требует проверки идентичности. |\n| Обычный запуск | Проверять наличие, целостность и совместимость выбранного комплекта; выдавать точную ошибку при отсутствии ресурса. Автоматически ничего не скачивать. Git checkout сам по себе весов не предоставляет. |\n\n**Замена генерации.** Подготовить кандидата рядом с текущим комплектом. Согласованно версионировать код, манифест, профиль, токенизатор, шаблоны промптов и необходимые адаптеры/проекторы. Сравнить фиксированные задачи по качеству, корректности, задержке и памяти с заранее заданными порогами.\n\n**Замена embedding.** Одинаковая размерность не доказывает совместимость. Нужно проверить кодировщики документов и запросов, токенизатор, pooling, нормализацию и пространство векторов. При изменении пространства пересчитать затронутые документы и построить совместимый индекс; переключать кодировщик запросов вместе с индексом. Это будущая операция с отдельным разрешением на данные и переиндексацию. Изменения OCR или предобработки могут потребовать повторной обработки документов.\n\n**Проверки и откат.** После отдельного разрешения проверить загрузку полного комплекта, обычную пользовательскую команду и затронутые функции на целевой установке. Зафиксировать идентичность моделей, версию кода, условия измерений и статусы «пройдено/не пройдено/не запускалось». Для отката сохранить прежние артефакты, код, конфигурацию и совместимый индекс; проверить восстановление этого комплекта до удаления старого.\n\nНедостающие входные данные:\n\n- Реестр/источники, точные модели и ревизии для всех трёх ролей, лицензии и условия доступа.\n- Доверенные SHA-256 и полный перечень файлов.\n- Runtime, профили, формат локальной конфигурации и правила разрешения путей.\n- Целевое оборудование, доступная память и постоянное хранилище.\n- Идентичность текущего комплекта и embedding-индекса, параметры кодирования и предобработки.\n- Репрезентативные задачи, пороги приёмки и критерии успешного отката.\n- Разрешения на будущие скачивание, перенос существующих весов, развёртывание и переиндексацию.\n\nФактически выполнены только стартовая проверка и статический разбор. Git не показал отслеживаемых файлов по проверенным путям `rag`, `config`, `.gitignore`, `pyproject.toml`, `uv.lock`; проверка образцов путей не подтвердила правила игнорирования. Поэтому заявленное в `LAUNCH.md` исключение локального конфига пока подтверждено только описанием. Идентичность манифеста отсутствует; готовность приложения и откат не проверены.\n\nФайлы не менял, коммитов, скачиваний, запусков приложения и субагентов не было.",
+      "native_check_passed": true
+    },
+    {
+      "file": "native-codex-common-candidate-implicit-v1.json",
+      "mode": "common",
+      "phase": "candidate",
+      "case": "implicit",
+      "completed": true,
+      "exit_code": 0,
+      "changed_files": [],
+      "skill_read": true,
+      "own_resource_read": true,
+      "human_read_candidates": [
+        {
+          "command": "/bin/bash -lc \"cat LAUNCH.md; rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 632
+        }
+      ],
+      "direct_human_read_candidates": [],
+      "all_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 329
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 300
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 1473
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-manage-local-models/SKILL.md .agents/skills/comm-separate-application-config/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 3144
+        },
+        {
+          "command": "/bin/bash -lc \"cat LAUNCH.md; rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 632
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-manage-local-models/references/lifecycle.md'",
+          "exit_code": 0,
+          "output_characters": 3430
+        },
+        {
+          "command": "/bin/bash -lc \"git status --short; git ls-files; rg --files --hidden --no-ignore -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'; ls -ld rag rag/local_models config .venv pyproject.toml uv.lock .gitignore\"",
+          "exit_code": 2,
+          "output_characters": 502
+        }
+      ],
+      "tool_output_characters": 54695,
+      "usage": {
+        "input_tokens": 201223,
+        "cached_input_tokens": 176768,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1520,
+        "reasoning_output_tokens": 0
+      },
+      "elapsed_seconds": 58.2,
+      "final": "Стартовая проверка успешна; обязательные материалы прочитаны в заданном порядке, без `README.human.md`. Применены нативные скиллы `comm-manage-local-models` и `comm-separate-application-config`. Ничего не изменял, приложение не запускал, модели не скачивал, коммитов и субагентов нет.\n\nПо `LAUNCH.md` нужны generation, embedding и OCR. Однако в доступном проекте отсутствуют код сервиса, `pyproject.toml`, `uv.lock`, `config/service.local.toml`, `.venv/models/` и `rag/local_models/`. Описанные зависимости, загрузчик конфигурации и веса проверить невозможно. Нет реестра моделей, точных ревизий, доверенных контрольных сумм, профилей совместимости и тестов.\n\nРекомендуемая подготовка — будущие файлы, сейчас не созданы:\n\n- `rag/local_models/.gitignore`: строки `*` и `!.gitignore`, чтобы сохранить каркас, исключив веса, токенизаторы и вложенные файлы.\n- `config/models.manifest.toml`: для каждой роли источник, неизменяемая ревизия, полный состав файлов, доверенные SHA-256, формат/квантизация, лицензия и совместимый runtime/profile.\n- `scripts/prepare_models.py`: отдельная команда подготовки через окружение с зависимостями, зафиксированными `uv`. Загрузка в staging внутри `rag/local_models/`, проверка всего комплекта перед выбором; повторное использование только после проверки идентичности.\n- `config/service.example.toml`: отслеживаемый шаблон; рабочий `config/service.local.toml` — игнорируемый. Пути моделей разрешать от корня проекта независимо от текущего каталога shell. Production должен отдельно получать проверенный комплект на постоянном хранилище.\n\nБезопасная замена: готовить кандидата рядом с текущим комплектом; выпускать совместно код, manifest, профили и тесты. Проверять загрузку, generation/embedding/OCR на фиксированных примерах, качество, задержку и память. Переключать проверенный комплект целиком, сохраняя предыдущие артефакты, код, конфигурацию и совместимые данные для отката.\n\nОдинаковая размерность embedding **не доказывает совместимость**: при изменении пространства нужны пересчёт документов и согласованное переключение query encoder с индексом. Изменение OCR может потребовать повторной обработки документов.\n\nПеред promotion нужны проверки SHA-256, полноты файлов, обычного запуска без скачивания, целевых функций и отката; Git-видимость — через `git check-ignore -v --no-index` и отдельно `git ls-files`. Эти проверки не выполнены: отсутствуют ресурсы и реализация. Доступ к production, скачивание, перенос весов и переиндексация текущим поручением не разрешены.",
+      "native_check_passed": true
+    },
+    {
+      "file": "native-codex-common-candidate-unrelated-v1.json",
+      "mode": "common",
+      "phase": "candidate",
+      "case": "unrelated",
+      "completed": true,
+      "exit_code": 0,
+      "changed_files": [],
+      "skill_read": false,
+      "own_resource_read": false,
+      "human_read_candidates": [],
+      "direct_human_read_candidates": [],
+      "all_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 329
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 300
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-skill-rule-ownership.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 6123
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 1473
+        }
+      ],
+      "tool_output_characters": 45833,
+      "usage": {
+        "input_tokens": 166667,
+        "cached_input_tokens": 142976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 642,
+        "reasoning_output_tokens": 0
+      },
+      "elapsed_seconds": 32.03,
+      "final": "37 × 4 = **148**.\n\nОбязательный старт и чтение выполнены; проверка прошла. Релевантных скиллов в нативном каталоге для этой задачи нет. README.human.md не читал, изменений и коммитов не делал, субагентов не использовал.",
+      "native_check_passed": true
+    }
+  ],
+  "codex": {
+    "common": "passed for scoped discovery/resource-loading/read-only scenarios",
+    "both": "passed for scoped discovery/resource-loading/read-only scenarios"
+  },
+  "claude": {
+    "common": "not run; unverified",
+    "both": "not run; unverified"
+  },
+  "overall": "unverified",
+  "baseline_observation": "Both baseline runs already recommended pinned artifacts, preparation and embedding/index compatibility; neither final response specified a tracked directory scaffold. Candidate responses supplied the exact scaffold recipe. This is a narrow observed omission, not evidence of broad causal improvement.",
+  "human_flag_review": "One broad regex flag was manually reviewed: cat LAUNCH.md; rg --files ... excludes README.human.md. Its output contains LAUNCH and filenames only, no human-guide body. The flag is a false positive.",
+  "limits": [
+    "Only synthetic read-only recommendation scenarios; no model download, real quality measurement, replacement or reindexing.",
+    "CLI default model used; no model or effort override; served model identity not inferred.",
+    "Combined existing project is a neutral sentinel fixture; repeated startup and preserved bytes checked.",
+    "Static token estimates are not API usage/cost."
+  ]
+}

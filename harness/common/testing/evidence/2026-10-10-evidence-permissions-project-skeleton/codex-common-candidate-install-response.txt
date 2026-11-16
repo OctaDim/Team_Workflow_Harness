@@ -1,0 +1,23 @@
+I’ll run the mandatory startup check, read the entrypoints and rules in the specified order, then use `comm-install-harness` and its checks resource for a read-only explanation.
+Startup passed, and I’ve read both START files, all machine rules, and both INDEX files. I’m using the local `comm-install-harness` skill to distinguish creation of an absent project from repair of an existing one. I’ll keep the agreed short process and use the session’s native skill catalog.
+The mandatory startup check passed. I read common START → project START → all machine Markdown rules → common INDEX → project INDEX. No human guide bodies were read. Setup was not invoked, and the startup check ran once.
+
+Relevant skills from the **native session catalog**, without a disk catalog search:
+
+| Skill | Native description |
+|---|---|
+| `comm-install-harness` | Installing or moving harness packages, changing their installation, or proposing changes to the shared project skeleton. |
+| `comm-diagnose-harness-entrypoints` | Diagnosing startup errors, entrypoint warnings, damaged startup links, imports, or unsafe input paths. |
+| `comm-preserve-harness-knowledge` | Saving reusable harness experience or placing project work records, decisions, and evidence, including authorized migrations. |
+| `comm-protect-harness-evidence` | Saving or changing harness evidence, distinguishing application results from protected mechanism evidence and parent operations. |
+
+I explicitly used the local [comm-install-harness skill](/tmp/two-modes-native-0f1wuub8/workspace/harness/common/skills/comm-install-harness/SKILL.md) and its own [checks resource](/tmp/two-modes-native-0f1wuub8/workspace/harness/common/skills/comm-install-harness/references/checks.md). Their contract is:
+
+- **Wholly absent project, including after deletion:** the common startup checker creates a neutral project from the agreed `project-skeleton.json`, including categories, START, INDEX, and human guides. This narrow exception needs no inbox request or extra confirmation. It recreates structure; it does **not restore deleted history**.
+- **Evidence branches:** `project/testing/evidence/work/` holds application/work results; `project/testing/evidence/harness/` holds evidence about the project harness mechanism. Purpose determines protection, including for legacy paths.
+- **Existing project:** preserve it byte-for-byte. Common-only creates a project only when wholly absent; combined installation preserves an existing project. Neither mode replaces or extends it from a changed template.
+- **Partially missing categories or guides:** an existing project remains unchanged. Startup does not fill those gaps; restoration requires specifically authorized scope.
+- **Missing START or INDEX in an existing project:** the check fails before writes. Restoring links in root entrypoints does not recreate missing target files.
+- **Package modes:** common is mandatory; project-only is unsupported. The template is not a recovery backup.
+
+No documentation, mechanism, migration, cleanup, or protected-bypass edits were made. The startup success does not establish full installation-suite or native Codex/Claude verification.

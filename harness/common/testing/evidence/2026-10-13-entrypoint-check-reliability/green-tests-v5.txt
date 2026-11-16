@@ -1,0 +1,23 @@
+........................................................................ [ 56%]
+...............................F........................                 [100%]
+=================================== FAILURES ===================================
+__ TestNotification.test_atomic_repair_preserves_extended_attributes_and_acl ___
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7f999efd1c40>
+
+    @pytest.mark.skipif(sys.platform != 'linux' or not hasattr(os, 'setxattr'), reason='Linux extended-attribute/ACL check requires Linux APIs')
+    def test_atomic_repair_preserves_extended_attributes_and_acl(self):
+        import struct
+        agents = self.damage_agents()
+        os.setxattr(agents, 'user.harness-test', b'preserve metadata')
+        # Linux POSIX ACL grants an explicit named user read access in this private fixture.
+        acl = struct.pack('<I', 2) + b''.join(struct.pack('<HHI', tag, permission, uid)
+            for tag, permission, uid in ((1, 6, 0xffffffff), (2, 4, 1001),
+                                         (4, 0, 0xffffffff), (16, 4, 0xffffffff), (32, 0, 0xffffffff)))
+>       os.setxattr(agents, 'system.posix_acl_access', acl)
+E       OSError: [Errno 22] Invalid argument: '/tmp/pytest-of-octadim/pytest-12/test_atomic_repair_preserves_e0/AGENTS.md'
+
+harness/common/testing/tests/test_entrypoint_notifications.py:308: OSError
+=========================== short test summary info ============================
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_atomic_repair_preserves_extended_attributes_and_acl
+1 failed, 127 passed in 8.37s

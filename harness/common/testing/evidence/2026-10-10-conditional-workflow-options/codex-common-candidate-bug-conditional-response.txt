@@ -1,0 +1,22 @@
+I’ll run the mandatory startup check, read the required entrypoints and machine rules in order, then use the native skill catalog to identify the applicable workflow. I’ll stop at the workflow-selection question without changing files.
+
+Startup passed, and I’ve read both START files, all machine rules, and both INDEX files. I’m using local `using-superpowers` and native `systematic-debugging` to determine the recommended route for a bug whose root cause is still unknown.
+
+Startup passed. Both START files, all machine rules, and both INDEX files were read. No human guide bodies were read; no implementation or plan edits were made.
+
+Relevant skills from the **native session catalog**:
+
+- `using-superpowers` — loaded locally; directs bug work to systematic debugging.
+- `systematic-debugging` — loaded; requires root-cause investigation before proposing fixes.
+- `test-driven-development` — applicable if a fix is later authorized.
+- `verification-before-completion` — applicable before claiming a fix works.
+
+For this new task set, the recommended route is:
+
+**Systematic debugging → reproduce and trace the wrong result → compare working behavior → test a hypothesis → establish root cause → report findings.** A later authorized fix would add a failing regression test, one targeted correction, and verification. Your read-only constraint currently limits the work to investigation.
+
+The required alternative is **Compound Engineering: `ce-brainstorm → ce-plan → ce-work`**. Those skills are absent from the native catalog, so I cannot claim that route is available.
+
+**Which route do you explicitly choose for this bug investigation: the recommended read-only systematic-debugging route, or the CE alternative pending skill availability?** Please also identify the function and provide a reproducing input with expected and actual results.
+
+I’m stopping here because [comm-confirm-development-workflow.md](/tmp/two-modes-native-uc59ubsi/workspace/.claude/rules/comm-confirm-development-workflow.md) requires: “После вопроса остановись и жди явного однозначного положительного ответа” — stop after the question and wait for an explicit, unambiguous affirmative answer. No root cause has been established.

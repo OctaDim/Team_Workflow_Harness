@@ -1,0 +1,630 @@
+{
+  "runs": [
+    {
+      "mode": "both",
+      "case": "explicit",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'git status --short; git diff -- checkpoint.md task-a.md task-b.md; git diff --cached --stat'",
+        "/bin/bash -lc 'cat .agents/skills/ce-commit/SKILL.md .agents/skills/using-superpowers/references/codex-tools.md .agents/skills/brainstorming/SKILL.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- checkpoint.md task-a.md task-b.md user.txt'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git rev-parse :user.txt'",
+        "/bin/bash -lc \"gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'\"",
+        "/bin/bash -lc 'git checkout -b acceptance-task-stages'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; Path('/tmp/acceptance-commit-message.txt').write_text('Record approved pending checkpoint\\\\n')\\\"\"",
+        "/bin/bash -lc 'git add checkpoint.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- checkpoint.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; Path('task-a.md').write_bytes(b'draft-a\\\\n'); assert Path('task-a.md').read_bytes() == b'draft-a\\\\n'; Path('/tmp/acceptance-commit-message.txt').write_text('Write task A draft\\\\n')\\\"\"",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- task-a.md'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc \"gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'\"",
+        "/bin/bash -lc 'git add task-a.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- task-a.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; Path('task-a.md').write_bytes(b'final-a\\\\n'); assert Path('task-a.md').read_bytes() == b'final-a\\\\n'; Path('/tmp/acceptance-commit-message.txt').write_text('Finalize task A\\\\n')\\\"\"",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- task-a.md'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc \"gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'\"",
+        "/bin/bash -lc 'git add task-a.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- task-a.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; Path('task-b.md').write_bytes(b'draft-b\\\\n'); assert Path('task-b.md').read_bytes() == b'draft-b\\\\n'; Path('/tmp/acceptance-commit-message.txt').write_text('Write task B draft\\\\n')\\\"\"",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- task-b.md'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc \"gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'\"",
+        "/bin/bash -lc 'git add task-b.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- task-b.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; Path('task-b.md').write_bytes(b'final-b\\\\n'); assert Path('task-b.md').read_bytes() == b'final-b\\\\n'; Path('/tmp/acceptance-commit-message.txt').write_text('Finalize task B\\\\n')\\\"\"",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- task-b.md'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc \"gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'\"",
+        "/bin/bash -lc 'git add task-b.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- task-b.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; assert Path('task-a.md').read_bytes() == b'final-a\\\\n'; assert Path('task-b.md').read_bytes() == b'final-b\\\\n'; print('Final contents and LF verified')\\\"\"",
+        "/bin/bash -lc 'git rev-parse :user.txt'",
+        "/bin/bash -lc 'git diff --cached --name-only'"
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 316606,
+          "cached_input_tokens": 280960,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1790,
+          "reasoning_output_tokens": 65
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "failure",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-confirm-development-workflow.md'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'git status --short; git diff -- checkpoint.md; git diff --cached -- user.txt; git log -3 --oneline'",
+        "/bin/bash -lc 'cat .agents/skills/ce-commit/SKILL.md .agents/skills/using-superpowers/references/codex-tools.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- checkpoint.md user.txt'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git checkout -b acceptance-tasks'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; Path(\\\"/tmp/acceptance-commit-message\\\").write_text(\\\"Record approved checkpoint\\\\n\\\")'\"",
+        "/bin/bash -lc 'git add checkpoint.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- checkpoint.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git config --get core.hooksPath'",
+        "/bin/bash -lc 'git config --get user.name'",
+        "/bin/bash -lc 'git config --get user.email'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .git/hooks -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .git/hooks/pre-commit'"
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 314775,
+          "cached_input_tokens": 291968,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1298,
+          "reasoning_output_tokens": 78
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "stages",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r -d '\\\\n' cat\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/brainstorming/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'git status --short; git diff -- checkpoint.md; git diff --cached -- user.txt; cat checkpoint.md'",
+        "/bin/bash -lc 'cat .agents/skills/ce-commit/SKILL.md .agents/skills/using-superpowers/references/codex-tools.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- checkpoint.md user.txt'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc \"gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'\"",
+        "/bin/bash -lc 'git checkout -b acceptance-two-tasks'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; Path(\\\"/tmp/acceptance-commit-message\\\").write_text(\\\"Record owned pending checkpoint\\\\n\\\")'\"",
+        "/bin/bash -lc 'git add -- checkpoint.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- checkpoint.md'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; p=Path(\\\"task-a.md\\\"); expected=b\\\"draft-a\\\\n\\\"; p.write_bytes(expected); assert p.read_bytes()==expected; Path(\\\"/tmp/acceptance-commit-message\\\").write_text(\\\"Write Task A draft\\\\n\\\")'\"",
+        "/bin/bash -lc 'git add -- task-a.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- task-a.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; p=Path(\\\"task-a.md\\\"); expected=b\\\"final-a\\\\n\\\"; p.write_bytes(expected); assert p.read_bytes()==expected; Path(\\\"/tmp/acceptance-commit-message\\\").write_text(\\\"Finalize Task A\\\\n\\\")'\"",
+        "/bin/bash -lc 'git add -- task-a.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- task-a.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; p=Path(\\\"task-b.md\\\"); expected=b\\\"draft-b\\\\n\\\"; p.write_bytes(expected); assert p.read_bytes()==expected; Path(\\\"/tmp/acceptance-commit-message\\\").write_text(\\\"Write Task B draft\\\\n\\\")'\"",
+        "/bin/bash -lc 'git add -- task-b.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- task-b.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; p=Path(\\\"task-b.md\\\"); expected=b\\\"final-b\\\\n\\\"; p.write_bytes(expected); assert p.read_bytes()==expected; Path(\\\"/tmp/acceptance-commit-message\\\").write_text(\\\"Finalize Task B\\\\n\\\")'\"",
+        "/bin/bash -lc 'git add -- task-b.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- task-b.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c 'import subprocess; from pathlib import Path; assert Path(\\\"task-a.md\\\").read_bytes()==b\\\"final-a\\\\n\\\"; assert Path(\\\"task-b.md\\\").read_bytes()==b\\\"final-b\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"show\\\",\\\":user.txt\\\"])==b\\\"unrelated-staged\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"diff\\\",\\\"--cached\\\",\\\"--name-only\\\"]).decode().splitlines()==[\\\"user.txt\\\"]; print(\\\"Final bytes verified; user.txt staged change preserved.\\\")'\"",
+        "/bin/bash -lc 'git log --oneline -5'"
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 353011,
+          "cached_input_tokens": 292736,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1647,
+          "reasoning_output_tokens": 39
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "unrelated",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'"
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 187155,
+          "cached_input_tokens": 157056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 634,
+          "reasoning_output_tokens": 10
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "case": "missing",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-confirm-development-workflow.md'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/brainstorming/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'git status --short; git diff -- checkpoint.md; git diff --cached --stat'",
+        "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md; rg --files --hidden --no-ignore -g '*SKILL.md' -g '\"'!README.human.md'\"' -g '*ce-commit*'; rg -n --hidden -g '\"'!README.human.md'\"' 'name:.*ce-commit|ce-commit' .agents harness/common/skills/comm-commit-task-stages\"",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore /tmp/two-modes-native-klxoc1e4/runtime /root/.codex /root/.agents -g 'SKILL.md' -g '\"'!README.human.md'\"' 2>/dev/null\"",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore /tmp/two-modes-native-klxoc1e4/runtime -g 'SKILL.md' -g '\"'!README.human.md'\"' | rg '/(ce-commit|compound-engineering)/'\""
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 273300,
+          "cached_input_tokens": 214912,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1202,
+          "reasoning_output_tokens": 61
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "explicit",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md .agents/skills/brainstorming/SKILL.md'",
+        "/bin/bash -lc 'git status --short; git diff -- checkpoint.md; git diff --cached -- user.txt'",
+        "/bin/bash -lc 'cat .agents/skills/ce-commit/SKILL.md .agents/skills/using-superpowers/references/codex-tools.md'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git diff HEAD -- checkpoint.md task-a.md task-b.md user.txt'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git checkout -b acceptance-task-stages'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; Path('/tmp/acceptance-commit-message.txt').write_text('chore: Record approved checkpoint\\\\n')\\\"\"",
+        "/bin/bash -lc 'git add -- checkpoint.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- checkpoint.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; Path('task-a.md').write_bytes(\\\"draft-a\\\\n\\\".encode()); Path('/tmp/acceptance-commit-message.txt').write_text('chore: Record task A draft\\\\n')\\\"\"",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- task-a.md'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git add -- task-a.md'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; Path(\\\"task-a.md\\\").write_bytes(\\\"draft-a\\\\n\\\".encode()); Path('\\\\''/tmp/acceptance-commit-message.txt'\\\\'').write_text(\\\"chore: Record task A draft\\\\n\\\")'\"",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- task-a.md'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git add -- task-a.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- task-a.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; Path(\\\"task-a.md\\\").write_bytes(\\\"final-a\\\\n\\\".encode()); Path('\\\\''/tmp/acceptance-commit-message.txt'\\\\'').write_text(\\\"chore: Finalize task A\\\\n\\\")'\"",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- task-a.md'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git add -- task-a.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- task-a.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; Path(\\\"task-b.md\\\").write_bytes(\\\"draft-b\\\\n\\\".encode()); Path('\\\\''/tmp/acceptance-commit-message.txt'\\\\'').write_text(\\\"chore: Record task B draft\\\\n\\\")'\"",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- task-b.md'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git add -- task-b.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- task-b.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; Path(\\\"task-b.md\\\").write_bytes(\\\"final-b\\\\n\\\".encode()); Path('\\\\''/tmp/acceptance-commit-message.txt'\\\\'').write_text(\\\"chore: Finalize task B\\\\n\\\")'\"",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- task-b.md'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git add -- task-b.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message.txt -- task-b.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; import subprocess; assert Path(\\\"task-a.md\\\").read_bytes() == b\\\"final-a\\\\n\\\"; assert Path(\\\"task-b.md\\\").read_bytes() == b\\\"final-b\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"show\\\",\\\":user.txt\\\"]) == b\\\"unrelated-staged\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"diff\\\",\\\"--cached\\\",\\\"--name-only\\\"]).decode().splitlines() == [\\\"user.txt\\\"]; print(\\\"Final bytes and preserved staged user.txt verified\\\")'\""
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 339507,
+          "cached_input_tokens": 307968,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1956,
+          "reasoning_output_tokens": 41
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "failure",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/brainstorming/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'git status --short; git diff -- checkpoint.md; git diff --cached -- user.txt'",
+        "/bin/bash -lc 'cat .agents/skills/ce-commit/SKILL.md .agents/skills/using-superpowers/references/codex-tools.md'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git diff HEAD -- checkpoint.md user.txt'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git checkout -b complete-approved-tasks'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc \"python3 -c 'from pathlib import Path; Path(\\\"/tmp/fixture-commit-message.txt\\\").write_text(\\\"chore: Record approved checkpoint\\\\n\\\"); import subprocess; staged=subprocess.check_output([\\\"git\\\",\\\"show\\\",\\\":user.txt\\\"]); Path(\\\"/tmp/fixture-user-staged.bin\\\").write_bytes(staged)'\"",
+        "/bin/bash -lc 'git add -- checkpoint.md'",
+        "/bin/bash -lc 'git commit -F /tmp/fixture-commit-message.txt -- checkpoint.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git config --get core.hooksPath'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .git/hooks -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .git/hooks/pre-commit'"
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 334956,
+          "cached_input_tokens": 310400,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1203,
+          "reasoning_output_tokens": 63
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "stages",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md .agents/skills/ce-commit/SKILL.md'",
+        "/bin/bash -lc 'git status --short && git diff -- checkpoint.md && git diff --cached --stat'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'git diff HEAD -- checkpoint.md user.txt'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc 'git log --oneline -10'",
+        "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "/bin/bash -lc 'git checkout -b acceptance-tasks'",
+        "/bin/bash -lc 'git branch --show-current'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; Path('/tmp/acceptance-commit-message').write_text('chore: Preserve approved checkpoint change\\\\n')\\\"\"",
+        "/bin/bash -lc 'git add -- checkpoint.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- checkpoint.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; p=Path('task-a.md'); p.write_bytes(b'draft-a\\\\n'); assert p.read_bytes()==b'draft-a\\\\n'; Path('/tmp/acceptance-commit-message').write_text('chore: Record task A draft\\\\n')\\\"\"",
+        "/bin/bash -lc 'git add -- task-a.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- task-a.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; p=Path('task-a.md'); p.write_bytes(b'final-a\\\\n'); assert p.read_bytes()==b'final-a\\\\n'; Path('/tmp/acceptance-commit-message').write_text('chore: Finalize task A\\\\n')\\\"\"",
+        "/bin/bash -lc 'git add -- task-a.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- task-a.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; p=Path('task-b.md'); p.write_bytes(b'draft-b\\\\n'); assert p.read_bytes()==b'draft-b\\\\n'; Path('/tmp/acceptance-commit-message').write_text('chore: Record task B draft\\\\n')\\\"\"",
+        "/bin/bash -lc 'git add -- task-b.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- task-b.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; p=Path('task-b.md'); p.write_bytes(b'final-b\\\\n'); assert p.read_bytes()==b'final-b\\\\n'; Path('/tmp/acceptance-commit-message').write_text('chore: Finalize task B\\\\n')\\\"\"",
+        "/bin/bash -lc 'git add -- task-b.md'",
+        "/bin/bash -lc 'git commit -F /tmp/acceptance-commit-message -- task-b.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; import subprocess; assert Path('task-a.md').read_bytes()==b'final-a\\\\n'; assert Path('task-b.md').read_bytes()==b'final-b\\\\n'; assert subprocess.check_output(['git','show',':user.txt'])==b'unrelated-staged\\\\n'; assert subprocess.check_output(['git','diff','--cached','--name-only'])==b'user.txt\\\\n'; assert not subprocess.check_output(['git','diff','HEAD','--','checkpoint.md','task-a.md','task-b.md']); print('Verified final LF bytes, committed scope, and preserved staged user.txt')\\\"\""
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 247335,
+          "cached_input_tokens": 221568,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1572,
+          "reasoning_output_tokens": 39
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "unrelated",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | while IFS= read -r rule; do cat \\\"\"'$rule\"; done'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'"
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 196723,
+          "cached_input_tokens": 169088,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 754,
+          "reasoning_output_tokens": 25
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "case": "missing",
+      "completed_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/brainstorming/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'git status --short; git diff -- checkpoint.md; git diff --cached -- checkpoint.md user.txt; git log -5 --oneline'",
+        "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md; rg --files --hidden --no-ignore .agents harness -g '*commit*' -g 'SKILL.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore /tmp/two-modes-native-pxqsoo65/runtime /tmp/two-modes-native-pxqsoo65/workspace /root/.codex /root/.agents -g 'SKILL.md' -g '\"'!README.human.md'\"' 2>/dev/null | rg 'ce-commit|compound-engineering'\""
+      ],
+      "turn_usage": [
+        {
+          "input_tokens": 234568,
+          "cached_input_tokens": 200832,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1023,
+          "reasoning_output_tokens": 45
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "method": "estimated-static plugin-eval; actual CLI turn usage recorded separately",
+    "own": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 32,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-10-task-stage-commits/comm-commit-task-stages/SKILL.md",
+            "tokens": 6,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-10-task-stage-commits/comm-commit-task-stages/SKILL.md",
+            "tokens": 26,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 296,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-10-task-stage-commits/comm-commit-task-stages/SKILL.md",
+            "tokens": 296,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 0,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": []
+      },
+      "total_tokens": {
+        "value": 328,
+        "band": "moderate"
+      }
+    },
+    "external_ce_commit": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 43,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/tmp/harness-task-commits-baseline/.agents/skills/ce-commit/SKILL.md",
+            "tokens": 3,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/tmp/harness-task-commits-baseline/.agents/skills/ce-commit/SKILL.md",
+            "tokens": 40,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 1185,
+        "band": "excessive",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/tmp/harness-task-commits-baseline/.agents/skills/ce-commit/SKILL.md",
+            "tokens": 1185,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 0,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": []
+      },
+      "total_tokens": {
+        "value": 1228,
+        "band": "excessive"
+      }
+    },
+    "direct_chain_available_estimated_tokens": 1556,
+    "startup_file_bytes": {
+      "harness/common/START.md": 1491,
+      "harness/project/START.md": 641,
+      "harness/common/INDEX.md": 4587,
+      "harness/project/INDEX.md": 3888,
+      ".claude/rules/comm-confirm-development-workflow.md": 8013,
+      ".claude/rules/comm-dependencies-through-uv.md": 1946,
+      ".claude/rules/comm-entrypoint-links-rule.md": 2790,
+      ".claude/rules/comm-human-folder-guides.md": 2552,
+      ".claude/rules/comm-instruction-order.md": 3135,
+      ".claude/rules/comm-package-independence.md": 1994,
+      ".claude/rules/comm-skill-rule-ownership.md": 9449,
+      ".claude/rules/comm-user-owned-entrypoints.md": 2769
+    },
+    "new_always_available_metadata_estimated_tokens": 32,
+    "no_supporting_machine_resources": true,
+    "limitation": "Total CLI input includes repeated context and other skills; it is not marginal skill cost. Startup instructions are unchanged by this skill."
+  }
+}

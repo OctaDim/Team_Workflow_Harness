@@ -1,0 +1,33 @@
+I’ll run the mandatory startup check, read the required files in order, and use the local using-superpowers skill to identify the workflow question. I’ll keep this read-only and stop before planning or implementation.
+The startup check passed, and I’ve read both START files, all eight machine rules, and both INDEX files. I opened using-superpowers too early; the harness requires skill bodies after the rules. I’ll now apply it with the rules loaded. No task content has been supplied, so there is no basis for recommending a route.
+Startup passed. Required entrypoints and all eight machine rules are read; no human guide bodies were read. No implementation or plan edits were made. I opened using-superpowers before the rules, then reread it after completing startup.
+
+Using local [using-superpowers](/tmp/two-modes-native-tyxg07ib/workspace/.agents/skills/using-superpowers/SKILL.md). Relevant skills from the **native session catalog** are:
+
+- `brainstorming`: clarify intent and design before creative changes.
+- `systematic-debugging`: investigate bugs and unexpected behavior.
+- `writing-plans`: plan work with established multi-step requirements.
+- `executing-plans`: implement a plan through the main agent.
+- `subagent-driven-development`: implement independent plan tasks through agents.
+- `verification-before-completion`: verify results before claiming completion.
+
+**No route is recommended yet:** the task-set name, task content, and intended outcome are missing. `using-superpowers` alone does not select a development route.
+
+The [workflow-selection rule](/tmp/two-modes-native-tyxg07ib/workspace/.claude/rules/comm-confirm-development-workflow.md) requires this conditional menu:
+
+| Conditional route | Stages |
+|---|---|
+| Superpowers, main-agent implementation | `brainstorming → writing-plans → executing-plans` |
+| Superpowers, subagent implementation | `brainstorming → writing-plans → subagent-driven-development` |
+| Short design route | Brainstorming with short chat design → agreement → implementation and verification |
+| Bug investigation | `systematic-debugging → root cause → fix and verification` |
+| Research experiment | Agree experiment → research → conclusions |
+| Compound Engineering | `ce-brainstorm → ce-plan → ce-work` |
+
+Compound Engineering skills are **not present in the native catalog**. The experiment route is a conditional option required by the rule; no task-specific skill basis establishes it as recommended.
+
+> **Main-agent implementation does not mean complete absence of subagents.** In `executing-plans`, the main agent writes all code, with a separate final-review subagent when available. In `subagent-driven-development`, implementers and reviewers participate in each plan task.
+
+**What is the task-set name and intended work, and which one of these routes do you explicitly choose?** A full Superpowers route also requires choosing main-agent or subagent implementation.
+
+I’m stopping here because the workflow-selection rule requires an explicit answer before dependent work begins.

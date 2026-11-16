@@ -22,15 +22,19 @@ class TestNotification:
     @pytest.fixture(autouse=True)
     def _project(self, tmp_path):
         self.root = tmp_path
+        for folder in ('harness/common/rules', '.claude/rules'):
+            rules = self.root / folder
+            rules.mkdir(parents=True)
+            (rules / 'comm-fixture.md').write_bytes(b'# Rule fixture\n')
         for package in ('common', 'project'):
             directory = self.root / 'harness' / package
-            directory.mkdir(parents=True)
+            directory.mkdir(parents=True, exist_ok=True)
             (directory / 'INDEX.md').write_text('# Index\n')
-            (directory / 'START.md').touch()
+            (directory / 'START.md').write_bytes(b'# Start\n')
         template = self.root / 'harness/common/base/project-skeleton.json'
         template.parent.mkdir()
         shutil.copyfile(SCRIPT.parent.parent / 'base/project-skeleton.json', template)
-        (self.root / 'AGENTS.md').write_text('# Static settings\n\nKeep this setting.\n\n' + ''.join((f'- [harness/{p}/{n}](harness/{p}/{n})\n' for p in ('common', 'project') for n in ('INDEX.md', 'START.md'))) + RULES_LINES)
+        (self.root / 'AGENTS.md').write_text('# Static settings\n\nKeep this setting.\n\n' + ''.join(f'- [harness/{p}/START.md](harness/{p}/START.md)\n' for p in ('common', 'project')) + RULES_LINES + ''.join(f'- [harness/{p}/INDEX.md](harness/{p}/INDEX.md)\n' for p in ('common', 'project')))
         (self.root / 'CLAUDE.md').write_text('@AGENTS.md\n')
 
     def check(self, git_available=True):
@@ -133,16 +137,19 @@ class TestNotification:
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         output = io.StringIO()
-        original_write = Path.write_bytes
+        original_replace = os.replace
+        replacements = []
 
-        def write(path, data, *args, **kwargs):
+        def replace(source, destination):
             assert NOTICE in output.getvalue()
-            return original_write(path, data, *args, **kwargs)
+            replacements.append(destination)
+            return original_replace(source, destination)
         with monkeypatch.context() as scoped:
-            scoped.setattr(Path, 'write_bytes', write)
+            scoped.setattr(os, 'replace', replace)
             with contextlib.redirect_stdout(output):
                 module.ensure(self.root)
         assert output.getvalue().count(NOTICE) == 1
+        assert replacements == [agents]
 
     def test_rules_repair_is_not_reported_as_a_settings_change(self):
         agents = self.root / 'AGENTS.md'
@@ -186,3 +193,122 @@ class TestNotification:
         assert second.returncode == 0, second.stderr
         assert NOTICE not in second.stdout
         assert 'изменение настроек' not in second.stdout
+
+    def load_checker(self):
+        spec = importlib.util.spec_from_file_location('entrypoint_atomic_checks', SCRIPT)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def damage_agents(self):
+        agents = self.root / 'AGENTS.md'
+        agents.write_bytes(agents.read_bytes().replace(
+            b'- [harness/common/START.md](harness/common/START.md)\n', b''))
+        return agents
+
+    def test_atomic_repair_preserves_permissions_and_crlf(self, monkeypatch):
+        agents = self.damage_agents()
+        original = agents.read_bytes().replace(b'\n', b'\r\n')
+        agents.write_bytes(original)
+        agents.chmod(0o640)
+        module = self.load_checker()
+        replacements = []
+        original_replace = os.replace
+
+        def replace(source, destination):
+            assert Path(destination).read_bytes() == original
+            assert Path(source).parent == agents.parent
+            replacements.append(destination)
+            return original_replace(source, destination)
+        monkeypatch.setattr(os, 'replace', replace)
+        module.ensure(self.root)
+        assert replacements == [agents]
+        assert agents.stat().st_mode & 0o777 == 0o640
+        assert b'\n' not in agents.read_bytes().replace(b'\r\n', b'')
+        assert not list(self.root.glob('.AGENTS.md-*'))
+
+    def test_parallel_edit_during_planning_is_preserved(self, monkeypatch):
+        agents = self.damage_agents()
+        module = self.load_checker()
+        repair = module.repair_startup_blocks
+
+        def changed(*args):
+            result = repair(*args)
+            agents.write_bytes(b'# Concurrent edit\n')
+            return result
+        monkeypatch.setattr(module, 'repair_startup_blocks', changed)
+        with pytest.raises(ValueError, match='changed'):
+            module.ensure(self.root)
+        assert agents.read_bytes() == b'# Concurrent edit\n'
+
+    def test_concurrent_bridge_edit_after_first_replace_reports_partial_result(self, monkeypatch):
+        agents = self.damage_agents()
+        bridge = self.root / 'CLAUDE.md'
+        bridge.write_bytes(b'User bridge\n')
+        module = self.load_checker()
+        replace = os.replace
+
+        def changed(source, destination):
+            result = replace(source, destination)
+            if Path(destination) == agents:
+                bridge.write_bytes(b'Concurrent bridge\n')
+            return result
+        monkeypatch.setattr(os, 'replace', changed)
+        with pytest.raises(ValueError, match='AGENTS.md') as error:
+            module.ensure(self.root)
+        assert 'CLAUDE.md' in str(error.value)
+        assert bridge.read_bytes() == b'Concurrent bridge\n'
+        assert b'](harness/common/START.md)' in agents.read_bytes()
+        assert not list(self.root.glob('.CLAUDE.md-*'))
+
+    @pytest.mark.parametrize('failure', ('create', 'replace', 'write'))
+    def test_atomic_io_failure_preserves_original_and_removes_temporary_file(self, monkeypatch, failure):
+        agents = self.damage_agents()
+        original = agents.read_bytes()
+        module = self.load_checker()
+
+        def fail(*args, **kwargs):
+            raise OSError('injected I/O failure')
+        if failure == 'replace':
+            monkeypatch.setattr(os, 'replace', fail)
+        elif failure == 'create':
+            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', fail)
+        else:
+            create = module.tempfile.NamedTemporaryFile
+
+            class BrokenWriter:
+                def __init__(self, *args, **kwargs):
+                    self.file = create(*args, **kwargs)
+                    self.name = self.file.name
+
+                def __enter__(self):
+                    return self
+
+                def __exit__(self, *args):
+                    self.file.close()
+
+                def write(self, data):
+                    self.file.write(data[:2])
+                    raise OSError('injected I/O failure')
+            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', BrokenWriter)
+        with pytest.raises((OSError, ValueError), match='injected I/O failure'):
+            module.ensure(self.root)
+        assert agents.read_bytes() == original
+        assert not list(self.root.glob('.AGENTS.md-*'))
+
+    @pytest.mark.skipif(sys.platform != 'linux' or not hasattr(os, 'setxattr'), reason='Linux extended-attribute/ACL check requires Linux APIs')
+    def test_atomic_repair_preserves_extended_attributes_and_acl(self):
+        import struct
+        agents = self.damage_agents()
+        os.setxattr(agents, 'user.harness-test', b'preserve metadata')
+        # Use the mapped UID so this ACL is valid inside a single-user namespace.
+        acl = struct.pack('<I', 2) + b''.join(struct.pack('<HHI', tag, permission, uid)
+            for tag, permission, uid in ((1, 6, 0xffffffff), (2, 4, os.getuid()),
+                                         (4, 0, 0xffffffff), (16, 4, 0xffffffff), (32, 0, 0xffffffff)))
+        os.setxattr(agents, 'system.posix_acl_access', acl)
+        before = {name: os.getxattr(agents, name) for name in os.listxattr(agents)}
+        original = agents.stat()
+        self.load_checker().ensure(self.root)
+        after = agents.stat()
+        assert (after.st_uid, after.st_gid, after.st_mode) == (original.st_uid, original.st_gid, original.st_mode)
+        assert before == {name: os.getxattr(agents, name) for name in os.listxattr(agents)}

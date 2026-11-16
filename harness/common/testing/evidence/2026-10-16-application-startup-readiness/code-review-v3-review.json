@@ -1,0 +1,64 @@
+{
+  "status": "complete",
+  "verdict": "Ready to merge",
+  "scope": {
+    "base": "7e9ffa8015c243292277cfcf2f85b0814b343a2e",
+    "branch": "octadim/simple-entrypoints",
+    "head_sha": "7e9ffa8015c243292277cfcf2f85b0814b343a2e",
+    "pr_url": null,
+    "files_changed": 8
+  },
+  "intent": "Publish startup-readiness early guard and one lazy skill, including uv proposal and explicit decision boundary; application code/configuration are outside scope.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "adversarial"
+  ],
+  "findings": [],
+  "actionable_findings": [],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan_source": "explicit",
+    "plan": "harness/common/docs/plans/2026-10-16-1137-feat-application-startup-readiness-plan.md",
+    "upstream_amendments": "harness/common/inbox/2026-10-16-application-startup-readiness/request.md",
+    "addressed": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "U1",
+      "U2"
+    ],
+    "missing": [],
+    "limitations": "Claude skipped/unverified and overall unverified; baseline causal improvement not established; exact-version publication exception approved separately."
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "focused",
+    "independent_read": "separate local adversarial agent; no cross-model claim",
+    "cross_model": "not run: acpx unavailable",
+    "criteria": [
+      "AGENTS.md",
+      "CLAUDE.md"
+    ],
+    "instruction_fallback": true,
+    "compound_packs": "not applied",
+    "not_assessed": [
+      "learnings",
+      "agent-native gaps",
+      "deployment notes"
+    ],
+    "untracked": "task evidence/plan/request and unrelated project docs excluded from diff review; task verification receipts inspected for completeness",
+    "human_guides": "bodies excluded; complete copy sets/types/bytes checked programmatically",
+    "validation": "current exact v3 prepublication 10 native runs, 168 tests, two 7-test installations and source/native integrity"
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/startup-readiness-v3",
+  "run_id": "startup-readiness-v3"
+}

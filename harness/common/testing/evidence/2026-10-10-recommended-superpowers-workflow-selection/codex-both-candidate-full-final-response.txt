@@ -1,0 +1,32 @@
+I’ll run the mandatory startup check, read the entrypoints and machine rules in the required order, then use the native skill catalog to present the workflow choice. I’ll keep this read-only and stop at that choice.
+Startup passed, and I’ve read both START files, all eight machine rules, and both INDEX files. I’m using `using-superpowers`, `brainstorming`, and `writing-plans` to determine the recommended stages, and checking the two execution skills to explain the choices. No human guide bodies have been read.
+Mandatory startup passed. I read both START entrypoints, all eight machine rules, and both INDEX files in order. No human guide bodies were read, and no implementation or plan edits were made.
+
+From the **native session catalog**, the relevant skills are:
+
+- `using-superpowers`: determines applicable skills and process.
+- `brainstorming`: classifies new subsystems and shared interfaces as **architectural**, requiring the full design process.
+- `writing-plans`: turns an approved specification into tasks with explicit interfaces, tests, and verification.
+- `executing-plans`: the main agent implements tasks; one fresh reviewer reviews the whole branch.
+- `subagent-driven-development`: separate implementers and reviewers work through each task.
+- For eventual execution: `using-git-worktrees`, `test-driven-development`, `requesting-code-review`, `verification-before-completion`, and `finishing-a-development-branch`.
+
+For the new task set, **“Shared application subsystem,”** Superpowers recommends the architectural stages: clarify purpose and constraints → compare approaches → review design sections → write and self-review the specification → obtain written-spec approval → write and self-review the implementation plan → obtain plan approval → execute.
+
+New storage contracts and multiple services establish this classification. If exploration reveals independent subsystems, `brainstorming` and `writing-plans` call for separate spec/plan cycles. The eventual execution recommendation depends on the actual task boundaries and review needs.
+
+Choose one route:
+
+| Choice | Workflow |
+|---|---|
+| **1. Superpowers, main-agent implementation** | `brainstorming → writing-plans → executing-plans` |
+| **2. Superpowers, subagents** | `brainstorming → writing-plans → subagent-driven-development` |
+| **3. Compound Engineering alternative** | `ce-brainstorm → ce-plan → ce-work` |
+
+> **Main-agent implementation does not mean a complete absence of subagents.** In `executing-plans`, the main agent writes all code, but the skill requires a separate final reviewer when available. In `subagent-driven-development`, separate implementers and reviewers participate in every plan task.
+
+The CE stages are required as an alternative by the local workflow rule; CE skills are **not present in this session’s native catalog**, so their availability remains unresolved.
+
+**Which route—1, 2, or 3—do you explicitly choose for “Shared application subsystem”?**
+
+I’m stopping here because [comm-confirm-development-workflow.md](/tmp/two-modes-native-8xnwite8/workspace/.claude/rules/comm-confirm-development-workflow.md) requires: “После вопроса остановись и жди явного однозначного положительного ответа” (“After the question, stop and wait for an explicit, unambiguous affirmative answer”). Your route choice is still required; later specification and plan approvals remain separate, and the read-only constraint continues to apply.

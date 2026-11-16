@@ -1,0 +1,89 @@
+{
+  "agent": "codex",
+  "mode": "both",
+  "invocation": "candidate-stages-green-v1",
+  "exit_code": 0,
+  "elapsed_seconds": 74.9,
+  "isolation_probe": "passed",
+  "completed": true,
+  "resource_name_in_events": false,
+  "response_file": "codex-both-candidate-stages-green-v1-response.txt",
+  "events_file": "codex-both-candidate-stages-green-v1-events.json",
+  "git_observation": {
+    "commits": [
+      {
+        "hash": "94fbdd8b26366b602ca1f7d1537c5a06c654437f",
+        "subject": "Save approved pending checkpoint",
+        "files": [
+          "checkpoint.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": null,
+          "task-b.md": null,
+          "user.txt": "unrelated-before\n"
+        }
+      },
+      {
+        "hash": "8e414deb4d9a051737c362b8e426766825382b3e",
+        "subject": "Write Task A draft",
+        "files": [
+          "task-a.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": "draft-a\n",
+          "task-b.md": null,
+          "user.txt": "unrelated-before\n"
+        }
+      },
+      {
+        "hash": "6ff89a65565e6bd65b242458f3b9db265e651a3e",
+        "subject": "Finalize Task A",
+        "files": [
+          "task-a.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": "final-a\n",
+          "task-b.md": null,
+          "user.txt": "unrelated-before\n"
+        }
+      },
+      {
+        "hash": "9d36f6db0dc797c11a279d7b1ba22f4df90c40d6",
+        "subject": "Write Task B draft",
+        "files": [
+          "task-b.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": "final-a\n",
+          "task-b.md": "draft-b\n",
+          "user.txt": "unrelated-before\n"
+        }
+      },
+      {
+        "hash": "916b1aee1d2df289913c6e253ed366c8a3a61c8b",
+        "subject": "Finalize Task B",
+        "files": [
+          "task-b.md"
+        ],
+        "snapshots": {
+          "checkpoint.md": "owned-pending\n",
+          "task-a.md": "final-a\n",
+          "task-b.md": "final-b\n",
+          "user.txt": "unrelated-before\n"
+        }
+      }
+    ],
+    "staged": [
+      "user.txt"
+    ],
+    "branch": "acceptance-two-tasks",
+    "owned_status": "",
+    "main_head": "674fe66da6b5f236bee89b55694be92dddc1bc9c",
+    "initial_head": "674fe66da6b5f236bee89b55694be92dddc1bc9c"
+  },
+  "boundaries_passed": true
+}

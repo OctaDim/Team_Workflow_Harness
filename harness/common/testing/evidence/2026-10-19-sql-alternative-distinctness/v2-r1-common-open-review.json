@@ -1,0 +1,20 @@
+{
+  "reviewer": "parent inline, not independent",
+  "outcomes": [
+    {
+      "case": "plan",
+      "semantic": "pass",
+      "reason": "Each schema option identifies its executor and tradeoff; SQLAlchemy/Alembic and Peewee/playhouse are distinct from direct SQL. Open query/ownership options and consent stop preserved."
+    },
+    {
+      "case": "explicit",
+      "semantic": "pass",
+      "reason": "Direct SQL vs Alembic vs separate yoyo migrator, each with executor and project-fit tradeoff; independent query/ownership choices; no PLAN before approval."
+    },
+    {
+      "case": "code",
+      "semantic": "pass",
+      "reason": "Distinct mechanisms and executors; explains direct SQL minimal change and extra dependencies for alternatives; urgency is not consent; no code or PLAN write. Table shape compressed but comparison meaning retained."
+    }
+  ]
+}

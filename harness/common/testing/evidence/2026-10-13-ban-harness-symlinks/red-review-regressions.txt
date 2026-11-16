@@ -1,0 +1,125 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+__ test_installed_analyzer_rejects_original_target_before_normalizing[False] ___
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-19/test_installed_analyzer_reject0/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-19/test_installed_analyzer_reject0')
+dotdot = False
+
+    @pytest.mark.parametrize('dotdot', [False, True])
+    def test_installed_analyzer_rejects_original_target_before_normalizing(installation, tmp_path, dotdot):
+        root = installation
+        skill = tmp_path / 'skill'
+        skill.mkdir()
+        (skill / 'SKILL.md').write_text('---\nname: fixture\ndescription: Use for test fixture tasks.\n---\nReport the result.\n')
+        target = tmp_path / 'outside'
+        target.mkdir()
+        link = tmp_path / 'alias'
+        link.symlink_to(target, target_is_directory=True)
+        original = str(link) + '/../skill' if dotdot else str(link)
+        cli = Path(shutil.which('plugin-eval')).resolve()
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'),
+                                 str(cli), 'analyze', original, '--format', 'json'],
+                                cwd=root, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink forbidden' in result.stderr and str(link) in result.stderr
+E       AssertionError: assert ('Symlink forbidden' in 'Target path does not exist: /tmp/pytest-of-octadim/pytest-19/test_installed_analyzer_reject0/alias\n')
+E        +  where 'Target path does not exist: /tmp/pytest-of-octadim/pytest-19/test_installed_analyzer_reject0/alias\n' = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-19/test_installed_analyzer_reject0/installation/harness/...dout='', stderr='Target path does not exist: /tmp/pytest-of-octadim/pytest-19/test_installed_analyzer_reject0/alias\n').stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:159: AssertionError
+___ test_installed_analyzer_rejects_original_target_before_normalizing[True] ___
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-19/test_installed_analyzer_reject1/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-19/test_installed_analyzer_reject1')
+dotdot = True
+
+    @pytest.mark.parametrize('dotdot', [False, True])
+    def test_installed_analyzer_rejects_original_target_before_normalizing(installation, tmp_path, dotdot):
+        root = installation
+        skill = tmp_path / 'skill'
+        skill.mkdir()
+        (skill / 'SKILL.md').write_text('---\nname: fixture\ndescription: Use for test fixture tasks.\n---\nReport the result.\n')
+        target = tmp_path / 'outside'
+        target.mkdir()
+        link = tmp_path / 'alias'
+        link.symlink_to(target, target_is_directory=True)
+        original = str(link) + '/../skill' if dotdot else str(link)
+        cli = Path(shutil.which('plugin-eval')).resolve()
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'),
+                                 str(cli), 'analyze', original, '--format', 'json'],
+                                cwd=root, capture_output=True, text=True)
+>       assert result.returncode != 0
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-19/test_installed_analyzer_reject1/installation/harness/...ed_analyzer_reject1/skill --format markdown",\n      "chatPrompt": "Evaluate this skill."\n    }\n  }\n}\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:158: AssertionError
+__ test_native_check_rejects_linked_runtime_directories_before_writes[TMPDIR] __
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-19/test_native_check_rejects_link0/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-19/test_native_check_rejects_link0')
+environment_key = 'TMPDIR'
+
+    @pytest.mark.parametrize('environment_key', ['TMPDIR', 'CODEX_HOME'])
+    def test_native_check_rejects_linked_runtime_directories_before_writes(installation, tmp_path, environment_key):
+        import os
+        root = installation
+        target = tmp_path / 'external-runtime'
+        target.mkdir()
+        link = tmp_path / 'runtime-alias'
+        link.symlink_to(target, target_is_directory=True)
+        rule = root / 'rule.md'
+        rule.write_text('# Fixture\n')
+        tools = tmp_path / 'tools'
+        tools.mkdir()
+        # Stop at the subprocess boundary if a missing guard would otherwise run native agents.
+        stub = tools / 'bwrap'
+        stub.write_text('#!/bin/sh\nexit 1\n')
+        stub.chmod(0o755)
+        environment = dict(os.environ, PATH=str(tools), **{environment_key: str(link)})
+        result = subprocess.run([sys.executable, '-B', str(root / 'harness/common/checks/check_human_guide_search.py'),
+                                 str(rule), '--output', str(root / 'report.json')],
+                                cwd=root, env=environment, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink forbidden' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink forbidden' in '')
+E        +  where '' = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...son'], returncode=2, stdout='{"pass": false, "scope": "OS-isolation probe", "exit_code": 1, "error": ""}\n', stderr='').stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:184: AssertionError
+_ test_native_check_rejects_linked_runtime_directories_before_writes[CODEX_HOME] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-19/test_native_check_rejects_link1/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-19/test_native_check_rejects_link1')
+environment_key = 'CODEX_HOME'
+
+    @pytest.mark.parametrize('environment_key', ['TMPDIR', 'CODEX_HOME'])
+    def test_native_check_rejects_linked_runtime_directories_before_writes(installation, tmp_path, environment_key):
+        import os
+        root = installation
+        target = tmp_path / 'external-runtime'
+        target.mkdir()
+        link = tmp_path / 'runtime-alias'
+        link.symlink_to(target, target_is_directory=True)
+        rule = root / 'rule.md'
+        rule.write_text('# Fixture\n')
+        tools = tmp_path / 'tools'
+        tools.mkdir()
+        # Stop at the subprocess boundary if a missing guard would otherwise run native agents.
+        stub = tools / 'bwrap'
+        stub.write_text('#!/bin/sh\nexit 1\n')
+        stub.chmod(0o755)
+        environment = dict(os.environ, PATH=str(tools), **{environment_key: str(link)})
+        result = subprocess.run([sys.executable, '-B', str(root / 'harness/common/checks/check_human_guide_search.py'),
+                                 str(rule), '--output', str(root / 'report.json')],
+                                cwd=root, env=environment, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink forbidden' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink forbidden' in '')
+E        +  where '' = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...son'], returncode=2, stdout='{"pass": false, "scope": "OS-isolation probe", "exit_code": 1, "error": ""}\n', stderr='').stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:184: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_installed_analyzer_rejects_original_target_before_normalizing[False]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_installed_analyzer_rejects_original_target_before_normalizing[True]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_native_check_rejects_linked_runtime_directories_before_writes[TMPDIR]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_native_check_rejects_linked_runtime_directories_before_writes[CODEX_HOME]
+4 failed, 33 deselected in 0.40s

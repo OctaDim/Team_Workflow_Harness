@@ -1,0 +1,525 @@
+{
+  "method": "All completed command outputs in original order, no deduplication. Includes startup/checks/repeated reads; CLI usage is cumulative per run, not context size or price. Baseline prompt differs from final recommendation prompt, so this is not a pure token savings comparison.",
+  "runs": [
+    {
+      "raw_log": "native-codex-common-baseline-new_plan_plain-v3.json",
+      "mode": "common",
+      "case": "new_plan_plain",
+      "commands_in_order": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_chars": 270,
+          "output_sha256": "41d5bec6b91073cd9636679aa7a9bcd97f62723d4c4b28b3b5258ce64119927c"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_chars": 859,
+          "output_sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_chars": 300,
+          "output_sha256": "b603941ec87b78d00f6e0608dd5a18ee98cef51a7ad6ea12e8a3645bf39fa8f4"
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_chars": 7085,
+          "output_sha256": "86f5c58c821f2c4ca48b28bc8e972e507568fa6aa23f512b136088226c6d62d3"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_chars": 444,
+          "output_sha256": "ba05cfb1246d07e2b7084defda1c89c17c7c6bad44d6cdacc9a2c23e4161f6c9"
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_chars": 23227,
+          "output_sha256": "3d35162e95cd2f7cae3fecb52f39af1eff3c0a5e6d3fb13f9250b5d5d4f16c73"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_chars": 4336,
+          "output_sha256": "c4fc695906680f8dce01b3bc43eafb2c809a07c0f346e6f3543569dbb4781470"
+        },
+        {
+          "command": "/bin/bash -lc 'cat context.md'",
+          "exit_code": 0,
+          "output_chars": 192,
+          "output_sha256": "500baf3109cf37548a8b070d5b5b362ad3913f5d0c9d11d0227bb7281da1acce"
+        },
+        {
+          "command": "/bin/bash -lc 'git status --short'",
+          "exit_code": 128,
+          "output_chars": 142,
+          "output_sha256": "6d03b30856ad522097e7b1efdbf4d13c7b1f2b63f92f3109fb2b132cb9bc78e5"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+          "exit_code": 0,
+          "output_chars": 3976,
+          "output_sha256": "5b4acc5a83b488aee123a10ef39a4dab8e384f1af3c7fe444b6a2777b7c3d1f2"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/common/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_chars": 81,
+          "output_sha256": "77d2505420a3870d4fddd51cc3b7007baa913e4d2986781e72431325daf40dea"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/specs/2026-10-06-structure-and-creation-dates.md'",
+          "exit_code": 0,
+          "output_chars": 5187,
+          "output_sha256": "c241a57f782af1d438377950fe206a034fdd14969d2820ff112610602258073b"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+          "exit_code": 0,
+          "output_chars": 4323,
+          "output_sha256": "bc77e58b91b303fb9f1bf9adcc6cb8ddc0f598687ab4a08001caf4537d0a2142"
+        },
+        {
+          "command": "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\nfor name in ['harness', 'harness/project', 'harness/project/docs', 'harness/project/docs/plans', 'harness/project/docs/plans/2026-10-16-customers-orders-plan.md', 'plan.md']:\n    p = Path(name)\n    print(f'{name}: symlink={p.is_symlink()}, exists={p.exists()}')\nPY\"",
+          "exit_code": 0,
+          "output_chars": 313,
+          "output_sha256": "6ef3c16dceda5cc3317bacde646ecf17b462bd42623056396985e4da0cc16b24"
+        },
+        {
+          "command": "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\nimport re\npaths = [Path('plan.md'), Path('harness/project/docs/plans/2026-10-16-customers-orders-plan.md')]\nfor path in paths:\n    body = path.read_text(encoding='utf-8')\n    assert body.strip(), path\n    for target in re.findall(r'\\\\]\\\\(([\"'^)]+)'\"\\\\)', body):\n        assert (path.parent / target).is_file(), (path, target)\n    print(f'{path}: UTF-8, непустой, ссылки существуют; строк: {len(body.splitlines())}')\nPY\"",
+          "exit_code": 0,
+          "output_chars": 165,
+          "output_sha256": "66d02396ce2a94c47398473afa7653b29502e28094857a5aee68114b3696d53b"
+        }
+      ],
+      "total_command_output_chars": 50900,
+      "completed_item_types": {
+        "agent_message": 4,
+        "command_execution": 15,
+        "file_change": 1
+      },
+      "cli_usage": {
+        "input_tokens": 326852,
+        "cached_input_tokens": 304384,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3273,
+        "reasoning_output_tokens": 246
+      }
+    },
+    {
+      "raw_log": "native-codex-common-candidate-new_plan-v6-agreement.json",
+      "mode": "common",
+      "case": "new_plan",
+      "commands_in_order": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_chars": 270,
+          "output_sha256": "41d5bec6b91073cd9636679aa7a9bcd97f62723d4c4b28b3b5258ce64119927c"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_chars": 859,
+          "output_sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_chars": 300,
+          "output_sha256": "b603941ec87b78d00f6e0608dd5a18ee98cef51a7ad6ea12e8a3645bf39fa8f4"
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_chars": 7085,
+          "output_sha256": "86f5c58c821f2c4ca48b28bc8e972e507568fa6aa23f512b136088226c6d62d3"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_chars": 490,
+          "output_sha256": "46b5d94ef199abc08beef6d9e9f10e72953864e942b129aab162f93d7083acf6"
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_chars": 24028,
+          "output_sha256": "5ab02a6d03d13e66e940639ed9ce88c3d90e872bdaf73aaf3027cb3030d10918"
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_chars": 7277,
+          "output_sha256": "8bd91cecd4fd36f530f0ed41de313f0aac65f0deb3b5a6c9bc3434e5e2e73084"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_chars": 2863,
+          "output_sha256": "2feba09081aa00a32d4b516839d7dda5ef49e09cc1efb940bd7b97da52e78b52"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_chars": 1473,
+          "output_sha256": "4ee56c9b8734b22c321394130c810dc8ff4e8fcc12b7b4df5eddccce1c7bcb6b"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+          "exit_code": 0,
+          "output_chars": 1906,
+          "output_sha256": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090"
+        },
+        {
+          "command": "/bin/bash -lc 'cat context.md'",
+          "exit_code": 0,
+          "output_chars": 192,
+          "output_sha256": "500baf3109cf37548a8b070d5b5b362ad3913f5d0c9d11d0227bb7281da1acce"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'",
+          "exit_code": 0,
+          "output_chars": 3677,
+          "output_sha256": "f8700dc45889d0025b5df1c4e1a3df5a81dfcc3b047fe7a604b577c2b5cb7e31"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/common/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+          "exit_code": 0,
+          "output_chars": 81,
+          "output_sha256": "d93509e1c263f98973be963f4d6a6d39399d02972ffcdcadf09129b44902d773"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+          "exit_code": 0,
+          "output_chars": 1891,
+          "output_sha256": "6a414239b66a63c7889f74cf10c9150ab608ed663024bd1eecd24bd4a8f398e0"
+        }
+      ],
+      "total_command_output_chars": 52392,
+      "completed_item_types": {
+        "agent_message": 3,
+        "command_execution": 14,
+        "web_search": 1
+      },
+      "cli_usage": {
+        "input_tokens": 301831,
+        "cached_input_tokens": 273152,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1859,
+        "reasoning_output_tokens": 229
+      }
+    },
+    {
+      "raw_log": "native-codex-both-candidate-new_plan-v6-agreement.json",
+      "mode": "both",
+      "case": "new_plan",
+      "commands_in_order": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_chars": 270,
+          "output_sha256": "41d5bec6b91073cd9636679aa7a9bcd97f62723d4c4b28b3b5258ce64119927c"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_chars": 859,
+          "output_sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_chars": 27,
+          "output_sha256": "970ba4cacaaefcba028867edd1e6543eea3f826b2fcc00700949658f6b62b232"
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_chars": 7085,
+          "output_sha256": "86f5c58c821f2c4ca48b28bc8e972e507568fa6aa23f512b136088226c6d62d3"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_chars": 490,
+          "output_sha256": "46b5d94ef199abc08beef6d9e9f10e72953864e942b129aab162f93d7083acf6"
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_chars": 24028,
+          "output_sha256": "5ab02a6d03d13e66e940639ed9ce88c3d90e872bdaf73aaf3027cb3030d10918"
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_chars": 7277,
+          "output_sha256": "8bd91cecd4fd36f530f0ed41de313f0aac65f0deb3b5a6c9bc3434e5e2e73084"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_chars": 2863,
+          "output_sha256": "2feba09081aa00a32d4b516839d7dda5ef49e09cc1efb940bd7b97da52e78b52"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_chars": 27,
+          "output_sha256": "970ba4cacaaefcba028867edd1e6543eea3f826b2fcc00700949658f6b62b232"
+        },
+        {
+          "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; paths=[Path(\\\"harness/common/skills/comm-confirm-database-design/SKILL.md\\\"),Path(\\\"harness/common/skills/comm-resolve-permission-blockers/SKILL.md\\\")]; [(p.is_symlink() and (_ for _ in ()).throw(RuntimeError(str(p)))) for f in paths for p in [f,*f.absolute().parents]]'\"",
+          "exit_code": 0,
+          "output_chars": 0,
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+          "exit_code": 0,
+          "output_chars": 1906,
+          "output_sha256": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090"
+        },
+        {
+          "command": "/bin/bash -lc 'cat context.md'",
+          "exit_code": 0,
+          "output_chars": 192,
+          "output_sha256": "500baf3109cf37548a8b070d5b5b362ad3913f5d0c9d11d0227bb7281da1acce"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+          "exit_code": 0,
+          "output_chars": 5568,
+          "output_sha256": "6f65c3fb8afec127741cb2cd50458ae6a19ca58bd16e904710342a65c49e85af"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_chars": 31,
+          "output_sha256": "8929e8ed13f5ebd2e23eba0d2556a63b4d03c716241f14d7c603a46657dd38ba"
+        }
+      ],
+      "total_command_output_chars": 50623,
+      "completed_item_types": {
+        "agent_message": 3,
+        "command_execution": 14,
+        "web_search": 1
+      },
+      "cli_usage": {
+        "input_tokens": 300397,
+        "cached_input_tokens": 275712,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1903,
+        "reasoning_output_tokens": 112
+      }
+    },
+    {
+      "raw_log": "native-codex-common-candidate-explicit-v6.json",
+      "mode": "common",
+      "case": "explicit",
+      "commands_in_order": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_chars": 270,
+          "output_sha256": "41d5bec6b91073cd9636679aa7a9bcd97f62723d4c4b28b3b5258ce64119927c"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_chars": 859,
+          "output_sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_chars": 300,
+          "output_sha256": "b603941ec87b78d00f6e0608dd5a18ee98cef51a7ad6ea12e8a3645bf39fa8f4"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_chars": 7085,
+          "output_sha256": "86f5c58c821f2c4ca48b28bc8e972e507568fa6aa23f512b136088226c6d62d3"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_chars": 490,
+          "output_sha256": "46b5d94ef199abc08beef6d9e9f10e72953864e942b129aab162f93d7083acf6"
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_chars": 24028,
+          "output_sha256": "5ab02a6d03d13e66e940639ed9ce88c3d90e872bdaf73aaf3027cb3030d10918"
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_chars": 7277,
+          "output_sha256": "8bd91cecd4fd36f530f0ed41de313f0aac65f0deb3b5a6c9bc3434e5e2e73084"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_chars": 2863,
+          "output_sha256": "2feba09081aa00a32d4b516839d7dda5ef49e09cc1efb940bd7b97da52e78b52"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_chars": 1473,
+          "output_sha256": "4ee56c9b8734b22c321394130c810dc8ff4e8fcc12b7b4df5eddccce1c7bcb6b"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g 'context.md' -g '\"'!README.human.md'\"' -g '\"'!.git'\"'\"",
+          "exit_code": 0,
+          "output_chars": 11,
+          "output_sha256": "84b04efda0b2a8194f7f77a394c3e8baf9fe0d7500c293b3c395a43ae18a1ebc"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+          "exit_code": 0,
+          "output_chars": 1906,
+          "output_sha256": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090"
+        },
+        {
+          "command": "/bin/bash -lc 'cat context.md'",
+          "exit_code": 0,
+          "output_chars": 192,
+          "output_sha256": "500baf3109cf37548a8b070d5b5b362ad3913f5d0c9d11d0227bb7281da1acce"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'",
+          "exit_code": 0,
+          "output_chars": 3677,
+          "output_sha256": "f8700dc45889d0025b5df1c4e1a3df5a81dfcc3b047fe7a604b577c2b5cb7e31"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.git/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_chars": 31,
+          "output_sha256": "c3535d07e8b41c02f1dd8211a72406847b492a3db4dcfcaac48798fecd92bba2"
+        }
+      ],
+      "total_command_output_chars": 50462,
+      "completed_item_types": {
+        "agent_message": 3,
+        "command_execution": 14,
+        "web_search": 2
+      },
+      "cli_usage": {
+        "input_tokens": 341272,
+        "cached_input_tokens": 311936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2948,
+        "reasoning_output_tokens": 370
+      }
+    },
+    {
+      "raw_log": "native-codex-both-candidate-explicit-v6.json",
+      "mode": "both",
+      "case": "explicit",
+      "commands_in_order": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_chars": 270,
+          "output_sha256": "41d5bec6b91073cd9636679aa7a9bcd97f62723d4c4b28b3b5258ce64119927c"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_chars": 859,
+          "output_sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_chars": 27,
+          "output_sha256": "970ba4cacaaefcba028867edd1e6543eea3f826b2fcc00700949658f6b62b232"
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_chars": 7085,
+          "output_sha256": "86f5c58c821f2c4ca48b28bc8e972e507568fa6aa23f512b136088226c6d62d3"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_chars": 490,
+          "output_sha256": "8973656ebf02f6bf778e545bfc80e904c2d823f9da35e64575ba4d3fc992ffb8"
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "output_chars": 24028,
+          "output_sha256": "78de09c3674c5af4f203a44a9963e422328eea58c3b6973238cadcc0a93a560c"
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "output_chars": 2966,
+          "output_sha256": "90db55f60154790de005b1dad59bbd8dc907e8f991a0b04dfe0b695abedd72e7"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_chars": 2863,
+          "output_sha256": "2feba09081aa00a32d4b516839d7dda5ef49e09cc1efb940bd7b97da52e78b52"
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_chars": 27,
+          "output_sha256": "970ba4cacaaefcba028867edd1e6543eea3f826b2fcc00700949658f6b62b232"
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-confirm-database-design/SKILL.md'",
+          "exit_code": 0,
+          "output_chars": 3812,
+          "output_sha256": "f474e4ac864d222708cb216c269f93fa18589fa66bd77123b82466a26941ad68"
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/common/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_chars": 106,
+          "output_sha256": "ece1df1b7af63f49bb47c93b63243e7cefce3549b2b7f3ae7e33ecbbbf7a99d5"
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/references/choices.md'",
+          "exit_code": 0,
+          "output_chars": 3677,
+          "output_sha256": "f8700dc45889d0025b5df1c4e1a3df5a81dfcc3b047fe7a604b577c2b5cb7e31"
+        },
+        {
+          "command": "/bin/bash -lc 'cat context.md'",
+          "exit_code": 0,
+          "output_chars": 192,
+          "output_sha256": "500baf3109cf37548a8b070d5b5b362ad3913f5d0c9d11d0227bb7281da1acce"
+        }
+      ],
+      "total_command_output_chars": 46402,
+      "completed_item_types": {
+        "agent_message": 3,
+        "command_execution": 13,
+        "web_search": 2
+      },
+      "cli_usage": {
+        "input_tokens": 359147,
+        "cached_input_tokens": 323840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2988,
+        "reasoning_output_tokens": 395
+      }
+    }
+  ]
+}

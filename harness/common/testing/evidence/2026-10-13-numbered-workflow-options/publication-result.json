@@ -1,0 +1,35 @@
+{
+  "created": "2026-10-13T01:47:43.236063+03:00",
+  "publication_commit": "fdd073b",
+  "published_sha256": "0e3447ea8f0322835f2e34ba9c6099e37b8ef1100a870c84d234d99b1aa74146",
+  "published_paths": [
+    "harness/common/rules/comm-confirm-development-workflow.md",
+    ".claude/rules/comm-confirm-development-workflow.md"
+  ],
+  "candidate_matches_sources_and_commit": true,
+  "ordinary_files_and_components": true,
+  "git_visibility": "both tracked and not ignored",
+  "installed_rule_copies": "complete set of 8 equal canonical/native rules",
+  "post_publication_checks": {
+    "rule_copy_pytest": {
+      "command": ".venv/bin/python -m pytest harness/common/testing/tests/test_rule_copies.py -q",
+      "exit_code": 0,
+      "passed": 4,
+      "seconds": 0.03
+    },
+    "startup": {
+      "command": "python3 -B harness/common/checks/ensure_entrypoint_links.py",
+      "exit_code": 0
+    },
+    "git_diff_check": {
+      "exit_code": 0
+    }
+  },
+  "Codex": "непроверенный",
+  "Codex_reason": "Eight successful behavior sessions with mandatory startup order failures and literal CE description deviations",
+  "Claude": "непроверенный",
+  "Claude_current_run": "skip",
+  "overall": "непроверенный",
+  "request": "completed",
+  "other_requests": "not processed"
+}

@@ -1,0 +1,851 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "plugin-eval",
+    "version": "0.1.0"
+  },
+  "createdAt": "2026-10-09T09:58:55.608Z",
+  "target": {
+    "kind": "directory",
+    "path": "/tmp/workflow-rule-analysis",
+    "entryPath": "/tmp/workflow-rule-analysis",
+    "name": "workflow-rule-analysis",
+    "relativePath": "../../../../tmp/workflow-rule-analysis"
+  },
+  "summary": {
+    "score": 100,
+    "grade": "A",
+    "riskLevel": "low",
+    "riskReasons": [
+      "No failing or warning checks were found; remaining items are informational only."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 0.5,
+      "finalScore": 100,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 2,
+      "pass": 0,
+      "warn": 0,
+      "fail": 0,
+      "info": 4,
+      "error": 0,
+      "warning": 0
+    },
+    "deductions": [
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "generic-target-analysis",
+        "category": "best-practice",
+        "severity": "info",
+        "status": "info",
+        "message": "The target is not a skill or plugin root, so only generic code, coverage, and budget analysis will run.",
+        "penalty": 0.25,
+        "remediation": [
+          "Point the analyzer at a skill directory or plugin root for richer structural checks."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "best-practice",
+        "totalPenalty": 0.25,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [],
+    "whyBullets": [
+      "best-practice is the largest source of score loss at -0.25 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [],
+    "watchNext": []
+  },
+  "budgets": {
+    "method": "estimated-static",
+    "trigger_cost_tokens": {
+      "value": 0,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 1,
+        "moderateMax": 1,
+        "heavyMax": 1
+      },
+      "components": []
+    },
+    "invoke_cost_tokens": {
+      "value": 0,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 1,
+        "moderateMax": 1,
+        "heavyMax": 1
+      },
+      "components": []
+    },
+    "deferred_cost_tokens": {
+      "value": 629,
+      "band": "moderate",
+      "thresholds": {
+        "goodMax": 240,
+        "moderateMax": 640,
+        "heavyMax": 1600
+      },
+      "components": [
+        {
+          "label": "comm-confirm-development-workflow.md",
+          "path": "/tmp/workflow-rule-analysis/comm-confirm-development-workflow.md",
+          "tokens": 629,
+          "note": "Generic text file budget"
+        }
+      ]
+    },
+    "total_tokens": {
+      "value": 629,
+      "band": "moderate"
+    }
+  },
+  "observedUsage": null,
+  "checks": [
+    {
+      "id": "generic-target-analysis",
+      "category": "best-practice",
+      "severity": "info",
+      "status": "info",
+      "message": "The target is not a skill or plugin root, so only generic code, coverage, and budget analysis will run.",
+      "evidence": [
+        "/tmp/workflow-rule-analysis"
+      ],
+      "remediation": [
+        "Point the analyzer at a skill directory or plugin root for richer structural checks."
+      ],
+      "source": "core"
+    },
+    {
+      "id": "coverage-artifacts-unavailable",
+      "category": "coverage",
+      "severity": "info",
+      "status": "info",
+      "message": "No coverage artifacts were found for this target.",
+      "evidence": [
+        "../../../../tmp/workflow-rule-analysis"
+      ],
+      "remediation": [
+        "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+      ],
+      "source": "core"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "trigger_cost_tokens",
+      "category": "budget",
+      "value": 0,
+      "unit": "tokens",
+      "band": "good",
+      "source": "core"
+    },
+    {
+      "id": "invoke_cost_tokens",
+      "category": "budget",
+      "value": 0,
+      "unit": "tokens",
+      "band": "good",
+      "source": "core"
+    },
+    {
+      "id": "deferred_cost_tokens",
+      "category": "budget",
+      "value": 629,
+      "unit": "tokens",
+      "band": "moderate",
+      "source": "core"
+    },
+    {
+      "id": "coverage_artifact_count",
+      "category": "coverage",
+      "value": 0,
+      "unit": "files",
+      "band": "info",
+      "source": "core"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "budget-breakdown",
+      "type": "budget",
+      "label": "Budget breakdown",
+      "description": "Trigger, invoke, and deferred token budget analysis.",
+      "source": "core",
+      "data": {
+        "budgets": {
+          "method": "estimated-static",
+          "trigger_cost_tokens": {
+            "value": 0,
+            "band": "good",
+            "thresholds": {
+              "goodMax": 1,
+              "moderateMax": 1,
+              "heavyMax": 1
+            },
+            "components": []
+          },
+          "invoke_cost_tokens": {
+            "value": 0,
+            "band": "good",
+            "thresholds": {
+              "goodMax": 1,
+              "moderateMax": 1,
+              "heavyMax": 1
+            },
+            "components": []
+          },
+          "deferred_cost_tokens": {
+            "value": 629,
+            "band": "moderate",
+            "thresholds": {
+              "goodMax": 240,
+              "moderateMax": 640,
+              "heavyMax": 1600
+            },
+            "components": [
+              {
+                "label": "comm-confirm-development-workflow.md",
+                "path": "/tmp/workflow-rule-analysis/comm-confirm-development-workflow.md",
+                "tokens": 629,
+                "note": "Generic text file budget"
+              }
+            ]
+          },
+          "total_tokens": {
+            "value": 629,
+            "band": "moderate"
+          }
+        },
+        "baselineEvidence": {
+          "skillSamples": 1,
+          "pluginSamples": 0,
+          "sourceRoots": [
+            "../../.codex/skills",
+            "../../.codex/plugins/cache/openai-curated",
+            "../../.codex/.tmp/plugins/plugins"
+          ]
+        }
+      }
+    },
+    {
+      "id": "measurement-plan",
+      "type": "measurement-plan",
+      "label": "Measurement plan",
+      "description": "Recommended toolsets for measuring the real-world effect of this skill or plugin.",
+      "source": "core",
+      "data": {
+        "recommendedToolsets": [
+          "token-usage-observer",
+          "task-outcome-scorecard"
+        ],
+        "toolsets": [
+          {
+            "id": "token-usage-observer",
+            "label": "Token Usage Observer",
+            "priority": "high",
+            "goal": "Measure how many tokens the skill or plugin actually burns in representative runs.",
+            "why": "Static estimates are useful guardrails, but observed usage is what tells you whether a real workflow is affordable and whether caching or reasoning changes the picture.",
+            "signals": [
+              "observed_usage_sample_count",
+              "observed_input_tokens_avg",
+              "observed_total_tokens_avg",
+              "estimate_vs_observed_input_ratio"
+            ],
+            "evidenceSources": [
+              "Responses API usage logs",
+              "Codex-like session exports",
+              "JSONL traces captured from local benchmarking harnesses"
+            ],
+            "starterPack": {
+              "manifestName": "token-usage-pack",
+              "focus": "Validate sample size, cold-start versus warm-cache behavior, and estimate drift over time."
+            }
+          },
+          {
+            "id": "task-outcome-scorecard",
+            "label": "Task Outcome Scorecard",
+            "priority": "high",
+            "goal": "Measure whether the skill helps users finish the intended job with fewer retries and less cleanup.",
+            "why": "A low-token skill is still a miss if it fails the task, and a verbose skill may be worth it if it consistently improves first-pass success.",
+            "signals": [
+              "task_success_rate",
+              "first_pass_success_rate",
+              "retry_rate",
+              "human_override_rate"
+            ],
+            "evidenceSources": [
+              "Task run logs",
+              "Structured user acceptance checklist",
+              "Before/after comparison runs on the same prompts"
+            ],
+            "starterPack": {
+              "manifestName": "task-outcomes-pack",
+              "focus": "Score success, retries, and manual intervention across a fixed prompt set."
+            }
+          },
+          {
+            "id": "tool-call-audit",
+            "label": "Tool Call Audit",
+            "priority": "medium",
+            "goal": "Check whether the agent uses the right tools, arguments, and sequencing when the skill is active.",
+            "why": "For Codex plugins and many higher-agency skills, tool correctness is often the real determinant of user value.",
+            "signals": [
+              "tool_call_success_rate",
+              "invalid_tool_argument_rate",
+              "recoverable_tool_failure_rate"
+            ],
+            "evidenceSources": [
+              "Tool invocation traces",
+              "Recorded sessions",
+              "Golden-path scenario replays"
+            ],
+            "starterPack": {
+              "manifestName": "tool-audit-pack",
+              "focus": "Flag wrong tool selection, malformed args, and missing follow-up calls."
+            }
+          },
+          {
+            "id": "latency-efficiency",
+            "label": "Latency And Efficiency",
+            "priority": "medium",
+            "goal": "Track whether the skill speeds users up enough to justify its cost.",
+            "why": "DX improvements usually win when they reduce waiting or rework, not only when they reduce absolute token counts.",
+            "signals": [
+              "p50_time_to_first_acceptable_answer_seconds",
+              "p95_time_to_task_completion_seconds",
+              "tokens_per_successful_run"
+            ],
+            "evidenceSources": [
+              "Benchmark harness timings",
+              "Manual stopwatch runs on canonical tasks",
+              "Responses API timestamps combined with usage logs"
+            ],
+            "starterPack": {
+              "manifestName": "latency-efficiency-pack",
+              "focus": "Measure time-to-value and cost-per-success on a stable prompt suite."
+            }
+          },
+          {
+            "id": "human-rubric-review",
+            "label": "Human Rubric Review",
+            "priority": "medium",
+            "goal": "Capture clarity, trust, and usefulness signals that automated checks will miss.",
+            "why": "The best skills often reduce confusion and editing effort in ways that do not show up in static lint-like checks.",
+            "signals": [
+              "clarity_score_avg",
+              "confidence_score_avg",
+              "follow_up_question_rate"
+            ],
+            "evidenceSources": [
+              "Reviewer scorecards",
+              "Team rubric sheets",
+              "Annotated transcripts"
+            ],
+            "starterPack": {
+              "manifestName": "human-rubric-pack",
+              "focus": "Collect 1 to 5 scores for clarity, trust, and edit burden across a small evaluator panel."
+            }
+          },
+          {
+            "id": "regression-suite",
+            "label": "Regression Suite",
+            "priority": "medium",
+            "goal": "Protect the repository behavior that the skill is supposed to improve.",
+            "why": "If a skill is meant to help coding workflows, outcomes should be paired with deterministic repo checks so quality gains do not come from cutting corners.",
+            "signals": [
+              "test_pass_rate",
+              "lint_pass_rate",
+              "regression_escape_count"
+            ],
+            "evidenceSources": [
+              "Unit and integration test runs",
+              "Coverage deltas",
+              "Snapshot or golden-file checks"
+            ],
+            "starterPack": {
+              "manifestName": "regression-pack",
+              "focus": "Blend repository test outcomes with evaluation-task success metrics."
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "extensions": [],
+  "measurementPlan": {
+    "kind": "measurement-plan",
+    "createdAt": "2026-10-09T09:58:55.638Z",
+    "target": {
+      "kind": "directory",
+      "path": "/tmp/workflow-rule-analysis",
+      "entryPath": "/tmp/workflow-rule-analysis",
+      "name": "workflow-rule-analysis",
+      "relativePath": "../../../../tmp/workflow-rule-analysis"
+    },
+    "title": "Measurement plan for workflow-rule-analysis",
+    "summary": "Combine cost, outcome, and trust signals so you can tell whether the skill or plugin is genuinely helping instead of only looking well-structured on paper.",
+    "recommendedToolsets": [
+      "token-usage-observer",
+      "task-outcome-scorecard"
+    ],
+    "toolsets": [
+      {
+        "id": "token-usage-observer",
+        "label": "Token Usage Observer",
+        "priority": "high",
+        "goal": "Measure how many tokens the skill or plugin actually burns in representative runs.",
+        "why": "Static estimates are useful guardrails, but observed usage is what tells you whether a real workflow is affordable and whether caching or reasoning changes the picture.",
+        "signals": [
+          "observed_usage_sample_count",
+          "observed_input_tokens_avg",
+          "observed_total_tokens_avg",
+          "estimate_vs_observed_input_ratio"
+        ],
+        "evidenceSources": [
+          "Responses API usage logs",
+          "Codex-like session exports",
+          "JSONL traces captured from local benchmarking harnesses"
+        ],
+        "starterPack": {
+          "manifestName": "token-usage-pack",
+          "focus": "Validate sample size, cold-start versus warm-cache behavior, and estimate drift over time."
+        }
+      },
+      {
+        "id": "task-outcome-scorecard",
+        "label": "Task Outcome Scorecard",
+        "priority": "high",
+        "goal": "Measure whether the skill helps users finish the intended job with fewer retries and less cleanup.",
+        "why": "A low-token skill is still a miss if it fails the task, and a verbose skill may be worth it if it consistently improves first-pass success.",
+        "signals": [
+          "task_success_rate",
+          "first_pass_success_rate",
+          "retry_rate",
+          "human_override_rate"
+        ],
+        "evidenceSources": [
+          "Task run logs",
+          "Structured user acceptance checklist",
+          "Before/after comparison runs on the same prompts"
+        ],
+        "starterPack": {
+          "manifestName": "task-outcomes-pack",
+          "focus": "Score success, retries, and manual intervention across a fixed prompt set."
+        }
+      },
+      {
+        "id": "tool-call-audit",
+        "label": "Tool Call Audit",
+        "priority": "medium",
+        "goal": "Check whether the agent uses the right tools, arguments, and sequencing when the skill is active.",
+        "why": "For Codex plugins and many higher-agency skills, tool correctness is often the real determinant of user value.",
+        "signals": [
+          "tool_call_success_rate",
+          "invalid_tool_argument_rate",
+          "recoverable_tool_failure_rate"
+        ],
+        "evidenceSources": [
+          "Tool invocation traces",
+          "Recorded sessions",
+          "Golden-path scenario replays"
+        ],
+        "starterPack": {
+          "manifestName": "tool-audit-pack",
+          "focus": "Flag wrong tool selection, malformed args, and missing follow-up calls."
+        }
+      },
+      {
+        "id": "latency-efficiency",
+        "label": "Latency And Efficiency",
+        "priority": "medium",
+        "goal": "Track whether the skill speeds users up enough to justify its cost.",
+        "why": "DX improvements usually win when they reduce waiting or rework, not only when they reduce absolute token counts.",
+        "signals": [
+          "p50_time_to_first_acceptable_answer_seconds",
+          "p95_time_to_task_completion_seconds",
+          "tokens_per_successful_run"
+        ],
+        "evidenceSources": [
+          "Benchmark harness timings",
+          "Manual stopwatch runs on canonical tasks",
+          "Responses API timestamps combined with usage logs"
+        ],
+        "starterPack": {
+          "manifestName": "latency-efficiency-pack",
+          "focus": "Measure time-to-value and cost-per-success on a stable prompt suite."
+        }
+      },
+      {
+        "id": "human-rubric-review",
+        "label": "Human Rubric Review",
+        "priority": "medium",
+        "goal": "Capture clarity, trust, and usefulness signals that automated checks will miss.",
+        "why": "The best skills often reduce confusion and editing effort in ways that do not show up in static lint-like checks.",
+        "signals": [
+          "clarity_score_avg",
+          "confidence_score_avg",
+          "follow_up_question_rate"
+        ],
+        "evidenceSources": [
+          "Reviewer scorecards",
+          "Team rubric sheets",
+          "Annotated transcripts"
+        ],
+        "starterPack": {
+          "manifestName": "human-rubric-pack",
+          "focus": "Collect 1 to 5 scores for clarity, trust, and edit burden across a small evaluator panel."
+        }
+      },
+      {
+        "id": "regression-suite",
+        "label": "Regression Suite",
+        "priority": "medium",
+        "goal": "Protect the repository behavior that the skill is supposed to improve.",
+        "why": "If a skill is meant to help coding workflows, outcomes should be paired with deterministic repo checks so quality gains do not come from cutting corners.",
+        "signals": [
+          "test_pass_rate",
+          "lint_pass_rate",
+          "regression_escape_count"
+        ],
+        "evidenceSources": [
+          "Unit and integration test runs",
+          "Coverage deltas",
+          "Snapshot or golden-file checks"
+        ],
+        "starterPack": {
+          "manifestName": "regression-pack",
+          "focus": "Blend repository test outcomes with evaluation-task success metrics."
+        }
+      }
+    ],
+    "artifact": {
+      "id": "measurement-plan",
+      "type": "measurement-plan",
+      "label": "Measurement plan",
+      "description": "Recommended toolsets for measuring the real-world effect of this skill or plugin.",
+      "source": "core",
+      "data": {
+        "recommendedToolsets": [
+          "token-usage-observer",
+          "task-outcome-scorecard"
+        ],
+        "toolsets": [
+          {
+            "id": "token-usage-observer",
+            "label": "Token Usage Observer",
+            "priority": "high",
+            "goal": "Measure how many tokens the skill or plugin actually burns in representative runs.",
+            "why": "Static estimates are useful guardrails, but observed usage is what tells you whether a real workflow is affordable and whether caching or reasoning changes the picture.",
+            "signals": [
+              "observed_usage_sample_count",
+              "observed_input_tokens_avg",
+              "observed_total_tokens_avg",
+              "estimate_vs_observed_input_ratio"
+            ],
+            "evidenceSources": [
+              "Responses API usage logs",
+              "Codex-like session exports",
+              "JSONL traces captured from local benchmarking harnesses"
+            ],
+            "starterPack": {
+              "manifestName": "token-usage-pack",
+              "focus": "Validate sample size, cold-start versus warm-cache behavior, and estimate drift over time."
+            }
+          },
+          {
+            "id": "task-outcome-scorecard",
+            "label": "Task Outcome Scorecard",
+            "priority": "high",
+            "goal": "Measure whether the skill helps users finish the intended job with fewer retries and less cleanup.",
+            "why": "A low-token skill is still a miss if it fails the task, and a verbose skill may be worth it if it consistently improves first-pass success.",
+            "signals": [
+              "task_success_rate",
+              "first_pass_success_rate",
+              "retry_rate",
+              "human_override_rate"
+            ],
+            "evidenceSources": [
+              "Task run logs",
+              "Structured user acceptance checklist",
+              "Before/after comparison runs on the same prompts"
+            ],
+            "starterPack": {
+              "manifestName": "task-outcomes-pack",
+              "focus": "Score success, retries, and manual intervention across a fixed prompt set."
+            }
+          },
+          {
+            "id": "tool-call-audit",
+            "label": "Tool Call Audit",
+            "priority": "medium",
+            "goal": "Check whether the agent uses the right tools, arguments, and sequencing when the skill is active.",
+            "why": "For Codex plugins and many higher-agency skills, tool correctness is often the real determinant of user value.",
+            "signals": [
+              "tool_call_success_rate",
+              "invalid_tool_argument_rate",
+              "recoverable_tool_failure_rate"
+            ],
+            "evidenceSources": [
+              "Tool invocation traces",
+              "Recorded sessions",
+              "Golden-path scenario replays"
+            ],
+            "starterPack": {
+              "manifestName": "tool-audit-pack",
+              "focus": "Flag wrong tool selection, malformed args, and missing follow-up calls."
+            }
+          },
+          {
+            "id": "latency-efficiency",
+            "label": "Latency And Efficiency",
+            "priority": "medium",
+            "goal": "Track whether the skill speeds users up enough to justify its cost.",
+            "why": "DX improvements usually win when they reduce waiting or rework, not only when they reduce absolute token counts.",
+            "signals": [
+              "p50_time_to_first_acceptable_answer_seconds",
+              "p95_time_to_task_completion_seconds",
+              "tokens_per_successful_run"
+            ],
+            "evidenceSources": [
+              "Benchmark harness timings",
+              "Manual stopwatch runs on canonical tasks",
+              "Responses API timestamps combined with usage logs"
+            ],
+            "starterPack": {
+              "manifestName": "latency-efficiency-pack",
+              "focus": "Measure time-to-value and cost-per-success on a stable prompt suite."
+            }
+          },
+          {
+            "id": "human-rubric-review",
+            "label": "Human Rubric Review",
+            "priority": "medium",
+            "goal": "Capture clarity, trust, and usefulness signals that automated checks will miss.",
+            "why": "The best skills often reduce confusion and editing effort in ways that do not show up in static lint-like checks.",
+            "signals": [
+              "clarity_score_avg",
+              "confidence_score_avg",
+              "follow_up_question_rate"
+            ],
+            "evidenceSources": [
+              "Reviewer scorecards",
+              "Team rubric sheets",
+              "Annotated transcripts"
+            ],
+            "starterPack": {
+              "manifestName": "human-rubric-pack",
+              "focus": "Collect 1 to 5 scores for clarity, trust, and edit burden across a small evaluator panel."
+            }
+          },
+          {
+            "id": "regression-suite",
+            "label": "Regression Suite",
+            "priority": "medium",
+            "goal": "Protect the repository behavior that the skill is supposed to improve.",
+            "why": "If a skill is meant to help coding workflows, outcomes should be paired with deterministic repo checks so quality gains do not come from cutting corners.",
+            "signals": [
+              "test_pass_rate",
+              "lint_pass_rate",
+              "regression_escape_count"
+            ],
+            "evidenceSources": [
+              "Unit and integration test runs",
+              "Coverage deltas",
+              "Snapshot or golden-file checks"
+            ],
+            "starterPack": {
+              "manifestName": "regression-pack",
+              "focus": "Blend repository test outcomes with evaluation-task success metrics."
+            }
+          }
+        ]
+      }
+    },
+    "nextAction": {
+      "label": "Start with Token Usage Observer",
+      "why": "Measure how many tokens the skill or plugin actually burns in representative runs.",
+      "command": "plugin-eval start /tmp/workflow-rule-analysis --request 'What should I run next?' --format markdown",
+      "chatPrompt": "What should I run next?",
+      "toolsetId": "token-usage-observer"
+    }
+  },
+  "improvementBrief": {
+    "title": "Improve workflow-rule-analysis",
+    "target": {
+      "kind": "directory",
+      "path": "/tmp/workflow-rule-analysis",
+      "entryPath": "/tmp/workflow-rule-analysis",
+      "name": "workflow-rule-analysis",
+      "relativePath": "../../../../tmp/workflow-rule-analysis"
+    },
+    "summary": "Raise the evaluation from grade A (100/100) with a focus on the highest-signal structural and budget issues first.",
+    "goals": [],
+    "measurementGoals": [
+      "token-usage-observer",
+      "task-outcome-scorecard"
+    ],
+    "requiredFixes": [],
+    "recommendedFixes": [],
+    "suggestedPrompt": "Use the skill-creator guidance to improve workflow-rule-analysis. Keep the structure compact and move bulky details into references or scripts. Define success measures with these toolsets: token-usage-observer, task-outcome-scorecard."
+  },
+  "nextAction": {
+    "label": "Choose the next workflow from chat",
+    "why": "The report is clean enough that the best next step depends on whether you want budgets, benchmarks, or comparisons.",
+    "command": "plugin-eval start /tmp/workflow-rule-analysis --request 'What should I run next?' --format markdown",
+    "chatPrompt": "What should I run next?"
+  },
+  "workflowGuide": {
+    "kind": "workflow-guide",
+    "createdAt": "2026-10-09T09:58:55.640Z",
+    "target": {
+      "kind": "directory",
+      "path": "/tmp/workflow-rule-analysis",
+      "entryPath": "/tmp/workflow-rule-analysis",
+      "name": "workflow-rule-analysis",
+      "relativePath": "../../../../tmp/workflow-rule-analysis"
+    },
+    "requestedGoal": "evaluate",
+    "requestedChatPrompt": null,
+    "requestRouting": null,
+    "recommendedWorkflowId": "evaluate",
+    "recommendedWorkflow": {
+      "id": "evaluate",
+      "label": "Evaluate Skill",
+      "chatPrompt": "Evaluate this target.",
+      "summary": "Start here when you want the overall report for a target, including structure, budgets, and code checks.",
+      "firstCommand": "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown",
+      "commands": [
+        "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown"
+      ],
+      "startCommand": "plugin-eval start /tmp/workflow-rule-analysis --request 'Evaluate this target.' --format markdown"
+    },
+    "workflowStatus": {
+      "hasBenchmarkConfig": false,
+      "hasUsageLog": false
+    },
+    "beginnerSummary": "Start with a natural chat request, then let plugin-eval show the exact local command sequence behind it.",
+    "startHere": {
+      "chatPrompt": "Evaluate this target.",
+      "label": "Evaluate Skill",
+      "summary": "Start here when you want the overall report for a target, including structure, budgets, and code checks.",
+      "routingExplanation": "Plugin Eval recommended Evaluate Skill from the current local state for this target.",
+      "startCommand": "plugin-eval start /tmp/workflow-rule-analysis --request 'Evaluate this target.' --format markdown",
+      "firstCommand": "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown",
+      "commands": [
+        "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown"
+      ]
+    },
+    "entrypoints": [
+      {
+        "id": "analysis",
+        "label": "Full Skill Analysis",
+        "chatPrompt": "Give me a full analysis of this target, including benchmark setup.",
+        "summary": "Use this when you want the full report and starter benchmark setup for this target in one guided path.",
+        "firstCommand": "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown",
+        "commands": [
+          "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown",
+          "plugin-eval init-benchmark /tmp/workflow-rule-analysis",
+          "plugin-eval benchmark /tmp/workflow-rule-analysis --config /tmp/workflow-rule-analysis/.plugin-eval/benchmark.json"
+        ],
+        "startCommand": "plugin-eval start /tmp/workflow-rule-analysis --request 'Give me a full analysis of this target, including benchmark setup.' --format markdown"
+      },
+      {
+        "id": "evaluate",
+        "label": "Evaluate Skill",
+        "chatPrompt": "Evaluate this target.",
+        "summary": "Start here when you want the overall report for a target, including structure, budgets, and code checks.",
+        "firstCommand": "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown",
+        "commands": [
+          "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown"
+        ],
+        "startCommand": "plugin-eval start /tmp/workflow-rule-analysis --request 'Evaluate this target.' --format markdown"
+      },
+      {
+        "id": "budget",
+        "label": "Explain Token Budget",
+        "chatPrompt": "Explain the token budget for this target.",
+        "summary": "Use this when the main question is why the target feels expensive before you collect any live measurements.",
+        "firstCommand": "plugin-eval explain-budget /tmp/workflow-rule-analysis --format markdown",
+        "commands": [
+          "plugin-eval explain-budget /tmp/workflow-rule-analysis --format markdown"
+        ],
+        "startCommand": "plugin-eval start /tmp/workflow-rule-analysis --request 'Explain the token budget for this target.' --format markdown"
+      },
+      {
+        "id": "measure",
+        "label": "Measure Real Token Usage",
+        "chatPrompt": "Measure the real token usage of this target.",
+        "summary": "Use this when you want real token usage instead of only the static estimate.",
+        "firstCommand": "plugin-eval init-benchmark /tmp/workflow-rule-analysis",
+        "commands": [
+          "plugin-eval init-benchmark /tmp/workflow-rule-analysis",
+          "plugin-eval benchmark /tmp/workflow-rule-analysis --config /tmp/workflow-rule-analysis/.plugin-eval/benchmark.json",
+          "plugin-eval analyze /tmp/workflow-rule-analysis --observed-usage /tmp/workflow-rule-analysis/.plugin-eval/benchmark-usage.jsonl --format markdown"
+        ],
+        "startCommand": "plugin-eval start /tmp/workflow-rule-analysis --request 'Measure the real token usage of this target.' --format markdown"
+      },
+      {
+        "id": "benchmark",
+        "label": "Benchmark With Starter Scenarios",
+        "chatPrompt": "Help me benchmark this target.",
+        "summary": "Use this when you want starter scenarios and a repeatable real-Codex benchmark run for this target.",
+        "firstCommand": "plugin-eval init-benchmark /tmp/workflow-rule-analysis",
+        "commands": [
+          "plugin-eval init-benchmark /tmp/workflow-rule-analysis"
+        ],
+        "startCommand": "plugin-eval start /tmp/workflow-rule-analysis --request 'Help me benchmark this target.' --format markdown"
+      },
+      {
+        "id": "next",
+        "label": "Start Here",
+        "chatPrompt": "What should I run next?",
+        "summary": "If you are new to plugin-eval, start with the overall evaluation report for this target.",
+        "firstCommand": "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown",
+        "commands": [
+          "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown"
+        ],
+        "startCommand": "plugin-eval start /tmp/workflow-rule-analysis --request 'What should I run next?' --format markdown"
+      }
+    ],
+    "nextSteps": [
+      "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown"
+    ],
+    "nextAction": {
+      "label": "Evaluate Skill",
+      "why": "Plugin Eval recommended Evaluate Skill from the current local state for this target.",
+      "command": "plugin-eval analyze /tmp/workflow-rule-analysis --format markdown",
+      "chatPrompt": "Evaluate this target."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "reviewer": "parent inline, not independent",
+  "outcomes": [
+    {
+      "case": "approved",
+      "semantic": "pass",
+      "reason": "Read actual PLAN: preserves deployment-only SQL evolution, no schema changes for filter, direct parameterized instr SELECT, sync operation ownership/explicit close, no new class/global/pool/commit. Covered decisions not asked again; only PLAN written."
+    },
+    {
+      "case": "partial",
+      "semantic": "pass",
+      "reason": "Recognizes approved schema is settled, asks only Core/raw SQL/PyPika queries and function/context/class/external ownership. Does not record plan or treat autonomous details as unseen architecture approval."
+    },
+    {
+      "case": "unrelated",
+      "semantic": "pass",
+      "reason": "Correct arithmetic without SQL skill/resource loading or file changes."
+    }
+  ]
+}

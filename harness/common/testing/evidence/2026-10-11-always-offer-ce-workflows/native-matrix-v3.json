@@ -1,0 +1,588 @@
+[
+  {
+    "file": "codex-both-candidate-v3-ce-only-events.json",
+    "case": "ce-only",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 247505,
+        "cached_input_tokens": 219264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1066,
+        "reasoning_output_tokens": 16
+      }
+    ],
+    "exact_labels": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "file": "codex-both-candidate-v3-guard-events.json",
+    "case": "guard",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 234716,
+        "cached_input_tokens": 215936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1062,
+        "reasoning_output_tokens": 33
+      }
+    ]
+  },
+  {
+    "file": "codex-both-candidate-v3-menu-events.json",
+    "case": "menu",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 238998,
+        "cached_input_tokens": 217472,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 995,
+        "reasoning_output_tokens": 22
+      }
+    ],
+    "exact_labels": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "file": "codex-both-candidate-v3-selected-ce-events.json",
+    "case": "selected-ce",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [
+      {
+        "command": "/bin/bash -lc 'git rev-parse --show-toplevel'",
+        "exit": 128
+      }
+    ],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 335039,
+        "cached_input_tokens": 291840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1333,
+        "reasoning_output_tokens": 197
+      }
+    ]
+  },
+  {
+    "file": "codex-both-candidate-v3-selected-joint-enabled-events.json",
+    "case": "selected-joint-enabled",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [
+      {
+        "command": "/bin/bash -lc 'git rev-parse --show-toplevel'",
+        "exit": 128
+      }
+    ],
+    "feature_config": [
+      "features.multi_agent=true"
+    ],
+    "usage": [
+      {
+        "input_tokens": 354940,
+        "cached_input_tokens": 305024,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1328,
+        "reasoning_output_tokens": 36
+      }
+    ]
+  },
+  {
+    "file": "codex-both-candidate-v3-selected-joint-events.json",
+    "case": "selected-joint",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "initial sequencing deviation, complete reread before skills",
+    "commands_with_errors": [
+      {
+        "command": "/bin/bash -lc 'git rev-parse --show-toplevel'",
+        "exit": 128
+      }
+    ],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 292681,
+        "cached_input_tokens": 250368,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1273,
+        "reasoning_output_tokens": 45
+      }
+    ]
+  },
+  {
+    "file": "codex-both-candidate-v3-selected-native-events.json",
+    "case": "selected-native",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {
+      "harness/project/docs/example.md": {
+        "before": null,
+        "after": "ed1a545bb85e55816bbf9566b028b2a0bc456b88f49f6f266c0401048824194b"
+      }
+    },
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 299704,
+        "cached_input_tokens": 277888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1035,
+        "reasoning_output_tokens": 34
+      }
+    ],
+    "positive_save": "pass: exactly 6 bytes, only authorized note"
+  },
+  {
+    "file": "codex-both-candidate-v3-unknown-events.json",
+    "case": "unknown",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 230883,
+        "cached_input_tokens": 213248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1163,
+        "reasoning_output_tokens": 10
+      }
+    ],
+    "exact_labels": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "file": "codex-both-candidate-v3-unrelated-events.json",
+    "case": "unrelated",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 258991,
+        "cached_input_tokens": 237952,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 705,
+        "reasoning_output_tokens": 10
+      }
+    ]
+  },
+  {
+    "file": "codex-both-candidate-v3-using-only-events.json",
+    "case": "using-only",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 230783,
+        "cached_input_tokens": 209920,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1221,
+        "reasoning_output_tokens": 75
+      }
+    ],
+    "exact_labels": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "file": "codex-common-candidate-v3-ce-only-events.json",
+    "case": "ce-only",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 284464,
+        "cached_input_tokens": 251648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1186,
+        "reasoning_output_tokens": 38
+      }
+    ],
+    "exact_labels": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "file": "codex-common-candidate-v3-guard-events.json",
+    "case": "guard",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 234807,
+        "cached_input_tokens": 215552,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1082,
+        "reasoning_output_tokens": 38
+      }
+    ]
+  },
+  {
+    "file": "codex-common-candidate-v3-menu-events.json",
+    "case": "menu",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 237881,
+        "cached_input_tokens": 204544,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1052,
+        "reasoning_output_tokens": 11
+      }
+    ],
+    "exact_labels": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "file": "codex-common-candidate-v3-selected-ce-events.json",
+    "case": "selected-ce",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [
+      {
+        "command": "/bin/bash -lc 'git rev-parse --show-toplevel'",
+        "exit": 128
+      }
+    ],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 327069,
+        "cached_input_tokens": 283776,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1113,
+        "reasoning_output_tokens": 36
+      }
+    ]
+  },
+  {
+    "file": "codex-common-candidate-v3-selected-joint-enabled-events.json",
+    "case": "selected-joint-enabled",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [
+      {
+        "command": "/bin/bash -lc 'git rev-parse --show-toplevel'",
+        "exit": 128
+      }
+    ],
+    "feature_config": [
+      "features.multi_agent=true"
+    ],
+    "usage": [
+      {
+        "input_tokens": 349725,
+        "cached_input_tokens": 302080,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1245,
+        "reasoning_output_tokens": 42
+      }
+    ]
+  },
+  {
+    "file": "codex-common-candidate-v3-selected-joint-events.json",
+    "case": "selected-joint",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "initial sequencing deviation, complete reread before skills",
+    "commands_with_errors": [
+      {
+        "command": "/bin/bash -lc 'git rev-parse --show-toplevel'",
+        "exit": 128
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .compound-engineering -g '\"'!README.human.md'\"'\"",
+        "exit": 2
+      }
+    ],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 292995,
+        "cached_input_tokens": 251776,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1393,
+        "reasoning_output_tokens": 67
+      }
+    ]
+  },
+  {
+    "file": "codex-common-candidate-v3-selected-native-events.json",
+    "case": "selected-native",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {
+      "harness/project/docs/example.md": {
+        "before": null,
+        "after": "ed1a545bb85e55816bbf9566b028b2a0bc456b88f49f6f266c0401048824194b"
+      }
+    },
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "initial sequencing deviation, complete reread before skills",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 346173,
+        "cached_input_tokens": 317440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1066,
+        "reasoning_output_tokens": 38
+      }
+    ],
+    "positive_save": "pass: exactly 6 bytes, only authorized note"
+  },
+  {
+    "file": "codex-common-candidate-v3-unknown-events.json",
+    "case": "unknown",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 229556,
+        "cached_input_tokens": 209280,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1067,
+        "reasoning_output_tokens": 11
+      }
+    ],
+    "exact_labels": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "file": "codex-common-candidate-v3-unrelated-events.json",
+    "case": "unrelated",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "pass",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 257218,
+        "cached_input_tokens": 227072,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 690,
+        "reasoning_output_tokens": 10
+      }
+    ]
+  },
+  {
+    "file": "codex-common-candidate-v3-using-only-events.json",
+    "case": "using-only",
+    "completed": true,
+    "exit": 0,
+    "isolation": "passed",
+    "changes": {},
+    "delegations": [],
+    "read_truncation": [],
+    "complete_rules_before_skills": true,
+    "startup_protocol": "initial sequencing deviation, complete reread before skills",
+    "commands_with_errors": [],
+    "feature_config": [
+      "features.multi_agent=false"
+    ],
+    "usage": [
+      {
+        "input_tokens": 223448,
+        "cached_input_tokens": 203648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1039,
+        "reasoning_output_tokens": 13
+      }
+    ],
+    "exact_labels": [
+      true,
+      true,
+      true
+    ]
+  }
+]

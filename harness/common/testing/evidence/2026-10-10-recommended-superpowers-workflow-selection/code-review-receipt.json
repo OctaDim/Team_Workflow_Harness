@@ -1,0 +1,63 @@
+{
+  "status": "complete",
+  "verdict": "Ready to merge",
+  "scope": {
+    "base": "488b66970967f4fe065e820ddf4b40c0b53e23b4",
+    "branch": "octadim/review-workflow-selection",
+    "head_sha": "488b66970967f4fe065e820ddf4b40c0b53e23b4",
+    "pr_url": null,
+    "files_changed": 2,
+    "reviewed_checkout": "/tmp/workflow-selection-baseline-8gu1lmjg",
+    "candidate_sha256": "25710607c6227fcbd6e942b0181af55999a10350aee52dceaa7517643bf3614c"
+  },
+  "intent": "Show the applicable Superpowers recommendation with concrete stages and CE. Offer both full execution variants only for a full-chain recommendation; preserve explicit single-route confirmation, existing stage and environment guards.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness"
+  ],
+  "findings": [],
+  "actionable_findings": [],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": null,
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "This is source review only. Parent native checks are separate; Claude and overall verification remain unverified. The receipt does not establish native menu behavior or perform publication."
+  ],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "lite",
+    "depth_reason": "The two Markdown copies change an immediately visible route-choice menu; the explicit-confirmation and permission guards retain their behavior. No hard full-depth floor or silent-pass mechanism was found.",
+    "reviewer_agents_dispatched": false,
+    "criteria_checked": [
+      "AGENTS.md",
+      "CLAUDE.md"
+    ],
+    "criteria_fallback": "Root instruction files; no CODING_STANDARDS.md exists.",
+    "compound_packs_applied": false,
+    "not_assessed": [
+      "learnings",
+      "agent-native gaps",
+      "deployment notes"
+    ],
+    "plan_discovery": "No plan argument, PR metadata or matching workflow-selection plan was found. requirements_completeness is null; the explicitly named inbox request was checked as intent.",
+    "request_contract_checked": [
+      "Concrete stages and grounds come from applicable Superpowers skills",
+      "CE always remains an alternative",
+      "Short recommendations do not force two full chains",
+      "Full recommendation shows both execution variants and their original subagent explanation",
+      "Multiple recommendations are each shown",
+      "Explicit using-superpowers/brainstorming use the same conditional menu",
+      "Missing recommendation is reported rather than invented",
+      "One explicit confirmed route and execution choice remain necessary",
+      "Ambiguity, silence, refusal and UI defaults do not authorize execution",
+      "Selected route persists for the current set; other gates remain"
+    ],
+    "copy_integrity": "Canonical, native and named inbox candidate are byte-identical; tracked diff contains exactly two rule files.",
+    "skipped": "No subagents, external agent CLIs, pytest repeats, candidate edits or publication."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/workflow-selection-h4kf68xb",
+  "run_id": "workflow-selection-h4kf68xb"
+}

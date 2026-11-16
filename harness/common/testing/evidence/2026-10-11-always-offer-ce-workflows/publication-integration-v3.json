@@ -1,0 +1,31 @@
+{
+  "phase": "publication integration",
+  "version_sha256": "7b9cddee04cc0fccbcc4aa6972ffbc9eba7a5234ffb2f58795df46ca1d3bf9f8",
+  "checks": [
+    {
+      "command": "python3 -B harness/common/checks/ensure_entrypoint_links.py",
+      "chunk_id": "cd9473",
+      "wall_time_seconds": 0.000013656,
+      "exit_code": 0,
+      "original_token_count": 77,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n"
+    },
+    {
+      "command": ".venv/bin/python -m pytest harness/common/testing/tests -q",
+      "initial_output": "..........",
+      "chunk_id": "de8516",
+      "wall_time_seconds": 1.044947109,
+      "exit_code": 0,
+      "original_token_count": 45,
+      "output": "........................................................ss.... [ 91%]\n.......                                                                  [100%]\n77 passed, 2 skipped in 8.47s\n"
+    },
+    {
+      "command": "python3 -B harness/common/testing/evidence/2026-10-11-always-offer-ce-workflows/check-contract-v3.py harness/common/rules/comm-confirm-development-workflow.md",
+      "chunk_id": "a0fcbd",
+      "wall_time_seconds": 0.000015839,
+      "exit_code": 0,
+      "original_token_count": 25,
+      "output": "Exact menu and ownership contract PASS: harness/common/rules/comm-confirm-development-workflow.md\n"
+    }
+  ]
+}

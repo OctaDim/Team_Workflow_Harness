@@ -1,0 +1,1944 @@
+{
+  "created_at": "2026-10-19T14:44:11.243357+00:00",
+  "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+  "counts": {
+    "total": 36,
+    "mechanical_pass": 36,
+    "parent_semantic_pass": 36,
+    "common": 18,
+    "both": 18
+  },
+  "independence": "Parent inline reviews; no independent/subagent or Claude review.",
+  "limitations": [
+    "Three repeats per scenario do not establish a statistical or absolute reliability guarantee.",
+    "Some brief replies merge schema alternatives into one table row; mechanisms, executors and fit/tradeoff remain identifiable. Table-format uniformity is not claimed.",
+    "Real app SQL, production access, async and further new architectural decisions are not runtime-tested; preserved instruction text covers them."
+  ],
+  "matrix": [
+    {
+      "file": "r1-codex-v2-common-plan.json",
+      "repetition": "r1",
+      "mode": "common",
+      "case": "plan",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "plan",
+        "semantic": "pass",
+        "reason": "Each schema option identifies its executor and tradeoff; SQLAlchemy/Alembic and Peewee/playhouse are distinct from direct SQL. Open query/ownership options and consent stop preserved."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        13
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 201775,
+          "cached_input_tokens": 177280,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1249,
+          "reasoning_output_tokens": 16
+        }
+      ],
+      "tool_read_output_utf8_bytes": 90377,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; test ! -f PLAN.md || cat PLAN.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md harness/common/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 45.04
+    },
+    {
+      "file": "r1-codex-v2-common-explicit.json",
+      "repetition": "r1",
+      "mode": "common",
+      "case": "explicit",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "explicit",
+        "semantic": "pass",
+        "reason": "Direct SQL vs Alembic vs separate yoyo migrator, each with executor and project-fit tradeoff; independent query/ownership choices; no PLAN before approval."
+      },
+      "skill_read_indices": [
+        6
+      ],
+      "resource_read_indices": [
+        6
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 198100,
+          "cached_input_tokens": 173184,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1149,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "tool_read_output_utf8_bytes": 74916,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'; cat harness/common/INDEX.md harness/project/INDEX.md\"",
+        "/bin/bash -lc \"cat .agents/skills/comm-confirm-database-design/SKILL.md .agents/skills/comm-confirm-database-design/references/choices.md; rg --files -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; git status --short; cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 45.93
+    },
+    {
+      "file": "r1-codex-v2-common-code.json",
+      "repetition": "r1",
+      "mode": "common",
+      "case": "code",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "code",
+        "semantic": "pass",
+        "reason": "Distinct mechanisms and executors; explains direct SQL minimal change and extra dependencies for alternatives; urgency is not consent; no code or PLAN write. Table shape compressed but comparison meaning retained."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 199778,
+          "cached_input_tokens": 163456,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1145,
+          "reasoning_output_tokens": 9
+        }
+      ],
+      "tool_read_output_utf8_bytes": 84854,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat APPROVALS.md storage.py PLAN.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\""
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 44.21
+    },
+    {
+      "file": "r1-codex-v2-common-approved.json",
+      "repetition": "r1",
+      "mode": "common",
+      "case": "approved",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "approved",
+        "semantic": "pass",
+        "reason": "Read actual PLAN: preserves deployment-only SQL evolution, no schema changes for filter, direct parameterized instr SELECT, sync operation ownership/explicit close, no new class/global/pool/commit. Covered decisions not asked again; only PLAN written."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        12
+      ],
+      "writes": [
+        13
+      ],
+      "usage": [
+        {
+          "input_tokens": 230662,
+          "cached_input_tokens": 190592,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1907,
+          "reasoning_output_tokens": 12
+        }
+      ],
+      "tool_read_output_utf8_bytes": 83291,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; git status --short'",
+        "/bin/bash -lc 'cat /tmp/lazy-sql-native-anso8dku/project/.agents/skills/comm-confirm-database-design/SKILL.md /tmp/lazy-sql-native-anso8dku/project/.agents/skills/comm-commit-task-stages/SKILL.md /tmp/lazy-sql-native-anso8dku/project/.agents/skills/comm-preserve-harness-knowledge/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/references/choices.md .agents/skills/comm-preserve-harness-knowledge/references/experience-routing.md .agents/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "",
+        "/bin/bash -lc 'git diff --check; git status --short PLAN.md storage.py APPROVALS.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 57.8
+    },
+    {
+      "file": "r1-codex-v2-common-partial.json",
+      "repetition": "r1",
+      "mode": "common",
+      "case": "partial",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "partial",
+        "semantic": "pass",
+        "reason": "Recognizes approved schema is settled, asks only Core/raw SQL/PyPika queries and function/context/class/external ownership. Does not record plan or treat autonomous details as unseen architecture approval."
+      },
+      "skill_read_indices": [
+        10
+      ],
+      "resource_read_indices": [
+        11
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 229864,
+          "cached_input_tokens": 208768,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1075,
+          "reasoning_output_tokens": 26
+        }
+      ],
+      "tool_read_output_utf8_bytes": 89295,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; test ! -f PLAN.md || cat PLAN.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 45.56
+    },
+    {
+      "file": "r1-codex-v2-common-unrelated.json",
+      "repetition": "r1",
+      "mode": "common",
+      "case": "unrelated",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "unrelated",
+        "semantic": "pass",
+        "reason": "Correct arithmetic without SQL skill/resource loading or file changes."
+      },
+      "skill_read_indices": [],
+      "resource_read_indices": [],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 208591,
+          "cached_input_tokens": 185216,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 548,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "tool_read_output_utf8_bytes": 72578,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 30.73
+    },
+    {
+      "file": "r1-codex-v2-both-plan.json",
+      "repetition": "r1",
+      "mode": "both",
+      "case": "plan",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "plan",
+        "semantic": "pass",
+        "reason": "Three separate migration mechanisms, applying functions/commands and project tradeoffs; three independent open blocks; explicit consent requested, no write."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 203001,
+          "cached_input_tokens": 181632,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1268,
+          "reasoning_output_tokens": 10
+        }
+      ],
+      "tool_read_output_utf8_bytes": 92218,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; if [ -f PLAN.md ]; then cat PLAN.md; fi'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 43.79
+    },
+    {
+      "file": "r1-codex-v2-both-explicit.json",
+      "repetition": "r1",
+      "mode": "both",
+      "case": "explicit",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "explicit",
+        "semantic": "pass",
+        "reason": "Separate schema mechanism/executor/fit rows, query and resource alternatives with project reasons, explicit agreement requested, no write."
+      },
+      "skill_read_indices": [
+        9
+      ],
+      "resource_read_indices": [
+        9
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 188888,
+          "cached_input_tokens": 168320,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1340,
+          "reasoning_output_tokens": 22
+        }
+      ],
+      "tool_read_output_utf8_bytes": 86835,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/SKILL.md .agents/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc \"rg --files -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!AGENTS.md'\"' -g '\"'!CLAUDE.md'\"'; cat storage.py APPROVALS.md\"",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md; git status --short; git log -3 --oneline'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 50.38
+    },
+    {
+      "file": "r1-codex-v2-both-code.json",
+      "repetition": "r1",
+      "mode": "both",
+      "case": "code",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "code",
+        "semantic": "pass",
+        "reason": "Each schema mechanism names an executor; existing SQLite preserved as recommendation and additional dependencies disclosed as tradeoff for both other options. Urgency/autonomous instruction did not become consent. Formatting differs from preferred rows but semantic comparison retained; no code write."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 182088,
+          "cached_input_tokens": 158848,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1066,
+          "reasoning_output_tokens": 11
+        }
+      ],
+      "tool_read_output_utf8_bytes": 89882,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden -g '*.md' -g '\"'!README.human.md'\"' .claude/rules | sort\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat APPROVALS.md storage.py; git status --short'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 43.34
+    },
+    {
+      "file": "r1-codex-v2-both-approved.json",
+      "repetition": "r1",
+      "mode": "both",
+      "case": "approved",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "approved",
+        "semantic": "pass",
+        "reason": "Actual PLAN.md preserves all three scoped choices, deployment-only raw SQL evolution, direct parameterized SELECT, caller-owned operation connection with guaranteed closure, no new class/global/ORM/startup DDL. No repeated approval. No storage change."
+      },
+      "skill_read_indices": [
+        12
+      ],
+      "resource_read_indices": [
+        13
+      ],
+      "writes": [
+        14
+      ],
+      "usage": [
+        {
+          "input_tokens": 240393,
+          "cached_input_tokens": 209280,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2066,
+          "reasoning_output_tokens": 7
+        }
+      ],
+      "tool_read_output_utf8_bytes": 103698,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+        "/bin/bash -lc 'git status --short; test ! -f PLAN.md || cat PLAN.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/specs/2026-10-06-structure-and-creation-dates.md'",
+        "",
+        "/bin/bash -lc 'git status --short; cat PLAN.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 62.23
+    },
+    {
+      "file": "r1-codex-v2-both-partial.json",
+      "repetition": "r1",
+      "mode": "both",
+      "case": "partial",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "partial",
+        "semantic": "pass",
+        "reason": "Keeps approved SQLAlchemy/Alembic schema, compares only open query/ownership alternatives (raw SQL, Core, PyPika; function/context, class, external owner) and stops before PLAN."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        13
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 187199,
+          "cached_input_tokens": 149760,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1197,
+          "reasoning_output_tokens": 19
+        }
+      ],
+      "tool_read_output_utf8_bytes": 92717,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; test ! -f PLAN.md || cat PLAN.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 41.94
+    },
+    {
+      "file": "r1-codex-v2-both-unrelated.json",
+      "repetition": "r1",
+      "mode": "both",
+      "case": "unrelated",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "unrelated",
+        "semantic": "pass",
+        "reason": "Correct arithmetic; no SQL skill/resource reads or writes."
+      },
+      "skill_read_indices": [],
+      "resource_read_indices": [],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 168362,
+          "cached_input_tokens": 145792,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 618,
+          "reasoning_output_tokens": 14
+        }
+      ],
+      "tool_read_output_utf8_bytes": 77463,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r cat\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 28.91
+    },
+    {
+      "file": "r2-codex-v2-common-plan.json",
+      "repetition": "r2",
+      "mode": "common",
+      "case": "plan",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "plan",
+        "semantic": "pass",
+        "reason": "Three schema mechanisms identify applying function/tool and tradeoffs; independent query/resource alternatives, explicit decision requested, no write."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 196314,
+          "cached_input_tokens": 167040,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1171,
+          "reasoning_output_tokens": 16
+        }
+      ],
+      "tool_read_output_utf8_bytes": 75712,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; if [ -f PLAN.md ]; then cat PLAN.md; fi'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 39.06
+    },
+    {
+      "file": "r2-codex-v2-common-explicit.json",
+      "repetition": "r2",
+      "mode": "common",
+      "case": "explicit",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "explicit",
+        "semantic": "pass",
+        "reason": "Raw SQL function, Alembic command and yoyo command separately explained with appropriate fit/cost; query and ownership tables avoid duplicate mechanisms; no plan before approval."
+      },
+      "skill_read_indices": [
+        9
+      ],
+      "resource_read_indices": [
+        9
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 230309,
+          "cached_input_tokens": 210944,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1521,
+          "reasoning_output_tokens": 22
+        }
+      ],
+      "tool_read_output_utf8_bytes": 77437,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/SKILL.md .agents/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 76.27
+    },
+    {
+      "file": "r2-codex-v2-common-code.json",
+      "repetition": "r2",
+      "mode": "common",
+      "case": "code",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "code",
+        "semantic": "pass",
+        "reason": "Actual response compares schema executors and tradeoffs, separate queries/ownership, preserves SQLite and caller ownership as recommendation; urgency does not grant consent or writes."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 211713,
+          "cached_input_tokens": 175104,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1209,
+          "reasoning_output_tokens": 38
+        }
+      ],
+      "tool_read_output_utf8_bytes": 87989,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat APPROVALS.md storage.py PLAN.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!*git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'; git status --short\"",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 44.27
+    },
+    {
+      "file": "r2-codex-v2-common-approved.json",
+      "repetition": "r2",
+      "mode": "common",
+      "case": "approved",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "approved",
+        "semantic": "pass",
+        "reason": "Actual PLAN covers prior decisions, direct bound SQL read, deployment-only schema, one connection per operation closed by owner on success/error; no class/global/session/pool or new commit boundary. No repeats of settled architecture."
+      },
+      "skill_read_indices": [
+        9
+      ],
+      "resource_read_indices": [
+        10
+      ],
+      "writes": [
+        11
+      ],
+      "usage": [
+        {
+          "input_tokens": 229214,
+          "cached_input_tokens": 200960,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1951,
+          "reasoning_output_tokens": 57
+        }
+      ],
+      "tool_read_output_utf8_bytes": 80140,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; git status --short'",
+        "/bin/bash -lc 'cat /tmp/lazy-sql-native-830rd8j6/project/.agents/skills/comm-confirm-database-design/SKILL.md /tmp/lazy-sql-native-830rd8j6/project/.agents/skills/comm-commit-task-stages/SKILL.md /tmp/lazy-sql-native-830rd8j6/project/.agents/skills/comm-preserve-harness-knowledge/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/references/choices.md .agents/skills/comm-preserve-harness-knowledge/references/experience-routing.md .agents/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "",
+        "/bin/bash -lc 'git diff --no-index -- /dev/null PLAN.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 54.74
+    },
+    {
+      "file": "r2-codex-v2-common-partial.json",
+      "repetition": "r2",
+      "mode": "common",
+      "case": "partial",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "partial",
+        "semantic": "pass",
+        "reason": "Keeps SQLAlchemy/Alembic approval and asks only open query/lifecycle decisions with distinct options. Recommendation is not treated as consent; PLAN absent."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        13
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 183121,
+          "cached_input_tokens": 157056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1161,
+          "reasoning_output_tokens": 15
+        }
+      ],
+      "tool_read_output_utf8_bytes": 89969,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-startup-readiness.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\"'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; if [ -f PLAN.md ]; then cat PLAN.md; fi'",
+        "/bin/bash -lc 'cat /tmp/lazy-sql-native-l0pmyc_a/project/.agents/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat /tmp/lazy-sql-native-l0pmyc_a/project/.agents/skills/comm-preserve-harness-knowledge/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 38.27
+    },
+    {
+      "file": "r2-codex-v2-common-unrelated.json",
+      "repetition": "r2",
+      "mode": "common",
+      "case": "unrelated",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "unrelated",
+        "semantic": "pass",
+        "reason": "Correct 148, no SQL loading or writes."
+      },
+      "skill_read_indices": [],
+      "resource_read_indices": [],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 136445,
+          "cached_input_tokens": 114688,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 538,
+          "reasoning_output_tokens": 14
+        }
+      ],
+      "tool_read_output_utf8_bytes": 63996,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 27.54
+    },
+    {
+      "file": "r2-codex-v2-both-plan.json",
+      "repetition": "r2",
+      "mode": "both",
+      "case": "plan",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "plan",
+        "semantic": "pass",
+        "reason": "Raw SQL function vs Alembic command vs Django migrations command, each with tradeoffs for small module; distinct queries/ownership; no writing before approval."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 227922,
+          "cached_input_tokens": 207232,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1260,
+          "reasoning_output_tokens": 11
+        }
+      ],
+      "tool_read_output_utf8_bytes": 84933,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; git status --short; if test -f PLAN.md; then cat PLAN.md; fi'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 44.36
+    },
+    {
+      "file": "r2-codex-v2-both-explicit.json",
+      "repetition": "r2",
+      "mode": "both",
+      "case": "explicit",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "explicit",
+        "semantic": "pass",
+        "reason": "Per-option executor and project-fit table; independent resource/query choices; asks explicit consent and preserves no-write boundary."
+      },
+      "skill_read_indices": [
+        9
+      ],
+      "resource_read_indices": [
+        9
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 186759,
+          "cached_input_tokens": 163840,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1438,
+          "reasoning_output_tokens": 8
+        }
+      ],
+      "tool_read_output_utf8_bytes": 86655,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/SKILL.md .agents/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 48.9
+    },
+    {
+      "file": "r2-codex-v2-both-code.json",
+      "repetition": "r2",
+      "mode": "both",
+      "case": "code",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "code",
+        "semantic": "pass",
+        "reason": "Distinct SQL/Alembic/Peewee migration mechanisms and executors with small-module tradeoffs. Autonomous urgency is not approval; actual storage unchanged."
+      },
+      "skill_read_indices": [
+        12
+      ],
+      "resource_read_indices": [
+        13
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 216580,
+          "cached_input_tokens": 192768,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1364,
+          "reasoning_output_tokens": 60
+        }
+      ],
+      "tool_read_output_utf8_bytes": 96597,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-entrypoint-links-rule.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat APPROVALS.md storage.py PLAN.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-entrypoint-links-rule.md'\"",
+        "/bin/bash -lc 'cat /tmp/lazy-sql-native-jkri355s/project/.agents/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!AGENTS.md'\"' -g '\"'!CLAUDE.md'\"'\"",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 46.89
+    },
+    {
+      "file": "r2-codex-v2-both-approved.json",
+      "repetition": "r2",
+      "mode": "both",
+      "case": "approved",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "approved",
+        "semantic": "pass",
+        "reason": "Actual PLAN retains all three approvals: no schema change/startup DDL; operator deployment SQL; direct bound instr SELECT; caller-owned connection, explicit close on exceptions/cancellation; no new global/class/pool/commit. No repeated architecture approval."
+      },
+      "skill_read_indices": [
+        10
+      ],
+      "resource_read_indices": [
+        11
+      ],
+      "writes": [
+        12
+      ],
+      "usage": [
+        {
+          "input_tokens": 236415,
+          "cached_input_tokens": 213504,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1936,
+          "reasoning_output_tokens": 52
+        }
+      ],
+      "tool_read_output_utf8_bytes": 92417,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+        "/bin/bash -lc 'git status --short;'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "",
+        "/bin/bash -lc 'git diff --stat; git status --short -- PLAN.md storage.py APPROVALS.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 63.25
+    },
+    {
+      "file": "r2-codex-v2-both-partial.json",
+      "repetition": "r2",
+      "mode": "both",
+      "case": "partial",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "partial",
+        "semantic": "pass",
+        "reason": "Approved schema left settled; distinct query alternatives and lifecycle alternatives compared with project-specific recommendation; no plan before missing decisions."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        13
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 182709,
+          "cached_input_tokens": 163328,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1188,
+          "reasoning_output_tokens": 56
+        }
+      ],
+      "tool_read_output_utf8_bytes": 87890,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; if test -f PLAN.md; then cat PLAN.md; fi'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!AGENTS.md'\"' -g '\"'!CLAUDE.md'\"'\""
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 37.7
+    },
+    {
+      "file": "r2-codex-v2-both-unrelated.json",
+      "repetition": "r2",
+      "mode": "both",
+      "case": "unrelated",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "unrelated",
+        "semantic": "pass",
+        "reason": "SQL skill/resource not loaded, correct 148 and no writes."
+      },
+      "skill_read_indices": [],
+      "resource_read_indices": [],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 167197,
+          "cached_input_tokens": 146048,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 579,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "tool_read_output_utf8_bytes": 76365,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 45.89
+    },
+    {
+      "file": "r3-codex-v2-common-plan.json",
+      "repetition": "r3",
+      "mode": "common",
+      "case": "plan",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "plan",
+        "semantic": "pass",
+        "reason": "Raw SQL, Alembic, Peewee distinct schema mechanisms with executor and fit/tradeoff; queries and owners differentiated; no plan until consent."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 201133,
+          "cached_input_tokens": 180352,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1211,
+          "reasoning_output_tokens": 12
+        }
+      ],
+      "tool_read_output_utf8_bytes": 88796,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; if test -f PLAN.md; then cat PLAN.md; fi'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 43.52
+    },
+    {
+      "file": "r3-codex-v2-common-explicit.json",
+      "repetition": "r3",
+      "mode": "common",
+      "case": "explicit",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "explicit",
+        "semantic": "pass",
+        "reason": "Three schema rows contain executor and project-specific cost/fit; no SQL version-marker duplicate. Query/ownership alternatives preserved; no writes before explicit agreement."
+      },
+      "skill_read_indices": [
+        10
+      ],
+      "resource_read_indices": [
+        10
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 235140,
+          "cached_input_tokens": 214400,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1510,
+          "reasoning_output_tokens": 11
+        }
+      ],
+      "tool_read_output_utf8_bytes": 84814,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/SKILL.md .agents/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 57.14
+    },
+    {
+      "file": "r3-codex-v2-common-code.json",
+      "repetition": "r3",
+      "mode": "common",
+      "case": "code",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "code",
+        "semantic": "pass",
+        "reason": "Separate migration mechanisms, executors and minimal/dependency tradeoffs; query/resource choices distinct; urgency not treated as consent; source unchanged."
+      },
+      "skill_read_indices": [
+        8
+      ],
+      "resource_read_indices": [
+        9
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 249475,
+          "cached_input_tokens": 215552,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1101,
+          "reasoning_output_tokens": 51
+        }
+      ],
+      "tool_read_output_utf8_bytes": 74330,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' harness/common/INDEX.md harness/project/INDEX.md\"",
+        "/bin/bash -lc \"cat APPROVALS.md storage.py; rg --files -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.*'\"' | head -40\"",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 43.17
+    },
+    {
+      "file": "r3-codex-v2-common-approved.json",
+      "repetition": "r3",
+      "mode": "common",
+      "case": "approved",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "approved",
+        "semantic": "pass",
+        "reason": "Actual PLAN preserves all prior architecture approvals, direct bound SQL, operator deployment evolution, no DDL/migrations on read/startup, owner-guaranteed close, no class/global/session/pool/commit. No repeated gate; only PLAN written."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        13
+      ],
+      "writes": [
+        14
+      ],
+      "usage": [
+        {
+          "input_tokens": 217913,
+          "cached_input_tokens": 195712,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2001,
+          "reasoning_output_tokens": 52
+        }
+      ],
+      "tool_read_output_utf8_bytes": 88722,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md'",
+        "/bin/bash -lc 'git status --short; test ! -f PLAN.md || cat PLAN.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "",
+        "/bin/bash -lc 'git diff --check; git status --short'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 45.97
+    },
+    {
+      "file": "r3-codex-v2-common-partial.json",
+      "repetition": "r3",
+      "mode": "common",
+      "case": "partial",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "partial",
+        "semantic": "pass",
+        "reason": "Already agreed schema is preserved, open query and ownership alternatives compared, specific consent requested before any PLAN write."
+      },
+      "skill_read_indices": [
+        8
+      ],
+      "resource_read_indices": [
+        9
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 200555,
+          "cached_input_tokens": 175616,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1129,
+          "reasoning_output_tokens": 12
+        }
+      ],
+      "tool_read_output_utf8_bytes": 89881,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc \"cat harness/common/START.md; cat harness/project/START.md; rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; if test -f PLAN.md; then cat PLAN.md; fi; git status --short'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 41.41
+    },
+    {
+      "file": "r3-codex-v2-common-unrelated.json",
+      "repetition": "r3",
+      "mode": "common",
+      "case": "unrelated",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "unrelated",
+        "semantic": "pass",
+        "reason": "Correct arithmetic; SQL skill/resource not loaded and files unchanged."
+      },
+      "skill_read_indices": [],
+      "resource_read_indices": [],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 205210,
+          "cached_input_tokens": 182656,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 555,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "tool_read_output_utf8_bytes": 65201,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 33.52
+    },
+    {
+      "file": "r3-codex-v2-both-plan.json",
+      "repetition": "r3",
+      "mode": "both",
+      "case": "plan",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "plan",
+        "semantic": "pass",
+        "reason": "Separate raw SQL, Alembic, Peewee migration mechanisms with applying owner/tool and tradeoff. Three independent open blocks, consent stop and no writes."
+      },
+      "skill_read_indices": [
+        10
+      ],
+      "resource_read_indices": [
+        11
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 195685,
+          "cached_input_tokens": 176256,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1211,
+          "reasoning_output_tokens": 24
+        }
+      ],
+      "tool_read_output_utf8_bytes": 80474,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md PLAN.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 38.13
+    },
+    {
+      "file": "r3-codex-v2-both-explicit.json",
+      "repetition": "r3",
+      "mode": "both",
+      "case": "explicit",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "explicit",
+        "semantic": "pass",
+        "reason": "Each schema alternative has mechanism, executor, small-module tradeoff; query alternatives distinct and external resource owner justified. No PLAN before approval."
+      },
+      "skill_read_indices": [
+        7
+      ],
+      "resource_read_indices": [
+        7
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 232382,
+          "cached_input_tokens": 211712,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1190,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "tool_read_output_utf8_bytes": 87285,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc \"cat harness/common/START.md; cat harness/project/START.md; rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat .agents/skills/comm-confirm-database-design/SKILL.md; cat .agents/skills/comm-confirm-database-design/references/choices.md; rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md; git status --short; cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 42.17
+    },
+    {
+      "file": "r3-codex-v2-both-code.json",
+      "repetition": "r3",
+      "mode": "both",
+      "case": "code",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "code",
+        "semantic": "pass",
+        "reason": "Raw SQL/Alembic/Peewee migration alternatives and executors differentiated with cost/fit. Query/lifecycle recommendation scoped to existing interface. Explicit approval requested, no code writes."
+      },
+      "skill_read_indices": [
+        10
+      ],
+      "resource_read_indices": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 183081,
+          "cached_input_tokens": 156928,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1238,
+          "reasoning_output_tokens": 70
+        }
+      ],
+      "tool_read_output_utf8_bytes": 91411,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat APPROVALS.md storage.py PLAN.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat /tmp/lazy-sql-native-_06aaa4s/project/.agents/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat /tmp/lazy-sql-native-_06aaa4s/project/.agents/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/references/choices.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\""
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 56.87
+    },
+    {
+      "file": "r3-codex-v2-both-approved.json",
+      "repetition": "r3",
+      "mode": "both",
+      "case": "approved",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "approved",
+        "semantic": "pass",
+        "reason": "Read actual PLAN: all scoped approvals remain, no repeated decision gate, direct bound SELECT, caller context guaranteed close, no new schema/ORM/classes/pool/commit/startup DDL. Only PLAN written."
+      },
+      "skill_read_indices": [
+        12
+      ],
+      "resource_read_indices": [
+        13
+      ],
+      "writes": [
+        14
+      ],
+      "usage": [
+        {
+          "input_tokens": 236752,
+          "cached_input_tokens": 210688,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1988,
+          "reasoning_output_tokens": 8
+        }
+      ],
+      "tool_read_output_utf8_bytes": 90297,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+        "/bin/bash -lc 'git status --short'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'",
+        "",
+        "/bin/bash -lc 'git status --short -- PLAN.md storage.py APPROVALS.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 58.01
+    },
+    {
+      "file": "r3-codex-v2-both-partial.json",
+      "repetition": "r3",
+      "mode": "both",
+      "case": "partial",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "partial",
+        "semantic": "pass",
+        "reason": "Approved models and deployment Alembic remain settled, only queries and ownership compared/requested. No plan or code write before open decisions."
+      },
+      "skill_read_indices": [
+        11
+      ],
+      "resource_read_indices": [
+        13
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 184510,
+          "cached_input_tokens": 161024,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1084,
+          "reasoning_output_tokens": 19
+        }
+      ],
+      "tool_read_output_utf8_bytes": 94311,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat storage.py APPROVALS.md PLAN.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 37.86
+    },
+    {
+      "file": "r3-codex-v2-both-unrelated.json",
+      "repetition": "r3",
+      "mode": "both",
+      "case": "unrelated",
+      "version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": {
+        "case": "unrelated",
+        "semantic": "pass",
+        "reason": "Correct 148, no SQL skill/resource loading or writes."
+      },
+      "skill_read_indices": [],
+      "resource_read_indices": [],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 210332,
+          "cached_input_tokens": 179712,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 564,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "tool_read_output_utf8_bytes": 76365,
+      "commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'"
+      ],
+      "human_body_read_commands": [],
+      "elapsed_seconds": 67.35
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "checked_at": "2026-10-19T14:54:17.550082+00:00",
+  "candidate_version_id": "da1b590ea04aacb4d9fc05ead0ede2732018c2ea504fe0f370aee0697571c371",
+  "scope_version_id": "d2d531f44252ff837e23923f5f5c7ac0a4922aaf1362e922f83e1849b4db8843",
+  "exact_published_scope": true,
+  "canonical_rule_count": 11,
+  "entire_installed_canonical_rule_set_equal": true,
+  "common_full_skill_count": 18,
+  "all_full_native_skill_copies_equal": true,
+  "target_equal_exact_candidate": true,
+  "metadata_and_other_target_files_unchanged": true,
+  "git_visible": true,
+  "tracked_changes_since_start": [
+    ".agents/skills/comm-confirm-database-design/references/choices.md",
+    ".claude/skills/comm-confirm-database-design/references/choices.md",
+    "harness/common/skills/comm-confirm-database-design/references/choices.md"
+  ],
+  "unrelated_preexisting_tracked_work_preserved": true,
+  "startup": {
+    "exit_code": 0,
+    "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+    "stderr": ""
+  },
+  "regression": "published-v2-regression.json",
+  "native_checks": [
+    {
+      "file": "published-v2-codex-published-common-plan.json",
+      "mode": "common",
+      "case": "plan",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": "pass",
+      "reason": "Distinct mechanisms/executors and project-fit tradeoffs; consent before plan and no writes.",
+      "skill_reads": [
+        11
+      ],
+      "resource_reads": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 201337,
+          "cached_input_tokens": 180736,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1167,
+          "reasoning_output_tokens": 9
+        }
+      ],
+      "reviewer": "parent inline, not independent"
+    },
+    {
+      "file": "published-v2-codex-published-common-explicit.json",
+      "mode": "common",
+      "case": "explicit",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": "pass",
+      "reason": "Distinct mechanisms/executors and project-fit tradeoffs; consent before plan and no writes.",
+      "skill_reads": [
+        10
+      ],
+      "resource_reads": [
+        12
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 233733,
+          "cached_input_tokens": 206592,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1409,
+          "reasoning_output_tokens": 17
+        }
+      ],
+      "reviewer": "parent inline, not independent"
+    },
+    {
+      "file": "published-v2-codex-published-common-unrelated.json",
+      "mode": "common",
+      "case": "unrelated",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": "pass",
+      "reason": "Correct arithmetic; no SQL skill/resource loading or writes.",
+      "skill_reads": [],
+      "resource_reads": [],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 166299,
+          "cached_input_tokens": 148736,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 550,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "reviewer": "parent inline, not independent"
+    },
+    {
+      "file": "published-v2-codex-published-both-plan.json",
+      "mode": "both",
+      "case": "plan",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": "pass",
+      "reason": "Distinct mechanisms/executors and project-fit tradeoffs; consent before plan and no writes.",
+      "skill_reads": [
+        12
+      ],
+      "resource_reads": [
+        13
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 197084,
+          "cached_input_tokens": 178048,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1207,
+          "reasoning_output_tokens": 12
+        }
+      ],
+      "reviewer": "parent inline, not independent"
+    },
+    {
+      "file": "published-v2-codex-published-both-explicit.json",
+      "mode": "both",
+      "case": "explicit",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": "pass",
+      "reason": "Distinct mechanisms/executors and project-fit tradeoffs; consent before plan and no writes.",
+      "skill_reads": [
+        10
+      ],
+      "resource_reads": [
+        10
+      ],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 205583,
+          "cached_input_tokens": 184832,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1416,
+          "reasoning_output_tokens": 14
+        }
+      ],
+      "reviewer": "parent inline, not independent"
+    },
+    {
+      "file": "published-v2-codex-published-both-unrelated.json",
+      "mode": "both",
+      "case": "unrelated",
+      "mechanical": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic": "pass",
+      "reason": "Correct arithmetic; no SQL skill/resource loading or writes.",
+      "skill_reads": [],
+      "resource_reads": [],
+      "writes": [],
+      "usage": [
+        {
+          "input_tokens": 165696,
+          "cached_input_tokens": 141824,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 542,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "reviewer": "parent inline, not independent"
+    }
+  ],
+  "Codex": {
+    "common": "проверено в указанной области; candidate 18/18 + published 3/3",
+    "both": "проверено в указанной области; candidate 18/18 + semantic 2/2 + published 3/3"
+  },
+  "Claude": "skip; непроверенный",
+  "overall": "непроверенный",
+  "remaining_in_scope": []
+}

@@ -1,0 +1,314 @@
+{
+  "created": "2026-10-13T01:45:59.723216+03:00",
+  "sha256": "0e3447ea8f0322835f2e34ba9c6099e37b8ef1100a870c84d234d99b1aa74146",
+  "Codex": "непроверенный",
+  "Codex_reason": "8 successful native sessions verify menu numbering and selection behavior; mandatory startup order violated by early using-superpowers read; unknown menu paraphrases literal CE descriptions. Full verified status is not justified.",
+  "Claude": "непроверенный",
+  "Claude_current_run": "skip",
+  "overall": "непроверенный",
+  "native_results": [
+    {
+      "mode": "common",
+      "scenario": "retry-menu",
+      "completed": true,
+      "elapsed_seconds": 51.75,
+      "numbered_menu": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "observed_file_changes": [],
+      "early_skill_read_before_START": true,
+      "usage": {
+        "input_tokens": 172304,
+        "cached_input_tokens": 151296,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1023,
+        "reasoning_output_tokens": 11
+      },
+      "actual_read_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/brainstorming/SKILL.md .agents/skills/using-superpowers/references/codex-tools.md'"
+      ],
+      "response_file": "codex-common-retry-menu-response.txt",
+      "native_behavior_review": "passed in stated scope"
+    },
+    {
+      "mode": "common",
+      "scenario": "number",
+      "completed": true,
+      "elapsed_seconds": 44.04,
+      "numbered_menu": null,
+      "observed_file_changes": [
+        "harness/project/docs/example.md"
+      ],
+      "early_skill_read_before_START": true,
+      "usage": {
+        "input_tokens": 268971,
+        "cached_input_tokens": 247552,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1246,
+        "reasoning_output_tokens": 28
+      },
+      "actual_read_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat /tmp/two-modes-native-mhk60o87/workspace/.agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-confirm-development-workflow.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/specs/2026-10-06-structure-and-creation-dates.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+        "/bin/bash -lc \"python3 -B - <<'PY'\nfrom pathlib import Path\np = Path('harness/project/docs/example.md')\np.write_bytes(b'ready\\\\n')\ndata = p.read_bytes()\nassert data == b'ready\\\\n'\nprint(f'{p}: {len(data)} bytes, hex={data.hex()}')\nPY\""
+      ],
+      "response_file": "codex-common-number-response.txt",
+      "native_behavior_review": "passed in stated scope"
+    },
+    {
+      "mode": "common",
+      "scenario": "selection-matrix",
+      "completed": true,
+      "elapsed_seconds": 44.71,
+      "numbered_menu": null,
+      "observed_file_changes": [],
+      "early_skill_read_before_START": true,
+      "usage": {
+        "input_tokens": 171500,
+        "cached_input_tokens": 147072,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1345,
+        "reasoning_output_tokens": 32
+      },
+      "actual_read_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-validate-harness-instructions/SKILL.md'"
+      ],
+      "response_file": "codex-common-selection-matrix-response.txt",
+      "native_behavior_review": "passed in stated scope"
+    },
+    {
+      "mode": "common",
+      "scenario": "unknown",
+      "completed": true,
+      "elapsed_seconds": 38.34,
+      "numbered_menu": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "observed_file_changes": [],
+      "early_skill_read_before_START": true,
+      "usage": {
+        "input_tokens": 173130,
+        "cached_input_tokens": 146816,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1304,
+        "reasoning_output_tokens": 23
+      },
+      "actual_read_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-confirm-development-workflow.md'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'"
+      ],
+      "response_file": "codex-common-unknown-response.txt",
+      "native_behavior_review": "numeric selection/numbered menus/matrix passed in stated scope; exact CE wording changed in unknown menu"
+    },
+    {
+      "mode": "both",
+      "scenario": "retry-menu",
+      "completed": true,
+      "elapsed_seconds": 51.84,
+      "numbered_menu": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "observed_file_changes": [],
+      "early_skill_read_before_START": true,
+      "usage": {
+        "input_tokens": 179699,
+        "cached_input_tokens": 158464,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1049,
+        "reasoning_output_tokens": 12
+      },
+      "actual_read_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat /tmp/two-modes-native-e24f76nh/workspace/.agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/brainstorming/SKILL.md'"
+      ],
+      "response_file": "codex-both-retry-menu-response.txt",
+      "native_behavior_review": "passed in stated scope"
+    },
+    {
+      "mode": "both",
+      "scenario": "number",
+      "completed": true,
+      "elapsed_seconds": 64.24,
+      "numbered_menu": null,
+      "observed_file_changes": [
+        "harness/project/docs/example.md"
+      ],
+      "early_skill_read_before_START": true,
+      "usage": {
+        "input_tokens": 263614,
+        "cached_input_tokens": 235648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1302,
+        "reasoning_output_tokens": 44
+      },
+      "actual_read_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat /tmp/two-modes-native-xl_sy9uo/workspace/.agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+        "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/specs/2026-10-06-structure-and-creation-dates.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+        "/bin/bash -lc \"python3 -B - <<'PY'\nfrom pathlib import Path\np = Path('harness/project/docs/example.md')\np.write_bytes(b'ready\\\\n')\ndata = p.read_bytes()\nassert data == b'ready\\\\n'\nprint(f'{p}: {len(data)} bytes, hex={data.hex()}')\nPY\""
+      ],
+      "response_file": "codex-both-number-response.txt",
+      "native_behavior_review": "passed in stated scope"
+    },
+    {
+      "mode": "both",
+      "scenario": "selection-matrix",
+      "completed": true,
+      "elapsed_seconds": 59.96,
+      "numbered_menu": null,
+      "observed_file_changes": [],
+      "early_skill_read_before_START": true,
+      "usage": {
+        "input_tokens": 142516,
+        "cached_input_tokens": 119040,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1240,
+        "reasoning_output_tokens": 45
+      },
+      "actual_read_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-confirm-development-workflow.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat harness/common/skills/comm-validate-harness-instructions/SKILL.md'"
+      ],
+      "response_file": "codex-both-selection-matrix-response.txt",
+      "native_behavior_review": "passed in stated scope"
+    },
+    {
+      "mode": "both",
+      "scenario": "unknown",
+      "completed": true,
+      "elapsed_seconds": 42.9,
+      "numbered_menu": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "observed_file_changes": [],
+      "early_skill_read_before_START": true,
+      "usage": {
+        "input_tokens": 173951,
+        "cached_input_tokens": 154112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1391,
+        "reasoning_output_tokens": 38
+      },
+      "actual_read_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat /tmp/two-modes-native-w3r2thwh/workspace/.agents/skills/using-superpowers/SKILL.md'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat \".claude/rules/comm-confirm-development-workflow.md\"'",
+        "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'"
+      ],
+      "response_file": "codex-both-unknown-response.txt",
+      "native_behavior_review": "numeric selection/numbered menus/matrix passed in stated scope; exact CE wording changed in unknown menu"
+    }
+  ],
+  "limits": [
+    "Selection matrix assesses separate replies without implementing each one.",
+    "Full-route execution, helper lifecycle and behavioral baseline RED are not run.",
+    "Plain rule has no own deferred resource; explicit skill-resource and unrelated skill non-loading checks are not applicable to this rule publication. Rule loading itself is unconditional."
+  ],
+  "publication": "exact unchanged candidate published; source/native/commit equality and post-publication checks passed",
+  "publication_commit": "fdd073b"
+}

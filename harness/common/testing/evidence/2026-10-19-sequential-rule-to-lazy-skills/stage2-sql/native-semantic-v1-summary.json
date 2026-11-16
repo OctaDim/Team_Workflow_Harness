@@ -1,0 +1,637 @@
+[
+  {
+    "file": "v1-codex-candidate-both-approved.json",
+    "mode": "both",
+    "case": "approved",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      10
+    ],
+    "resource_read_indices": [
+      11
+    ],
+    "write_indices": [
+      12
+    ],
+    "usage": [
+      {
+        "input_tokens": 269087,
+        "cached_input_tokens": 223232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2167,
+        "reasoning_output_tokens": 55
+      }
+    ],
+    "all_tool_output_utf8_bytes": 104493,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+      "/bin/bash -lc 'cat \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\"'",
+      "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+      "/bin/bash -lc 'git status --short'",
+      "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md .agents/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+      "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/references/choices.md .agents/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/specs/2026-10-06-structure-and-creation-dates.md'",
+      "file_change",
+      "/bin/bash -lc 'git diff --no-index -- /dev/null PLAN.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-both-code.json",
+    "mode": "both",
+    "case": "code",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      11
+    ],
+    "resource_read_indices": [
+      12
+    ],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 209844,
+        "cached_input_tokens": 190848,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1080,
+        "reasoning_output_tokens": 48
+      }
+    ],
+    "all_tool_output_utf8_bytes": 87623,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-application-config-git.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat APPROVALS.md storage.py PLAN.md'",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'",
+      "/bin/bash -lc \"git status --short; rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+      "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-both-explicit.json",
+    "mode": "both",
+    "case": "explicit",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      10
+    ],
+    "resource_read_indices": [
+      10
+    ],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 184970,
+        "cached_input_tokens": 162176,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1337,
+        "reasoning_output_tokens": 10
+      }
+    ],
+    "all_tool_output_utf8_bytes": 87491,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/SKILL.md .agents/skills/comm-confirm-database-design/references/choices.md'",
+      "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+      "/bin/bash -lc 'cat storage.py APPROVALS.md; if test -f PLAN.md; then cat PLAN.md; fi'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-both-partial.json",
+    "mode": "both",
+    "case": "partial",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      9
+    ],
+    "resource_read_indices": [
+      10
+    ],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 260447,
+        "cached_input_tokens": 222720,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1136,
+        "reasoning_output_tokens": 42
+      }
+    ],
+    "all_tool_output_utf8_bytes": 91048,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat storage.py APPROVALS.md; if test -f PLAN.md; then cat PLAN.md; fi'",
+      "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/SKILL.md .agents/skills/comm-preserve-harness-knowledge/SKILL.md .agents/skills/comm-commit-task-stages/SKILL.md'",
+      "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/references/choices.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-both-plan.json",
+    "mode": "both",
+    "case": "plan",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      11
+    ],
+    "resource_read_indices": [
+      12
+    ],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 201298,
+        "cached_input_tokens": 164480,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1073,
+        "reasoning_output_tokens": 11
+      }
+    ],
+    "all_tool_output_utf8_bytes": 87303,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat storage.py APPROVALS.md; if test -f PLAN.md; then cat PLAN.md; fi'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-both-unrelated.json",
+    "mode": "both",
+    "case": "unrelated",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [],
+    "resource_read_indices": [],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 165006,
+        "cached_input_tokens": 144384,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 528,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "all_tool_output_utf8_bytes": 75429,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-common-approved.json",
+    "mode": "common",
+    "case": "approved",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      12
+    ],
+    "resource_read_indices": [
+      13
+    ],
+    "write_indices": [
+      14
+    ],
+    "usage": [
+      {
+        "input_tokens": 268798,
+        "cached_input_tokens": 238848,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2078,
+        "reasoning_output_tokens": 10
+      }
+    ],
+    "all_tool_output_utf8_bytes": 95828,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+      "/bin/bash -lc 'git status --short; test ! -f PLAN.md || cat PLAN.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'",
+      "file_change",
+      "/bin/bash -lc 'git diff --no-index -- /dev/null PLAN.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-common-code.json",
+    "mode": "common",
+    "case": "code",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      11
+    ],
+    "resource_read_indices": [
+      12
+    ],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 229957,
+        "cached_input_tokens": 206336,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1073,
+        "reasoning_output_tokens": 18
+      }
+    ],
+    "all_tool_output_utf8_bytes": 85690,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat APPROVALS.md storage.py PLAN.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md'",
+      "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.agents/**'\"'\"",
+      "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-common-explicit.json",
+    "mode": "common",
+    "case": "explicit",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      10
+    ],
+    "resource_read_indices": [
+      10
+    ],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 234435,
+        "cached_input_tokens": 196224,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1208,
+        "reasoning_output_tokens": 10
+      }
+    ],
+    "all_tool_output_utf8_bytes": 85742,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat .agents/skills/comm-confirm-database-design/SKILL.md .agents/skills/comm-confirm-database-design/references/choices.md'",
+      "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+      "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+      "/bin/bash -lc 'git status --short'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-common-partial.json",
+    "mode": "common",
+    "case": "partial",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      13
+    ],
+    "resource_read_indices": [
+      14
+    ],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 216688,
+        "cached_input_tokens": 182016,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1193,
+        "reasoning_output_tokens": 30
+      }
+    ],
+    "all_tool_output_utf8_bytes": 101735,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat storage.py APPROVALS.md; if test -f PLAN.md; then cat PLAN.md; fi'",
+      "/bin/bash -lc \"git status --short; rg --files -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.*'\"' \"",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md harness/common/skills/comm-commit-task-stages/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-common-plan.json",
+    "mode": "common",
+    "case": "plan",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [
+      9
+    ],
+    "resource_read_indices": [
+      10
+    ],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 201150,
+        "cached_input_tokens": 170496,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1115,
+        "reasoning_output_tokens": 13
+      }
+    ],
+    "all_tool_output_utf8_bytes": 91169,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat storage.py APPROVALS.md; if [ -f PLAN.md ]; then cat PLAN.md; fi'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  },
+  {
+    "file": "v1-codex-candidate-common-unrelated.json",
+    "mode": "common",
+    "case": "unrelated",
+    "checks": {
+      "completed": true,
+      "only_expected_plan_write": true,
+      "input_code_and_all_other_files_unchanged": true,
+      "skill_loading": true,
+      "own_resource_loading": true,
+      "load_before_dependent_write": true
+    },
+    "source_version": {
+      "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+      "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+      "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+      "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+    },
+    "skill_read_indices": [],
+    "resource_read_indices": [],
+    "write_indices": [],
+    "usage": [
+      {
+        "input_tokens": 137978,
+        "cached_input_tokens": 90880,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 577,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "all_tool_output_utf8_bytes": 76028,
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'"
+    ],
+    "semantic_review": "pass: alternatives separated by mechanism/owner; scoped prior approvals preserved; writes gated; full final answer and PLAN content reviewed",
+    "human_candidate_commands": []
+  }
+]

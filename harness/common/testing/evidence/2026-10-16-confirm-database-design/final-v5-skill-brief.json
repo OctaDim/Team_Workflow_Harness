@@ -1,0 +1,37 @@
+{
+  "title": "Improve comm-confirm-database-design",
+  "target": {
+    "kind": "skill",
+    "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-16-confirm-database-design/comm-confirm-database-design",
+    "entryPath": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-16-confirm-database-design/comm-confirm-database-design/SKILL.md",
+    "name": "comm-confirm-database-design",
+    "relativePath": "harness/common/inbox/2026-10-16-confirm-database-design/comm-confirm-database-design"
+  },
+  "summary": "Raise the evaluation from grade B (91/100) with a focus on the highest-signal structural and budget issues first.",
+  "goals": [
+    "Reduce repeated instruction text and move detail into deferred supporting files."
+  ],
+  "measurementGoals": [
+    "token-usage-observer",
+    "task-outcome-scorecard",
+    "latency-efficiency"
+  ],
+  "requiredFixes": [],
+  "recommendedFixes": [
+    {
+      "id": "invoke_cost_tokens-budget-high",
+      "message": "invoke_cost_tokens is heavy relative to the current Codex baseline.",
+      "remediation": [
+        "Reduce repeated instruction text and move detail into deferred supporting files."
+      ]
+    },
+    {
+      "id": "deferred_cost_tokens-budget-high",
+      "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+      "remediation": [
+        "Reduce repeated instruction text and move detail into deferred supporting files."
+      ]
+    }
+  ],
+  "suggestedPrompt": "Use the skill-creator guidance to improve comm-confirm-database-design. Keep the structure compact and move bulky details into references or scripts. Define success measures with these toolsets: token-usage-observer, task-outcome-scorecard, latency-efficiency. Address invoke_cost_tokens-budget-high: invoke_cost_tokens is heavy relative to the current Codex baseline. Address deferred_cost_tokens-budget-high: deferred_cost_tokens is heavy relative to the current Codex baseline."
+}

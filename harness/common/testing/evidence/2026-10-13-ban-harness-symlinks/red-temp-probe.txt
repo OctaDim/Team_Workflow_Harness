@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_temp_directory_probe_does_not_write_through_link _____________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-23/test_temp_directory_probe_does0/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-23/test_temp_directory_probe_does0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b6bda1462d0>
+
+    def test_temp_directory_probe_does_not_write_through_link(installation, tmp_path, monkeypatch):
+        import os
+        import runpy
+        import tempfile
+        root = installation
+        target = tmp_path / 'temp-target'
+        target.mkdir()
+        link = tmp_path / 'temp-alias'
+        link.symlink_to(target, target_is_directory=True)
+        rule = root / 'rule.md'
+        rule.write_text('# Fixture\n')
+        module = runpy.run_path(str(root / 'harness/common/checks/check_human_guide_search.py'))
+        monkeypatch.setenv('TMPDIR', str(link))
+        monkeypatch.setattr(tempfile, 'tempdir', None)
+        monkeypatch.setattr(sys, 'argv', ['check', str(rule), '--output', str(root / 'report.json')])
+        attempts = []
+        original_open = os.open
+    
+        def record_open(file, *args, **kwargs):
+            if str(file).startswith(str(link) + os.sep):
+                attempts.append(file)
+            return original_open(file, *args, **kwargs)
+    
+        monkeypatch.setattr(os, 'open', record_open)
+        with pytest.raises(ValueError, match='Symlink forbidden'):
+            module['main']()
+>       assert attempts == [], 'Even transient write probes must not follow TMPDIR links'
+E       AssertionError: Even transient write probes must not follow TMPDIR links
+E       assert ['/tmp/pytest...ias/c2fomm4p'] == []
+E         
+E         Left contains one more item: '/tmp/pytest-of-octadim/pytest-23/test_temp_directory_probe_does0/temp-alias/c2fomm4p'
+E         Use -v to get more diff
+
+/tmp/harness-symlinks-stage-v2/harness/common/testing/tests/test_harness_symlinks.py:217: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../../tmp/harness-symlinks-stage-v2/harness/common/testing/tests/test_harness_symlinks.py::test_temp_directory_probe_does_not_write_through_link
+1 failed, 39 deselected in 0.06s

@@ -1,4 +1,5 @@
 """Check installed shared rules and exercise copy-drift failures."""
+import importlib.util
 import tempfile
 import pytest
 from pathlib import Path
@@ -7,33 +8,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]
 
 
-def check_rule_copies(root):
-    if not (root / 'harness/common').is_dir():
-        raise ValueError('harness/common is required; project-only is unsupported.')
-    native = root / '.claude/rules'
-    sources = {}
-    installed_prefixes = []
-    for package, prefix in (('common', 'comm-'), ('project', 'proj-')):
-        rules = root / 'harness' / package / 'rules'
-        if rules.is_dir():
-            installed_prefixes.append(prefix)
-            sources.update((file.name, file) for file in rules.glob(prefix + '*.md'))
-    if not sources:
-        raise ValueError('No canonical shared rules found; nothing checked.')
-    expected = set(sources)
-    actual = {file.name for prefix in installed_prefixes
-              for file in native.glob(prefix + '*.md')}
-    if expected != actual:
-        raise ValueError(f'Missing copies: {sorted(expected - actual)}; '
-                         f'extra copies: {sorted(actual - expected)}')
-    for name, source in sorted(sources.items()):
-        copy = native / name
-        for file in (source, copy):
-            if not file.is_file() or any(path.is_symlink() for path in (file, *file.parents)):
-                raise ValueError(f'Not an ordinary file: {file}')
-        if source.read_bytes() != copy.read_bytes():
-            raise ValueError(f'Different rule bytes: {name}')
-    return len(sources)
+spec = importlib.util.spec_from_file_location('common_rule_copy_checks', ROOT / 'harness/common/checks/ensure_entrypoint_links.py')
+checker = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(checker)
+check_rule_copies = checker.check_rule_copies
 
 
 class TestRuleCopies:

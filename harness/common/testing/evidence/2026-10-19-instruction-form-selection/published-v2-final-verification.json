@@ -1,0 +1,159 @@
+{
+  "version": "v2",
+  "checked_at": "2026-10-19T13:00:42+03:00",
+  "targets": {
+    "harness/common/skills/comm-create-lazy-claude-codex-skills": {
+      "SKILL.md": "909a097a37781b329068ca281eb0c1ef24e235150272584d132745adbc43670c",
+      "README.human.md": "748d72468b2a5b8e586700bd5563c21d26b97c3bb208674d5598a77481b9a1c0",
+      "references/content-contract.md": "8ce61cf6e8f183d6e5e5f5e19a74346f9edfde1caa963588602d574bd1414f80",
+      "references/README.human.md": "b0635c47a783e1a6fe40f7502318bfbe994b91f085264172b193aa87ed80689a"
+    },
+    ".agents/skills/comm-create-lazy-claude-codex-skills": {
+      "SKILL.md": "909a097a37781b329068ca281eb0c1ef24e235150272584d132745adbc43670c",
+      "README.human.md": "748d72468b2a5b8e586700bd5563c21d26b97c3bb208674d5598a77481b9a1c0",
+      "references/content-contract.md": "8ce61cf6e8f183d6e5e5f5e19a74346f9edfde1caa963588602d574bd1414f80",
+      "references/README.human.md": "b0635c47a783e1a6fe40f7502318bfbe994b91f085264172b193aa87ed80689a"
+    },
+    ".claude/skills/comm-create-lazy-claude-codex-skills": {
+      "SKILL.md": "909a097a37781b329068ca281eb0c1ef24e235150272584d132745adbc43670c",
+      "README.human.md": "748d72468b2a5b8e586700bd5563c21d26b97c3bb208674d5598a77481b9a1c0",
+      "references/content-contract.md": "8ce61cf6e8f183d6e5e5f5e19a74346f9edfde1caa963588602d574bd1414f80",
+      "references/README.human.md": "b0635c47a783e1a6fe40f7502318bfbe994b91f085264172b193aa87ed80689a"
+    }
+  },
+  "native": [
+    {
+      "file": "published-v2-native-published-both-implicit.json",
+      "mode": "both",
+      "completed": true,
+      "whole_rule_bodies_read": true,
+      "skill_and_resource_read": true,
+      "changed_files": [
+        "PROPOSAL.md"
+      ],
+      "seven_cases_and_three_form_comparisons": "passed manual review",
+      "stable_installation": true
+    },
+    {
+      "file": "published-v2-native-published-common-implicit.json",
+      "mode": "common",
+      "completed": true,
+      "whole_rule_bodies_read": true,
+      "skill_and_resource_read": true,
+      "changed_files": [
+        "PROPOSAL.md"
+      ],
+      "seven_cases_and_three_form_comparisons": "passed manual review",
+      "stable_installation": true
+    }
+  ],
+  "overall_status": "unverified",
+  "claude_status": "unverified; not run",
+  "profile": {
+    "exit_code": 0
+  },
+  "startup": {
+    "exit_code": 0
+  },
+  "pytest": {
+    "exit_code": 0
+  },
+  "start": {
+    "exit_code": 0
+  },
+  "analyze": {
+    "exit_code": 0
+  },
+  "analysis_summary": {
+    "score": 95,
+    "grade": "A",
+    "riskLevel": "medium",
+    "riskReasons": [
+      "Contains 1 warning signal that still need attention."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 4.75,
+      "finalScore": 95,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 2,
+      "pass": 0,
+      "warn": 1,
+      "fail": 0,
+      "info": 2,
+      "error": 0,
+      "warning": 1
+    },
+    "deductions": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "penalty": 4.5,
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "budget",
+        "totalPenalty": 4.5,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [
+      "Reduce repeated instruction text and move detail into deferred supporting files."
+    ],
+    "whyBullets": [
+      "1 warning signal still need cleanup before this feels polished.",
+      "budget is the largest source of score loss at -4.5 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "why": "Budget pressure matters because always-loaded or frequently-loaded text can make the workflow feel expensive fast.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "penalty": 4.5,
+        "source": "core"
+      }
+    ],
+    "watchNext": []
+  },
+  "previous_report_sha256": "ae64a6549e80c9871c1f01117a61d2c7468353ed85c05ff4a897cabc15f774be"
+}

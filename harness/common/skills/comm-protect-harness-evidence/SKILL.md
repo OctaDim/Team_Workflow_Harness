@@ -1,40 +1,23 @@
 ---
 name: comm-protect-harness-evidence
-description: Use when changing or cleaning harness testing evidence, including output from tools and operations on parent directories.
+description: Use when saving or changing harness evidence, distinguishing application results from protected mechanism evidence and parent operations.
 ---
 
-# Защита evidence
+# Preserve evidence by purpose and operation
 
-Охват: `harness/common/testing/evidence/`, `harness/project/testing/evidence/`,
-сами каталоги, все вложенные файлы/папки и затрагивающие их родительские операции.
+Before classifying any evidence operation read [operations](references/operations.md)
+and from root `harness/common/skills/comm-process-harness-inbox/SKILL.md` plus its
+`references/workflow.md` for the authorized route. Reading within project access is allowed.
 
-Прямые создание, дополнение, перезапись, удаление, перенос, переименование,
-замена, сжатие и очистка по умолчанию категорически запрещены. Скрипты, тесты,
-генераторы и другие агенты исключений не дают. Чтение разрешено.
+Application/task evidence belongs in `harness/project/testing/evidence/work/`;
+project mechanism evidence in `harness/project/testing/evidence/harness/`;
+portable common evidence stays `harness/common/testing/evidence/`.
+Existing evidence keeps paths until an addressed migration. Purpose, not
+folder/name, governs; mechanism in work remains protected. Inspect all contents
+before parent operations; mixed mechanism stays protected, unknown purpose/state
+requires clarification before mutation. Explicit invocation changes no boundary.
 
-Перед изменением прочитай из корня проекта
-`harness/common/skills/comm-process-harness-inbox/SKILL.md`
-и `harness/common/skills/comm-process-harness-inbox/references/workflow.md`.
-Обычный маршрут — согласованная inbox-заявка. Создание заявки не разрешает
-выполнение/публикацию. Запись доказательств разрешённой обработки — этот маршрут.
-
-Для прямого исключения:
-
-1. Нужно однозначное указание пользователя изменить evidence прямо, минуя inbox.
-   Путь назначения, «сохрани результат», «освободи место», разрешение проверки
-   или инструменту такого указания не заменяют.
-2. До выполнения задай отдельный вопрос: конкретные пути, операции, обход inbox.
-   Остановись до однозначного положительного ответа. Первоначальное «подтверждаю»
-   не ответ на будущий вопрос.
-3. Молчание/время — жди; условия, неоднозначность, варианты — уточни и жди;
-   отказ — не выполняй. До ответа запрещены изменяющие команды и проверки
-   с записью; чтение для определения состава допустимо.
-4. Уже полученную пару «вопрос → да» для неизменной задачи не запрашивай повторно.
-   Выполняй только подтверждённый состав; расширение требует нового указания
-   и отдельного подтверждения.
-
-Перед удалением/заменой/переносом установи зависимые ссылки и доказательства;
-покажи последствия в согласуемом составе. Возраст и успешные тесты не означают
-ненужность evidence. Сохраняй применимые проверки, ограничения и статусы:
-копирование/разрешение их не повышают. Инструкция управляет поведением,
-а не технически блокирует файловую запись.
+Apply operations to new/current/completed reports and raw runs; record actual
+written or blocked files and preserve statuses. Completion: permitted results
+saved, original raw/completed evidence preserved, provenance/dates/links intact.
+No automatic migration or technical filesystem enforcement.

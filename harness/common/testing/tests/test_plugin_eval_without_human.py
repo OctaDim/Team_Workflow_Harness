@@ -56,7 +56,9 @@ class TestHumanFilter:
                 probe.write_text("import fs from 'node:fs/promises';\nconsole.log(await fs.readFile(" + json.dumps(str(source)) + ", 'utf8'));\n")
                 result = subprocess.run(['node', str(LAUNCHER), str(probe)], capture_output=True, text=True)
                 assert result.returncode != 0
-                assert 'README.human.md' in result.stderr
+                assert ('README.human.md' if source == human else 'Symlink forbidden') in result.stderr
+                if source == alias:
+                    assert str(alias) in result.stderr
                 assert 'HUMAN_CANARY' not in result.stdout + result.stderr
             protected = root / 'protected.txt'
             protected.write_text('unchanged')

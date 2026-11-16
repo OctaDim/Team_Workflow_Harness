@@ -1,0 +1,199 @@
+.....FFFF....FFF                                                         [100%]
+=================================== FAILURES ===================================
+_ TestPortability.test_common_checker_rejects_symlinked_paths_without_writes[harness/common/checks-common-only] _
+
+self = <tests.test_entrypoint_portability.TestPortability object at 0x78db61a918b0>
+relative = 'harness/common/checks', mode = ('common',)
+
+    @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
+    @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks', 'harness/common/checks/ensure_entrypoint_links.py'))
+    def test_common_checker_rejects_symlinked_paths_without_writes(self, relative, mode):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, mode)
+            external = root / 'external'
+            checker = external / ('checks/ensure_entrypoint_links.py' if relative == 'harness/common' else 'ensure_entrypoint_links.py')
+            checker.parent.mkdir(parents=True)
+            marker = root / 'external-code-executed'
+            checker.write_text('from pathlib import Path\nPath(' + repr(str(marker)) + ').touch()\n')
+            directory_path = root / relative
+            directory_path.rename(directory_path.with_name(directory_path.name + '-original'))
+            directory_path.symlink_to(checker if directory_path.suffix == '.py' else external,
+                                      target_is_directory=directory_path.suffix != '.py')
+            # The trusted checker inspects the tree; never execute the substituted file.
+            script = str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')
+            result = subprocess.run([sys.executable, '-I', '-B', script, str(root)],
+                                    capture_output=True, text=True)
+            assert not marker.exists(), 'unsafe resources must not be executed'
+>           assert result.returncode == 2, result.stderr
+E           AssertionError: 
+E           assert 0 == 2
+E            +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', '/tmp/ent...т: создаётся пустой каркас из common.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:92: AssertionError
+_ TestPortability.test_common_checker_rejects_symlinked_paths_without_writes[harness/common/checks-common-and-project] _
+
+self = <tests.test_entrypoint_portability.TestPortability object at 0x78db61a91130>
+relative = 'harness/common/checks', mode = ('common', 'project')
+
+    @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
+    @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks', 'harness/common/checks/ensure_entrypoint_links.py'))
+    def test_common_checker_rejects_symlinked_paths_without_writes(self, relative, mode):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, mode)
+            external = root / 'external'
+            checker = external / ('checks/ensure_entrypoint_links.py' if relative == 'harness/common' else 'ensure_entrypoint_links.py')
+            checker.parent.mkdir(parents=True)
+            marker = root / 'external-code-executed'
+            checker.write_text('from pathlib import Path\nPath(' + repr(str(marker)) + ').touch()\n')
+            directory_path = root / relative
+            directory_path.rename(directory_path.with_name(directory_path.name + '-original'))
+            directory_path.symlink_to(checker if directory_path.suffix == '.py' else external,
+                                      target_is_directory=directory_path.suffix != '.py')
+            # The trusted checker inspects the tree; never execute the substituted file.
+            script = str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')
+            result = subprocess.run([sys.executable, '-I', '-B', script, str(root)],
+                                    capture_output=True, text=True)
+            assert not marker.exists(), 'unsafe resources must not be executed'
+>           assert result.returncode == 2, result.stderr
+E           AssertionError: 
+E           assert 0 == 2
+E            +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', '/tmp/ent... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:92: AssertionError
+_ TestPortability.test_common_checker_rejects_symlinked_paths_without_writes[harness/common/checks/ensure_entrypoint_links.py-common-only] _
+
+self = <tests.test_entrypoint_portability.TestPortability object at 0x78db61a910d0>
+relative = 'harness/common/checks/ensure_entrypoint_links.py'
+mode = ('common',)
+
+    @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
+    @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks', 'harness/common/checks/ensure_entrypoint_links.py'))
+    def test_common_checker_rejects_symlinked_paths_without_writes(self, relative, mode):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, mode)
+            external = root / 'external'
+            checker = external / ('checks/ensure_entrypoint_links.py' if relative == 'harness/common' else 'ensure_entrypoint_links.py')
+            checker.parent.mkdir(parents=True)
+            marker = root / 'external-code-executed'
+            checker.write_text('from pathlib import Path\nPath(' + repr(str(marker)) + ').touch()\n')
+            directory_path = root / relative
+            directory_path.rename(directory_path.with_name(directory_path.name + '-original'))
+            directory_path.symlink_to(checker if directory_path.suffix == '.py' else external,
+                                      target_is_directory=directory_path.suffix != '.py')
+            # The trusted checker inspects the tree; never execute the substituted file.
+            script = str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')
+            result = subprocess.run([sys.executable, '-I', '-B', script, str(root)],
+                                    capture_output=True, text=True)
+            assert not marker.exists(), 'unsafe resources must not be executed'
+>           assert result.returncode == 2, result.stderr
+E           AssertionError: 
+E           assert 0 == 2
+E            +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', '/tmp/ent...т: создаётся пустой каркас из common.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:92: AssertionError
+_ TestPortability.test_common_checker_rejects_symlinked_paths_without_writes[harness/common/checks/ensure_entrypoint_links.py-common-and-project] _
+
+self = <tests.test_entrypoint_portability.TestPortability object at 0x78db61a90c50>
+relative = 'harness/common/checks/ensure_entrypoint_links.py'
+mode = ('common', 'project')
+
+    @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
+    @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks', 'harness/common/checks/ensure_entrypoint_links.py'))
+    def test_common_checker_rejects_symlinked_paths_without_writes(self, relative, mode):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, mode)
+            external = root / 'external'
+            checker = external / ('checks/ensure_entrypoint_links.py' if relative == 'harness/common' else 'ensure_entrypoint_links.py')
+            checker.parent.mkdir(parents=True)
+            marker = root / 'external-code-executed'
+            checker.write_text('from pathlib import Path\nPath(' + repr(str(marker)) + ').touch()\n')
+            directory_path = root / relative
+            directory_path.rename(directory_path.with_name(directory_path.name + '-original'))
+            directory_path.symlink_to(checker if directory_path.suffix == '.py' else external,
+                                      target_is_directory=directory_path.suffix != '.py')
+            # The trusted checker inspects the tree; never execute the substituted file.
+            script = str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')
+            result = subprocess.run([sys.executable, '-I', '-B', script, str(root)],
+                                    capture_output=True, text=True)
+            assert not marker.exists(), 'unsafe resources must not be executed'
+>           assert result.returncode == 2, result.stderr
+E           AssertionError: 
+E           assert 0 == 2
+E            +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', '/tmp/ent... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:92: AssertionError
+_ TestPortability.test_direct_checker_rejects_its_own_symlinked_path[harness/common/checks] _
+
+self = <tests.test_entrypoint_portability.TestPortability object at 0x78db61a907d0>
+relative = 'harness/common/checks'
+
+    @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks', 'harness/common/checks/ensure_entrypoint_links.py'))
+    def test_direct_checker_rejects_its_own_symlinked_path(self, relative):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, ('common',))
+            path = root / relative
+            original = path.with_name(path.name + '-original')
+            path.rename(original)
+            path.symlink_to(original, target_is_directory=original.is_dir())
+            result = self.run_check(root)
+>           assert result.returncode == 2, result.stderr
+E           AssertionError: 
+E           assert 0 == 2
+E            +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', 'harness/...т: создаётся пустой каркас из common.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:131: AssertionError
+_ TestPortability.test_direct_checker_rejects_its_own_symlinked_path[harness/common/checks/ensure_entrypoint_links.py] _
+
+self = <tests.test_entrypoint_portability.TestPortability object at 0x78db61a90740>
+relative = 'harness/common/checks/ensure_entrypoint_links.py'
+
+    @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks', 'harness/common/checks/ensure_entrypoint_links.py'))
+    def test_direct_checker_rejects_its_own_symlinked_path(self, relative):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, ('common',))
+            path = root / relative
+            original = path.with_name(path.name + '-original')
+            path.rename(original)
+            path.symlink_to(original, target_is_directory=original.is_dir())
+            result = self.run_check(root)
+>           assert result.returncode == 2, result.stderr
+E           AssertionError: 
+E           assert 0 == 2
+E            +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', 'harness/...т: создаётся пустой каркас из common.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:131: AssertionError
+____ TestPortability.test_symlinked_target_root_is_rejected_without_writes _____
+
+self = <tests.test_entrypoint_portability.TestPortability object at 0x78db61a90470>
+
+    def test_symlinked_target_root_is_rejected_without_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'project'
+            root.mkdir()
+            self.install(root, ('common',))
+            alias = root.with_name('alias')
+            alias.symlink_to(root, target_is_directory=True)
+            result = subprocess.run([sys.executable, '-I', '-B',
+                                    str(PACKAGES / 'common/checks/ensure_entrypoint_links.py'), str(alias)],
+                                    capture_output=True, text=True)
+>           assert result.returncode == 2, result.stderr
+E           AssertionError: 
+E           assert 0 == 2
+E            +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', '/tmp/ent...т: создаётся пустой каркас из common.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:145: AssertionError
+=========================== short test summary info ============================
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_common_checker_rejects_symlinked_paths_without_writes[harness/common/checks-common-only]
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_common_checker_rejects_symlinked_paths_without_writes[harness/common/checks-common-and-project]
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_common_checker_rejects_symlinked_paths_without_writes[harness/common/checks/ensure_entrypoint_links.py-common-only]
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_common_checker_rejects_symlinked_paths_without_writes[harness/common/checks/ensure_entrypoint_links.py-common-and-project]
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_direct_checker_rejects_its_own_symlinked_path[harness/common/checks]
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_direct_checker_rejects_its_own_symlinked_path[harness/common/checks/ensure_entrypoint_links.py]
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_symlinked_target_root_is_rejected_without_writes
+7 failed, 9 passed in 1.34s

@@ -1,0 +1,33 @@
+Стартовая проверка прошла. Применяю `using-superpowers` для выбора применимых навыков; далее прочитаю инструкции репозитория в заданном порядке, исключая `README.human.md`.
+
+Стартовая проверка прошла. Прочитаны START common → START project → все машинные Markdown-правила → INDEX common → INDEX project. Тела `README.human.md` не читались. Публикация, коммиты и запуск субагентов не выполнялись.
+
+Нативный каталог содержит:
+
+- `using-superpowers`, `brainstorming`;
+- `ce-brainstorm`, `ce-plan`, `ce-work`, `ce-commit`;
+- `imagegen`, `openai-docs`, `skill-creator`, `skill-installer`;
+- `comm-commit-task-stages`, `comm-create-lazy-claude-codex-skills`, `comm-diagnose-harness-entrypoints`, `comm-install-harness`, `comm-normalize-text-line-endings`, `comm-preserve-harness-knowledge`, `comm-preserve-text-line-endings`, `comm-process-harness-inbox`, `comm-protect-harness-evidence`, `comm-publish-harness-instructions`, `comm-report-plugin-eval-budget`, `comm-resolve-permission-blockers`, `comm-validate-harness-instructions`.
+
+В каталоге отсутствуют `writing-plans`, `executing-plans`, `subagent-driven-development`, `systematic-debugging`. Наличие в каталоге не означает, что тело навыка уже прочитано.
+
+Описание новой задачи неизвестно, поэтому обоснованную рекомендацию установить нельзя. Все маршруты ниже — **условные варианты**:
+
+1. **Superpowers, через одного агента:** `brainstorming → writing-plans → executing-plans`. Последние два навыка недоступны в каталоге.
+2. **Superpowers, через субагентов:** `brainstorming → writing-plans → subagent-driven-development`. Последние два навыка недоступны; исполнение также запрещено вашим текущим ограничением.
+3. Согласование эксперимента → исследование → выводы.
+4. `brainstorming` с коротким дизайном в чате → согласование → реализация и проверка.
+5. `systematic-debugging` → установление первопричины → исправление и проверка. Навык отсутствует в каталоге.
+6. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work` — с одновременным выполнением `using-superpowers` и CE-этапов.
+7. **Compound Engineering:** `ce-brainstorm → ce-plan → ce-work` — нативный CE-маршрут.
+8. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.
+
+> **Самостоятельная реализация не означает полного отсутствия субагентов**.
+> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает отдельного субагента для итогового ревью, когда он доступен.
+> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют в каждой задаче плана.
+
+Ваш запрет на субагентов сохраняется при любом выборе.
+
+**Какой один маршрут вы явно выбираете для новой задачи — 1–8?**
+
+Выбор требуется правилом [comm-confirm-development-workflow.md](/tmp/two-modes-native-w3r2thwh/workspace/.claude/rules/comm-confirm-development-workflow.md): «После вопроса остановись и жди явного однозначного положительного ответа». Останавливаюсь до вашего выбора.

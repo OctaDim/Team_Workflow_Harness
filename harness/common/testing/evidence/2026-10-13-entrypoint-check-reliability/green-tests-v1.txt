@@ -1,0 +1,67 @@
+........................................................................ [ 59%]
+.........................FFF.....................                        [100%]
+=================================== FAILURES ===================================
+_ TestPortability.test_startup_command_runs_in_each_clean_mode_without_git[common-only] _
+
+self = <harness.common.testing.tests.test_entrypoint_portability.TestPortability object at 0x77af36279430>
+mode = ('common',)
+
+    @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
+    def test_startup_command_runs_in_each_clean_mode_without_git(self, mode):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, mode)
+            project = root / 'harness/project'
+            before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}
+            first = self.run_check(root)
+>           assert first.returncode == 0, first.stderr
+E           AssertionError: Entrypoint check failed: Missing copies: ['comm-commit-result-boundaries.md', 'comm-confirm-development-workflow.md', 'comm-dependencies-through-uv.md', 'comm-entrypoint-links-rule.md', 'comm-human-folder-guides.md', 'comm-instruction-order.md', 'comm-package-independence.md', 'comm-skill-rule-ownership.md', 'comm-user-owned-entrypoints.md']; extra copies: []
+E             
+E           assert 2 == 0
+E            +  where 2 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', 'harness/...'comm-package-independence.md', 'comm-skill-rule-ownership.md', 'comm-user-owned-entrypoints.md']; extra copies: []\n").returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:42: AssertionError
+_ TestPortability.test_startup_command_runs_in_each_clean_mode_without_git[common-and-project] _
+
+self = <harness.common.testing.tests.test_entrypoint_portability.TestPortability object at 0x77af3627af30>
+mode = ('common', 'project')
+
+    @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
+    def test_startup_command_runs_in_each_clean_mode_without_git(self, mode):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, mode)
+            project = root / 'harness/project'
+            before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}
+            first = self.run_check(root)
+>           assert first.returncode == 0, first.stderr
+E           AssertionError: Entrypoint check failed: Missing copies: ['comm-commit-result-boundaries.md', 'comm-confirm-development-workflow.md', 'comm-dependencies-through-uv.md', 'comm-entrypoint-links-rule.md', 'comm-human-folder-guides.md', 'comm-instruction-order.md', 'comm-package-independence.md', 'comm-skill-rule-ownership.md', 'comm-user-owned-entrypoints.md']; extra copies: []
+E             
+E           assert 2 == 0
+E            +  where 2 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', 'harness/...'comm-package-independence.md', 'comm-skill-rule-ownership.md', 'comm-user-owned-entrypoints.md']; extra copies: []\n").returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:42: AssertionError
+_ TestPortability.test_existing_settings_and_startup_command_are_never_rewritten _
+
+self = <harness.common.testing.tests.test_entrypoint_portability.TestPortability object at 0x77af36279ac0>
+
+    def test_existing_settings_and_startup_command_are_never_rewritten(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, ('common', 'project'))
+            script = 'harness/common/checks/ensure_entrypoint_links.py'
+            prefix = '# Existing settings\n\npython3 ' + script + '\nKeep this setting.\n'
+            (root / 'AGENTS.md').write_text(prefix)
+            result = self.run_check(root, script)
+>           assert result.returncode == 0, result.stderr
+E           AssertionError: Entrypoint check failed: Missing copies: ['comm-commit-result-boundaries.md', 'comm-confirm-development-workflow.md', 'comm-dependencies-through-uv.md', 'comm-entrypoint-links-rule.md', 'comm-human-folder-guides.md', 'comm-instruction-order.md', 'comm-package-independence.md', 'comm-skill-rule-ownership.md', 'comm-user-owned-entrypoints.md']; extra copies: []
+E             
+E           assert 2 == 0
+E            +  where 2 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-I', '-B', 'harness/...'comm-package-independence.md', 'comm-skill-rule-ownership.md', 'comm-user-owned-entrypoints.md']; extra copies: []\n").returncode
+
+harness/common/testing/tests/test_entrypoint_portability.py:69: AssertionError
+=========================== short test summary info ============================
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_startup_command_runs_in_each_clean_mode_without_git[common-only]
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_startup_command_runs_in_each_clean_mode_without_git[common-and-project]
+FAILED harness/common/testing/tests/test_entrypoint_portability.py::TestPortability::test_existing_settings_and_startup_command_are_never_rewritten
+3 failed, 118 passed in 7.20s

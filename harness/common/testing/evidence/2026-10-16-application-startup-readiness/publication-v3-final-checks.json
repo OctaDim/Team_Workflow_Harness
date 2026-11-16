@@ -1,0 +1,47 @@
+{
+  "time": "2026-10-16T12:30:14+03:00",
+  "version": "v3",
+  "installed_hashes": {
+    ".agents/skills/comm-verify-application-startup/README.human.md": "b9a9ecec26ecced94b2a184b5bfb4b61c03cd6737ab749e9717990633860d740",
+    ".claude/skills/comm-verify-application-startup/README.human.md": "b9a9ecec26ecced94b2a184b5bfb4b61c03cd6737ab749e9717990633860d740",
+    "harness/common/skills/comm-verify-application-startup/README.human.md": "b9a9ecec26ecced94b2a184b5bfb4b61c03cd6737ab749e9717990633860d740",
+    ".agents/skills/comm-verify-application-startup/SKILL.md": "f94252cf1f55f21c5a8ee2637e4d1e0d0905ed32556c701d25425cbfea4b0c68",
+    ".claude/rules/comm-application-startup-readiness.md": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+    ".claude/skills/comm-verify-application-startup/SKILL.md": "f94252cf1f55f21c5a8ee2637e4d1e0d0905ed32556c701d25425cbfea4b0c68",
+    "harness/common/rules/comm-application-startup-readiness.md": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+    "harness/common/skills/comm-verify-application-startup/SKILL.md": "f94252cf1f55f21c5a8ee2637e4d1e0d0905ed32556c701d25425cbfea4b0c68"
+  },
+  "all_source_native_rule_sets_equal": true,
+  "all_skill_folders_equal": true,
+  "protected_inputs_preserved": true,
+  "startup_repeats": [
+    {
+      "command": [
+        "python3",
+        "harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+      "stderr": ""
+    }
+  ],
+  "project_preserved_during_rechecks": true,
+  "postpublication_pytest": {
+    "command": ".venv/bin/python -m pytest -q",
+    "exit_code": 0,
+    "result": "168 passed in 27.29s",
+    "source": "parent tool session 22917 completed after publication"
+  },
+  "codex_status": "passed in tested scope",
+  "claude_status": "unverified; skipped",
+  "overall_status": "unverified"
+}

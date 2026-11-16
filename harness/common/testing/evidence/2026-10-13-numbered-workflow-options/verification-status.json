@@ -1,0 +1,42 @@
+{
+  "created": "2026-10-13T01:37:17.718951+03:00",
+  "candidate_sha256": "0e3447ea8f0322835f2e34ba9c6099e37b8ef1100a870c84d234d99b1aa74146",
+  "canonical_scope": [
+    "harness/common/rules/comm-confirm-development-workflow.md",
+    ".claude/rules/comm-confirm-development-workflow.md"
+  ],
+  "pytest": {
+    "command": ".venv/bin/python -m pytest harness/common/testing/tests -q",
+    "exit_code": 0,
+    "passed": 77,
+    "skipped": 2,
+    "seconds": 7.33,
+    "skip_reason": "Legacy shim is absent in this common-only source installation (test_entrypoint_portability.py:80)."
+  },
+  "Codex": {
+    "version": "0.161.0",
+    "common-only": "not verified; transport failed before behavior",
+    "common+project": "not run; same unavailable transport",
+    "reason": "workspace routing discovery failed"
+  },
+  "Claude": {
+    "version": "2.1.260",
+    "common-only": "not verified; authentication failed before behavior",
+    "common+project": "not run; same expired credentials",
+    "reason": "Failed to authenticate: OAuth session expired and could not be refreshed"
+  },
+  "overall": "unverified",
+  "publication": "blocked; explicit confirmation of this unverified version is missing",
+  "content_review": "passed; unchanged boundaries and required routes; numeric and verbal choices included",
+  "rule_copies": "8 equal rules in both isolated installations",
+  "remaining_native_checks": [
+    "baseline RED behavior",
+    "menu scenarios: short/full/unknown",
+    "numeric/verbal selections and invalid/conflicting choices",
+    "explicit resource invocation",
+    "implicit choice",
+    "unrelated non-loading",
+    "startup order and human-loader behavior"
+  ],
+  "usage": "No completed native task reads. Claude usage reported zero; Codex usage unavailable. Byte/word measures are static, not token usage or cost."
+}

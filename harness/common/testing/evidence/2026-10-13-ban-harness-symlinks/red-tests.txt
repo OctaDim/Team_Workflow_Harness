@@ -1,0 +1,1003 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.                                        [100%]
+=================================== FAILURES ===================================
+_ test_startup_rejects_every_harness_link_before_repair[internal-file-common/inbox/old/candidate] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har0/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har0')
+folder = 'common/inbox/old/candidate', target_kind = 'internal-file'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[internal-file-common/testing/evidence/raw] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har1/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har1')
+folder = 'common/testing/evidence/raw', target_kind = 'internal-file'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[internal-file-project/docs] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har2/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har2')
+folder = 'project/docs', target_kind = 'internal-file'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[external-file-common/inbox/old/candidate] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har3/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har3')
+folder = 'common/inbox/old/candidate', target_kind = 'external-file'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[external-file-common/testing/evidence/raw] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har4/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har4')
+folder = 'common/testing/evidence/raw', target_kind = 'external-file'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[external-file-project/docs] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har5/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har5')
+folder = 'project/docs', target_kind = 'external-file'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[directory-common/inbox/old/candidate] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har6/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har6')
+folder = 'common/inbox/old/candidate', target_kind = 'directory'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[directory-common/testing/evidence/raw] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har7/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har7')
+folder = 'common/testing/evidence/raw', target_kind = 'directory'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[directory-project/docs] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har8/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har8')
+folder = 'project/docs', target_kind = 'directory'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[broken-common/inbox/old/candidate] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har9/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har9')
+folder = 'common/inbox/old/candidate', target_kind = 'broken'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_startup_rejects_every_harness_link_before_repair[broken-common/testing/evidence/raw] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har10/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har10')
+folder = 'common/testing/evidence/raw', target_kind = 'broken'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+__ test_startup_rejects_every_harness_link_before_repair[broken-project/docs] __
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har11/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_startup_rejects_every_har11')
+folder = 'project/docs', target_kind = 'broken'
+
+    @pytest.mark.parametrize('folder', ['common/inbox/old/candidate', 'common/testing/evidence/raw', 'project/docs'])
+    @pytest.mark.parametrize('target_kind', ['internal-file', 'external-file', 'directory', 'broken'])
+    def test_startup_rejects_every_harness_link_before_repair(installation, tmp_path, folder, target_kind):
+        root = installation
+        target = (root / 'harness/common/target') if target_kind == 'internal-file' else tmp_path / 'target'
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_bytes(b'unchanged')
+        elif target_kind != 'broken':
+            target.write_bytes(b'unchanged')
+        link = root / 'harness' / folder / 'alias'
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        before = (root / 'AGENTS.md').read_bytes()
+        result = python_script(root, 'checks/ensure_entrypoint_links.py')
+>       assert result.returncode == 2, result.stdout + result.stderr
+E       AssertionError: Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+E         Сравнение настроек с историей не проверено: нет истории этого проекта.
+E         Стартовые ссылки повреждены и будут автоматически восстановлены.
+E         Entrypoint check completed: changed paths: AGENTS.md, CLAUDE.md
+E         
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ны и будут автоматически восстановлены.\nEntrypoint check completed: changed paths: AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:54: AssertionError
+_ test_python_tools_reject_tree_link_before_running_work[scripts/run_tests.py] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_0/installation')
+script = 'scripts/run_tests.py'
+
+    @pytest.mark.parametrize('script', ['scripts/run_tests.py', 'checks/check_human_guide_search.py'])
+    def test_python_tools_reject_tree_link_before_running_work(installation, script):
+        root = installation
+        link = root / 'harness/project/broken'
+        link.symlink_to(root / 'missing')
+        args = ['missing-rule', '--output', 'report.json'] if script.startswith('checks/') else []
+        result = python_script(root, script, *args)
+        assert result.returncode != 0
+>       assert str(link) in result.stderr
+E       assert '/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_0/installation/harness/project/broken' in 'Traceback (most recent call last):\n  File "/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_0/installa...8, in <module>\n    assert SUITES, \'No test suites found\'\n           ^^^^^^\nAssertionError: No test suites found\n'
+E        +  where '/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_0/installation/harness/project/broken' = str(PosixPath('/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_0/installation/harness/project/broken'))
+E        +  and   'Traceback (most recent call last):\n  File "/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_0/installa...8, in <module>\n    assert SUITES, \'No test suites found\'\n           ^^^^^^\nAssertionError: No test suites found\n' = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of..., in <module>\n    assert SUITES, \'No test suites found\'\n           ^^^^^^\nAssertionError: No test suites found\n').stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:71: AssertionError
+_ test_python_tools_reject_tree_link_before_running_work[checks/check_human_guide_search.py] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_1/installation')
+script = 'checks/check_human_guide_search.py'
+
+    @pytest.mark.parametrize('script', ['scripts/run_tests.py', 'checks/check_human_guide_search.py'])
+    def test_python_tools_reject_tree_link_before_running_work(installation, script):
+        root = installation
+        link = root / 'harness/project/broken'
+        link.symlink_to(root / 'missing')
+        args = ['missing-rule', '--output', 'report.json'] if script.startswith('checks/') else []
+        result = python_script(root, script, *args)
+        assert result.returncode != 0
+>       assert str(link) in result.stderr
+E       assert '/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_1/installation/harness/project/broken' in 'Traceback (most recent call last):\n  File "/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_1/installa...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: \'missing-rule\'\n'
+E        +  where '/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_1/installation/harness/project/broken' = str(PosixPath('/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_1/installation/harness/project/broken'))
+E        +  and   'Traceback (most recent call last):\n  File "/tmp/pytest-of-octadim/pytest-15/test_python_tools_reject_tree_1/installa...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: \'missing-rule\'\n' = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: \'missing-rule\'\n').stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:71: AssertionError
+____ test_native_check_rejects_linked_inputs_and_outputs_before_probe[rule] ____
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link0/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link0')
+which = 'rule'
+
+    @pytest.mark.parametrize('which', ['rule', 'output', 'output-parent'])
+    def test_native_check_rejects_linked_inputs_and_outputs_before_probe(installation, tmp_path, which):
+        root = installation
+        rule = root / 'rule.md'
+        rule.write_text('# Fixture\n')
+        output = root / 'report.json'
+        target = tmp_path / 'preserved'
+        target.write_bytes(b'unchanged')
+        if which == 'rule':
+            rule.unlink()
+            rule.symlink_to(target)
+            link = rule
+        elif which == 'output':
+            output.symlink_to(target)
+            link = output
+        else:
+            link = root / 'linked-parent'
+            link.symlink_to(tmp_path, target_is_directory=True)
+            output = link / 'report.json'
+        result = python_script(root, 'checks/check_human_guide_search.py', rule, '--output', output)
+        assert result.returncode != 0
+>       assert str(link) in result.stderr
+E       assert '/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link0/installation/rule.md' in ''
+E        +  where '/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link0/installation/rule.md' = str(PosixPath('/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link0/installation/rule.md'))
+E        +  and   '' = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...cbjf-raw.json",\n  "check_sha256": "ac459008654c74db2c0af92c42d30fb3896010478715a3726ca6f373e30f1998"\n}\n', stderr='').stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:96: AssertionError
+___ test_native_check_rejects_linked_inputs_and_outputs_before_probe[output] ___
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link1/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link1')
+which = 'output'
+
+    @pytest.mark.parametrize('which', ['rule', 'output', 'output-parent'])
+    def test_native_check_rejects_linked_inputs_and_outputs_before_probe(installation, tmp_path, which):
+        root = installation
+        rule = root / 'rule.md'
+        rule.write_text('# Fixture\n')
+        output = root / 'report.json'
+        target = tmp_path / 'preserved'
+        target.write_bytes(b'unchanged')
+        if which == 'rule':
+            rule.unlink()
+            rule.symlink_to(target)
+            link = rule
+        elif which == 'output':
+            output.symlink_to(target)
+            link = output
+        else:
+            link = root / 'linked-parent'
+            link.symlink_to(tmp_path, target_is_directory=True)
+            output = link / 'report.json'
+        result = python_script(root, 'checks/check_human_guide_search.py', rule, '--output', output)
+        assert result.returncode != 0
+>       assert str(link) in result.stderr
+E       assert '/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link1/installation/report.json' in ''
+E        +  where '/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link1/installation/report.json' = str(PosixPath('/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link1/installation/report.json'))
+E        +  and   '' = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...ef5z-raw.json",\n  "check_sha256": "ac459008654c74db2c0af92c42d30fb3896010478715a3726ca6f373e30f1998"\n}\n', stderr='').stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:96: AssertionError
+_ test_native_check_rejects_linked_inputs_and_outputs_before_probe[output-parent] _
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link2/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link2')
+which = 'output-parent'
+
+    @pytest.mark.parametrize('which', ['rule', 'output', 'output-parent'])
+    def test_native_check_rejects_linked_inputs_and_outputs_before_probe(installation, tmp_path, which):
+        root = installation
+        rule = root / 'rule.md'
+        rule.write_text('# Fixture\n')
+        output = root / 'report.json'
+        target = tmp_path / 'preserved'
+        target.write_bytes(b'unchanged')
+        if which == 'rule':
+            rule.unlink()
+            rule.symlink_to(target)
+            link = rule
+        elif which == 'output':
+            output.symlink_to(target)
+            link = output
+        else:
+            link = root / 'linked-parent'
+            link.symlink_to(tmp_path, target_is_directory=True)
+            output = link / 'report.json'
+        result = python_script(root, 'checks/check_human_guide_search.py', rule, '--output', output)
+        assert result.returncode != 0
+>       assert str(link) in result.stderr
+E       assert '/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link2/installation/linked-parent' in ''
+E        +  where '/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link2/installation/linked-parent' = str(PosixPath('/tmp/pytest-of-octadim/pytest-15/test_native_check_rejects_link2/installation/linked-parent'))
+E        +  and   '' = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/pytest-of...qmmb-raw.json",\n  "check_sha256": "ac459008654c74db2c0af92c42d30fb3896010478715a3726ca6f373e30f1998"\n}\n', stderr='').stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:96: AssertionError
+__________ test_node_tool_rejects_links_before_access[file-readFile] ___________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b0/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b0')
+operation = 'readFile', target_kind = 'file'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+>       assert result.returncode != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b0/installation/harness/...test-of-octadim/pytest-15/test_node_tool_rejects_links_b0/installation/probe.mjs'], returncode=0, stdout='', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:121: AssertionError
+___________ test_node_tool_rejects_links_before_access[file-readdir] ___________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b1/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b1')
+operation = 'readdir', target_kind = 'file'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink' in "node:internal/fs/promises:954\n  const result = await PromisePrototypeThen(\n                 ^\n\nError: ENOTDIR: no...th: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b1/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n")
+E        +  where "node:internal/fs/promises:954\n  const result = await PromisePrototypeThen(\n                 ^\n\nError: ENOTDIR: no...th: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b1/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n" = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b1/installation/harness/...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b1/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n").stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:122: AssertionError
+____________ test_node_tool_rejects_links_before_access[file-open] _____________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b2/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b2')
+operation = 'open', target_kind = 'file'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+>       assert result.returncode != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b2/installation/harness/...test-of-octadim/pytest-15/test_node_tool_rejects_links_b2/installation/probe.mjs'], returncode=0, stdout='', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:121: AssertionError
+____________ test_node_tool_rejects_links_before_access[file-stat] _____________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b3/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b3')
+operation = 'stat', target_kind = 'file'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+>       assert result.returncode != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b3/installation/harness/...test-of-octadim/pytest-15/test_node_tool_rejects_links_b3/installation/probe.mjs'], returncode=0, stdout='', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:121: AssertionError
+___________ test_node_tool_rejects_links_before_access[file-import] ____________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b4/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b4')
+operation = 'import', target_kind = 'file'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+>       assert result.returncode != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b4/installation/harness/...test-of-octadim/pytest-15/test_node_tool_rejects_links_b4/installation/alias.mjs'], returncode=0, stdout='', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:121: AssertionError
+________ test_node_tool_rejects_links_before_access[directory-readFile] ________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b5/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b5')
+operation = 'readFile', target_kind = 'directory'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink' in "node:internal/fs/promises:554\n    const bytesRead = (await PromisePrototypeThen(\n                       ^\n\nError:...s_links_b5/installation/probe.mjs:1:36 {\n  errno: -21,\n  code: 'EISDIR',\n  syscall: 'read'\n}\n\nNode.js v22.14.0\n")
+E        +  where "node:internal/fs/promises:554\n    const bytesRead = (await PromisePrototypeThen(\n                       ^\n\nError:...s_links_b5/installation/probe.mjs:1:36 {\n  errno: -21,\n  code: 'EISDIR',\n  syscall: 'read'\n}\n\nNode.js v22.14.0\n" = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b5/installation/harness/..._links_b5/installation/probe.mjs:1:36 {\n  errno: -21,\n  code: 'EISDIR',\n  syscall: 'read'\n}\n\nNode.js v22.14.0\n").stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:122: AssertionError
+________ test_node_tool_rejects_links_before_access[directory-readdir] _________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b6/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b6')
+operation = 'readdir', target_kind = 'directory'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+>       assert result.returncode != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b6/installation/harness/...test-of-octadim/pytest-15/test_node_tool_rejects_links_b6/installation/probe.mjs'], returncode=0, stdout='', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:121: AssertionError
+__________ test_node_tool_rejects_links_before_access[directory-open] __________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b7/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b7')
+operation = 'open', target_kind = 'directory'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+>       assert result.returncode != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b7/installation/harness/...test-of-octadim/pytest-15/test_node_tool_rejects_links_b7/installation/probe.mjs'], returncode=0, stdout='', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:121: AssertionError
+__________ test_node_tool_rejects_links_before_access[directory-stat] __________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b8/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b8')
+operation = 'stat', target_kind = 'directory'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+>       assert result.returncode != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b8/installation/harness/...test-of-octadim/pytest-15/test_node_tool_rejects_links_b8/installation/probe.mjs'], returncode=0, stdout='', stderr='').returncode
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:121: AssertionError
+_________ test_node_tool_rejects_links_before_access[directory-import] _________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b9/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b9')
+operation = 'import', target_kind = 'directory'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink' in "node:internal/modules/esm/resolve:263\n    throw new ERR_UNSUPPORTED_DIR_IMPORT(path, basePath, String(resolved));\n ...\n  url: 'file:///tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b9/target.mjs'\n}\n\nNode.js v22.14.0\n")
+E        +  where "node:internal/modules/esm/resolve:263\n    throw new ERR_UNSUPPORTED_DIR_IMPORT(path, basePath, String(resolved));\n ...\n  url: 'file:///tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b9/target.mjs'\n}\n\nNode.js v22.14.0\n" = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b9/installation/harness/...n  url: 'file:///tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b9/target.mjs'\n}\n\nNode.js v22.14.0\n").stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:122: AssertionError
+_________ test_node_tool_rejects_links_before_access[broken-readFile] __________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b10/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b10')
+operation = 'readFile', target_kind = 'broken'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink' in "node:internal/fs/promises:1169\n  return await PromisePrototypeThen(\n         ^\n\nError: ENOENT: no such file or di...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b10/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n")
+E        +  where "node:internal/fs/promises:1169\n  return await PromisePrototypeThen(\n         ^\n\nError: ENOENT: no such file or di...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b10/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n" = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b10/installation/harness...: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b10/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n").stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:122: AssertionError
+__________ test_node_tool_rejects_links_before_access[broken-readdir] __________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b11/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b11')
+operation = 'readdir', target_kind = 'broken'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink' in "node:internal/fs/promises:954\n  const result = await PromisePrototypeThen(\n                 ^\n\nError: ENOENT: no ...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b11/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n")
+E        +  where "node:internal/fs/promises:954\n  const result = await PromisePrototypeThen(\n                 ^\n\nError: ENOENT: no ...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b11/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n" = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b11/installation/harness...: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b11/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n").stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:122: AssertionError
+___________ test_node_tool_rejects_links_before_access[broken-open] ____________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b12/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b12')
+operation = 'open', target_kind = 'broken'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink' in "node:internal/fs/promises:638\n  return new FileHandle(await PromisePrototypeThen(\n                        ^\n\nErro...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b12/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n")
+E        +  where "node:internal/fs/promises:638\n  return new FileHandle(await PromisePrototypeThen(\n                        ^\n\nErro...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b12/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n" = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b12/installation/harness...: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b12/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n").stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:122: AssertionError
+___________ test_node_tool_rejects_links_before_access[broken-stat] ____________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b13/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b13')
+operation = 'stat', target_kind = 'broken'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink' in "node:internal/fs/promises:1036\n  const result = await PromisePrototypeThen(\n                 ^\n\nError: ENOENT: no...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b13/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n")
+E        +  where "node:internal/fs/promises:1036\n  const result = await PromisePrototypeThen(\n                 ^\n\nError: ENOENT: no...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b13/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n" = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b13/installation/harness...: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b13/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n").stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:122: AssertionError
+__________ test_node_tool_rejects_links_before_access[broken-import] ___________
+
+installation = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b14/installation')
+tmp_path = PosixPath('/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b14')
+operation = 'import', target_kind = 'broken'
+
+    @pytest.mark.parametrize('operation', ['readFile', 'readdir', 'open', 'stat', 'import'])
+    @pytest.mark.parametrize('target_kind', ['file', 'directory', 'broken'])
+    def test_node_tool_rejects_links_before_access(installation, tmp_path, operation, target_kind):
+        root = installation
+        marker = tmp_path / 'executed'
+        target = tmp_path / 'target.mjs'
+        body = "import fs from 'node:fs'; fs.writeFileSync(" + json.dumps(str(marker)) + ", 'executed');\n"
+        if target_kind == 'directory':
+            target.mkdir()
+            (target / 'data').write_text('private-data')
+        elif target_kind == 'file':
+            target.write_text(body)
+        link = root / 'alias.mjs'
+        link.symlink_to(target, target_is_directory=target_kind == 'directory')
+        probe = root / 'probe.mjs'
+        probe.write_text("import fs from 'node:fs/promises'; await fs." + operation + '(' + json.dumps(str(link)) + ");\n")
+        cli = link if operation == 'import' else probe
+        result = subprocess.run(['node', str(root / 'harness/common/scripts/plugin_eval_without_human.mjs'), str(cli)],
+                                cwd=root, capture_output=True, text=True)
+        assert result.returncode != 0
+>       assert 'Symlink' in result.stderr and str(link) in result.stderr
+E       assert ('Symlink' in "node:internal/fs/promises:1169\n  return await PromisePrototypeThen(\n         ^\n\nError: ENOENT: no such file or di...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b14/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n")
+E        +  where "node:internal/fs/promises:1169\n  return await PromisePrototypeThen(\n         ^\n\nError: ENOENT: no such file or di...h: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b14/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n" = CompletedProcess(args=['node', '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b14/installation/harness...: '/tmp/pytest-of-octadim/pytest-15/test_node_tool_rejects_links_b14/installation/alias.mjs'\n}\n\nNode.js v22.14.0\n").stderr
+
+/tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py:122: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[internal-file-common/inbox/old/candidate]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[internal-file-common/testing/evidence/raw]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[internal-file-project/docs]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[external-file-common/inbox/old/candidate]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[external-file-common/testing/evidence/raw]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[external-file-project/docs]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[directory-common/inbox/old/candidate]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[directory-common/testing/evidence/raw]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[directory-project/docs]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[broken-common/inbox/old/candidate]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[broken-common/testing/evidence/raw]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_startup_rejects_every_harness_link_before_repair[broken-project/docs]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_python_tools_reject_tree_link_before_running_work[scripts/run_tests.py]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_python_tools_reject_tree_link_before_running_work[checks/check_human_guide_search.py]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_native_check_rejects_linked_inputs_and_outputs_before_probe[rule]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_native_check_rejects_linked_inputs_and_outputs_before_probe[output]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_native_check_rejects_linked_inputs_and_outputs_before_probe[output-parent]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[file-readFile]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[file-readdir]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[file-open]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[file-stat]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[file-import]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[directory-readFile]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[directory-readdir]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[directory-open]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[directory-stat]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[directory-import]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[broken-readFile]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[broken-readdir]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[broken-open]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[broken-stat]
+FAILED ../../../../tmp/harness-symlinks-stage/harness/common/testing/tests/test_harness_symlinks.py::test_node_tool_rejects_links_before_access[broken-import]
+32 failed, 1 passed in 2.71s

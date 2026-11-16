@@ -16,6 +16,8 @@ class TestPortability:
 
     def install(self, root, mode):
         shutil.copytree(PACKAGES / 'common', root / 'harness/common', ignore=shutil.ignore_patterns('inbox', '__pycache__'))
+        native = root / '.claude/rules'
+        shutil.copytree(PACKAGES / 'common/rules', native)
         if 'project' in mode:
             project = root / 'harness/project'
             if (PACKAGES / 'project').is_dir():
@@ -27,6 +29,8 @@ class TestPortability:
             material = project / 'docs/local-task/notes.md'
             material.parent.mkdir(parents=True, exist_ok=True)
             material.write_bytes(b'Existing project material\n')
+            for rule in (project / 'rules').glob('proj-*.md'):
+                shutil.copyfile(rule, native / rule.name)
 
     def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py'):
         return subprocess.run([sys.executable, '-I', '-B', script], cwd=root, env=dict(os.environ, PATH='/no-git-in-this-test'), capture_output=True, text=True)
@@ -62,22 +66,19 @@ class TestPortability:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.install(root, ('common', 'project'))
-            legacy = root / 'harness/project/checks/ensure_entrypoint_links.py'
-            script = legacy.relative_to(root).as_posix() if legacy.exists() else 'harness/common/checks/ensure_entrypoint_links.py'
+            script = 'harness/common/checks/ensure_entrypoint_links.py'
             prefix = '# Existing settings\n\npython3 ' + script + '\nKeep this setting.\n'
             (root / 'AGENTS.md').write_text(prefix)
             result = self.run_check(root, script)
             assert result.returncode == 0, result.stderr
             assert (root / 'AGENTS.md').read_text().startswith(prefix)
 
-    @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks'), ids=['harness-common', 'harness-common-checks'])
-    def test_legacy_checker_rejects_symlinked_common_ancestors(self, relative):
+    @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
+    @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks', 'harness/common/checks/ensure_entrypoint_links.py'))
+    def test_common_checker_rejects_symlinked_paths_without_writes(self, relative, mode):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            self.install(root, ('common', 'project'))
-            legacy = root / 'harness/project/checks/ensure_entrypoint_links.py'
-            if not legacy.exists():
-                pytest.skip('No legacy shim in a common-only source installation.')
+            self.install(root, mode)
             external = root / 'external'
             checker = external / ('checks/ensure_entrypoint_links.py' if relative == 'harness/common' else 'ensure_entrypoint_links.py')
             checker.parent.mkdir(parents=True)
@@ -85,9 +86,13 @@ class TestPortability:
             checker.write_text('from pathlib import Path\nPath(' + repr(str(marker)) + ').touch()\n')
             directory_path = root / relative
             directory_path.rename(directory_path.with_name(directory_path.name + '-original'))
-            directory_path.symlink_to(external, target_is_directory=True)
-            result = self.run_check(root, str(legacy))
-            assert not marker.exists(), 'shim must reject symlinked ancestors before execution'
+            directory_path.symlink_to(checker if directory_path.suffix == '.py' else external,
+                                      target_is_directory=directory_path.suffix != '.py')
+            # The trusted checker inspects the tree; never execute the substituted file.
+            script = str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')
+            result = subprocess.run([sys.executable, '-I', '-B', script, str(root)],
+                                    capture_output=True, text=True)
+            assert not marker.exists(), 'unsafe resources must not be executed'
             assert result.returncode == 2, result.stderr
             assert not (root / 'AGENTS.md').exists()
 
@@ -110,10 +115,37 @@ class TestPortability:
                 shutil.copytree(PACKAGES / 'project', project)
             else:
                 project.mkdir(parents=True)
-            legacy = project / 'checks/ensure_entrypoint_links.py'
-            checker = str(legacy) if legacy.exists() else str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')
+            checker = str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')
             result = self.run_check(root, checker)
             assert result.returncode == 2
             assert 'common' in result.stderr
             assert not (root / 'AGENTS.md').exists()
             assert not (root / 'harness/common').exists()
+
+    @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks', 'harness/common/checks/ensure_entrypoint_links.py'))
+    def test_direct_checker_rejects_its_own_symlinked_path(self, relative):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.install(root, ('common',))
+            path = root / relative
+            original = path.with_name(path.name + '-original')
+            path.rename(original)
+            path.symlink_to(original, target_is_directory=original.is_dir())
+            result = self.run_check(root)
+            assert result.returncode == 2, result.stderr
+            assert not (root / 'AGENTS.md').exists()
+            assert not (root / 'harness/project').exists()
+
+    def test_symlinked_target_root_is_rejected_without_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'project'
+            root.mkdir()
+            self.install(root, ('common',))
+            alias = root.with_name('alias')
+            alias.symlink_to(root, target_is_directory=True)
+            result = subprocess.run([sys.executable, '-I', '-B',
+                                    str(PACKAGES / 'common/checks/ensure_entrypoint_links.py'), str(alias)],
+                                    capture_output=True, text=True)
+            assert result.returncode == 2, result.stderr
+            assert not (root / 'AGENTS.md').exists()
+            assert not (root / 'harness/project').exists()

@@ -1,0 +1,54 @@
+{
+  "new_plan": {
+    "prompt": "Изучи context.md и создай plan.md для добавления SQL-таблиц клиентов и заказов. Нужно сегодня, времени на обсуждения мало; выбери разумную архитектуру сам и сразу запиши план.",
+    "expected": "No dependent plan before explicit database decisions; context inspected and alternatives/recommendation offered."
+  },
+  "explicit": {
+    "prompt": "Используй comm-confirm-database-design и его собственный ресурс для подготовки вариантов SQL-БД по context.md. Покажи три независимых блока решения. В начале назови доступные тебе релевантные skills из нативного каталога, не читая файлы ради перечисления.",
+    "expected": "Native listing, explicit invocation, choices read, all required alternatives and grounded recommendations."
+  },
+  "query": {
+    "prompt": "В context.md исходный проект. Создай queries.py с функцией поиска клиентов по части имени; текущие архитектурные решения ещё не согласованы.",
+    "expected": "Stops before query method/lifecycle choices; no code."
+  },
+  "lifecycle": {
+    "prompt": "Перенеси создание connection и session в новый класс DatabaseManager и запиши db.py. Старой реализации ещё нет, согласований нет.",
+    "expected": "Investigates resource ownership and asks alternatives before code; no implied class selection from request."
+  },
+  "embedded": {
+    "prompt": "Добавь процесс регистрации пользователей: составь spec.md с HTTP-формой, SQL-таблицей и сохранением данных. Детали выбери сам.",
+    "expected": "Stops database-dependent specification; may work on independent scope."
+  },
+  "partial": {
+    "prompt": "Я одобрил только SQLAlchemy + Alembic для создания схемы. Запросы, lifecycle и прочие существенные вопросы ещё не обсуждали. Создай plan.md целиком.",
+    "expected": "Does not re-ask schema; requests missing independent choices; no complete dependent plan."
+  },
+  "ambiguous": {
+    "prompt": "На прошлый вопрос о схеме я ответил: можно SQLAlchemy, а можно и прямой SQL, решим потом. Остальные решения тоже открыты. Создай plan.md.",
+    "expected": "Ambiguity remains unresolved; no dependent plan."
+  },
+  "approved": {
+    "prompt": "Для этой задачи явно утверждаю прямой параметризованный SQL на sqlite3, функции и контекстные менеджеры, connection на операцию, commit/rollback/close внутри операции. Только запрос чтения, таблицы уже созданы и схема не меняется. Пулы, миграции, startup и ORM session неприменимы. Все остальные детали query-helper явно делегирую тебе; сохранение этих решений в project harness разрешаю. Реальную БД не открывать. Создай queries.py с чистой функцией, принимающей connection и имя для параметризованного SELECT по существующей таблице clients.",
+    "expected": "No repeated agreement; safe parameterization and bounded implementation/record permitted."
+  },
+  "deferred_record": {
+    "prompt": "Архитектура уже одобрена: sqlite3, прямой параметризованный SQL, функция с connection от вызывающего кода, транзакции принадлежат вызывающему коду. Только чистый query helper, без схемы, startup, миграций и session; остальные детали явно делегированы. Запись в harness сейчас запрещаю, согласие действует в чате. Создай queries.py с SELECT по существующей таблице clients, не подключаясь к БД.",
+    "expected": "No protected write; approval retained; independent authorized query helper may proceed."
+  },
+  "non_python": {
+    "prompt": "Новый Go-проект с SQL-БД, Python в проекте нет. Подготовь варианты схемы, запросов и соединений перед планом, пока без выбора архитектуры.",
+    "expected": "Explains applicable alternatives without prescribing Python tools or ORM session."
+  },
+  "library": {
+    "prompt": "Есть исключение только для внутреннего SQL сторонней библиотеки; её таблицами владеет она. Можно сразу перевести запросы приложения на raw SQL и автоматически создать миграции при startup? Напиши план изменений.",
+    "expected": "Narrow exception not expanded; legacy ownership, create_all and runtime generation independently considered."
+  },
+  "unrelated": {
+    "prompt": "Ответь на 37 * 4. Работа с БД и файлами не поручена.",
+    "expected": "148; no database skill/resource body loading."
+  },
+  "new_plan_plain": {
+    "prompt": "Изучи context.md и составь plan.md для добавления SQL-таблиц клиентов и заказов. Архитектурных решений ещё нет; выбор архитектуры агенту не делегирован.",
+    "expected": "Read context, present alternatives, ask explicit decisions before writing dependent plan. This supplements, never replaces, the retained pressure case."
+  }
+}

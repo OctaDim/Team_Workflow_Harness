@@ -1,0 +1,324 @@
+{
+  "method": "plugin-eval estimated-static: ceil(UTF16 text length / 4), not billing/tokenizer usage",
+  "local_harness_startup_without_AGENTS_or_external_plugin_metadata": {
+    "baseline": 7201,
+    "current": 7479,
+    "components": [
+      {
+        "path": "harness/common/START.md",
+        "estimated_tokens": 215
+      },
+      {
+        "path": "harness/project/START.md",
+        "estimated_tokens": 99
+      },
+      {
+        "path": ".claude/rules/comm-ban-harness-symlinks.md",
+        "estimated_tokens": 278
+      },
+      {
+        "path": ".claude/rules/comm-commit-result-boundaries.md",
+        "estimated_tokens": 137
+      },
+      {
+        "path": ".claude/rules/comm-confirm-development-workflow.md",
+        "estimated_tokens": 1531
+      },
+      {
+        "path": ".claude/rules/comm-dependencies-through-uv.md",
+        "estimated_tokens": 289
+      },
+      {
+        "path": ".claude/rules/comm-entrypoint-links-rule.md",
+        "estimated_tokens": 636
+      },
+      {
+        "path": ".claude/rules/comm-human-folder-guides.md",
+        "estimated_tokens": 382
+      },
+      {
+        "path": ".claude/rules/comm-instruction-order.md",
+        "estimated_tokens": 453
+      },
+      {
+        "path": ".claude/rules/comm-package-independence.md",
+        "estimated_tokens": 308
+      },
+      {
+        "path": ".claude/rules/comm-skill-rule-ownership.md",
+        "estimated_tokens": 1390
+      },
+      {
+        "path": ".claude/rules/comm-user-owned-entrypoints.md",
+        "estimated_tokens": 406
+      },
+      {
+        "path": "harness/common/INDEX.md",
+        "estimated_tokens": 716
+      },
+      {
+        "path": "harness/project/INDEX.md",
+        "estimated_tokens": 639
+      }
+    ]
+  },
+  "unchanged_local_skill_metadata": {
+    "estimated_tokens": 536,
+    "components": [
+      {
+        "name": "comm-commit-task-stages",
+        "estimated_tokens": 44
+      },
+      {
+        "name": "comm-create-lazy-claude-codex-skills",
+        "estimated_tokens": 33
+      },
+      {
+        "name": "comm-diagnose-harness-entrypoints",
+        "estimated_tokens": 39
+      },
+      {
+        "name": "comm-install-harness",
+        "estimated_tokens": 38
+      },
+      {
+        "name": "comm-normalize-text-line-endings",
+        "estimated_tokens": 40
+      },
+      {
+        "name": "comm-preserve-harness-knowledge",
+        "estimated_tokens": 42
+      },
+      {
+        "name": "comm-preserve-text-line-endings",
+        "estimated_tokens": 54
+      },
+      {
+        "name": "comm-process-harness-inbox",
+        "estimated_tokens": 26
+      },
+      {
+        "name": "comm-protect-harness-evidence",
+        "estimated_tokens": 43
+      },
+      {
+        "name": "comm-publish-harness-instructions",
+        "estimated_tokens": 39
+      },
+      {
+        "name": "comm-report-plugin-eval-budget",
+        "estimated_tokens": 41
+      },
+      {
+        "name": "comm-resolve-permission-blockers",
+        "estimated_tokens": 51
+      },
+      {
+        "name": "comm-validate-harness-instructions",
+        "estimated_tokens": 46
+      }
+    ]
+  },
+  "skill_baseline_budgets": {
+    "method": "estimated-static",
+    "invocation_policy": {
+      "allow_implicit_invocation": true
+    },
+    "trigger_cost_tokens": {
+      "value": 46,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 48,
+        "moderateMax": 92,
+        "heavyMax": 150
+      },
+      "components": [
+        {
+          "label": "skill-name",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "tokens": 9,
+          "note": "Always-loaded skill identifier"
+        },
+        {
+          "label": "skill-description",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "tokens": 37,
+          "note": "Always-loaded trigger description"
+        }
+      ]
+    },
+    "invoke_cost_tokens": {
+      "value": 407,
+      "band": "moderate",
+      "thresholds": {
+        "goodMax": 220,
+        "moderateMax": 480,
+        "heavyMax": 900
+      },
+      "components": [
+        {
+          "label": "skill-file",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "tokens": 407,
+          "note": "Loaded when the skill is invoked"
+        }
+      ]
+    },
+    "deferred_cost_tokens": {
+      "value": 783,
+      "band": "heavy",
+      "thresholds": {
+        "goodMax": 180,
+        "moderateMax": 520,
+        "heavyMax": 1200
+      },
+      "components": [
+        {
+          "label": "references/evaluation.md",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/skills/comm-validate-harness-instructions/references/evaluation.md",
+          "tokens": 213,
+          "note": "Deferred supporting file"
+        },
+        {
+          "label": "references/validation.md",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/skills/comm-validate-harness-instructions/references/validation.md",
+          "tokens": 570,
+          "note": "Deferred supporting file"
+        }
+      ]
+    },
+    "total_tokens": {
+      "value": 1236,
+      "band": "heavy"
+    }
+  },
+  "skill_current_budgets": {
+    "method": "estimated-static",
+    "invocation_policy": {
+      "allow_implicit_invocation": true
+    },
+    "trigger_cost_tokens": {
+      "value": 46,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 48,
+        "moderateMax": 92,
+        "heavyMax": 150
+      },
+      "components": [
+        {
+          "label": "skill-name",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-13-ban-harness-symlinks/candidate/harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "tokens": 9,
+          "note": "Always-loaded skill identifier"
+        },
+        {
+          "label": "skill-description",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-13-ban-harness-symlinks/candidate/harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "tokens": 37,
+          "note": "Always-loaded trigger description"
+        }
+      ]
+    },
+    "invoke_cost_tokens": {
+      "value": 407,
+      "band": "moderate",
+      "thresholds": {
+        "goodMax": 220,
+        "moderateMax": 480,
+        "heavyMax": 900
+      },
+      "components": [
+        {
+          "label": "skill-file",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-13-ban-harness-symlinks/candidate/harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "tokens": 407,
+          "note": "Loaded when the skill is invoked"
+        }
+      ]
+    },
+    "deferred_cost_tokens": {
+      "value": 846,
+      "band": "heavy",
+      "thresholds": {
+        "goodMax": 180,
+        "moderateMax": 520,
+        "heavyMax": 1200
+      },
+      "components": [
+        {
+          "label": "references/evaluation.md",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-13-ban-harness-symlinks/candidate/harness/common/skills/comm-validate-harness-instructions/references/evaluation.md",
+          "tokens": 276,
+          "note": "Deferred supporting file"
+        },
+        {
+          "label": "references/validation.md",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-13-ban-harness-symlinks/candidate/harness/common/skills/comm-validate-harness-instructions/references/validation.md",
+          "tokens": 570,
+          "note": "Deferred supporting file"
+        }
+      ]
+    },
+    "total_tokens": {
+      "value": 1299,
+      "band": "heavy"
+    }
+  },
+  "rule_budgets": {
+    "method": "estimated-static",
+    "trigger_cost_tokens": {
+      "value": 0,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 1,
+        "moderateMax": 1,
+        "heavyMax": 1
+      },
+      "components": []
+    },
+    "invoke_cost_tokens": {
+      "value": 0,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 1,
+        "moderateMax": 1,
+        "heavyMax": 1
+      },
+      "components": []
+    },
+    "deferred_cost_tokens": {
+      "value": 278,
+      "band": "moderate",
+      "thresholds": {
+        "goodMax": 240,
+        "moderateMax": 640,
+        "heavyMax": 1600
+      },
+      "components": [
+        {
+          "label": "comm-ban-harness-symlinks.md",
+          "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-13-ban-harness-symlinks/candidate/harness/common/rules/comm-ban-harness-symlinks.md",
+          "tokens": 278,
+          "note": "Generic text file budget"
+        }
+      ]
+    },
+    "total_tokens": {
+      "value": 278,
+      "band": "moderate"
+    }
+  },
+  "required_fixes": [],
+  "recommended_fixes": [
+    {
+      "id": "deferred_cost_tokens-budget-high",
+      "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+      "remediation": [
+        "Reduce repeated instruction text and move detail into deferred supporting files."
+      ]
+    }
+  ],
+  "growth_reason": "early symlink boundary and explicit safe analyzer invocation/limitations; required resources retained, no thresholds raised",
+  "native_usage_and_actual_resource_reads": "reported separately per final-v2 native session after completion; static package size is not startup or actual usage"
+}

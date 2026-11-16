@@ -1,0 +1,386 @@
+{
+  "installations": [
+    {
+      "variant": "v0",
+      "mode": "common",
+      "guards_utf8_bytes": 41299,
+      "catalog_metadata_utf8_bytes": 3501,
+      "native_skill_count_including_ce_commit_dependency": 19
+    },
+    {
+      "variant": "v0",
+      "mode": "both",
+      "guards_utf8_bytes": 41299,
+      "catalog_metadata_utf8_bytes": 3501,
+      "native_skill_count_including_ce_commit_dependency": 19
+    },
+    {
+      "variant": "v2",
+      "mode": "common",
+      "guards_utf8_bytes": 41299,
+      "catalog_metadata_utf8_bytes": 3501,
+      "target_full_machine_utf8_bytes": 6680
+    },
+    {
+      "variant": "v2",
+      "mode": "both",
+      "guards_utf8_bytes": 41299,
+      "catalog_metadata_utf8_bytes": 3501,
+      "target_full_machine_utf8_bytes": 6680
+    }
+  ],
+  "comparable_actual_reads_with_dependencies": {
+    "baseline": {
+      "file": "baseline-1-codex-v0-both-plan.json",
+      "reads": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_utf8_bytes": 2132
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_utf8_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-package-independence.md\"'",
+          "output_utf8_bytes": 41299
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-instruction-order.md\"'",
+          "output_utf8_bytes": 3135
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_utf8_bytes": 8475
+        },
+        {
+          "command": "/bin/bash -lc 'cat storage.py APPROVALS.md'",
+          "output_utf8_bytes": 364
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md'",
+          "output_utf8_bytes": 5012
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+          "output_utf8_bytes": 7304
+        }
+      ],
+      "whole_session_usage": [
+        {
+          "input_tokens": 224798,
+          "cached_input_tokens": 195840,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1048,
+          "reasoning_output_tokens": 12
+        }
+      ]
+    },
+    "candidate": [
+      {
+        "file": "r1-codex-v2-both-plan.json",
+        "reads": [
+          {
+            "command": "/bin/bash -lc 'cat harness/common/START.md'",
+            "output_utf8_bytes": 1491
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/project/START.md'",
+            "output_utf8_bytes": 641
+          },
+          {
+            "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+            "output_utf8_bytes": 12001
+          },
+          {
+            "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+            "output_utf8_bytes": 41299
+          },
+          {
+            "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+            "output_utf8_bytes": 12458
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+            "output_utf8_bytes": 4587
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+            "output_utf8_bytes": 3888
+          },
+          {
+            "command": "/bin/bash -lc 'cat storage.py APPROVALS.md; if [ -f PLAN.md ]; then cat PLAN.md; fi'",
+            "output_utf8_bytes": 364
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+            "output_utf8_bytes": 7473
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+            "output_utf8_bytes": 8016
+          }
+        ],
+        "whole_session_usage": [
+          {
+            "input_tokens": 203001,
+            "cached_input_tokens": 181632,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 1268,
+            "reasoning_output_tokens": 10
+          }
+        ]
+      },
+      {
+        "file": "r2-codex-v2-both-plan.json",
+        "reads": [
+          {
+            "command": "/bin/bash -lc 'cat harness/common/START.md'",
+            "output_utf8_bytes": 1491
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/project/START.md'",
+            "output_utf8_bytes": 641
+          },
+          {
+            "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+            "output_utf8_bytes": 12001
+          },
+          {
+            "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+            "output_utf8_bytes": 41299
+          },
+          {
+            "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md'\"",
+            "output_utf8_bytes": 5081
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+            "output_utf8_bytes": 4587
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+            "output_utf8_bytes": 3888
+          },
+          {
+            "command": "/bin/bash -lc 'cat storage.py APPROVALS.md; git status --short; if test -f PLAN.md; then cat PLAN.md; fi'",
+            "output_utf8_bytes": 456
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+            "output_utf8_bytes": 7473
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+            "output_utf8_bytes": 8016
+          }
+        ],
+        "whole_session_usage": [
+          {
+            "input_tokens": 227922,
+            "cached_input_tokens": 207232,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 1260,
+            "reasoning_output_tokens": 11
+          }
+        ]
+      },
+      {
+        "file": "r3-codex-v2-both-plan.json",
+        "reads": [
+          {
+            "command": "/bin/bash -lc 'cat harness/common/START.md'",
+            "output_utf8_bytes": 1491
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+            "output_utf8_bytes": 12001
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/project/START.md'",
+            "output_utf8_bytes": 641
+          },
+          {
+            "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+            "output_utf8_bytes": 41299
+          },
+          {
+            "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+            "output_utf8_bytes": 3135
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+            "output_utf8_bytes": 4587
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+            "output_utf8_bytes": 3888
+          },
+          {
+            "command": "/bin/bash -lc 'cat storage.py APPROVALS.md PLAN.md'",
+            "output_utf8_bytes": 404
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-commit-task-stages/SKILL.md'",
+            "output_utf8_bytes": 5012
+          },
+          {
+            "command": "/bin/bash -lc 'cat harness/common/skills/comm-confirm-database-design/references/choices.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+            "output_utf8_bytes": 8016
+          }
+        ],
+        "whole_session_usage": [
+          {
+            "input_tokens": 195685,
+            "cached_input_tokens": 176256,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 1211,
+            "reasoning_output_tokens": 24
+          }
+        ]
+      }
+    ]
+  },
+  "static_budgets": {
+    "v0": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 42,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-19-sql-alternative-distinctness/candidate-v0/comm-confirm-database-design/SKILL.md",
+            "tokens": 7,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-19-sql-alternative-distinctness/candidate-v0/comm-confirm-database-design/SKILL.md",
+            "tokens": 35,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 477,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-19-sql-alternative-distinctness/candidate-v0/comm-confirm-database-design/SKILL.md",
+            "tokens": 477,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 1015,
+        "band": "heavy",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/choices.md",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-19-sql-alternative-distinctness/candidate-v0/comm-confirm-database-design/references/choices.md",
+            "tokens": 1015,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 1534,
+        "band": "heavy"
+      }
+    },
+    "v2": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 42,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-19-sql-alternative-distinctness/candidate-v2/comm-confirm-database-design/SKILL.md",
+            "tokens": 7,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-19-sql-alternative-distinctness/candidate-v2/comm-confirm-database-design/SKILL.md",
+            "tokens": 35,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 477,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-19-sql-alternative-distinctness/candidate-v2/comm-confirm-database-design/SKILL.md",
+            "tokens": 477,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 1193,
+        "band": "heavy",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/choices.md",
+            "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-19-sql-alternative-distinctness/candidate-v2/comm-confirm-database-design/references/choices.md",
+            "tokens": 1193,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 1712,
+        "band": "heavy"
+      }
+    }
+  },
+  "notes": [
+    "All actual cat/sed tool outputs are counted, including dependencies and repeated reads; this is tool output, not hidden model context or exact file I/O bytes.",
+    "Whole-session usage includes startup, instructions, caching and answers. One baseline sample versus three current samples is not a cost-effectiveness estimate.",
+    "Available machine resources assessed in full by the filtered analyzer; human guide bodies excluded.",
+    "Startup guards and metadata unchanged. Supporting resource grows 1015 to 1193 static tokens (+178); above 1000 goal, below >1200 resolution trigger. All old clauses retained; no thresholds raised, artificial splits, hidden resources or inflated baseline."
+  ]
+}

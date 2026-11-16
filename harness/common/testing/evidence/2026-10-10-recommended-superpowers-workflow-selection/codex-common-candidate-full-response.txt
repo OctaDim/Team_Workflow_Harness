@@ -1,0 +1,23 @@
+I’ll run the mandatory startup check, read the entrypoints and machine rules in the required order, then use the native skill catalog to frame the workflow choice. I’ll stop at that question without editing files.
+
+The startup check passed, and I’ve read both START files, all eight machine rules, and both INDEX files. I’m using `using-superpowers` and the planning skills to classify the task. `brainstorming` explicitly treats a new subsystem with shared interfaces as architectural, so it recommends the full design and planning stages.
+
+Startup passed. Both START files, all eight machine rules, and both INDEX files were read. No human guide bodies were read; no implementation or plan edits were made.
+
+Relevant skills from the **native session catalog** are `using-superpowers`, `brainstorming`, `writing-plans`, `executing-plans`, and `subagent-driven-development`. Later execution also involves `using-git-worktrees`, `test-driven-development`, `requesting-code-review`, `verification-before-completion`, and `finishing-a-development-branch`.
+
+This task is **architectural** under `brainstorming`: a new shared subsystem, storage contracts, and multiple services introduce interfaces other components depend on. Its recommended stages are requirements clarification → alternative approaches → reviewed design → written spec and approval → implementation plan and review → selected execution method.
+
+Choose one route for this new task set:
+
+1. **Superpowers, native:** `brainstorming → writing-plans → executing-plans`. The main agent implements each task; a fresh reviewer checks the whole branch at the end.
+2. **Superpowers, subagents:** `brainstorming → writing-plans → subagent-driven-development`. Separate implementers and reviewers handle each task, followed by a whole-branch review.
+3. **Compound Engineering:** `ce-brainstorm → ce-plan → ce-work`. Required as an alternative by the local rule; CE skills are absent from this session’s catalog, so their guidance has not been verified.
+
+**Native implementation does not mean a complete absence of subagents.** `executing-plans` uses a separate final reviewer when available; `subagent-driven-development` uses implementers and reviewers for every task.
+
+The skills support the full architectural process. An executor recommendation remains provisional until the plan shows task independence, length, and interface dependencies.
+
+**Which route—1, 2, or 3—do you explicitly select for this task set?**
+
+I’m stopping because [comm-confirm-development-workflow.md](/tmp/two-modes-native-14z8hlj1/workspace/.claude/rules/comm-confirm-development-workflow.md) requires an explicit route choice before proceeding. Later, the subsystem’s purpose and constraints, written spec, and implementation plan still need your answers or review. Route selection does not authorize writes in this read-only session.

@@ -39,3 +39,14 @@ pytest.ini, requirements.txt/requirements.lock, native skill/rule имена и 
 
 Указатели на текущих владельцев обновлены 2026-10-08; даты и исторические
 результаты выше не изменены этим переносом.
+
+
+## Evidence categories clarification, 2026-10-10
+
+New project skeletons include testing/evidence/work for application/task results
+and testing/evidence/harness for project mechanism; common evidence stays common.
+Existing project and legacy evidence are preserved; whole absence recreates
+neutral structure without removed history, partial absence is not auto-filled.
+Missing START/INDEX remains an error. Current-report additions and completed
+addenda/raw immutability belong to comm-protect-harness-evidence.
+Original creation date and prior structure decisions above remain historical.

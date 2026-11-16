@@ -1,0 +1,20 @@
+Сначала выполню проверку и прочитаю инструкции в указанном порядке. Затем оценю, разрешает ли ответ «да, на твой выбор» сохранение заметки.
+
+В нативном каталоге доступны `using-superpowers`, `brainstorming`, `ce-brainstorm`, `ce-plan`, `ce-work`, `comm-preserve-harness-knowledge` и `comm-resolve-permission-blockers`. Для этой оценки применяю `using-superpowers` и `comm-resolve-permission-blockers`; сохранение заметки относится к `comm-preserve-harness-knowledge`. Скиллы `writing-plans`, `executing-plans` и `subagent-driven-development` в каталоге не представлены.
+
+Выполнение **не разрешено**: ответ «да, на твой выбор» не выбирает маршрут однозначно. Правило [comm-confirm-development-workflow.md](/tmp/two-modes-native-aybnpnmj/workspace/.claude/rules/comm-confirm-development-workflow.md) прямо указывает: «“на твой выбор” … не разрешают выполнение». Агент должен уточнить выбор и ждать, не выбирая маршрут самостоятельно.
+
+Релевантные доступные нативные скиллы:
+
+- `using-superpowers` — выбор применимых процедур.
+- `brainstorming`, `ce-brainstorm`, `ce-plan`, `ce-work` — процедуры предлагаемых маршрутов.
+- `comm-preserve-harness-knowledge` — размещение обычной заметки приложения.
+- `comm-resolve-permission-blockers` — остановка при недостающем решении пользователя.
+
+`writing-plans`, `executing-plans`, `subagent-driven-development` в нативном каталоге отсутствуют.
+
+Обычная заметка приложения может сохраняться прямо в `harness/project/docs/example.md`, без inbox. Однако это не отменяет обязательного выбора маршрута. Файл не создан; реализация, публикация и коммиты не выполнялись.
+
+Необходимое уточнение после такого ответа: «Какой именно из показанных маршрутов вы выбираете для сохранения заметки?»
+
+Остановка следует также из [comm-resolve-permission-blockers/SKILL.md](/tmp/two-modes-native-aybnpnmj/workspace/harness/common/skills/comm-resolve-permission-blockers/SKILL.md): «После запроса остановись и дождись ответа».

@@ -1,0 +1,1007 @@
+{
+  "codex_runs": [
+    {
+      "file": "native-codex-both-baseline-implicit-v0-fixture2.json",
+      "mode": "both",
+      "case": "implicit",
+      "phase": "baseline",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": false,
+      "skill_read_commands": [],
+      "direct_human_read_candidates": [],
+      "changed_files": [],
+      "final": "Для обычной команды `python3 app.py` приложение **пока не готово**: отсутствует `config.local.json`, запуск и функциональная проверка завершаются с кодом 2.\n\nС временным конфигом вне проекта демо работает: `FUNCTION_OK:demo-ready`, код 0. Прошедшие тесты подтверждают работу с тестовой конфигурацией.\n\nДля рабочего запуска нужны реальные параметры через `config.local.json` или `DEMO_CONFIG` и доступный ресурс.\n\nОбязательный старт и чтение выполнены; `README.human.md` не читал. Приложение, рабочие конфиги и harness не менял, коммитов не делал.",
+      "usage": {
+        "input_tokens": 224673,
+        "cached_input_tokens": 199936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1237,
+        "reasoning_output_tokens": 38
+      },
+      "startup_tool_outputs_characters": 45031,
+      "all_tool_outputs_characters": 47472,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 27
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 535
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "output_characters": 24713
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 9461
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 23
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 99
+        },
+        {
+          "command": "/bin/bash -lc 'cat app.py test_app.py LAUNCH.md config.example.json .gitignore'",
+          "exit_code": 0,
+          "output_characters": 1158
+        },
+        {
+          "command": "/bin/bash -lc 'git status --short'",
+          "exit_code": 128,
+          "output_characters": 142
+        },
+        {
+          "command": "/bin/bash -lc \"python3 -B - <<'PY'\nimport json, os, subprocess, tempfile\nfrom pathlib import Path\nfor args in ([\\\"python3\\\", \\\"-B\\\", \\\"app.py\\\"], [\\\"python3\\\", \\\"-B\\\", \\\"app.py\\\", \\\"--check\\\"]):\n    result = subprocess.run(args, capture_output=True, text=True)\n    print('COMMAND:', ' '.join(args))\n    print('EXIT:', result.returncode)\n    print(result.stdout + result.stderr, end='')\nwith tempfile.TemporaryDirectory(prefix='demo-readiness-') as directory:\n    config = Path(directory) / 'demo.json'\n    config.write_text(json.dumps({'resource': str(Path('resources/demo.txt').absolute())}))\n    result = subprocess.run(['python3', '-B', 'app.py', '--check'], env=dict(os.environ, DEMO_CONFIG=str(config)), capture_output=True, text=True)\n    print('TEMPORARY DEMO FUNCTION CHECK')\n    print('EXIT:', result.returncode)\n    print(result.stdout + result.stderr, end='')\nPY\"",
+          "exit_code": 0,
+          "output_characters": 237
+        }
+      ],
+      "elapsed_seconds": 47.45
+    },
+    {
+      "file": "native-codex-both-candidate-cases-v1-fixture2.json",
+      "mode": "both",
+      "case": "cases",
+      "phase": "candidate",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": true,
+      "skill_read_commands": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 1594
+        }
+      ],
+      "direct_human_read_candidates": [],
+      "changed_files": [],
+      "final": "Обязательная стартовая проверка прошла; START, все машинные правила и INDEX прочитаны в установленном порядке. `README.human.md` не читал. Приложение не запускал, файлы не менял, коммитов и субагентов не было.\n\nРелевантные скиллы нативного каталога: `comm-verify-application-startup` (применён), `comm-separate-application-config`, `comm-resolve-permission-blockers` (для соответствующих действий при реальном устранении пробелов).\n\n| № | Действие по `comm-verify-application-startup` | Статус по данным случая |\n|---|---|---|\n| 1 | Отделить тестовое окружение от рабочего; указать отсутствие обычного DSN. Временные TOML и БД не копировать. | Обычный запуск и функция **не проверены**. Даже успешные тесты подтверждают только тестовое окружение. |\n| 2 | Зафиксировать результат health `model-not-loaded`; определить причину незагрузки модели в пределах поручения. | Процесс запущен, но функция **не готова**. Проверка функции неуспешна. |\n| 3 | Использовать существующие действительные результаты проверки этой версии с поддерживаемым постоянным env. Повторный запуск не нужен. | Обычная команда и функция **проверены в указанной установке**. |\n| 4 | Указать два конкретных пробела: обязательный секрет и файл модели. Не придумывать значения и не скачивать модель. | Подготовка заблокирована отсутствующими ресурсами; запуск и функция **не проверены**. |\n| 5 | Не выполнять платную production-операцию. Указать, что функциональная проверка требует отдельного разрешения. | Функция **не проверена**; готовность не подтверждена. Факт запуска оценивается отдельно, если он известен. |\n| 6 | Не запускать проверки приложения из-за изменения пунктуации. | Проверка запуска **не требуется этой правкой**; прежний статус сохраняется, нового подтверждения готовности нет. |\n| 7 | Не назначать известные тестовые БД и порты рабочими. Указать отсутствие согласованной рабочей установки. | Обычный запуск и функция в рабочей установке **не проверены**. |\n| 8 | Использовать согласованный поддерживаемый менеджер секретов; локальный TOML не создавать. Проверять полноту входов через предусмотренный источник. | Отсутствие TOML **не является дефектом или блокером**. Без результатов обычного запуска и функции их статус остаётся **не проверено**. |\n\nЭто оценка предоставленных фактов: новые проверки и разрешения для неё не нужны.",
+      "usage": {
+        "input_tokens": 245945,
+        "cached_input_tokens": 211456,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1280,
+        "reasoning_output_tokens": 0
+      },
+      "startup_tool_outputs_characters": 45573,
+      "all_tool_outputs_characters": 48024,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 27
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-confirm-database-design.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 9089
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 23
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 1594
+        }
+      ],
+      "elapsed_seconds": 55.35
+    },
+    {
+      "file": "native-codex-both-candidate-explicit-v1.json",
+      "mode": "both",
+      "case": "explicit",
+      "phase": "candidate",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": true,
+      "skill_read_commands": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 3390
+        }
+      ],
+      "direct_human_read_candidates": [],
+      "changed_files": [
+        "config.local.json"
+      ],
+      "final": "Демо готово к обычному запуску из корня проекта. Создан `config.local.json` с ресурсом `resources/demo.txt`.\n\nПроверки:\n- `python3 test_app.py` — `Tests passed`.\n- `python3 app.py` — успешно.\n- `python3 app.py --check` — `FUNCTION_OK:demo-ready`.\n\nОбязательный старт и чтение выполнены, `README.human.md` не читался. Harness не менял, коммитов не делал.\n\nЛокальный конфиг указан в `.gitignore`; проверить Git-игнорирование и индекс невозможно: каталог не является Git-репозиторием.",
+      "usage": {
+        "input_tokens": 319374,
+        "cached_input_tokens": 298624,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1320,
+        "reasoning_output_tokens": 21
+      },
+      "startup_tool_outputs_characters": 43761,
+      "all_tool_outputs_characters": 50436,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 886
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2886
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 3390
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 99
+        },
+        {
+          "command": "/bin/bash -lc 'cat app.py test_app.py config.example.json LAUNCH.md .gitignore resources/demo.txt'",
+          "exit_code": 0,
+          "output_characters": 1169
+        },
+        {
+          "command": "/bin/bash -lc 'git status --short'",
+          "exit_code": 128,
+          "output_characters": 142
+        },
+        {
+          "command": "/bin/bash -lc \"python3 -c 'import os; from pathlib import Path; print(\\\"DEMO_CONFIG override present:\\\", \\\"DEMO_CONFIG\\\" in os.environ); print(\\\"Local config exists:\\\", Path(\\\"config.local.json\\\").exists())'\"",
+          "exit_code": 0,
+          "output_characters": 63
+        },
+        {
+          "command": "/bin/bash -lc 'git ls-files --error-unmatch -- config.local.json'",
+          "exit_code": 128,
+          "output_characters": 142
+        },
+        {
+          "command": "/bin/bash -lc 'python3 app.py'",
+          "exit_code": 0,
+          "output_characters": 48
+        },
+        {
+          "command": "/bin/bash -lc 'git check-ignore -v --no-index -- config.local.json'",
+          "exit_code": 128,
+          "output_characters": 142
+        },
+        {
+          "command": "/bin/bash -lc 'python3 test_app.py'",
+          "exit_code": 0,
+          "output_characters": 13
+        },
+        {
+          "command": "/bin/bash -lc 'python3 app.py --check'",
+          "exit_code": 0,
+          "output_characters": 23
+        }
+      ],
+      "elapsed_seconds": 63.45
+    },
+    {
+      "file": "native-codex-both-candidate-implicit-v1.json",
+      "mode": "both",
+      "case": "implicit",
+      "phase": "candidate",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": true,
+      "skill_read_commands": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 1594
+        }
+      ],
+      "direct_human_read_candidates": [],
+      "changed_files": [],
+      "final": "Приложение пока **не готово** для обычной команды `python3 app.py`.\n\n- Обязательный старт и чтение выполнены в установленном порядке; `README.human.md` не читал.\n- Применён релевантный скилл `comm-verify-application-startup`.\n- `python3 app.py` и `python3 app.py --check` завершаются с кодом 2: отсутствует `config.local.json`.\n- Прошедшие тесты используют временный `DEMO_CONFIG` и не подтверждают готовность обычного запуска.\n\nНе хватает рабочей конфигурации с известным значением `resource` и проверки указанного ресурса. Значения не выдумывал; приложение, конфиги и harness не менял, коммитов не делал.",
+      "usage": {
+        "input_tokens": 268309,
+        "cached_input_tokens": 249344,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 983,
+        "reasoning_output_tokens": 0
+      },
+      "startup_tool_outputs_characters": 43761,
+      "all_tool_outputs_characters": 47709,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 27
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 23
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 1594
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 99
+        },
+        {
+          "command": "/bin/bash -lc 'cat LAUNCH.md app.py test_app.py config.example.json .gitignore'",
+          "exit_code": 0,
+          "output_characters": 1158
+        },
+        {
+          "command": "/bin/bash -lc 'git status --short'",
+          "exit_code": 128,
+          "output_characters": 142
+        },
+        {
+          "command": "/bin/bash -lc 'python3 app.py'",
+          "exit_code": 2,
+          "output_characters": 49
+        },
+        {
+          "command": "/bin/bash -lc 'python3 app.py --check'",
+          "exit_code": 2,
+          "output_characters": 49
+        }
+      ],
+      "elapsed_seconds": 51.53
+    },
+    {
+      "file": "native-codex-both-candidate-unrelated-v1-fixture2.json",
+      "mode": "both",
+      "case": "unrelated",
+      "phase": "candidate",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": false,
+      "skill_read_commands": [],
+      "direct_human_read_candidates": [],
+      "changed_files": [],
+      "final": "Обязательная стартовая проверка прошла; START, все машинные Markdown-правила и INDEX прочитаны в установленном порядке. README.human.md не читал.\n\nДля вычисления релевантных скиллов в предоставленном нативном каталоге нет. `comm-verify-application-startup` здесь не применяется: изменение и запуск приложения не поручены. Тела скиллов ради перечисления не открывал.\n\n**37 × 4 = 148.**\n\nКоммитов, изменений harness и запуска приложения не выполнял; субагентов не привлекал.",
+      "usage": {
+        "input_tokens": 208625,
+        "cached_input_tokens": 172544,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 692,
+        "reasoning_output_tokens": 0
+      },
+      "startup_tool_outputs_characters": 43761,
+      "all_tool_outputs_characters": 44618,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 27
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 23
+        }
+      ],
+      "elapsed_seconds": 42.39
+    },
+    {
+      "file": "native-codex-common-baseline-implicit-v0-network.json",
+      "mode": "common",
+      "case": "implicit",
+      "phase": "baseline",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": false,
+      "skill_read_commands": [],
+      "direct_human_read_candidates": [],
+      "changed_files": [],
+      "final": "Для обычной команды `python3 app.py` приложение **не готово**: запуск и `--check` завершаются с кодом 2 — отсутствует `config.local.json`.\n\nДемо с временным конфигом успешно прошло функциональную проверку: `FUNCTION_OK:demo-ready`. Для рабочей установки нужны реальные настройки ресурса в `config.local.json` либо конфиге, указанном через `DEMO_CONFIG`; вы их не предоставили.\n\nОбязательный старт и чтение выполнены, `README.human.md` не читал. Релевантный скилл каталога — `comm-separate-application-config`. Приложение, рабочие конфиги и harness не менял, коммитов не делал.",
+      "usage": {
+        "input_tokens": 268570,
+        "cached_input_tokens": 249216,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1182,
+        "reasoning_output_tokens": 23
+      },
+      "startup_tool_outputs_characters": 44570,
+      "all_tool_outputs_characters": 46945,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 300
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 535
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 24713
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 1473
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/common/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 149
+        },
+        {
+          "command": "/bin/bash -lc 'cat LAUNCH.md app.py config.example.json test_app.py .gitignore'",
+          "exit_code": 0,
+          "output_characters": 1158
+        },
+        {
+          "command": "/bin/bash -lc 'git status --short'",
+          "exit_code": 128,
+          "output_characters": 142
+        },
+        {
+          "command": "/bin/bash -lc 'python3 app.py'",
+          "exit_code": 2,
+          "output_characters": 49
+        },
+        {
+          "command": "/bin/bash -lc 'python3 app.py --check'",
+          "exit_code": 2,
+          "output_characters": 49
+        },
+        {
+          "command": "/bin/bash -lc \"python3 -B - <<'PY'\nimport json, os, subprocess, sys, tempfile\nfrom pathlib import Path\nwith tempfile.TemporaryDirectory(prefix='demo-readiness-') as directory:\n    config = Path(directory) / 'demo.json'\n    config.write_text(json.dumps({'resource': 'resources/demo.txt'}))\n    result = subprocess.run([sys.executable, '-B', 'app.py', '--check'], env=dict(os.environ, DEMO_CONFIG=str(config)), text=True, capture_output=True)\n    print(result.stdout, end='')\n    print(result.stderr, end='')\n    sys.exit(result.returncode)\nPY\"",
+          "exit_code": 0,
+          "output_characters": 23
+        }
+      ],
+      "elapsed_seconds": 51.87
+    },
+    {
+      "file": "native-codex-common-baseline-implicit-v0.json",
+      "mode": "common",
+      "case": "implicit",
+      "phase": "baseline",
+      "completed": false,
+      "exit_code": 1,
+      "skill_body_read": false,
+      "skill_read_commands": [],
+      "direct_human_read_candidates": [],
+      "changed_files": [],
+      "final": null,
+      "usage": null,
+      "startup_tool_outputs_characters": 0,
+      "all_tool_outputs_characters": 0,
+      "all_tool_commands": [],
+      "elapsed_seconds": 20.22
+    },
+    {
+      "file": "native-codex-common-candidate-cases-v1.json",
+      "mode": "common",
+      "case": "cases",
+      "phase": "candidate",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": true,
+      "skill_read_commands": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md .agents/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 3188
+        }
+      ],
+      "direct_human_read_candidates": [],
+      "changed_files": [],
+      "final": "Обязательный старт выполнен успешно; START, все машинные правила и INDEX прочитаны в установленном порядке. `README.human.md` не читал. Приложение не запускал, файлы не менял, коммиты не создавал.\n\nРелевантные скиллы нативного каталога: `comm-verify-application-startup` (применён), `comm-separate-application-config`, `comm-resolve-permission-blockers` (условно, при соответствующих действиях).\n\n| № | Действие по ситуации | Статус |\n|---|---|---|\n| 1 | Указать отсутствие рабочего DSN; получить согласованное значение через поддерживаемый источник. Временные TOML и БД не переносить автоматически. | Обычный запуск и функция **не проверены**. Даже успешные тесты подтверждают только тестовую установку. |\n| 2 | Зафиксировать `model-not-loaded`; определить причину незагрузки модели, затем в разрешённых пределах повторить проверку функции. | Процесс запущен; проверка готовности функции **не пройдена**. |\n| 3 | Переиспользовать действительные свидетельства для той же согласованной установки и версии. Повторный запуск не нужен. | Обычный запуск и функция **проверены**; поддерживаемый постоянный env допустим. |\n| 4 | Назвать два пробела: обязательный секрет и файл модели. Не выдумывать значения и не скачивать модель. | Подготовка **заблокирована отсутствующими ресурсами**; запуск и функция не проверены. |\n| 5 | Не выполнять платную production-операцию. Указать, что для этой проверки требуется отдельное разрешение. | Функция **не проверена**; готовность целиком не подтверждена. |\n| 6 | Не проводить повторные проверки запуска или тяжёлые модельные тесты из-за пунктуации. | Новая проверка **не требуется**; прежний статус сохраняется. |\n| 7 | Получить согласованные рабочие параметры установки; не считать известные тестовые БД и порты рабочими по умолчанию. | Согласованная рабочая установка **не определена**; её запуск и функция не проверены. |\n| 8 | Использовать согласованный менеджер секретов; не создавать TOML ради формального наличия. Перед заявлением о готовности нужны свидетельства получения настроек, обычного запуска и работы функции. | Отсутствие TOML **не является дефектом**. По приведённым фактам запуск и функция ещё не подтверждены. |\n\nЭто классификация предоставленных фактов: новые проверки приложения не выполнялись.",
+      "usage": {
+        "input_tokens": 245523,
+        "cached_input_tokens": 226432,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1260,
+        "reasoning_output_tokens": 0
+      },
+      "startup_tool_outputs_characters": 45484,
+      "all_tool_outputs_characters": 49529,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 300
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 1473
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md .agents/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 3188
+        }
+      ],
+      "elapsed_seconds": 53.97
+    },
+    {
+      "file": "native-codex-common-candidate-explicit-v1.json",
+      "mode": "common",
+      "case": "explicit",
+      "phase": "candidate",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": true,
+      "skill_read_commands": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md .agents/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 4984
+        }
+      ],
+      "direct_human_read_candidates": [],
+      "changed_files": [
+        "config.local.json"
+      ],
+      "final": "Демо готово к обычному запуску из корня проекта.\n\n- Создан [config.local.json](/tmp/startup-readiness-2p5wu7tp/project/config.local.json) с ресурсом `resources/demo.txt`.\n- Тест: `python3 test_app.py` — `Tests passed`.\n- Обычный запуск: `python3 app.py` — успешно.\n- Проверка функции: `python3 app.py --check` — `FUNCTION_OK:demo-ready`.\n\nОбязательный старт и чтение выполнены; `README.human.md` не читался. Harness не менялся, коммиты не создавались.\n\nЛокальный конфиг указан в `.gitignore`; проверить его Git-статус невозможно: каталог не является Git-репозиторием.",
+      "usage": {
+        "input_tokens": 260418,
+        "cached_input_tokens": 227328,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1284,
+        "reasoning_output_tokens": 20
+      },
+      "startup_tool_outputs_characters": 41545,
+      "all_tool_outputs_characters": 49814,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 300
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "output_characters": 3338
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 1473
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-application-startup/SKILL.md harness/common/skills/comm-separate-application-config/SKILL.md .agents/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 4984
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 99
+        },
+        {
+          "command": "/bin/bash -lc 'git status --short'",
+          "exit_code": 128,
+          "output_characters": 142
+        },
+        {
+          "command": "/bin/bash -lc 'cat app.py test_app.py config.example.json LAUNCH.md .gitignore resources/demo.txt'",
+          "exit_code": 0,
+          "output_characters": 1169
+        },
+        {
+          "command": "/bin/bash -lc 'python3 test_app.py'",
+          "exit_code": 0,
+          "output_characters": 13
+        },
+        {
+          "command": "/bin/bash -lc \"python3 -c 'import os; from pathlib import Path; print(\\\"DEMO_CONFIG override present:\\\", \\\"DEMO_CONFIG\\\" in os.environ); print(\\\"Local config exists:\\\", Path(\\\"config.local.json\\\").exists())'\"",
+          "exit_code": 0,
+          "output_characters": 63
+        },
+        {
+          "command": "/bin/bash -lc 'python3 app.py'",
+          "exit_code": 0,
+          "output_characters": 48
+        },
+        {
+          "command": "/bin/bash -lc 'python3 app.py --check'",
+          "exit_code": 0,
+          "output_characters": 23
+        },
+        {
+          "command": "/bin/bash -lc 'git check-ignore -v --no-index -- config.local.json'",
+          "exit_code": 128,
+          "output_characters": 142
+        },
+        {
+          "command": "/bin/bash -lc 'git ls-files --error-unmatch -- config.local.json'",
+          "exit_code": 128,
+          "output_characters": 142
+        }
+      ],
+      "elapsed_seconds": 56.0
+    },
+    {
+      "file": "native-codex-common-candidate-implicit-v1.json",
+      "mode": "common",
+      "case": "implicit",
+      "phase": "candidate",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": true,
+      "skill_read_commands": [
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 1594
+        }
+      ],
+      "direct_human_read_candidates": [],
+      "changed_files": [],
+      "final": "Приложение пока не готово для обычной команды `python3 app.py`.\n\n- Обязательный старт и чтение выполнены; `README.human.md` не читал.\n- Применён релевантный скилл `comm-verify-application-startup`.\n- Обычный запуск и `python3 app.py --check` завершились с кодом 2: отсутствует `config.local.json`.\n- Тесты, по вашим данным, прошли. Они используют временный `DEMO_CONFIG`, поэтому готовность рабочей установки не подтверждают.\n\nДля завершения нужны рабочая конфигурация (`config.local.json` либо постоянный `DEMO_CONFIG`) и известный путь ресурса в поле `resource`. Эти значения не предоставлены; функциональная проверка обычной установки остаётся непройденной.\n\nПриложение, конфиги и harness не менял, коммитов не делал.",
+      "usage": {
+        "input_tokens": 255397,
+        "cached_input_tokens": 221184,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1006,
+        "reasoning_output_tokens": 0
+      },
+      "startup_tool_outputs_characters": 45484,
+      "all_tool_outputs_characters": 50019,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 1159
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_characters": 7277
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 4336
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-verify-application-startup/SKILL.md'",
+          "exit_code": 0,
+          "output_characters": 1594
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.codex/**'\"'\"",
+          "exit_code": 0,
+          "output_characters": 99
+        },
+        {
+          "command": "/bin/bash -lc 'cat LAUNCH.md app.py test_app.py config.example.json .gitignore'",
+          "exit_code": 0,
+          "output_characters": 1158
+        },
+        {
+          "command": "/bin/bash -lc 'git status --short'",
+          "exit_code": 128,
+          "output_characters": 142
+        },
+        {
+          "command": "/bin/bash -lc 'python3 -B app.py'",
+          "exit_code": 2,
+          "output_characters": 49
+        },
+        {
+          "command": "/bin/bash -lc 'python3 -B app.py --check'",
+          "exit_code": 2,
+          "output_characters": 49
+        }
+      ],
+      "elapsed_seconds": 52.03
+    },
+    {
+      "file": "native-codex-common-candidate-unrelated-v1.json",
+      "mode": "common",
+      "case": "unrelated",
+      "phase": "candidate",
+      "completed": true,
+      "exit_code": 0,
+      "skill_body_read": false,
+      "skill_read_commands": [],
+      "direct_human_read_candidates": [],
+      "changed_files": [],
+      "final": "37 × 4 = **148**.\n\nОбязательная стартовая проверка прошла успешно; START, все машинные Markdown-правила и INDEX прочитаны в установленном порядке. README.human.md не читал.\n\nВ нативном каталоге нет скиллов, применимых к этому вычислению. `comm-verify-application-startup` здесь не требуется: запуск и изменение приложения не поручены.\n\nКоммиты не создавал, harness не редактировал, субагентов не использовал.",
+      "usage": {
+        "input_tokens": 208124,
+        "cached_input_tokens": 184704,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 706,
+        "reasoning_output_tokens": 15
+      },
+      "startup_tool_outputs_characters": 43509,
+      "all_tool_outputs_characters": 44366,
+      "all_tool_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_characters": 270
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_characters": 859
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_characters": 300
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_characters": 7085
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_characters": 587
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "output_characters": 25627
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "output_characters": 1232
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_characters": 1526
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "output_characters": 2544
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 2863
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_characters": 1473
+        }
+      ],
+      "elapsed_seconds": 42.61
+    }
+  ],
+  "candidate_runs_completed": 8,
+  "candidate_discovery_loading_contract": true,
+  "claude": {
+    "common": {
+      "status": "not run",
+      "reason": "claude auth status: loggedIn false; no credentials or setup changed"
+    },
+    "both": {
+      "status": "not run",
+      "reason": "claude auth status: loggedIn false; no credentials or setup changed"
+    }
+  },
+  "behavior_review": "Parent read every completed final response and relevant launch commands. Explicit runs produced config.local.json and FUNCTION_OK; implicit runs refused readiness after ordinary command exit 2; cases preserved missing-data/production/env/manager/process boundaries; unrelated runs returned 148 without reading skill.",
+  "baseline": "Both successful baseline runs detected the gap without guidance. Behavioral RED not observed; no causal improvement demonstrated.",
+  "limits": [
+    "CLI model default used; served model identity not emitted, not inferred.",
+    "Scenario cases are fact-analysis checks; two explicit cases execute actual synthetic startup/function checks.",
+    "Native fixture has no git metadata; explicit runs correctly reported Git visibility checks unavailable.",
+    "Infrastructure failure retained separately; it is not a behavior failure."
+  ]
+}

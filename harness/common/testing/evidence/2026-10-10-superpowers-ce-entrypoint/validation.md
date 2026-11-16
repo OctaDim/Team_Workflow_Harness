@@ -1,0 +1,10 @@
+# Отдельный вход using-superpowers + CE
+
+Дата создания: 2026-10-10. Итоговая версия `28f7237998f2e5c4202b7b970a843290c84507b6a6271ed8a30c6782da7de7a0`; текущая исходная версия `a6209150e2aa249491e7dde7b16ca37ff92e0a78bce55fe65d8a2560740c04a9`. Сохранены оба старых исходника заявки.
+Обычный CE и дополнительный using-superpowers → CE предлагаются отдельно только при совместном явном вызове двух входных скиллов. Отдельный вызов, цитата или история не задают условие; вызов не заменяет выбор. Последовательность стадий и подтверждения сохранены, selected CE не заменяется SP.
+
+RED/характеризация: два baseline Codex запуска показывали только обычный CE и не показывали дополнительную цепочку. GREEN: 14 текущих Codex запусков в common-only/common+project, без записей (включая writable guard); совместный/одиночный/неизвестная рекомендация, selected additional/ordinary и ambiguity. Меню и фактический entry проверены отдельно: в selected-joint реальные команды загрузили using-superpowers и его Codex reference до отдельного чтения ce-brainstorm; selected-ce загрузил только CE. Применение всех последующих CE стадий в этих read-only probes не выполнялось: статус Codex непроверенный, полная цепочка execution не доказана одним меню. Claude пропущен, непроверенный; итог непроверенный. Подробные реальные commands/usage/ответы сохранены.
+
+77 passed, 2 прежних legacy-shim skip; rule-copy/startup/install проверки в обоих режимах успешны; project-only отказ без записи. Plain-rule quick_validate N/A. Generic plugin-eval start/analyze/compare: A95, 1019 static tokens против 792, +227; heavy warning с неизменёнными порогами 240/640/1600, required error fixes нет. Нет skill root или native proof в generic анализе; человеческие гайды исключены до чтения. Дополнительный роутер/скилл и правки сторонних плагинов не создавались.
+
+Актуальный ce-code-review complete, 0 findings; source-only, lite выбран самим gate. Simplification не требовалась: production code не менялся. Источники/native копии опубликованы вместе после текущих проверок; защищённые entrypoints и template сохранены побайтно. Публикация не повышает статусы.

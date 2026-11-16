@@ -1,0 +1,64 @@
+{
+  "kind": "isolated installation, equality and negative controls; not native discovery",
+  "checks": [
+    {
+      "mode": "common",
+      "check": "initial and repeated startup, existing project preservation",
+      "status": "passed",
+      "startup": [
+        {
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: changed paths: harness/project\n",
+          "stderr": ""
+        },
+        {
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "check": "full source/native sets and bytes",
+      "status": "passed"
+    },
+    {
+      "mode": "common",
+      "check": "different rule copy rejected",
+      "status": "passed"
+    },
+    {
+      "mode": "both",
+      "check": "initial and repeated startup, existing project preservation",
+      "status": "passed",
+      "startup": [
+        {
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        },
+        {
+          "exit_code": 0,
+          "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "mode": "both",
+      "check": "full source/native sets and bytes",
+      "status": "passed"
+    },
+    {
+      "mode": "both",
+      "check": "different rule copy rejected",
+      "status": "passed"
+    },
+    {
+      "mode": "project-only",
+      "check": "refused without writes",
+      "status": "passed"
+    }
+  ]
+}

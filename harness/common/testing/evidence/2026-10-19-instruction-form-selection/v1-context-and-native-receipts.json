@@ -1,0 +1,2426 @@
+{
+  "method": "plugin-eval static estimator: ceil(UTF-16 code units/4), per file/output; not billed usage",
+  "estimator_source": "/home/octadim/.codex/plugins/cache/openai-curated-remote/plugin-eval/0.1.2/src/lib/tokens.js",
+  "startup_cap": null,
+  "note": "No agreed startup token cap. Repeated tool outputs include complete task dependencies and repeats. CLI usage is cumulative provider-reported input/output, including cached inputs; it cannot isolate the skill cost.",
+  "contexts": [
+    {
+      "mode": "common",
+      "phase": "baseline",
+      "installation": {
+        "startup": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "harness/common/checks/ensure_entrypoint_links.py"
+            ],
+            "exit_code": 0,
+            "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: changed paths: harness/project\n",
+            "stderr": "",
+            "elapsed_seconds": 0.06
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "harness/common/checks/ensure_entrypoint_links.py"
+            ],
+            "exit_code": 0,
+            "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+            "stderr": "",
+            "elapsed_seconds": 0.04
+          }
+        ],
+        "stable": true,
+        "existing_project_preserved": false
+      },
+      "startup_files": [
+        {
+          "path": "AGENTS.md",
+          "bytes": 1838,
+          "sha256": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11",
+          "estimated_static_tokens": 329
+        },
+        {
+          "path": "harness/common/START.md",
+          "bytes": 1491,
+          "sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2",
+          "estimated_static_tokens": 215
+        },
+        {
+          "path": "harness/project/START.md",
+          "bytes": 479,
+          "sha256": "b603941ec87b78d00f6e0608dd5a18ee98cef51a7ad6ea12e8a3645bf39fa8f4",
+          "estimated_static_tokens": 75
+        },
+        {
+          "path": ".claude/rules/comm-application-config-git.md",
+          "bytes": 1168,
+          "sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333",
+          "estimated_static_tokens": 172
+        },
+        {
+          "path": ".claude/rules/comm-application-startup-readiness.md",
+          "bytes": 1629,
+          "sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+          "estimated_static_tokens": 229
+        },
+        {
+          "path": ".claude/rules/comm-ban-harness-symlinks.md",
+          "bytes": 1930,
+          "sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c",
+          "estimated_static_tokens": 278
+        },
+        {
+          "path": ".claude/rules/comm-commit-result-boundaries.md",
+          "bytes": 934,
+          "sha256": "1bffa2c007d734f500a380c7501c50a093363a7b639c97aa3a0c0198b0ec13ce",
+          "estimated_static_tokens": 137
+        },
+        {
+          "path": ".claude/rules/comm-confirm-database-design.md",
+          "bytes": 1391,
+          "sha256": "14e41f1c09a3322a202a930340503c18f460bcc84b120a0aa87a025c1ef6075d",
+          "estimated_static_tokens": 201
+        },
+        {
+          "path": ".claude/rules/comm-confirm-development-workflow.md",
+          "bytes": 10512,
+          "sha256": "0e3447ea8f0322835f2e34ba9c6099e37b8ef1100a870c84d234d99b1aa74146",
+          "estimated_static_tokens": 1531
+        },
+        {
+          "path": ".claude/rules/comm-dependencies-through-uv.md",
+          "bytes": 1946,
+          "sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "estimated_static_tokens": 289
+        },
+        {
+          "path": ".claude/rules/comm-entrypoint-links-rule.md",
+          "bytes": 4215,
+          "sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2",
+          "estimated_static_tokens": 636
+        },
+        {
+          "path": ".claude/rules/comm-human-folder-guides.md",
+          "bytes": 2552,
+          "sha256": "ed9dc86ecea957ecad7bcd1f34242649c8c80e652d0f05b15e8d5931e028a89e",
+          "estimated_static_tokens": 382
+        },
+        {
+          "path": ".claude/rules/comm-instruction-order.md",
+          "bytes": 3135,
+          "sha256": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+          "estimated_static_tokens": 453
+        },
+        {
+          "path": ".claude/rules/comm-package-independence.md",
+          "bytes": 1994,
+          "sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e",
+          "estimated_static_tokens": 308
+        },
+        {
+          "path": ".claude/rules/comm-skill-rule-ownership.md",
+          "bytes": 9449,
+          "sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd",
+          "estimated_static_tokens": 1390
+        },
+        {
+          "path": ".claude/rules/comm-user-owned-entrypoints.md",
+          "bytes": 2769,
+          "sha256": "6666ea4af0c25e40e16ef7a28767ce18f46bf27fb1250f2cd214df41547242b3",
+          "estimated_static_tokens": 406
+        },
+        {
+          "path": "harness/common/INDEX.md",
+          "bytes": 4587,
+          "sha256": "2feba09081aa00a32d4b516839d7dda5ef49e09cc1efb940bd7b97da52e78b52",
+          "estimated_static_tokens": 716
+        },
+        {
+          "path": "harness/project/INDEX.md",
+          "bytes": 2209,
+          "sha256": "4ee56c9b8734b22c321394130c810dc8ff4e8fcc12b7b4df5eddccce1c7bcb6b",
+          "estimated_static_tokens": 369
+        }
+      ],
+      "catalog_metadata": [
+        {
+          "name": "comm-commit-task-stages",
+          "description": "Use when deciding when to commit repository work, including ideation, brainstorming, planning, implementation, verification, fixes and documentation.",
+          "estimated_static_tokens": 44
+        },
+        {
+          "name": "comm-confirm-database-design",
+          "description": "Use when planning, specifying or changing SQL schemas, initialization, migrations, queries, transactions or connection/session ownership.",
+          "estimated_static_tokens": 42
+        },
+        {
+          "name": "comm-create-lazy-claude-codex-skills",
+          "description": "Use when designing, creating or substantially editing working Codex and Claude skills or rules.",
+          "estimated_static_tokens": 33
+        },
+        {
+          "name": "comm-diagnose-harness-entrypoints",
+          "description": "Use when diagnosing harness startup errors, entrypoint warnings, damaged startup links, imports or unsafe input paths.",
+          "estimated_static_tokens": 39
+        },
+        {
+          "name": "comm-install-harness",
+          "description": "Use when installing or moving harness packages, changing their installation, or proposing changes to the shared project skeleton.",
+          "estimated_static_tokens": 38
+        },
+        {
+          "name": "comm-manage-local-models",
+          "description": "Use when preparing, provisioning, replacing or validating local inference model files and their reproducible deployment.",
+          "estimated_static_tokens": 36
+        },
+        {
+          "name": "comm-normalize-text-line-endings",
+          "description": "Use when explicitly normalizing LF/CRLF text files for cross-platform use, including mixed endings and Windows batch exceptions.",
+          "estimated_static_tokens": 40
+        },
+        {
+          "name": "comm-preserve-harness-knowledge",
+          "description": "Use when saving reusable harness experience or placing project work records, decisions and evidence, including authorized migrations.",
+          "estimated_static_tokens": 42
+        },
+        {
+          "name": "comm-preserve-text-line-endings",
+          "description": "Use when diagnosing CRLF/LF conversion or implementing a narrow UTF-8 text repair that must preserve untouched bytes and line endings, including harness entrypoint link restoration.",
+          "estimated_static_tokens": 54
+        },
+        {
+          "name": "comm-process-harness-inbox",
+          "description": "Use when creating, executing, closing or resuming harness inbox requests.",
+          "estimated_static_tokens": 26
+        },
+        {
+          "name": "comm-protect-harness-evidence",
+          "description": "Use when saving or changing harness evidence, distinguishing application results from protected mechanism evidence and parent operations.",
+          "estimated_static_tokens": 43
+        },
+        {
+          "name": "comm-publish-harness-instructions",
+          "description": "Use when publishing or restoring a prepared skill or rule version to canonical sources and native installation copies.",
+          "estimated_static_tokens": 39
+        },
+        {
+          "name": "comm-report-plugin-eval-budget",
+          "description": "Use when plugin-eval deferred budgets exceed 1200 for skills or 1600 for directories, or per-reference token details are requested.",
+          "estimated_static_tokens": 41
+        },
+        {
+          "name": "comm-resolve-permission-blockers",
+          "description": "Use when a sandbox, access, filesystem, data-transfer or automatic approval rejection blocks work and resolving it needs a new user permission, decision or confirmation.",
+          "estimated_static_tokens": 51
+        },
+        {
+          "name": "comm-separate-application-config",
+          "description": "Use when creating or changing application configuration, config templates, deployment settings, or Git exclusions for local configs.",
+          "estimated_static_tokens": 41
+        },
+        {
+          "name": "comm-validate-harness-instructions",
+          "description": "Use when checking an existing harness instruction or candidate, interpreting findings, or establishing its verification status without publication.",
+          "estimated_static_tokens": 46
+        },
+        {
+          "name": "comm-verify-application-startup",
+          "description": "Use when finishing changes to entrypoints, configuration, services or resources, or before claiming ordinary startup readiness.",
+          "estimated_static_tokens": 40
+        }
+      ],
+      "startup_guard_tokens": 8116,
+      "catalog_metadata_tokens": 695,
+      "selected_owner_all_resources": [
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "bytes": 1353,
+          "sha256": "4225b4092e2ae920cdf5e8a77f5635618ceac562b83176081a259b9ce98f6a63",
+          "estimated_static_tokens": 337
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+          "bytes": 1427,
+          "sha256": "aac9285e8698bd9f8808e6aed1aec885a5a3cea74bed0f366ca6ba11d558bb28",
+          "estimated_static_tokens": 352
+        }
+      ],
+      "selected_owner_resource_tokens": 689,
+      "all_common_skill_files": [
+        {
+          "path": "harness/common/skills/comm-commit-task-stages/SKILL.md",
+          "bytes": 1581,
+          "sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473",
+          "estimated_static_tokens": 396
+        },
+        {
+          "path": "harness/common/skills/comm-confirm-database-design/SKILL.md",
+          "bytes": 1910,
+          "sha256": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+          "estimated_static_tokens": 477
+        },
+        {
+          "path": "harness/common/skills/comm-confirm-database-design/references/choices.md",
+          "bytes": 3677,
+          "sha256": "f8700dc45889d0025b5df1c4e1a3df5a81dfcc3b047fe7a604b577c2b5cb7e31",
+          "estimated_static_tokens": 920
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "bytes": 1353,
+          "sha256": "4225b4092e2ae920cdf5e8a77f5635618ceac562b83176081a259b9ce98f6a63",
+          "estimated_static_tokens": 337
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+          "bytes": 1427,
+          "sha256": "aac9285e8698bd9f8808e6aed1aec885a5a3cea74bed0f366ca6ba11d558bb28",
+          "estimated_static_tokens": 352
+        },
+        {
+          "path": "harness/common/skills/comm-diagnose-harness-entrypoints/SKILL.md",
+          "bytes": 1369,
+          "sha256": "d2f576e976836f4ee3bfd6d569834c8a915001c41c52b9f32da8c3526a57f0c9",
+          "estimated_static_tokens": 343
+        },
+        {
+          "path": "harness/common/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md",
+          "bytes": 4696,
+          "sha256": "a8ef1c50590408fb059a230af495bdbd38ae995ab63d1218a2f84f09103311ae",
+          "estimated_static_tokens": 1174
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/SKILL.md",
+          "bytes": 1529,
+          "sha256": "ff0a67ef8fbf6841f8e499cdadbb8d34a8527a1bb2e17af6c128acdb5cce9242",
+          "estimated_static_tokens": 383
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/references/checks.md",
+          "bytes": 3265,
+          "sha256": "2f87722952353ef41246137bc9389326927137bd812d062b985a0c62889050b3",
+          "estimated_static_tokens": 817
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/references/testing.md",
+          "bytes": 1870,
+          "sha256": "3dada9a78e5429e1dba643fb992563a169a78cd94d1fba568a1bf02268879fea",
+          "estimated_static_tokens": 313
+        },
+        {
+          "path": "harness/common/skills/comm-manage-local-models/SKILL.md",
+          "bytes": 1348,
+          "sha256": "1b9ebaeabb0510f7f377322e3492a6008583bc9bb88297628b20904e416c5328",
+          "estimated_static_tokens": 337
+        },
+        {
+          "path": "harness/common/skills/comm-manage-local-models/references/lifecycle.md",
+          "bytes": 3430,
+          "sha256": "46b1dce7feb10cb271eed023d2136ef5b66ab99a2c41cfd1b09e32437fd78681",
+          "estimated_static_tokens": 858
+        },
+        {
+          "path": "harness/common/skills/comm-normalize-text-line-endings/SKILL.md",
+          "bytes": 1436,
+          "sha256": "f026597aca7ff151e49a410b5fae97f319583024c0742543c43977daf071d4c5",
+          "estimated_static_tokens": 359
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/SKILL.md",
+          "bytes": 1521,
+          "sha256": "08f643858288c964b96cfd80f31222fbf38f9e84ed6334137ba2b832b25dabf3",
+          "estimated_static_tokens": 379
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md",
+          "bytes": 2120,
+          "sha256": "7a2ca759a364f70de6492e0aff6f8fa3e99d160d0ca619f8102d6ea856571a06",
+          "estimated_static_tokens": 526
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md",
+          "bytes": 2461,
+          "sha256": "e74890425faee47c61a0b15ae50c346be4948bf3bd8c83912019e95f55590c09",
+          "estimated_static_tokens": 616
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-text-line-endings/SKILL.md",
+          "bytes": 2972,
+          "sha256": "e7c1cce1271d2eebcacb520f7e6e96715cfd23329af907be8d7b1a7f63ae36cb",
+          "estimated_static_tokens": 474
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-text-line-endings/references/regressions.md",
+          "bytes": 3049,
+          "sha256": "eaa18a7a39b1ff36fa97014374b50b1194936e57b6bd744f26194647a1b208da",
+          "estimated_static_tokens": 488
+        },
+        {
+          "path": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+          "bytes": 1304,
+          "sha256": "23ada60d573269c6afb56602d28738a2ea1eb8d3509b7d66861da008b4553ade",
+          "estimated_static_tokens": 326
+        },
+        {
+          "path": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+          "bytes": 4361,
+          "sha256": "bc77e58b91b303fb9f1bf9adcc6cb8ddc0f598687ab4a08001caf4537d0a2142",
+          "estimated_static_tokens": 1081
+        },
+        {
+          "path": "harness/common/skills/comm-protect-harness-evidence/SKILL.md",
+          "bytes": 1339,
+          "sha256": "75d8ef27c251fb71a9e7a54ff2c06ef542c52df63b6a7fb866d3d8bd052861c3",
+          "estimated_static_tokens": 335
+        },
+        {
+          "path": "harness/common/skills/comm-protect-harness-evidence/references/operations.md",
+          "bytes": 1577,
+          "sha256": "d222cc04b99990f53abab2c35522aacb0599320a66f46bbfd9a4085446ff5b6e",
+          "estimated_static_tokens": 395
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/SKILL.md",
+          "bytes": 1428,
+          "sha256": "ee1dc4e54173ab7111c09a1dc9970009932a6aa480eff7691ad08479c6f538d9",
+          "estimated_static_tokens": 357
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/references/gate.md",
+          "bytes": 1225,
+          "sha256": "05f6e1c7ec35dfc7e37944c1b8c6f7bdab998c4ba862861a285792e14115d02c",
+          "estimated_static_tokens": 307
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/references/placement-contract.md",
+          "bytes": 1014,
+          "sha256": "c0c8fdea5ea9f3c1e71e2d975601ad5092b03079d9729f66254b2397ee7c05cf",
+          "estimated_static_tokens": 252
+        },
+        {
+          "path": "harness/common/skills/comm-report-plugin-eval-budget/SKILL.md",
+          "bytes": 3366,
+          "sha256": "7e4f0bbc85413efb432a97b283245d88ae21b7d1e523b5db76c21eb6d0aa05bd",
+          "estimated_static_tokens": 570
+        },
+        {
+          "path": "harness/common/skills/comm-resolve-permission-blockers/SKILL.md",
+          "bytes": 3246,
+          "sha256": "6a414239b66a63c7889f74cf10c9150ab608ed663024bd1eecd24bd4a8f398e0",
+          "estimated_static_tokens": 473
+        },
+        {
+          "path": "harness/common/skills/comm-separate-application-config/SKILL.md",
+          "bytes": 1796,
+          "sha256": "e9c43d44cb7a3714f7a18e71587af732ef72cf009d1e04957261506335732af0",
+          "estimated_static_tokens": 449
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "bytes": 1625,
+          "sha256": "3e306fd9dc37363b12c008a730ed12c4bbc14b16dccc07f6f5874d7c48e0fdf8",
+          "estimated_static_tokens": 407
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/references/evaluation.md",
+          "bytes": 1104,
+          "sha256": "7203060c251d479529172a42dd913a9c607b0b79a44ecb69aec555e583eba33d",
+          "estimated_static_tokens": 276
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/references/validation.md",
+          "bytes": 2296,
+          "sha256": "0f9c37a876a4b36d2ed8d4bcdc0d3185e0b314eba3db6b3bcbd84bae76ac4949",
+          "estimated_static_tokens": 570
+        },
+        {
+          "path": "harness/common/skills/comm-verify-application-startup/SKILL.md",
+          "bytes": 1890,
+          "sha256": "f94252cf1f55f21c5a8ee2637e4d1e0d0905ed32556c701d25425cbfea4b0c68",
+          "estimated_static_tokens": 473
+        }
+      ],
+      "all_common_skill_tokens": 15820
+    },
+    {
+      "mode": "common",
+      "phase": "candidate",
+      "installation": {
+        "startup": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "harness/common/checks/ensure_entrypoint_links.py"
+            ],
+            "exit_code": 0,
+            "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: changed paths: harness/project\n",
+            "stderr": "",
+            "elapsed_seconds": 0.06
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "harness/common/checks/ensure_entrypoint_links.py"
+            ],
+            "exit_code": 0,
+            "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+            "stderr": "",
+            "elapsed_seconds": 0.05
+          }
+        ],
+        "stable": true,
+        "existing_project_preserved": false
+      },
+      "startup_files": [
+        {
+          "path": "AGENTS.md",
+          "bytes": 1838,
+          "sha256": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11",
+          "estimated_static_tokens": 329
+        },
+        {
+          "path": "harness/common/START.md",
+          "bytes": 1491,
+          "sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2",
+          "estimated_static_tokens": 215
+        },
+        {
+          "path": "harness/project/START.md",
+          "bytes": 479,
+          "sha256": "b603941ec87b78d00f6e0608dd5a18ee98cef51a7ad6ea12e8a3645bf39fa8f4",
+          "estimated_static_tokens": 75
+        },
+        {
+          "path": ".claude/rules/comm-application-config-git.md",
+          "bytes": 1168,
+          "sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333",
+          "estimated_static_tokens": 172
+        },
+        {
+          "path": ".claude/rules/comm-application-startup-readiness.md",
+          "bytes": 1629,
+          "sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+          "estimated_static_tokens": 229
+        },
+        {
+          "path": ".claude/rules/comm-ban-harness-symlinks.md",
+          "bytes": 1930,
+          "sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c",
+          "estimated_static_tokens": 278
+        },
+        {
+          "path": ".claude/rules/comm-commit-result-boundaries.md",
+          "bytes": 934,
+          "sha256": "1bffa2c007d734f500a380c7501c50a093363a7b639c97aa3a0c0198b0ec13ce",
+          "estimated_static_tokens": 137
+        },
+        {
+          "path": ".claude/rules/comm-confirm-database-design.md",
+          "bytes": 1391,
+          "sha256": "14e41f1c09a3322a202a930340503c18f460bcc84b120a0aa87a025c1ef6075d",
+          "estimated_static_tokens": 201
+        },
+        {
+          "path": ".claude/rules/comm-confirm-development-workflow.md",
+          "bytes": 10512,
+          "sha256": "0e3447ea8f0322835f2e34ba9c6099e37b8ef1100a870c84d234d99b1aa74146",
+          "estimated_static_tokens": 1531
+        },
+        {
+          "path": ".claude/rules/comm-dependencies-through-uv.md",
+          "bytes": 1946,
+          "sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "estimated_static_tokens": 289
+        },
+        {
+          "path": ".claude/rules/comm-entrypoint-links-rule.md",
+          "bytes": 4215,
+          "sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2",
+          "estimated_static_tokens": 636
+        },
+        {
+          "path": ".claude/rules/comm-human-folder-guides.md",
+          "bytes": 2552,
+          "sha256": "ed9dc86ecea957ecad7bcd1f34242649c8c80e652d0f05b15e8d5931e028a89e",
+          "estimated_static_tokens": 382
+        },
+        {
+          "path": ".claude/rules/comm-instruction-order.md",
+          "bytes": 3135,
+          "sha256": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+          "estimated_static_tokens": 453
+        },
+        {
+          "path": ".claude/rules/comm-package-independence.md",
+          "bytes": 1994,
+          "sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e",
+          "estimated_static_tokens": 308
+        },
+        {
+          "path": ".claude/rules/comm-skill-rule-ownership.md",
+          "bytes": 9449,
+          "sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd",
+          "estimated_static_tokens": 1390
+        },
+        {
+          "path": ".claude/rules/comm-user-owned-entrypoints.md",
+          "bytes": 2769,
+          "sha256": "6666ea4af0c25e40e16ef7a28767ce18f46bf27fb1250f2cd214df41547242b3",
+          "estimated_static_tokens": 406
+        },
+        {
+          "path": "harness/common/INDEX.md",
+          "bytes": 4587,
+          "sha256": "2feba09081aa00a32d4b516839d7dda5ef49e09cc1efb940bd7b97da52e78b52",
+          "estimated_static_tokens": 716
+        },
+        {
+          "path": "harness/project/INDEX.md",
+          "bytes": 2209,
+          "sha256": "4ee56c9b8734b22c321394130c810dc8ff4e8fcc12b7b4df5eddccce1c7bcb6b",
+          "estimated_static_tokens": 369
+        }
+      ],
+      "catalog_metadata": [
+        {
+          "name": "comm-commit-task-stages",
+          "description": "Use when deciding when to commit repository work, including ideation, brainstorming, planning, implementation, verification, fixes and documentation.",
+          "estimated_static_tokens": 44
+        },
+        {
+          "name": "comm-confirm-database-design",
+          "description": "Use when planning, specifying or changing SQL schemas, initialization, migrations, queries, transactions or connection/session ownership.",
+          "estimated_static_tokens": 42
+        },
+        {
+          "name": "comm-create-lazy-claude-codex-skills",
+          "description": "Use when designing, creating or substantially editing working Codex and Claude skills or rules.",
+          "estimated_static_tokens": 33
+        },
+        {
+          "name": "comm-diagnose-harness-entrypoints",
+          "description": "Use when diagnosing harness startup errors, entrypoint warnings, damaged startup links, imports or unsafe input paths.",
+          "estimated_static_tokens": 39
+        },
+        {
+          "name": "comm-install-harness",
+          "description": "Use when installing or moving harness packages, changing their installation, or proposing changes to the shared project skeleton.",
+          "estimated_static_tokens": 38
+        },
+        {
+          "name": "comm-manage-local-models",
+          "description": "Use when preparing, provisioning, replacing or validating local inference model files and their reproducible deployment.",
+          "estimated_static_tokens": 36
+        },
+        {
+          "name": "comm-normalize-text-line-endings",
+          "description": "Use when explicitly normalizing LF/CRLF text files for cross-platform use, including mixed endings and Windows batch exceptions.",
+          "estimated_static_tokens": 40
+        },
+        {
+          "name": "comm-preserve-harness-knowledge",
+          "description": "Use when saving reusable harness experience or placing project work records, decisions and evidence, including authorized migrations.",
+          "estimated_static_tokens": 42
+        },
+        {
+          "name": "comm-preserve-text-line-endings",
+          "description": "Use when diagnosing CRLF/LF conversion or implementing a narrow UTF-8 text repair that must preserve untouched bytes and line endings, including harness entrypoint link restoration.",
+          "estimated_static_tokens": 54
+        },
+        {
+          "name": "comm-process-harness-inbox",
+          "description": "Use when creating, executing, closing or resuming harness inbox requests.",
+          "estimated_static_tokens": 26
+        },
+        {
+          "name": "comm-protect-harness-evidence",
+          "description": "Use when saving or changing harness evidence, distinguishing application results from protected mechanism evidence and parent operations.",
+          "estimated_static_tokens": 43
+        },
+        {
+          "name": "comm-publish-harness-instructions",
+          "description": "Use when publishing or restoring a prepared skill or rule version to canonical sources and native installation copies.",
+          "estimated_static_tokens": 39
+        },
+        {
+          "name": "comm-report-plugin-eval-budget",
+          "description": "Use when plugin-eval deferred budgets exceed 1200 for skills or 1600 for directories, or per-reference token details are requested.",
+          "estimated_static_tokens": 41
+        },
+        {
+          "name": "comm-resolve-permission-blockers",
+          "description": "Use when a sandbox, access, filesystem, data-transfer or automatic approval rejection blocks work and resolving it needs a new user permission, decision or confirmation.",
+          "estimated_static_tokens": 51
+        },
+        {
+          "name": "comm-separate-application-config",
+          "description": "Use when creating or changing application configuration, config templates, deployment settings, or Git exclusions for local configs.",
+          "estimated_static_tokens": 41
+        },
+        {
+          "name": "comm-validate-harness-instructions",
+          "description": "Use when checking an existing harness instruction or candidate, interpreting findings, or establishing its verification status without publication.",
+          "estimated_static_tokens": 46
+        },
+        {
+          "name": "comm-verify-application-startup",
+          "description": "Use when finishing changes to entrypoints, configuration, services or resources, or before claiming ordinary startup readiness.",
+          "estimated_static_tokens": 40
+        }
+      ],
+      "startup_guard_tokens": 8116,
+      "catalog_metadata_tokens": 695,
+      "selected_owner_all_resources": [
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "bytes": 1659,
+          "sha256": "bae6df91cf077a8430759b0bd316b5dd1b59ab2aa38647d75cb0a3fca41eaa53",
+          "estimated_static_tokens": 413
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+          "bytes": 3220,
+          "sha256": "98d570c34fdabe77c07014de67b5ff6002717c01785a68dc6786f3f060fb7a86",
+          "estimated_static_tokens": 800
+        }
+      ],
+      "selected_owner_resource_tokens": 1213,
+      "all_common_skill_files": [
+        {
+          "path": "harness/common/skills/comm-commit-task-stages/SKILL.md",
+          "bytes": 1581,
+          "sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473",
+          "estimated_static_tokens": 396
+        },
+        {
+          "path": "harness/common/skills/comm-confirm-database-design/SKILL.md",
+          "bytes": 1910,
+          "sha256": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+          "estimated_static_tokens": 477
+        },
+        {
+          "path": "harness/common/skills/comm-confirm-database-design/references/choices.md",
+          "bytes": 3677,
+          "sha256": "f8700dc45889d0025b5df1c4e1a3df5a81dfcc3b047fe7a604b577c2b5cb7e31",
+          "estimated_static_tokens": 920
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "bytes": 1659,
+          "sha256": "bae6df91cf077a8430759b0bd316b5dd1b59ab2aa38647d75cb0a3fca41eaa53",
+          "estimated_static_tokens": 413
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+          "bytes": 3220,
+          "sha256": "98d570c34fdabe77c07014de67b5ff6002717c01785a68dc6786f3f060fb7a86",
+          "estimated_static_tokens": 800
+        },
+        {
+          "path": "harness/common/skills/comm-diagnose-harness-entrypoints/SKILL.md",
+          "bytes": 1369,
+          "sha256": "d2f576e976836f4ee3bfd6d569834c8a915001c41c52b9f32da8c3526a57f0c9",
+          "estimated_static_tokens": 343
+        },
+        {
+          "path": "harness/common/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md",
+          "bytes": 4696,
+          "sha256": "a8ef1c50590408fb059a230af495bdbd38ae995ab63d1218a2f84f09103311ae",
+          "estimated_static_tokens": 1174
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/SKILL.md",
+          "bytes": 1529,
+          "sha256": "ff0a67ef8fbf6841f8e499cdadbb8d34a8527a1bb2e17af6c128acdb5cce9242",
+          "estimated_static_tokens": 383
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/references/checks.md",
+          "bytes": 3265,
+          "sha256": "2f87722952353ef41246137bc9389326927137bd812d062b985a0c62889050b3",
+          "estimated_static_tokens": 817
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/references/testing.md",
+          "bytes": 1870,
+          "sha256": "3dada9a78e5429e1dba643fb992563a169a78cd94d1fba568a1bf02268879fea",
+          "estimated_static_tokens": 313
+        },
+        {
+          "path": "harness/common/skills/comm-manage-local-models/SKILL.md",
+          "bytes": 1348,
+          "sha256": "1b9ebaeabb0510f7f377322e3492a6008583bc9bb88297628b20904e416c5328",
+          "estimated_static_tokens": 337
+        },
+        {
+          "path": "harness/common/skills/comm-manage-local-models/references/lifecycle.md",
+          "bytes": 3430,
+          "sha256": "46b1dce7feb10cb271eed023d2136ef5b66ab99a2c41cfd1b09e32437fd78681",
+          "estimated_static_tokens": 858
+        },
+        {
+          "path": "harness/common/skills/comm-normalize-text-line-endings/SKILL.md",
+          "bytes": 1436,
+          "sha256": "f026597aca7ff151e49a410b5fae97f319583024c0742543c43977daf071d4c5",
+          "estimated_static_tokens": 359
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/SKILL.md",
+          "bytes": 1521,
+          "sha256": "08f643858288c964b96cfd80f31222fbf38f9e84ed6334137ba2b832b25dabf3",
+          "estimated_static_tokens": 379
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md",
+          "bytes": 2120,
+          "sha256": "7a2ca759a364f70de6492e0aff6f8fa3e99d160d0ca619f8102d6ea856571a06",
+          "estimated_static_tokens": 526
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md",
+          "bytes": 2461,
+          "sha256": "e74890425faee47c61a0b15ae50c346be4948bf3bd8c83912019e95f55590c09",
+          "estimated_static_tokens": 616
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-text-line-endings/SKILL.md",
+          "bytes": 2972,
+          "sha256": "e7c1cce1271d2eebcacb520f7e6e96715cfd23329af907be8d7b1a7f63ae36cb",
+          "estimated_static_tokens": 474
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-text-line-endings/references/regressions.md",
+          "bytes": 3049,
+          "sha256": "eaa18a7a39b1ff36fa97014374b50b1194936e57b6bd744f26194647a1b208da",
+          "estimated_static_tokens": 488
+        },
+        {
+          "path": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+          "bytes": 1304,
+          "sha256": "23ada60d573269c6afb56602d28738a2ea1eb8d3509b7d66861da008b4553ade",
+          "estimated_static_tokens": 326
+        },
+        {
+          "path": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+          "bytes": 4361,
+          "sha256": "bc77e58b91b303fb9f1bf9adcc6cb8ddc0f598687ab4a08001caf4537d0a2142",
+          "estimated_static_tokens": 1081
+        },
+        {
+          "path": "harness/common/skills/comm-protect-harness-evidence/SKILL.md",
+          "bytes": 1339,
+          "sha256": "75d8ef27c251fb71a9e7a54ff2c06ef542c52df63b6a7fb866d3d8bd052861c3",
+          "estimated_static_tokens": 335
+        },
+        {
+          "path": "harness/common/skills/comm-protect-harness-evidence/references/operations.md",
+          "bytes": 1577,
+          "sha256": "d222cc04b99990f53abab2c35522aacb0599320a66f46bbfd9a4085446ff5b6e",
+          "estimated_static_tokens": 395
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/SKILL.md",
+          "bytes": 1428,
+          "sha256": "ee1dc4e54173ab7111c09a1dc9970009932a6aa480eff7691ad08479c6f538d9",
+          "estimated_static_tokens": 357
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/references/gate.md",
+          "bytes": 1225,
+          "sha256": "05f6e1c7ec35dfc7e37944c1b8c6f7bdab998c4ba862861a285792e14115d02c",
+          "estimated_static_tokens": 307
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/references/placement-contract.md",
+          "bytes": 1014,
+          "sha256": "c0c8fdea5ea9f3c1e71e2d975601ad5092b03079d9729f66254b2397ee7c05cf",
+          "estimated_static_tokens": 252
+        },
+        {
+          "path": "harness/common/skills/comm-report-plugin-eval-budget/SKILL.md",
+          "bytes": 3366,
+          "sha256": "7e4f0bbc85413efb432a97b283245d88ae21b7d1e523b5db76c21eb6d0aa05bd",
+          "estimated_static_tokens": 570
+        },
+        {
+          "path": "harness/common/skills/comm-resolve-permission-blockers/SKILL.md",
+          "bytes": 3246,
+          "sha256": "6a414239b66a63c7889f74cf10c9150ab608ed663024bd1eecd24bd4a8f398e0",
+          "estimated_static_tokens": 473
+        },
+        {
+          "path": "harness/common/skills/comm-separate-application-config/SKILL.md",
+          "bytes": 1796,
+          "sha256": "e9c43d44cb7a3714f7a18e71587af732ef72cf009d1e04957261506335732af0",
+          "estimated_static_tokens": 449
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "bytes": 1625,
+          "sha256": "3e306fd9dc37363b12c008a730ed12c4bbc14b16dccc07f6f5874d7c48e0fdf8",
+          "estimated_static_tokens": 407
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/references/evaluation.md",
+          "bytes": 1104,
+          "sha256": "7203060c251d479529172a42dd913a9c607b0b79a44ecb69aec555e583eba33d",
+          "estimated_static_tokens": 276
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/references/validation.md",
+          "bytes": 2296,
+          "sha256": "0f9c37a876a4b36d2ed8d4bcdc0d3185e0b314eba3db6b3bcbd84bae76ac4949",
+          "estimated_static_tokens": 570
+        },
+        {
+          "path": "harness/common/skills/comm-verify-application-startup/SKILL.md",
+          "bytes": 1890,
+          "sha256": "f94252cf1f55f21c5a8ee2637e4d1e0d0905ed32556c701d25425cbfea4b0c68",
+          "estimated_static_tokens": 473
+        }
+      ],
+      "all_common_skill_tokens": 16344
+    },
+    {
+      "mode": "both",
+      "phase": "baseline",
+      "installation": {
+        "startup": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "harness/common/checks/ensure_entrypoint_links.py"
+            ],
+            "exit_code": 0,
+            "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+            "stderr": "",
+            "elapsed_seconds": 0.05
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "harness/common/checks/ensure_entrypoint_links.py"
+            ],
+            "exit_code": 0,
+            "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+            "stderr": "",
+            "elapsed_seconds": 0.05
+          }
+        ],
+        "stable": true,
+        "existing_project_preserved": true
+      },
+      "startup_files": [
+        {
+          "path": "AGENTS.md",
+          "bytes": 1838,
+          "sha256": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11",
+          "estimated_static_tokens": 329
+        },
+        {
+          "path": "harness/common/START.md",
+          "bytes": 1491,
+          "sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2",
+          "estimated_static_tokens": 215
+        },
+        {
+          "path": "harness/project/START.md",
+          "bytes": 641,
+          "sha256": "e83a0a5bd994e6e143bd215d843e2362122c2f4464ec94b6a61850becde43736",
+          "estimated_static_tokens": 99
+        },
+        {
+          "path": ".claude/rules/comm-application-config-git.md",
+          "bytes": 1168,
+          "sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333",
+          "estimated_static_tokens": 172
+        },
+        {
+          "path": ".claude/rules/comm-application-startup-readiness.md",
+          "bytes": 1629,
+          "sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+          "estimated_static_tokens": 229
+        },
+        {
+          "path": ".claude/rules/comm-ban-harness-symlinks.md",
+          "bytes": 1930,
+          "sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c",
+          "estimated_static_tokens": 278
+        },
+        {
+          "path": ".claude/rules/comm-commit-result-boundaries.md",
+          "bytes": 934,
+          "sha256": "1bffa2c007d734f500a380c7501c50a093363a7b639c97aa3a0c0198b0ec13ce",
+          "estimated_static_tokens": 137
+        },
+        {
+          "path": ".claude/rules/comm-confirm-database-design.md",
+          "bytes": 1391,
+          "sha256": "14e41f1c09a3322a202a930340503c18f460bcc84b120a0aa87a025c1ef6075d",
+          "estimated_static_tokens": 201
+        },
+        {
+          "path": ".claude/rules/comm-confirm-development-workflow.md",
+          "bytes": 10512,
+          "sha256": "0e3447ea8f0322835f2e34ba9c6099e37b8ef1100a870c84d234d99b1aa74146",
+          "estimated_static_tokens": 1531
+        },
+        {
+          "path": ".claude/rules/comm-dependencies-through-uv.md",
+          "bytes": 1946,
+          "sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "estimated_static_tokens": 289
+        },
+        {
+          "path": ".claude/rules/comm-entrypoint-links-rule.md",
+          "bytes": 4215,
+          "sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2",
+          "estimated_static_tokens": 636
+        },
+        {
+          "path": ".claude/rules/comm-human-folder-guides.md",
+          "bytes": 2552,
+          "sha256": "ed9dc86ecea957ecad7bcd1f34242649c8c80e652d0f05b15e8d5931e028a89e",
+          "estimated_static_tokens": 382
+        },
+        {
+          "path": ".claude/rules/comm-instruction-order.md",
+          "bytes": 3135,
+          "sha256": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+          "estimated_static_tokens": 453
+        },
+        {
+          "path": ".claude/rules/comm-package-independence.md",
+          "bytes": 1994,
+          "sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e",
+          "estimated_static_tokens": 308
+        },
+        {
+          "path": ".claude/rules/comm-skill-rule-ownership.md",
+          "bytes": 9449,
+          "sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd",
+          "estimated_static_tokens": 1390
+        },
+        {
+          "path": ".claude/rules/comm-user-owned-entrypoints.md",
+          "bytes": 2769,
+          "sha256": "6666ea4af0c25e40e16ef7a28767ce18f46bf27fb1250f2cd214df41547242b3",
+          "estimated_static_tokens": 406
+        },
+        {
+          "path": "harness/common/INDEX.md",
+          "bytes": 4587,
+          "sha256": "2feba09081aa00a32d4b516839d7dda5ef49e09cc1efb940bd7b97da52e78b52",
+          "estimated_static_tokens": 716
+        },
+        {
+          "path": "harness/project/INDEX.md",
+          "bytes": 3888,
+          "sha256": "afb75a69c04a70ba9242b1245cc3a2aa2c65da6bc33c13022a329f3a2f8c9c76",
+          "estimated_static_tokens": 639
+        }
+      ],
+      "catalog_metadata": [
+        {
+          "name": "comm-commit-task-stages",
+          "description": "Use when deciding when to commit repository work, including ideation, brainstorming, planning, implementation, verification, fixes and documentation.",
+          "estimated_static_tokens": 44
+        },
+        {
+          "name": "comm-confirm-database-design",
+          "description": "Use when planning, specifying or changing SQL schemas, initialization, migrations, queries, transactions or connection/session ownership.",
+          "estimated_static_tokens": 42
+        },
+        {
+          "name": "comm-create-lazy-claude-codex-skills",
+          "description": "Use when designing, creating or substantially editing working Codex and Claude skills or rules.",
+          "estimated_static_tokens": 33
+        },
+        {
+          "name": "comm-diagnose-harness-entrypoints",
+          "description": "Use when diagnosing harness startup errors, entrypoint warnings, damaged startup links, imports or unsafe input paths.",
+          "estimated_static_tokens": 39
+        },
+        {
+          "name": "comm-install-harness",
+          "description": "Use when installing or moving harness packages, changing their installation, or proposing changes to the shared project skeleton.",
+          "estimated_static_tokens": 38
+        },
+        {
+          "name": "comm-manage-local-models",
+          "description": "Use when preparing, provisioning, replacing or validating local inference model files and their reproducible deployment.",
+          "estimated_static_tokens": 36
+        },
+        {
+          "name": "comm-normalize-text-line-endings",
+          "description": "Use when explicitly normalizing LF/CRLF text files for cross-platform use, including mixed endings and Windows batch exceptions.",
+          "estimated_static_tokens": 40
+        },
+        {
+          "name": "comm-preserve-harness-knowledge",
+          "description": "Use when saving reusable harness experience or placing project work records, decisions and evidence, including authorized migrations.",
+          "estimated_static_tokens": 42
+        },
+        {
+          "name": "comm-preserve-text-line-endings",
+          "description": "Use when diagnosing CRLF/LF conversion or implementing a narrow UTF-8 text repair that must preserve untouched bytes and line endings, including harness entrypoint link restoration.",
+          "estimated_static_tokens": 54
+        },
+        {
+          "name": "comm-process-harness-inbox",
+          "description": "Use when creating, executing, closing or resuming harness inbox requests.",
+          "estimated_static_tokens": 26
+        },
+        {
+          "name": "comm-protect-harness-evidence",
+          "description": "Use when saving or changing harness evidence, distinguishing application results from protected mechanism evidence and parent operations.",
+          "estimated_static_tokens": 43
+        },
+        {
+          "name": "comm-publish-harness-instructions",
+          "description": "Use when publishing or restoring a prepared skill or rule version to canonical sources and native installation copies.",
+          "estimated_static_tokens": 39
+        },
+        {
+          "name": "comm-report-plugin-eval-budget",
+          "description": "Use when plugin-eval deferred budgets exceed 1200 for skills or 1600 for directories, or per-reference token details are requested.",
+          "estimated_static_tokens": 41
+        },
+        {
+          "name": "comm-resolve-permission-blockers",
+          "description": "Use when a sandbox, access, filesystem, data-transfer or automatic approval rejection blocks work and resolving it needs a new user permission, decision or confirmation.",
+          "estimated_static_tokens": 51
+        },
+        {
+          "name": "comm-separate-application-config",
+          "description": "Use when creating or changing application configuration, config templates, deployment settings, or Git exclusions for local configs.",
+          "estimated_static_tokens": 41
+        },
+        {
+          "name": "comm-validate-harness-instructions",
+          "description": "Use when checking an existing harness instruction or candidate, interpreting findings, or establishing its verification status without publication.",
+          "estimated_static_tokens": 46
+        },
+        {
+          "name": "comm-verify-application-startup",
+          "description": "Use when finishing changes to entrypoints, configuration, services or resources, or before claiming ordinary startup readiness.",
+          "estimated_static_tokens": 40
+        }
+      ],
+      "startup_guard_tokens": 8410,
+      "catalog_metadata_tokens": 695,
+      "selected_owner_all_resources": [
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "bytes": 1353,
+          "sha256": "4225b4092e2ae920cdf5e8a77f5635618ceac562b83176081a259b9ce98f6a63",
+          "estimated_static_tokens": 337
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+          "bytes": 1427,
+          "sha256": "aac9285e8698bd9f8808e6aed1aec885a5a3cea74bed0f366ca6ba11d558bb28",
+          "estimated_static_tokens": 352
+        }
+      ],
+      "selected_owner_resource_tokens": 689,
+      "all_common_skill_files": [
+        {
+          "path": "harness/common/skills/comm-commit-task-stages/SKILL.md",
+          "bytes": 1581,
+          "sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473",
+          "estimated_static_tokens": 396
+        },
+        {
+          "path": "harness/common/skills/comm-confirm-database-design/SKILL.md",
+          "bytes": 1910,
+          "sha256": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+          "estimated_static_tokens": 477
+        },
+        {
+          "path": "harness/common/skills/comm-confirm-database-design/references/choices.md",
+          "bytes": 3677,
+          "sha256": "f8700dc45889d0025b5df1c4e1a3df5a81dfcc3b047fe7a604b577c2b5cb7e31",
+          "estimated_static_tokens": 920
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "bytes": 1353,
+          "sha256": "4225b4092e2ae920cdf5e8a77f5635618ceac562b83176081a259b9ce98f6a63",
+          "estimated_static_tokens": 337
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+          "bytes": 1427,
+          "sha256": "aac9285e8698bd9f8808e6aed1aec885a5a3cea74bed0f366ca6ba11d558bb28",
+          "estimated_static_tokens": 352
+        },
+        {
+          "path": "harness/common/skills/comm-diagnose-harness-entrypoints/SKILL.md",
+          "bytes": 1369,
+          "sha256": "d2f576e976836f4ee3bfd6d569834c8a915001c41c52b9f32da8c3526a57f0c9",
+          "estimated_static_tokens": 343
+        },
+        {
+          "path": "harness/common/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md",
+          "bytes": 4696,
+          "sha256": "a8ef1c50590408fb059a230af495bdbd38ae995ab63d1218a2f84f09103311ae",
+          "estimated_static_tokens": 1174
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/SKILL.md",
+          "bytes": 1529,
+          "sha256": "ff0a67ef8fbf6841f8e499cdadbb8d34a8527a1bb2e17af6c128acdb5cce9242",
+          "estimated_static_tokens": 383
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/references/checks.md",
+          "bytes": 3265,
+          "sha256": "2f87722952353ef41246137bc9389326927137bd812d062b985a0c62889050b3",
+          "estimated_static_tokens": 817
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/references/testing.md",
+          "bytes": 1870,
+          "sha256": "3dada9a78e5429e1dba643fb992563a169a78cd94d1fba568a1bf02268879fea",
+          "estimated_static_tokens": 313
+        },
+        {
+          "path": "harness/common/skills/comm-manage-local-models/SKILL.md",
+          "bytes": 1348,
+          "sha256": "1b9ebaeabb0510f7f377322e3492a6008583bc9bb88297628b20904e416c5328",
+          "estimated_static_tokens": 337
+        },
+        {
+          "path": "harness/common/skills/comm-manage-local-models/references/lifecycle.md",
+          "bytes": 3430,
+          "sha256": "46b1dce7feb10cb271eed023d2136ef5b66ab99a2c41cfd1b09e32437fd78681",
+          "estimated_static_tokens": 858
+        },
+        {
+          "path": "harness/common/skills/comm-normalize-text-line-endings/SKILL.md",
+          "bytes": 1436,
+          "sha256": "f026597aca7ff151e49a410b5fae97f319583024c0742543c43977daf071d4c5",
+          "estimated_static_tokens": 359
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/SKILL.md",
+          "bytes": 1521,
+          "sha256": "08f643858288c964b96cfd80f31222fbf38f9e84ed6334137ba2b832b25dabf3",
+          "estimated_static_tokens": 379
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md",
+          "bytes": 2120,
+          "sha256": "7a2ca759a364f70de6492e0aff6f8fa3e99d160d0ca619f8102d6ea856571a06",
+          "estimated_static_tokens": 526
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md",
+          "bytes": 2461,
+          "sha256": "e74890425faee47c61a0b15ae50c346be4948bf3bd8c83912019e95f55590c09",
+          "estimated_static_tokens": 616
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-text-line-endings/SKILL.md",
+          "bytes": 2972,
+          "sha256": "e7c1cce1271d2eebcacb520f7e6e96715cfd23329af907be8d7b1a7f63ae36cb",
+          "estimated_static_tokens": 474
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-text-line-endings/references/regressions.md",
+          "bytes": 3049,
+          "sha256": "eaa18a7a39b1ff36fa97014374b50b1194936e57b6bd744f26194647a1b208da",
+          "estimated_static_tokens": 488
+        },
+        {
+          "path": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+          "bytes": 1304,
+          "sha256": "23ada60d573269c6afb56602d28738a2ea1eb8d3509b7d66861da008b4553ade",
+          "estimated_static_tokens": 326
+        },
+        {
+          "path": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+          "bytes": 4361,
+          "sha256": "bc77e58b91b303fb9f1bf9adcc6cb8ddc0f598687ab4a08001caf4537d0a2142",
+          "estimated_static_tokens": 1081
+        },
+        {
+          "path": "harness/common/skills/comm-protect-harness-evidence/SKILL.md",
+          "bytes": 1339,
+          "sha256": "75d8ef27c251fb71a9e7a54ff2c06ef542c52df63b6a7fb866d3d8bd052861c3",
+          "estimated_static_tokens": 335
+        },
+        {
+          "path": "harness/common/skills/comm-protect-harness-evidence/references/operations.md",
+          "bytes": 1577,
+          "sha256": "d222cc04b99990f53abab2c35522aacb0599320a66f46bbfd9a4085446ff5b6e",
+          "estimated_static_tokens": 395
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/SKILL.md",
+          "bytes": 1428,
+          "sha256": "ee1dc4e54173ab7111c09a1dc9970009932a6aa480eff7691ad08479c6f538d9",
+          "estimated_static_tokens": 357
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/references/gate.md",
+          "bytes": 1225,
+          "sha256": "05f6e1c7ec35dfc7e37944c1b8c6f7bdab998c4ba862861a285792e14115d02c",
+          "estimated_static_tokens": 307
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/references/placement-contract.md",
+          "bytes": 1014,
+          "sha256": "c0c8fdea5ea9f3c1e71e2d975601ad5092b03079d9729f66254b2397ee7c05cf",
+          "estimated_static_tokens": 252
+        },
+        {
+          "path": "harness/common/skills/comm-report-plugin-eval-budget/SKILL.md",
+          "bytes": 3366,
+          "sha256": "7e4f0bbc85413efb432a97b283245d88ae21b7d1e523b5db76c21eb6d0aa05bd",
+          "estimated_static_tokens": 570
+        },
+        {
+          "path": "harness/common/skills/comm-resolve-permission-blockers/SKILL.md",
+          "bytes": 3246,
+          "sha256": "6a414239b66a63c7889f74cf10c9150ab608ed663024bd1eecd24bd4a8f398e0",
+          "estimated_static_tokens": 473
+        },
+        {
+          "path": "harness/common/skills/comm-separate-application-config/SKILL.md",
+          "bytes": 1796,
+          "sha256": "e9c43d44cb7a3714f7a18e71587af732ef72cf009d1e04957261506335732af0",
+          "estimated_static_tokens": 449
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "bytes": 1625,
+          "sha256": "3e306fd9dc37363b12c008a730ed12c4bbc14b16dccc07f6f5874d7c48e0fdf8",
+          "estimated_static_tokens": 407
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/references/evaluation.md",
+          "bytes": 1104,
+          "sha256": "7203060c251d479529172a42dd913a9c607b0b79a44ecb69aec555e583eba33d",
+          "estimated_static_tokens": 276
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/references/validation.md",
+          "bytes": 2296,
+          "sha256": "0f9c37a876a4b36d2ed8d4bcdc0d3185e0b314eba3db6b3bcbd84bae76ac4949",
+          "estimated_static_tokens": 570
+        },
+        {
+          "path": "harness/common/skills/comm-verify-application-startup/SKILL.md",
+          "bytes": 1890,
+          "sha256": "f94252cf1f55f21c5a8ee2637e4d1e0d0905ed32556c701d25425cbfea4b0c68",
+          "estimated_static_tokens": 473
+        }
+      ],
+      "all_common_skill_tokens": 15820
+    },
+    {
+      "mode": "both",
+      "phase": "candidate",
+      "installation": {
+        "startup": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "harness/common/checks/ensure_entrypoint_links.py"
+            ],
+            "exit_code": 0,
+            "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+            "stderr": "",
+            "elapsed_seconds": 0.05
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "harness/common/checks/ensure_entrypoint_links.py"
+            ],
+            "exit_code": 0,
+            "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+            "stderr": "",
+            "elapsed_seconds": 0.04
+          }
+        ],
+        "stable": true,
+        "existing_project_preserved": true
+      },
+      "startup_files": [
+        {
+          "path": "AGENTS.md",
+          "bytes": 1838,
+          "sha256": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11",
+          "estimated_static_tokens": 329
+        },
+        {
+          "path": "harness/common/START.md",
+          "bytes": 1491,
+          "sha256": "cf7eec0ab5fdbb5560fe5cef5376ecf17443794f2284813a76475c363e27b0d2",
+          "estimated_static_tokens": 215
+        },
+        {
+          "path": "harness/project/START.md",
+          "bytes": 641,
+          "sha256": "e83a0a5bd994e6e143bd215d843e2362122c2f4464ec94b6a61850becde43736",
+          "estimated_static_tokens": 99
+        },
+        {
+          "path": ".claude/rules/comm-application-config-git.md",
+          "bytes": 1168,
+          "sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333",
+          "estimated_static_tokens": 172
+        },
+        {
+          "path": ".claude/rules/comm-application-startup-readiness.md",
+          "bytes": 1629,
+          "sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+          "estimated_static_tokens": 229
+        },
+        {
+          "path": ".claude/rules/comm-ban-harness-symlinks.md",
+          "bytes": 1930,
+          "sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c",
+          "estimated_static_tokens": 278
+        },
+        {
+          "path": ".claude/rules/comm-commit-result-boundaries.md",
+          "bytes": 934,
+          "sha256": "1bffa2c007d734f500a380c7501c50a093363a7b639c97aa3a0c0198b0ec13ce",
+          "estimated_static_tokens": 137
+        },
+        {
+          "path": ".claude/rules/comm-confirm-database-design.md",
+          "bytes": 1391,
+          "sha256": "14e41f1c09a3322a202a930340503c18f460bcc84b120a0aa87a025c1ef6075d",
+          "estimated_static_tokens": 201
+        },
+        {
+          "path": ".claude/rules/comm-confirm-development-workflow.md",
+          "bytes": 10512,
+          "sha256": "0e3447ea8f0322835f2e34ba9c6099e37b8ef1100a870c84d234d99b1aa74146",
+          "estimated_static_tokens": 1531
+        },
+        {
+          "path": ".claude/rules/comm-dependencies-through-uv.md",
+          "bytes": 1946,
+          "sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "estimated_static_tokens": 289
+        },
+        {
+          "path": ".claude/rules/comm-entrypoint-links-rule.md",
+          "bytes": 4215,
+          "sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2",
+          "estimated_static_tokens": 636
+        },
+        {
+          "path": ".claude/rules/comm-human-folder-guides.md",
+          "bytes": 2552,
+          "sha256": "ed9dc86ecea957ecad7bcd1f34242649c8c80e652d0f05b15e8d5931e028a89e",
+          "estimated_static_tokens": 382
+        },
+        {
+          "path": ".claude/rules/comm-instruction-order.md",
+          "bytes": 3135,
+          "sha256": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+          "estimated_static_tokens": 453
+        },
+        {
+          "path": ".claude/rules/comm-package-independence.md",
+          "bytes": 1994,
+          "sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e",
+          "estimated_static_tokens": 308
+        },
+        {
+          "path": ".claude/rules/comm-skill-rule-ownership.md",
+          "bytes": 9449,
+          "sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd",
+          "estimated_static_tokens": 1390
+        },
+        {
+          "path": ".claude/rules/comm-user-owned-entrypoints.md",
+          "bytes": 2769,
+          "sha256": "6666ea4af0c25e40e16ef7a28767ce18f46bf27fb1250f2cd214df41547242b3",
+          "estimated_static_tokens": 406
+        },
+        {
+          "path": "harness/common/INDEX.md",
+          "bytes": 4587,
+          "sha256": "2feba09081aa00a32d4b516839d7dda5ef49e09cc1efb940bd7b97da52e78b52",
+          "estimated_static_tokens": 716
+        },
+        {
+          "path": "harness/project/INDEX.md",
+          "bytes": 3888,
+          "sha256": "afb75a69c04a70ba9242b1245cc3a2aa2c65da6bc33c13022a329f3a2f8c9c76",
+          "estimated_static_tokens": 639
+        }
+      ],
+      "catalog_metadata": [
+        {
+          "name": "comm-commit-task-stages",
+          "description": "Use when deciding when to commit repository work, including ideation, brainstorming, planning, implementation, verification, fixes and documentation.",
+          "estimated_static_tokens": 44
+        },
+        {
+          "name": "comm-confirm-database-design",
+          "description": "Use when planning, specifying or changing SQL schemas, initialization, migrations, queries, transactions or connection/session ownership.",
+          "estimated_static_tokens": 42
+        },
+        {
+          "name": "comm-create-lazy-claude-codex-skills",
+          "description": "Use when designing, creating or substantially editing working Codex and Claude skills or rules.",
+          "estimated_static_tokens": 33
+        },
+        {
+          "name": "comm-diagnose-harness-entrypoints",
+          "description": "Use when diagnosing harness startup errors, entrypoint warnings, damaged startup links, imports or unsafe input paths.",
+          "estimated_static_tokens": 39
+        },
+        {
+          "name": "comm-install-harness",
+          "description": "Use when installing or moving harness packages, changing their installation, or proposing changes to the shared project skeleton.",
+          "estimated_static_tokens": 38
+        },
+        {
+          "name": "comm-manage-local-models",
+          "description": "Use when preparing, provisioning, replacing or validating local inference model files and their reproducible deployment.",
+          "estimated_static_tokens": 36
+        },
+        {
+          "name": "comm-normalize-text-line-endings",
+          "description": "Use when explicitly normalizing LF/CRLF text files for cross-platform use, including mixed endings and Windows batch exceptions.",
+          "estimated_static_tokens": 40
+        },
+        {
+          "name": "comm-preserve-harness-knowledge",
+          "description": "Use when saving reusable harness experience or placing project work records, decisions and evidence, including authorized migrations.",
+          "estimated_static_tokens": 42
+        },
+        {
+          "name": "comm-preserve-text-line-endings",
+          "description": "Use when diagnosing CRLF/LF conversion or implementing a narrow UTF-8 text repair that must preserve untouched bytes and line endings, including harness entrypoint link restoration.",
+          "estimated_static_tokens": 54
+        },
+        {
+          "name": "comm-process-harness-inbox",
+          "description": "Use when creating, executing, closing or resuming harness inbox requests.",
+          "estimated_static_tokens": 26
+        },
+        {
+          "name": "comm-protect-harness-evidence",
+          "description": "Use when saving or changing harness evidence, distinguishing application results from protected mechanism evidence and parent operations.",
+          "estimated_static_tokens": 43
+        },
+        {
+          "name": "comm-publish-harness-instructions",
+          "description": "Use when publishing or restoring a prepared skill or rule version to canonical sources and native installation copies.",
+          "estimated_static_tokens": 39
+        },
+        {
+          "name": "comm-report-plugin-eval-budget",
+          "description": "Use when plugin-eval deferred budgets exceed 1200 for skills or 1600 for directories, or per-reference token details are requested.",
+          "estimated_static_tokens": 41
+        },
+        {
+          "name": "comm-resolve-permission-blockers",
+          "description": "Use when a sandbox, access, filesystem, data-transfer or automatic approval rejection blocks work and resolving it needs a new user permission, decision or confirmation.",
+          "estimated_static_tokens": 51
+        },
+        {
+          "name": "comm-separate-application-config",
+          "description": "Use when creating or changing application configuration, config templates, deployment settings, or Git exclusions for local configs.",
+          "estimated_static_tokens": 41
+        },
+        {
+          "name": "comm-validate-harness-instructions",
+          "description": "Use when checking an existing harness instruction or candidate, interpreting findings, or establishing its verification status without publication.",
+          "estimated_static_tokens": 46
+        },
+        {
+          "name": "comm-verify-application-startup",
+          "description": "Use when finishing changes to entrypoints, configuration, services or resources, or before claiming ordinary startup readiness.",
+          "estimated_static_tokens": 40
+        }
+      ],
+      "startup_guard_tokens": 8410,
+      "catalog_metadata_tokens": 695,
+      "selected_owner_all_resources": [
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "bytes": 1659,
+          "sha256": "bae6df91cf077a8430759b0bd316b5dd1b59ab2aa38647d75cb0a3fca41eaa53",
+          "estimated_static_tokens": 413
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+          "bytes": 3220,
+          "sha256": "98d570c34fdabe77c07014de67b5ff6002717c01785a68dc6786f3f060fb7a86",
+          "estimated_static_tokens": 800
+        }
+      ],
+      "selected_owner_resource_tokens": 1213,
+      "all_common_skill_files": [
+        {
+          "path": "harness/common/skills/comm-commit-task-stages/SKILL.md",
+          "bytes": 1581,
+          "sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473",
+          "estimated_static_tokens": 396
+        },
+        {
+          "path": "harness/common/skills/comm-confirm-database-design/SKILL.md",
+          "bytes": 1910,
+          "sha256": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+          "estimated_static_tokens": 477
+        },
+        {
+          "path": "harness/common/skills/comm-confirm-database-design/references/choices.md",
+          "bytes": 3677,
+          "sha256": "f8700dc45889d0025b5df1c4e1a3df5a81dfcc3b047fe7a604b577c2b5cb7e31",
+          "estimated_static_tokens": 920
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+          "bytes": 1659,
+          "sha256": "bae6df91cf077a8430759b0bd316b5dd1b59ab2aa38647d75cb0a3fca41eaa53",
+          "estimated_static_tokens": 413
+        },
+        {
+          "path": "harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md",
+          "bytes": 3220,
+          "sha256": "98d570c34fdabe77c07014de67b5ff6002717c01785a68dc6786f3f060fb7a86",
+          "estimated_static_tokens": 800
+        },
+        {
+          "path": "harness/common/skills/comm-diagnose-harness-entrypoints/SKILL.md",
+          "bytes": 1369,
+          "sha256": "d2f576e976836f4ee3bfd6d569834c8a915001c41c52b9f32da8c3526a57f0c9",
+          "estimated_static_tokens": 343
+        },
+        {
+          "path": "harness/common/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md",
+          "bytes": 4696,
+          "sha256": "a8ef1c50590408fb059a230af495bdbd38ae995ab63d1218a2f84f09103311ae",
+          "estimated_static_tokens": 1174
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/SKILL.md",
+          "bytes": 1529,
+          "sha256": "ff0a67ef8fbf6841f8e499cdadbb8d34a8527a1bb2e17af6c128acdb5cce9242",
+          "estimated_static_tokens": 383
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/references/checks.md",
+          "bytes": 3265,
+          "sha256": "2f87722952353ef41246137bc9389326927137bd812d062b985a0c62889050b3",
+          "estimated_static_tokens": 817
+        },
+        {
+          "path": "harness/common/skills/comm-install-harness/references/testing.md",
+          "bytes": 1870,
+          "sha256": "3dada9a78e5429e1dba643fb992563a169a78cd94d1fba568a1bf02268879fea",
+          "estimated_static_tokens": 313
+        },
+        {
+          "path": "harness/common/skills/comm-manage-local-models/SKILL.md",
+          "bytes": 1348,
+          "sha256": "1b9ebaeabb0510f7f377322e3492a6008583bc9bb88297628b20904e416c5328",
+          "estimated_static_tokens": 337
+        },
+        {
+          "path": "harness/common/skills/comm-manage-local-models/references/lifecycle.md",
+          "bytes": 3430,
+          "sha256": "46b1dce7feb10cb271eed023d2136ef5b66ab99a2c41cfd1b09e32437fd78681",
+          "estimated_static_tokens": 858
+        },
+        {
+          "path": "harness/common/skills/comm-normalize-text-line-endings/SKILL.md",
+          "bytes": 1436,
+          "sha256": "f026597aca7ff151e49a410b5fae97f319583024c0742543c43977daf071d4c5",
+          "estimated_static_tokens": 359
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/SKILL.md",
+          "bytes": 1521,
+          "sha256": "08f643858288c964b96cfd80f31222fbf38f9e84ed6334137ba2b832b25dabf3",
+          "estimated_static_tokens": 379
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md",
+          "bytes": 2120,
+          "sha256": "7a2ca759a364f70de6492e0aff6f8fa3e99d160d0ca619f8102d6ea856571a06",
+          "estimated_static_tokens": 526
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md",
+          "bytes": 2461,
+          "sha256": "e74890425faee47c61a0b15ae50c346be4948bf3bd8c83912019e95f55590c09",
+          "estimated_static_tokens": 616
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-text-line-endings/SKILL.md",
+          "bytes": 2972,
+          "sha256": "e7c1cce1271d2eebcacb520f7e6e96715cfd23329af907be8d7b1a7f63ae36cb",
+          "estimated_static_tokens": 474
+        },
+        {
+          "path": "harness/common/skills/comm-preserve-text-line-endings/references/regressions.md",
+          "bytes": 3049,
+          "sha256": "eaa18a7a39b1ff36fa97014374b50b1194936e57b6bd744f26194647a1b208da",
+          "estimated_static_tokens": 488
+        },
+        {
+          "path": "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+          "bytes": 1304,
+          "sha256": "23ada60d573269c6afb56602d28738a2ea1eb8d3509b7d66861da008b4553ade",
+          "estimated_static_tokens": 326
+        },
+        {
+          "path": "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+          "bytes": 4361,
+          "sha256": "bc77e58b91b303fb9f1bf9adcc6cb8ddc0f598687ab4a08001caf4537d0a2142",
+          "estimated_static_tokens": 1081
+        },
+        {
+          "path": "harness/common/skills/comm-protect-harness-evidence/SKILL.md",
+          "bytes": 1339,
+          "sha256": "75d8ef27c251fb71a9e7a54ff2c06ef542c52df63b6a7fb866d3d8bd052861c3",
+          "estimated_static_tokens": 335
+        },
+        {
+          "path": "harness/common/skills/comm-protect-harness-evidence/references/operations.md",
+          "bytes": 1577,
+          "sha256": "d222cc04b99990f53abab2c35522aacb0599320a66f46bbfd9a4085446ff5b6e",
+          "estimated_static_tokens": 395
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/SKILL.md",
+          "bytes": 1428,
+          "sha256": "ee1dc4e54173ab7111c09a1dc9970009932a6aa480eff7691ad08479c6f538d9",
+          "estimated_static_tokens": 357
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/references/gate.md",
+          "bytes": 1225,
+          "sha256": "05f6e1c7ec35dfc7e37944c1b8c6f7bdab998c4ba862861a285792e14115d02c",
+          "estimated_static_tokens": 307
+        },
+        {
+          "path": "harness/common/skills/comm-publish-harness-instructions/references/placement-contract.md",
+          "bytes": 1014,
+          "sha256": "c0c8fdea5ea9f3c1e71e2d975601ad5092b03079d9729f66254b2397ee7c05cf",
+          "estimated_static_tokens": 252
+        },
+        {
+          "path": "harness/common/skills/comm-report-plugin-eval-budget/SKILL.md",
+          "bytes": 3366,
+          "sha256": "7e4f0bbc85413efb432a97b283245d88ae21b7d1e523b5db76c21eb6d0aa05bd",
+          "estimated_static_tokens": 570
+        },
+        {
+          "path": "harness/common/skills/comm-resolve-permission-blockers/SKILL.md",
+          "bytes": 3246,
+          "sha256": "6a414239b66a63c7889f74cf10c9150ab608ed663024bd1eecd24bd4a8f398e0",
+          "estimated_static_tokens": 473
+        },
+        {
+          "path": "harness/common/skills/comm-separate-application-config/SKILL.md",
+          "bytes": 1796,
+          "sha256": "e9c43d44cb7a3714f7a18e71587af732ef72cf009d1e04957261506335732af0",
+          "estimated_static_tokens": 449
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/SKILL.md",
+          "bytes": 1625,
+          "sha256": "3e306fd9dc37363b12c008a730ed12c4bbc14b16dccc07f6f5874d7c48e0fdf8",
+          "estimated_static_tokens": 407
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/references/evaluation.md",
+          "bytes": 1104,
+          "sha256": "7203060c251d479529172a42dd913a9c607b0b79a44ecb69aec555e583eba33d",
+          "estimated_static_tokens": 276
+        },
+        {
+          "path": "harness/common/skills/comm-validate-harness-instructions/references/validation.md",
+          "bytes": 2296,
+          "sha256": "0f9c37a876a4b36d2ed8d4bcdc0d3185e0b314eba3db6b3bcbd84bae76ac4949",
+          "estimated_static_tokens": 570
+        },
+        {
+          "path": "harness/common/skills/comm-verify-application-startup/SKILL.md",
+          "bytes": 1890,
+          "sha256": "f94252cf1f55f21c5a8ee2637e4d1e0d0905ed32556c701d25425cbfea4b0c68",
+          "estimated_static_tokens": 473
+        }
+      ],
+      "all_common_skill_tokens": 16344
+    }
+  ],
+  "native": [
+    {
+      "file": "v1-native-baseline-both-implicit.json",
+      "mode": "both",
+      "phase": "baseline",
+      "case": "implicit",
+      "completed": true,
+      "exit_code": 0,
+      "complete_rule_reading": true,
+      "missing_rules": [],
+      "selected_skill_read": true,
+      "own_resource_read": true,
+      "read_receipts": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_bytes": 1491,
+          "output_estimated_static_tokens": 215
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 641,
+          "output_estimated_static_tokens": 99
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001,
+          "output_estimated_static_tokens": 1772
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_bytes": 43624,
+          "output_estimated_static_tokens": 6407
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_bytes": 12458,
+          "output_estimated_static_tokens": 1820
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 4587,
+          "output_estimated_static_tokens": 716
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 3888,
+          "output_estimated_static_tokens": 639
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 1353,
+          "output_estimated_static_tokens": 337
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md'",
+          "exit_code": 0,
+          "output_bytes": 1427,
+          "output_estimated_static_tokens": 352
+        }
+      ],
+      "repeated_actual_read_output_bytes": 81470,
+      "repeated_actual_read_output_estimated_tokens": 12357,
+      "usage": [
+        {
+          "input_tokens": 267275,
+          "cached_input_tokens": 236416,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2438,
+          "reasoning_output_tokens": 34
+        }
+      ],
+      "changes": [
+        "PROPOSAL.md"
+      ]
+    },
+    {
+      "file": "v1-native-baseline-common-implicit.json",
+      "mode": "common",
+      "phase": "baseline",
+      "case": "implicit",
+      "completed": true,
+      "exit_code": 0,
+      "complete_rule_reading": true,
+      "missing_rules": [],
+      "selected_skill_read": true,
+      "own_resource_read": true,
+      "read_receipts": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_bytes": 1491,
+          "output_estimated_static_tokens": 215
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 479,
+          "output_estimated_static_tokens": 75
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001,
+          "output_estimated_static_tokens": 1772
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_bytes": 43624,
+          "output_estimated_static_tokens": 6407
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_bytes": 12458,
+          "output_estimated_static_tokens": 1820
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 4587,
+          "output_estimated_static_tokens": 716
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 2209,
+          "output_estimated_static_tokens": 369
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 1353,
+          "output_estimated_static_tokens": 337
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-validate-harness-instructions/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 1625,
+          "output_estimated_static_tokens": 407
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+          "exit_code": 0,
+          "output_bytes": 3982,
+          "output_estimated_static_tokens": 994
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md'",
+          "exit_code": 0,
+          "output_bytes": 1427,
+          "output_estimated_static_tokens": 352
+        }
+      ],
+      "repeated_actual_read_output_bytes": 85236,
+      "repeated_actual_read_output_estimated_tokens": 13464,
+      "usage": [
+        {
+          "input_tokens": 237933,
+          "cached_input_tokens": 208128,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3040,
+          "reasoning_output_tokens": 50
+        }
+      ],
+      "changes": [
+        "PROPOSAL.md"
+      ]
+    },
+    {
+      "file": "v1-native-candidate-both-explicit.json",
+      "mode": "both",
+      "phase": "candidate",
+      "case": "explicit",
+      "completed": true,
+      "exit_code": 0,
+      "complete_rule_reading": true,
+      "missing_rules": [],
+      "selected_skill_read": true,
+      "own_resource_read": true,
+      "read_receipts": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_bytes": 1491,
+          "output_estimated_static_tokens": 215
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 641,
+          "output_estimated_static_tokens": 99
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001,
+          "output_estimated_static_tokens": 1772
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-confirm-database-design.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-commit-result-boundaries.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\"'",
+          "exit_code": 0,
+          "output_bytes": 43624,
+          "output_estimated_static_tokens": 6407
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\"'",
+          "exit_code": 0,
+          "output_bytes": 15010,
+          "output_estimated_static_tokens": 2201
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 4587,
+          "output_estimated_static_tokens": 716
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 3888,
+          "output_estimated_static_tokens": 639
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 3318,
+          "output_estimated_static_tokens": 825
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md'",
+          "exit_code": 0,
+          "output_bytes": 3220,
+          "output_estimated_static_tokens": 800
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+          "exit_code": 0,
+          "output_bytes": 5286,
+          "output_estimated_static_tokens": 1320
+        }
+      ],
+      "repeated_actual_read_output_bytes": 93066,
+      "repeated_actual_read_output_estimated_tokens": 14994,
+      "usage": [
+        {
+          "input_tokens": 265409,
+          "cached_input_tokens": 240640,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3349,
+          "reasoning_output_tokens": 36
+        }
+      ],
+      "changes": [
+        "PROPOSAL.md"
+      ]
+    },
+    {
+      "file": "v1-native-candidate-both-implicit.json",
+      "mode": "both",
+      "phase": "candidate",
+      "case": "implicit",
+      "completed": true,
+      "exit_code": 0,
+      "complete_rule_reading": true,
+      "missing_rules": [],
+      "selected_skill_read": true,
+      "own_resource_read": true,
+      "read_receipts": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_bytes": 1491,
+          "output_estimated_static_tokens": 215
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 641,
+          "output_estimated_static_tokens": 99
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001,
+          "output_estimated_static_tokens": 1772
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_bytes": 43624,
+          "output_estimated_static_tokens": 6407
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_bytes": 12458,
+          "output_estimated_static_tokens": 1820
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 4587,
+          "output_estimated_static_tokens": 716
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 3888,
+          "output_estimated_static_tokens": 639
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 1659,
+          "output_estimated_static_tokens": 413
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md'",
+          "exit_code": 0,
+          "output_bytes": 3220,
+          "output_estimated_static_tokens": 800
+        }
+      ],
+      "repeated_actual_read_output_bytes": 83569,
+      "repeated_actual_read_output_estimated_tokens": 12881,
+      "usage": [
+        {
+          "input_tokens": 339864,
+          "cached_input_tokens": 317184,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2855,
+          "reasoning_output_tokens": 51
+        }
+      ],
+      "changes": [
+        "PROPOSAL.md"
+      ]
+    },
+    {
+      "file": "v1-native-candidate-both-unrelated.json",
+      "mode": "both",
+      "phase": "candidate",
+      "case": "unrelated",
+      "completed": true,
+      "exit_code": 0,
+      "complete_rule_reading": true,
+      "missing_rules": [],
+      "selected_skill_read": false,
+      "own_resource_read": false,
+      "read_receipts": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_bytes": 1491,
+          "output_estimated_static_tokens": 215
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 641,
+          "output_estimated_static_tokens": 99
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001,
+          "output_estimated_static_tokens": 1772
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_bytes": 43624,
+          "output_estimated_static_tokens": 6407
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_bytes": 12458,
+          "output_estimated_static_tokens": 1820
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 4587,
+          "output_estimated_static_tokens": 716
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 3888,
+          "output_estimated_static_tokens": 639
+        }
+      ],
+      "repeated_actual_read_output_bytes": 78690,
+      "repeated_actual_read_output_estimated_tokens": 11668,
+      "usage": [
+        {
+          "input_tokens": 167692,
+          "cached_input_tokens": 146176,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 589,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "changes": []
+    },
+    {
+      "file": "v1-native-candidate-common-explicit.json",
+      "mode": "common",
+      "phase": "candidate",
+      "case": "explicit",
+      "completed": true,
+      "exit_code": 0,
+      "complete_rule_reading": true,
+      "missing_rules": [],
+      "selected_skill_read": true,
+      "own_resource_read": true,
+      "read_receipts": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_bytes": 1491,
+          "output_estimated_static_tokens": 215
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 479,
+          "output_estimated_static_tokens": 75
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001,
+          "output_estimated_static_tokens": 1772
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "output_bytes": 43624,
+          "output_estimated_static_tokens": 6407
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "output_bytes": 5687,
+          "output_estimated_static_tokens": 835
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_bytes": 10512,
+          "output_estimated_static_tokens": 1531
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 4587,
+          "output_estimated_static_tokens": 716
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 2209,
+          "output_estimated_static_tokens": 369
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 3318,
+          "output_estimated_static_tokens": 825
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md'",
+          "exit_code": 0,
+          "output_bytes": 3220,
+          "output_estimated_static_tokens": 800
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+          "exit_code": 0,
+          "output_bytes": 5286,
+          "output_estimated_static_tokens": 1320
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md'",
+          "exit_code": 0,
+          "output_bytes": 6481,
+          "output_estimated_static_tokens": 1607
+        }
+      ],
+      "repeated_actual_read_output_bytes": 98895,
+      "repeated_actual_read_output_estimated_tokens": 16472,
+      "usage": [
+        {
+          "input_tokens": 346420,
+          "cached_input_tokens": 313088,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3215,
+          "reasoning_output_tokens": 75
+        }
+      ],
+      "changes": [
+        "PROPOSAL.md"
+      ]
+    },
+    {
+      "file": "v1-native-candidate-common-implicit.json",
+      "mode": "common",
+      "phase": "candidate",
+      "case": "implicit",
+      "completed": true,
+      "exit_code": 0,
+      "complete_rule_reading": true,
+      "missing_rules": [],
+      "selected_skill_read": true,
+      "own_resource_read": true,
+      "read_receipts": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 1970,
+          "output_estimated_static_tokens": 290
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001,
+          "output_estimated_static_tokens": 1772
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md'\"",
+          "exit_code": 0,
+          "output_bytes": 43624,
+          "output_estimated_static_tokens": 6407
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_bytes": 10512,
+          "output_estimated_static_tokens": 1531
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 6796,
+          "output_estimated_static_tokens": 1084
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/SKILL.md harness/common/skills/comm-validate-harness-instructions/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+          "exit_code": 0,
+          "output_bytes": 7266,
+          "output_estimated_static_tokens": 1813
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/specs/2026-10-06-structure-and-creation-dates.md'",
+          "exit_code": 0,
+          "output_bytes": 9777,
+          "output_estimated_static_tokens": 2097
+        }
+      ],
+      "repeated_actual_read_output_bytes": 91946,
+      "repeated_actual_read_output_estimated_tokens": 14994,
+      "usage": [
+        {
+          "input_tokens": 238636,
+          "cached_input_tokens": 215168,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2625,
+          "reasoning_output_tokens": 33
+        }
+      ],
+      "changes": [
+        "PROPOSAL.md"
+      ]
+    },
+    {
+      "file": "v1-native-candidate-common-unrelated.json",
+      "mode": "common",
+      "phase": "candidate",
+      "case": "unrelated",
+      "completed": true,
+      "exit_code": 0,
+      "complete_rule_reading": true,
+      "missing_rules": [],
+      "selected_skill_read": false,
+      "own_resource_read": false,
+      "read_receipts": [
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md'",
+          "exit_code": 0,
+          "output_bytes": 1491,
+          "output_estimated_static_tokens": 215
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 479,
+          "output_estimated_static_tokens": 75
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001,
+          "output_estimated_static_tokens": 1772
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-database-design.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-commit-result-boundaries.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\"'",
+          "exit_code": 0,
+          "output_bytes": 43624,
+          "output_estimated_static_tokens": 6407
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-confirm-development-workflow.md\"'",
+          "exit_code": 0,
+          "output_bytes": 10512,
+          "output_estimated_static_tokens": 1531
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 4587,
+          "output_estimated_static_tokens": 716
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 2209,
+          "output_estimated_static_tokens": 369
+        }
+      ],
+      "repeated_actual_read_output_bytes": 74903,
+      "repeated_actual_read_output_estimated_tokens": 11085,
+      "usage": [
+        {
+          "input_tokens": 123302,
+          "cached_input_tokens": 106368,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 552,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "changes": []
+    }
+  ]
+}

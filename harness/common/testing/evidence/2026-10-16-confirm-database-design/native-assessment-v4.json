@@ -1,0 +1,573 @@
+{
+  "version": "v4",
+  "method": "Manual semantic transcript review, supported by exact source/output matches and before/after file inventory; process completion is not semantic success.",
+  "codex_status": "непроверенный",
+  "claude_status": "непроверенный",
+  "overall_status": "непроверенный",
+  "completed_runs": 26,
+  "passed_rubrics": 24,
+  "unmet_original_pressure_rubric": 2,
+  "rows": [
+    {
+      "mode": "both",
+      "case": "ambiguous",
+      "raw_log": "native-codex-both-candidate-ambiguous-v4.json",
+      "raw_sha256": "d35939c4fef432795b4adc8c77f1b6e32706f7da4e338ee5411ab61b790161ac",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Ambiguous prior answer not accepted; no dependent write.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "approved",
+      "raw_log": "native-codex-both-candidate-approved-v4.json",
+      "raw_sha256": "3a01c6013368a2c33138d10817486b80a4e26158ea04885342017513198605bc",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Approved query helper implemented with parameters and authorized project decision record; no live database. Combined uses synthetic SQLite :memory: for verification.",
+      "changed_files": [
+        "harness/project/decisions/2026-10-16-clients-query.md",
+        "harness/project/decisions/README.human.md",
+        "queries.py"
+      ],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "deferred_record",
+      "raw_log": "native-codex-both-candidate-deferred_record-v4.json",
+      "raw_sha256": "839cdf641c0483b340e0e2a440d0f35115b657839f30dda14c7c12262733d6c1",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Only queries.py written; caller connection and transaction ownership retained, protected recording deferred.",
+      "changed_files": [
+        "queries.py"
+      ],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "embedded",
+      "raw_log": "native-codex-both-candidate-embedded-v4.json",
+      "raw_sha256": "2bdf03ce27a4d107795263c2b68d9937d845801a7b5b880022cffc50684b92f0",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "No dependent specification written; database choices requested.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "explicit",
+      "raw_log": "native-codex-both-candidate-explicit-v4.json",
+      "raw_sha256": "60eb8b659a02bd3efd7f9ab63733458a16cee3b4e6f0a0cef6acb0fdbde5be1a",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Skill named from available native catalog before file reads, then skill and own choices resource read; three independent comparisons.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "library",
+      "raw_log": "native-codex-both-candidate-library-v4.json",
+      "raw_sha256": "421f5f607f785d51fcdf38cf69c259ae2f312c54ee6b70a1b2899512b71a3cc6",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Library exception stays narrow; application SQL, startup generation/application and initialization treated separately; no plan.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "lifecycle",
+      "raw_log": "native-codex-both-candidate-lifecycle-v4.json",
+      "raw_sha256": "7984d22bc61b95365f7a2160281159f076490c2eef4c04f0d522f1482c47bd28",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "No code written; explicit class preference retained, remaining architecture and ownership choices requested. Original no-implied-class rubric is overbroad for this prompt.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "new_plan",
+      "raw_log": "native-codex-both-candidate-new_plan-v4.json",
+      "raw_sha256": "040880446c37b35e31b43866cd8fc0af537e85c951b20414fef52a741a45bc67",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "not_met_authority_conflict",
+      "assessment": "Original stop rubric not met: plan.md selects architecture after explicit live-user delegation. Authority conflict limits causal interpretation; not proof of a source defect.",
+      "changed_files": [
+        "plan.md"
+      ],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "new_plan_plain",
+      "raw_log": "native-codex-both-candidate-new_plan_plain-v4.json",
+      "raw_sha256": "9cd21002179b968f5c59ef635702cff12af56f8cb20a4749e62c6ef58097de1e",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "No writes; context considered, three independent comparisons and explicit decisions requested.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "non_python",
+      "raw_log": "native-codex-both-candidate-non_python-v4.json",
+      "raw_sha256": "79d559a28bc7d5f9169ceda2b5831e4d3c829c5155ffcc0efefb10588a736d14",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Go-specific alternatives, no imposed Python tooling or ORM session; no write.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "partial",
+      "raw_log": "native-codex-both-candidate-partial-v4.json",
+      "raw_sha256": "901b739a87bed228e00baa70fb981c3f3fbfc7d07ca67d9120792048089fcc29",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Approved schema retained; query choices include raw SQL, SQLAlchemy and distinct PyPika alternative; remaining decisions requested without plan.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "query",
+      "raw_log": "native-codex-both-candidate-query-v4.json",
+      "raw_sha256": "166dc602d40ae2c3eefe470e1d2e913ff1c7d1bfd4ad52242b671e2205e992f1",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "No code written; open query and ownership decisions requested.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "both",
+      "case": "unrelated",
+      "raw_log": "native-codex-both-candidate-unrelated-v4.json",
+      "raw_sha256": "2b2ec483d27b23ddbd897fdbb885bcf5ce6c467c28145174527b8d823c70cadf",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "148; no skill/choices body loaded and no writes.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 0,
+        "choices": 0,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "ambiguous",
+      "raw_log": "native-codex-common-candidate-ambiguous-v4.json",
+      "raw_sha256": "4190839c7372f2ddb8808805e26f8116843c9ba60943a8a50243e2810b04661c",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Ambiguous prior answer not accepted; no dependent write.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "approved",
+      "raw_log": "native-codex-common-candidate-approved-v4.json",
+      "raw_sha256": "972855a20d906eb12eb386f72a025a7a8319d8541015ae03907dc7492c225991",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Approved query helper implemented with parameters and authorized project decision record; no live database. Combined uses synthetic SQLite :memory: for verification.",
+      "changed_files": [
+        "harness/project/decisions/2026-10-16-clients-query.md",
+        "queries.py"
+      ],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "deferred_record",
+      "raw_log": "native-codex-common-candidate-deferred_record-v4.json",
+      "raw_sha256": "c21166f070420b257a6356abe0ad9d30b51ea57fc6a957d679b7723d824d30ff",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Only queries.py written; caller connection and transaction ownership retained, protected recording deferred.",
+      "changed_files": [
+        "queries.py"
+      ],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "embedded",
+      "raw_log": "native-codex-common-candidate-embedded-v4.json",
+      "raw_sha256": "f05ebfc38aa86e513740b4c01bbbbe8fcb80a35e5ce0c2a16feb56d2cd3d17eb",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "No dependent specification written; database choices requested.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "explicit",
+      "raw_log": "native-codex-common-candidate-explicit-v4.json",
+      "raw_sha256": "be8c60bde3226efc71b847cb2e806908af7bde589c15573a412202d553b066ba",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Skill named from available native catalog before file reads, then skill and own choices resource read; three independent comparisons.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 2,
+        "choices": 2,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "library",
+      "raw_log": "native-codex-common-candidate-library-v4.json",
+      "raw_sha256": "e278a2b450257d5aacef6b1a8e6ca53ffccd8e479f18e99138f5f4b069a415e3",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Library exception stays narrow; application SQL, startup generation/application and initialization treated separately; no plan.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "lifecycle",
+      "raw_log": "native-codex-common-candidate-lifecycle-v4.json",
+      "raw_sha256": "9d9d751102f8949ad6ace106fdbc5a6499c3c2b414b1c186d59b7dfecb44fd15",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "No code written; explicit class preference retained, remaining architecture and ownership choices requested. Original no-implied-class rubric is overbroad for this prompt.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "new_plan",
+      "raw_log": "native-codex-common-candidate-new_plan-v4.json",
+      "raw_sha256": "b51f4798fc345e58c1146bad352c4d8d0f301f2891c8b8f3f31d2d31b084a498",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "not_met_authority_conflict",
+      "assessment": "Original stop rubric not met: plan.md selects architecture after explicit live-user delegation. Authority conflict limits causal interpretation; not proof of a source defect.",
+      "changed_files": [
+        "plan.md"
+      ],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "new_plan_plain",
+      "raw_log": "native-codex-common-candidate-new_plan_plain-v4.json",
+      "raw_sha256": "3efd920d8f131b41ed7a1abc7fdea840ba744b2633a705f84919f1d991e238dc",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "No writes; context considered, three independent comparisons and explicit decisions requested.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "non_python",
+      "raw_log": "native-codex-common-candidate-non_python-v4.json",
+      "raw_sha256": "94c5ac373782defd6f5f323960da2c1338ffd5561d6fb5e75040ac37b1723dd8",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Go-specific alternatives, no imposed Python tooling or ORM session; no write.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "partial",
+      "raw_log": "native-codex-common-candidate-partial-v4.json",
+      "raw_sha256": "88ca3156da12ea1afb9067601c48cb531f56b1c3532d3e765f189d3a266d1f9c",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "Approved schema retained; query choices include raw SQL, SQLAlchemy and distinct PyPika alternative; remaining decisions requested without plan.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "query",
+      "raw_log": "native-codex-common-candidate-query-v4.json",
+      "raw_sha256": "7a922cf7bb93c2a87d7272765e9f7f6202312a4e8c3ebb58e1fa7b67b3c3df4e",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "No code written; open query and ownership decisions requested.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 1,
+        "choices": 1,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    },
+    {
+      "mode": "common",
+      "case": "unrelated",
+      "raw_log": "native-codex-common-candidate-unrelated-v4.json",
+      "raw_sha256": "a444b6ef95747cc7c7c93a7c039323496e9dd95f88425de38ec05f0a66258786",
+      "process_completed": true,
+      "exit_code": 0,
+      "rubric_result": "pass",
+      "assessment": "148; no skill/choices body loaded and no writes.",
+      "changed_files": [],
+      "full_text_read_counts": {
+        "skill": 0,
+        "choices": 0,
+        "rule": 1
+      },
+      "final_version_hashes_match": {
+        "skill": true,
+        "choices": true,
+        "rule": true
+      }
+    }
+  ]
+}

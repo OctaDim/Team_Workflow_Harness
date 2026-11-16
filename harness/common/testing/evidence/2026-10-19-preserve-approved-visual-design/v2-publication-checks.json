@@ -1,0 +1,76 @@
+{
+  "version": "v2",
+  "bundle_sha256": "ee4dfa7c9a6ea49cbceb26a8f52a3bddf6aa8280f99012c1cff781f9415acfcb",
+  "published_files": [
+    {
+      "path": "harness/common/skills/comm-preserve-visual-design/README.human.md",
+      "sha256": "dc121cc3bd53d5a1512f418df60c53a5ca6a3f90072642e65ea1bf86e32a6002",
+      "prior": "absent"
+    },
+    {
+      "path": "harness/common/skills/comm-preserve-visual-design/SKILL.md",
+      "sha256": "9d60d361adc0bedf94fb0ed43cef417b60ea84b4f4dab6fda388b5def9003d9f",
+      "prior": "absent"
+    },
+    {
+      "path": ".agents/skills/comm-preserve-visual-design/README.human.md",
+      "sha256": "dc121cc3bd53d5a1512f418df60c53a5ca6a3f90072642e65ea1bf86e32a6002",
+      "prior": "absent"
+    },
+    {
+      "path": ".agents/skills/comm-preserve-visual-design/SKILL.md",
+      "sha256": "9d60d361adc0bedf94fb0ed43cef417b60ea84b4f4dab6fda388b5def9003d9f",
+      "prior": "absent"
+    },
+    {
+      "path": ".claude/skills/comm-preserve-visual-design/README.human.md",
+      "sha256": "dc121cc3bd53d5a1512f418df60c53a5ca6a3f90072642e65ea1bf86e32a6002",
+      "prior": "absent"
+    },
+    {
+      "path": ".claude/skills/comm-preserve-visual-design/SKILL.md",
+      "sha256": "9d60d361adc0bedf94fb0ed43cef417b60ea84b4f4dab6fda388b5def9003d9f",
+      "prior": "absent"
+    }
+  ],
+  "full_equal_ordinary_copies": true,
+  "git_visible": true,
+  "canonical_rule_count": 13,
+  "canonical_rules_equal": true,
+  "pre_existing_protected_files_unchanged": true,
+  "no_new_rule": true,
+  "checks": {
+    "entrypoint": {
+      "command": [
+        "python3",
+        "-B",
+        "harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+      "stderr": ""
+    },
+    "profile": {
+      "command": [
+        "python3",
+        "/home/octadim/.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "harness/common/skills/comm-preserve-visual-design"
+      ],
+      "exit_code": 0,
+      "stdout": "Skill is valid!\n",
+      "stderr": ""
+    },
+    "rule_copies_pytest": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "harness/common/testing/tests/test_rule_copies.py"
+      ],
+      "exit_code": 0,
+      "stdout": "....                                                                     [100%]\n4 passed in 0.03s\n",
+      "stderr": ""
+    }
+  }
+}

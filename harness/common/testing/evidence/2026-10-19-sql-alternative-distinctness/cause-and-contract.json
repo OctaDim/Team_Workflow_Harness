@@ -1,0 +1,28 @@
+{
+  "version_before": {
+    "SKILL.md": "f42896ff2859dc008d45ef7603d97a86b8d8cc754f48a1aebf7229467515d090",
+    "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+    "references/choices.md": "d7062d679b1d55826a143701a5dc547f67e797e2b672062b0b94c5b11ad0ea35",
+    "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec"
+  },
+  "historical_red": "../2026-10-19-sequential-rule-to-lazy-skills/stage2-sql/published-v1-codex-published-both-plan.json",
+  "red_trace": "The same choices resource was read before a reply presenting raw SQL, Alembic, and declarative schema with PRAGMA user_version without identifying a distinct third executor/mechanism. No dependent write occurred.",
+  "fresh_baseline": [
+    "baseline-1-codex-v0-both-plan.json",
+    "baseline-1-codex-v0-both-counterexample.json"
+  ],
+  "fresh_result": "Both mechanical checks passed; implicit plan used distinct tool names; explicit counterexample review rejected the version marker. No new identical failure in these two runs.",
+  "bounded_cause": "The resource permits a distinct justified mechanism but does not require reporting mechanism/executor/fit for each schema option or checking the produced answer. Successful discovery and explicit recognition rule out a missing skill/resource as the observed cause; the failure is applying the comparison during answer synthesis.",
+  "causal_limit": "A fresh correct reply and a historical failure with identical bytes show variability, not proof of an internal model cause or a measured reduction in error rate. Full repeated candidate scenarios still required.",
+  "form_comparison": {
+    "rule-only": "Insufficient for the full comparison/approval/recording algorithm.",
+    "rule+skill": "No evidenced pre-selection failure; the failing reply already read the resource.",
+    "lazy-only amendment": "Keep current native discovery and amend the owner resource; chosen minimal form."
+  },
+  "contract_map": {
+    "SKILL.md": "byte-identical; all six procedure steps and metadata preserved",
+    "choices.md before insertion": "byte-identical prefix, including three-block table, distinct owners and raw-SQL versioning boundary",
+    "choices.md after insertion": "byte-identical suffix, including Core/ORM distinction, all applicable scopes, explicit approval and recording rules",
+    "new behavior": "schema mechanism/executor/fit, semantic negative example, pre-question duplicate check and explicit unresolved-third stop"
+  }
+}

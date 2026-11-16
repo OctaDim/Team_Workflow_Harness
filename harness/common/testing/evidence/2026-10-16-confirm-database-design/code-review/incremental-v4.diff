@@ -1,0 +1,14 @@
+diff --git a/harness/common/inbox/2026-10-16-confirm-database-design/comm-confirm-database-design/references/choices.md b/harness/common/inbox/2026-10-16-confirm-database-design/comm-confirm-database-design/references/choices.md
+index 714bcf4..64720ae 100644
+--- a/harness/common/inbox/2026-10-16-confirm-database-design/comm-confirm-database-design/references/choices.md
++++ b/harness/common/inbox/2026-10-16-confirm-database-design/comm-confirm-database-design/references/choices.md
+@@ -18,6 +18,9 @@ these alternatives; ask after comparing. Preserve specific choices already made:
+ 
+ The schema choice does not settle queries or lifecycle. SQLAlchemy also executes
+ expressions through `.execute()`; distinguish expressions from handwritten SQL.
++Core and ORM are subchoices of the SQLAlchemy option, not the separate third
++query alternative; offer another approach, such as a different query builder
++or ORM, with project-specific justification.
+ Do not force Python tools into another stack. If ORM sessions are inapplicable,
+ state that explicitly rather than introducing them. Values and DDL identifiers
+ need different safe handling; do not promise bind parameters cover identifiers.

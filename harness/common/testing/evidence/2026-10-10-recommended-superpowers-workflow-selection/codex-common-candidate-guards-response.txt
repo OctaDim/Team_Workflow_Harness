@@ -1,0 +1,39 @@
+Сначала выполню обязательную стартовую проверку, затем прочитаю входные файлы и машинные правила в заданном порядке. После этого покажу вопрос выбора процесса и разберу, какие ответы дают разрешение продолжать.
+Стартовая проверка прошла; оба START, все восемь машинных правил и оба INDEX прочитаны. Использую `using-superpowers` для выбора применимых скиллов из нативного каталога. Правило выбора процесса требует отдельного однозначного ответа; сейчас проверю основания маршрутов, не начиная разработку.
+Startup passed. I read both START files, all eight machine rules, and both INDEX files in order. No human guide bodies were read. No implementation or plan edits were made.
+
+Relevant skills from the **native session catalog**, without searching disk to construct a catalog:
+
+| Skill | Relevance |
+|---|---|
+| `using-superpowers` | Identify applicable skills; it does not mandate a full development chain. |
+| `brainstorming` | Classify creative work as spike, bounded, or architectural before implementation. |
+| `writing-plans` | Prepare a plan for a task with requirements and multiple steps. |
+| `executing-plans` | Main-agent execution of an implementation plan. |
+| `subagent-driven-development` | Execution with separate implementers and reviewers. |
+| `test-driven-development`, `verification-before-completion`, `requesting-code-review` | Apply during later implementation and verification stages. |
+
+The task set’s development scope has not been supplied, so **a specific Superpowers route cannot yet be recommended**. The skill basis is:
+
+- **Spike:** approve a question and probe → investigate → report findings.
+- **Bounded existing-code change:** approve a short design in chat → implement and verify; no plan document.
+- **Architectural work:** brainstorming and written-spec approval → `writing-plans` and plan approval → a selected execution method.
+
+The required alternative is **Compound Engineering: `ce-brainstorm → ce-plan → ce-work`**. Those CE skills are absent from this session’s native catalog, so I can present the alternative but cannot claim their procedures are available.
+
+Each reply to a route-selection question must be assessed separately:
+
+| Reply | Authorizes work? | Needed next step |
+|---|---|---|
+| Silence / no reply | No | Wait for an explicit route choice. |
+| Refusal | No | Respect the refusal and stop. |
+| Unqualified “да” to a menu | No | Clarify which route—and executor where required—was selected. |
+| “На твой выбор” | No | Ask the user to select one route explicitly. |
+| Two permitted route numbers | No | Ask for exactly one route. |
+| UI default never submitted | No | Wait for a submitted, unambiguous choice. |
+
+None of these answers selects one route for this new task set. A route choice also does not authorize edits under the current read-only instruction.
+
+**Workflow-selection question:** For this new named task set, what is its name and intended development outcome, and which process do you explicitly select: **Superpowers, with its concrete route determined from that scope**, or **Compound Engineering (`ce-brainstorm → ce-plan → ce-work`)**? A full Superpowers route would still require a separate, unambiguous execution-method choice before execution.
+
+This stop is required by [comm-confirm-development-workflow.md](/tmp/two-modes-native-y98j0hd9/workspace/.claude/rules/comm-confirm-development-workflow.md): “После вопроса остановись и жди явного однозначного положительного ответа.” I am stopping without selecting a route for you.

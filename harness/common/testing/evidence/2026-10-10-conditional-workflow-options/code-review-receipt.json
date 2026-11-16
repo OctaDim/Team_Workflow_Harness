@@ -1,0 +1,80 @@
+{
+  "status": "complete",
+  "verdict": "Ready to merge",
+  "scope": {
+    "base": "8bf4cb56a0bea5db2d81ad885cc1cae78a8f6988",
+    "branch": "octadim/review-workflow-selection",
+    "head_sha": "8bf4cb56a0bea5db2d81ad885cc1cae78a8f6988",
+    "pr_url": null,
+    "files_changed": 2,
+    "candidate_sha256": "a6209150e2aa249491e7dde7b16ca37ff92e0a78bce55fe65d8a2560740c04a9"
+  },
+  "intent": "When a Superpowers recommendation cannot be established, explain the missing data or skills and show all full and short Superpowers routes plus CE as conditional possibilities, not recommendations. Preserve the existing menus for known short or full recommendations and the route confirmation, executor choice, stage and environment guards.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness"
+  ],
+  "findings": [],
+  "actionable_findings": [],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": null,
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "This receipt covers the exact source diff only. Independent native behavior validation belongs to the parent workflow; it was not performed by this review. Source review does not raise Claude or overall verification statuses."
+  ],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "lite",
+    "depth_reason": "The diff changes only the visible route-selection menu. A wrong menu is observable where it is shown; unchanged confirmation and permission guards remain outside the diff. No helper floor or silent-pass class applies.",
+    "scope_mode": "local-aligned",
+    "scope_facts": {
+      "changed_lines": 32,
+      "exec_nontest_lines": 0,
+      "size_band": "small",
+      "unclassified_lines": {
+        ".md": 32
+      },
+      "hard_block_full": false,
+      "silent_pass_classes": []
+    },
+    "criteria_files": [
+      "AGENTS.md",
+      "CLAUDE.md"
+    ],
+    "instruction_file_fallback": true,
+    "criteria_mapping": {
+      ".claude/rules/comm-confirm-development-workflow.md": [
+        "AGENTS.md",
+        "CLAUDE.md"
+      ],
+      "harness/common/rules/comm-confirm-development-workflow.md": [
+        "AGENTS.md",
+        "CLAUDE.md"
+      ]
+    },
+    "criteria_search": "complete; no governing CODING_STANDARDS.md",
+    "plan_discovery": "No explicit plan or PR; no matching workflow-selection plan at the resolved artifact root. Latest request scope used for explicit intent.",
+    "request_scope": "Latest scope section supersedes the historical prohibition on full conditional routes when no recommendation is established.",
+    "source_checks": [
+      "Canonical rule, native copy and inbox candidate match expected SHA-256.",
+      "Missing recommendation shows both full execution chains, three specified short processes, other skill-established short routes and CE as conditional possibilities; unavailable skills are identified.",
+      "Known short recommendation retains short routes plus CE without automatically adding full chains; known full recommendation shows both executors plus CE and the existing subagent explanation.",
+      "Explicit using-superpowers/brainstorming uses the same menu conditions; route confirmation, executor clarification, persistence and remaining guards are unchanged."
+    ],
+    "reviewer_agents_dispatched": false,
+    "declared_compound_packs_applied": false,
+    "not_assessed": [
+      "learnings",
+      "agent-native gaps",
+      "deployment notes",
+      "cross-model review",
+      "independent native runtime validation"
+    ],
+    "untracked_excluded": []
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/conditional-workflow-_e5vkhh8",
+  "run_id": "conditional-workflow-_e5vkhh8"
+}

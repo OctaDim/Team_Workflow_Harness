@@ -1,0 +1,1452 @@
+[
+  {
+    "file": "v0-bwrap-codex-lazy-both-explicit.json",
+    "variant": "lazy",
+    "mode": "both",
+    "case": "explicit",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 302002,
+        "cached_input_tokens": 279808,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1135,
+        "reasoning_output_tokens": 39
+      }
+    ],
+    "tool_output_utf8_bytes_total": 87382,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 2672
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "utf8_bytes": 12458
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "utf8_bytes": 8475
+      },
+      {
+        "command": "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md .agents/skills/ce-commit/SKILL.md'",
+        "utf8_bytes": 6362
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short; git diff -- notes.md; git diff --cached -- notes.md user.txt; cat notes.md; git log -5 --oneline'",
+        "utf8_bytes": 347
+      },
+      {
+        "command": "/bin/bash -lc 'git status'",
+        "utf8_bytes": 316
+      },
+      {
+        "command": "/bin/bash -lc 'git diff HEAD'",
+        "utf8_bytes": 267
+      },
+      {
+        "command": "/bin/bash -lc 'git branch --show-current'",
+        "utf8_bytes": 19
+      },
+      {
+        "command": "/bin/bash -lc 'git log --oneline -10'",
+        "utf8_bytes": 44
+      },
+      {
+        "command": "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "utf8_bytes": 204
+      },
+      {
+        "command": "/bin/bash -lc 'git ls-files --stage -- user.txt'",
+        "utf8_bytes": 59
+      },
+      {
+        "command": "/bin/bash -lc 'sha256sum user.txt notes.md'",
+        "utf8_bytes": 150
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --check -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'gh repo view --json defaultBranchRef --jq .defaultBranchRef.name'",
+        "utf8_bytes": 21
+      },
+      {
+        "command": "/bin/bash -lc 'git add -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git commit -F /tmp/lazy-commit-notes-message.txt -- notes.md'",
+        "utf8_bytes": 116
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short'",
+        "utf8_bytes": 12
+      },
+      {
+        "command": "/bin/bash -lc 'git show --stat --oneline HEAD'",
+        "utf8_bytes": 112
+      },
+      {
+        "command": "/bin/bash -lc 'git ls-files --stage -- user.txt'",
+        "utf8_bytes": 59
+      },
+      {
+        "command": "/bin/bash -lc 'sha256sum user.txt notes.md'",
+        "utf8_bytes": 150
+      }
+    ],
+    "skill_read_indices": [
+      7
+    ],
+    "commit_indices": [
+      19
+    ],
+    "commits": [
+      {
+        "sha": "3e8cca57f9f9a37738e3d14a614853a49459a1e0",
+        "subject": "docs: Preserve current discussion draft",
+        "paths": [
+          "notes.md"
+        ],
+        "notes": "draft-owned"
+      }
+    ],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-lazy-both-fixes.json",
+    "variant": "lazy",
+    "mode": "both",
+    "case": "fixes",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 264365,
+        "cached_input_tokens": 222336,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1420,
+        "reasoning_output_tokens": 15
+      }
+    ],
+    "tool_output_utf8_bytes_total": 90370,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "utf8_bytes": 2132
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-confirm-database-design.md'\"",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "utf8_bytes": 15593
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "utf8_bytes": 8475
+      },
+      {
+        "command": "/bin/bash -lc 'cat workflow.md notes.md\n git status --short\n git ls-files --stage -- user.txt'",
+        "utf8_bytes": 334
+      },
+      {
+        "command": "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md .agents/skills/ce-commit/SKILL.md'",
+        "utf8_bytes": 6362
+      },
+      {
+        "command": "/bin/bash -lc 'git status'",
+        "utf8_bytes": 316
+      },
+      {
+        "command": "/bin/bash -lc 'git diff HEAD'",
+        "utf8_bytes": 267
+      },
+      {
+        "command": "/bin/bash -lc 'git branch --show-current'",
+        "utf8_bytes": 19
+      },
+      {
+        "command": "/bin/bash -lc 'git log --oneline -10'",
+        "utf8_bytes": 44
+      },
+      {
+        "command": "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "utf8_bytes": 204
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; import hashlib, subprocess; print(\\\"user working sha256:\\\",hashlib.sha256(Path(\\\"user.txt\\\").read_bytes()).hexdigest()); print(\\\"user index:\\\",subprocess.check_output([\\\"git\\\",\\\"ls-files\\\",\\\"--stage\\\",\\\"--\\\",\\\"user.txt\\\"]).decode().strip())'\"",
+        "utf8_bytes": 157
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; p=Path(\\\"notes.md\\\"); steps=(b\\\"fixed-title\\\\n\\\",b\\\"fixed-title-and-scope\\\\n\\\",b\\\"fixed-title-and-scope-and-example\\\\n\\\"); [(p.write_bytes(value),print(p.read_bytes().decode(),end=\\\"\\\")) for value in steps]; assert p.read_bytes()==steps[-1]; Path(\\\"/tmp/lazy-commit-native-message.txt\\\").write_text(\\\"Fix title, scope and example in notes\\\\n\\\",encoding=\\\"utf-8\\\")'\"",
+        "utf8_bytes": 68
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --check'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git diff -- notes.md'",
+        "utf8_bytes": 148
+      },
+      {
+        "command": "/bin/bash -lc 'git add -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git commit -F /tmp/lazy-commit-native-message.txt -- notes.md'",
+        "utf8_bytes": 114
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; import hashlib,subprocess; assert Path(\\\"notes.md\\\").read_bytes()==b\\\"fixed-title-and-scope-and-example\\\\n\\\"; assert hashlib.sha256(Path(\\\"user.txt\\\").read_bytes()).hexdigest()==\\\"b8dd82e0793cd4c931aac498e7dfc6416801e516d2c7313487ebc24504ec3513\\\"; assert subprocess.check_output([\\\"git\\\",\\\"ls-files\\\",\\\"--stage\\\",\\\"--\\\",\\\"user.txt\\\"])==b\\\"100644 241205a1931b6b5ef6b6d776f64d8f2f623b27df 0\\\\tuser.txt\\\\n\\\"; print(\\\"Final text and user.txt preservation verified\\\")'\"",
+        "utf8_bytes": 46
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short'",
+        "utf8_bytes": 12
+      }
+    ],
+    "skill_read_indices": [
+      9
+    ],
+    "commit_indices": [
+      20
+    ],
+    "commits": [
+      {
+        "sha": "7bb327d321d9c682801e385a8f59d75f2c9324d0",
+        "subject": "Fix title, scope and example in notes",
+        "paths": [
+          "notes.md"
+        ],
+        "notes": "fixed-title-and-scope-and-example"
+      }
+    ],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-lazy-both-stages.json",
+    "variant": "lazy",
+    "mode": "both",
+    "case": "stages",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true,
+      "independent_results_preserved": true
+    },
+    "usage": [
+      {
+        "input_tokens": 253651,
+        "cached_input_tokens": 230656,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1851,
+        "reasoning_output_tokens": 50
+      }
+    ],
+    "tool_output_utf8_bytes_total": 98035,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md'",
+        "utf8_bytes": 1491
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/START.md'",
+        "utf8_bytes": 641
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "utf8_bytes": 4587
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "utf8_bytes": 3888
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md'\"",
+        "utf8_bytes": 14388
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "utf8_bytes": 8475
+      },
+      {
+        "command": "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md .agents/skills/ce-commit/SKILL.md'",
+        "utf8_bytes": 6362
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short; git diff -- notes.md; git ls-files --stage -- user.txt; cat notes.md; cat workflow.md'",
+        "utf8_bytes": 460
+      },
+      {
+        "command": "/bin/bash -lc 'git status'",
+        "utf8_bytes": 316
+      },
+      {
+        "command": "/bin/bash -lc 'git diff HEAD'",
+        "utf8_bytes": 267
+      },
+      {
+        "command": "/bin/bash -lc 'git branch --show-current'",
+        "utf8_bytes": 19
+      },
+      {
+        "command": "/bin/bash -lc 'git log --oneline -10'",
+        "utf8_bytes": 44
+      },
+      {
+        "command": "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "utf8_bytes": 204
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'import pathlib,subprocess; p=pathlib.Path(\\\"user.txt\\\"); print(\\\"user-bytes\\\",p.read_bytes().hex()); print(\\\"index\\\",subprocess.check_output([\\\"git\\\",\\\"ls-files\\\",\\\"--stage\\\",\\\"--\\\",\\\"user.txt\\\"]).decode(),end=\\\"\\\")'\"",
+        "utf8_bytes": 111
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; Path(\\\"notes.md\\\").write_bytes(b\\\"accepted-requirements\\\\n\\\"); assert Path(\\\"notes.md\\\").read_bytes()==b\\\"accepted-requirements\\\\n\\\"; Path(\\\"/tmp/acceptance-requirements-commit.txt\\\").write_text(\\\"docs: Record accepted requirements\\\\n\\\"); print(\\\"Exact requirements text verified\\\")'\"",
+        "utf8_bytes": 33
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --check'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git diff -- notes.md'",
+        "utf8_bytes": 136
+      },
+      {
+        "command": "/bin/bash -lc 'git add -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git commit -F /tmp/acceptance-requirements-commit.txt -- notes.md'",
+        "utf8_bytes": 111
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; import subprocess; assert subprocess.check_output([\\\"git\\\",\\\"show\\\",\\\"HEAD:notes.md\\\"])==b\\\"accepted-requirements\\\\n\\\"; assert Path(\\\"user.txt\\\").read_bytes()==b\\\"unrelated-staged\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"ls-files\\\",\\\"--stage\\\",\\\"--\\\",\\\"user.txt\\\"])==b\\\"100644 241205a1931b6b5ef6b6d776f64d8f2f623b27df 0\\\\tuser.txt\\\\n\\\"; Path(\\\"notes.md\\\").write_bytes(b\\\"verified-delivery\\\\n\\\"); assert Path(\\\"notes.md\\\").read_bytes()==b\\\"verified-delivery\\\\n\\\"; Path(\\\"/tmp/acceptance-delivery-commit.txt\\\").write_text(\\\"docs: Record verified delivery\\\\n\\\"); print(\\\"Requirements commit and exact delivery text verified; user.txt preserved\\\")'\"",
+        "utf8_bytes": 73
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --check'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git diff -- notes.md'",
+        "utf8_bytes": 147
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short'",
+        "utf8_bytes": 24
+      },
+      {
+        "command": "/bin/bash -lc 'git add -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git commit -F /tmp/acceptance-delivery-commit.txt -- notes.md'",
+        "utf8_bytes": 107
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; import subprocess; assert Path(\\\"notes.md\\\").read_bytes()==b\\\"verified-delivery\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"show\\\",\\\"HEAD:notes.md\\\"])==b\\\"verified-delivery\\\\n\\\"; assert Path(\\\"user.txt\\\").read_bytes()==b\\\"unrelated-staged\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"ls-files\\\",\\\"--stage\\\",\\\"--\\\",\\\"user.txt\\\"])==b\\\"100644 241205a1931b6b5ef6b6d776f64d8f2f623b27df 0\\\\tuser.txt\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"diff\\\",\\\"--name-only\\\",\\\"HEAD~2\\\",\\\"HEAD\\\"])==b\\\"notes.md\\\\n\\\"; print(\\\"Final bytes, commit scope and user.txt index entry verified\\\")'\"",
+        "utf8_bytes": 60
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short'",
+        "utf8_bytes": 12
+      }
+    ],
+    "skill_read_indices": [
+      11
+    ],
+    "commit_indices": [
+      23,
+      29
+    ],
+    "commits": [
+      {
+        "sha": "61e3ace87f7e51b569baee39abe12a7b18299f8e",
+        "subject": "docs: Record accepted requirements",
+        "paths": [
+          "notes.md"
+        ],
+        "notes": "accepted-requirements"
+      },
+      {
+        "sha": "2c8502380834cc0688f016eeb614d9d5e5233570",
+        "subject": "docs: Record verified delivery",
+        "paths": [
+          "notes.md"
+        ],
+        "notes": "verified-delivery"
+      }
+    ],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-lazy-both-unfinished.json",
+    "variant": "lazy",
+    "mode": "both",
+    "case": "unfinished",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 181596,
+        "cached_input_tokens": 156928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1295,
+        "reasoning_output_tokens": 121
+      }
+    ],
+    "tool_output_utf8_bytes_total": 83463,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md'",
+        "utf8_bytes": 1491
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/START.md'",
+        "utf8_bytes": 641
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-database-design.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "utf8_bytes": 4587
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "utf8_bytes": 3888
+      },
+      {
+        "command": "/bin/bash -lc 'cat workflow.md'",
+        "utf8_bytes": 239
+      },
+      {
+        "command": "/bin/bash -lc 'cat \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\"'",
+        "utf8_bytes": 14388
+      },
+      {
+        "command": "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "utf8_bytes": 1581
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short; git ls-files --stage -- notes.md user.txt; git diff -- notes.md; cat notes.md'",
+        "utf8_bytes": 280
+      },
+      {
+        "command": "/bin/bash -lc \"python3 - <<'PY'\nimport pathlib, subprocess, hashlib\np = pathlib.Path('notes.md')\nu = pathlib.Path('user.txt')\nindex_before = subprocess.check_output(['git','ls-files','--stage','--','user.txt'])\nuser_before = u.read_bytes()\nhead_before = subprocess.check_output(['git','rev-parse','HEAD'])\nfor refinement in ('draft-a', 'draft-b', 'draft-c'):\n    expected = (refinement + '\\\\n').encode()\n    p.write_bytes(expected)\n    assert p.read_bytes() == expected\n    print('Saved and verified:', refinement)\nassert u.read_bytes() == user_before\nassert subprocess.check_output(['git','ls-files','--stage','--','user.txt']) == index_before\nassert subprocess.check_output(['git','rev-parse','HEAD']) == head_before\nprint('user.txt content and index entry preserved; HEAD unchanged')\nPY\"",
+        "utf8_bytes": 143
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --check -- notes.md; git diff -- notes.md; git status --short'",
+        "utf8_bytes": 146
+      }
+    ],
+    "skill_read_indices": [
+      11
+    ],
+    "commit_indices": [],
+    "commits": [],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-lazy-both-unrelated.json",
+    "variant": "lazy",
+    "mode": "both",
+    "case": "unrelated",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 210099,
+        "cached_input_tokens": 188416,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 595,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "tool_output_utf8_bytes_total": 78604,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md'",
+        "utf8_bytes": 1491
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/START.md'",
+        "utf8_bytes": 641
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "utf8_bytes": 12458
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "utf8_bytes": 4587
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "utf8_bytes": 3888
+      }
+    ],
+    "skill_read_indices": [],
+    "commit_indices": [],
+    "commits": [],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-lazy-common-explicit.json",
+    "variant": "lazy",
+    "mode": "common",
+    "case": "explicit",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 266612,
+        "cached_input_tokens": 240768,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1421,
+        "reasoning_output_tokens": 31
+      }
+    ],
+    "tool_output_utf8_bytes_total": 83283,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "utf8_bytes": 1970
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md'\"",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "utf8_bytes": 10512
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "utf8_bytes": 6796
+      },
+      {
+        "command": "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md .agents/skills/ce-commit/SKILL.md'",
+        "utf8_bytes": 6362
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short; git diff -- notes.md; git diff --cached -- notes.md user.txt; cat notes.md'",
+        "utf8_bytes": 303
+      },
+      {
+        "command": "/bin/bash -lc 'git status'",
+        "utf8_bytes": 316
+      },
+      {
+        "command": "/bin/bash -lc 'git diff HEAD'",
+        "utf8_bytes": 267
+      },
+      {
+        "command": "/bin/bash -lc 'git branch --show-current'",
+        "utf8_bytes": 19
+      },
+      {
+        "command": "/bin/bash -lc 'git log --oneline -10'",
+        "utf8_bytes": 44
+      },
+      {
+        "command": "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "utf8_bytes": 204
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'import pathlib,subprocess,hashlib,json; p=pathlib.Path(\\\"user.txt\\\"); print(json.dumps({\\\"user_sha256\\\":hashlib.sha256(p.read_bytes()).hexdigest(),\\\"index\\\":subprocess.check_output([\\\"git\\\",\\\"ls-files\\\",\\\"--stage\\\",\\\"--\\\",\\\"user.txt\\\"]).decode(),\\\"notes\\\":pathlib.Path(\\\"notes.md\\\").read_text()}))'\"",
+        "utf8_bytes": 184
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --check -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc \"gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'\"",
+        "utf8_bytes": 21
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; Path(\\\"/tmp/lazy-commit-native-k04883lr-commit-message.txt\\\").write_text(\\\"docs: Preserve current draft notes\\\\n\\\", encoding=\\\"utf-8\\\")'\"",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git add -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git commit -F /tmp/lazy-commit-native-k04883lr-commit-message.txt -- notes.md'",
+        "utf8_bytes": 111
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short'",
+        "utf8_bytes": 12
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'import pathlib,subprocess,hashlib; assert hashlib.sha256(pathlib.Path(\\\"user.txt\\\").read_bytes()).hexdigest()==\\\"b8dd82e0793cd4c931aac498e7dfc6416801e516d2c7313487ebc24504ec3513\\\"; assert subprocess.check_output([\\\"git\\\",\\\"ls-files\\\",\\\"--stage\\\",\\\"--\\\",\\\"user.txt\\\"])==b\\\"100644 241205a1931b6b5ef6b6d776f64d8f2f623b27df 0\\\\tuser.txt\\\\n\\\"; assert pathlib.Path(\\\"notes.md\\\").read_bytes()==b\\\"draft-owned\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"diff-tree\\\",\\\"--no-commit-id\\\",\\\"--name-only\\\",\\\"-r\\\",\\\"HEAD\\\"])==b\\\"notes.md\\\\n\\\"; print(\\\"Verified: only notes.md committed; notes text and user.txt content/index preserved\\\")'\"",
+        "utf8_bytes": 83
+      }
+    ],
+    "skill_read_indices": [
+      8
+    ],
+    "commit_indices": [
+      20
+    ],
+    "commits": [
+      {
+        "sha": "51bf001c9830ad4aa3ee8a947f39426fb977ee04",
+        "subject": "docs: Preserve current draft notes",
+        "paths": [
+          "notes.md"
+        ],
+        "notes": "draft-owned"
+      }
+    ],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-lazy-common-fixes.json",
+    "variant": "lazy",
+    "mode": "common",
+    "case": "fixes",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 217852,
+        "cached_input_tokens": 190336,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1642,
+        "reasoning_output_tokens": 76
+      }
+    ],
+    "tool_output_utf8_bytes_total": 85532,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md'",
+        "utf8_bytes": 1491
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/START.md'",
+        "utf8_bytes": 479
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "utf8_bytes": 12458
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "utf8_bytes": 4587
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "utf8_bytes": 2209
+      },
+      {
+        "command": "/bin/bash -lc 'cat workflow.md notes.md'",
+        "utf8_bytes": 251
+      },
+      {
+        "command": "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md .agents/skills/ce-commit/SKILL.md'",
+        "utf8_bytes": 6362
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short; git diff -- notes.md; git diff --cached --stat'",
+        "utf8_bytes": 214
+      },
+      {
+        "command": "/bin/bash -lc 'git status'",
+        "utf8_bytes": 316
+      },
+      {
+        "command": "/bin/bash -lc 'git diff HEAD'",
+        "utf8_bytes": 267
+      },
+      {
+        "command": "/bin/bash -lc 'git branch --show-current'",
+        "utf8_bytes": 19
+      },
+      {
+        "command": "/bin/bash -lc 'git log --oneline -10'",
+        "utf8_bytes": 44
+      },
+      {
+        "command": "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "utf8_bytes": 204
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c \\\"import pathlib,subprocess; from hashlib import sha256; p=pathlib.Path('user.txt'); print('worktree',sha256(p.read_bytes()).hexdigest()); print('index',subprocess.check_output(['git','ls-files','--stage','--','user.txt']).decode().strip())\\\"\"",
+        "utf8_bytes": 139
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; p=Path('notes.md'); p.write_bytes(b'fixed-title\\\\n'); assert p.read_bytes()==b'fixed-title\\\\n'; print('verified fixed-title')\\\"\"",
+        "utf8_bytes": 21
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; p=Path('notes.md'); p.write_bytes(b'fixed-title-and-scope\\\\n'); assert p.read_bytes()==b'fixed-title-and-scope\\\\n'; print('verified fixed-title-and-scope')\\\"\"",
+        "utf8_bytes": 31
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c \\\"from pathlib import Path; p=Path('notes.md'); p.write_bytes(b'fixed-title-and-scope-and-example\\\\n'); assert p.read_bytes()==b'fixed-title-and-scope-and-example\\\\n'; print('verified final text and newline'); Path('/tmp/notes-acceptance-commit-message.txt').write_text('fix: correct notes title, scope, and example\\\\n')\\\"\"",
+        "utf8_bytes": 32
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --check'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git diff -- notes.md'",
+        "utf8_bytes": 148
+      },
+      {
+        "command": "/bin/bash -lc 'git add -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git commit -F /tmp/notes-acceptance-commit-message.txt -- notes.md'",
+        "utf8_bytes": 121
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short'",
+        "utf8_bytes": 12
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c \\\"import pathlib,subprocess; from hashlib import sha256; assert pathlib.Path('notes.md').read_bytes()==b'fixed-title-and-scope-and-example\\\\n'; assert sha256(pathlib.Path('user.txt').read_bytes()).hexdigest()=='b8dd82e0793cd4c931aac498e7dfc6416801e516d2c7313487ebc24504ec3513'; assert subprocess.check_output(['git','ls-files','--stage','--','user.txt'])==b'100644 241205a1931b6b5ef6b6d776f64d8f2f623b27df 0\\\\tuser.txt\\\\n'; print('Final text and user.txt worktree/index verified')\\\"\"",
+        "utf8_bytes": 48
+      }
+    ],
+    "skill_read_indices": [
+      11
+    ],
+    "commit_indices": [
+      25
+    ],
+    "commits": [
+      {
+        "sha": "937f7686208385fab4e458053cf8a4af93a26409",
+        "subject": "fix: correct notes title, scope, and example",
+        "paths": [
+          "notes.md"
+        ],
+        "notes": "fixed-title-and-scope-and-example"
+      }
+    ],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-lazy-common-stages.json",
+    "variant": "lazy",
+    "mode": "common",
+    "case": "stages",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true,
+      "independent_results_preserved": true
+    },
+    "usage": [
+      {
+        "input_tokens": 222657,
+        "cached_input_tokens": 200448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1877,
+        "reasoning_output_tokens": 67
+      }
+    ],
+    "tool_output_utf8_bytes_total": 92846,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md'",
+        "utf8_bytes": 1491
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/START.md'",
+        "utf8_bytes": 479
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "utf8_bytes": 4587
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "utf8_bytes": 2209
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "utf8_bytes": 12458
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "utf8_bytes": 6796
+      },
+      {
+        "command": "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md .agents/skills/ce-commit/SKILL.md'",
+        "utf8_bytes": 6362
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short; git diff -- notes.md; git diff --cached --stat; cat workflow.md'",
+        "utf8_bytes": 453
+      },
+      {
+        "command": "/bin/bash -lc 'git status'",
+        "utf8_bytes": 316
+      },
+      {
+        "command": "/bin/bash -lc 'git diff HEAD'",
+        "utf8_bytes": 267
+      },
+      {
+        "command": "/bin/bash -lc 'git branch --show-current'",
+        "utf8_bytes": 19
+      },
+      {
+        "command": "/bin/bash -lc 'git log --oneline -10'",
+        "utf8_bytes": 44
+      },
+      {
+        "command": "/bin/bash -lc 'git rev-parse --abbrev-ref origin/HEAD'",
+        "utf8_bytes": 204
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'import pathlib,subprocess; from hashlib import sha256; p=pathlib.Path(\\\"user.txt\\\"); print(\\\"user_worktree\\\",sha256(p.read_bytes()).hexdigest()); print(\\\"user_index\\\",subprocess.check_output([\\\"git\\\",\\\"ls-files\\\",\\\"--stage\\\",\\\"--\\\",\\\"user.txt\\\"]).decode(),end=\\\"\\\")' \"",
+        "utf8_bytes": 149
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; p=Path(\\\"notes.md\\\"); p.write_bytes(b\\\"accepted-requirements\\\\n\\\"); assert p.read_bytes()==b\\\"accepted-requirements\\\\n\\\"; Path(\\\"/tmp/acceptance-requirements-commit.txt\\\").write_text(\\\"docs: Record accepted requirements\\\\n\\\"); print(\\\"Exact bytes verified:\\\",repr(p.read_bytes()))' \"",
+        "utf8_bytes": 49
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --check'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git diff -- notes.md'",
+        "utf8_bytes": 136
+      },
+      {
+        "command": "/bin/bash -lc 'git add -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git commit -F /tmp/acceptance-requirements-commit.txt -- notes.md'",
+        "utf8_bytes": 111
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short'",
+        "utf8_bytes": 12
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; p=Path(\\\"notes.md\\\"); p.write_bytes(b\\\"verified-delivery\\\\n\\\"); assert p.read_bytes()==b\\\"verified-delivery\\\\n\\\"; Path(\\\"/tmp/acceptance-delivery-commit.txt\\\").write_text(\\\"docs: Record verified delivery\\\\n\\\"); print(\\\"Exact bytes verified:\\\",repr(p.read_bytes()))' \"",
+        "utf8_bytes": 45
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --check'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git diff -- notes.md'",
+        "utf8_bytes": 147
+      },
+      {
+        "command": "/bin/bash -lc 'git branch --show-current'",
+        "utf8_bytes": 19
+      },
+      {
+        "command": "/bin/bash -lc 'git diff --cached --name-only'",
+        "utf8_bytes": 9
+      },
+      {
+        "command": "/bin/bash -lc 'git add -- notes.md'",
+        "utf8_bytes": 0
+      },
+      {
+        "command": "/bin/bash -lc 'git commit -F /tmp/acceptance-delivery-commit.txt -- notes.md'",
+        "utf8_bytes": 107
+      },
+      {
+        "command": "/bin/bash -lc \"python3 -c 'from pathlib import Path; import subprocess; from hashlib import sha256; assert Path(\\\"notes.md\\\").read_bytes()==b\\\"verified-delivery\\\\n\\\"; assert sha256(Path(\\\"user.txt\\\").read_bytes()).hexdigest()==\\\"b8dd82e0793cd4c931aac498e7dfc6416801e516d2c7313487ebc24504ec3513\\\"; assert subprocess.check_output([\\\"git\\\",\\\"ls-files\\\",\\\"--stage\\\",\\\"--\\\",\\\"user.txt\\\"])==b\\\"100644 241205a1931b6b5ef6b6d776f64d8f2f623b27df 0\\\\tuser.txt\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"show\\\",\\\"HEAD~1:notes.md\\\"])==b\\\"accepted-requirements\\\\n\\\"; assert subprocess.check_output([\\\"git\\\",\\\"show\\\",\\\"HEAD:notes.md\\\"])==b\\\"verified-delivery\\\\n\\\"; print(\\\"Both committed results verified; user.txt bytes and index entry preserved\\\")' \"",
+        "utf8_bytes": 74
+      },
+      {
+        "command": "/bin/bash -lc 'git status --short'",
+        "utf8_bytes": 12
+      },
+      {
+        "command": "/bin/bash -lc 'git log -2 --format=%h:%s --stat'",
+        "utf8_bytes": 212
+      }
+    ],
+    "skill_read_indices": [
+      11
+    ],
+    "commit_indices": [
+      23,
+      31
+    ],
+    "commits": [
+      {
+        "sha": "dfe6113614ba3b26195a15703ddd6397eb7e6904",
+        "subject": "docs: Record accepted requirements",
+        "paths": [
+          "notes.md"
+        ],
+        "notes": "accepted-requirements"
+      },
+      {
+        "sha": "c35bf06bc7fac7bdfde117f502d98da2bfb375a8",
+        "subject": "docs: Record verified delivery",
+        "paths": [
+          "notes.md"
+        ],
+        "notes": "verified-delivery"
+      }
+    ],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-lazy-common-unfinished.json",
+    "variant": "lazy",
+    "mode": "common",
+    "case": "unfinished",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 182972,
+        "cached_input_tokens": 160768,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1150,
+        "reasoning_output_tokens": 71
+      }
+    ],
+    "tool_output_utf8_bytes_total": 79588,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md'",
+        "utf8_bytes": 1491
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/START.md'",
+        "utf8_bytes": 479
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "utf8_bytes": 12458
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "utf8_bytes": 4587
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "utf8_bytes": 2209
+      },
+      {
+        "command": "/bin/bash -lc 'cat workflow.md; git status --short; git diff -- notes.md; git ls-files --stage -- user.txt; cat notes.md'",
+        "utf8_bytes": 460
+      },
+      {
+        "command": "/bin/bash -lc 'cat .agents/skills/comm-commit-task-stages/SKILL.md'",
+        "utf8_bytes": 1581
+      },
+      {
+        "command": "/bin/bash -lc \"python3 - <<'PY'\nimport hashlib\nimport subprocess\nfrom pathlib import Path\np = Path('user.txt')\nbefore = p.read_bytes()\nindex_before = subprocess.check_output(['git', 'ls-files', '--stage', '--', 'user.txt'])\nfor value in ('draft-a', 'draft-b', 'draft-c'):\n    data = (value + '\\\\n').encode()\n    Path('notes.md').write_bytes(data)\n    assert Path('notes.md').read_bytes() == data\n    print('Saved:', value)\nassert p.read_bytes() == before\nassert subprocess.check_output(['git', 'ls-files', '--stage', '--', 'user.txt']) == index_before\nprint('Verified: user.txt content and index entry unchanged')\nPY\"",
+        "utf8_bytes": 98
+      },
+      {
+        "command": "/bin/bash -lc 'git diff -- notes.md; git status --short'",
+        "utf8_bytes": 146
+      }
+    ],
+    "skill_read_indices": [
+      11
+    ],
+    "commit_indices": [],
+    "commits": [],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-lazy-common-unrelated.json",
+    "variant": "lazy",
+    "mode": "common",
+    "case": "unrelated",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 164847,
+        "cached_input_tokens": 147584,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 538,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "tool_output_utf8_bytes_total": 76763,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md'",
+        "utf8_bytes": 1491
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/START.md harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12480
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 540
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "utf8_bytes": 42690
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "utf8_bytes": 12458
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "utf8_bytes": 6796
+      }
+    ],
+    "skill_read_indices": [],
+    "commit_indices": [],
+    "commits": [],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-pair-both-unfinished.json",
+    "variant": "pair",
+    "mode": "both",
+    "case": "unfinished",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 213260,
+        "cached_input_tokens": 187392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1119,
+        "reasoning_output_tokens": 87
+      }
+    ],
+    "tool_output_utf8_bytes_total": 84903,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md'",
+        "utf8_bytes": 1491
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/START.md'",
+        "utf8_bytes": 641
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden -g '*.md' -g '\"'!README.human.md'\"' .claude/rules | sort\"",
+        "utf8_bytes": 587
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 587
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md'\"",
+        "utf8_bytes": 43624
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "utf8_bytes": 15010
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+        "utf8_bytes": 4587
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+        "utf8_bytes": 3888
+      },
+      {
+        "command": "/bin/bash -lc 'cat workflow.md notes.md; git status --short; git ls-files --stage -- user.txt'",
+        "utf8_bytes": 334
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/skills/comm-commit-task-stages/SKILL.md'",
+        "utf8_bytes": 1581
+      },
+      {
+        "command": "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\nimport subprocess\np = Path('user.txt')\nbefore = p.read_bytes()\nindex = subprocess.check_output(['git', 'ls-files', '--stage', '--', 'user.txt'])\nfor value in ('draft-a', 'draft-b', 'draft-c'):\n    Path('notes.md').write_bytes((value + '\\\\n').encode())\n    assert Path('notes.md').read_bytes() == (value + '\\\\n').encode()\nassert p.read_bytes() == before\nassert subprocess.check_output(['git', 'ls-files', '--stage', '--', 'user.txt']) == index\nprint('notes.md: draft-a → draft-b → draft-c; final newline verified')\nprint('user.txt: working content and index entry unchanged')\nPY\n git diff -- notes.md\n git status --short\"",
+        "utf8_bytes": 264
+      }
+    ],
+    "skill_read_indices": [
+      11
+    ],
+    "commit_indices": [],
+    "commits": [],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  },
+  {
+    "file": "v0-bwrap-codex-pair-common-unfinished.json",
+    "variant": "pair",
+    "mode": "common",
+    "case": "unfinished",
+    "checks": {
+      "completed": true,
+      "expected_commit_count": true,
+      "expected_content": true,
+      "only_owned_commit_paths": true,
+      "unrelated_staged_preserved": true,
+      "main_and_remote_preserved": true,
+      "instructions_preserved": true,
+      "skill_loading": true,
+      "read_before_commit_attempt": true
+    },
+    "usage": [
+      {
+        "input_tokens": 226115,
+        "cached_input_tokens": 194176,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1081,
+        "reasoning_output_tokens": 62
+      }
+    ],
+    "tool_output_utf8_bytes_total": 80421,
+    "tool_outputs": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "utf8_bytes": 308
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "utf8_bytes": 1970
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+        "utf8_bytes": 587
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "utf8_bytes": 12001
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "utf8_bytes": 587
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-commit-result-boundaries.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-database-design.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "utf8_bytes": 43624
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "utf8_bytes": 12458
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "utf8_bytes": 6796
+      },
+      {
+        "command": "/bin/bash -lc 'cat workflow.md; git status --short; cat notes.md'",
+        "utf8_bytes": 275
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/skills/comm-commit-task-stages/SKILL.md'",
+        "utf8_bytes": 1581
+      },
+      {
+        "command": "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\nimport subprocess\nimport hashlib\nstate = (Path('user.txt').read_bytes(), subprocess.check_output(['git', 'ls-files', '--stage', '--', 'user.txt']))\nfor refinement in ('draft-a', 'draft-b', 'draft-c'):\n    data = (refinement + '\\\\n').encode()\n    Path('notes.md').write_bytes(data)\n    assert Path('notes.md').read_bytes() == data\n    print('Saved:', refinement)\nassert state == (Path('user.txt').read_bytes(), subprocess.check_output(['git', 'ls-files', '--stage', '--', 'user.txt']))\nprint('user.txt content and index entry preserved')\nPY\n git diff -- notes.md\n git status --short\"",
+        "utf8_bytes": 234
+      }
+    ],
+    "skill_read_indices": [
+      9
+    ],
+    "commit_indices": [],
+    "commits": [],
+    "parent_review": "final answer, Git and relevant read/write commands reviewed; no behavior finding",
+    "source_skill_sha256": "14b0f014c400cc8e8fa5f403e3b0fa96ebb3ce4bdbe4e1e106a87c10cfcd1473"
+  }
+]

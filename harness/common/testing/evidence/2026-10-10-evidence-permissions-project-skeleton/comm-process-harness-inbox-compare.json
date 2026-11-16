@@ -1,0 +1,211 @@
+{
+  "kind": "comparison",
+  "createdAt": "2026-10-09T22:44:59.848Z",
+  "target": {
+    "kind": "skill",
+    "path": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-09-evidence-permissions-and-project-skeleton/candidate/harness/common/skills/comm-process-harness-inbox",
+    "entryPath": "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-09-evidence-permissions-and-project-skeleton/candidate/harness/common/skills/comm-process-harness-inbox/SKILL.md",
+    "name": "comm-process-harness-inbox",
+    "relativePath": "harness/common/inbox/2026-10-09-evidence-permissions-and-project-skeleton/candidate/harness/common/skills/comm-process-harness-inbox"
+  },
+  "scoreDelta": 0,
+  "gradeBefore": "A",
+  "gradeAfter": "A",
+  "riskBefore": "medium",
+  "riskAfter": "medium",
+  "budgetDelta": {
+    "trigger_cost_tokens": 0,
+    "invoke_cost_tokens": 0,
+    "deferred_cost_tokens": 79
+  },
+  "resolvedFailures": [],
+  "newFailures": [],
+  "beforeSummary": {
+    "score": 95,
+    "grade": "A",
+    "riskLevel": "medium",
+    "riskReasons": [
+      "Contains 1 warning signal that still need attention."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 4.75,
+      "finalScore": 95,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 2,
+      "pass": 0,
+      "warn": 1,
+      "fail": 0,
+      "info": 2,
+      "error": 0,
+      "warning": 1
+    },
+    "deductions": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "penalty": 4.5,
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "budget",
+        "totalPenalty": 4.5,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [
+      "Reduce repeated instruction text and move detail into deferred supporting files."
+    ],
+    "whyBullets": [
+      "1 warning signal still need cleanup before this feels polished.",
+      "budget is the largest source of score loss at -4.5 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "why": "Budget pressure matters because always-loaded or frequently-loaded text can make the workflow feel expensive fast.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "penalty": 4.5,
+        "source": "core"
+      }
+    ],
+    "watchNext": []
+  },
+  "afterSummary": {
+    "score": 95,
+    "grade": "A",
+    "riskLevel": "medium",
+    "riskReasons": [
+      "Contains 1 warning signal that still need attention."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 4.75,
+      "finalScore": 95,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 2,
+      "pass": 0,
+      "warn": 1,
+      "fail": 0,
+      "info": 2,
+      "error": 0,
+      "warning": 1
+    },
+    "deductions": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "penalty": 4.5,
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "budget",
+        "totalPenalty": 4.5,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [
+      "Reduce repeated instruction text and move detail into deferred supporting files."
+    ],
+    "whyBullets": [
+      "1 warning signal still need cleanup before this feels polished.",
+      "budget is the largest source of score loss at -4.5 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "why": "Budget pressure matters because always-loaded or frequently-loaded text can make the workflow feel expensive fast.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "penalty": 4.5,
+        "source": "core"
+      }
+    ],
+    "watchNext": []
+  },
+  "nextAction": {
+    "label": "Continue from the improved baseline",
+    "why": "The comparison is trending in the right direction, so the next move is to keep the workflow tight and repeatable.",
+    "command": "plugin-eval start ~/MyProjects/Multi_User_RAG_Assist_System/harness/common/inbox/2026-10-09-evidence-permissions-and-project-skeleton/candidate/harness/common/skills/comm-process-harness-inbox --request 'What should I run next?' --format markdown",
+    "chatPrompt": "What should I run next?"
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "status": "complete",
+  "verdict": "Ready to merge",
+  "verdict_reasoning": "No source defects or actionable findings were established in the reviewed U1 candidate. R1-R8 are covered by the instruction diff. This verdict concerns source review only: Claude and overall native verification remain unverified, and U3 publication remains a separate parent workflow action under the existing gate.",
+  "scope": {
+    "base": "0a900064a929c4d71812e4200feff517240f6142",
+    "branch": "octadim/review-inbox-boundaries",
+    "head_sha": "0a900064a929c4d71812e4200feff517240f6142",
+    "pr_url": null,
+    "files_changed": 23,
+    "reviewed_checkout": "/tmp/inbox-boundaries-baseline-buj_uan5",
+    "mode": "standalone",
+    "reviewed_material": "Tracked candidate instruction changes for project-harness-inbox-boundaries only"
+  },
+  "intent": "Permit authorized creation/update of ordinary application records directly in permanent project categories. Preserve common and project-mechanism inbox protection, truthful statuses, mixed-content/parent protections and existing publication gates; perform no migration.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "agent-native",
+    "security",
+    "adversarial"
+  ],
+  "findings": [],
+  "actionable_findings": [],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan_source": "explicit",
+    "plan_path": "/tmp/inbox-boundaries-baseline-buj_uan5/harness/common/docs/plans/2026-10-09-1237-refactor-project-harness-inbox-boundaries-plan.md",
+    "assessment_scope": "Instruction source coverage is assessed separately from parent execution evidence and publication.",
+    "requirements": [
+      {
+        "id": "R1",
+        "status": "met",
+        "basis": "reviewed-source",
+        "note": "Authorized application records save/update directly in permanent project categories.",
+        "files": [
+          "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+          "harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md",
+          "harness/project/INDEX.md"
+        ]
+      },
+      {
+        "id": "R2",
+        "status": "met",
+        "basis": "reviewed-source",
+        "note": "Project mechanism changes retain project/inbox.",
+        "files": [
+          "harness/common/rules/comm-skill-rule-ownership.md",
+          "harness/common/skills/comm-process-harness-inbox/references/workflow.md"
+        ]
+      },
+      {
+        "id": "R3",
+        "status": "met",
+        "basis": "reviewed-source",
+        "note": "All common changes, including reports and memory, retain common/inbox.",
+        "files": [
+          "harness/common/rules/comm-skill-rule-ownership.md",
+          "harness/common/INDEX.md"
+        ]
+      },
+      {
+        "id": "R4",
+        "status": "met",
+        "basis": "reviewed-source",
+        "note": "Purpose and operation govern routing; folders, names and the word test do not.",
+        "files": [
+          "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+          "harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md"
+        ]
+      },
+      {
+        "id": "R5",
+        "status": "met",
+        "basis": "reviewed-source",
+        "note": "Candidate/accepted, planned/implemented and failed/unrun/passed remain factual.",
+        "files": [
+          "harness/common/skills/comm-preserve-harness-knowledge/SKILL.md",
+          "harness/common/skills/comm-protect-harness-evidence/SKILL.md"
+        ]
+      },
+      {
+        "id": "R6",
+        "status": "met",
+        "basis": "reviewed-source",
+        "note": "Stage authorization, protected inputs and validation/publication gates remain.",
+        "files": [
+          "harness/common/skills/comm-process-harness-inbox/SKILL.md",
+          "harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md",
+          "harness/common/decisions/2026-10-05-inbox-execution-status.md"
+        ]
+      },
+      {
+        "id": "R7",
+        "status": "met",
+        "basis": "reviewed-source",
+        "note": "The candidate performs no migration or cleanup and does not authorize either.",
+        "files": [
+          "harness/common/skills/comm-process-harness-inbox/references/workflow.md",
+          "harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md"
+        ]
+      },
+      {
+        "id": "R8",
+        "status": "met",
+        "basis": "reviewed-source",
+        "note": "Mechanism evidence, mixed content and parent operations retain protection; unknown purpose pauses mutation.",
+        "files": [
+          "harness/common/rules/comm-skill-rule-ownership.md",
+          "harness/common/skills/comm-protect-harness-evidence/SKILL.md"
+        ]
+      }
+    ],
+    "implementation_units": [
+      {
+        "id": "U1",
+        "status": "met",
+        "basis": "reviewed-source",
+        "note": "The candidate updates the existing routing, preservation and evidence owners, indexes and dated decision clarification, including matching native instruction copies."
+      },
+      {
+        "id": "U2",
+        "status": "partially addressed",
+        "basis": "parent-reported-validation",
+        "intentional_staging": true,
+        "note": "Final structural and Codex native checks passed as reported by the parent. Claude and overall native verification remain unverified; source review does not replace these outcomes. Validation evidence is outside this instruction diff."
+      },
+      {
+        "id": "U3",
+        "status": "partially addressed",
+        "basis": "staged-parent-workflow",
+        "intentional_staging": true,
+        "note": "This review supplies the source receipt. Publication and request closure remain the parent workflow action under the retained gate; no publication completion is claimed."
+      }
+    ],
+    "unrequested_behavior_rules": [],
+    "reverse_check": "The reviewed diff and full explicit plan introduce no additional user-visible behavior rule beyond the requested purpose-based routing and preserved protections."
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "Claude and overall native verification remain unverified. Parent-reported Codex passes and source/structural review do not establish Claude behavior or authorize publication; U3 remains pending parent action."
+  ],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "full",
+    "reviewer_selection": [
+      {
+        "reviewer": "correctness",
+        "tier": "session",
+        "reason": "always-on"
+      },
+      {
+        "reviewer": "project-standards",
+        "tier": "mid-tier",
+        "reason": "AGENTS/CLAUDE criteria"
+      },
+      {
+        "reviewer": "testing",
+        "tier": "mid-tier",
+        "reason": "changed harness write behavior"
+      },
+      {
+        "reviewer": "agent-native",
+        "tier": "mid-tier",
+        "reason": "native instruction surface"
+      },
+      {
+        "reviewer": "security",
+        "tier": "session",
+        "reason": "protected-operation permission boundary"
+      },
+      {
+        "reviewer": "adversarial",
+        "tier": "session",
+        "reason": "data mutation and mixed operations"
+      }
+    ],
+    "standards": {
+      "criteria": [
+        {
+          "path": "AGENTS.md",
+          "files": "all changed files in scope.files"
+        },
+        {
+          "path": "CLAUDE.md",
+          "files": "all changed files in scope.files"
+        }
+      ],
+      "fallback_named": true,
+      "note": "Root AGENTS.md/CLAUDE.md fallback was used; no CODING_STANDARDS.md exists."
+    },
+    "source_review": {
+      "primary_findings": 0,
+      "actionable_findings": 0,
+      "reviewer_failures": [],
+      "note": "Five structured reviewer returns and the unstructured agent-native source review established no findings. Agent-native capability assessment is documented-source coverage only."
+    },
+    "cross_model": {
+      "outcome": "in-process-fallback",
+      "note": "Cross-model pass: not run. The adversarial lens ran through the in-process fallback."
+    },
+    "validator": {
+      "outcome": "empty-batch",
+      "selected": 0,
+      "confirmed": 0,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "protected_subject_reclassifications": 0,
+      "reason": "No findings were selected for validation.",
+      "note": "No validator was launched; no cross-model corroboration shortcut was used."
+    },
+    "synthesis": {
+      "suppressed_by_confidence": {},
+      "suppressed_count": 0,
+      "mode_aware_demotions": 0,
+      "malformed_findings": 0,
+      "malformed_returns": 0,
+      "first_evidence_backfilled": 0,
+      "missing_quote_demotions": 0,
+      "semantic_merge_count": 0,
+      "settlement_discards": 0
+    },
+    "parent_validation": {
+      "basis": "Parent-reported final candidate checks; not independently rerun by review leaves.",
+      "structural": {
+        "quick_validate": "All 3 valid",
+        "plugin_eval_grades": [
+          95,
+          95,
+          100
+        ],
+        "pytest_modules": 7,
+        "pytest_passed": 74,
+        "pytest_skipped": 2,
+        "skip_reason": "Absent legacy shim",
+        "repeated_startup": "Preserved bytes in both installation modes"
+      },
+      "native": {
+        "codex": "passed in both installation modes",
+        "claude": "unverified",
+        "overall": "unverified",
+        "scenarios": [
+          "implicit selection",
+          "explicit invocation",
+          "unrelated non-loading",
+          "actual write"
+        ],
+        "actual_write": "Each mode created exactly five authorized application records with factual statuses and preserved all other bytes.",
+        "baseline_red": "The old blanket gate stopped before writing.",
+        "combined_retry": "Only the staging fixture changed; candidate instruction bytes stayed unchanged."
+      }
+    },
+    "publication": {
+      "status": "pending-parent-action",
+      "note": "U3 is intentionally staged outside this read-only source review; it is not an omitted source defect and publication has not been performed by this review."
+    },
+    "compound_packs": {
+      "roots": [],
+      "warnings": [],
+      "errors": []
+    },
+    "skipped": "No pytest repeats, native agent CLIs, candidate edits, migration or publication by review leaves."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/boundaries-r7r70qm0",
+  "run_id": "boundaries-r7r70qm0"
+}

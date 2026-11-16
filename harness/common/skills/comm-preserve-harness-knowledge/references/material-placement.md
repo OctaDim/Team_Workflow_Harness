@@ -23,5 +23,16 @@ checks read `harness/common/skills/comm-install-harness/SKILL.md` from root;
 instruction changes require current validation/publication stages.
 Edits reset separate agent statuses, gate stays; protected inputs remain protected.
 Shared template changes need separate common request/decision/confirmation
-of usefulness to ALL projects. Existing project changes are addressed authorized
-migration; ordinary startup preserves it, new projects use the agreed template.
+of usefulness to ALL projects. Migrations of existing project material require
+addressed authorization; ordinary authorized application saves/updates are not
+migrations. Mechanism changes retain project/inbox. Ordinary startup preserves
+existing project; new projects use the agreed template.
+
+For evidence placement first read from project root
+`harness/common/skills/comm-protect-harness-evidence/SKILL.md`.
+New application/task evidence: project/testing/evidence/work; project mechanism:
+project/testing/evidence/harness; common evidence retains common/testing/evidence.
+Completed-report corrections use new dated addenda linked to the original;
+raw runs keep original files. Existing legacy evidence is classified by purpose,
+not automatically moved. Current unfinished reports may be supplemented within
+existing task/inbox authority; a directory never grants editing old runs.

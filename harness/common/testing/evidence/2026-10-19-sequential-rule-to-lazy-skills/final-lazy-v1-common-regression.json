@@ -1,0 +1,40 @@
+{
+  "mode": "common",
+  "startup": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: changed paths: harness/project\n",
+      "stderr": "",
+      "elapsed_seconds": 0.06
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+      "stderr": "",
+      "elapsed_seconds": 0.05
+    }
+  ],
+  "regression": {
+    "command": [
+      "/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 42%]\n........................................................................ [ 85%]\n........................                                                 [100%]\n168 passed in 10.15s\n",
+    "stderr": "",
+    "elapsed_seconds": 11.67
+  }
+}

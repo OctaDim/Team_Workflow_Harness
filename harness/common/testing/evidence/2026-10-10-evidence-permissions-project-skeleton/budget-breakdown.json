@@ -1,0 +1,217 @@
+{
+  "target": {
+    "kind": "directory",
+    "path": "/tmp/evidence-rules-eval-cjny6j4q",
+    "entryPath": "/tmp/evidence-rules-eval-cjny6j4q",
+    "name": "evidence-rules-eval-cjny6j4q",
+    "relativePath": "../../../../tmp/evidence-rules-eval-cjny6j4q"
+  },
+  "summary": {
+    "score": 86,
+    "grade": "B",
+    "riskLevel": "high",
+    "riskReasons": [
+      "Contains 1 failing error check (deferred_cost_tokens-budget-high)."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 14.5,
+      "finalScore": 86,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 3,
+      "pass": 0,
+      "warn": 0,
+      "fail": 1,
+      "info": 4,
+      "error": 1,
+      "warning": 0
+    },
+    "deductions": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "error",
+        "status": "fail",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "penalty": 14,
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "generic-target-analysis",
+        "category": "best-practice",
+        "severity": "info",
+        "status": "info",
+        "message": "The target is not a skill or plugin root, so only generic code, coverage, and budget analysis will run.",
+        "penalty": 0.25,
+        "remediation": [
+          "Point the analyzer at a skill directory or plugin root for richer structural checks."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "budget",
+        "totalPenalty": 14,
+        "checks": 1
+      },
+      {
+        "category": "best-practice",
+        "totalPenalty": 0.25,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [
+      "Reduce repeated instruction text and move detail into deferred supporting files."
+    ],
+    "whyBullets": [
+      "1 failing error check are driving the highest-confidence problems.",
+      "budget is the largest source of score loss at -14 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "error",
+        "status": "fail",
+        "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+        "why": "Budget pressure matters because always-loaded or frequently-loaded text can make the workflow feel expensive fast.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "penalty": 14,
+        "source": "core"
+      }
+    ],
+    "watchNext": []
+  },
+  "budgets": {
+    "method": "estimated-static",
+    "trigger_cost_tokens": {
+      "value": 0,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 1,
+        "moderateMax": 1,
+        "heavyMax": 1
+      },
+      "components": []
+    },
+    "invoke_cost_tokens": {
+      "value": 0,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 1,
+        "moderateMax": 1,
+        "heavyMax": 1
+      },
+      "components": []
+    },
+    "deferred_cost_tokens": {
+      "value": 1698,
+      "band": "excessive",
+      "thresholds": {
+        "goodMax": 240,
+        "moderateMax": 640,
+        "heavyMax": 1600
+      },
+      "components": [
+        {
+          "label": "comm-package-independence.md",
+          "path": "/tmp/evidence-rules-eval-cjny6j4q/comm-package-independence.md",
+          "tokens": 308,
+          "note": "Generic text file budget"
+        },
+        {
+          "label": "comm-skill-rule-ownership.md",
+          "path": "/tmp/evidence-rules-eval-cjny6j4q/comm-skill-rule-ownership.md",
+          "tokens": 1390,
+          "note": "Generic text file budget"
+        }
+      ]
+    },
+    "total_tokens": {
+      "value": 1698,
+      "band": "excessive"
+    }
+  },
+  "checks": [
+    {
+      "id": "generic-target-analysis",
+      "category": "best-practice",
+      "severity": "info",
+      "status": "info",
+      "message": "The target is not a skill or plugin root, so only generic code, coverage, and budget analysis will run.",
+      "evidence": [
+        "/tmp/evidence-rules-eval-cjny6j4q"
+      ],
+      "remediation": [
+        "Point the analyzer at a skill directory or plugin root for richer structural checks."
+      ],
+      "source": "core"
+    },
+    {
+      "id": "deferred_cost_tokens-budget-high",
+      "category": "budget",
+      "severity": "error",
+      "status": "fail",
+      "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+      "evidence": [
+        "Value: 1698 tokens",
+        "Baseline samples: skills=1, plugins=0"
+      ],
+      "remediation": [
+        "Reduce repeated instruction text and move detail into deferred supporting files."
+      ],
+      "source": "core"
+    },
+    {
+      "id": "coverage-artifacts-unavailable",
+      "category": "coverage",
+      "severity": "info",
+      "status": "info",
+      "message": "No coverage artifacts were found for this target.",
+      "evidence": [
+        "../../../../tmp/evidence-rules-eval-cjny6j4q"
+      ],
+      "remediation": [
+        "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+      ],
+      "source": "core"
+    }
+  ],
+  "baseline_deferred": 1658,
+  "delta": 40,
+  "SKILL.md": "N/A; bounded generic rule directory contains no skill roots",
+  "reference_assignment": "N/A; generic files are not skill references",
+  "explanation": "Existing excessive budget remains: unchanged package-independence=308, ownership=1390 (+40). Full mandatory permission boundaries retained; no resources hidden and no thresholds raised."
+}

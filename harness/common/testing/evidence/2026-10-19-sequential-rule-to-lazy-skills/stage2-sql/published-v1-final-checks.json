@@ -1,0 +1,117 @@
+{
+  "checked_at": "2026-10-19T13:16:12.225796+00:00",
+  "version_id": "d6a6b3870b8570b0e2e4cb6b65e3402144431051e972b3d05864c12a629800ce",
+  "exact_published_scope": true,
+  "canonical_installed_rules_equal": true,
+  "canonical_rule_count": 11,
+  "all_common_full_skill_copies_equal": true,
+  "common_skill_count": 18,
+  "candidate_sql_folder_equal": true,
+  "retained_metadata_unchanged": true,
+  "git_visible": true,
+  "startup": {
+    "exit_code": 0,
+    "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+    "stderr": ""
+  },
+  "regression": "published-v1-regression.json",
+  "native": [
+    {
+      "file": "published-v1-codex-published-common-plan.json",
+      "mode": "common",
+      "case": "plan",
+      "mechanical_checks": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic_review": "pass",
+      "finding": null
+    },
+    {
+      "file": "published-v1-codex-published-common-explicit.json",
+      "mode": "common",
+      "case": "explicit",
+      "mechanical_checks": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic_review": "pass",
+      "finding": null
+    },
+    {
+      "file": "published-v1-codex-published-common-unrelated.json",
+      "mode": "common",
+      "case": "unrelated",
+      "mechanical_checks": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic_review": "pass",
+      "finding": null
+    },
+    {
+      "file": "published-v1-codex-published-both-plan.json",
+      "mode": "both",
+      "case": "plan",
+      "mechanical_checks": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic_review": "fail",
+      "finding": "Third schema alternative uses PRAGMA user_version without explaining a distinct mechanism from explicit SQL."
+    },
+    {
+      "file": "published-v1-codex-published-both-explicit.json",
+      "mode": "both",
+      "case": "explicit",
+      "mechanical_checks": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic_review": "pass",
+      "finding": null
+    },
+    {
+      "file": "published-v1-codex-published-both-unrelated.json",
+      "mode": "both",
+      "case": "unrelated",
+      "mechanical_checks": {
+        "completed": true,
+        "only_expected_plan_write": true,
+        "input_code_and_all_other_files_unchanged": true,
+        "skill_loading": true,
+        "own_resource_loading": true,
+        "load_before_dependent_write": true
+      },
+      "semantic_review": "pass",
+      "finding": null
+    }
+  ],
+  "Codex": {
+    "common": "проверено в указанной области; 3/3 published probes",
+    "both": "непроверенный; mechanical 3/3, semantic 2/3",
+    "overall": "непроверенный; unresolved schema-alternative finding"
+  },
+  "Claude": "skip; непроверенный",
+  "overall": "непроверенный"
+}

@@ -1,0 +1,29 @@
+{
+  "title": "Improve startup-budget",
+  "target": {
+    "kind": "directory",
+    "path": "/tmp/db-final-check-5361cvq4/startup-budget",
+    "entryPath": "/tmp/db-final-check-5361cvq4/startup-budget",
+    "name": "startup-budget",
+    "relativePath": "../../../../tmp/db-final-check-5361cvq4/startup-budget"
+  },
+  "summary": "Raise the evaluation from grade B (86/100) with a focus on the highest-signal structural and budget issues first.",
+  "goals": [
+    "Reduce repeated instruction text and move detail into deferred supporting files."
+  ],
+  "measurementGoals": [
+    "token-usage-observer",
+    "task-outcome-scorecard"
+  ],
+  "requiredFixes": [
+    {
+      "id": "deferred_cost_tokens-budget-high",
+      "message": "deferred_cost_tokens is excessive relative to the current Codex baseline.",
+      "remediation": [
+        "Reduce repeated instruction text and move detail into deferred supporting files."
+      ]
+    }
+  ],
+  "recommendedFixes": [],
+  "suggestedPrompt": "Use the skill-creator guidance to improve startup-budget. Keep the structure compact and move bulky details into references or scripts. Define success measures with these toolsets: token-usage-observer, task-outcome-scorecard. Address deferred_cost_tokens-budget-high: deferred_cost_tokens is excessive relative to the current Codex baseline."
+}

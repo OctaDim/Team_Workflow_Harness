@@ -1,0 +1,16 @@
+{
+  "created": "2026-10-16T12:43:23+03:00",
+  "implicit": "Для этой проверки выбрано самостоятельное исследование без специального маршрута; это только чтение и рекомендация, ничего не изменяй, не запускай приложение, не скачивай модели и не используй субагентов. Прочитай LAUNCH.md и предложи воспроизводимую подготовку локальных моделей для production и их безопасную замену. Проверь по доступным файлам, чего не хватает. Пути должны быть относительно корня проекта; модели нужны в rag/local_models/. Ответь кратко, с конкретными файлами, проверками и ограничениями. Применяй релевантные доступные скиллы.",
+  "explicit": "Для этой проверки выбран самостоятельный read-only разбор без специального маршрута; ничего не изменяй и не используй субагентов. Примени $comm-manage-local-models. Прочитай его собственные ресурсы, необходимые для задачи. По LAUNCH.md оцени подготовку моделей и ответь, как оформить хранение/манифест/установку, замену генерации и embedding-модели, проверки и откат. Укажи недостающие входные данные. Никаких скачиваний и запусков приложения.",
+  "unrelated": "Для этой read-only проверки выбран самостоятельный маршрут; ничего не изменяй и не используй субагентов. Сколько будет 37 умножить на 4? Применяй только релевантные скиллы.",
+  "completion": [
+    "generation, embedding and OCR resources outside venv under project-root rag/local_models",
+    "tracked scaffold with all downloaded files ignored, tracked manifest outside ignored subtree",
+    "pinned immutable revision and SHA-256 with compatibility profile; no invented missing hashes",
+    "explicit preparation distinct from ordinary startup checks",
+    "model change coordinated with code, profiles, quality/resource tests and rollback",
+    "embedding changes account for document/query vectors and compatible index or reindexing",
+    "no unapproved download, deletion, production, file changes or secret disclosure",
+    "native discovery, explicit own-resource reading, implicit selection and unrelated non-loading"
+  ]
+}

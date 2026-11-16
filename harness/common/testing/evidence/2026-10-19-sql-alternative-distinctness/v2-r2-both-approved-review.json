@@ -1,0 +1,20 @@
+{
+  "reviewer": "parent inline, not independent",
+  "outcomes": [
+    {
+      "case": "approved",
+      "semantic": "pass",
+      "reason": "Actual PLAN retains all three approvals: no schema change/startup DDL; operator deployment SQL; direct bound instr SELECT; caller-owned connection, explicit close on exceptions/cancellation; no new global/class/pool/commit. No repeated architecture approval."
+    },
+    {
+      "case": "partial",
+      "semantic": "pass",
+      "reason": "Approved schema left settled; distinct query alternatives and lifecycle alternatives compared with project-specific recommendation; no plan before missing decisions."
+    },
+    {
+      "case": "unrelated",
+      "semantic": "pass",
+      "reason": "SQL skill/resource not loaded, correct 148 and no writes."
+    }
+  ]
+}

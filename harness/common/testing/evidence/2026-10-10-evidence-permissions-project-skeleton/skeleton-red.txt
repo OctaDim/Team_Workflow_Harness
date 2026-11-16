@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ TestEntryPointLinks.test_common_only_creates_neutral_project _________
+
+self = <tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x77f65024cfb0>
+
+    def test_common_only_creates_neutral_project(self):
+        shutil.rmtree(self.root / 'harness/project')
+        result = self.run_check()
+        assert result.returncode == 0, result.stderr
+        project = self.root / 'harness/project'
+        expected = {'base', 'decisions', 'testing', 'rules', 'skills', 'checks', 'scripts', 'specs', 'inbox', 'docs', 'handoffs'}
+        assert project.is_dir(), 'common-only must create project'
+        assert {p.name for p in project.iterdir() if p.is_dir()} == expected
+        assert {p.name for p in (project / 'testing').iterdir() if p.is_dir()} == {'acceptance', 'tests', 'evidence'}
+        assert all((project / 'testing' / name / 'README.human.md').is_file() for name in ('acceptance', 'tests', 'evidence'))
+        for directory in [project, *(project / name for name in expected)]:
+            assert (directory / 'README.human.md').is_file()
+        assert not (project / 'lessons').exists()
+        assert (project / 'docs/plans/README.human.md').is_file()
+        assert not (project / 'checks/ensure_entrypoint_links.py').exists()
+        for branch in ('work', 'harness'):
+>           assert (project / 'testing/evidence' / branch / 'README.human.md').is_file()
+E           AssertionError: assert False
+E            +  where False = is_file()
+E            +    where is_file = (((PosixPath('/tmp/pytest-of-octadim/pytest-6/test_common_only_creates_neutr0/harness/project') / 'testing/evidence') / 'work') / 'README.human.md').is_file
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:181: AssertionError
+=========================== short test summary info ============================
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_common_only_creates_neutral_project
+1 failed, 52 deselected in 0.10s

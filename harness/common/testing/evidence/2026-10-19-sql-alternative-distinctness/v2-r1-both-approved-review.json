@@ -1,0 +1,20 @@
+{
+  "reviewer": "parent inline, not independent",
+  "outcomes": [
+    {
+      "case": "approved",
+      "semantic": "pass",
+      "reason": "Actual PLAN.md preserves all three scoped choices, deployment-only raw SQL evolution, direct parameterized SELECT, caller-owned operation connection with guaranteed closure, no new class/global/ORM/startup DDL. No repeated approval. No storage change."
+    },
+    {
+      "case": "partial",
+      "semantic": "pass",
+      "reason": "Keeps approved SQLAlchemy/Alembic schema, compares only open query/ownership alternatives (raw SQL, Core, PyPika; function/context, class, external owner) and stops before PLAN."
+    },
+    {
+      "case": "unrelated",
+      "semantic": "pass",
+      "reason": "Correct arithmetic; no SQL skill/resource reads or writes."
+    }
+  ]
+}

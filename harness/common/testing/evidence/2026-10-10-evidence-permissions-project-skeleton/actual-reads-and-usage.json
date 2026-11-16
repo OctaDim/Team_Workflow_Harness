@@ -1,0 +1,350 @@
+[
+  {
+    "run": "codex-both-candidate-explicit-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat .agents/skills/comm-protect-harness-evidence/SKILL.md .agents/skills/comm-preserve-harness-knowledge/SKILL.md'",
+      "/bin/bash -lc 'cat .agents/skills/comm-protect-harness-evidence/references/operations.md .agents/skills/comm-preserve-harness-knowledge/references/experience-routing.md .agents/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+      "/bin/bash -lc 'cat harness/common/specs/2026-10-06-structure-and-creation-dates.md harness/common/skills/comm-protect-harness-evidence/SKILL.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 215321,
+        "cached_input_tokens": 180736,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1332,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "changes": {},
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-both-candidate-guard-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/references/operations.md harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 183922,
+        "cached_input_tokens": 163840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1114,
+        "reasoning_output_tokens": 18
+      }
+    ],
+    "changes": {},
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-both-candidate-implicit-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+      "/bin/bash -lc \"rg --files .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/references/operations.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/specs/2026-10-06-structure-and-creation-dates.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 186719,
+        "cached_input_tokens": 168704,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1184,
+        "reasoning_output_tokens": 13
+      }
+    ],
+    "changes": {},
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-both-candidate-install-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-install-harness/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-install-harness/references/checks.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 183114,
+        "cached_input_tokens": 167936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1148,
+        "reasoning_output_tokens": 7
+      }
+    ],
+    "changes": {},
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-both-candidate-unrelated-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 146684,
+        "cached_input_tokens": 127488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 471,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "changes": {},
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-both-candidate-write-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+      "/bin/bash -lc \"rg --files .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore harness/project/testing/evidence -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/references/operations.md harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/specs/2026-10-06-structure-and-creation-dates.md harness/project/testing/evidence/work/2026-10-10-open-report.md harness/project/testing/evidence/work/2026-10-10-finished-report.md harness/project/testing/evidence/work/2026-10-10-previous-run.log'",
+      "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib\np = Path('harness/project/testing/evidence/work')\noriginals = {n: (p/n).read_bytes() for n in ['2026-10-10-finished-report.md','2026-10-10-previous-run.log']}\nopen_report = p/'2026-10-10-open-report.md'\nprior = open_report.read_bytes()\nnew_files = {\n '2026-10-10-new-report.md': '# Application check report\\\\n\\\\nCreation date: 2026-10-10\\\\nStatus: failed check; application task remains unfinished.\\\\nObservation: check failed\\\\nSource: user-provided fixture observation; no application check executed in this session.\\\\nRaw evidence: [new run](2026-10-10-new-run.log).\\\\n',\n '2026-10-10-finished-report-addendum.md': '# Completed report correction\\\\n\\\\nCreation date: 2026-10-10\\\\nOriginal: [completed report](2026-10-10-finished-report.md).\\\\n\\\\nCorrection: the old verification was not exhaustive. The original result does not establish exhaustive verification of the application documentation. This addendum records the limitation and preserves the original completed report and raw evidence.\\\\nSource: user-provided correction.\\\\n',\n '2026-10-10-new-run.log': 'new raw result: failure\\\\n',\n}\nfor name in new_files:\n if (p/name).exists():\n  raise SystemExit(f'Destination already exists: {p/name}')\nfor name, content in new_files.items():\n with (p/name).open('x', encoding='utf-8', newline='') as f:\n  f.write(content)\nwith open_report.open('ab') as f:\n f.write(b'\\\\nObservation (2026-10-10): check failed\\\\n')\nassert open_report.read_bytes() == prior + b'\\\\nObservation (2026-10-10): check failed\\\\n'\nfor name, data in originals.items():\n assert (p/name).read_bytes() == data\n print(f'Preserved {p/name}; SHA-256 {hashlib.sha256(data).hexdigest()}')\nfor name, content in new_files.items():\n assert (p/name).read_bytes() == content.encode()\n print(f'Created {p/name}')\nprint(f'Appended {open_report}')\nPY\""
+    ],
+    "usage": [
+      {
+        "input_tokens": 219799,
+        "cached_input_tokens": 192896,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1555,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "changes": {
+      "harness/project/testing/evidence/work/2026-10-10-finished-report-addendum.md": {
+        "before": null,
+        "after": "8c48e1dd3a8a9017bc5cbbf520a9fad59330a336614040f2a720275eda43f6ed"
+      },
+      "harness/project/testing/evidence/work/2026-10-10-new-report.md": {
+        "before": null,
+        "after": "8750dd3e5753c1a9e239512ae363d2a651096e949fb100e6a55ce943e2baf240"
+      },
+      "harness/project/testing/evidence/work/2026-10-10-new-run.log": {
+        "before": null,
+        "after": "7ad2559fcdb09b417996e13822266e53f0797d76ab062bd02b92d118795750df"
+      },
+      "harness/project/testing/evidence/work/2026-10-10-open-report.md": {
+        "before": "5b9bc332f6f36b538adc057559a4511854eefa814bed01a06a6da73338b01b39",
+        "after": "35ed1016c32f3537ed8eb3dbb85372f9e62a6fec360a1d7f3b4200e07a6bdf72"
+      }
+    },
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-common-candidate-explicit-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+      "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/references/operations.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+      "/bin/bash -lc 'cat harness/common/specs/2026-10-06-structure-and-creation-dates.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 212724,
+        "cached_input_tokens": 191872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1224,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "changes": {},
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-common-candidate-guard-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/references/operations.md harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 199631,
+        "cached_input_tokens": 182656,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1102,
+        "reasoning_output_tokens": 25
+      }
+    ],
+    "changes": {},
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-common-candidate-implicit-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+      "/bin/bash -lc \"rg --files .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-process-harness-inbox/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/references/operations.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 184435,
+        "cached_input_tokens": 167680,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1345,
+        "reasoning_output_tokens": 13
+      }
+    ],
+    "changes": {},
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-common-candidate-install-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-install-harness/SKILL.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-install-harness/references/checks.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 182152,
+        "cached_input_tokens": 167296,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1168,
+        "reasoning_output_tokens": 11
+      }
+    ],
+    "changes": {},
+    "startup_limitation": null
+  },
+  {
+    "run": "codex-common-candidate-unrelated-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-human-folder-guides.md'\"",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'"
+    ],
+    "usage": [
+      {
+        "input_tokens": 130005,
+        "cached_input_tokens": 113536,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 470,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "changes": {},
+    "startup_limitation": "common/unrelated reads canonical owner rules before project START"
+  },
+  {
+    "run": "codex-common-candidate-write-events.json",
+    "commands": [
+      "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+      "/bin/bash -lc 'cat harness/common/START.md'",
+      "/bin/bash -lc 'cat harness/project/START.md'",
+      "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+      "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+      "/bin/bash -lc 'cat harness/common/INDEX.md'",
+      "/bin/bash -lc 'cat harness/project/INDEX.md'",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md'",
+      "/bin/bash -lc \"rg --files harness/project/testing/evidence -g '\"'!README.human.md'\"'\"",
+      "/bin/bash -lc 'cat harness/common/skills/comm-protect-harness-evidence/references/operations.md harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md harness/common/specs/2026-10-06-structure-and-creation-dates.md'",
+      "/bin/bash -lc 'cat harness/project/testing/evidence/work/2026-10-10-open-report.md harness/project/testing/evidence/work/2026-10-10-finished-report.md harness/project/testing/evidence/work/2026-10-10-previous-run.log'",
+      "/bin/bash -lc \"python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib\np=Path('harness/project/testing/evidence/work')\noriginals={n:(p/n).read_bytes() for n in ['2026-10-10-finished-report.md','2026-10-10-previous-run.log']}\nnew={\n'2026-10-10-new-report.md':'# Application documentation check\\\\n\\\\nCreation date: 2026-10-10\\\\nTask status: in progress\\\\nCheck result: failed\\\\nObservation: check failed\\\\nRaw evidence: [new run](2026-10-10-new-run.log).\\\\n\\\\nResult supplied by the user; no additional check execution is claimed.\\\\n',\n'2026-10-10-finished-report-addendum.md':'# Completed report correction\\\\n\\\\nCreation date: 2026-10-10\\\\nOriginal: [completed report](2026-10-10-finished-report.md).\\\\n\\\\nCorrection: the old verification was not exhaustive. The original completed result must not be interpreted as exhaustive verification. This addendum preserves the original report and does not reopen or claim a new verification of the previous task.\\\\n',\n'2026-10-10-new-run.log':'new raw result: failure\\\\n'}\nfor n in new:\n    if (p/n).exists():\n        raise SystemExit(f'Collision: {p/n}')\nfor n,body in new.items():\n    with (p/n).open('x',encoding='utf-8') as f: f.write(body)\nwith (p/'2026-10-10-open-report.md').open('ab') as f:\n    f.write(b'\\\\nObservation (2026-10-10): check failed\\\\n')\nfor n,old in originals.items():\n    assert (p/n).read_bytes()==old, n\n    print(f'Preserved: {p/n} SHA256={hashlib.sha256(old).hexdigest()}')\nfor n in [*new,'2026-10-10-open-report.md']:\n    print(f'Saved: {p/n}')\nassert (p/'2026-10-10-new-run.log').read_text()=='new raw result: failure\\\\n'\nassert 'check failed' in (p/'2026-10-10-open-report.md').read_text()\nprint('Verification passed: saved contents and original bytes preserved.')\nPY\""
+    ],
+    "usage": [
+      {
+        "input_tokens": 195404,
+        "cached_input_tokens": 176128,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1599,
+        "reasoning_output_tokens": 8
+      }
+    ],
+    "changes": {
+      "harness/project/testing/evidence/work/2026-10-10-finished-report-addendum.md": {
+        "before": null,
+        "after": "3e244fc029a6fcb541ff16f92012279e2dd7771b0856532b09aa29b4d90c2260"
+      },
+      "harness/project/testing/evidence/work/2026-10-10-new-report.md": {
+        "before": null,
+        "after": "39e91b1b4661d14af1c5c16bf347137d955d5060554c9d07fc07e189e98a3765"
+      },
+      "harness/project/testing/evidence/work/2026-10-10-new-run.log": {
+        "before": null,
+        "after": "7ad2559fcdb09b417996e13822266e53f0797d76ab062bd02b92d118795750df"
+      },
+      "harness/project/testing/evidence/work/2026-10-10-open-report.md": {
+        "before": "5b9bc332f6f36b538adc057559a4511854eefa814bed01a06a6da73338b01b39",
+        "after": "35ed1016c32f3537ed8eb3dbb85372f9e62a6fec360a1d7f3b4200e07a6bdf72"
+      }
+    },
+    "startup_limitation": null
+  }
+]

@@ -18,7 +18,7 @@ authorized stages. Before recording, executing or changing status read
 4. Update each request's status, result, reason and actual update time. Finish with
    completed/skipped/remaining requests and reasons.
 
-For a direct bypass, require explicit named paths/operations and a separate
+For a direct bypass of the protected scope defined in workflow, require explicit named paths/operations and a separate
 question → unequivocal positive answer after it. Preliminary confirmation is
 not that answer; keep waiting without writes. Known technical errors within
 existing authorization can be corrected.

@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-10-19T15:45:58+03:00",
+  "version": "v0 SQL semantic review",
+  "automatic_gate_results": "12/12 lazy plus 2/2 pair passed",
+  "semantic_RED": [
+    {
+      "file": "v0-codex-lazy-common-code.json",
+      "issue": "Functions and context managers presented as separate ownership alternatives; choices.md groups them in one first option."
+    },
+    {
+      "file": "v0-codex-pair-both-plan.json",
+      "issue": "Same overlapping ownership alternatives in baseline with rule; the rule does not fix the distinction."
+    },
+    {
+      "files": [
+        "v0-codex-lazy-common-plan.json",
+        "v0-codex-lazy-both-plan.json"
+      ],
+      "issue": "Raw explicit schema evolution and versioned SQL scripts not distinguished by migration mechanism."
+    }
+  ],
+  "decision": "Clarify existing choices resource only, preserving all other contracts. Repeat mandatory final-version checks; do not treat file-preservation checks as full semantic pass."
+}
