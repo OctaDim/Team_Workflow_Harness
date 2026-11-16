@@ -1,0 +1,43 @@
+{
+  "baseline": [
+    {
+      "file": "../2026-11-16-execute-agent-specific-publication-exceptions/baseline-control-both-claude-only-implicit.json",
+      "actual_tool_output_chars": 58559,
+      "usage": [
+        {
+          "input_tokens": 176540,
+          "cached_input_tokens": 156544,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1057,
+          "reasoning_output_tokens": 9
+        }
+      ],
+      "observed": "canonical baseline stops publication/queue; original incident not freshly reproduced"
+    },
+    {
+      "file": "../2026-11-16-execute-agent-specific-publication-exceptions/baseline-control-common-retry-unexplained-implicit.json",
+      "actual_tool_output_chars": 69329,
+      "usage": [
+        {
+          "input_tokens": 211182,
+          "cached_input_tokens": 181248,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1135,
+          "reasoning_output_tokens": 25
+        }
+      ],
+      "observed": "canonical baseline stops publication/queue; original incident not freshly reproduced"
+    }
+  ],
+  "limits": "No causal improvement over passing canonical controls is claimed. Initial control with explanatory gate hints retained separately, not a RED result.",
+  "candidate_v1": "Prepared candidate has real over-blocking contradiction: unconditional unresolved-stop versus matching exception; combined scoped-exception refuses specifically authorized fixture release. Separate all-pass stale diagnosis is fixture inconsistency. V1 never published.",
+  "repair": "V2 per-slot coverage evaluated first; only uncovered results need repair/new decisions. All mandatory current checks repeated. All-pass fixture diagnosis=N/A.",
+  "original": "../2026-11-16-execute-agent-specific-publication-exceptions/native-review-v1-diagnostic.json",
+  "current_source": {
+    "SKILL.md": "0c8843b05fe2d83c8dbbbe079ebd7d24633a1b331d4cff07b375f8df160303e0",
+    "README.human.md": "2cfcae4948004289efc53de4c710fffd92596e3043f24d86f7a9cda0c4258a84",
+    "references/gate.md": "ec0711742f62fb339a5c0ba10c16f7370afd30ea998947729cf6f518af2c667c",
+    "references/README.human.md": "2cfcae4948004289efc53de4c710fffd92596e3043f24d86f7a9cda0c4258a84",
+    "references/placement-contract.md": "c0c8fdea5ea9f3c1e71e2d975601ad5092b03079d9729f66254b2397ee7c05cf"
+  }
+}

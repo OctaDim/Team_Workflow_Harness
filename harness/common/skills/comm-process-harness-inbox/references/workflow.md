@@ -1,8 +1,25 @@
 # Route, stages and state
 
-All harness creation/edit/delete/rename/transfer, including instructions, code,
-tests, configuration, reports and memory, uses agreed inbox. Approved request
-creation and permanent results of its authorized execution are this route.
+Classify purpose/operation before routing:
+- All common changes, including reports/memory, use common/inbox.
+- Project mechanism changes (structure, agent rules/procedures, executable
+  mechanism checks, governing configuration) use project/inbox.
+- Authorized creation/update of application ideas, research, decisions, specs,
+  plans, handoffs and check results goes directly to permanent project categories,
+  without another request; an authorized save is this ordinary route.
+  preserve candidate/accepted, planned/implemented and failed/unrun/passed status.
+  It does not authorize migration or cleanup of existing materials.
+  Before any evidence operation use comm-protect-harness-evidence: new work evidence
+  and additions to a current unfinished report are direct; completed corrections
+  are new dated linked addenda, raw logs/snapshots immutable. Report state, not age
+  or work/ placement, determines whether a report is still current.
+Purpose governs, not folder/name/"test": app API contracts are work records;
+agent procedures remain mechanism even in docs.
+Inspect contents/descendants before parent operations. Mixed mechanism stays
+protected; clarify unknown purpose before mutation. Explicit skills retain this boundary.
+Approved request creation and permanent results of its authorized execution
+are the inbox route. Bypass conditions below govern protected changes,
+not ordinary app saves.
 
 Direct bypass requires an unambiguous instruction for named material/operation,
 plus a separate agent question about paths/operations/bypass and a positive
@@ -23,6 +40,12 @@ One message can authorize several stages; do not re-ask authorized stages.
 Path/“save”/deadline/option number do not grant missing stages. If separate
 agreement is required, wait before even creating/testing. An error grants no
 new authorization: propose a contextual request, then wait as necessary.
+
+When authorized, run targeted checks for changed behavior and full project checks
+when compatibility needs them. Creation grants no candidate execution or all
+historical editions. Before suite use read from root
+`harness/common/skills/comm-install-harness/references/testing.md`.
+Report scope/exit/limits: target success is not full, collection not execution.
 
 Create harness/<package>/inbox/YYYY-MM-DD-meaning/ using actual creation date;
 disambiguate collisions by meaning. Record need time, circumstances, cause,

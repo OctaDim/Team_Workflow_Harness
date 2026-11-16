@@ -1,0 +1,53 @@
+{
+  "rule_sha256": "d79c6674765afb49a74abd9065b1aad45f677705616841ce37668773d9ccd288",
+  "skill": {
+    "SKILL.md": "9824724e1974ca2a8a722e42da9f320c8c70e6cc5c181c72808d2b272108f5f6",
+    "README.human.md": "5aea1bfb011eca02438aabd4157fe76b944f0acb9807a2829de9988c56a27d87",
+    "references/choice.md": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f",
+    "references/README.human.md": "5997be5203fe22f34bd145e6478978aea777d1b64ca3f7c20b12f71f07dd0789",
+    "references/menu.md": "e218e0fb9daf855db74e1fdb6d895a0a592fb6fee0366014b4f18d7afcd07594"
+  },
+  "suite": {
+    "command": [
+      "/tmp/harness-inbox-20261113-venv/bin/python",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 36%]\n........................................................................ [ 73%]\n...................................................                      [100%]\n195 passed in 16.32s\n",
+    "stderr": "",
+    "elapsed_seconds": 17.41
+  },
+  "startup": {
+    "startup": [
+      {
+        "command": [
+          "python3",
+          "-B",
+          "harness/common/checks/ensure_entrypoint_links.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: changed paths: harness/project\n",
+        "stderr": "",
+        "elapsed_seconds": 0.05
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "harness/common/checks/ensure_entrypoint_links.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+        "stderr": "",
+        "elapsed_seconds": 0.04
+      }
+    ],
+    "stable": true,
+    "existing_project_preserved": false
+  },
+  "project_preserved": true,
+  "repeat_startup_unchanged": true,
+  "copies_equal": true
+}

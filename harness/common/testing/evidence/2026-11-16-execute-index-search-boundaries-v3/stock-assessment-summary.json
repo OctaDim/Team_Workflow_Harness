@@ -1,0 +1,166 @@
+{
+  "tool": {
+    "name": "plugin-eval",
+    "version": "0.1.0"
+  },
+  "target": {
+    "kind": "directory",
+    "path": "/tmp/harness-index-boundaries-v3-v8saardb/assessment/candidate-v3",
+    "entryPath": "/tmp/harness-index-boundaries-v3-v8saardb/assessment/candidate-v3",
+    "name": "candidate-v3",
+    "relativePath": "../../../../tmp/harness-index-boundaries-v3-v8saardb/assessment/candidate-v3"
+  },
+  "summary": {
+    "score": 95,
+    "grade": "A",
+    "riskLevel": "medium",
+    "riskReasons": [
+      "Contains 1 warning signal that still need attention."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 5,
+      "finalScore": 95,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 3,
+      "pass": 0,
+      "warn": 1,
+      "fail": 0,
+      "info": 4,
+      "error": 0,
+      "warning": 1
+    },
+    "deductions": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "penalty": 4.5,
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "generic-target-analysis",
+        "category": "best-practice",
+        "severity": "info",
+        "status": "info",
+        "message": "The target is not a skill or plugin root, so only generic code, coverage, and budget analysis will run.",
+        "penalty": 0.25,
+        "remediation": [
+          "Point the analyzer at a skill directory or plugin root for richer structural checks."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "budget",
+        "totalPenalty": 4.5,
+        "checks": 1
+      },
+      {
+        "category": "best-practice",
+        "totalPenalty": 0.25,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [
+      "Reduce repeated instruction text and move detail into deferred supporting files."
+    ],
+    "whyBullets": [
+      "1 warning signal still need cleanup before this feels polished.",
+      "budget is the largest source of score loss at -4.5 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [
+      {
+        "id": "deferred_cost_tokens-budget-high",
+        "category": "budget",
+        "severity": "warning",
+        "status": "warn",
+        "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+        "why": "Budget pressure matters because always-loaded or frequently-loaded text can make the workflow feel expensive fast.",
+        "remediation": [
+          "Reduce repeated instruction text and move detail into deferred supporting files."
+        ],
+        "penalty": 4.5,
+        "source": "core"
+      }
+    ],
+    "watchNext": []
+  },
+  "budgets": {
+    "method": "estimated-static",
+    "trigger_cost_tokens": {
+      "value": 0,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 1,
+        "moderateMax": 1,
+        "heavyMax": 1
+      },
+      "components": []
+    },
+    "invoke_cost_tokens": {
+      "value": 0,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 1,
+        "moderateMax": 1,
+        "heavyMax": 1
+      },
+      "components": []
+    },
+    "deferred_cost_tokens": {
+      "value": 916,
+      "band": "heavy",
+      "thresholds": {
+        "goodMax": 240,
+        "moderateMax": 640,
+        "heavyMax": 1600
+      },
+      "components": [
+        {
+          "label": "INDEX.md",
+          "path": "/tmp/harness-index-boundaries-v3-v8saardb/assessment/candidate-v3/INDEX.md",
+          "tokens": 916,
+          "note": "Generic text file budget"
+        }
+      ]
+    },
+    "total_tokens": {
+      "value": 916,
+      "band": "heavy"
+    }
+  },
+  "scope": "Generic bounded directory containing only whole INDEX.md. No skill/plugin profile, invented manifest, coverage or relaxed threshold. Creator/skill structure checks N/A to navigation map. Mandatory startup cost is not deferred regardless of analyzer field label."
+}

@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "case_results": [
+    {
+      "kind": "merge2",
+      "config_sha256": "188bb4e6c469d7620f628193a8bd5fb81f5fb0a1d1f5783ed503c6251a73821a",
+      "result_sha": "3556601439aeee9dc77169cee1c2845e1b4ec710",
+      "parent": "4967b4fe93709543bb814aa4100f38d7321a9ce6",
+      "actual_tree": "5f27990764753afab6301444e3dbaf9315a265b4",
+      "source_sha256": {
+        "src/summary.py": "9601afe7671e5308100e8bdc98c4c1553625d65f446daac8cab04bff241dc5ae",
+        "src/worker.py": "134dc1d217b514ecca791146c9a2301b1b6f861e691c0a7eb574a6417ef6891e",
+        "src/target.py": "0ccd69d04e2604c944ee529034d927cdb2e2212dfa09034f02879dfed48bd66c"
+      },
+      "executed_contracts": {
+        "summarize": true,
+        "worker_base": true,
+        "target_contract": true
+      },
+      "public_probe_equals_real_execution": true,
+      "passed": true
+    },
+    {
+      "kind": "merge3",
+      "config_sha256": "e173537e0670d3b1f03c5652c17b72ae6df54179dbf9e262dbf640c72e72f8d8",
+      "result_sha": "2bf0936a83c45ff4e059091c53e8e623e6c17b58",
+      "parent": "6eb53d5f7c9f0f472bd428929b2c5354076ad515",
+      "actual_tree": "e9d07745a4a87b703e59973030da66c979207769",
+      "source_sha256": {
+        "src/summary.py": "9601afe7671e5308100e8bdc98c4c1553625d65f446daac8cab04bff241dc5ae",
+        "src/worker.py": "134dc1d217b514ecca791146c9a2301b1b6f861e691c0a7eb574a6417ef6891e",
+        "src/target.py": "0ccd69d04e2604c944ee529034d927cdb2e2212dfa09034f02879dfed48bd66c"
+      },
+      "executed_contracts": {
+        "summarize": true,
+        "worker_base": true,
+        "target_contract": true
+      },
+      "public_probe_equals_real_execution": true,
+      "passed": true
+    },
+    {
+      "kind": "loss",
+      "config_sha256": "d935e6ed37805d8ff01c18f881cd0d6dd219331b860acf56d3b85f0459c0a58b",
+      "result_sha": "53086bb94b22360bbb49ac2ad9b20b1046ea670d",
+      "parent": "f447fe4e63a89a09ff5c0d3682a1a71f658aae20",
+      "actual_tree": "d2c894007c5795f7e5d186d949ec877a471ce508",
+      "source_sha256": {
+        "src/target.py": "0ccd69d04e2604c944ee529034d927cdb2e2212dfa09034f02879dfed48bd66c"
+      },
+      "executed_contracts": {
+        "summarize": false,
+        "worker_base": false,
+        "target_contract": true
+      },
+      "public_probe_equals_real_execution": true,
+      "passed": true
+    }
+  ],
+  "limits": "Public probe executes summary; worker/target public booleans use presence. Independent parent executes all three exact functions on real merged commits and checks actual tree/parent, proving public probe sound for every merge shape used here. Native candidate, public fixture code and configs unchanged."
+}

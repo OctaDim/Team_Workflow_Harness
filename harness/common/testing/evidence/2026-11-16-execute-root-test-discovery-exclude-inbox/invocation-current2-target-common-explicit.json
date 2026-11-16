@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "stdout": "{\"tag\": \"current2-target\", \"mode\": \"common\", \"case\": \"target\", \"completed\": true, \"exit_code\": 0, \"observed_runs\": 1, \"historical_imports\": 1, \"final\": \"Выполню стартовое чтение в указанном порядке, затем применю comm-install-harness и запущу только разрешённый исторический тест. Файлы и конфигурацию менять не буду.\\nСтартовая проверка завершилась с кодом 0, правила и PROJECT.md прочитаны. Применяю comm-install-harness в пределах разрешённого запуска: без установки, изменения конфигурации и общего прогона.\\nВыполнена команда:\\n\\n```sh\\n.venv/bin/python -m pytest harness/common/inbox/synthetic/candidate-v1/test_history.py\\n```\\n\\nФактический результат: **код 1**, собран и выполнен **1 тест**, `test_contract` намеренно упал на строке 9: `AssertionError: intentional unexecuted historical test`.\\n\\nИспользован существующий `pytest.ini`. Общий прогон и соседние редакции не запускались. Конфигурация и исходники не изменялись; падение не исправлялось.\\n\\nСтартовая проверка завершилась с кодом 0. Скилл `comm-install-harness` применён в пределах разрешённой целевой проверки.\"}\n",
+  "stderr": ""
+}

@@ -1,0 +1,64 @@
+{
+  "version": "candidate-v1",
+  "source": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-16-development-workflow-implementation-only/candidate-comm-confirm-development-workflow.md",
+  "source_sha256": "24b88388bfefe0b5ca8d46ab2aa0fec46f93c76890858f0c6658948618721e69",
+  "W": 572,
+  "word_band": "excessive-fail",
+  "C": 4759,
+  "utf16_units": 4759,
+  "T": 1190,
+  "stock_grade": "A",
+  "stock_score": 95,
+  "stock_checks": [
+    {
+      "id": "generic-target-analysis",
+      "category": "best-practice",
+      "severity": "info",
+      "status": "info",
+      "message": "The target is not a skill or plugin root, so only generic code, coverage, and budget analysis will run.",
+      "evidence": [
+        "/tmp/harness-workflow-scope-qxwoq2xt/assessment/candidate-v1"
+      ],
+      "remediation": [
+        "Point the analyzer at a skill directory or plugin root for richer structural checks."
+      ],
+      "source": "core"
+    },
+    {
+      "id": "deferred_cost_tokens-budget-high",
+      "category": "budget",
+      "severity": "warning",
+      "status": "warn",
+      "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+      "evidence": [
+        "Value: 1190 tokens",
+        "Baseline samples: skills=1, plugins=0"
+      ],
+      "remediation": [
+        "Reduce repeated instruction text and move detail into deferred supporting files."
+      ],
+      "source": "core"
+    },
+    {
+      "id": "coverage-artifacts-unavailable",
+      "category": "coverage",
+      "severity": "info",
+      "status": "info",
+      "message": "No coverage artifacts were found for this target.",
+      "evidence": [
+        "../../../../tmp/harness-workflow-scope-qxwoq2xt/assessment/candidate-v1"
+      ],
+      "remediation": [
+        "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+      ],
+      "source": "core"
+    }
+  ],
+  "budget_component": {
+    "label": "comm-confirm-development-workflow.md",
+    "path": "/tmp/harness-workflow-scope-qxwoq2xt/assessment/candidate-v1/comm-confirm-development-workflow.md",
+    "tokens": 1190,
+    "note": "Generic text file budget"
+  },
+  "method": "unnormalized full UTF8 Markdown; bounded generic directory, stock per-file char/4 estimate; no fake skill profile. Creator N/A: rule, not skill."
+}

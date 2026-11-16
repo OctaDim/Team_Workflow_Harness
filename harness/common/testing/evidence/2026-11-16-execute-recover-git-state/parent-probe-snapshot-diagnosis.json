@@ -1,0 +1,6 @@
+{
+  "record": "current-common-abort-explicit.json",
+  "artifact": "src/__pycache__/app.cpython-312.pyc",
+  "cause": "Driver captured after snapshot AFTER parent behavior probe using default bytecode mode. Agent ran its authorized checks with PYTHONDONTWRITEBYTECODE=1; parent probe created the cache. Original raw retained, not reported as clean.",
+  "fix": "Freeze agent snapshot before parent probe; parent Python -B and PYTHONDONTWRITEBYTECODE=1. Repeat contaminated positive cases with new tag; no candidate source changes."
+}

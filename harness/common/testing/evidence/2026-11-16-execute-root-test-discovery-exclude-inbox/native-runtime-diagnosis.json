@@ -1,0 +1,11 @@
+{
+  "prior": [
+    "baseline-install-common-explicit.json",
+    "baseline-install-both-explicit.json"
+  ],
+  "cause": "bwrap masked the installed plugin package; plugin-eval PATH entry could not resolve, producing five existing integration-test failures. Not counted as RED behavior.",
+  "fix": "Read-only bind the exact trusted installed plugin-eval 0.1.2 package; Python already provided read-only. No project dependency installation or fake analyzer. Repeat baseline before current native checks.",
+  "entry": "/home/octadim/.codex/plugins/cache/openai-curated-remote/plugin-eval/0.1.2/scripts/plugin-eval.js",
+  "entry_sha256": "6013d9b280e3ca76de00f6269937650867d991ae6455fdd8d853b38c2382c563",
+  "valid_independent_RED": "baseline3 code regression: 16 failures/10 passes; baseline native also demonstrated excluded historical import/narrow fixed-directory scope, separately from missing-tool errors."
+}

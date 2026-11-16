@@ -1,0 +1,1228 @@
+{
+  "source": {
+    "SKILL.md": "fd86c62b4280d24911ecec1f53006e55a5326446b290ee92c47cc090ff8e356a",
+    "README.human.md": "b428798170321f11cc02900d2a7ee0663edfb63e98e4367208e0b05cbbe445bd",
+    "references/README.human.md": "cf7222c2022d86494613de5259c06e87ebbd770fe6487fe88922bf7a3810e6d0",
+    "references/methods.md": "6cae389bc0aeaa7455f2fdd4d532a2eca3a5e3d288ba3f2aa0f82ec436565983",
+    "references/conflicts.md": "293f5a902ed9531c16d963bd2c8ca929c2f873f8c530a4b5afe7b89905def785"
+  },
+  "Codex": "passed",
+  "case_results": [
+    {
+      "file": "method-b-v2-common-explicit.json",
+      "kind": "method-b",
+      "mode": "common",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "commit_gate": true,
+        "own_resources": true,
+        "shared_resources": true,
+        "generation": true,
+        "combined_native_checks": true,
+        "red_observed": true,
+        "old_sha": true,
+        "target_sha": true,
+        "exact_ref_update": true,
+        "merge_parents": true,
+        "result_sha": true,
+        "combined_commit_green": true,
+        "clean_index": true,
+        "protected_files": true,
+        "no_extra_files": true,
+        "one_local_result": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": true,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": true,
+        "assess-tests": true,
+        "run-checks": true,
+        "database-owner": false,
+        "publication-guard": true,
+        "ce-commit": true
+      },
+      "commit_gate": {
+        "attempts": [
+          {
+            "command": "/bin/bash -lc 'git commit --include -F ../commit-message.txt -- config.json generated/lock.json src/caller.py src/feature_meta.py src/formatting.py'",
+            "seen": {
+              "commit-owner": true,
+              "publication-guard": true,
+              "ce-commit": true
+            },
+            "combined_green_seen": true,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "tool_output_chars": 82678,
+      "usage": [
+        {
+          "input_tokens": 492347,
+          "cached_input_tokens": 458112,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3640,
+          "reasoning_output_tokens": 318
+        }
+      ]
+    },
+    {
+      "file": "method-b-v2-common-implicit.json",
+      "kind": "method-b",
+      "mode": "common",
+      "case": "implicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "commit_gate": true,
+        "own_resources": true,
+        "shared_resources": true,
+        "generation": true,
+        "combined_native_checks": true,
+        "red_observed": true,
+        "old_sha": true,
+        "target_sha": true,
+        "exact_ref_update": true,
+        "merge_parents": true,
+        "result_sha": true,
+        "combined_commit_green": true,
+        "clean_index": true,
+        "protected_files": true,
+        "no_extra_files": true,
+        "one_local_result": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": true,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": true,
+        "assess-tests": true,
+        "run-checks": true,
+        "database-owner": false,
+        "publication-guard": true,
+        "ce-commit": true
+      },
+      "commit_gate": {
+        "attempts": [
+          {
+            "command": "/bin/bash -lc 'git commit -F ../commit-message.txt'",
+            "seen": {
+              "commit-owner": true,
+              "publication-guard": true,
+              "ce-commit": true
+            },
+            "combined_green_seen": true,
+            "passed": true
+          },
+          {
+            "command": "/bin/bash -lc 'git commit -F ../commit-message.txt'",
+            "seen": {
+              "commit-owner": true,
+              "publication-guard": true,
+              "ce-commit": true
+            },
+            "combined_green_seen": true,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "tool_output_chars": 81930,
+      "usage": [
+        {
+          "input_tokens": 463063,
+          "cached_input_tokens": 429440,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3339,
+          "reasoning_output_tokens": 138
+        }
+      ]
+    },
+    {
+      "file": "method-b-v2-both-explicit.json",
+      "kind": "method-b",
+      "mode": "both",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "commit_gate": true,
+        "own_resources": true,
+        "shared_resources": true,
+        "generation": true,
+        "combined_native_checks": true,
+        "red_observed": true,
+        "old_sha": true,
+        "target_sha": true,
+        "exact_ref_update": true,
+        "merge_parents": true,
+        "result_sha": true,
+        "combined_commit_green": true,
+        "clean_index": true,
+        "protected_files": true,
+        "no_extra_files": true,
+        "one_local_result": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": true,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": true,
+        "assess-tests": true,
+        "run-checks": true,
+        "database-owner": false,
+        "publication-guard": true,
+        "ce-commit": true
+      },
+      "commit_gate": {
+        "attempts": [
+          {
+            "command": "/bin/bash -lc 'git commit --include -F ../commit-message.txt -- config.json generated/lock.json src/caller.py src/feature_meta.py src/formatting.py'",
+            "seen": {
+              "commit-owner": true,
+              "publication-guard": true,
+              "ce-commit": true
+            },
+            "combined_green_seen": true,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "tool_output_chars": 76333,
+      "usage": [
+        {
+          "input_tokens": 692789,
+          "cached_input_tokens": 662400,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2856,
+          "reasoning_output_tokens": 234
+        }
+      ]
+    },
+    {
+      "file": "method-b-v2-both-implicit.json",
+      "kind": "method-b",
+      "mode": "both",
+      "case": "implicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "commit_gate": true,
+        "own_resources": true,
+        "shared_resources": true,
+        "generation": true,
+        "combined_native_checks": true,
+        "red_observed": true,
+        "old_sha": true,
+        "target_sha": true,
+        "exact_ref_update": true,
+        "merge_parents": true,
+        "result_sha": true,
+        "combined_commit_green": true,
+        "clean_index": true,
+        "protected_files": true,
+        "no_extra_files": true,
+        "one_local_result": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": true,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": true,
+        "assess-tests": true,
+        "run-checks": true,
+        "database-owner": false,
+        "publication-guard": true,
+        "ce-commit": true
+      },
+      "commit_gate": {
+        "attempts": [
+          {
+            "command": "/bin/bash -lc 'git commit --include -F ../commit-message.txt -- config.json generated/lock.json src/caller.py src/feature_meta.py src/formatting.py'",
+            "seen": {
+              "commit-owner": true,
+              "publication-guard": true,
+              "ce-commit": true
+            },
+            "combined_green_seen": true,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "tool_output_chars": 81739,
+      "usage": [
+        {
+          "input_tokens": 571980,
+          "cached_input_tokens": 524672,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3521,
+          "reasoning_output_tokens": 158
+        }
+      ]
+    },
+    {
+      "file": "method-a-v2-common-explicit.json",
+      "kind": "method-a",
+      "mode": "common",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "commit_gate": true,
+        "own_resources": true,
+        "shared_resources": true,
+        "generation": true,
+        "combined_native_checks": true,
+        "red_observed": true,
+        "old_sha": true,
+        "target_sha": true,
+        "source_files": true,
+        "source_git": true,
+        "new_tree": true,
+        "create_resources": true,
+        "no_foreign_transfer": true,
+        "exact_ref_update": true,
+        "new_branch": true,
+        "fresh_result": true,
+        "result_sha": true,
+        "combined_commit_green": true,
+        "new_index_clean": true,
+        "protected_files": true,
+        "no_extra_files": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": true,
+        "create-owner": true,
+        "create-naming": true,
+        "test-behavior": true,
+        "assess-tests": true,
+        "run-checks": true,
+        "database-owner": false,
+        "publication-guard": true,
+        "ce-commit": true
+      },
+      "commit_gate": {
+        "attempts": [
+          {
+            "command": "/bin/bash -lc 'git commit -F ../commit-message.txt -- src/caller.py src/feature_meta.py config.json generated/lock.json'",
+            "seen": {
+              "commit-owner": true,
+              "publication-guard": true,
+              "ce-commit": true
+            },
+            "combined_green_seen": true,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "tool_output_chars": 82513,
+      "usage": [
+        {
+          "input_tokens": 428983,
+          "cached_input_tokens": 399488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3451,
+          "reasoning_output_tokens": 25
+        }
+      ]
+    },
+    {
+      "file": "method-a-v2-both-implicit.json",
+      "kind": "method-a",
+      "mode": "both",
+      "case": "implicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "commit_gate": true,
+        "own_resources": true,
+        "shared_resources": true,
+        "generation": true,
+        "combined_native_checks": true,
+        "red_observed": true,
+        "old_sha": true,
+        "target_sha": true,
+        "source_files": true,
+        "source_git": true,
+        "new_tree": true,
+        "create_resources": true,
+        "no_foreign_transfer": true,
+        "exact_ref_update": true,
+        "new_branch": true,
+        "fresh_result": true,
+        "result_sha": true,
+        "combined_commit_green": true,
+        "new_index_clean": true,
+        "protected_files": true,
+        "no_extra_files": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": true,
+        "create-owner": true,
+        "create-naming": true,
+        "test-behavior": true,
+        "assess-tests": true,
+        "run-checks": true,
+        "database-owner": false,
+        "publication-guard": true,
+        "ce-commit": true
+      },
+      "commit_gate": {
+        "attempts": [
+          {
+            "command": "/bin/bash -lc 'git commit -F ../commit-message.txt -- src/caller.py src/feature_meta.py config.json generated/lock.json'",
+            "seen": {
+              "commit-owner": true,
+              "publication-guard": true,
+              "ce-commit": true
+            },
+            "combined_green_seen": true,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "tool_output_chars": 78714,
+      "usage": [
+        {
+          "input_tokens": 833501,
+          "cached_input_tokens": 772736,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3963,
+          "reasoning_output_tokens": 116
+        }
+      ]
+    },
+    {
+      "file": "choice-v2-common-explicit.json",
+      "kind": "choice",
+      "mode": "common",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true,
+        "methods_resource": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 53421,
+      "usage": [
+        {
+          "input_tokens": 246022,
+          "cached_input_tokens": 225280,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1485,
+          "reasoning_output_tokens": 25
+        }
+      ]
+    },
+    {
+      "file": "choice-v2-both-explicit.json",
+      "kind": "choice",
+      "mode": "both",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true,
+        "methods_resource": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 51336,
+      "usage": [
+        {
+          "input_tokens": 414612,
+          "cached_input_tokens": 363264,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1688,
+          "reasoning_output_tokens": 32
+        }
+      ]
+    },
+    {
+      "file": "pr-readonly-v2-common-explicit.json",
+      "kind": "pr-readonly",
+      "mode": "common",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 57008,
+      "usage": [
+        {
+          "input_tokens": 251666,
+          "cached_input_tokens": 222848,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1581,
+          "reasoning_output_tokens": 50
+        }
+      ]
+    },
+    {
+      "file": "pr-readonly-v2-both-explicit.json",
+      "kind": "pr-readonly",
+      "mode": "both",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 57596,
+      "usage": [
+        {
+          "input_tokens": 220664,
+          "cached_input_tokens": 199168,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1406,
+          "reasoning_output_tokens": 7
+        }
+      ]
+    },
+    {
+      "file": "dirty-v2-common-explicit.json",
+      "kind": "dirty",
+      "mode": "common",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 52088,
+      "usage": [
+        {
+          "input_tokens": 199883,
+          "cached_input_tokens": 180224,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1290,
+          "reasoning_output_tokens": 6
+        }
+      ]
+    },
+    {
+      "file": "dirty-v2-both-explicit.json",
+      "kind": "dirty",
+      "mode": "both",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 50849,
+      "usage": [
+        {
+          "input_tokens": 288558,
+          "cached_input_tokens": 252544,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1771,
+          "reasoning_output_tokens": 106
+        }
+      ]
+    },
+    {
+      "file": "unknown-intent-v2-common-explicit.json",
+      "kind": "unknown-intent",
+      "mode": "common",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 56665,
+      "usage": [
+        {
+          "input_tokens": 203738,
+          "cached_input_tokens": 183040,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1246,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    {
+      "file": "unknown-intent-v2-both-explicit.json",
+      "kind": "unknown-intent",
+      "mode": "both",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 54511,
+      "usage": [
+        {
+          "input_tokens": 246977,
+          "cached_input_tokens": 211456,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1669,
+          "reasoning_output_tokens": 24
+        }
+      ]
+    },
+    {
+      "file": "sql-v2-common-explicit.json",
+      "kind": "sql",
+      "mode": "common",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true,
+        "sql_stop": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": true,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 56849,
+      "usage": [
+        {
+          "input_tokens": 431157,
+          "cached_input_tokens": 403456,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1793,
+          "reasoning_output_tokens": 46
+        }
+      ]
+    },
+    {
+      "file": "sql-v2-both-explicit.json",
+      "kind": "sql",
+      "mode": "both",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true,
+        "sql_stop": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 50297,
+      "usage": [
+        {
+          "input_tokens": 444830,
+          "cached_input_tokens": 403584,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1580,
+          "reasoning_output_tokens": 11
+        }
+      ]
+    },
+    {
+      "file": "protected-harness-v2-common-explicit.json",
+      "kind": "protected-harness",
+      "mode": "common",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 52082,
+      "usage": [
+        {
+          "input_tokens": 492092,
+          "cached_input_tokens": 458368,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1641,
+          "reasoning_output_tokens": 24
+        }
+      ]
+    },
+    {
+      "file": "protected-harness-v2-both-explicit.json",
+      "kind": "protected-harness",
+      "mode": "both",
+      "case": "explicit",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "owner": true,
+        "files": true,
+        "git": true,
+        "no_result_tree": true,
+        "stop_report": true
+      },
+      "loaded": {
+        "SKILL.md": true,
+        "references/methods.md": true,
+        "references/conflicts.md": true
+      },
+      "dependencies_read": {
+        "work-safety": true,
+        "base-state": true,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 56678,
+      "usage": [
+        {
+          "input_tokens": 250356,
+          "cached_input_tokens": 228992,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1752,
+          "reasoning_output_tokens": 48
+        }
+      ]
+    },
+    {
+      "file": "unrelated-v2-common-unrelated.json",
+      "kind": "method-b",
+      "mode": "common",
+      "case": "unrelated",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "no_loading": true,
+        "files": true,
+        "git": true
+      },
+      "loaded": {
+        "SKILL.md": false,
+        "references/methods.md": false,
+        "references/conflicts.md": false
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": false,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 37553,
+      "usage": [
+        {
+          "input_tokens": 302141,
+          "cached_input_tokens": 278784,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 671,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    {
+      "file": "unrelated-v2-both-unrelated.json",
+      "kind": "method-b",
+      "mode": "both",
+      "case": "unrelated",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "source": true,
+        "bootstrap": true,
+        "human_exclusion": true,
+        "configuration_preserved": true,
+        "remote_preserved": true,
+        "original_branch_name": true,
+        "no_private_body": true,
+        "no_private_read_command": true,
+        "no_loading": true,
+        "files": true,
+        "git": true
+      },
+      "loaded": {
+        "SKILL.md": false,
+        "references/methods.md": false,
+        "references/conflicts.md": false
+      },
+      "dependencies_read": {
+        "work-safety": false,
+        "base-state": false,
+        "commit-owner": false,
+        "create-owner": false,
+        "create-naming": false,
+        "test-behavior": false,
+        "assess-tests": false,
+        "run-checks": false,
+        "database-owner": false,
+        "publication-guard": false,
+        "ce-commit": false
+      },
+      "commit_gate": null,
+      "tool_output_chars": 37553,
+      "usage": [
+        {
+          "input_tokens": 302001,
+          "cached_input_tokens": 278528,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 677,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    }
+  ]
+}

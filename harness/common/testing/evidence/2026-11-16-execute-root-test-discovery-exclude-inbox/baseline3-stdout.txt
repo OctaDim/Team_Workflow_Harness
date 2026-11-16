@@ -1,0 +1,257 @@
+FFFFFF..........FFFFFFFFFF                                               [100%]
+=================================== FAILURES ===================================
+__ test_full_root_executes_active_once_excludes_inbox_imports[default-common] __
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:101: in test_full_root_executes_active_once_excludes_inbox_imports
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'harness': 1}) == Counter({'app... 'source': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Right contains 4 more items:
+E     {'application': 1, 'before': 1, 'candidate': 1, 'source': 1}
+E     Use -v to get more diff
+_ test_full_root_executes_active_once_excludes_inbox_imports[default-combined] _
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:101: in test_full_root_executes_active_once_excludes_inbox_imports
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'harness': 1}) == Counter({'pro... 'source': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Right contains 5 more items:
+E     {'application': 1, 'before': 1, 'candidate': 1, 'project': 1, 'source': 1}
+E     Use -v to get more diff
+___ test_full_root_executes_active_once_excludes_inbox_imports[root-common] ____
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:101: in test_full_root_executes_active_once_excludes_inbox_imports
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'app... 'source': 1}) == Counter({'app... 'source': 1})
+E     
+E     Omitting 5 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,
+E      'project-source': 1}
+E     Use -v to get more diff
+__ test_full_root_executes_active_once_excludes_inbox_imports[root-combined] ___
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:101: in test_full_root_executes_active_once_excludes_inbox_imports
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'app... 'source': 1}) == Counter({'pro... 'source': 1})
+E     
+E     Omitting 6 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,
+E      'project-source': 1}
+E     Use -v to get more diff
+__ test_full_root_executes_active_once_excludes_inbox_imports[runner-common] ___
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:101: in test_full_root_executes_active_once_excludes_inbox_imports
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...t-source': 1}) == Counter({'app... 'source': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (4 lines hidden), use '-vv' to show
+_ test_full_root_executes_active_once_excludes_inbox_imports[runner-combined] __
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:101: in test_full_root_executes_active_once_excludes_inbox_imports
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...'project': 1}) == Counter({'pro... 'source': 1})
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (4 lines hidden), use '-vv' to show
+_____ test_runner_preserves_receiving_configuration[pyproject.toml-common] _____
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:133: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...t-source': 1}) == Counter({'app... 'source': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+____ test_runner_preserves_receiving_configuration[pyproject.toml-combined] ____
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:133: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...'project': 1}) == Counter({'pro... 'source': 1})
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+________ test_runner_preserves_receiving_configuration[tox.ini-common] _________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:133: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...t-source': 1}) == Counter({'app... 'source': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+_______ test_runner_preserves_receiving_configuration[tox.ini-combined] ________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:133: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...'project': 1}) == Counter({'pro... 'source': 1})
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+_______ test_runner_preserves_receiving_configuration[setup.cfg-common] ________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:133: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...t-source': 1}) == Counter({'app... 'source': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+______ test_runner_preserves_receiving_configuration[setup.cfg-combined] _______
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:133: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...'project': 1}) == Counter({'pro... 'source': 1})
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+____________________ test_runner_works_from_other_directory ____________________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:141: in test_runner_works_from_other_directory
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...t-source': 1}) == Counter({'app... 'source': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (4 lines hidden), use '-vv' to show
+_______________ test_runner_preserves_empty_selection_exit_code ________________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:147: in test_runner_preserves_empty_selection_exit_code
+    assert result.returncode == 5, result.stdout + result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "/tmp/pytest-of-octadim/pytest-54/test_runner_preserves_empty_se0/receiving project/harness/common/scripts/run_tests.py", line 20, in <module>
+E         assert SUITES, 'No test suites found'
+E                ^^^^^^
+E     AssertionError: No test suites found
+E     
+E   assert 1 == 5
+E    +  where 1 = CompletedProcess(args=['/tmp/harness-inbox-20261113-venv/bin/python', '/tmp/pytest-of-octadim/pytest-54/test_runner_pr..., in <module>\n    assert SUITES, \'No test suites found\'\n           ^^^^^^\nAssertionError: No test suites found\n').returncode
+_________________ test_runner_reports_failure_outside_harness __________________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:154: in test_runner_reports_failure_outside_harness
+    assert result.returncode == 1, result.stdout + result.stderr
+E   AssertionError: harness/common/inbox/request/before
+E     .                                                                        [100%]
+E     1 passed in 0.01s
+E     harness/common/inbox/request/candidate-v1
+E     .                                                                        [100%]
+E     1 passed in 0.01s
+E     harness/common/inbox/request/candidate-v2
+E     .                                                                        [100%]
+E     1 passed in 0.01s
+E     harness/common/testing/tests
+E     .                                                                        [100%]
+E     1 passed in 0.01s
+E     harness/project/inbox/other/merged
+E     .                                                                        [100%]
+E     1 passed in 0.01s
+E     harness/project/inbox/request/source
+E     .                                                                        [100%]
+E     1 passed in 0.01s
+E     
+E   assert 0 == 1
+E    +  where 0 = CompletedProcess(args=['/tmp/harness-inbox-20261113-venv/bin/python', '/tmp/pytest-of-octadim/pytest-54/test_runner_re...urce\n.                                                                        [100%]\n1 passed in 0.01s\n', stderr='').returncode
+________________ test_nested_config_requires_explicit_selection ________________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:162: in test_nested_config_requires_explicit_selection
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:91: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'app... 'source': 1}) == Counter({'app... 'source': 1})
+E     
+E     Omitting 5 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,
+E      'project-source': 1}
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_full_root_executes_active_once_excludes_inbox_imports[default-common]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_full_root_executes_active_once_excludes_inbox_imports[default-combined]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_full_root_executes_active_once_excludes_inbox_imports[root-common]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_full_root_executes_active_once_excludes_inbox_imports[root-combined]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_full_root_executes_active_once_excludes_inbox_imports[runner-common]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_full_root_executes_active_once_excludes_inbox_imports[runner-combined]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[pyproject.toml-common]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[pyproject.toml-combined]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[tox.ini-common]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[tox.ini-combined]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[setup.cfg-common]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[setup.cfg-combined]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_works_from_other_directory
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_empty_selection_exit_code
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_reports_failure_outside_harness
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_nested_config_requires_explicit_selection
+16 failed, 10 passed in 11.37s

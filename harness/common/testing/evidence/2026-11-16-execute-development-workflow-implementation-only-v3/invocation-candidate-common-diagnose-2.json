@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "stdout": "{\"file\": \"candidate-common-diagnose-2.json\", \"completed\": true, \"code\": 0, \"unchanged\": true, \"tool_messages\": 22, \"final\": \"Выполню обязательный старт в указанном порядке, затем изучу `src/ports.py` и сообщу причину ошибки без изменения файлов.\\nОбязательный старт выполнен; checker завершился успешно.\\n\\nПричина в [src/ports.py:4](/tmp/workflow-native-nx8kk6sb/project/src/ports.py:4): значение по умолчанию `4321` возвращается только при `value is None`. Для `\\\"abc\\\"` выполняется `int(\\\"abc\\\")`, что вызывает `ValueError`, поскольку строка не представляет целое число. Обработки исключения нет, поэтому оно выходит из `selected_port`.\\n\\nФайлы не изменял.\"}\n",
+  "stderr": ""
+}

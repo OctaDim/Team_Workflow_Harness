@@ -1,0 +1,5 @@
+{
+  "raw": "current-install-pyproject-common-explicit.json",
+  "cause": "New test helper used SOURCE/pytest.ini as default fixture configuration. Valid receiving project uses pyproject.toml and has no root pytest.ini, causing 20 helper failures; main root discovery itself correctly ran all active probes without inbox imports.",
+  "fix": "Use portable harness/common/testing/pytest.ini; add dedicated no-root-config source regression. Only implementation test file changes, instructions candidate-v2 unchanged. Full code checks/modes/native checks must repeat for implementation-v2; earlier result unverified, not published."
+}

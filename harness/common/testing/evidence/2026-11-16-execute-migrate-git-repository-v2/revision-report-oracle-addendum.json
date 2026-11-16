@@ -1,0 +1,6 @@
+{
+  "original": "native-review-diagnostic-v2.json",
+  "case": "current-both-links-only-implicit.json",
+  "observation": "Native inspect output records exact host revision4 and expected Git SHAs; subsequent final summary reports refs preserved and explains inability to compare the already-moved old path. All exact state/file properties and 6 behavior tests pass.",
+  "correction": "For links-only scope the complete command/output record is the revision evidence, with final summary referring to the checked refs. Require exact observed revision4 and actual Git SHA in native outputs plus refs/SHA in summary. Do not require repeated numeric literals in final prose; native-transfer explicitly requests SHAs and retains its stronger final assertion. No source/native edits or hidden oracle-only fact attribution."
+}

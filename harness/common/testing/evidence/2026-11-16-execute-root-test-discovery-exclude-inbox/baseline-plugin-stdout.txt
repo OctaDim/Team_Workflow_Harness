@@ -1,0 +1,100 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_____ test_runner_preserves_receiving_configuration[pyproject.toml-common] _____
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:134: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:92: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...t-source': 1}) == Counter({'har...ing-spec': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+____ test_runner_preserves_receiving_configuration[pyproject.toml-combined] ____
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:134: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:92: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...'project': 1}) == Counter({'pro...ing-spec': 1})
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+________ test_runner_preserves_receiving_configuration[tox.ini-common] _________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:134: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:92: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...t-source': 1}) == Counter({'har...ing-spec': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+_______ test_runner_preserves_receiving_configuration[tox.ini-combined] ________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:134: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:92: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...'project': 1}) == Counter({'pro...ing-spec': 1})
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+_______ test_runner_preserves_receiving_configuration[setup.cfg-common] ________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:134: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:92: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...t-source': 1}) == Counter({'har...ing-spec': 1})
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+______ test_runner_preserves_receiving_configuration[setup.cfg-combined] _______
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:134: in test_runner_preserves_receiving_configuration
+    assert_full(result, events, active)
+/tmp/harness-root-discovery-knnr7qlp/regression_spec.py:92: in assert_full
+    assert collections.Counter(e['case'] for e in events if e['kind'] == 'run') == collections.Counter(active)
+E   AssertionError: assert Counter({'com...'project': 1}) == Counter({'pro...ing-spec': 1})
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Left contains 5 more items:
+E     {'common-before': 1,
+E      'common-candidate-1': 1,
+E      'common-candidate-2': 1,
+E      'project-other': 1,...
+E     
+E     ...Full output truncated (8 lines hidden), use '-vv' to show
+=========================== short test summary info ============================
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[pyproject.toml-common]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[pyproject.toml-combined]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[tox.ini-common]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[tox.ini-combined]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[setup.cfg-common]
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec.py::test_runner_preserves_receiving_configuration[setup.cfg-combined]
+6 failed, 20 deselected in 6.74s

@@ -1,0 +1,29 @@
+{
+  "title": "Improve comm-publish-harness-instructions",
+  "target": {
+    "kind": "skill",
+    "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-15-agent-specific-publication-exceptions/candidate-v2/comm-publish-harness-instructions",
+    "entryPath": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-15-agent-specific-publication-exceptions/candidate-v2/comm-publish-harness-instructions/SKILL.md",
+    "name": "comm-publish-harness-instructions",
+    "relativePath": "harness/common/inbox/2026-11-15-agent-specific-publication-exceptions/candidate-v2/comm-publish-harness-instructions"
+  },
+  "summary": "Raise the evaluation from grade A (95/100) with a focus on the highest-signal structural and budget issues first.",
+  "goals": [
+    "Reduce repeated instruction text and move detail into deferred supporting files."
+  ],
+  "measurementGoals": [
+    "token-usage-observer",
+    "task-outcome-scorecard"
+  ],
+  "requiredFixes": [],
+  "recommendedFixes": [
+    {
+      "id": "deferred_cost_tokens-budget-high",
+      "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+      "remediation": [
+        "Reduce repeated instruction text and move detail into deferred supporting files."
+      ]
+    }
+  ],
+  "suggestedPrompt": "Use the skill-creator guidance to improve comm-publish-harness-instructions. Keep the structure compact and move bulky details into references or scripts. Define success measures with these toolsets: token-usage-observer, task-outcome-scorecard. Address deferred_cost_tokens-budget-high: deferred_cost_tokens is heavy relative to the current Codex baseline."
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "requirement": "Observe actual repository/worktree, refs/SHAs, index/files, publication/collaborators before mutation; preserve scoped authority/foreign work",
+    "owner": "SKILL.md steps1-3; shared work-safety",
+    "scenarios": [
+      "abort-risk",
+      "reset-missing",
+      "pr-readonly",
+      "abort",
+      "reset-exact",
+      "lost-ref"
+    ]
+  },
+  {
+    "requirement": "Applicable abort; no promise of preexisting uncommitted restoration",
+    "owner": "references/modes.md first paragraph",
+    "scenarios": [
+      "abort-risk",
+      "abort"
+    ]
+  },
+  {
+    "requirement": "Exact branch/SHA/consequences and explicit permission for destructive reset",
+    "owner": "references/modes.md unpublished result",
+    "scenarios": [
+      "reset-missing",
+      "reset-exact"
+    ]
+  },
+  {
+    "requirement": "Published focused corrective commit versus revert; actual merge parents/mainline; squash distinction and future-merge consequences; no automatic rewrite",
+    "owner": "references/modes.md published result",
+    "scenarios": [
+      "published"
+    ],
+    "limits": "Analysis only by fixture authority; no corrective commit/revert/push is authorized or claimed. Commit/publication gates remain shared owners."
+  },
+  {
+    "requirement": "Local expiring reflogs; no all-data recovery guarantee; purpose/source/permission/naming for recovery branch without original mutation",
+    "owner": "references/modes.md lost ref; shared naming",
+    "scenarios": [
+      "lost-ref",
+      "expired"
+    ]
+  },
+  {
+    "requirement": "Verify actual result/affected behavior, preserve original when recovering only ref; discrepancy waits; PR read only remains",
+    "owner": "SKILL.md steps3,5",
+    "scenarios": [
+      "abort",
+      "reset-exact",
+      "lost-ref",
+      "mismatch",
+      "pr-readonly"
+    ]
+  },
+  {
+    "requirement": "Explicit/implicit subject selection, own/shared when-read, unrelated non-loading, both modes",
+    "owner": "metadata and SKILL.md resource links",
+    "scenarios": [
+      "all current20 matrix"
+    ],
+    "limits": "Complete session bootstrap and chronological preoperation reads audited independently of outcome counts."
+  }
+]

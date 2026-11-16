@@ -1,0 +1,66 @@
+{
+  "startup": {
+    "startup": [
+      {
+        "command": [
+          "python3",
+          "-B",
+          "harness/common/checks/ensure_entrypoint_links.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: changed paths: harness/project\n",
+        "stderr": "",
+        "elapsed_seconds": 0.05
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "harness/common/checks/ensure_entrypoint_links.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+        "stderr": "",
+        "elapsed_seconds": 0.04
+      }
+    ],
+    "stable": true,
+    "existing_project_preserved": false
+  },
+  "source": {
+    "comm-install-harness": {
+      "SKILL.md": "ff0a67ef8fbf6841f8e499cdadbb8d34a8527a1bb2e17af6c128acdb5cce9242",
+      "README.human.md": "45f7c0bfe7b6dc0eccf450de22b041a81c621fdc3e8a84bc96f82d37368eb16a",
+      "references/checks.md": "2f87722952353ef41246137bc9389326927137bd812d062b985a0c62889050b3",
+      "references/testing.md": "04698b2b385c07b262c132b083aca4300f5a50be129fae73980a975ccf88b256",
+      "references/README.human.md": "efab7cf83a2902e32195144a65f07e53f696e4990fa9116f5f2b15b3cffc4168"
+    },
+    "comm-process-harness-inbox": {
+      "SKILL.md": "23ada60d573269c6afb56602d28738a2ea1eb8d3509b7d66861da008b4553ade",
+      "README.human.md": "28837accdfa77dc1b0040488066585971ac75b4f4219b10ab17a6407b3152f93",
+      "references/README.human.md": "90930c1a7a163844b2521f2044e316722be946dab01556850fb934d1ed1272e4",
+      "references/workflow.md": "0aeb3ef35692d7679233db83a645112340162849b0548325bc3e4766834b7b07"
+    }
+  },
+  "implementation": {
+    "pytest.ini": "7d1c2a2bcbe3909f5b3777d7f9560089d6f0c5f7cc1e52f4ea6049ae61834a2b",
+    "harness/common/testing/pytest.ini": "7d1c2a2bcbe3909f5b3777d7f9560089d6f0c5f7cc1e52f4ea6049ae61834a2b",
+    "harness/common/scripts/run_tests.py": "cad7e6fa2e59979a2d89f3d43fa33028c40b53da6698669e7f2e29f6502a364e",
+    "harness/common/docs/2026-10-06-run-tests.md": "dc58023e2b26d94026697b7a4879c342a167467dfd58ed1392cc24b45d32249d",
+    "harness/common/testing/tests/test_root_test_discovery.py": "0e7fc395cbeee54ce5808b1872a4a89f63283a93ffe50d2b00a42d1b86bf02a8"
+  },
+  "project_preserved": true,
+  "suite": {
+    "command": [
+      "/tmp/harness-inbox-20261113-venv/bin/python",
+      "-m",
+      "pytest",
+      ".",
+      "-q"
+    ],
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 37%]\n........................................................................ [ 74%]\n..................................................                       [100%]\n194 passed in 14.36s\n",
+    "stderr": "",
+    "elapsed_seconds": 14.76
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "startup": {
+    "startup": [
+      {
+        "command": [
+          "python3",
+          "-B",
+          "harness/common/checks/ensure_entrypoint_links.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: changed paths: harness/project\n",
+        "stderr": "",
+        "elapsed_seconds": 0.06
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "harness/common/checks/ensure_entrypoint_links.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+        "stderr": "",
+        "elapsed_seconds": 0.05
+      }
+    ],
+    "stable": true,
+    "existing_project_preserved": false
+  },
+  "source": {
+    "SKILL.md": "5a5c3ac67667fe4c150fe1d60d71c07485da4c99588766fef957ee56dc0cd178",
+    "README.human.md": "b428798170321f11cc02900d2a7ee0663edfb63e98e4367208e0b05cbbe445bd",
+    "references/README.human.md": "cf7222c2022d86494613de5259c06e87ebbd770fe6487fe88922bf7a3810e6d0",
+    "references/methods.md": "6cae389bc0aeaa7455f2fdd4d532a2eca3a5e3d288ba3f2aa0f82ec436565983",
+    "references/conflicts.md": "293f5a902ed9531c16d963bd2c8ca929c2f873f8c530a4b5afe7b89905def785"
+  },
+  "suite": {
+    "command": [
+      "/tmp/harness-inbox-20261113-venv/bin/python",
+      "-m",
+      "pytest",
+      "/tmp/facts-suite-2xfo44p3/harness/common/testing/tests",
+      "-q",
+      "--import-mode=importlib"
+    ],
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 42%]\n........................................................................ [ 85%]\n........................                                                 [100%]\n168 passed in 11.30s\n",
+    "stderr": "",
+    "elapsed_seconds": 12.34
+  }
+}

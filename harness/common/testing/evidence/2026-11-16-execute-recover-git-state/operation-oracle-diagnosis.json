@@ -1,0 +1,5 @@
+{
+  "original": "operation-audit.json",
+  "manual_review": "Every flagged command reviewed in full. All seven are parser false positives: merge-base prefix match; authorized exact new-ref creation via update-ref CAS in both modes; single-key config user.email getter in both mismatch Python probes; stash list read. No forbidden mutation found.",
+  "correction": "Require exact command token, recognize read-only stash list/show and single-key getter, accept update-ref creation of precisely the authorized recovery ref (exact result/source/zero-old-ref CAS separately captured and native gates checked). Include --no-optional-locks global flag. Original audit retained unchanged."
+}

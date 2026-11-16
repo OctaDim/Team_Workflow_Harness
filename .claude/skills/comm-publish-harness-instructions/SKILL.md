@@ -13,8 +13,9 @@ placement/copy checks read [placement](references/placement-contract.md).
    outdated/missing/failed checks cannot borrow earlier success. Use from root
    `harness/common/skills/comm-validate-harness-instructions/SKILL.md` for required
    validation, not a new design stage.
-2. Stop if required permissions/confirmation are missing. An authorized exception
-   for this unverified version retains real agent/mode and overall statuses.
+2. Classify each required agent/mode result: current full pass or an explicit
+   matching exception. Resolve uncovered gaps before copying; preserve real
+   statuses and scoped approvals. Other exceptions do not transfer.
 3. Publish source and full ordinary equal copies together after gate. Stop on
    a differing other-owner file; verify full sets/bytes/types/Git visibility,
    the ENTIRE installed canonical rule set, links and native integration.

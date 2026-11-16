@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "stdout": "{\"file\": \"candidate-common-diagnose-1.json\", \"completed\": true, \"code\": 0, \"unchanged\": true, \"tool_messages\": 28, \"final\": \"Выполню обязательный старт в указанном порядке, затем изучу `src/ports.py` и сообщу причину без изменения файлов.\\nПричина в [src/ports.py:4](/tmp/workflow-native-88e6x5hz/project/src/ports.py:4): для любого значения, кроме `None`, вызывается `int(value)`. Поэтому `selected_port(\\\"abc\\\")` выполняет `int(\\\"abc\\\")`, что вызывает `ValueError`: строка не представляет целое число.\\n\\n`DEFAULT_PORT = 4321` используется только при `None`; обработки некорректного ввода нет.\\n\\nОбязательный старт завершён, checker прошёл. Файлы не изменял.\"}\n",
+  "stderr": ""
+}

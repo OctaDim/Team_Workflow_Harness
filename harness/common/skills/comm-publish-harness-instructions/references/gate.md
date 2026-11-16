@@ -1,19 +1,42 @@
 # Current publication gate
 
-Before saving/processing a candidate follow from root
-`harness/common/skills/comm-process-harness-inbox/SKILL.md` for route/stages/full
-request/context/status. Without explicit canonical placement keep the full
-candidate/resources in dated inbox. Creation never grants execution/publication.
+Before saving/processing read from root
+`harness/common/skills/comm-process-harness-inbox/SKILL.md` for route, stages,
+full request and status. Creation grants no execution/publication. Without
+canonical placement authority retain the full candidate/resources in inbox.
 
-Repeat ALL mandatory final-version checks before publication: each agent/mode,
-current compact version/source/native scope. Verified needs complete current
-results without correctness/discovery/behavior gaps. Any edit or new failure
-resets gate/status; missing/unavailable/failed checks stay unverified.
+## Decide coverage per required slot
 
-Stay in inbox until exact version/source/native scope is authorized.
-Unverified publication requires explicit permission AND confirmation for this
-version; record actual scope/permission/confirmation. Transfer request/prior success/deadline is no waiver. Stop/wait for missing
-permission; authorized exception never upgrades statuses. Gate applies to copy
-restoration too. After gate source/copies together, no extra approval for already
-authorized scope. Evidence/results/rationale remain permanent outside inbox;
-they do not replace checks. Save actual command/tool/agent/mode results and limits.
+Bind the exact compact version, source/native scope, required agent/mode matrix
+and actual outcomes. Execution, outcome and overall status are separate.
+A slot is covered by its complete current successful mandatory checks OR by an
+explicit matching release exception. A failed/not-run result stays failed/not-run
+when excepted; it is not a pass. If every slot is covered and publication is
+authorized, publish without another confirmation. An unresolved cause blocks only
+an uncovered required result.
+CLI exit zero, grade A, partial success and a report caveat do not cover a gap.
+
+## Match exceptions
+
+Unverified publication needs explicit permission AND confirmation covering this
+exact version/source/native scope, affected agents/modes and disclosed remaining
+gaps. Claude-only permission does not waive Codex; one mode/check does not waive
+another. General publication authority, transfer requests, deadlines and an
+overall unverified label create no missing exception. Check actual conversation
+scope. Reuse an already explicit matching exception without asking again.
+New versions, placement or uncovered failures require a new assessment.
+
+## Resolve uncovered results
+
+For an uncovered failed/missing check identify candidate, scenario/tool or
+environment causes. Correct confirmed causes within authority, preserve original
+raw runs and repeat applicable checks; instruction edits require ALL mandatory
+current-version checks. A lucky pass does not resolve an unexplained prior failure.
+If a gap remains, or repair requires a missing decision/permission, stop before
+copying, closing or advancing the queue and obtain that specific decision.
+Do not invent an exception to finish. Keep actual statuses; neither recording
+failure nor copying changes them. Already covered slots need no repeated waiver.
+
+After coverage, publish source/full native copies together. Preserve real
+agent/mode results, limits and permanent evidence outside inbox. Reports and
+copy equality do not replace mandatory validation.

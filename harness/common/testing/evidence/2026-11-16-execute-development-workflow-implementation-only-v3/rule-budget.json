@@ -1,0 +1,94 @@
+{
+  "source_sha256": "d79c6674765afb49a74abd9065b1aad45f677705616841ce37668773d9ccd288",
+  "W": 178,
+  "word_band": "moderate",
+  "C": 1502,
+  "UTF16_units": 1502,
+  "T": 376,
+  "tool": {
+    "name": "plugin-eval",
+    "version": "0.1.0"
+  },
+  "component": {
+    "label": "comm-confirm-development-workflow.md",
+    "path": "/tmp/harness-workflow-scope-qxwoq2xt/assessment/rule-v3/comm-confirm-development-workflow.md",
+    "tokens": 376,
+    "note": "Generic text file budget"
+  },
+  "stock_summary": {
+    "score": 100,
+    "grade": "A",
+    "riskLevel": "low",
+    "riskReasons": [
+      "No failing or warning checks were found; remaining items are informational only."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 0.5,
+      "finalScore": 100,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 2,
+      "pass": 0,
+      "warn": 0,
+      "fail": 0,
+      "info": 4,
+      "error": 0,
+      "warning": 0
+    },
+    "deductions": [
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      },
+      {
+        "id": "generic-target-analysis",
+        "category": "best-practice",
+        "severity": "info",
+        "status": "info",
+        "message": "The target is not a skill or plugin root, so only generic code, coverage, and budget analysis will run.",
+        "penalty": 0.25,
+        "remediation": [
+          "Point the analyzer at a skill directory or plugin root for richer structural checks."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "best-practice",
+        "totalPenalty": 0.25,
+        "checks": 1
+      },
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [],
+    "whyBullets": [
+      "best-practice is the largest source of score loss at -0.25 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [],
+    "watchNext": []
+  },
+  "method": "Full unnormalized UTF8 rule, stock per-file estimate. Generic result is not skill/native proof; creator N/A for rule.",
+  "limits_preserved": true
+}

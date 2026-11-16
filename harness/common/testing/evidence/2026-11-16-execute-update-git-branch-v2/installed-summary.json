@@ -1,0 +1,95 @@
+{
+  "comm-update-git-branch": {
+    "score": 100,
+    "grade": "A",
+    "checks": [
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "evidence": [
+          "harness/common/skills/comm-update-git-branch"
+        ],
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      }
+    ],
+    "budgets": {
+      "method": "estimated-static",
+      "invocation_policy": {
+        "allow_implicit_invocation": true
+      },
+      "trigger_cost_tokens": {
+        "value": 37,
+        "band": "good",
+        "thresholds": {
+          "goodMax": 48,
+          "moderateMax": 92,
+          "heavyMax": 150
+        },
+        "components": [
+          {
+            "label": "skill-name",
+            "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/skills/comm-update-git-branch/SKILL.md",
+            "tokens": 6,
+            "note": "Always-loaded skill identifier"
+          },
+          {
+            "label": "skill-description",
+            "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/skills/comm-update-git-branch/SKILL.md",
+            "tokens": 31,
+            "note": "Always-loaded trigger description"
+          }
+        ]
+      },
+      "invoke_cost_tokens": {
+        "value": 431,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 220,
+          "moderateMax": 480,
+          "heavyMax": 900
+        },
+        "components": [
+          {
+            "label": "skill-file",
+            "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/skills/comm-update-git-branch/SKILL.md",
+            "tokens": 431,
+            "note": "Loaded when the skill is invoked"
+          }
+        ]
+      },
+      "deferred_cost_tokens": {
+        "value": 481,
+        "band": "moderate",
+        "thresholds": {
+          "goodMax": 180,
+          "moderateMax": 520,
+          "heavyMax": 1200
+        },
+        "components": [
+          {
+            "label": "references/conflicts.md",
+            "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/skills/comm-update-git-branch/references/conflicts.md",
+            "tokens": 232,
+            "note": "Deferred supporting file"
+          },
+          {
+            "label": "references/methods.md",
+            "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/skills/comm-update-git-branch/references/methods.md",
+            "tokens": 249,
+            "note": "Deferred supporting file"
+          }
+        ]
+      },
+      "total_tokens": {
+        "value": 949,
+        "band": "moderate"
+      }
+    }
+  }
+}

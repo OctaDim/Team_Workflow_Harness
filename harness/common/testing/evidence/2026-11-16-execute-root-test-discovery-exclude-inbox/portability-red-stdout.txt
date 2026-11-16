@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_portable_source_needs_no_receiving_root_ini _______________
+/tmp/harness-root-discovery-knnr7qlp/regression_spec_v2.py:178: in test_portable_source_needs_no_receiving_root_ini
+    root, active, _ = fixture_project(receiving)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/tmp/harness-root-discovery-knnr7qlp/regression_spec_v2.py:28: in fixture_project
+    write(root / config, (SOURCE / 'pytest.ini').read_text(encoding='utf-8'))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/pathlib.py:1013: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-octadim/pytest-59/test_portable_source_needs_no_0/portable source/pytest.ini'
+=========================== short test summary info ============================
+FAILED ../../../../tmp/harness-root-discovery-knnr7qlp/regression_spec_v2.py::test_portable_source_needs_no_receiving_root_ini
+1 failed, 26 deselected in 0.07s
