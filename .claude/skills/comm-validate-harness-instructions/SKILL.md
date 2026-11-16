@@ -9,6 +9,8 @@ Identify version, target kind, contract, modes, available tools and authorized
 checks. Before tests read [validation](references/validation.md); before plugin-eval
 read [evaluation](references/evaluation.md). For content/profile checks read from
 root `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`.
+For new/edited always-loaded rules, before checking/reporting read
+[rule budgets](references/rule-budgets.md).
 
 1. Run applicable mandatory checks on the final compact version; separate
    structural, budget, code and native behavior findings. Missing tools/checks

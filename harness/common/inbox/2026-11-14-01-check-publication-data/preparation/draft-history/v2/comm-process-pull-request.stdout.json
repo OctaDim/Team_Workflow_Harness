@@ -1,0 +1,227 @@
+{
+  "kind": "budget-explanation",
+  "createdAt": "2026-11-14T00:10:30.668Z",
+  "target": {
+    "kind": "skill",
+    "path": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request",
+    "entryPath": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request/SKILL.md",
+    "name": "comm-process-pull-request"
+  },
+  "budgets": {
+    "method": "estimated-static",
+    "invocation_policy": {
+      "allow_implicit_invocation": true
+    },
+    "trigger_cost_tokens": {
+      "value": 44,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 48,
+        "moderateMax": 92,
+        "heavyMax": 150
+      },
+      "components": [
+        {
+          "label": "skill-name",
+          "path": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request/SKILL.md",
+          "tokens": 7,
+          "note": "Always-loaded skill identifier"
+        },
+        {
+          "label": "skill-description",
+          "path": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request/SKILL.md",
+          "tokens": 37,
+          "note": "Always-loaded trigger description"
+        }
+      ]
+    },
+    "invoke_cost_tokens": {
+      "value": 367,
+      "band": "moderate",
+      "thresholds": {
+        "goodMax": 220,
+        "moderateMax": 480,
+        "heavyMax": 900
+      },
+      "components": [
+        {
+          "label": "skill-file",
+          "path": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request/SKILL.md",
+          "tokens": 367,
+          "note": "Loaded when the skill is invoked"
+        }
+      ]
+    },
+    "deferred_cost_tokens": {
+      "value": 533,
+      "band": "heavy",
+      "thresholds": {
+        "goodMax": 180,
+        "moderateMax": 520,
+        "heavyMax": 1200
+      },
+      "components": [
+        {
+          "label": "references/merge.md",
+          "path": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request/references/merge.md",
+          "tokens": 188,
+          "note": "Deferred supporting file"
+        },
+        {
+          "label": "references/preparation.md",
+          "path": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request/references/preparation.md",
+          "tokens": 140,
+          "note": "Deferred supporting file"
+        },
+        {
+          "label": "references/remote-deletion.md",
+          "path": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request/references/remote-deletion.md",
+          "tokens": 205,
+          "note": "Deferred supporting file"
+        }
+      ]
+    },
+    "total_tokens": {
+      "value": 944,
+      "band": "heavy"
+    }
+  },
+  "baselineEvidence": {
+    "skillSamples": 1,
+    "pluginSamples": 0,
+    "sourceRoots": [
+      "../../.codex/skills",
+      "../../.codex/plugins/cache/openai-curated",
+      "../../.codex/.tmp/plugins/plugins"
+    ]
+  },
+  "workflowGuide": {
+    "kind": "workflow-guide",
+    "createdAt": "2026-11-14T00:10:30.673Z",
+    "target": {
+      "kind": "skill",
+      "path": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request",
+      "entryPath": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request/SKILL.md",
+      "name": "comm-process-pull-request",
+      "relativePath": "../../../../tmp/harness_group5_candidates_20261114/comm-process-pull-request"
+    },
+    "requestedGoal": "budget",
+    "requestedChatPrompt": null,
+    "requestRouting": null,
+    "recommendedWorkflowId": "budget",
+    "recommendedWorkflow": {
+      "id": "budget",
+      "label": "Explain Token Budget",
+      "chatPrompt": "Explain the token budget for this skill.",
+      "summary": "Use this when the main question is why the skill feels expensive before you collect any live measurements.",
+      "firstCommand": "plugin-eval explain-budget /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown",
+      "commands": [
+        "plugin-eval explain-budget /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown"
+      ],
+      "startCommand": "plugin-eval start /tmp/harness_group5_candidates_20261114/comm-process-pull-request --request 'Explain the token budget for this skill.' --format markdown"
+    },
+    "workflowStatus": {
+      "hasBenchmarkConfig": false,
+      "hasUsageLog": false
+    },
+    "beginnerSummary": "Start with a natural chat request, then let plugin-eval show the exact local command sequence behind it.",
+    "startHere": {
+      "chatPrompt": "Explain the token budget for this skill.",
+      "label": "Explain Token Budget",
+      "summary": "Use this when the main question is why the skill feels expensive before you collect any live measurements.",
+      "routingExplanation": "Plugin Eval recommended Explain Token Budget from the current local state for this skill.",
+      "startCommand": "plugin-eval start /tmp/harness_group5_candidates_20261114/comm-process-pull-request --request 'Explain the token budget for this skill.' --format markdown",
+      "firstCommand": "plugin-eval explain-budget /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown",
+      "commands": [
+        "plugin-eval explain-budget /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown"
+      ]
+    },
+    "entrypoints": [
+      {
+        "id": "analysis",
+        "label": "Full Skill Analysis",
+        "chatPrompt": "Give me a full analysis of this skill, including benchmark setup.",
+        "summary": "Use this when you want the full report and starter benchmark setup for this skill in one guided path.",
+        "firstCommand": "plugin-eval analyze /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown",
+        "commands": [
+          "plugin-eval analyze /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown",
+          "plugin-eval init-benchmark /tmp/harness_group5_candidates_20261114/comm-process-pull-request",
+          "plugin-eval benchmark /tmp/harness_group5_candidates_20261114/comm-process-pull-request --config /tmp/harness_group5_candidates_20261114/comm-process-pull-request/.plugin-eval/benchmark.json"
+        ],
+        "startCommand": "plugin-eval start /tmp/harness_group5_candidates_20261114/comm-process-pull-request --request 'Give me a full analysis of this skill, including benchmark setup.' --format markdown"
+      },
+      {
+        "id": "evaluate",
+        "label": "Evaluate Skill",
+        "chatPrompt": "Evaluate this skill.",
+        "summary": "Start here when you want the overall report for a skill, including structure, budgets, and code checks.",
+        "firstCommand": "plugin-eval analyze /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown",
+        "commands": [
+          "plugin-eval analyze /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown"
+        ],
+        "startCommand": "plugin-eval start /tmp/harness_group5_candidates_20261114/comm-process-pull-request --request 'Evaluate this skill.' --format markdown"
+      },
+      {
+        "id": "budget",
+        "label": "Explain Token Budget",
+        "chatPrompt": "Explain the token budget for this skill.",
+        "summary": "Use this when the main question is why the skill feels expensive before you collect any live measurements.",
+        "firstCommand": "plugin-eval explain-budget /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown",
+        "commands": [
+          "plugin-eval explain-budget /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown"
+        ],
+        "startCommand": "plugin-eval start /tmp/harness_group5_candidates_20261114/comm-process-pull-request --request 'Explain the token budget for this skill.' --format markdown"
+      },
+      {
+        "id": "measure",
+        "label": "Measure Real Token Usage",
+        "chatPrompt": "Measure the real token usage of this skill.",
+        "summary": "Use this when you want real token usage instead of only the static estimate.",
+        "firstCommand": "plugin-eval init-benchmark /tmp/harness_group5_candidates_20261114/comm-process-pull-request",
+        "commands": [
+          "plugin-eval init-benchmark /tmp/harness_group5_candidates_20261114/comm-process-pull-request",
+          "plugin-eval benchmark /tmp/harness_group5_candidates_20261114/comm-process-pull-request --config /tmp/harness_group5_candidates_20261114/comm-process-pull-request/.plugin-eval/benchmark.json",
+          "plugin-eval analyze /tmp/harness_group5_candidates_20261114/comm-process-pull-request --observed-usage /tmp/harness_group5_candidates_20261114/comm-process-pull-request/.plugin-eval/benchmark-usage.jsonl --format markdown"
+        ],
+        "startCommand": "plugin-eval start /tmp/harness_group5_candidates_20261114/comm-process-pull-request --request 'Measure the real token usage of this skill.' --format markdown"
+      },
+      {
+        "id": "benchmark",
+        "label": "Benchmark With Starter Scenarios",
+        "chatPrompt": "Help me benchmark this skill.",
+        "summary": "Use this when you want starter scenarios and a repeatable real-Codex benchmark run for this skill.",
+        "firstCommand": "plugin-eval init-benchmark /tmp/harness_group5_candidates_20261114/comm-process-pull-request",
+        "commands": [
+          "plugin-eval init-benchmark /tmp/harness_group5_candidates_20261114/comm-process-pull-request"
+        ],
+        "startCommand": "plugin-eval start /tmp/harness_group5_candidates_20261114/comm-process-pull-request --request 'Help me benchmark this skill.' --format markdown"
+      },
+      {
+        "id": "next",
+        "label": "Start Here",
+        "chatPrompt": "What should I run next?",
+        "summary": "If you are new to plugin-eval, start with the overall evaluation report for this skill.",
+        "firstCommand": "plugin-eval analyze /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown",
+        "commands": [
+          "plugin-eval analyze /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown"
+        ],
+        "startCommand": "plugin-eval start /tmp/harness_group5_candidates_20261114/comm-process-pull-request --request 'What should I run next?' --format markdown"
+      }
+    ],
+    "nextSteps": [
+      "plugin-eval explain-budget /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown"
+    ],
+    "nextAction": {
+      "label": "Explain Token Budget",
+      "why": "Plugin Eval recommended Explain Token Budget from the current local state for this skill.",
+      "command": "plugin-eval explain-budget /tmp/harness_group5_candidates_20261114/comm-process-pull-request --format markdown",
+      "chatPrompt": "Explain the token budget for this skill."
+    }
+  },
+  "nextAction": {
+    "label": "Review the full evaluation",
+    "why": "The budget does not look alarming on its own, so the next useful step is the full structural and quality report.",
+    "command": "plugin-eval start /tmp/harness_group5_candidates_20261114/comm-process-pull-request --request 'Evaluate this skill.' --format markdown",
+    "chatPrompt": "Evaluate this skill."
+  }
+}

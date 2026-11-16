@@ -1,0 +1,360 @@
+{
+  "created_at": "2026-11-13T01:51:44+03:00",
+  "rows": [
+    {
+      "id": "1.1",
+      "question_approved": true,
+      "owner_index": 1,
+      "candidate_path": "references/fidelity.md:1",
+      "source": "testing-browser.md:44",
+      "source_failure": "Textarea is always empty when fake reads value attribute.",
+      "portable_requirement": "Model initial/default text and edited current value.",
+      "canonical_coverage": "No specific textarea contract.",
+      "open_proposal_coverage": "comm-assess-project-tests Q2-Q3: meaningful inputs and fidelity.",
+      "future_behavior_scenario": "Nonempty initial text and edited value survive through real input path; bad fake is detected.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "1.2",
+      "question_approved": true,
+      "owner_index": 1,
+      "candidate_path": "references/fidelity.md:2",
+      "source": "testing-browser.md:49",
+      "source_failure": "Fake retains currentTarget throughout awaited handler.",
+      "portable_requirement": "Respect dispatch lifetime, not a blanket every-await reset.",
+      "canonical_coverage": "No specific event lifetime condition.",
+      "open_proposal_coverage": "comm-assess-project-tests Q3: temporal semantics.",
+      "future_behavior_scenario": "Continuation after dispatch cannot rely on preserved currentTarget; no false rule that all awaits end dispatch.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "1.3",
+      "question_approved": true,
+      "owner_index": 1,
+      "candidate_path": "references/fidelity.md:3",
+      "source": "testing-browser.md:40",
+      "source_failure": "DOM click passes while user input is obstructed.",
+      "portable_requirement": "Verify visible/reachable target, allowed descendant and effect for pointer claims.",
+      "canonical_coverage": "comm-preserve-visual-design: actual behavior/rendering, not these conditions.",
+      "open_proposal_coverage": "comm-assess-project-tests Q1,Q3: observable contract and fidelity.",
+      "future_behavior_scenario": "Obstructed target is not declared reachable merely because element.click activates; allowed child hit is accepted.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "1.4",
+      "question_approved": true,
+      "owner_index": 1,
+      "candidate_path": "references/fidelity.md:4",
+      "source": "testing-browser.md:55",
+      "source_failure": "Helper passes while UI calls it incorrectly.",
+      "portable_requirement": "Verify UI caller and observable outcome.",
+      "canonical_coverage": "Visual owner requires behavior separately.",
+      "open_proposal_coverage": "Quality Q2-Q3; TDD T4 integration.",
+      "future_behavior_scenario": "Helper unit stays green but incorrect UI wiring is detected through the screen.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "1.5",
+      "question_approved": true,
+      "owner_index": 1,
+      "candidate_path": "references/fidelity.md:5",
+      "source": "testing-browser.md:154",
+      "source_failure": "Stubbed measurement result hides a broken measurer.",
+      "portable_requirement": "Execute actual measurer; input geometry differs from stubbing its output.",
+      "canonical_coverage": "Visual owner requires actual rendering.",
+      "open_proposal_coverage": "Quality Q1,Q3: tested logic cannot be replaced.",
+      "future_behavior_scenario": "Real measurer failure is observable; lightweight geometry test is not claimed as platform-layout proof.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "1.6",
+      "question_approved": true,
+      "owner_index": 1,
+      "candidate_path": "references/fidelity.md:6",
+      "source": "testing-browser.md:98",
+      "source_failure": "Parent fits but content protrudes/blocks controls.",
+      "portable_requirement": "Check content overflow/clipping/scrolling and neighbors against contract.",
+      "canonical_coverage": "Visual owner: visibility/responsiveness, no nested geometry detail.",
+      "open_proposal_coverage": "Quality Q1-Q2: contract/boundaries.",
+      "future_behavior_scenario": "Overflow is detected despite correct parent bounds; approved popover is not falsely forbidden.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "2.1",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/artifacts.md",
+      "source": "testing-browser.md:58",
+      "source_failure": "Worktree server imports and serves main checkout.",
+      "portable_requirement": "Prove actual imports/serving roots/browser-loaded artifacts.",
+      "canonical_coverage": "comm-verify-application-startup: command/cwd/loaders/resources.",
+      "open_proposal_coverage": "Runner R4 stable version; quality mutation resource proves modified copy.",
+      "future_behavior_scenario": "Wrong checkout is not validated just because cwd/HEAD matches.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "2.2",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/artifacts.md",
+      "source": "testing-browser.md:79",
+      "source_failure": "Before comparison combines old JS and new CSS.",
+      "portable_requirement": "Account for every relevant component; allow established unchanged components.",
+      "canonical_coverage": "Visual owner forbids mixing reference versions, not artifact-set specifics.",
+      "open_proposal_coverage": "Runner R1/R4 and quality fidelity; no component list.",
+      "future_behavior_scenario": "JS/CSS mismatch is found; equal measurements alone do not prove a wrong source or successful change.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "2.3",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/artifacts.md",
+      "source": "prototypes.md:37",
+      "source_failure": "Copied kit has no verifiable origin.",
+      "portable_requirement": "Use appropriate version/build/hash provenance and intentional edits; not always latest.",
+      "canonical_coverage": "Visual owner already records reference/version.",
+      "open_proposal_coverage": "comm-verify-project-facts: dated claims need current evidence.",
+      "future_behavior_scenario": "Approved pinned reference remains valid despite newer upstream version; claimed byte identity requires evidence.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "3.1",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/state.md",
+      "source": "testing-browser.md:30",
+      "source_failure": "Cached release masks current CSS.",
+      "portable_requirement": "Control SW/cache participation according to scenario, not unconditional clearing.",
+      "canonical_coverage": "Visual owner: real current render; permission owners retain scope.",
+      "open_proposal_coverage": "Runner environment; quality meaningful conditions.",
+      "future_behavior_scenario": "Fresh and offline/update cases both remain testable without clearing their subject.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "3.2",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/state.md",
+      "source": "testing-browser.md:184",
+      "source_failure": "Old storage replaces default-state scenario.",
+      "portable_requirement": "Set relevant keys/values; distinguish defaults from persistence.",
+      "canonical_coverage": "Visual owner requires essential states.",
+      "open_proposal_coverage": "Quality Q2 prerequisites.",
+      "future_behavior_scenario": "Default scenario is known; persistence scenario is not reset between relevant steps.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "3.3",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/state.md",
+      "source": "testing-browser.md:188",
+      "source_failure": "Requested light check actually uses dark settings.",
+      "portable_requirement": "Account for app/system settings; verify effective styles/state.",
+      "canonical_coverage": "Visual owner requires relevant states.",
+      "open_proposal_coverage": "Quality fidelity and runner environment.",
+      "future_behavior_scenario": "Launch/media preference alone cannot certify the applied theme.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "3.4",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/state.md",
+      "source": "testing-browser.md:180",
+      "source_failure": "Window parameters do not establish layout viewport.",
+      "portable_requirement": "Measure actual page width/height and relevant scale.",
+      "canonical_coverage": "Visual owner already requires relevant sizes.",
+      "open_proposal_coverage": "Quality: instrument matches subject.",
+      "future_behavior_scenario": "Nominal mobile/window settings do not prove the claimed narrow/low viewport.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "4.1",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/lifecycle.md",
+      "source": "testing-browser.md:118",
+      "source_failure": "Shared port/profile collides with previous run.",
+      "portable_requirement": "Isolate independent mutable resources; preserve scenario state and caller settings.",
+      "canonical_coverage": "Startup limits resources and scope.",
+      "open_proposal_coverage": "Runner R4 live runs; mutation isolation is not browser-profile procedure.",
+      "future_behavior_scenario": "Parallel independent runs are separated; caller conflicts are reported, not silently overwritten.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "4.2",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/lifecycle.md",
+      "source": "testing-browser.md:29",
+      "source_failure": "PNG exists while browser process hangs.",
+      "portable_requirement": "Separate artifact/check/process result; bounded graceful then necessary owned termination.",
+      "canonical_coverage": "Startup: stop only owned processes; permission blockers remain owner.",
+      "open_proposal_coverage": "Runner actual completion, live-run inspection, classification.",
+      "future_behavior_scenario": "No broad browser kill; screenshot existence is not test success; preserve evidence on failure.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "5.1",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/preconditions.md",
+      "source": "testing-browser.md:21",
+      "source_failure": "Probe silently measures login/error page.",
+      "portable_requirement": "Check navigation result, final URL and target; three probe controls.",
+      "canonical_coverage": "Startup verifies function, not process creation alone.",
+      "open_proposal_coverage": "Facts safe operation; runner real results.",
+      "future_behavior_scenario": "Working page, failure and redirect controls distinguish requested scenario from other page.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "5.2",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/preconditions.md",
+      "source": "testing-browser.md:64",
+      "source_failure": "Invalid seed causes API failure and unnoticed fallback.",
+      "portable_requirement": "Check relevant response status/content and actual mode; preserve negative scenarios.",
+      "canonical_coverage": "Visual owner essential states; startup test/ordinary configuration.",
+      "open_proposal_coverage": "Quality Q2-Q3 fixtures and fidelity.",
+      "future_behavior_scenario": "Fallback is not mistaken for primary mode; expected rejection is not cleared away.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "5.3",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/preconditions.md",
+      "source": "testing-browser.md:72",
+      "source_failure": "External DB observation causes lock/500.",
+      "portable_requirement": "Do not accidentally interfere; preserve intentional concurrency tests and project access.",
+      "canonical_coverage": "Access/scope remain canonical.",
+      "open_proposal_coverage": "Runner classification; quality conditions.",
+      "future_behavior_scenario": "Observation fault is distinguished without universal SQLite settings or blanket concurrency ban.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "6",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "references/artifacts.md",
+      "source": "prototypes.md:12",
+      "source_failure": "Wrong document root breaks icon while page looks loaded.",
+      "portable_requirement": "Supported base paths/version URL and assets actually load/apply.",
+      "canonical_coverage": "Startup resources plus visual owner accessible concrete design.",
+      "open_proposal_coverage": "Facts operation and runner environment.",
+      "future_behavior_scenario": "Preview works without mandatory separate server per version, fixed icon path or required 404.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "7",
+      "question_approved": true,
+      "owner_index": 2,
+      "candidate_path": "references/value-semantics.md",
+      "source": "prototypes.md:59",
+      "source_failure": "Equal literal/token values are mistaken for identical purpose.",
+      "portable_requirement": "Choose by semantic role/approved version and intended variation.",
+      "canonical_coverage": "Visual owner already owns approvals, deviations and comparison.",
+      "open_proposal_coverage": "Solution selection and current facts; no token-specific conditions.",
+      "future_behavior_scenario": "Shared/separate/fixed options respect project rules; history does not decide which design is right.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "8",
+      "question_approved": true,
+      "owner_index": 1,
+      "candidate_path": "references/coverage.md",
+      "source": "testing-browser.md:98,178; driver-ui.md:297",
+      "source_failure": "One convenient size/state is overstated as broad compatibility.",
+      "portable_requirement": "Apply supported engines/platforms/inputs, width+height, states and necessary combinations.",
+      "canonical_coverage": "Visual owner relevant sizes/states; actual-state checks owned by prepare.",
+      "open_proposal_coverage": "Runner scope, quality boundaries, TDD regression requirements.",
+      "future_behavior_scenario": "Record real versus emulated scope and limits; no universal all-browser or Cartesian matrix.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "9",
+      "question_approved": true,
+      "owner_index": 0,
+      "candidate_path": "SKILL.md; dated research report",
+      "source": "testing-browser.md:21; testing-history:375",
+      "source_failure": "Recreate driver or assume a tool works because catalogued.",
+      "portable_requirement": "Reuse solution-choice owner; justify gaps and verify operation, no fixed vendor.",
+      "canonical_coverage": "Dependency/permission rules retain authority.",
+      "open_proposal_coverage": "comm-choose-effective-solution and comm-verify-project-facts fully own generic algorithms.",
+      "future_behavior_scenario": "Suitable existing tool retained; modern alternatives researched for demonstrated gap; no implicit install.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "10",
+      "question_approved": true,
+      "owner_index": 1,
+      "candidate_path": "request.md acceptance only",
+      "source": "testing-browser.md:198; driver-ui.md:162",
+      "source_failure": "Main suite passes while a standalone probe is broken.",
+      "portable_requirement": "Reuse causal-repair/scope owners; preserve this acceptance case, no new algorithm.",
+      "canonical_coverage": "Visual owner discloses unverified behavior.",
+      "open_proposal_coverage": "comm-fix-shared-causes; comm-run-project-checks; comm-assess-project-tests.",
+      "future_behavior_scenario": "Unrun original remains unverified even when separately described alternative passes.",
+      "behavior_status": "not run"
+    },
+    {
+      "id": "11",
+      "question_approved": true,
+      "owner_index": -1,
+      "candidate_path": "group preparation report",
+      "source": "approved discussion",
+      "source_failure": "Preparation, behavior verification and reference semantics get duplicated.",
+      "portable_requirement": "Two independent new results, one narrow existing-owner resource; no new always-loaded rule.",
+      "canonical_coverage": "Authoring content-contract and existing ownership rules.",
+      "open_proposal_coverage": "Open duplicate-check candidate supports source selection; not installed policy.",
+      "future_behavior_scenario": "Discovery/forms/conditional reads and all dependencies are verified only at authorized execution.",
+      "behavior_status": "not run"
+    }
+  ],
+  "primary_research": {
+    "retrieved_in_session_on": "2026-11-13",
+    "sources": [
+      {
+        "url": "https://html.spec.whatwg.org/multipage/form-elements.html#the-textarea-element",
+        "finding": "Textarea default text and current value are distinct; do not universally substitute text content for current value."
+      },
+      {
+        "url": "https://dom.spec.whatwg.org/#concept-event-dispatch",
+        "finding": "currentTarget resets after dispatch; not every await is a dispatch boundary."
+      },
+      {
+        "url": "https://html.spec.whatwg.org/multipage/interaction.html#dom-click",
+        "finding": "DOM click fires synthetic activation; it is not proof of physical reachability."
+      },
+      {
+        "url": "https://www.w3.org/TR/webdriver/#element-click",
+        "finding": "Browser interaction mechanisms can account for scrolling/obstruction; CDP coordinates are not mandatory."
+      },
+      {
+        "url": "https://playwright.dev/docs/intro",
+        "finding": "Example E2E framework with runner/isolation; not a compulsory common dependency."
+      },
+      {
+        "url": "https://github.com/microsoft/playwright-cli",
+        "finding": "CLI+skills is recommended by authors for coding agents; local context savings have not been measured."
+      },
+      {
+        "url": "https://github.com/microsoft/playwright-mcp",
+        "finding": "MCP is an interactive browser interface; its authors distinguish it from CLI workflows."
+      },
+      {
+        "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+        "finding": "Chrome diagnostics, including network/console/performance; official support limited to Chrome/Chrome for Testing."
+      },
+      {
+        "url": "https://www.selenium.dev/documentation/webdriver/bidi/",
+        "finding": "Selenium documents bidirectional automation; consider when compatible with project infrastructure."
+      }
+    ],
+    "not_a_fixed_tool_recommendation": true,
+    "local_runtime_comparisons": "not measured"
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "kind": "budget-explanation",
+  "createdAt": "2026-11-12T21:20:57.462Z",
+  "target": {
+    "kind": "skill",
+    "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior",
+    "entryPath": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior/SKILL.md",
+    "name": "comm-test-project-behavior"
+  },
+  "budgets": {
+    "method": "estimated-static",
+    "invocation_policy": {
+      "allow_implicit_invocation": true
+    },
+    "trigger_cost_tokens": {
+      "value": 29,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 48,
+        "moderateMax": 92,
+        "heavyMax": 150
+      },
+      "components": [
+        {
+          "label": "skill-name",
+          "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior/SKILL.md",
+          "tokens": 7,
+          "note": "Always-loaded skill identifier"
+        },
+        {
+          "label": "skill-description",
+          "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior/SKILL.md",
+          "tokens": 22,
+          "note": "Always-loaded trigger description"
+        }
+      ]
+    },
+    "invoke_cost_tokens": {
+      "value": 320,
+      "band": "moderate",
+      "thresholds": {
+        "goodMax": 220,
+        "moderateMax": 480,
+        "heavyMax": 900
+      },
+      "components": [
+        {
+          "label": "skill-file",
+          "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior/SKILL.md",
+          "tokens": 320,
+          "note": "Loaded when the skill is invoked"
+        }
+      ]
+    },
+    "deferred_cost_tokens": {
+      "value": 0,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 180,
+        "moderateMax": 520,
+        "heavyMax": 1200
+      },
+      "components": []
+    },
+    "total_tokens": {
+      "value": 349,
+      "band": "moderate"
+    }
+  },
+  "baselineEvidence": {
+    "skillSamples": 1,
+    "pluginSamples": 0,
+    "sourceRoots": [
+      "../../.codex/skills",
+      "../../.codex/plugins/cache/openai-curated",
+      "../../.codex/.tmp/plugins/plugins"
+    ]
+  },
+  "workflowGuide": {
+    "kind": "workflow-guide",
+    "createdAt": "2026-11-12T21:20:57.474Z",
+    "target": {
+      "kind": "skill",
+      "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior",
+      "entryPath": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior/SKILL.md",
+      "name": "comm-test-project-behavior",
+      "relativePath": "harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior"
+    },
+    "requestedGoal": "budget",
+    "requestedChatPrompt": null,
+    "requestRouting": null,
+    "recommendedWorkflowId": "budget",
+    "recommendedWorkflow": {
+      "id": "budget",
+      "label": "Explain Token Budget",
+      "chatPrompt": "Explain the token budget for this skill.",
+      "summary": "Use this when the main question is why the skill feels expensive before you collect any live measurements.",
+      "firstCommand": "plugin-eval explain-budget ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown",
+      "commands": [
+        "plugin-eval explain-budget ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown"
+      ],
+      "startCommand": "plugin-eval start ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --request 'Explain the token budget for this skill.' --format markdown"
+    },
+    "workflowStatus": {
+      "hasBenchmarkConfig": false,
+      "hasUsageLog": false
+    },
+    "beginnerSummary": "Start with a natural chat request, then let plugin-eval show the exact local command sequence behind it.",
+    "startHere": {
+      "chatPrompt": "Explain the token budget for this skill.",
+      "label": "Explain Token Budget",
+      "summary": "Use this when the main question is why the skill feels expensive before you collect any live measurements.",
+      "routingExplanation": "Plugin Eval recommended Explain Token Budget from the current local state for this skill.",
+      "startCommand": "plugin-eval start ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --request 'Explain the token budget for this skill.' --format markdown",
+      "firstCommand": "plugin-eval explain-budget ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown",
+      "commands": [
+        "plugin-eval explain-budget ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown"
+      ]
+    },
+    "entrypoints": [
+      {
+        "id": "analysis",
+        "label": "Full Skill Analysis",
+        "chatPrompt": "Give me a full analysis of this skill, including benchmark setup.",
+        "summary": "Use this when you want the full report and starter benchmark setup for this skill in one guided path.",
+        "firstCommand": "plugin-eval analyze ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown",
+        "commands": [
+          "plugin-eval analyze ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown",
+          "plugin-eval init-benchmark ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior",
+          "plugin-eval benchmark ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --config ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior/.plugin-eval/benchmark.json"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --request 'Give me a full analysis of this skill, including benchmark setup.' --format markdown"
+      },
+      {
+        "id": "evaluate",
+        "label": "Evaluate Skill",
+        "chatPrompt": "Evaluate this skill.",
+        "summary": "Start here when you want the overall report for a skill, including structure, budgets, and code checks.",
+        "firstCommand": "plugin-eval analyze ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown",
+        "commands": [
+          "plugin-eval analyze ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --request 'Evaluate this skill.' --format markdown"
+      },
+      {
+        "id": "budget",
+        "label": "Explain Token Budget",
+        "chatPrompt": "Explain the token budget for this skill.",
+        "summary": "Use this when the main question is why the skill feels expensive before you collect any live measurements.",
+        "firstCommand": "plugin-eval explain-budget ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown",
+        "commands": [
+          "plugin-eval explain-budget ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --request 'Explain the token budget for this skill.' --format markdown"
+      },
+      {
+        "id": "measure",
+        "label": "Measure Real Token Usage",
+        "chatPrompt": "Measure the real token usage of this skill.",
+        "summary": "Use this when you want real token usage instead of only the static estimate.",
+        "firstCommand": "plugin-eval init-benchmark ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior",
+        "commands": [
+          "plugin-eval init-benchmark ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior",
+          "plugin-eval benchmark ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --config ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior/.plugin-eval/benchmark.json",
+          "plugin-eval analyze ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --observed-usage ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior/.plugin-eval/benchmark-usage.jsonl --format markdown"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --request 'Measure the real token usage of this skill.' --format markdown"
+      },
+      {
+        "id": "benchmark",
+        "label": "Benchmark With Starter Scenarios",
+        "chatPrompt": "Help me benchmark this skill.",
+        "summary": "Use this when you want starter scenarios and a repeatable real-Codex benchmark run for this skill.",
+        "firstCommand": "plugin-eval init-benchmark ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior",
+        "commands": [
+          "plugin-eval init-benchmark ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --request 'Help me benchmark this skill.' --format markdown"
+      },
+      {
+        "id": "next",
+        "label": "Start Here",
+        "chatPrompt": "What should I run next?",
+        "summary": "If you are new to plugin-eval, start with the overall evaluation report for this skill.",
+        "firstCommand": "plugin-eval analyze ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown",
+        "commands": [
+          "plugin-eval analyze ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown"
+        ],
+        "startCommand": "plugin-eval start ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --request 'What should I run next?' --format markdown"
+      }
+    ],
+    "nextSteps": [
+      "plugin-eval explain-budget ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown"
+    ],
+    "nextAction": {
+      "label": "Explain Token Budget",
+      "why": "Plugin Eval recommended Explain Token Budget from the current local state for this skill.",
+      "command": "plugin-eval explain-budget ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --format markdown",
+      "chatPrompt": "Explain the token budget for this skill."
+    }
+  },
+  "nextAction": {
+    "label": "Review the full evaluation",
+    "why": "The budget does not look alarming on its own, so the next useful step is the full structural and quality report.",
+    "command": "plugin-eval start ~/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-13-test-project-behavior/candidate/comm-test-project-behavior --request 'Evaluate this skill.' --format markdown",
+    "chatPrompt": "Evaluate this skill."
+  }
+}

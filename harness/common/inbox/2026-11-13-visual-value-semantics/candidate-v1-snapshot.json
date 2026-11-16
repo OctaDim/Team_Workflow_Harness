@@ -1,0 +1,25 @@
+{
+  "created_at": "2026-11-13T01:56:42+03:00",
+  "version": "v1-draft-unverified",
+  "reason": "Restore explicit project placement of product-specific business rules in the shortened conclusion.",
+  "files": [
+    {
+      "path": "candidate/comm-preserve-visual-design/SKILL.md",
+      "sha256": "28d073025eb45795d0933100a360f4c4bbcb3705c94c6d0ee29ace73a4ad2810",
+      "utf8_text": "---\nname: comm-preserve-visual-design\ndescription: Use when creating or substantially redesigning a user interface, implementing an approved visual reference, or verifying visual conformance before completion.\n---\n\n# Visual conformance\n\nInputs: actual reference/version, approvals, delegated decisions.\n\n1. Inspect the reference. Preserve its location/version, layout, action hierarchy,\n   visibility, responsiveness and essential states in an authorized permanent\n   project record. Apply latest explicit changes; never mix versions. Missing\n   reference: request it; pause dependent work only.\n2. Separate requirements, structure, appearance and technical approvals.\n   Wireframes approve shown structure, not unseen styling. Before implementing\n   unapproved appearance, present an accessible concrete design covering key\n   states and responsiveness; obtain approval unless delegated. Opening queued\n   proves neither viewing nor approval.\n3. Preserve authorizations. Obtain approval for material deviations before\n   implementation. Direct instructions authorize named changes; conformance fixes\n   and delegated details need no repeated approval.\n4. Compare actual renders with the reference at relevant sizes/states. Verify\n   behavior, structure and appearance separately; functional tests or screenshots\n   alone do not prove conformance.\n5. Report evidence, approved deviations and unverified aspects. Unapproved\n   material mismatches prevent full-completion claims.\n\nBefore token/literal choices read [semantics](references/value-semantics.md).\n\nBefore preserving records follow\n`harness/common/skills/comm-preserve-harness-knowledge/SKILL.md`; evidence also\nfollows `harness/common/skills/comm-protect-harness-evidence/SKILL.md`.\n\nDone: conformance or explicit gaps; preserve workflow and project-specific business rules.\n"
+    },
+    {
+      "path": "candidate/comm-preserve-visual-design/references/value-semantics.md",
+      "sha256": "596974922ed1f42fae08d8deda1311efed7e40a8ac1f3d07ec424d99c6e0b3c6",
+      "utf8_text": "# Bind values by visual intent\n\nBefore replacing a literal or binding a shared token, establish its semantic role\nand approved reference/version. Equal current values do not establish a shared\ncontract. History helps identify changes, not decide which design is correct.\n\nCompare suitable choices within project design-system constraints:\n- Reuse a token when its role and intended future variation match the element.\n- Propose a separate semantic token when an independent role justifies maintenance.\n- A fixed value may preserve a versioned approved prototype when project rules\n  allow it; it is not automatically an error or an exemption from those rules.\n\nChoose by intended behavior and evidence, not literal/token quotas or a blanket\n\"token changed, so literal is right\" rule. Apply the skill's existing approval\nand delegation conditions for material deviations; verify affected renders/states.\nReference provenance belongs to the existing reference record; browser artifact\nidentity and prototype serving use comm-prepare-browser-check. Do not duplicate\nthose algorithms or automatically update the reference to latest.\n"
+    }
+  ],
+  "immutable_artifact_sha256": {
+    "candidate-manifest.json": "ba52960256bce98e5a3c31a41429b1e2c108af7789561577fb8f1c74b3e4db10",
+    "source-snapshot.json": "01e1b8c19edf45894b7d4df22b1fa301065484d1f700fb639b6cfb80a2252990",
+    "requirements-map.json": "813096335b3ab5bb6b4c7b8b2f3dfeb28054c79cea273c7d5e3b2d15b6e9a4d6",
+    "2026-11-13-static-v1-budget.json": "c6f27553342fa510993953b153946029a99772c8e85e252c6e59b1837f665176",
+    "2026-11-13-static-canonical-before-budget.json": "a522346c32805ec3fbbbc0e514bd912f733ba7d7b23b5e9a25fe1254ea7af60a",
+    "2026-11-13-creation-and-budget-report.md": "850e91747fa214d438cbea0d91740c7d165943011a4647925bc5dc4a02328143"
+  }
+}

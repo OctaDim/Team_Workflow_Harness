@@ -5,23 +5,28 @@ description: Use when a decision depends on uncertain, historical, negative or a
 
 # Verify current project facts
 
-Inputs: claim, intended decision, project/version/environment and authorized evidence.
+Inputs: claim/decision, project/version/environment, authorized evidence.
 
-1. Inspect relevant current code, configuration, research, decisions, requests and
-   connected sources. Reuse earlier findings after checking their applicability.
-2. Distinguish observed state, intended contract and hypothesis. Recheck material
-   dated claims against authoritative current evidence; a document, status or old
-   success alone does not establish today's state.
-3. For absence claims, search relevant locations and naming variants. Check
-   coverage, filters and a known positive control where available. Failed or
-   incomplete searches establish uncertainty, not absence; qualify conclusions
-   by the searched scope.
-4. Establish tool availability through an authorized safe probe when needed.
-   Catalog entries or health indicators alone do not prove the operation works.
-   Missing permission or evidence stays unresolved; do not bypass restrictions.
-5. Report sources, version/date, observations, contradictions, limits and the
-   supported conclusion. Identify affected current statements when a fact changes.
-   Use existing recording/evidence procedures before saving; preserve history.
+1. Inspect relevant current code, configuration, research, decisions, requests
+   and connected sources. Check applicability before reusing findings.
+2. Separate observation, contract and hypothesis. Recheck material dated claims
+   against authoritative current evidence; old documents/statuses/successes
+   alone do not prove today's state.
+3. For absence search relevant locations/naming variants; check coverage, filters
+   and available positive controls. Failed/incomplete searches prove uncertainty,
+   not absence; qualify conclusions.
+4. Probe availability safely within authority when needed. Catalog/health alone
+   is insufficient. Missing permission/evidence remains unresolved; never bypass restrictions.
+5. Read only the applicable Git resource:
+   [base state](references/git-base-state.md) for freshness of target/working revisions;
+   [integration](references/git-integration.md) for integration/supersession of code
+   or requirements, their continued presence or deployment;
+   [operation result](references/git-operation-result.md) for uncertain effects
+   of an attempted mutation. Frozen comparisons use integration, not base;
+   PR-field edits use operation result, not integration. Other facts need none.
+6. Report sources/version/date, observations, contradictions, limits, conclusions
+   and affected current statements. Follow recording/evidence
+   routes and preserve history.
 
-Done: the decision has current supporting evidence or explicitly unresolved facts.
-Solution comparison and repair remain separate tasks.
+Done: current evidence or explicit unresolved facts.
+Solution choice, repair and mutation authority remain separate.

@@ -1,0 +1,109 @@
+{
+  "label": "candidate-comm-recover-git-state",
+  "root": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state/candidate/comm-recover-git-state",
+  "raw": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-01-check-publication-data/preparation/final-budget-recovery-v2/candidate-comm-recover-git-state.stdout.json",
+  "command": [
+    "node",
+    "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/scripts/plugin_eval_without_human.mjs",
+    "/home/octadim/.codex/plugins/cache/openai-curated-remote/plugin-eval/0.1.2/scripts/plugin-eval.js",
+    "explain-budget",
+    "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state/candidate/comm-recover-git-state",
+    "--format",
+    "json"
+  ],
+  "target": {
+    "kind": "skill",
+    "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state/candidate/comm-recover-git-state",
+    "entryPath": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state/candidate/comm-recover-git-state/SKILL.md",
+    "name": "comm-recover-git-state"
+  },
+  "budgets": {
+    "method": "estimated-static",
+    "invocation_policy": {
+      "allow_implicit_invocation": true
+    },
+    "trigger_cost_tokens": {
+      "value": 41,
+      "band": "good",
+      "thresholds": {
+        "goodMax": 48,
+        "moderateMax": 92,
+        "heavyMax": 150
+      },
+      "components": [
+        {
+          "label": "skill-name",
+          "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state/candidate/comm-recover-git-state/SKILL.md",
+          "tokens": 6,
+          "note": "Always-loaded skill identifier"
+        },
+        {
+          "label": "skill-description",
+          "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state/candidate/comm-recover-git-state/SKILL.md",
+          "tokens": 35,
+          "note": "Always-loaded trigger description"
+        }
+      ]
+    },
+    "invoke_cost_tokens": {
+      "value": 383,
+      "band": "moderate",
+      "thresholds": {
+        "goodMax": 220,
+        "moderateMax": 480,
+        "heavyMax": 900
+      },
+      "components": [
+        {
+          "label": "skill-file",
+          "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state/candidate/comm-recover-git-state/SKILL.md",
+          "tokens": 383,
+          "note": "Loaded when the skill is invoked"
+        }
+      ]
+    },
+    "deferred_cost_tokens": {
+      "value": 294,
+      "band": "moderate",
+      "thresholds": {
+        "goodMax": 180,
+        "moderateMax": 520,
+        "heavyMax": 1200
+      },
+      "components": [
+        {
+          "label": "references/modes.md",
+          "path": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state/candidate/comm-recover-git-state/references/modes.md",
+          "tokens": 294,
+          "note": "Deferred supporting file"
+        }
+      ]
+    },
+    "total_tokens": {
+      "value": 718,
+      "band": "moderate"
+    }
+  },
+  "files": [
+    {
+      "path": "SKILL.md",
+      "words": 184,
+      "unicode_characters": 1529,
+      "utf16_units": 1529,
+      "stock_static_tokens": 383,
+      "sha256": "806bd187d7df87a24a00d3b1829d7f1ee22e191f149ac212270ac36399c4a60b"
+    },
+    {
+      "path": "references/modes.md",
+      "words": 157,
+      "unicode_characters": 1176,
+      "utf16_units": 1176,
+      "stock_static_tokens": 294,
+      "sha256": "93e6c3f93751e336bdf0154a8ef326f2020d2b5ea27d107a62b604b2bac6e06b"
+    }
+  ],
+  "score_grade": "not evaluated; explain-budget only",
+  "actual_native_reads": "not measured; no execution permission",
+  "order": 7,
+  "request": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state"
+}

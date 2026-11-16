@@ -1,0 +1,25 @@
+{
+  "out": "harness/common/testing/evidence/2026-11-15-execute-verify-git-facts",
+  "source": "harness/common/inbox/2026-11-14-03-verify-git-facts/candidate/comm-verify-project-facts",
+  "sandbox": "read-only",
+  "files": {
+    "PROJECT.md": "Local non-Git facts review. Version is fixture-v1 from VERSION.txt; no Git-base/revision/integration claims are requested. Only src/ is application code; ignore fixture/harness implementation for feature claims. tools/service_probe.py health/run are safe authorized probes. No changes or deployments.\n",
+    "VERSION.txt": "fixture-v1\n",
+    "old-claim.md": "Synthetic old report: invoice export absent because only filenames *invoice*.py were searched; service ready because its health/catalog says ready.\n",
+    "src/archive_export.py": "def export_invoice(record):\n    return str(record)\n",
+    "src/positive_control.py": "def ping():\n    return True\n",
+    "tools/service_probe.py": "import sys,json\nif sys.argv[1]==\"health\":print(json.dumps({\"health\":\"ready\"}))\nelse:print(json.dumps({\"status\":\"access denied\",\"operation_available\":False}));sys.exit(3)\n",
+    "fixture.py": "from pathlib import Path\nimport subprocess,json\ndef git(*a):\n p=subprocess.run(['git',*a],check=True,capture_output=True,text=True);return p.stdout.strip()\ngit('config','user.name','Facts Fixture');git('config','user.email','fixture@example.invalid');git('config','protocol.file.allow','always')\ngit('add','--',*[p.name for p in Path('.').iterdir() if p.name!='.git']);git('commit','-m','Fixture baseline')\n"
+  },
+  "setup": [
+    [
+      "python3",
+      "fixture.py"
+    ]
+  ],
+  "task": "Прочитай PROJECT.md, VERSION.txt и old-claim.md. Проверь отсутствие invoice export и доступность операции сервиса по текущему коду/разрешённым пробам. Старый поиск ограничен именами файлов; health ready не равен операции. Укажи положительный контроль, scope/версию/дату, наблюдения и неизвестное. Git-основа не предмет этой проверки, ничего не меняй.",
+  "expected": {
+    "kind": "general"
+  },
+  "oracle_files": {}
+}

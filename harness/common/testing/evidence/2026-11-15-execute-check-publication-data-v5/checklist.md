@@ -1,0 +1,27 @@
+# Checklist текущей версии — завершён
+
+- RED: pressure scenarios with deadline/authority/sunk cost: done; fixtures and exact prompts retained.
+- RED: baseline without new guidance: done; old no-skill controls correct, composite v4 failure observed before edit.
+- RED: exact failures and patterns: done; suffix loss, earlier disclosure/false classification preserved without invented rationalizations.
+- GREEN: valid name: passed quick_validate.
+- GREEN: YAML/frontmatter required fields and bounds: passed.
+- GREEN: third-person trigger description starting Use when: passed; no workflow summary.
+- GREEN: discovery keywords: explicit/implicit tests passed.
+- GREEN: overview/core procedure: compact five-step positive recipe.
+- GREEN: addresses demonstrated failure: verbatim binding before content review; five composite repeats passed.
+- GREEN: guidance form: positive input binding and fixed output fields.
+- GREEN: wording probes against control, 5+ samples: five old and five new scope probes; no causal claim from isolated probes.
+- GREEN: code/ref placement: N/A; self-contained instruction, no code/resources.
+- GREEN: same pressure scenarios with guidance: 14 counted full cases, all passed.
+- REFACTOR: new failure analysis: earlier versions retained; current acceptance has no unresolved correctness/discovery/behavior gap.
+- REFACTOR: explicit counters for discipline failure: N/A; observed errors were representation/classification, repaired by positive contracts.
+- REFACTOR: rationalization table: N/A; no deliberate rationalization invented; exact observed commands in raw.
+- REFACTOR: red flags: wrong-range substitution and keyword-only findings covered inline.
+- REFACTOR: final re-verification: 19 valid Codex runs + full test suites.
+- Quality: flowchart: N/A; linear procedure.
+- Quality: quick reference: inline four-field output schema.
+- Quality: common mistakes: covered inline: wider history, candidate vs confirmed, source values, scanner silence.
+- Quality: no narrative in instruction: passed.
+- Quality: supporting files justified: none needed.
+- Deployment: source/native copies: done; exact full equal folders.
+- Deployment: commit/push/PR: not part of this instruction publication; skipped.

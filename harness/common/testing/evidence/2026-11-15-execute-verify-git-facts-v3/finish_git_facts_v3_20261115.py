@@ -1,0 +1,62 @@
+import json,hashlib,os,subprocess,sys
+from pathlib import Path
+from datetime import datetime
+from zoneinfo import ZoneInfo
+repo=Path('/home/octadim/MyProjects/Team_Workflow_Harness');out=repo/'harness/common/testing/evidence/2026-11-15-execute-verify-git-facts-v3';request=repo/'harness/common/inbox/2026-11-14-03-verify-git-facts';source=request/'candidate-v3/comm-verify-project-facts';native=json.loads((out/'native-review-v3.json').read_text());assert native['Codex']=='passed' and len(native['case_results'])==20
+assert json.loads((out/'publication.json').read_text())['full_copies_equal']
+env=os.environ.copy();env.update(PYTHONDONTWRITEBYTECODE='1',PYTEST_DISABLE_PLUGIN_AUTOLOAD='1')
+r=subprocess.run(['/tmp/harness-inbox-20261113-venv/bin/python','-m','pytest','-q'],cwd=repo,env=env,capture_output=True,text=True,timeout=300)
+with (out/'postpublication-pytest.json').open('x') as f:json.dump({'exit_code':r.returncode,'stdout':r.stdout,'stderr':r.stderr},f,ensure_ascii=False,indent=2)
+assert r.returncode==0,r.stdout+r.stderr
+now=datetime.now(ZoneInfo('Europe/Minsk')).isoformat();sha=hashlib.sha256((source/'SKILL.md').read_bytes()).hexdigest();context=json.loads((out/'context-accounting.json').read_text());budget=context['target_static']['candidate'];refs=context['target_references'];table='\n'.join('| '+row['kind']+' | '+row['mode']+' | passed | '+', '.join(p for p,loaded in row['loaded'].items() if loaded)+' |' for row in native['case_results'])
+report=f'''# Исполнение заявки 3/8: проверка Git-фактов
+
+Создано: {now}. Итоговая версия: candidate-v3. SHA256 SKILL.md: `{sha}`.
+Опубликована полная версия canonical/.agents/.claude, 18 обычных файлов; наборы и байты равны. Root entrypoints, project и правила сохранены.
+
+## Изменение и rationale
+
+Сохранены прежние проверки текущих фактов, отсутствия/доступности, coverage/positive controls и ограничения полномочий. Git-свежесть, остаток интеграции и неопределённый результат мутации вынесены в три условных ресурса. В v3 frozen comparisons явно отделены от свежести remote, правка полей PR — от интеграции кода. Новые always-loaded правила и Git-коммиты рабочего репозитория не создавались.
+
+## RED → GREEN
+
+Baseline использует прежнего установленного владельца, а не удаляет его. Generic-контракт прошёл в обоих режимах. В fresh/common baseline четыре временные контрольные точки ошибочно заменены четырьмя типами Git-наблюдений; raw и review сохранены в соседней evidence-папке исходного исполнения. Исходный candidate функционально прошёл 20 сценариев, но избыточно загружал Git-ресурсы. V2 устранил лишние чтения для freshness-only; partial/common ещё прочитал integration. Эти версии не публиковались. V3 прошёл все 20 сценариев, включая выбор ресурсов, на точных исходных хэшах.
+
+Четыре первые v3-попытки general/unrelated прерваны usage limit, их turn.failed сохранены и не повышены до passed; после доступности Codex выполнены отдельные retry. В permission/both implicit получен безопасный отказ через blocker owner без чтения проверяемой процедуры; он сохранён отдельно и дополнен explicit invocation той же v3. Нативный denominator — 20 выбранных завершённых current-проверок, а не все исторические попытки.
+
+В general/common retry1 прочитан setup-файл, который исходный PROJECT исключал как application evidence, но не запрещал читать. В fixture-v2 запрет уточнён явно; general/common повторён с этим ограничением. Исходный trace сохранён и не засчитан как финальный pass.
+
+Ошибка подготовки первой integration-фикстуры произошла до Codex, сохранена отдельно; v2-фактическая фикстура восстанавливает каталоги после checkout. Формат Git diff может быть name-status либо полный patch: проверяются направление и вывод, не конкретная команда. Raw и старые verdict не изменялись.
+
+## Codex
+
+Codex CLI 0.166.0, default model/effort без override; модель не раскрыта в событиях. Ephemeral native sessions, реальная загрузка .agents/canonical, общий строгий старт, human-guides исключены. Два режима: common-only с нейтральным project и common+project с сохранённым project. Внешний workspace read-only через bwrap; Git/PR эффекты только в одноразовых фикстурах. Read-only кейсы не меняют ни файлы, ни HEAD/refs/index. API-кейсы используют локальный синтетический протокол, а не реальный сервис; oracle и реализация CLI субъекту не разрешены и не читались.
+
+Fresh: реальный локальный bare remote central/integration/current продвинут, tracking ref намеренно устарел; получен точный свежий SHA, behind=1, несовместимость TypeError подтверждена. Четыре временные точки названы правильно; маршрут обновления не выполнен. Offline/ambiguous останавливают зависимые действия без fallback.
+
+Integration: настоящий Git-граф squash→revert; новый PR имеет больше файлов, но теряет validation/docs/support. Полные SHA/merge bases, old→new D, partial-search coverage и probe поведения проверены. MERGED, текущее поведение и deployment разделены; transfer/closure не выполнялись.
+
+Operation: полный эффект с ошибкой observation не повторён; partial дополняет только body с read→edit→read и точными байтами title/body; unknown/read denied и permission rejection не обходятся alternate CLI/API. Backend counters/trace доказывают отсутствие replay. Git остаётся неизменным. Generic и unrelated сохраняют отсутствие Git-resource reads; unrelated не читает и тело владельца.
+
+| Сценарий | Режим | Результат | Фактически прочитано |
+|---|---|---|---|
+{table}
+
+Пределы: синтетические локальные Git/API сценарии, не live hosting/deployment/сетевые отказы реального провайдера. Instruction gates не являются ОС-механизмом разграничения доступа.
+
+## Формальные проверки и контекст
+
+Skill-creator, plugin-eval start/analyze/explain-budget: passed; A/95. Warning deferred=575 heavy относительно штатного moderateMax=520, requiredFixes=[]; пороги не менялись. Ресурсы разделены по отдельным условиям, сумма 575 ниже цели 1000, deferred>1200 отсутствует; прикладной code coverage к Markdown не подделывался. Принято сохранение трёх небольших ресурсов ради полноты требований.
+
+Static trigger/invoke/deferred/total: {budget}; refs: {refs}. Baseline static total=424, candidate=1064. Полный доступный контекст, metadata, startup guards и все зависимости — отдельно в context-accounting.json; это оценки char/4, не фактическая стоимость конкретного скилла. Фактические чтения, output sizes и неизменённая session usage находятся в raw/native-review-v3.json.
+
+До публикации: 168 тестов в каждом из двух режимов; project-only отказ до записи; штатная синхронизация дважды стабильна. После публикации: {r.stdout.strip().splitlines()[-1]}. Checked publisher сверяет source/native scope, 20 current native verdict, все suites, dependency hashes, protected snapshots и прежние наборы файлов до копирования. Публикация выполнялась в ранее разрешённом scope.
+
+Codex/common-only: проверенный в указанном scope.
+Codex/common+project: проверенный в указанном scope.
+Claude/common-only и common+project: непроверенный — не запускался.
+Итоговый статус: непроверенный.
+'''
+with (out/'2026-11-15-report.md').open('x') as f:f.write(report)
+with (request/'request.md').open('a') as f:f.write(f'''\n## Execution — завершение\n\nStatus: completed\nResult: candidate-v3 опубликован canonical/.agents/.claude; Codex 20/20 в обоих режимах, formal/install/full-suite проверки пройдены.\nUpdated: {now}\nCodex/common-only: проверенный в scope отчёта.\nCodex/common+project: проверенный в scope отчёта.\nClaude/common-only: непроверенный — не запускался.\nClaude/common+project: непроверенный — не запускался.\nИтоговый статус: непроверенный.\nОтчёт: [permanent report](../../testing/evidence/{out.name}/2026-11-15-report.md).\n''')
+print(json.dumps({'status':'completed','Codex':'passed','tests':r.stdout.strip().splitlines()[-1],'sha256':sha},ensure_ascii=False))

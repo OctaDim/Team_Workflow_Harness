@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-11-13T00:20:55+03:00",
+  "version": "v1-draft-unverified",
+  "reason": "Preserve exact v1 before making the behavioral classification explicit.",
+  "files": [
+    {
+      "path": "candidate/comm-test-project-behavior/SKILL.md",
+      "sha256": "389300f9bf2ad16120ce009fb44250ec25b78da401bc99e01ed93047b8d02316",
+      "utf8_text": "---\nname: comm-test-project-behavior\ndescription: Use when adding, fixing or changing application code/files; excludes harness mechanisms.\n---\n\n# Test behavior\n\nInputs: contract, scope, revision/environment, checks.\n\n1. Identify each change's contract/regression risk; size grants no exemption.\n   Reuse sufficient tests; add/adapt gaps. For test design use\n   `comm-assess-project-tests`.\n2. New code, new/changed behavior and defects require TDD: behavioral RED,\n   minimal GREEN implementation, refactor with passing checks. Syntax/import/\n   environment failures do not establish RED.\n3. New functions require unit and integration tests: contract, neighboring\n   behavior, boundaries and errors.\n4. Behavior-preserving refactors need no artificial RED. Text-only changes need\n   link/syntax/rendering checks; add programmatic tests for significant gaps.\n   Assess behavioral impact of conditions, permissions, dependencies, formats\n   and startup configuration.\n5. Missing infrastructure: create within scope or record an explicit prerequisite;\n   never omit testing. Missing authority blocks dependent work.\n6. Before finishing run the entire relevant set and assess coverage using\n   `comm-run-project-checks`.\n\nDone: evidence supports the contract; disclose gaps. Harness procedures stay separate.\n"
+    }
+  ],
+  "manifest": "candidate-manifest.json",
+  "raw_budget": "2026-11-13-static-v1-budget.json"
+}

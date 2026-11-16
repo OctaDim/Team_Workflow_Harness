@@ -1,0 +1,21 @@
+# Проверка подготовленного кандидата — завершена
+
+- RED pressure scenarios: done; real staged/unstaged/index/writer and literal-text fixtures.
+- RED baseline without new guidance: two successful old-owner real commits retained; no invented failure.
+- RED failures/rationalizations: N/A: prepared candidate validated without edits; no violation invented.
+- GREEN name/frontmatter/description: profile passed; valid name, required YAML and trigger-only third-person metadata.
+- GREEN keywords/discovery: explicit/implicit actual commits passed.
+- GREEN overview/result/limits: complete compact owner retains ce-commit and permission boundaries.
+- GREEN guidance form: reused approved body/resources; no speculative new rules.
+- GREEN wording micro-tests/control: N/A: no wording authored in this execution; real behavior sampled across modes.
+- GREEN code/examples/references: no target code; two complete conditional resources tested.
+- GREEN final scenarios: 18 passed.
+- REFACTOR new failures: none observed in current acceptance.
+- REFACTOR counters/rationalization table/red flags: N/A: no edit and no deliberate rationalization observed; bounds retained inline.
+- REFACTOR final recheck: native audit + both full suites + installed checks passed.
+- Quality flowchart: N/A: linear context-dependent procedure.
+- Quality quick reference: named when-read pointers for independent resources.
+- Quality common mistakes: raw shell text, foreign staging, writer overlap, small-change boundaries covered.
+- Quality narrative/supporting files: no narrative in working instruction; resources belong to same owner.
+- Deployment source/native: complete equal ordinary copies; 15 files.
+- Deployment commit/push: only temporary test commits; working-repo publication uses copy, no Git commit/push.

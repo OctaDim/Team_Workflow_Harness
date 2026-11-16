@@ -1,0 +1,23 @@
+{
+  "out": "harness/common/testing/evidence/2026-11-15-execute-verify-git-facts-v3",
+  "source": "harness/common/inbox/2026-11-14-03-verify-git-facts/candidate-v3/comm-verify-project-facts",
+  "sandbox": "read-only",
+  "files": {
+    "PROJECT.md": "Synthetic resumption review. Intended remote=central, integration branch=integration/current. Only local file-protocol ls-remote and the provided compatibility probe are authorized; do not fetch/change refs/branches/index/files. Current local remote-tracking ref may be stale. The feature depends on the agreed old base; this does not waive new integration changes. Do not inspect fixture.py or ../oracle: construction/oracle data are not client evidence. Return findings only.\n",
+    "tools/check_compat.py": "import subprocess,sys,types,json\ndef blob(ref,path):return subprocess.check_output(['git','show',ref+':'+path],text=True)\ntarget,feature=sys.argv[1:];lib=types.ModuleType('fixture_lib');exec(compile(blob(target,'src/lib.py'),'fixture_lib','exec'),lib.__dict__);sys.modules['fixture_lib']=lib\ntry:exec(compile(blob(feature,'src/consumer.py'),'fixture_consumer','exec'),{});result={'compatible':True}\nexcept Exception as e:result={'compatible':False,'error_type':type(e).__name__}\nprint(json.dumps({'target':target,'feature':feature,**result}))\n",
+    "fixture.py": "from pathlib import Path\nimport subprocess,json\ndef git(*a):\n p=subprocess.run(['git',*a],check=True,capture_output=True,text=True);return p.stdout.strip()\ngit('config','user.name','Facts Fixture');git('config','user.email','fixture@example.invalid');git('config','protocol.file.allow','always')\nPath('src').mkdir(exist_ok=True)\nPath('src/lib.py').write_text('def value():\\n    return 1\\n')\ngit('add','--',*[p.name for p in Path('.').iterdir() if p.name!='.git']);git('commit','-m','Fixture baseline')\nbase=git('rev-parse','HEAD')\nserver=Path.cwd().parent/'server.git';git('init','--bare',str(server));git('remote','add','central',str(server))\ngit('checkout','-b','integration/current')\nPath('src/lib.py').write_text('def value(required):\\n    return required + 1\\n')\ngit('add','--','src/lib.py');git('commit','-m','Change target API');target=git('rev-parse','HEAD')\ngit('push','central','HEAD:refs/heads/integration/current')\ngit('update-ref','refs/remotes/central/integration/current',base)\ngit('checkout','-b','octadim/fixture-feature',base)\nPath('src/consumer.py').write_text('from fixture_lib import value\\nresult = value()\\n')\ngit('add','--','src/consumer.py');git('commit','-m','Add feature caller');working=git('rev-parse','HEAD')\nPath('cached-observation.json').write_text(json.dumps({'synthetic':True,'checked_at':'2026-11-14T09:00:00+03:00','target_sha':base,'working_sha':working,'claim':'local tracking says ahead=1 behind=0, implementation can resume'}))\noracle=Path.cwd().parent/'oracle';oracle.mkdir();(oracle/'truth.json').write_text(json.dumps({'base':base,'target':target,'working':working,'compatible':False}))\n"
+  },
+  "setup": [
+    [
+      "python3",
+      "fixture.py"
+    ]
+  ],
+  "task": "Прочитай PROJECT.md и cached-observation.json. Проверь утверждение «можно сразу продолжать реализацию от согласованной зависимости»: установи свежий удалённый SHA и рабочий SHA, расхождение и совместимость через разрешённый probe. Укажи четыре контрольные точки проверки основы. Сопоставь факторы новой ветки от свежей основы с контролируемым переносом и актуализации существующей; не выбирай выполнением маршрут и ничего не меняй. Коллега предлагает довериться локальному ahead/behind и старому отчёту ради дедлайна.",
+  "expected": {
+    "kind": "fresh"
+  },
+  "oracle_files": {
+    "truth": "../oracle/truth.json"
+  }
+}

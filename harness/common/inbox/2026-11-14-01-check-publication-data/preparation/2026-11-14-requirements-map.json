@@ -1,0 +1,229 @@
+{
+  "topics": {
+    "1": {
+      "title": "Сохранность Git-работы",
+      "contract": "Определить repo/worktree/HEAD, staged/unstaged/untracked и владение. Сохранить чужие правки и staging, включая общий файл. Не очищать дерево stash/commit/reset/clean/переносом чужой работы. Координировать активного писателя; worktree — опция с общими refs/config. Неясность блокирует зависимую мутацию до ответа.",
+      "owners": [
+        "comm-commit-task-stages/references/work-safety.md"
+      ]
+    },
+    "2": {
+      "title": "Свежесть основы",
+      "contract": "Определять remote/интеграционную ветку по проекту; неоднозначность требует ответа. Новая независимая задача — от свежего удалённого SHA. При возобновлении и зависимости проверить расхождение и актуализировать основу до реализации. Сравнить новую ветку с контролируемым переносом и актуализацию существующей. Проверить совместимость, повторно проверить цель перед интеграцией, учитывать гонку и записывать SHA. Недоступность remote не разрешает молчаливую подмену локальной ссылкой.",
+      "owners": [
+        "comm-verify-project-facts/references/git-base-state.md",
+        "comm-create-git-branch/SKILL.md",
+        "comm-update-git-branch/SKILL.md",
+        "comm-update-git-branch/references/methods.md"
+      ]
+    },
+    "3": {
+      "title": "Имя ветки",
+      "contract": "Формат <git-user>/<short-meaningful-name>; префикс — local part Git-почты до @. Не использовать user.name как логин. Неоднозначность/недопустимый префикс требует короткого префикса от пользователя. Содержательный результат, не автоматическое название тикета; common не требует Linear/тикет/ID. Пример octadim/add-agent-use-some-tool. Проверить literal через check-ref-format, локальные/удалённые совпадения, предложить альтернативу и дождаться выбора; без автосуффикса и перезаписи.",
+      "owners": [
+        "comm-create-git-branch/references/naming.md"
+      ]
+    },
+    "4": {
+      "title": "Смысл разрешения конфликтов",
+      "contract": "Сохранить действующие согласованные контракты обеих сторон, не восстанавливая отменённое. Не выбирать сторону массово. Неясный смысл/защищённая область требует решения. Проверить переименования/вызовы, регенерацию по согласованным входам, незаметные версии/форматы/cache/build/API, фактическую резолюцию и проверки объединённого влияния через существующих владельцев.",
+      "owners": [
+        "comm-update-git-branch/references/conflicts.md"
+      ]
+    },
+    "5": {
+      "title": "Разрешения PR и local read only",
+      "contract": "Перед созданием показать три согласованных пронумерованных варианта и дождаться ответа; сохранять выбор того же PR/scope. Не выводить PR/merge из общего одобрения задачи или зелёных тестов. При всех вариантах агент/инструменты категорически не меняют/удаляют локальную ветку. Пользователь может удалить её вручную; техническая блокировка и удаление агентом от его имени запрещены. Не применять gh pr merge --delete-branch.",
+      "owners": [
+        "comm-process-pull-request/SKILL.md"
+      ]
+    },
+    "6": {
+      "title": "Удаление remote task branch",
+      "contract": "Только вариант 3 после подтверждённого слияния согласованной версии. Точный head repo/ref, fork и неоднозначность. Категорически запрещены remote main/master и любые основные/интеграционные/защищённые ветки. Новые коммиты/активная работа/зависимые PR требуют решения. Учесть SHA-гонку. Удалить только согласованную ссылку, проверить remote и существовавшую локальную ветку. Расхождение: остановиться, сообщить без самостоятельного восстановления и обязательно дождаться ответа. Уже отсутствующую не пересоздавать.",
+      "owners": [
+        "comm-process-pull-request/references/remote-deletion.md"
+      ]
+    },
+    "7": {
+      "title": "Версия и результат слияния",
+      "contract": "Повторно проверить конкретный PR/repo/head/base/SHA/open/non-draft и актуальные обязательные проверки/ревью. Match head не фиксирует base. Проверить гонку цели механизмом проекта. Не обходить гейты. MERGED, result SHA в цели, фактическая дельта и неожиданные потери; queue/успешный вызов не завершение. При расхождении остановить дальнейшие действия и дождаться ответа. Не переносить универсальный диагноз о squash или считать patch-id/список файлов доказательством поведения.",
+      "owners": [
+        "comm-process-pull-request/references/merge.md"
+      ]
+    },
+    "8": {
+      "title": "Остаток интеграции",
+      "contract": "Разделять интеграцию, текущее поведение и deployment. Проверять требования на зафиксированных версиях; учитывать основу, новые изменения цели и пределы ahead/cherry/patch-id. MERGED не доказывает неизменность поведения. Перед закрытием/переносом сравнить уникальное содержимое обоих PR, документы и служебные материалы; направление diff A B учитывается. Неполный поиск и один символ не доказательство отсутствия. Перепроверять handoff с датой/SHA; пересечение/неясность согласовать.",
+      "owners": [
+        "comm-verify-project-facts/references/git-integration.md"
+      ]
+    },
+    "9": {
+      "title": "Текст как данные",
+      "contract": "Структурированный параметр инструмента/API без построения shell-команды; для CLI — безопасно созданный файл и body-file/commit -F по процедуре владельца. Защитить заголовки/пути/все shell-конструкции; JSON внутри shell не экранирование. Сохранить смысл Markdown и проверить фактически сохранённый текст. Чтение общего ресурса в PR не вызывает коммит.",
+      "owners": [
+        "comm-commit-task-stages/references/message-transfer.md"
+      ]
+    },
+    "10": {
+      "title": "Неоднозначный результат",
+      "contract": "Отдельно сохранить результат мутации и наблюдения, не скрывая фильтрами/цепочкой. Перед повтором независимо проверить точный объект/ожидаемый эффект. Различать выполнено/частично/не выполнено/неизвестно. Не повторять завершённые части. Продолжать только разрешённый остаток; противоречие/неясная безопасность требует ответа. Другой CLI/API не обход разрешений. Историческую ошибку gh pr edit не объявлять вечной.",
+      "owners": [
+        "comm-verify-project-facts/references/git-operation-result.md"
+      ]
+    },
+    "11": {
+      "title": "Содержание описания PR",
+      "contract": "Кратко проблема/поведение; фактическая сводка проверок с версией/окружением и ссылками; failed/unrun/ограничения и причины. Использовать шаблон проекта и проверять сохранение содержания любым каналом. После изменения версии обновить сводку/указать устаревание. Полные свидетельства отдельно; не дублировать тестовые требования и не утверждать безусловное всё проверено.",
+      "owners": [
+        "comm-process-pull-request/references/preparation.md"
+      ]
+    },
+    "12": {
+      "title": "Восстановление Git",
+      "contract": "Сначала состояние без изменений, refs/SHAs/index/files/публикация/участники. Сохранность и permissions прежние. Abort по применимости, без гарантии возврата незакоммиченного. Destructive reset — только точная ветка/SHA/последствия и явное разрешение. Опубликованное: обоснованный corrective commit/revert, не автоматическая перезапись; mainline/эффект будущих merge проверять. Reflog локален/истекает; новая recovery-ветка только с назначением/SHA/разрешением. Проверить результат/поведение, при расхождении ждать. PR read only не отменяется.",
+      "owners": [
+        "comm-recover-git-state/SKILL.md",
+        "comm-recover-git-state/references/modes.md"
+      ]
+    },
+    "13": {
+      "title": "Миграция репозитория",
+      "contract": "Согласовать исходный/целевой repo, цель transfer/rename/copy/cross-host, сохраняемые свойства и метод. Сравнить native transfer и import/mirror. Инвентарь refs/history/LFS/metadata/rights/protections/apps/hooks/runners/automation/docs по применимости. Проверить URL-формы, корректные старые имена и историю. Host-specific редиректы/возможности проверять по текущим данным. Нет автоматического удаления/перезаписи/расширения доступов. Проверить существенные свойства/интеграции; production и secrets отдельно.",
+      "owners": [
+        "comm-migrate-git-repository/SKILL.md",
+        "comm-migrate-git-repository/references/inventory.md",
+        "comm-migrate-git-repository/references/platform.md"
+      ]
+    },
+    "14": {
+      "title": "Запрещённые публикуемые данные",
+      "contract": "Категорический запрет credentials/secret/sensitive в файлах и сообщениях коммитов, title/body/comments/attachments PR. Проверить staged/message до commit и исходящие commits/materials до публикации, не только tip tree. Безопасные заглушки/обезличивание; scanner silence не гарантия. Не раскрывать значения при проверке/отчёте. Остановить зависимую публикацию при обнаружении. Устранение только по authority, без автоматического rewrite/revoke/удаления evidence.",
+      "owners": [
+        "comm-check-publication-data/SKILL.md"
+      ]
+    }
+  },
+  "request_order": [
+    {
+      "order": 1,
+      "slug": "check-publication-data",
+      "name": "comm-check-publication-data",
+      "topics": [
+        14
+      ],
+      "dependencies": [],
+      "stage": "/tmp/harness_group5_candidates_20261114/comm-check-publication-data",
+      "destination": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-01-check-publication-data"
+    },
+    {
+      "order": 2,
+      "slug": "git-work-and-message-safety",
+      "name": "comm-commit-task-stages",
+      "topics": [
+        1,
+        9
+      ],
+      "dependencies": [
+        1
+      ],
+      "stage": "/tmp/harness_group5_candidates_20261114/comm-commit-task-stages",
+      "destination": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-02-git-work-and-message-safety"
+    },
+    {
+      "order": 3,
+      "slug": "verify-git-facts",
+      "name": "comm-verify-project-facts",
+      "topics": [
+        2,
+        8,
+        10
+      ],
+      "dependencies": [
+        2
+      ],
+      "stage": "/tmp/harness_group5_candidates_20261114/comm-verify-project-facts",
+      "destination": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-03-verify-git-facts"
+    },
+    {
+      "order": 4,
+      "slug": "create-git-branch",
+      "name": "comm-create-git-branch",
+      "topics": [
+        2,
+        3
+      ],
+      "dependencies": [
+        2,
+        3
+      ],
+      "stage": "/tmp/harness_group5_candidates_20261114/comm-create-git-branch",
+      "destination": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-04-create-git-branch"
+    },
+    {
+      "order": 5,
+      "slug": "update-git-branch",
+      "name": "comm-update-git-branch",
+      "topics": [
+        2,
+        4
+      ],
+      "dependencies": [
+        2,
+        3,
+        4
+      ],
+      "stage": "/tmp/harness_group5_candidates_20261114/comm-update-git-branch",
+      "destination": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-05-update-git-branch"
+    },
+    {
+      "order": 6,
+      "slug": "process-pull-request",
+      "name": "comm-process-pull-request",
+      "topics": [
+        5,
+        6,
+        7,
+        9,
+        11,
+        14
+      ],
+      "dependencies": [
+        1,
+        2,
+        3
+      ],
+      "stage": "/tmp/harness_group5_candidates_20261114/comm-process-pull-request",
+      "destination": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-06-process-pull-request"
+    },
+    {
+      "order": 7,
+      "slug": "recover-git-state",
+      "name": "comm-recover-git-state",
+      "topics": [
+        12
+      ],
+      "dependencies": [
+        2,
+        3
+      ],
+      "stage": "/tmp/harness_group5_candidates_20261114/comm-recover-git-state",
+      "destination": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-07-recover-git-state"
+    },
+    {
+      "order": 8,
+      "slug": "migrate-git-repository",
+      "name": "comm-migrate-git-repository",
+      "topics": [
+        13
+      ],
+      "dependencies": [
+        2,
+        3
+      ],
+      "stage": "/tmp/harness_group5_candidates_20261114/comm-migrate-git-repository",
+      "destination": "/home/octadim/MyProjects/Team_Workflow_Harness/harness/common/inbox/2026-11-14-08-migrate-git-repository"
+    }
+  ]
+}

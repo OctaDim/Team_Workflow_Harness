@@ -1,0 +1,52 @@
+{
+  "startup": {
+    "startup": [
+      {
+        "command": [
+          "python3",
+          "-B",
+          "harness/common/checks/ensure_entrypoint_links.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nharness/project отсутствует: создаётся пустой каркас из common.\nEntrypoint check completed: changed paths: harness/project\n",
+        "stderr": "",
+        "elapsed_seconds": 0.1
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "harness/common/checks/ensure_entrypoint_links.py"
+        ],
+        "exit_code": 0,
+        "stdout": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nСравнение настроек с историей не проверено: нет истории этого проекта.\nEntrypoint check completed\n",
+        "stderr": "",
+        "elapsed_seconds": 0.06
+      }
+    ],
+    "stable": true,
+    "existing_project_preserved": false
+  },
+  "source": {
+    "SKILL.md": "a11b9cb599f1d42844146516868aa066e26b32aee78b79b3614b1c33ef974f34",
+    "README.human.md": "49d8f08ad21c92c1d1346d91267b99f6efb5800f7301a51b42556f5c120e70ac",
+    "references/git-base-state.md": "435ab7f70569afa09329dcc6d1c880612006296645e7efd948dada10640afc0d",
+    "references/README.human.md": "cf7222c2022d86494613de5259c06e87ebbd770fe6487fe88922bf7a3810e6d0",
+    "references/git-integration.md": "40dece0a5d9085e527c4f54fa45e165a000db7301124136483a20fc4ff4673a1",
+    "references/git-operation-result.md": "4fc9e2e0a91ba9ffdab37d93aef15cf711f0f52fa651d67d4e6da08c9d96d549"
+  },
+  "suite": {
+    "command": [
+      "/tmp/harness-inbox-20261113-venv/bin/python",
+      "-m",
+      "pytest",
+      "/tmp/facts-suite-30q0koc5/harness/common/testing/tests",
+      "-q",
+      "--import-mode=importlib"
+    ],
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 42%]\n........................................................................ [ 85%]\n........................                                                 [100%]\n168 passed in 14.75s\n",
+    "stderr": "",
+    "elapsed_seconds": 15.13
+  }
+}
