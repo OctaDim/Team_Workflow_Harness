@@ -1,0 +1,987 @@
+.....................................................FFFFFFFFFFFFFFFFFFF [ 59%]
+.FFFFFFFFFFF..F...FFFFFFF........................                        [100%]
+=================================== FAILURES ===================================
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[-START.md-common] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc4133ca40>
+package = 'common', name = 'START.md', content = b''
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[-START.md-project] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4c710>
+package = 'project', name = 'START.md', content = b''
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[-INDEX.md-common] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4d6a0>
+package = 'common', name = 'INDEX.md', content = b''
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[-INDEX.md-project] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4c6b0>
+package = 'project', name = 'INDEX.md', content = b''
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[ \r\n-START.md-common] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4ccb0>
+package = 'common', name = 'START.md', content = b' \r\n'
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[ \r\n-START.md-project] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4c8f0>
+package = 'project', name = 'START.md', content = b' \r\n'
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[ \r\n-INDEX.md-common] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4dd00>
+package = 'common', name = 'INDEX.md', content = b' \r\n'
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[ \r\n-INDEX.md-project] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4d460>
+package = 'project', name = 'INDEX.md', content = b' \r\n'
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[\xff-START.md-common] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4fd70>
+package = 'common', name = 'START.md', content = b'\xff'
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[\xff-START.md-project] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4e5d0>
+package = 'project', name = 'START.md', content = b'\xff'
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[\xff-INDEX.md-common] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4ce60>
+package = 'common', name = 'INDEX.md', content = b'\xff'
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_empty_or_invalid_utf8_resources_refuse_before_input_writes[\xff-INDEX.md-project] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4ce30>
+package = 'project', name = 'INDEX.md', content = b'\xff'
+
+    @pytest.mark.parametrize('package', ('common', 'project'))
+    @pytest.mark.parametrize('name', ('START.md', 'INDEX.md'))
+    @pytest.mark.parametrize('content', (b'', b' \r\n', b'\xff'))
+    def test_empty_or_invalid_utf8_resources_refuse_before_input_writes(self, package, name, content):
+        (self.root / 'harness' / package / name).write_bytes(content)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:342: AssertionError
+_ TestEntryPointLinks.test_invalid_rule_copies_are_refused_without_automatic_publication[missing-directory] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4e090>
+damage = 'missing-directory'
+
+    @pytest.mark.parametrize('damage', ('missing-directory', 'missing-copy', 'different-copy',
+                                      'extra-copy', 'empty-source', 'invalid-utf8-source', 'nested-canonical'))
+    def test_invalid_rule_copies_are_refused_without_automatic_publication(self, damage):
+        native = self.root / '.claude/rules'
+        source = self.root / 'harness/common/rules/comm-fixture.md'
+        copy = native / source.name
+        if damage == 'missing-directory':
+            shutil.rmtree(native)
+        elif damage == 'missing-copy':
+            copy.unlink()
+        elif damage == 'different-copy':
+            copy.write_bytes(b'different\n')
+        elif damage == 'extra-copy':
+            (native / 'proj-extra.md').write_bytes(b'extra\n')
+        elif damage == 'empty-source':
+            source.write_bytes(b' \n')
+            copy.write_bytes(source.read_bytes())
+        elif damage == 'invalid-utf8-source':
+            source.write_bytes(b'\xff')
+            copy.write_bytes(source.read_bytes())
+        else:
+            (native / 'nested').mkdir()
+            (native / 'nested/comm-fixture.md').write_bytes(source.read_bytes())
+        before = {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:371: AssertionError
+_ TestEntryPointLinks.test_invalid_rule_copies_are_refused_without_automatic_publication[missing-copy] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4d8b0>
+damage = 'missing-copy'
+
+    @pytest.mark.parametrize('damage', ('missing-directory', 'missing-copy', 'different-copy',
+                                      'extra-copy', 'empty-source', 'invalid-utf8-source', 'nested-canonical'))
+    def test_invalid_rule_copies_are_refused_without_automatic_publication(self, damage):
+        native = self.root / '.claude/rules'
+        source = self.root / 'harness/common/rules/comm-fixture.md'
+        copy = native / source.name
+        if damage == 'missing-directory':
+            shutil.rmtree(native)
+        elif damage == 'missing-copy':
+            copy.unlink()
+        elif damage == 'different-copy':
+            copy.write_bytes(b'different\n')
+        elif damage == 'extra-copy':
+            (native / 'proj-extra.md').write_bytes(b'extra\n')
+        elif damage == 'empty-source':
+            source.write_bytes(b' \n')
+            copy.write_bytes(source.read_bytes())
+        elif damage == 'invalid-utf8-source':
+            source.write_bytes(b'\xff')
+            copy.write_bytes(source.read_bytes())
+        else:
+            (native / 'nested').mkdir()
+            (native / 'nested/comm-fixture.md').write_bytes(source.read_bytes())
+        before = {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:371: AssertionError
+_ TestEntryPointLinks.test_invalid_rule_copies_are_refused_without_automatic_publication[different-copy] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4d9d0>
+damage = 'different-copy'
+
+    @pytest.mark.parametrize('damage', ('missing-directory', 'missing-copy', 'different-copy',
+                                      'extra-copy', 'empty-source', 'invalid-utf8-source', 'nested-canonical'))
+    def test_invalid_rule_copies_are_refused_without_automatic_publication(self, damage):
+        native = self.root / '.claude/rules'
+        source = self.root / 'harness/common/rules/comm-fixture.md'
+        copy = native / source.name
+        if damage == 'missing-directory':
+            shutil.rmtree(native)
+        elif damage == 'missing-copy':
+            copy.unlink()
+        elif damage == 'different-copy':
+            copy.write_bytes(b'different\n')
+        elif damage == 'extra-copy':
+            (native / 'proj-extra.md').write_bytes(b'extra\n')
+        elif damage == 'empty-source':
+            source.write_bytes(b' \n')
+            copy.write_bytes(source.read_bytes())
+        elif damage == 'invalid-utf8-source':
+            source.write_bytes(b'\xff')
+            copy.write_bytes(source.read_bytes())
+        else:
+            (native / 'nested').mkdir()
+            (native / 'nested/comm-fixture.md').write_bytes(source.read_bytes())
+        before = {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:371: AssertionError
+_ TestEntryPointLinks.test_invalid_rule_copies_are_refused_without_automatic_publication[extra-copy] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4fc20>
+damage = 'extra-copy'
+
+    @pytest.mark.parametrize('damage', ('missing-directory', 'missing-copy', 'different-copy',
+                                      'extra-copy', 'empty-source', 'invalid-utf8-source', 'nested-canonical'))
+    def test_invalid_rule_copies_are_refused_without_automatic_publication(self, damage):
+        native = self.root / '.claude/rules'
+        source = self.root / 'harness/common/rules/comm-fixture.md'
+        copy = native / source.name
+        if damage == 'missing-directory':
+            shutil.rmtree(native)
+        elif damage == 'missing-copy':
+            copy.unlink()
+        elif damage == 'different-copy':
+            copy.write_bytes(b'different\n')
+        elif damage == 'extra-copy':
+            (native / 'proj-extra.md').write_bytes(b'extra\n')
+        elif damage == 'empty-source':
+            source.write_bytes(b' \n')
+            copy.write_bytes(source.read_bytes())
+        elif damage == 'invalid-utf8-source':
+            source.write_bytes(b'\xff')
+            copy.write_bytes(source.read_bytes())
+        else:
+            (native / 'nested').mkdir()
+            (native / 'nested/comm-fixture.md').write_bytes(source.read_bytes())
+        before = {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:371: AssertionError
+_ TestEntryPointLinks.test_invalid_rule_copies_are_refused_without_automatic_publication[empty-source] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4f6b0>
+damage = 'empty-source'
+
+    @pytest.mark.parametrize('damage', ('missing-directory', 'missing-copy', 'different-copy',
+                                      'extra-copy', 'empty-source', 'invalid-utf8-source', 'nested-canonical'))
+    def test_invalid_rule_copies_are_refused_without_automatic_publication(self, damage):
+        native = self.root / '.claude/rules'
+        source = self.root / 'harness/common/rules/comm-fixture.md'
+        copy = native / source.name
+        if damage == 'missing-directory':
+            shutil.rmtree(native)
+        elif damage == 'missing-copy':
+            copy.unlink()
+        elif damage == 'different-copy':
+            copy.write_bytes(b'different\n')
+        elif damage == 'extra-copy':
+            (native / 'proj-extra.md').write_bytes(b'extra\n')
+        elif damage == 'empty-source':
+            source.write_bytes(b' \n')
+            copy.write_bytes(source.read_bytes())
+        elif damage == 'invalid-utf8-source':
+            source.write_bytes(b'\xff')
+            copy.write_bytes(source.read_bytes())
+        else:
+            (native / 'nested').mkdir()
+            (native / 'nested/comm-fixture.md').write_bytes(source.read_bytes())
+        before = {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:371: AssertionError
+_ TestEntryPointLinks.test_invalid_rule_copies_are_refused_without_automatic_publication[invalid-utf8-source] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4f680>
+damage = 'invalid-utf8-source'
+
+    @pytest.mark.parametrize('damage', ('missing-directory', 'missing-copy', 'different-copy',
+                                      'extra-copy', 'empty-source', 'invalid-utf8-source', 'nested-canonical'))
+    def test_invalid_rule_copies_are_refused_without_automatic_publication(self, damage):
+        native = self.root / '.claude/rules'
+        source = self.root / 'harness/common/rules/comm-fixture.md'
+        copy = native / source.name
+        if damage == 'missing-directory':
+            shutil.rmtree(native)
+        elif damage == 'missing-copy':
+            copy.unlink()
+        elif damage == 'different-copy':
+            copy.write_bytes(b'different\n')
+        elif damage == 'extra-copy':
+            (native / 'proj-extra.md').write_bytes(b'extra\n')
+        elif damage == 'empty-source':
+            source.write_bytes(b' \n')
+            copy.write_bytes(source.read_bytes())
+        elif damage == 'invalid-utf8-source':
+            source.write_bytes(b'\xff')
+            copy.write_bytes(source.read_bytes())
+        else:
+            (native / 'nested').mkdir()
+            (native / 'nested/comm-fixture.md').write_bytes(source.read_bytes())
+        before = {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:371: AssertionError
+_ TestEntryPointLinks.test_invalid_rule_copies_are_refused_without_automatic_publication[nested-canonical] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f3fb00>
+damage = 'nested-canonical'
+
+    @pytest.mark.parametrize('damage', ('missing-directory', 'missing-copy', 'different-copy',
+                                      'extra-copy', 'empty-source', 'invalid-utf8-source', 'nested-canonical'))
+    def test_invalid_rule_copies_are_refused_without_automatic_publication(self, damage):
+        native = self.root / '.claude/rules'
+        source = self.root / 'harness/common/rules/comm-fixture.md'
+        copy = native / source.name
+        if damage == 'missing-directory':
+            shutil.rmtree(native)
+        elif damage == 'missing-copy':
+            copy.unlink()
+        elif damage == 'different-copy':
+            copy.write_bytes(b'different\n')
+        elif damage == 'extra-copy':
+            (native / 'proj-extra.md').write_bytes(b'extra\n')
+        elif damage == 'empty-source':
+            source.write_bytes(b' \n')
+            copy.write_bytes(source.read_bytes())
+        elif damage == 'invalid-utf8-source':
+            source.write_bytes(b'\xff')
+            copy.write_bytes(source.read_bytes())
+        else:
+            (native / 'nested').mkdir()
+            (native / 'nested/comm-fixture.md').write_bytes(source.read_bytes())
+        before = {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:371: AssertionError
+_ TestEntryPointLinks.test_complete_block_in_wrong_order_refuses_without_reordering_user_file _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f4fda0>
+
+    def test_complete_block_in_wrong_order_refuses_without_reordering_user_file(self):
+        paths = ('harness/common/INDEX.md', 'harness/common/START.md',
+                 'harness/project/START.md', '.claude/rules/', 'harness/project/INDEX.md')
+        agents = self.root / 'AGENTS.md'
+        original = ''.join(f'- [{p}]({p})\n' for p in paths).encode()
+        agents.write_bytes(original)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:390: AssertionError
+_ TestEntryPointLinks.test_repeated_block_with_two_missing_links_is_repaired_locally _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f82cc0>
+
+    def test_repeated_block_with_two_missing_links_is_repaired_locally(self):
+        paths = ('harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
+                 'harness/common/INDEX.md', 'harness/project/INDEX.md')
+        block = ''.join(f'- [{p}]({p})\n' for p in paths)
+        damaged = ''.join(line for line in block.splitlines(keepends=True)
+                          if 'common/START.md' not in line and '.claude/rules/' not in line)
+        agents = self.root / 'AGENTS.md'
+        agents.write_text(block + '\nRepeat:\n' + damaged)
+        result = self.run_check()
+        assert result.returncode == 0, result.stderr
+        repaired = agents.read_text().split('\nRepeat:\n')[1]
+        for path in paths:
+>           assert f']({path})' in repaired
+E           AssertionError: assert '](harness/common/START.md)' in '- [harness/project/START.md](harness/project/START.md)\n- [harness/common/INDEX.md](harness/common/INDEX.md)\n- [harn...рочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n'
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:407: AssertionError
+_ TestEntryPointLinks.test_ambiguous_partial_link_list_refuses_without_adding_to_user_list _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f83ef0>
+
+    def test_ambiguous_partial_link_list_refuses_without_adding_to_user_list(self):
+        agents = self.root / 'AGENTS.md'
+        original = b'- [My note](harness/common/START.md)\n- [Another note](harness/common/INDEX.md)\n'
+        agents.write_bytes(original)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:418: AssertionError
+_ TestEntryPointLinks.test_container_fenced_examples_do_not_supply_startup_connections[> -> ] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f83c20>
+prefix = '> ', continuation = '> '
+
+    @pytest.mark.parametrize('prefix,continuation', (('> ', '> '), ('> > ', '> > '), ('- ', '  '), ('> - ', '>   ')))
+    def test_container_fenced_examples_do_not_supply_startup_connections(self, prefix, continuation):
+        paths = ('harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
+                 'harness/common/INDEX.md', 'harness/project/INDEX.md')
+        examples = ''.join(continuation + f'[Example]({p})\n' for p in paths)
+        text = prefix + '~~~md\n' + examples + continuation + '~~~~\n'
+        agents = self.root / 'AGENTS.md'
+        agents.write_text(text)
+        result = self.run_check()
+        assert result.returncode == 0, result.stderr
+        assert agents.read_text().startswith(text)
+        for path in paths:
+>           assert f']({path})' in agents.read_text()[len(text):]
+E           AssertionError: assert '](harness/common/START.md)' in '\nДо выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n'
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:434: AssertionError
+_ TestEntryPointLinks.test_container_fenced_examples_do_not_supply_startup_connections[> > -> > ] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f83a70>
+prefix = '> > ', continuation = '> > '
+
+    @pytest.mark.parametrize('prefix,continuation', (('> ', '> '), ('> > ', '> > '), ('- ', '  '), ('> - ', '>   ')))
+    def test_container_fenced_examples_do_not_supply_startup_connections(self, prefix, continuation):
+        paths = ('harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
+                 'harness/common/INDEX.md', 'harness/project/INDEX.md')
+        examples = ''.join(continuation + f'[Example]({p})\n' for p in paths)
+        text = prefix + '~~~md\n' + examples + continuation + '~~~~\n'
+        agents = self.root / 'AGENTS.md'
+        agents.write_text(text)
+        result = self.run_check()
+        assert result.returncode == 0, result.stderr
+        assert agents.read_text().startswith(text)
+        for path in paths:
+>           assert f']({path})' in agents.read_text()[len(text):]
+E           AssertionError: assert '](harness/common/START.md)' in '\nДо выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n'
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:434: AssertionError
+_ TestEntryPointLinks.test_container_fenced_examples_do_not_supply_startup_connections[- -  ] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40f837a0>
+prefix = '- ', continuation = '  '
+
+    @pytest.mark.parametrize('prefix,continuation', (('> ', '> '), ('> > ', '> > '), ('- ', '  '), ('> - ', '>   ')))
+    def test_container_fenced_examples_do_not_supply_startup_connections(self, prefix, continuation):
+        paths = ('harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
+                 'harness/common/INDEX.md', 'harness/project/INDEX.md')
+        examples = ''.join(continuation + f'[Example]({p})\n' for p in paths)
+        text = prefix + '~~~md\n' + examples + continuation + '~~~~\n'
+        agents = self.root / 'AGENTS.md'
+        agents.write_text(text)
+        result = self.run_check()
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Entrypoint check failed: Unclosed Markdown code fence starting at line 7.
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin...о: нет истории этого проекта.\n', stderr='Entrypoint check failed: Unclosed Markdown code fence starting at line 7.\n').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:431: AssertionError
+_ TestEntryPointLinks.test_container_fenced_examples_do_not_supply_startup_connections[> - ->   ] _
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40dcd0a0>
+prefix = '> - ', continuation = '>   '
+
+    @pytest.mark.parametrize('prefix,continuation', (('> ', '> '), ('> > ', '> > '), ('- ', '  '), ('> - ', '>   ')))
+    def test_container_fenced_examples_do_not_supply_startup_connections(self, prefix, continuation):
+        paths = ('harness/common/START.md', 'harness/project/START.md', '.claude/rules/',
+                 'harness/common/INDEX.md', 'harness/project/INDEX.md')
+        examples = ''.join(continuation + f'[Example]({p})\n' for p in paths)
+        text = prefix + '~~~md\n' + examples + continuation + '~~~~\n'
+        agents = self.root / 'AGENTS.md'
+        agents.write_text(text)
+        result = self.run_check()
+        assert result.returncode == 0, result.stderr
+        assert agents.read_text().startswith(text)
+        for path in paths:
+>           assert f']({path})' in agents.read_text()[len(text):]
+E           AssertionError: assert '](harness/common/START.md)' in '\nДо выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.\n'
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:434: AssertionError
+__ TestEntryPointLinks.test_unclosed_quote_fence_refuses_without_autoclosing ___
+
+self = <harness.common.testing.tests.test_ensure_entrypoint_links.TestEntryPointLinks object at 0x7cdc40dcd2e0>
+
+    def test_unclosed_quote_fence_refuses_without_autoclosing(self):
+        agents = self.root / 'AGENTS.md'
+        original = b'> ~~~md\n> [Example](harness/common/START.md)\n'
+        agents.write_bytes(original)
+        result = self.run_check()
+>       assert result.returncode == 2, result.stderr
+E       AssertionError: 
+E       assert 0 == 2
+E        +  where 0 = CompletedProcess(args=['/home/octadim/MyProjects/Multi_User_RAG_Assist_System/.venv/bin/python', '-B', '/tmp/entrypoin... и будут автоматически восстановлены.\nEntrypoint check completed: updated links in AGENTS.md, CLAUDE.md\n', stderr='').returncode
+
+harness/common/testing/tests/test_ensure_entrypoint_links.py:441: AssertionError
+__ TestNotification.test_no_git_binary_or_repository_or_baseline_is_required ___
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40dcc3b0>
+
+    def test_no_git_binary_or_repository_or_baseline_is_required(self):
+        before = ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes())
+        result = self.check(git_available=False)
+        assert result.returncode == 0, result.stderr
+        assert POLICY in result.stdout
+>       assert before == ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes())
+E       AssertionError: assert (b'# Static s...@AGENTS.md\n') == (b'# Static s...@AGENTS.md\n')
+E         
+E         At index 0 diff: b'# Static settings\n\nKeep this setting.\n\n- [harness/common/START.md](harness/common/START.md)\n- [harness/project/START.md](harness/project/START.md)\n- [.claude/rules](.claude/rules/)\n\xd0\x94\xd0\xbe \xd0\xb2\xd1\x8b\xd0\xbf\xd0\xbe\xd0\xbb\xd0\xbd\xd0\xb5\xd0\xbd\xd0\xb8\xd1\x8f \xd0\xb7\xd0\xb0\xd0\xb4\xd0\xb0\xd1\x87\xd0\xb8 \xd0\xbf\xd1\x80\xd0\xbe\xd1\x87\xd0\xb8\xd1\x82\xd0\xb0\xd0\xb9 \xd0\xb2\xd1\x81\xd0\xb5 Markdown-\xd0\xbf\xd1\x80\xd0\xb0\xd0\xb2\xd0\xb8\xd0\xbb\xd0\xb0 \xd0\xb8\xd0\xb7 .claude/rules \xd0\xb8 \xd0\xb5\xd0\xb3\xd0\xbe \...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+harness/common/testing/tests/test_entrypoint_notifications.py:63: AssertionError
+_ TestNotification.test_instruction_change_is_reported_and_preserved_without_blocking _
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40dcfdd0>
+
+    def test_instruction_change_is_reported_and_preserved_without_blocking(self):
+        self.register_fixture()
+        agents = self.root / 'AGENTS.md'
+        changed = agents.read_text().replace('Keep this setting.', 'Changed setting.')
+        agents.write_text(changed)
+        result = self.check()
+        assert result.returncode == 0, result.stderr
+        assert POLICY in result.stdout
+        assert 'AGENTS.md' in result.stdout
+        assert 'inbox' in result.stdout
+        assert 'изменение настроек' in result.stdout
+>       assert agents.read_text() == changed
+E       AssertionError: assert '# Static set...t/INDEX.md)\n' == '# Static set...t/INDEX.md)\n'
+E         
+E         Skipping 169 identical leading characters in diff, use -v to show
+E           e/rules/)
+E         + - [harness/common/INDEX.md](harness/common/INDEX.md)
+E         + - [harness/project/INDEX.md](harness/project/INDEX.md)
+E           До выполнения задачи прочитай все Markdown-правила из .claude/rules и его подпапок, кроме README.human.md; соблюдай применимые требования.
+E           - [harness/common/INDEX.md](harness/common/INDEX.md)
+E           - [harness/project/INDEX.md](harness/project/INDEX.md)
+
+harness/common/testing/tests/test_entrypoint_notifications.py:76: AssertionError
+_ TestNotification.test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change _
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40dcc050>
+
+    def test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change(self):
+        agents = self.root / 'AGENTS.md'
+        original = agents.read_text() + '\n~~~md\n~~~example\n~~~\n'
+        agents.write_text(original)
+        self.register_fixture()
+        instruction = RULES_LINES.splitlines(keepends=True)[1]
+        changed = original.replace('~~~example\n', '~~~example\n' + instruction)
+        agents.write_text(changed)
+        result = self.check()
+        assert result.returncode == 0, result.stderr
+        assert 'изменение настроек' in result.stdout
+>       assert NOTICE not in result.stdout
+E       AssertionError: assert 'Стартовые с...сстановлены.' not in 'Прямое реда... AGENTS.md\n'
+E         
+E         'Стартовые ссылки п...ески восстановлены.' is contained here:
+E           >/inbox/.
+E           Стартовые ссылки повреждены и будут автоматически восстановлены.
+E           Entrypoint check completed: updated links in AGENTS.md
+
+harness/common/testing/tests/test_entrypoint_notifications.py:89: AssertionError
+_ TestNotification.test_repair_is_announced_and_next_run_has_no_damage_message _
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40dcc2f0>
+
+    def test_repair_is_announced_and_next_run_has_no_damage_message(self):
+        agents = self.root / 'AGENTS.md'
+        line = '- [harness/common/START.md](harness/common/START.md)\n'
+        agents.write_text(agents.read_text().replace(line, ''))
+        first = self.check(git_available=False)
+        assert first.returncode == 0, first.stderr
+        assert NOTICE in first.stdout
+        assert line in agents.read_text()
+>       assert NOTICE not in self.check(git_available=False).stdout
+E       AssertionError: assert 'Стартовые с...сстановлены.' not in 'Прямое реда... AGENTS.md\n'
+E         
+E         'Стартовые ссылки п...ески восстановлены.' is contained here:
+E           язателен.
+E           Стартовые ссылки повреждены и будут автоматически восстановлены.
+E           Entrypoint check completed: updated links in AGENTS.md
+
+harness/common/testing/tests/test_entrypoint_notifications.py:130: AssertionError
+_ TestNotification.test_crlf_link_repair_is_not_reported_as_a_settings_change __
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40dccb60>
+
+    def test_crlf_link_repair_is_not_reported_as_a_settings_change(self):
+        agents = self.root / 'AGENTS.md'
+        original = agents.read_bytes().replace(b'\n', b'\r\n')
+        line = b'- [harness/common/START.md](harness/common/START.md)\r\n'
+        original = original.replace(line, b'')
+        agents.write_bytes(original)
+        self.register_fixture()
+        first = self.check()
+        assert first.returncode == 0, first.stderr
+        assert NOTICE in first.stdout
+        repaired = agents.read_bytes()
+        assert repaired.startswith(b'# Static settings\r\n\r\nKeep this setting.\r\n\r\n')
+        assert b'\n' not in repaired.replace(b'\r\n', b'')
+        assert line in agents.read_bytes()
+        second = self.check()
+        assert second.returncode == 0, second.stderr
+>       assert NOTICE not in second.stdout
+E       AssertionError: assert 'Стартовые с...сстановлены.' not in 'Прямое реда... AGENTS.md\n'
+E         
+E         'Стартовые ссылки п...ески восстановлены.' is contained here:
+E           >/inbox/.
+E           Стартовые ссылки повреждены и будут автоматически восстановлены.
+E           Entrypoint check completed: updated links in AGENTS.md
+
+harness/common/testing/tests/test_entrypoint_notifications.py:191: AssertionError
+______ TestNotification.test_atomic_repair_preserves_permissions_and_crlf ______
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40dccb90>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cdc40b48920>
+
+    def test_atomic_repair_preserves_permissions_and_crlf(self, monkeypatch):
+        agents = self.damage_agents()
+        original = agents.read_bytes().replace(b'\n', b'\r\n')
+        agents.write_bytes(original)
+        agents.chmod(0o640)
+        module = self.load_checker()
+        replacements = []
+        original_replace = os.replace
+    
+        def replace(source, destination):
+            assert Path(destination).read_bytes() == original
+            assert Path(source).parent == agents.parent
+            replacements.append(destination)
+            return original_replace(source, destination)
+        monkeypatch.setattr(os, 'replace', replace)
+        module.ensure(self.root)
+>       assert replacements == [agents]
+E       AssertionError: assert [] == [PosixPath('/...0/AGENTS.md')]
+E         
+E         Right contains one more item: PosixPath('/tmp/pytest-of-octadim/pytest-7/test_atomic_repair_preserves_p0/AGENTS.md')
+E         Use -v to get more diff
+
+harness/common/testing/tests/test_entrypoint_notifications.py:222: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+Сравнение настроек с историей не проверено: нет истории этого проекта.
+Стартовые ссылки повреждены и будут автоматически восстановлены.
+_______ TestNotification.test_parallel_edit_during_planning_is_preserved _______
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40de9400>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cdc40e5a840>
+
+    def test_parallel_edit_during_planning_is_preserved(self, monkeypatch):
+        agents = self.damage_agents()
+        module = self.load_checker()
+        repair = module.repair_startup_blocks
+    
+        def changed(*args):
+            result = repair(*args)
+            agents.write_bytes(b'# Concurrent edit\n')
+            return result
+        monkeypatch.setattr(module, 'repair_startup_blocks', changed)
+>       with pytest.raises(ValueError, match='changed'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+harness/common/testing/tests/test_entrypoint_notifications.py:237: Failed
+----------------------------- Captured stdout call -----------------------------
+Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+Сравнение настроек с историей не проверено: нет истории этого проекта.
+Стартовые ссылки повреждены и будут автоматически восстановлены.
+_ TestNotification.test_concurrent_bridge_edit_after_first_replace_reports_partial_result _
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40de9370>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cdc40e59ee0>
+
+    def test_concurrent_bridge_edit_after_first_replace_reports_partial_result(self, monkeypatch):
+        agents = self.damage_agents()
+        bridge = self.root / 'CLAUDE.md'
+        bridge.write_bytes(b'User bridge\n')
+        module = self.load_checker()
+        replace = os.replace
+    
+        def changed(source, destination):
+            result = replace(source, destination)
+            if Path(destination) == agents:
+                bridge.write_bytes(b'Concurrent bridge\n')
+            return result
+        monkeypatch.setattr(os, 'replace', changed)
+>       with pytest.raises(ValueError, match='AGENTS.md') as error:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+harness/common/testing/tests/test_entrypoint_notifications.py:254: Failed
+----------------------------- Captured stdout call -----------------------------
+Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+Сравнение настроек с историей не проверено: нет истории этого проекта.
+Стартовые ссылки повреждены и будут автоматически восстановлены.
+CLAUDE.md: требуется единственная строка @AGENTS.md; дополнительное или отличающееся содержимое сохранено. Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+_ TestNotification.test_atomic_io_failure_preserves_original_and_removes_temporary_file[create] _
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40de8dd0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cdc40b7e8a0>
+failure = 'create'
+
+    @pytest.mark.parametrize('failure', ('create', 'replace', 'write'))
+    def test_atomic_io_failure_preserves_original_and_removes_temporary_file(self, monkeypatch, failure):
+        agents = self.damage_agents()
+        original = agents.read_bytes()
+        module = self.load_checker()
+    
+        def fail(*args, **kwargs):
+            raise OSError('injected I/O failure')
+        if failure == 'replace':
+            monkeypatch.setattr(os, 'replace', fail)
+        elif failure == 'create':
+            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', fail)
+        else:
+            create = module.tempfile.NamedTemporaryFile
+    
+            class BrokenWriter:
+                def __init__(self, *args, **kwargs):
+                    self.file = create(*args, **kwargs)
+                    self.name = self.file.name
+    
+                def __enter__(self):
+                    return self
+    
+                def __exit__(self, *args):
+                    self.file.close()
+    
+                def write(self, data):
+                    self.file.write(data[:2])
+                    raise OSError('injected I/O failure')
+            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', BrokenWriter)
+>       with pytest.raises((OSError, ValueError), match='injected I/O failure'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (<class 'OSError'>, <class 'ValueError'>)
+
+harness/common/testing/tests/test_entrypoint_notifications.py:291: Failed
+----------------------------- Captured stdout call -----------------------------
+Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+Сравнение настроек с историей не проверено: нет истории этого проекта.
+Стартовые ссылки повреждены и будут автоматически восстановлены.
+_ TestNotification.test_atomic_io_failure_preserves_original_and_removes_temporary_file[replace] _
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40de8e60>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cdc40b7d6a0>
+failure = 'replace'
+
+    @pytest.mark.parametrize('failure', ('create', 'replace', 'write'))
+    def test_atomic_io_failure_preserves_original_and_removes_temporary_file(self, monkeypatch, failure):
+        agents = self.damage_agents()
+        original = agents.read_bytes()
+        module = self.load_checker()
+    
+        def fail(*args, **kwargs):
+            raise OSError('injected I/O failure')
+        if failure == 'replace':
+            monkeypatch.setattr(os, 'replace', fail)
+        elif failure == 'create':
+            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', fail)
+        else:
+            create = module.tempfile.NamedTemporaryFile
+    
+            class BrokenWriter:
+                def __init__(self, *args, **kwargs):
+                    self.file = create(*args, **kwargs)
+                    self.name = self.file.name
+    
+                def __enter__(self):
+                    return self
+    
+                def __exit__(self, *args):
+                    self.file.close()
+    
+                def write(self, data):
+                    self.file.write(data[:2])
+                    raise OSError('injected I/O failure')
+            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', BrokenWriter)
+>       with pytest.raises((OSError, ValueError), match='injected I/O failure'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (<class 'OSError'>, <class 'ValueError'>)
+
+harness/common/testing/tests/test_entrypoint_notifications.py:291: Failed
+----------------------------- Captured stdout call -----------------------------
+Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+Сравнение настроек с историей не проверено: нет истории этого проекта.
+Стартовые ссылки повреждены и будут автоматически восстановлены.
+_ TestNotification.test_atomic_io_failure_preserves_original_and_removes_temporary_file[write] _
+
+self = <harness.common.testing.tests.test_entrypoint_notifications.TestNotification object at 0x7cdc40de8bc0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cdc40b7f080>
+failure = 'write'
+
+    @pytest.mark.parametrize('failure', ('create', 'replace', 'write'))
+    def test_atomic_io_failure_preserves_original_and_removes_temporary_file(self, monkeypatch, failure):
+        agents = self.damage_agents()
+        original = agents.read_bytes()
+        module = self.load_checker()
+    
+        def fail(*args, **kwargs):
+            raise OSError('injected I/O failure')
+        if failure == 'replace':
+            monkeypatch.setattr(os, 'replace', fail)
+        elif failure == 'create':
+            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', fail)
+        else:
+            create = module.tempfile.NamedTemporaryFile
+    
+            class BrokenWriter:
+                def __init__(self, *args, **kwargs):
+                    self.file = create(*args, **kwargs)
+                    self.name = self.file.name
+    
+                def __enter__(self):
+                    return self
+    
+                def __exit__(self, *args):
+                    self.file.close()
+    
+                def write(self, data):
+                    self.file.write(data[:2])
+                    raise OSError('injected I/O failure')
+            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', BrokenWriter)
+>       with pytest.raises((OSError, ValueError), match='injected I/O failure'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (<class 'OSError'>, <class 'ValueError'>)
+
+harness/common/testing/tests/test_entrypoint_notifications.py:291: Failed
+----------------------------- Captured stdout call -----------------------------
+Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.
+Сравнение настроек с историей не проверено: нет истории этого проекта.
+Стартовые ссылки повреждены и будут автоматически восстановлены.
+=========================== short test summary info ============================
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[-START.md-common]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[-START.md-project]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[-INDEX.md-common]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[-INDEX.md-project]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[ \r\n-START.md-common]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[ \r\n-START.md-project]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[ \r\n-INDEX.md-common]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[ \r\n-INDEX.md-project]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[\xff-START.md-common]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[\xff-START.md-project]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[\xff-INDEX.md-common]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_empty_or_invalid_utf8_resources_refuse_before_input_writes[\xff-INDEX.md-project]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_rule_copies_are_refused_without_automatic_publication[missing-directory]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_rule_copies_are_refused_without_automatic_publication[missing-copy]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_rule_copies_are_refused_without_automatic_publication[different-copy]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_rule_copies_are_refused_without_automatic_publication[extra-copy]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_rule_copies_are_refused_without_automatic_publication[empty-source]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_rule_copies_are_refused_without_automatic_publication[invalid-utf8-source]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_invalid_rule_copies_are_refused_without_automatic_publication[nested-canonical]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_complete_block_in_wrong_order_refuses_without_reordering_user_file
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_repeated_block_with_two_missing_links_is_repaired_locally
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_ambiguous_partial_link_list_refuses_without_adding_to_user_list
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_container_fenced_examples_do_not_supply_startup_connections[> -> ]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_container_fenced_examples_do_not_supply_startup_connections[> > -> > ]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_container_fenced_examples_do_not_supply_startup_connections[- -  ]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_container_fenced_examples_do_not_supply_startup_connections[> - ->   ]
+FAILED harness/common/testing/tests/test_ensure_entrypoint_links.py::TestEntryPointLinks::test_unclosed_quote_fence_refuses_without_autoclosing
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_no_git_binary_or_repository_or_baseline_is_required
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_instruction_change_is_reported_and_preserved_without_blocking
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_repair_is_announced_and_next_run_has_no_damage_message
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_crlf_link_repair_is_not_reported_as_a_settings_change
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_atomic_repair_preserves_permissions_and_crlf
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_parallel_edit_during_planning_is_preserved
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_concurrent_bridge_edit_after_first_replace_reports_partial_result
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_atomic_io_failure_preserves_original_and_removes_temporary_file[create]
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_atomic_io_failure_preserves_original_and_removes_temporary_file[replace]
+FAILED harness/common/testing/tests/test_entrypoint_notifications.py::TestNotification::test_atomic_io_failure_preserves_original_and_removes_temporary_file[write]
+38 failed, 83 passed in 7.00s
