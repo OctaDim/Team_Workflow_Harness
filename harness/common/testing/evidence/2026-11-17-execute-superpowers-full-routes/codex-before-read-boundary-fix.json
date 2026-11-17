@@ -1,0 +1,748 @@
+{
+  "menu_sha256": "2418bbf29789311218968ce44239f57ffc071ac1c7091522d836988168b018d8",
+  "matrix": {
+    "baseline/both/implicit": {
+      "file": "baseline-both-codex-implicit-retry-bd0135-codex-implicit.status",
+      "checks": {
+        "runs_to_completion": true,
+        "new_resource_absent": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2464,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "output_bytes": 33478,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/INDEX.md && cat harness/project/INDEX.md && rg --files --hidden --no-ignore .agents/skills harness/common/skills harness/project/skills -g '*.md' -g '\"'!README.human.md'\"' | rg 'superpowers|development-workflow|brainstorming|writing-plans|subagent-driven'\"",
+          "output_bytes": 9997,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/subagent-driven-development/SKILL.md .agents/skills/subagent-driven-development/references/resuming.md .agents/skills/subagent-driven-development/references/fix-loop.md .agents/skills/subagent-driven-development/references/preflight.md .agents/skills/subagent-driven-development/references/final-review.md harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "output_bytes": 32432,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-select-development-workflow/SKILL.md harness/common/skills/comm-select-development-workflow/references/menu.md .agents/skills/using-superpowers/references/codex-tools.md && rg -n 'approved|harness|worktree|verification|confirm|commit' .agents/skills/{brainstorming,writing-plans,finishing-a-development-branch,test-driven-development,verification-before-completion}/SKILL.md\"",
+          "output_bytes": 17598,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 226285,
+          "cached_input_tokens": 192640,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1801,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Возобновил бы **первую задачу без строки `Task <N>: complete`**. Если её последняя запись — `fix round R/5`, продолжил бы с раунда `R+1`. После пятого раунда разобрал бы оставшиеся замечания по правилам fix-loop. Завершённые задачи повторно не делегируются.\n\n**Как найти и сверить журнал**\n\n- С точным путём к согласованному `PLAN_FILE` штатная команда `bash scripts/sdd-workspace PLAN_FILE` указывает отдельный каталог плана под `<repo-root>/.superpowers/sdd/`. Журнал лежит в `<workspace>/progress.md`, рядом с брифами, отчётами и пакетами ревью.\n- Первая строка должна совпадать с `# SDD ledger — plan: <plan file path>`. Журнал с другим путём и старый общий `.superpowers/sdd/progress.md` оставляю на месте. Для восстановления сверяю записи о завершённых задачах, номер раунда, открытые замечания и диапазоны коммитов с отчётом исполнителя и `git log`. Если рабочий каталог был удалён, восстанавливаю подтверждённый прогресс по истории Git. [Возобновление](/tmp/harness-full-routes.sX93GCkU/baseline-both-codex-implicit-retry-bd0135/.agents/skills/subagent-driven-development/references/resuming.md)\n\n**Полный маршрут**\n\n1. `using-superpowers` → `brainstorming` → согласование дизайна и спецификации → `writing-plans` → согласование плана → `subagent-driven-development`. Выбранный маршрут и согласованный план сохраняют силу при возобновлении.\n2. В `subagent-driven-development` — изолированный worktree, сверка журнала, плана и спецификации. Перед первой задачей проводится проверка конфликтов с записью решений в журнал. Спецификация задаёт требования при расхождении с планом.\n3. Для каждой новой задачи — отдельный исполнитель с брифом и зафиксированным `BASE`, реализация и тесты по TDD, отчёт и самопроверка, затем отдельное ревью диапазона `BASE..HEAD`. Для прохождения нужны оба вердикта: соответствие спецификации и качество кода. Исполнители работают последовательно и сами никого не делегируют.\n4. Перед каждым fix-раундом перечитываю `fix-loop.md`. В раундах 1–3 возвращаю замечания исходному исполнителю через `followup_task`, если он доступен. Если его нельзя возобновить, новый получает бриф, отчёт и открытые замечания. В раундах 4–5 подключается новый исполнитель с более сильной моделью. Каждый раунд включает исправление, команду и вывод целевых тестов, ревью только изменений раунда (`FIX_BASE..HEAD`) и запись в журнале. `Minor` откладываются до итогового ревью. После пятого раунда фиксирую решение по каждому открытому замечанию и передаю критичные для зависимых задач решения дальше. [Fix-loop](/tmp/harness-full-routes.sX93GCkU/baseline-both-codex-implicit-retry-bd0135/.agents/skills/subagent-driven-development/references/fix-loop.md)\n5. После всех задач — ревью всей ветки от `MERGE_BASE` до `HEAD`, включая отложенные замечания. При замечаниях предусмотрены одна общая волна исправлений и одно повторное ревью её diff. Затем — свежая проверка перед заявлением о готовности и `finishing-a-development-branch`. Все `Ruling:` выносятся в итоговый отчёт до очистки каталога этого плана. [Итоговое ревью](/tmp/harness-full-routes.sX93GCkU/baseline-both-codex-implicit-retry-bd0135/.agents/skills/subagent-driven-development/references/final-review.md)\n\nВыбор маршрута действует в пределах согласованной работы. Отдельного решения требуют необратимые или разрушительные операции, действия с риском для безопасности, внешние операции вроде merge, push или публикации и ситуация, когда дефект плана делает любой следующий шаг догадкой. Защита harness, evidence и статичных входов действует на всех этапах.\n\nСтартовая проверка завершилась с кодом `0`. В этом сеансе я прочитал агентские инструкции проекта. Фактический журнал, план и коммиты не проверял, рабочий процесс не запускал, файлы не редактировал и задачи не делегировал."
+    },
+    "baseline/common/explicit": {
+      "file": "baseline-common-codex-explicit-retry-588849-codex-explicit.status",
+      "checks": {
+        "runs_to_completion": true,
+        "new_resource_absent": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 2464,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+          "output_bytes": 33478,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 4015,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md harness/common/skills/comm-select-development-workflow/references/choice.md harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 10759,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n 'harness|[Жж]урнал|cleanup|handoff|specs/|plans/' .agents/skills/{brainstorming,writing-plans,executing-plans,finishing-a-development-branch}/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/{SKILL.md,references/material-placement.md}; rg -l 'журнал|handoff' harness/common/skills/comm-select-development-workflow .agents/skills/{brainstorming,writing-plans,executing-plans,finishing-a-development-branch} -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 3386,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n 'журнал|handoff harness|superpowers|очистк' harness/common/{skills,rules,base} -g '*.md' -g '\"'!README.human.md'\"' | head -110; cat .agents/skills/executing-plans/SKILL.md harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md\"",
+          "output_bytes": 22595,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-preserve-harness-knowledge/SKILL.md; rg -n 'handoff|progress.md|\\\\.superpowers|очистк|журнал' harness/common/specs/2026-10-06-structure-and-creation-dates.md .agents/skills/{brainstorming,writing-plans,finishing-a-development-branch}/SKILL.md; sed -n '215,270p' .agents/skills/brainstorming/SKILL.md; sed -n '180,215p' .agents/skills/writing-plans/SKILL.md; rg -n 'handoff|cleanup' harness/common/skills/comm-process-harness-inbox -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 6801,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/specs/2026-10-06-structure-and-creation-dates.md; sed -n '157,211p' .agents/skills/finishing-a-development-branch/SKILL.md; rg -n 'handoff|progress.md' harness/project/{rules,skills} .agents/skills/comm-select-development-workflow -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 10860,
+          "exit_code": 1
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 358056,
+          "cached_input_tokens": 310144,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1848,
+          "reasoning_output_tokens": 10
+        }
+      ],
+      "answer": "Стартовая проверка прошла. `comm-select-development-workflow` принимает ваш явный выбор **полного Superpowers через одного агента**. Повторное меню не требуется. Маршрут я не запускал, файлы не менял и работу не делегировал.\n\n1. **`brainstorming`** — уточнить требования, рассмотреть подходы и подготовить спецификацию в `harness/project/specs/YYYY-MM-DD-<topic>-design.md`. Получить ваше согласование дизайна перед переходом к плану.\n2. **`writing-plans`** — подготовить и самостоятельно проверить план в `harness/project/docs/plans/YYYY-MM-DD-<feature-name>.md`. Получить ваше подтверждение плана перед реализацией. Выбор исполнителя уже сделан.\n3. **`executing-plans`** — в изолированной рабочей области основной агент выполняет задачи по порядку, проверяет RED → GREEN, фиксирует результаты проверок, отклонения и коммиты. Штатный временный журнал скилла находится в `<repo-root>/.superpowers/sdd/<plan-basename>/progress.md`. Затем проходит итоговое ревью всей ветки. Штатно для него предусмотрен отдельный ревьюер при доступности и разрешении на делегирование. Существенные замечания исправляются с повторной проверкой, отложенные фиксируются.\n4. **`finishing-a-development-branch`** — после проверок выбрать способ завершения ветки. Временный каталог конкретного плана можно очистить после чистого итогового ревью, коммитов исправлений и сохранения всех нужных постоянных результатов. Соседние каталоги планов сохраняются. Собственный worktree Superpowers удаляется после локального слияния или явно подтверждённого отказа от работы. При создании PR, сохранении ветки или внешнем владении worktree остаётся. Если удаление блокируют незакоммиченные файлы, требуется решение пользователя.\n\nПостоянные результаты приложения хранятся в `harness/project/` вне временного каталога и inbox. Спецификация и план остаются по указанным путям, принятые решения идут в `decisions/`, исследования в `docs/`, результаты проверок в `testing/evidence/work/`, а контекст незавершённой работы в `handoffs/`. Перед очисткой временного журнала нужно сохранить значимые решения, отклонения и результаты с их фактическими статусами. Исходные логи и снимки сохраняются, исправления завершённых отчётов оформляются датированным дополнением. Разрешение на обычную запись не распространяется на перенос или очистку существующих материалов.\n\n**Разрешение на handoff зависит от содержания.** Для разрешённой записи о работе над приложением в `harness/project/handoffs/` отдельное подтверждение и inbox не нужны. Если handoff относится к механизму project harness, нужно явное разрешение на соответствующую стадию через `harness/project/inbox/`. Для любого handoff в common действует `harness/common/inbox/`. Прямая правка защищённого материала требует явного указания конкретной операции и отдельного положительного ответа после вопроса агента. Ваш текущий запрос разрешает только описание маршрута."
+    },
+    "candidate/both/explicit": {
+      "file": "candidate-both-codex-explicit-retry-a9c843-codex-explicit.status",
+      "checks": {
+        "runs_to_completion": true,
+        "rule_read": true,
+        "routes_skill_read": true,
+        "full_resource_read": true,
+        "expected_stages": true,
+        "native_ledger": true,
+        "native_docs": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-startup-readiness.md\"'",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md .agents/skills/using-superpowers/SKILL.md'",
+          "output_bytes": 3884,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/full-superpowers.md .agents/skills/using-superpowers/references/codex-tools.md'",
+          "output_bytes": 5977,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n 'docs/|ledger|cleanup|удал|result|marker|workspace' .agents/skills/{brainstorming,writing-plans,executing-plans,finishing-a-development-branch} -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 9491,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"sed -n '123,145p;238,307p' .agents/skills/executing-plans/SKILL.md; rg -n 'superpowers/|marker|Marker' .agents/skills/subagent-driven-development -g '*.md' -g '\"'!README.human.md'\"'; sed -n '216,250p' .agents/skills/brainstorming/SKILL.md; sed -n '180,220p' .agents/skills/writing-plans/SKILL.md\"",
+          "output_bytes": 8815,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n 'permanent|постоянн|verification/|Superpowers|plan-file|marker' harness/common/skills/comm-select-development-workflow harness/common/skills/comm-preserve-harness-knowledge .agents/skills/verification-before-completion .agents/skills/writing-plans -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 2232,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n -i 'verification records|verification results|permanent results|постоянные результаты|plan marker|superpowers/(verification|results|evidence|checks)|\\\\.plan-file' .agents/skills harness/common/skills -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 620,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/verification-before-completion/SKILL.md .agents/skills/subagent-driven-development/references/resuming.md; rg -n -i 'verification|results|marker' .agents/skills/executing-plans/SKILL.md .agents/skills/subagent-driven-development/SKILL.md\"",
+          "output_bytes": 5536,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n --hidden -i 'docs/superpowers/|постоянные результаты проверок' .agents/skills harness/common/rules harness/project/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 573,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 424023,
+          "cached_input_tokens": 383616,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1745,
+          "reasoning_output_tokens": 9
+        }
+      ],
+      "answer": "Startup-проверка завершилась с кодом `0`. По `comm-select-development-workflow` ваш явный выбор фиксирует полный Superpowers через одного агента с исполнителем `executing-plans`. Повторный выбор маршрута не нужен. Файлы проекта не менялись, рабочий процесс не запускался, делегирования не было.\n\n1. **`using-superpowers` → `brainstorming`.** Подготовить спецификацию в `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` и получить ваше согласование до перехода к плану.\n2. **`writing-plans`.** Сохранить план в `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`, связать его со спецификацией и описать проверки. До реализации получить ваше согласование плана и проверок. Выбор исполнителя уже сделан.\n3. **`executing-plans` → `test-driven-development`.** Использовать изолированное рабочее дерево и каталог плана `.superpowers/sdd/<plan-basename>/`. Журнал находится в `.superpowers/sdd/<plan-basename>/progress.md`. При возобновлении сверить маркер плана и первую строку журнала, затем продолжить с первой незавершённой задачи или ожидающего раунда исправлений. Для каждой задачи зафиксировать ожидаемый RED до изменения и GREEN после него.\n4. **Итоговое ревью → `verification-before-completion`.** Для критических и важных замечаний предусмотрен один проход исправлений с RED → GREEN и прогоном полного набора тестов. Мелкие замечания и принятые решения фиксируются в журнале. Если обязательный шаг ревью требует делегирования, при вашем запрете этот шаг останавливается с сохранением выбранного маршрута.\n5. **Очистка → `finishing-a-development-branch`.** Перед очисткой сохранить свидетельства согласований, коммитов и проверок, а решения и отложенные замечания вынести из журнала в итоговый отчёт. Временный каталог конкретного плана удаляется после чистого итогового ревью и коммита исправлений. Очистка рабочего дерева зависит от выбранного завершения ветки и от того, кто создал рабочее дерево.\n\n**Постоянные результаты проверок** сохраняются по штатным путям Superpowers. Прочитанные инструкции не задают отдельного точного каталога для этих результатов. Для материалов, оформляемых как свидетельства работы приложения в harness, предусмотрен `harness/project/testing/evidence/work/`. Свидетельства механизма harness защищены правилами соответствующего пакета.\n\n**Для handoff в harness нужно ваше явное указание.** Для проектной задачи его путь — `harness/project/handoffs/`. Возобновление по штатному журналу Superpowers отдельного handoff не требует."
+    },
+    "candidate/both/implicit": {
+      "file": "candidate-both-codex-implicit-retry-a0fb6d-codex-implicit.status",
+      "checks": {
+        "runs_to_completion": true,
+        "rule_read": true,
+        "routes_skill_read": true,
+        "full_resource_read": true,
+        "expected_stages": true,
+        "native_ledger": true,
+        "native_docs": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'ls -la .claude/rules && cat harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 3580,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -l --hidden --no-ignore 'fix-loop|plan_sha|журнал' .agents/skills harness/common/skills -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 122,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/subagent-driven-development/SKILL.md .agents/skills/subagent-driven-development/references/final-review.md'",
+          "output_bytes": 25145,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/subagent-driven-development/references/resuming.md .agents/skills/subagent-driven-development/references/fix-loop.md .agents/skills/using-superpowers/references/codex-tools.md && cat harness/common/skills/comm-select-development-workflow/SKILL.md && rg -n 'docs/superpowers|worktree|verification|commit' .agents/skills/{brainstorming,writing-plans,finishing-a-development-branch}/SKILL.md\"",
+          "output_bytes": 14809,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-select-development-workflow/references/full-superpowers.md && rg -n 'sha|hash|basename|git|mkdir' .agents/skills/subagent-driven-development/scripts/sdd-workspace\"",
+          "output_bytes": 2046,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/subagent-driven-development/scripts/sdd-workspace'",
+          "output_bytes": 3684,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 315329,
+          "cached_input_tokens": 277504,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1776,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка из `AGENTS.md` завершилась успешно. Прочитал `START.md` обоих пакетов, установленные правила и оба `INDEX.md` в заданном порядке. Рабочий процесс не запускал, файлы не менял, субагентов не вызывал.\n\n**Возобновление.** Выбор полного Superpowers через субагентов и согласование плана уже действуют. В изолированном рабочем дереве я бы продолжил с первого незавершённого задания. Если его последняя запись в журнале имеет вид `Task <N>: fix round <R>/5`, следующий шаг — раунд `R+1`. После записанного пятого раунда с открытыми замечаниями применяется процедура разбора остатка. Задания с `Task <N>: complete` повторно не делегируются. Записанные диапазоны коммитов сверяются с `git log`. [Инструкция по возобновлению](.agents/skills/subagent-driven-development/references/resuming.md)\n\n**Журнал и принадлежность плану.** Штатный `sdd-workspace PLAN_FILE` определяет каталог `<корень рабочего дерева>/.superpowers/sdd/<каталог-плана>/`. В нём лежат `progress.md`, задания для исполнителей, отчёты и пакеты ревью. Принадлежность проверяется по двум данным.\n\n- `plan-path` содержит нормализованный путь плана. Для плана внутри репозитория путь относительный к его корню, для внешнего — абсолютный. При совпадении имени файла скрипт пробует суффикс родительского каталога, затем числовой суффикс.\n- Первая строка `progress.md` должна называть тот же план в формате `# SDD ledger — plan: <plan file path>`. Это особенно важно для старого каталога без маркера, который скрипт может принять и пометить. Журнал с чужим заголовком и старый общий `.superpowers/sdd/progress.md` оставляются на месте.\n\nВ этом сеансе конкретный журнал не проверял. Скрипт определения каталога может создать каталог, маркер и `.gitignore`, поэтому его не запускал. [Скрипт SDD](.agents/skills/subagent-driven-development/scripts/sdd-workspace)\n\n**Очередность полного маршрута**\n\n1. Обязательный startup → `using-superpowers` → `brainstorming` → согласование спецификации → `writing-plans` → согласование связанного плана и проверок.\n2. `subagent-driven-development` → проверка изоляции рабочего дерева и журнала → предварительная проверка плана перед первой задачей. Для реализации действует TDD с наблюдаемым ожидаемым RED до правки и GREEN после неё, с применимыми согласованными исключениями.\n3. Один свежий исполнитель на задачу, последовательно и с изолированным контекстом. После реализации, тестов, коммита и самопроверки отдельный ревьюер даёт два вердикта: соответствие спецификации и качество. Пакет ревью строится от `BASE`, записанного перед задачей, до `HEAD`.\n4. При открытом fix-loop перечитывается `fix-loop.md` перед каждым раундом. В раундах 1–3 возобновляется исходный исполнитель через `followup_task`, если он доступен. В раундах 4–5 привлекается новый исполнитель с моделью минимум на ступень выше. Каждый раунд включает исправление, повтор покрывающих тестов с командой и выводом в отчёте, узкое ревью от `HEAD`, который видел предыдущий ревьюер, и запись в журнал. Minor откладываются до общего ревью. После пятого раунда остаток разбирается с записью `Ruling:` для каждого решения. Координатор сам код не исправляет.\n5. После всех задач — ревью всей ветки от точки ответвления, при замечаниях одна волна исправлений и одно узкое повторное ревью. Затем `verification-before-completion` → `finishing-a-development-branch`. Перед удалением рабочего каталога собираются все `Ruling:` с последствиями ошибочного решения. Очистка касается только каталога этого плана и выполняется после чистого финального ревью и слияния его исправлений. [Полный маршрут](harness/common/skills/comm-select-development-workflow/references/full-superpowers.md) · [Fix-loop](.agents/skills/subagent-driven-development/references/fix-loop.md) · [Финальное ревью](.agents/skills/subagent-driven-development/references/final-review.md)\n\nПри исполнении сохраняются ограничения harness на запись, защищённые свидетельства, inbox, интеграцию и публикацию. Штатные материалы Superpowers остаются в его каталогах, а harness handoff создаётся только по явному запросу. Если выбранный исполнитель или обязательный инструмент запрещён либо недоступен, зависимый шаг останавливается с сохранением выбранного маршрута. В текущем запросе эта граница проходит перед возобновлением fix-loop."
+    },
+    "candidate/both/menu": {
+      "file": "candidate-both-codex-menu-retry-e4728c-codex-menu.status",
+      "checks": {
+        "runs_to_completion": true,
+        "rule_read": true,
+        "routes_skill_read": true,
+        "full_resource_read": false,
+        "menu_order": true,
+        "exact_mandatory_alternatives": true,
+        "exact_review_quote": true,
+        "menu_full": true,
+        "positive_recommendation_absent": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules | sort'",
+          "output_bytes": 2585,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md; ls -l .claude/rules; ls harness/project'",
+          "output_bytes": 13048,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/INDEX.md harness/project/INDEX.md; rg --files --hidden --no-ignore .agents/skills -g 'SKILL.md' | rg 'using-superpowers|comm-select'\"",
+          "output_bytes": 8319,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 3884,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md harness/common/skills/comm-select-development-workflow/references/menu.md harness/common/skills/comm-select-development-workflow/references/full-superpowers.md'",
+          "output_bytes": 10102,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n -i 'reviewer|review|delegat' .agents/skills/executing-plans/SKILL.md .agents/skills/subagent-driven-development/SKILL.md\"",
+          "output_bytes": 13980,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"ls .agents/skills; rg -n 'reviewer|review' .agents/skills/{brainstorming,writing-plans}/SKILL.md .agents/skills/subagent-driven-development/references/final-review.md\"",
+          "output_bytes": 4845,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 283192,
+          "cached_input_tokens": 247936,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1241,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка прошла. Маршрут пока не выбран. Для рекомендации нужны описание реализации, её масштаб и требования к ревью. Ниже все варианты меню. Доступность `systematic-debugging`, `requesting-code-review` и скиллов `ce-*` по инструкциям проекта не подтверждена.\n\n1. **Superpowers, через одного агента.** `using-superpowers` → `brainstorming` → согласование спецификации с пользователем → `writing-plans` → согласование плана и проверок с сохранением выбранного исполнителя → `executing-plans` с TDD (RED → GREEN) → проверки и итоговое ревью всей ветки → `verification-before-completion` → `finishing-a-development-branch`. Основной агент реализует все задачи. Отдельный ревьюер со свежим контекстом проверяет всю ветку в конце, когда доступен инструмент субагентов и разрешено делегирование. При отсутствии инструмента основной агент проводит итоговое саморевью и явно указывает это.\n2. **Superpowers, через субагентов.** `using-superpowers` → `brainstorming` → согласование спецификации с пользователем → `writing-plans` → согласование плана и проверок с сохранением выбранного исполнителя → `subagent-driven-development` с TDD (RED → GREEN) → проверки и итоговое ревью всей ветки → `verification-before-completion` → `finishing-a-development-branch`. Для каждой задачи выделяется отдельный исполнитель. Ревьюер задачи проверяет и соответствие спецификации, и качество кода. Итоговый ревьюер проверяет всю ветку. Исправления проходят предусмотренные маршрутом повторные проверки.\n3. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n4. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n5. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n6. Согласование эксперимента → исследование → выводы.\n7. `brainstorming` с коротким дизайном в чате → согласование → реализация и проверка.\n8. `systematic-debugging` → установление первопричины → исправление и проверка.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nКогда будете готовы выбрать, укажите один номер."
+    },
+    "candidate/both/unrelated": {
+      "file": "candidate-both-codex-unrelated-retry-acbd3f-codex-unrelated.status",
+      "checks": {
+        "runs_to_completion": true,
+        "rule_read": true,
+        "routes_skill_read": true,
+        "full_resource_read": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+          "output_bytes": 3192,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'",
+          "output_bytes": 4762,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 208181,
+          "cached_input_tokens": 177792,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 438,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Локальная ветка Git — это именованная ссылка на коммит в вашем локальном репозитории, которая обновляется, когда вы создаёте новый коммит в этой ветке."
+    },
+    "candidate/common/explicit": {
+      "file": "candidate-common-codex-explicit-retry-2aa9c8-codex-explicit.status",
+      "checks": {
+        "runs_to_completion": true,
+        "rule_read": true,
+        "routes_skill_read": true,
+        "full_resource_read": true,
+        "expected_stages": true,
+        "native_ledger": true,
+        "native_docs": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; ls -la .claude/rules; rg --files --hidden -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 3583,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 3884,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md harness/common/skills/comm-select-development-workflow/references/full-superpowers.md'",
+          "output_bytes": 5977,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n -i 'docs/|ledger|cleanup|marker|verification|handoff|workspace' .agents/skills/{brainstorming,writing-plans,executing-plans,finishing-a-development-branch,verification-before-completion} -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 11556,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"sed -n '108,149p;240,307p' .agents/skills/executing-plans/SKILL.md\nrg -n 'execut|review|Spec:' .agents/skills/writing-plans/SKILL.md\nrg -n 'sdd/|worktrees|git-path|superpowers/verification' .agents/skills/{using-git-worktrees,subagent-driven-development,executing-plans} -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 8981,
+          "exit_code": 2
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n --hidden 'verification-results|verification/|permanent|постоянн|marker|маркер' .agents/skills/{brainstorming,writing-plans,executing-plans,subagent-driven-development} harness/common/skills/comm-select-development-workflow -g '*.md' -g '\"'!README.human.md'\"'\nsed -n '155,214p' .agents/skills/finishing-a-development-branch/SKILL.md\"",
+          "output_bytes": 1955,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n --hidden 'docs/superpowers|plan marker|маркер плана' .agents/skills harness/common/skills -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 898,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n -i 'results|evidence|record|log' .agents/skills/executing-plans/SKILL.md | tail -35\ncat harness/common/skills/comm-select-development-workflow/references/choice.md\nrg --files --hidden .agents .claude -g '*.md' -g '\"'!README.human.md'\"' | rg 'superpowers|verification'\"",
+          "output_bytes": 3125,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 394396,
+          "cached_input_tokens": 355840,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1752,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка harness прошла. Ваш явный выбор принят: полный Superpowers с исполнением в текущей сессии через `executing-plans`. Повторный выбор маршрута не требуется. В этой сессии я только прочитал инструкции и описал маршрут.\n\n1. **`using-superpowers` → `brainstorming`.** Согласовать дизайн и оформить спецификацию в `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`. Получить ваше согласование спецификации до перехода к плану.\n2. **`writing-plans`.** Подготовить план в `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`, связать его со спецификацией и указать команды проверок и ожидаемые результаты. Получить ваше согласование плана и проверок до реализации. Выбор исполнителя уже сделан.\n3. **`executing-plans` → `test-driven-development`.** Подготовить или проверить изолированное рабочее дерево. Журнал плана находится в `.superpowers/sdd/<plan-basename>/progress.md`. При возобновлении сверить маркер плана и первую строку журнала `# SDD ledger — plan: <plan file path>`, затем продолжить с первой незавершённой задачи или ожидающего раунда исправлений. По каждой задаче зафиксировать ожидаемый RED до изменения, GREEN после и результаты проверок.\n4. **Итоговый обзор → `verification-before-completion`.** Провести обзор всей ветки, выполнить один проход исправлений для критических и важных замечаний и заново запустить проверки. При запрете делегирования применим предусмотренный самостоятельный обзор отдельным проходом с записью в журнале и раскрытием в итоговом отчёте. Постоянные результаты штатных проверок остаются по штатным путям Superpowers. Прочитанные инструкции не задают для них отдельного каталога. Полные выводы задач во временной рабочей папке удаляются вместе с ней, а история Git сохраняет коммиты. Для отдельных свидетельств приложения, сохраняемых средствами harness, предусмотрен `harness/project/testing/evidence/work/`.\n5. **Очистка → `finishing-a-development-branch`.** После чистого итогового обзора и коммита исправлений собрать из журнала принятые решения и отложенные мелкие замечания для итогового отчёта. Затем удалить только `.superpowers/sdd/<plan-basename>/`. Рабочее дерево Superpowers очищается после локального слияния или явно подтверждённого отказа от изменений. При создании PR или сохранении ветки оно остаётся. Если обычному удалению мешают локальные файлы, нужно ваше решение об их судьбе.\n\n**Для handoff в harness нужно ваше явное указание.** Сам выбор полного Superpowers такого указания не даёт. Для обычной передачи контекста проекта предусмотрен `harness/project/handoffs/`. Подтверждение плана перед исполнением и возобновление по журналу Superpowers выполняются по своим процедурам."
+    },
+    "candidate/common/implicit": {
+      "file": "candidate-common-codex-implicit-retry-0ac926-codex-implicit.status",
+      "checks": {
+        "runs_to_completion": true,
+        "rule_read": true,
+        "routes_skill_read": true,
+        "full_resource_read": true,
+        "expected_stages": true,
+        "native_ledger": true,
+        "native_docs": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nrg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md\nfind .claude/rules -type l -printf '%p %l\\\\n'\"",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n -i 'fix-loop|журнал|implicit.retry' .agents/skills harness/common/skills -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 1022,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-select-development-workflow/SKILL.md .agents/skills/subagent-driven-development/SKILL.md\nls .agents/skills/subagent-driven-development/references'",
+          "output_bytes": 23492,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/full-superpowers.md .agents/skills/subagent-driven-development/references/resuming.md .agents/skills/subagent-driven-development/references/fix-loop.md .agents/skills/subagent-driven-development/references/final-review.md .agents/skills/using-superpowers/references/codex-tools.md'",
+          "output_bytes": 13287,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n -i 'marker|sha256|implicit|docs/superpowers|retry' .agents/skills/subagent-driven-development .agents/skills/writing-plans .agents/skills/brainstorming harness/common/skills/comm-select-development-workflow -g '*.md' -g '\"'!README.human.md'\"'\ncat .agents/skills/subagent-driven-development/scripts/sdd-workspace\"",
+          "output_bytes": 4760,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 286798,
+          "cached_input_tokens": 261248,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1880,
+          "reasoning_output_tokens": 9
+        }
+      ],
+      "answer": "Стартовая проверка завершилась успешно. Я прочитал инструкции проекта. Рабочий процесс не запускал, задачи не делегировал, файлы не менял. Выбранный маршрут через субагентов и согласованный план сохраняются. Повторное меню и повторное согласование для продолжения того же плана не нужны.\n\n### Как найду журнал и продолжу\n\n1. **Сверю рабочее дерево и точный путь согласованного плана.** Журнал находится в `<корень рабочего дерева>/.superpowers/sdd/<каталог плана>/progress.md`. При разрешённом запуске каталог определяет `bash scripts/sdd-workspace PLAN_FILE`. Этот скрипт может записать маркер и `.gitignore`, поэтому в режиме чтения его не запускаю.\n2. **Проверю два признака принадлежности.** Файл `plan-path` должен содержать нормализованный путь к плану, относительный к корню рабочего дерева для плана внутри репозитория и абсолютный для внешнего. Первая строка `progress.md` должна идентифицировать тот же план в формате `# SDD ledger — plan: <plan file path>`. При совпадении имён файлов скрипт различает каталоги суффиксом родительской папки, затем счётчиком. Старый каталог без маркера скрипт может принять в работу, поэтому для возобновления важна проверка заголовка журнала. Чужой журнал и старый общий `.superpowers/sdd/progress.md` оставлю на месте.\n3. **Восстановлю точку продолжения по журналу и Git.** Сверю записанные коммиты с `git log` в нужном рабочем дереве. Строки `Task N: complete` закрывают задачи. У первой незавершённой задачи последняя записанная строка `fix round R/5` означает продолжение с раунда `R+1`. Если прерывание случилось до записи раунда, сначала сверю отчёт исполнителя, коммиты и результат повторного ревью, чтобы определить, какая часть раунда ещё открыта. При потере журнала история Git служит источником восстановления. [Процедура возобновления](.agents/skills/subagent-driven-development/references/resuming.md)\n\n### Порядок полного маршрута\n\n1. Обязательный startup harness → `using-superpowers` → `brainstorming` → согласование спецификации → `writing-plans` → согласование связанного плана и проверок.\n2. `subagent-driven-development` → изолированное рабочее дерево, журнал и предварительная сверка плана со спецификацией → задачи по очереди. Для реализации применяется `test-driven-development` с наблюдаемым ожидаемым RED до изменения и GREEN после него, с учётом применимых согласованных исключений. На каждую задачу назначается отдельный исполнитель. После его отчёта обязательны оба вердикта ревью, по соответствию спецификации и по качеству.\n3. При провале проверки спецификации, Critical/Important или подтверждённом пробеле — **fix-loop**, максимум пять раундов на задачу. Перед каждым раундом перечитываю процедуру. В раундах 1–3 возобновляю исходного исполнителя через `followup_task`. В раундах 4–5 назначается новый исполнитель с моделью как минимум на ступень выше. Каждый раунд включает исправление, запуск охватывающих тестов с записью команды и вывода, ревью только изменений раунда и запись результата в журнал. Minor откладываются до итогового ревью. На пределе по каждому открытому замечанию записывается решение, а дефект, от которого зависит следующая задача, учитывается в её задании.\n4. После всех задач — ревью всей ветки, при замечаниях одна общая волна исправлений и одно повторное ревью её изменений. Затем `verification-before-completion` → `finishing-a-development-branch`. Перед разрешённой очисткой временного каталога этого плана переношу из журнала все `Ruling:` в итоговый отчёт. [Полный маршрут](harness/common/skills/comm-select-development-workflow/references/full-superpowers.md) · [Fix-loop](.agents/skills/subagent-driven-development/references/fix-loop.md) · [Итоговое ревью](.agents/skills/subagent-driven-development/references/final-review.md)\n\n**Ограничения.** Исполнители работают последовательно и сами не делегируют. Контроллер ведёт журнал и принимает решения по ревью, исправления выполняет назначенный исполнитель. Если делегирование запрещено или необходимый инструмент недоступен, зависимый шаг останавливается с сохранением выбранного маршрута. Разрушительные и чувствительные к безопасности действия, слияние, отправка в общую ветку и публикация подчиняются отдельным разрешениям. Работа также останавливается, если дефект плана оставляет только догадки. Спецификация, план, журнал и результаты проверок остаются по штатным путям Superpowers. Правила inbox и защиты свидетельств продолжают действовать, а handoff в harness создаётся только по явному указанию. [.claude/rules/comm-user-owned-entrypoints.md](.claude/rules/comm-user-owned-entrypoints.md)"
+    },
+    "candidate/common/menu": {
+      "file": "candidate-common-codex-menu-retry-c5da24-codex-menu.status",
+      "checks": {
+        "runs_to_completion": true,
+        "rule_read": true,
+        "routes_skill_read": true,
+        "full_resource_read": true,
+        "menu_order": true,
+        "exact_mandatory_alternatives": true,
+        "exact_review_quote": true,
+        "menu_full": true,
+        "positive_recommendation_absent": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nrg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-select-development-workflow/SKILL.md\nrg --files --hidden .agents/skills/using-superpowers -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 1157,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 7317,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md\nrg -n 'review|ревью' .agents/skills/{executing-plans,subagent-driven-development}/SKILL.md\"",
+          "output_bytes": 17540,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 243662,
+          "cached_input_tokens": 209920,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1222,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка завершилась успешно. Маршрут пока открыт для выбора.\n\n## Меню маршрутов\n\n1. **Superpowers, через одного агента.** `using-superpowers → brainstorming → согласование спецификации → writing-plans → согласование плана с сохранением выбранного исполнителя → executing-plans → проверки и итоговое ревью всей ветки → verification-before-completion → finishing-a-development-branch`. Основной агент реализует весь план. Итоговое ревью проводит отдельный субагент со свежим контекстом, когда он доступен. При отсутствии инструмента для субагентов основной агент проводит итоговое саморевью и отмечает это в отчёте.\n2. **Superpowers, через субагентов.** `using-superpowers → brainstorming → согласование спецификации → writing-plans → согласование плана с сохранением выбранного исполнителя → subagent-driven-development → проверки и ревью задач, затем итоговое ревью всей ветки → verification-before-completion → finishing-a-development-branch`. На каждую задачу назначается исполнитель. Отдельный ревьюер задачи проверяет и соответствие спецификации, и качество кода. После всех задач отдельный итоговый ревьюер оценивает всю ветку.\n3. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n4. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n5. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n6. **Короткий исследовательский маршрут.** Согласование эксперимента → исследование → выводы.\n7. **Короткий маршрут реализации.** `brainstorming` с коротким дизайном в чате → согласование → реализация и проверка.\n8. **Короткий маршрут исправления.** `systematic-debugging` → установление первопричины → исправление и проверка.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nПрименимость вариантов зависит от объёма и характера будущей реализации. Скиллы CE для вариантов 3–4 и `systematic-debugging` для варианта 8 в текущем наборе недоступны.\n\nДля выбора укажите один номер."
+    },
+    "candidate/common/unrelated": {
+      "file": "candidate-common-codex-unrelated-retry-60a00e-codex-unrelated.status",
+      "checks": {
+        "runs_to_completion": true,
+        "rule_read": true,
+        "routes_skill_read": true,
+        "full_resource_read": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+          "output_bytes": 3192,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'",
+          "output_bytes": 4762,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 208941,
+          "cached_input_tokens": 178304,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 600,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Локальная ветка Git — это именованная ссылка в вашем локальном репозитории, которая указывает на последний коммит этой ветки и обновляется при добавлении в неё новых коммитов."
+    }
+  }
+}
