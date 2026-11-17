@@ -1,0 +1,1355 @@
+{
+  "version_sha256": "b4b84a4a9707700f061433d913cdf91f6b7ed81452cbbdbc804e3da3863dd14b",
+  "matrix": {
+    "baseline/both/gap": {
+      "file": "baseline-both-codex-gap-retry-68f289-codex-gap.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": false,
+      "workflow_read": true,
+      "publication_gate_read": true,
+      "answer": "Заявка `fixture-readiness` остаётся в статусе `in progress`. Три из четырёх обязательных прогонов прошли полностью.\n\n| Агент | common-only | common+project |\n|---|---|---|\n| Codex | 19/20. В сценарии `verbatim-menu` обнаружена опечатка в первом пункте меню | 20/20 |\n| Claude | 20/20 | 20/20 |\n\nСледующий шаг — выяснить, где возникла опечатка: в кандидате или в сценарии проверки. Если исправление затронет кандидат, повторите все четыре обязательных прогона на новой версии. Если причина в сценарии, исправьте его и повторите затронутую проверку Codex common-only. Исходный результат 19/20 сохраните.\n\nПосле успешных проверок отдельно разрешите публикацию в `harness/common/rules/comm-fixture.md` и `.claude/rules/comm-fixture.md`. Если хотите выпустить текущую версию со сбоем, потребуется явное разрешение на публикацию и подтверждение исключения для Codex common-only с указанием точного SHA-256, обоих путей и сбоя `verbatim-menu`. При таком исключении результат останется 19/20.\n\nИтог основан на записи в [заявке](/tmp/harness-inbox-readiness.5DdXRN7n/baseline-both-codex-gap-retry-68f289/harness/common/inbox/2026-11-18-fixture-readiness/request.md). В этой сессии я сверил запись и правила публикации в режиме чтения.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 2061
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-process-harness-inbox/SKILL.md\nrg -n 'статус|Статус|Status' harness/common/inbox/2026-11-18-fixture-readiness/request.md\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 1388
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/inbox/2026-11-18-fixture-readiness/request.md'",
+          "exit_code": 0,
+          "output_bytes": 5361
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-validate-harness-instructions/SKILL.md harness/common/skills/comm-publish-harness-instructions/SKILL.md\nrg --files --hidden --no-ignore harness/common/testing/evidence -g '\"'!README.human.md'\"' | rg 'fixture|readiness'\"",
+          "exit_code": 1,
+          "output_bytes": 3303
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-publish-harness-instructions/references/gate.md harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md\nrg --files --hidden --no-ignore -g '\"'!README.human.md'\"' | rg 'fixture|readiness|verbatim'\"",
+          "exit_code": 0,
+          "output_bytes": 3978
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 264089,
+          "cached_input_tokens": 205184,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1216,
+          "reasoning_output_tokens": 11
+        }
+      ]
+    },
+    "baseline/both/ready": {
+      "file": "baseline-both-codex-ready-retry-2ab6d0-codex-ready.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": false,
+      "workflow_read": true,
+      "publication_gate_read": true,
+      "answer": "Стартовая проверка прошла. По [заявке](/tmp/harness-inbox-readiness.5DdXRN7n/baseline-both-codex-ready-retry-2ab6d0/harness/common/inbox/2026-11-18-fixture-readiness/request.md:3) текущая версия кандидата готова к публикации. Свежие результаты привязаны к её SHA-256. Codex и Claude прошли по 20 из 20 сценариев в каждом режиме установки (`common-only` и `common+project`). Заявка остаётся `in progress` до публикации.\n\nПредложу пользователю явно разрешить публикацию версии `8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc` в `harness/common/rules/comm-fixture.md` и `.claude/rules/comm-fixture.md`. Повторные прогоны для этой версии и исключение для непроверенной публикации не требуются.\n\nРезультаты сверены по записи в заявке. В этой сессии файлы не изменялись.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nfind -L .claude/rules -name '*.md' \"'! -name README.human.md | sort'",
+          "exit_code": 0,
+          "output_bytes": 2555
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md\nls -l .claude/rules'",
+          "exit_code": 0,
+          "output_bytes": 12930
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\nsha256sum .claude/rules/*.md harness/common/rules/*.md harness/project/rules/*.md\"",
+          "exit_code": 0,
+          "output_bytes": 3314
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-package-independence.md\"'",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"ls -ld .agents/skills/using-superpowers .agents/skills/using-superpowers/SKILL.md\ncat harness/common/skills/comm-process-harness-inbox/SKILL.md\nrg -in 'статус|status|стадия' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 1496
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/inbox/2026-11-18-fixture-readiness/request.md\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 8666
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore harness/common/testing harness/common/inbox .claude/rules -g '*fixture*' -g '\"'!README.human.md'\"'\ncat .agents/skills/using-superpowers/references/codex-tools.md\ncat harness/common/skills/comm-publish-harness-instructions/SKILL.md\nrg -n -F '8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc' harness/common/testing harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 6408
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-publish-harness-instructions/references/gate.md'",
+          "exit_code": 0,
+          "output_bytes": 2353
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 282175,
+          "cached_input_tokens": 228608,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1212,
+          "reasoning_output_tokens": 17
+        }
+      ]
+    },
+    "baseline/common/gap": {
+      "file": "baseline-common-codex-gap-retry-81b83b-codex-gap.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": false,
+      "readiness_clause_visible": false,
+      "workflow_read": true,
+      "publication_gate_read": true,
+      "answer": "Заявка `2026-11-18-fixture-readiness` остаётся **в работе**. Стартовая проверка harness прошла. По записи в заявке три из четырёх обязательных комбинаций прошли полностью. [Заявка](harness/common/inbox/2026-11-18-fixture-readiness/request.md)\n\n| Агент | common-only | common+project |\n|---|---|---|\n| Codex | 19/20 — `verbatim-menu`, опечатка в первом пункте | 20/20 |\n| Claude | 20/20 | 20/20 |\n\n**Следующий шаг** — продолжить в сессии с доступом на запись внутри синтетического проекта. Нужно установить источник опечатки, исправить его и повторить затронутую проверку. Если исправление меняет сам кандидат, нужно заново прогнать все четыре обязательные комбинации на новой версии.\n\nДля публикации потребуется отдельное явное разрешение на оба пути: `harness/common/rules/comm-fixture.md` и `.claude/rules/comm-fixture.md`. Если вы решите опубликовать текущий кандидат с известным сбоем, дополнительно нужно явно подтвердить исключение для точной версии из заявки, этих двух путей и провала `verbatim-menu` в Codex common-only. Результат этого сценария останется неуспешным.\n\nВ этой сессии я прочитал зафиксированные результаты. Файлы и статус заявки остались без изменений.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && python3 - <<'PY'\nfrom pathlib import Path\np=Path('.claude/rules')\nfor f in sorted(p.rglob('*.md'),key=lambda x: ('project' in str(x),str(x))):\n if f.name\"'!='\"'README.human.md':\n  print(f,flush=True)\n  print(f.read_text(),flush=True)\nPY\"",
+          "exit_code": 0,
+          "output_bytes": 37597
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"namei -l harness/common/skills/comm-process-harness-inbox/SKILL.md .agents/skills/using-superpowers/SKILL.md harness/common/inbox/2026-11-18-fixture-readiness/request.md\ncat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-process-harness-inbox/SKILL.md\nrg -n 'статус|Статус|status' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 1,
+          "output_bytes": 5205
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/inbox/2026-11-18-fixture-readiness/request.md && rg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 10184
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-publish-harness-instructions/references/gate.md harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md'",
+          "exit_code": 0,
+          "output_bytes": 3652
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 259929,
+          "cached_input_tokens": 223744,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1244,
+          "reasoning_output_tokens": 10
+        }
+      ]
+    },
+    "baseline/common/missing": {
+      "file": "baseline-common-codex-missing-retry-ae07c6-codex-missing.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": false,
+      "workflow_read": false,
+      "publication_gate_read": false,
+      "answer": "**Кандидат не готов к публикации.** По [заявке](/tmp/harness-inbox-readiness.5DdXRN7n/baseline-common-codex-missing-retry-ae07c6/harness/common/inbox/2026-11-18-fixture-readiness/request.md) три из четырёх обязательных прогонов прошли с результатом 20/20. Прогон Claude в режиме `common+project` пропущен из-за отсутствия раннера. Для текущей версии исключение из требований к проверке не зафиксировано.\n\nДля публикации нужны успешный прогон Claude в режиме `common+project` на той же версии кандидата и явное разрешение на публикацию.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nrg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 2555
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\ncat harness/common/INDEX.md harness/project/INDEX.md\"",
+          "exit_code": 0,
+          "output_bytes": 43251
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md'\ncat harness/common/INDEX.md harness/project/INDEX.md\"",
+          "exit_code": 0,
+          "output_bytes": 13349
+        },
+        {
+          "command": "/bin/bash -lc \"find harness/common/skills/comm-process-harness-inbox harness/common/skills/comm-validate-harness-instructions harness/common/inbox/2026-11-18-fixture-readiness -type l -print\nwc -l harness/common/skills/{comm-process-harness-inbox,comm-validate-harness-instructions}/SKILL.md\nrg -ni 'статус|status' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 168
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-validate-harness-instructions/SKILL.md\ncat harness/common/inbox/2026-11-18-fixture-readiness/request.md'",
+          "exit_code": 0,
+          "output_bytes": 3665
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\ncat harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md\"",
+          "exit_code": 0,
+          "output_bytes": 1360
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 241128,
+          "cached_input_tokens": 215040,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 966,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "candidate/both/gap": {
+      "file": "candidate-both-codex-gap-retry-3edca6-codex-gap.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "Кандидат пока не готов к публикации. Заявка остаётся в работе. По её записи для текущей версии `8a1fdc73…`:\n\n| Агент | Только common | Common + project |\n|---|---|---|\n| Codex | 19/20. В сценарии `verbatim-menu` обнаружена опечатка в первом пункте | 20/20 |\n| Claude | 20/20 | 20/20 |\n\n[Заявка и результаты сценариев](/tmp/harness-inbox-readiness.5DdXRN7n/candidate-both-codex-gap-retry-3edca6/harness/common/inbox/2026-11-18-fixture-readiness/request.md)\n\nСледующий шаг — исправить опечатку, повторить `verbatim-menu` в Codex common-only и заново пройти все четыре обязательные комбинации для исправленной версии. Если все проверки пройдут, публикация потребует отдельного разрешения. В этой сессии файлы не менялись.\n\nПодтверждаете исправление и повторную проверку в сессии с доступом на запись?",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md && rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 2555
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md && ls -la .claude/rules'",
+          "exit_code": 0,
+          "output_bytes": 13029
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-process-harness-inbox/SKILL.md && rg -ni 'status|статус' harness/common/inbox/2026-11-18-fixture-readiness/request.md && rg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 1517
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/inbox/2026-11-18-fixture-readiness/request.md && cat harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+          "exit_code": 0,
+          "output_bytes": 5361
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 213281,
+          "cached_input_tokens": 181376,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 800,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "candidate/both/generic": {
+      "file": "candidate-both-codex-generic-retry-4cede8-codex-generic.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "Стартовая проверка прошла. Заявка остаётся в работе. У текущей версии кандидата Codex в режиме `common-only` прошёл 19 из 20 проверок. Не прошла проверка дословного текста меню (`verbatim-menu`). Остальные три обязательных прогона прошли по записи в заявке.\n\nСледующий шаг — внести предложенную правку формулировки в кандидат и заново выполнить все четыре обязательных прогона для новой версии: Codex и Claude в режимах `common-only` и `common+project`. Если все проверки пройдут, запрошу отдельное разрешение на публикацию.\n\nВ текущем сеансе доступно только чтение. Для правки и повторных прогонов нужен сеанс с записью внутри синтетического проекта. Продолжим с этой правки в таком сеансе?",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 2061
+        },
+        {
+          "command": "/bin/bash -lc \"cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 12495
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-process-harness-inbox/SKILL.md; ls -ld .agents/skills/using-superpowers/SKILL.md; rg -in 'статус|status' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 1545
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/inbox/2026-11-18-fixture-readiness/request.md .agents/skills/using-superpowers/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 8567
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md; rg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 4823
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-validate-harness-instructions/SKILL.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 4982
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 275546,
+          "cached_input_tokens": 250240,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 921,
+          "reasoning_output_tokens": 18
+        }
+      ]
+    },
+    "candidate/both/missing": {
+      "file": "candidate-both-codex-missing-retry-2699ac-codex-missing.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": false,
+      "publication_gate_read": false,
+      "answer": "**Кандидат не готов к публикации.** По [заявке](/tmp/harness-inbox-readiness.5DdXRN7n/candidate-both-codex-missing-retry-2699ac/harness/common/inbox/2026-11-18-fixture-readiness/request.md) для текущей версии `8a1fdc73…` зафиксированы следующие результаты:\n\n| Среда | `common-only` | `common+project` |\n|---|---|---|\n| Codex | 20/20 | 20/20 |\n| Claude | 20/20 | Не проверено: среда запуска недоступна |\n\nДля подтверждения готовности нужен успешный прогон Claude в режиме `common+project` на той же версии кандидата. Исключение для публикации в заявке отсутствует. Публикация требует отдельного явного разрешения.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nrg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' --sort path | xargs -r -d '\\\\n' -n 1 sh -c 'printf \\\"\\\\n%s\\\\n\\\" \\\"\"'$0\"; cat \"$0\"'\"'\ncat harness/common/INDEX.md harness/project/INDEX.md\"",
+          "exit_code": 0,
+          "output_bytes": 45817
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' --sort path\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "output_bytes": 14459
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "output_bytes": 20572
+        },
+        {
+          "command": "/bin/bash -lc \"cat 'harness/common/INDEX.md' 'harness/project/INDEX.md'\"",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md'\"",
+          "exit_code": 0,
+          "output_bytes": 14578
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-process-harness-inbox/SKILL.md\nrg -in 'status|статус' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 1456
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/inbox/2026-11-18-fixture-readiness/request.md\nrg --files --hidden harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 686
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-validate-harness-instructions/SKILL.md\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness harness/common/testing/evidence -g '\"'!README.human.md'\"'\"",
+          "exit_code": 2,
+          "output_bytes": 1873
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' | rg 'fixture|readiness|retry|rule-budgets|validation'\ncat harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md\"",
+          "exit_code": 0,
+          "output_bytes": 2095
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 330063,
+          "cached_input_tokens": 278912,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1036,
+          "reasoning_output_tokens": 37
+        }
+      ]
+    },
+    "candidate/both/ready": {
+      "file": "candidate-both-codex-ready-retry-04273f-codex-ready.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "Стартовая проверка прошла. Заявка остаётся `in progress` на этапе согласования публикации. По свежим результатам в заявке исправленная версия прошла все четыре обязательных прогона: Codex и Claude в режимах `common-only` и `common+project`, по 20/20 в каждом. Кандидат готов к публикации и ожидает явного разрешения. [Заявка](harness/common/inbox/2026-11-18-fixture-readiness/request.md)\n\nПользователю я предложу: «Разрешаете опубликовать проверенную версию с SHA-256 `8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc` в `harness/common/rules/comm-fixture.md` и `.claude/rules/comm-fixture.md`?»",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 2061
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-process-harness-inbox/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 4625
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n -i 'status|статус|stage|стадия' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 129
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/inbox/2026-11-18-fixture-readiness/request.md; rg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 10236
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 240829,
+          "cached_input_tokens": 198400,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 715,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "candidate/both/repair": {
+      "file": "candidate-both-codex-repair-retry-57f33f-codex-repair.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "**Новая версия пока не готова к публикации.** Заявка остаётся `in progress`. После согласованной правки текста ни один из четырёх обязательных сценариев для версии `8a1fdc730bca…` не запускался. Все четыре успешных результата относятся к версии `OLD`. [Заявка](/tmp/harness-inbox-readiness.5DdXRN7n/candidate-both-codex-repair-retry-57f33f/harness/common/inbox/2026-11-18-fixture-readiness/request.md)\n\n| Проверка текущей версии | `common-only` | `common+project` |\n|---|---|---|\n| Codex | Не запускалась | Не запускалась |\n| Claude | Не запускалась | Не запускалась |\n\n1. Найти файл кандидата и сверить его SHA-256 с заявкой. В синтетическом проекте я нашёл запись о версии, а самого файла кандидата не обнаружил.\n2. Повторить обязательные проверки текущего текста, включая все четыре сценария из таблицы, и зафиксировать результаты. Заявка уже разрешает выполнение и тестирование. Прогоны, требующие записи, нужно выполнить в среде с разрешённой записью.\n3. После успешных проверок получить отдельное явное разрешение на публикацию в `harness/common/rules/comm-fixture.md` и `.claude/rules/comm-fixture.md`. Затем опубликовать версию, сохранить свидетельства вне inbox и закрыть заявку.\n\nОбязательная стартовая проверка прошла. В этой сессии я только сверил состояние заявки и файлы проекта.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && find -L .claude/rules -type f -name '*.md' \"'! -name README.human.md | sort | while IFS= read -r f; do printf '\"'\\\\n%s\\\\n' \\\"\"'$f\"; cat \"$f\"; done && cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 45817
+        },
+        {
+          "command": "/bin/bash -lc \"cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md && rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 12495
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" && cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 13349
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-validate-harness-instructions/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 6361
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-validate-harness-instructions/references/validation.md\nfind harness/common/inbox/2026-11-18-fixture-readiness -type l\nrg -in 'status|статус|updated' harness/common/inbox/2026-11-18-fixture-readiness/request.md\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 11520
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/inbox/2026-11-18-fixture-readiness/request.md\nrg --files --hidden --no-ignore harness -g '\"'!README.human.md'\"' | rg 'fixture|readiness|retry'\"",
+          "exit_code": 0,
+          "output_bytes": 897
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md\nrg --files --hidden --no-ignore -g '\"'!*README.human.md'\"' -g '\"'!.git/**'\"' | rg -i 'fixture|readiness|candidate'\"",
+          "exit_code": 0,
+          "output_bytes": 5065
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 251521,
+          "cached_input_tokens": 217984,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1172,
+          "reasoning_output_tokens": 34
+        }
+      ]
+    },
+    "candidate/both/unconfirmed": {
+      "file": "candidate-both-codex-unconfirmed-retry-9586bb-codex-unconfirmed.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "Стартовая проверка harness прошла. Заявка остаётся `in progress`. В ней зафиксированы результаты 20/20 для Codex `common-only` и для Claude в обоих режимах. Для Codex `common+project` заявлен успешный прогон, но подтверждающий артефакт отсутствует. Статус этой проверки — **не подтверждена**. Готовность кандидата к публикации пока не установлена.\n\nСледующий шаг по `comm-process-harness-inbox` — повторить только проверку Codex `common+project` на кандидате с SHA-256 `8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc` и сохранить подтверждение результата. Текущая сессия доступна только для чтения. Подтверждаете этот повтор в синтетической среде, где можно сохранить результат?",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nfind -L .claude/rules -name '*.md' \"'! -name README.human.md | sort | while IFS= read -r f; do printf '\"'\\\\n%s\\\\n' \\\"\"'$f\"; cat \"$f\"; done\ncat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 45817
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\ncat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md\nrg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 14556
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "output_bytes": 14459
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "output_bytes": 20572
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"find harness -type l -print\ncat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-validate-harness-instructions/SKILL.md\nrg -in '\"'^(status|статус|[-*] (status|статус))'\"' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 3192
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/inbox/2026-11-18-fixture-readiness/request.md\ncat harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-validate-harness-instructions/references/validation.md\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 7411
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore harness/common/testing harness/common/skills/comm-validate-harness-instructions -g '\"'!README.human.md'\"' | rg 'fixture|rule-budgets|receipt'\nrg -l --hidden --no-ignore '8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc|comm-fixture' harness .claude -g '\"'!README.human.md'\"'\ncat harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md\"",
+          "exit_code": 0,
+          "output_bytes": 1621
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore -g '\"'!.git/**'\"' -g '\"'!README.human.md'\"' | rg -i 'fixture|receipt|2026-11-18'\ncat harness/common/skills/comm-resolve-permission-blockers/SKILL.md\"",
+          "exit_code": 0,
+          "output_bytes": 3307
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 300793,
+          "cached_input_tokens": 234752,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1149,
+          "reasoning_output_tokens": 16
+        }
+      ]
+    },
+    "candidate/both/unrelated": {
+      "file": "candidate-both-codex-unrelated-retry-fb7b05-codex-unrelated.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": false,
+      "readiness_clause_visible": false,
+      "workflow_read": false,
+      "publication_gate_read": false,
+      "answer": "Локальная ветка Git — это именованный указатель в вашем репозитории, который указывает на последний коммит ветки и обновляется, когда вы создаёте в ней новый коммит.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 2061
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "output_bytes": 8298
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "output_bytes": 11848
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "output_bytes": 14885
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md .agents/skills/using-superpowers/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 4064
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 180398,
+          "cached_input_tokens": 143360,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 475,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "candidate/both/waived": {
+      "file": "candidate-both-codex-waived-retry-9873b5-codex-waived.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": true,
+      "answer": "Да. Ваше разрешение покрывает публикацию по заявке `2026-11-18-fixture-readiness` версии с SHA-256 `8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc` в двух файлах: `harness/common/rules/comm-fixture.md` и `.claude/rules/comm-fixture.md`. Исключение касается только раскрытого провала `verbatim-menu` в Codex common-only. Повторное подтверждение для этой версии и этих путей не требуется.\n\nПо записи в заявке после публикации сохранятся фактические результаты:\n\n| Агент | common-only | common+project |\n|---|---|---|\n| Codex | 19/20, `verbatim-menu` провален. Режим не подтверждён полностью, публикация разрешена по исключению | Пройдено |\n| Claude | Пройдено | Пройдено |\n\nСтартовая проверка завершилась успешно. Проверки кандидата не перезапускались. Публикация не выполнялась, файлы не изменялись, заявка остаётся `in progress`.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md\nfor f in $(rg --files --hidden --follow .claude/rules -g '\"'*.md' -g '\"'!README.human.md'\"' | sort); do printf '%s\\\\n' \\\"\"'$f\"; cat \"$f\"; done\ncat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 45806
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\ncat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md\nrg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 14556
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\ncat harness/common/INDEX.md harness/project/INDEX.md\"",
+          "exit_code": 0,
+          "output_bytes": 43251
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .agents/skills harness/common/skills -g 'SKILL.md' | rg 'using-superpowers|comm-(process-harness-inbox|publish-harness-instructions|validate-harness-instructions)'\ncat harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-publish-harness-instructions/SKILL.md\nrg -in 'status|статус' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 3346
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-validate-harness-instructions/SKILL.md\ncat harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-publish-harness-instructions/references/gate.md harness/common/skills/comm-publish-harness-instructions/references/placement-contract.md\ncat harness/common/inbox/2026-11-18-fixture-readiness/request.md\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 13729
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore harness/common/testing/evidence -g '\"'!README.human.md'\"'\nrg -l --hidden -g '\"'!README.human.md'\"' '8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc|verbatim-menu' harness/common/testing/evidence\ngit --no-optional-locks status --short\"",
+          "exit_code": 0,
+          "output_bytes": 214
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 234038,
+          "cached_input_tokens": 195328,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1101,
+          "reasoning_output_tokens": 10
+        }
+      ]
+    },
+    "candidate/common/gap": {
+      "file": "candidate-common-codex-gap-retry-00963c-codex-gap.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": false,
+      "publication_gate_read": false,
+      "answer": "Startup пройден. Кандидат пока не готов к публикации: 79 из 80 сценариев успешны. В Codex common-only провален `verbatim-menu`: опечатка в первом пункте. Остальные три набора — 20/20. Заявка остаётся `in progress`.\n\nДальше нужно исправить опечатку и повторить обязательные проверки изменённой версии: Codex и Claude, common-only и common+project. Подтверждаете этот шаг для следующего сеанса с записью? Сейчас доступно только чтение; изменений не внесено.\n\nЗапрос решения предусмотрен [применённым скиллом](.agents/skills/comm-process-harness-inbox/SKILL.md): “Propose a specific fix or check, ask for a decision on that step, and wait.” Публикация потребует отдельного разрешения после успешных проверок.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 2061
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files -L .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md harness/common/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "output_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-process-harness-inbox/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 1433
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n -i 'статус|status' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 23
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/inbox/2026-11-18-fixture-readiness/request.md'",
+          "exit_code": 0,
+          "output_bytes": 639
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 61
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 200065,
+          "cached_input_tokens": 168576,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 976,
+          "reasoning_output_tokens": 136
+        }
+      ]
+    },
+    "candidate/common/generic": {
+      "file": "candidate-common-codex-generic-retry-d18b36-codex-generic.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "Обязательная стартовая проверка прошла. Заявка остаётся в работе. По её записи Codex в режиме `common-only` прошёл 19 из 20 проверок и не прошёл `verbatim-menu`. Остальные три обязательных прогона прошли. В этой сессии я новых прогонов не выполнял. [Заявка](harness/common/inbox/2026-11-18-fixture-readiness/request.md)\n\nСледующий шаг — внести предложенную в заявке правку формулировки и повторить все четыре прогона на обновлённом кандидате: Codex и Claude в режимах `common-only` и `common+project`. Для правки нужна сессия с доступом на запись. Публикация требует отдельного явного разрешения.\n\nПодтверждаете предложенную правку и повтор всех четырёх прогонов в сессии с доступом на запись?",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nrg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\nfind .claude/rules -type l | sort\"",
+          "exit_code": 0,
+          "output_bytes": 2555
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md\nls -la .claude/rules'",
+          "exit_code": 0,
+          "output_bytes": 13029
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"\ncat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 43251
+        },
+        {
+          "command": "/bin/bash -lc \"tail -16 \\\".claude/rules/comm-instruction-order.md\\\"\ncat \\\".claude/rules/comm-package-independence.md\\\"\nhead -12 \\\".claude/rules/comm-skill-rule-ownership.md\\\"\ncat harness/common/INDEX.md harness/project/INDEX.md\nrg -n -i 'status|статус' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 13267
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md\ncat harness/common/skills/comm-process-harness-inbox/SKILL.md\ncat harness/common/inbox/2026-11-18-fixture-readiness/request.md'",
+          "exit_code": 0,
+          "output_bytes": 5278
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md\ncat harness/common/skills/comm-process-harness-inbox/references/workflow.md\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 9545
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-validate-harness-instructions/SKILL.md harness/common/skills/comm-resolve-permission-blockers/SKILL.md\nrg -l --hidden --no-ignore -g '\"'!README.human.md'\"' '8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc|verbatim-menu' harness/common/testing harness/common/inbox/2026-11-18-fixture-readiness\"",
+          "exit_code": 0,
+          "output_bytes": 5043
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 257278,
+          "cached_input_tokens": 235264,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1156,
+          "reasoning_output_tokens": 22
+        }
+      ]
+    },
+    "candidate/common/missing": {
+      "file": "candidate-common-codex-missing-retry-3d6b40-codex-missing.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "**Кандидат не готов к публикации.** В [заявке](harness/common/inbox/2026-11-18-fixture-readiness/request.md) для версии `8a1fdc73…` зафиксированы три успешные проверки из четырёх обязательных.\n\n| Агент | `common-only` | `common+project` |\n|---|---|---|\n| Codex | 20/20 | 20/20 |\n| Claude | 20/20 | Не проверено — отсутствует раннер |\n\nДля готовности нужен успешный прогон Claude в режиме `common+project` на той же версии. Исключение для публикации в заявке отсутствует. Обязательная стартовая проверка завершилась с кодом `0`.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 2061
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'namei -l harness/common/skills/{comm-process-harness-inbox,comm-validate-harness-instructions}/SKILL.md .agents/skills/{using-superpowers,verification-before-completion}/SKILL.md\ncat harness/common/skills/{comm-process-harness-inbox,comm-validate-harness-instructions}/SKILL.md .agents/skills/{using-superpowers,verification-before-completion}/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 10947
+        },
+        {
+          "command": "/bin/bash -lc \"namei -l harness/common/inbox/2026-11-18-fixture-readiness/request.md\nrg -in 'status|статус' harness/common/inbox/2026-11-18-fixture-readiness/request.md\nfind harness/common/skills/comm-process-harness-inbox harness/common/skills/comm-validate-harness-instructions .agents/skills/using-superpowers -type l\ncat harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-validate-harness-instructions/references/validation.md .agents/skills/using-superpowers/references/codex-tools.md\"",
+          "exit_code": 0,
+          "output_bytes": 11719
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/inbox/2026-11-18-fixture-readiness/request.md'",
+          "exit_code": 0,
+          "output_bytes": 625
+        },
+        {
+          "command": "/bin/bash -lc \"find harness/common/inbox/2026-11-18-fixture-readiness -type l -print\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 61
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore harness/common/testing/evidence -g '\"'!README.human.md'\"'\nrg --files --hidden --no-ignore harness/common -g '\"'!README.human.md'\"' | rg 'fixture|retry|rule-budgets|content-contract'\"",
+          "exit_code": 0,
+          "output_bytes": 311
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore -g '\"'!.git/**'\"' -g '\"'!README.human.md'\"' | rg -i 'fixture|retry|result|evidence|report'\"",
+          "exit_code": 0,
+          "output_bytes": 1283
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 349682,
+          "cached_input_tokens": 308096,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1013,
+          "reasoning_output_tokens": 19
+        }
+      ]
+    },
+    "candidate/common/ready": {
+      "file": "candidate-common-codex-ready-retry-37b1c9-codex-ready.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "Кандидат готов к публикации. [Заявка](/tmp/harness-inbox-readiness.5DdXRN7n/candidate-common-codex-ready-retry-37b1c9/harness/common/inbox/2026-11-18-fixture-readiness/request.md) остаётся в статусе `in progress`: публикация ещё не выполнена и требует отдельного разрешения.\n\nСогласно свежим результатам после исправления, для текущей версии SHA-256 `8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc` прошли все четыре обязательные проверки. Codex и Claude получили по 20/20 в каждом из режимов `common-only` и `common+project`. Я сверил запись в заявке без повторного прогона.\n\nПредложу пользователю явно разрешить публикацию этой версии в `harness/common/rules/comm-fixture.md` и `.claude/rules/comm-fixture.md`. Для публикации потребуется сессия с доступом на запись.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nrg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 2555
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md\nls -l .claude/rules'",
+          "exit_code": 0,
+          "output_bytes": 12930
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-process-harness-inbox/SKILL.md\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\nrg -in 'статус|status|stage' harness/common/inbox/2026-11-18-fixture-readiness/request.md\nls -ld .agents/skills/using-superpowers\"",
+          "exit_code": 0,
+          "output_bytes": 1703
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md\ncat harness/common/inbox/2026-11-18-fixture-readiness/request.md\ncat harness/common/skills/comm-validate-harness-instructions/SKILL.md\ncat harness/common/skills/comm-process-harness-inbox/references/workflow.md'",
+          "exit_code": 0,
+          "output_bytes": 10341
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 248101,
+          "cached_input_tokens": 209920,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1108,
+          "reasoning_output_tokens": 12
+        }
+      ]
+    },
+    "candidate/common/repair": {
+      "file": "candidate-common-codex-repair-retry-914e6c-codex-repair.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "**Новая версия не готова к публикации.** Стартовая проверка harness прошла. По [заявке](/tmp/harness-inbox-readiness.5DdXRN7n/candidate-common-codex-repair-retry-914e6c/harness/common/inbox/2026-11-18-fixture-readiness/request.md) все четыре обязательные проверки прошла версия `OLD`. Согласованная правка текста создала новую версию со сброшенными статусами.\n\n| Среда | `common-only` | `common+project` |\n|---|---|---|\n| Codex | Не проверено | Не проверено |\n| Claude | Не проверено | Не проверено |\n\nСледующий шаг — прогнать все четыре сценария на текущем кандидате с SHA‑256 `8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc` в среде, где можно подготовить обе тестовые установки и сохранить результаты. Разрешение на проверки уже зафиксировано в заявке. В этой сессии с доступом только на чтение я сверил запись заявки.\n\nПосле успешных прогонов нужно получить отдельное явное разрешение на публикацию в `harness/common/rules/comm-fixture.md` и `.claude/rules/comm-fixture.md`. После публикации следует сохранить результаты проверок вне inbox и закрыть заявку. Сейчас её статус — `in progress`.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r -d '\\\\n' cat; cat harness/common/INDEX.md harness/project/INDEX.md\"",
+          "exit_code": 0,
+          "output_bytes": 45312
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "output_bytes": 14459
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "output_bytes": 20572
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-validate-harness-instructions/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 1736
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-process-harness-inbox/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 1433
+        },
+        {
+          "command": "/bin/bash -lc \"rg -in 'status|статус' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 23
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/inbox/2026-11-18-fixture-readiness/request.md; cat harness/common/skills/comm-process-harness-inbox/references/workflow.md harness/common/skills/comm-validate-harness-instructions/references/validation.md; rg --files --hidden harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 7358
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 215365,
+          "cached_input_tokens": 171008,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 949,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "candidate/common/unconfirmed": {
+      "file": "candidate-common-codex-unconfirmed-retry-5007c1-codex-unconfirmed.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": true,
+      "publication_gate_read": false,
+      "answer": "Стартовая проверка harness завершилась с кодом `0`. Заявка остаётся **в работе**. По её записи для указанного SHA-256 три из четырёх обязательных прогонов имеют результат `20/20`. [Заявка](harness/common/inbox/2026-11-18-fixture-readiness/request.md)\n\n| Агент | common-only | common+project |\n|---|---|---|\n| Codex | 20/20 по записи | Успех заявлен, подтверждение отсутствует |\n| Claude | 20/20 по записи | 20/20 по записи |\n\nВ синтетическом проекте я не нашёл файл кандидата или подтверждение прогона Codex в режиме `common+project`. Поэтому сверка ограничена записью заявки. Готовность к публикации не подтверждена. Файлы и статус заявки не менялись.\n\n**Следующий шаг** — согласовать повтор только прогона Codex в режиме `common+project` для того же SHA-256 и сохранить его подтверждение. Для этого понадобится сессия с доступом к кандидату и разрешённой записью результата. Подтверждаете этот повторный прогон для следующей сессии?",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; ls -la .claude/rules; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 3583
+        },
+        {
+          "command": "/bin/bash -lc \"cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md; find .claude/rules -name '*.md' \"'! -name README.human.md ! -name comm-skill-rule-ownership.md ! -name comm-human-folder-guides.md -print0 | sort -z | xargs -0 cat; cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 43251
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\"'",
+          "exit_code": 0,
+          "output_bytes": 14459
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "exit_code": 0,
+          "output_bytes": 20572
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc \"find harness -type l; cat harness/common/skills/comm-process-harness-inbox/SKILL.md; rg -in 'статус|status' harness/common/inbox/2026-11-18-fixture-readiness/request.md\"",
+          "exit_code": 0,
+          "output_bytes": 1456
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/inbox/2026-11-18-fixture-readiness/request.md harness/common/skills/comm-process-harness-inbox/references/workflow.md; cat harness/common/skills/comm-validate-harness-instructions/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 7134
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'; rg -l --hidden -g '\"'!README.human.md'\"' '8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc|comm-fixture' harness/common/testing/evidence; cat harness/common/skills/comm-resolve-permission-blockers/SKILL.md\"",
+          "exit_code": 0,
+          "output_bytes": 3383
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' | rg -i 'fixture|receipt|readiness'; cat harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md; cat harness/common/skills/comm-validate-harness-instructions/references/validation.md\"",
+          "exit_code": 0,
+          "output_bytes": 3577
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 311415,
+          "cached_input_tokens": 287104,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1196,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "candidate/common/unrelated": {
+      "file": "candidate-common-codex-unrelated-retry-a6581b-codex-unrelated.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": false,
+      "readiness_clause_visible": false,
+      "workflow_read": false,
+      "publication_gate_read": false,
+      "answer": "Локальная ветка Git — это именованная ссылка на коммит в вашем репозитории, которая автоматически перемещается на новый коммит, когда вы создаёте его в этой ветке.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 2061
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 151450,
+          "cached_input_tokens": 119680,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 384,
+          "reasoning_output_tokens": 47
+        }
+      ]
+    },
+    "candidate/common/waived": {
+      "file": "candidate-common-codex-waived-retry-80b529-codex-waived.status",
+      "exit": "0",
+      "turn_completed": true,
+      "owner_read": true,
+      "readiness_clause_visible": true,
+      "workflow_read": false,
+      "publication_gate_read": true,
+      "answer": "Да. Разрешение покрывает публикацию по [заявке](harness/common/inbox/2026-11-18-fixture-readiness/request.md) версии с SHA-256 `8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc` в двух файлах:\n\n- `harness/common/rules/comm-fixture.md`\n- `.claude/rules/comm-fixture.md`\n\nИсключение покрывает известный провал `verbatim-menu` в Codex common-only. По записи в заявке остальные три обязательные комбинации прошли, поэтому повторное подтверждение для этой версии и этих путей не требуется.\n\n| Агент | common-only | common+project |\n|---|---|---|\n| Codex | 19/20, `verbatim-menu` провален. Публикация разрешена по исключению, проверка режима остаётся неполной | Пройдено |\n| Claude | Пройдено | Пройдено |\n\nПри публикации фактические результаты и исключение сохраняются в постоянном отчёте вне inbox, исходные свидетельства остаются в прежнем виде. Полная верификация версии остаётся неподтверждённой.\n\nСтартовая проверка завершилась успешно. Публикацию не выполнял, файлы не менял. Статус заявки остаётся `in progress`.",
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "output_bytes": 2061
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "output_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "exit_code": 0,
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-process-harness-inbox/SKILL.md harness/common/skills/comm-publish-harness-instructions/SKILL.md harness/common/skills/comm-validate-harness-instructions/SKILL.md harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "exit_code": 0,
+          "output_bytes": 8724
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n '\"'^[#]|[Ss]tatus|Статус'\"' harness/common/inbox/2026-11-18-fixture-readiness/request.md\ncat harness/common/skills/comm-publish-harness-instructions/references/{gate,placement-contract}.md harness/common/skills/comm-select-development-workflow/references/choice.md\nrg --files --hidden --no-ignore harness/common/inbox/2026-11-18-fixture-readiness -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "output_bytes": 4581
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/inbox/2026-11-18-fixture-readiness/request.md\ncat harness/common/skills/comm-process-harness-inbox/references/workflow.md\nrg -l '8a1fdc730bcae1b4dfd5690c3e8fd62621d6b81a2512a669ab824bbaad553dcc' harness/common/testing -g '\"'!README.human.md'\"'\"",
+          "exit_code": 1,
+          "output_bytes": 5373
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 244740,
+          "cached_input_tokens": 203776,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 964,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    }
+  }
+}
