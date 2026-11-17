@@ -1,24 +1,27 @@
 ---
 name: comm-process-harness-inbox
-description: Use when creating, executing, closing or resuming harness inbox requests.
+description: Use when creating, executing, resuming or closing harness inbox requests, or reporting candidate readiness.
 ---
 
 # Process one request
 
-Identify the request, current status, chronology, full contents and explicitly
-authorized stages. Before recording, executing or changing status read
-[workflow](references/workflow.md). Do not infer execution from creation.
+Identify the request, status, chronology, contents and authorized stages. Before
+recording, executing or changing status read [workflow](references/workflow.md).
+Creation alone grants no execution.
 
-1. Reconcile existing results/status; resume remaining work, do not repeat completed
-   requests without instruction. Process one from earliest to latest.
-2. Create/retain the full dated request and candidate/resources; execute only the
-   authorized scope. Missing permission/conflict: ask and wait, no next request.
-3. Publish the required result and preserve permanent evidence independently of
-   inbox. A ready candidate does not close a request requiring publication.
-4. Update each request's status, result, reason and actual update time. Finish with
-   completed/skipped/remaining requests and reasons.
+1. Reconcile results and resume remaining work. Process oldest first. Skip
+   completed requests unless asked to repeat.
+2. Retain the full dated request and candidate. Stop for missing permission
+   or conflict. Execute only authorized work.
+3. Before reporting readiness, check all mandatory scenarios for this version.
+   If incomplete, report gaps and actual statuses. Propose a specific fix or
+   check, ask for a decision on that step, and wait. Offer publication only
+   after all pass. When the user explicitly authorizes an exception after
+   disclosure, follow comm-publish-harness-instructions.
+4. Publish the required result, preserve permanent evidence outside inbox, then
+   record status, result, reason and update time. Report completed and remaining
+   requests with reasons. A candidate alone cannot close required publication.
 
-For a direct bypass of the protected scope defined in workflow, require explicit named paths/operations and a separate
-question → unequivocal positive answer after it. Preliminary confirmation is
-not that answer; keep waiting without writes. Known technical errors within
-existing authorization can be corrected.
+Direct bypass requires named paths and operations, then a separate question
+and unequivocal positive answer. Wait without writes. Known technical errors
+within existing authorization can be corrected.
