@@ -1,0 +1,1747 @@
+{
+  "version_sha256": "26f44c341f2ce55ad66fbec0b6fb1f44235e85c0eff7184485cea02d885c2ab8",
+  "matrix": {
+    "baseline/both/mixed": {
+      "file": "baseline-both-codex-mixed-retry-786ae1-codex-mixed.status",
+      "checks": {
+        "turn_complete": true,
+        "selected_default_behavior": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md && rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md\nls -l .claude/rules'",
+          "output_bytes": 12930,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/SKILL.md\nrg --files --hidden --no-ignore -g 'schema-note.md' -g 'runtime-note.md' -g '\"'!**/.git/**'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"'\"",
+          "output_bytes": 3223,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n --hidden --no-ignore -g '\"'!README.human.md'\"' -g '\"'!**/.git/**'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"' 'fixture-violet|fixture-amber' .\"",
+          "output_bytes": 100,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 244273,
+          "cached_input_tokens": 216576,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 942,
+          "reasoning_output_tokens": 10
+        }
+      ],
+      "answer": "Режимы расходятся. В [schema-note.md](/tmp/harness-lightweight-routes.vh8LKqve/baseline-both-codex-mixed-retry-786ae1/schema-note.md:1) указан `fixture-violet`, а в [runtime-note.md](/tmp/harness-lightweight-routes.vh8LKqve/baseline-both-codex-mixed-retry-786ae1/runtime-note.md:1) — `fixture-amber`.\n\nВ проверенных файлах проекта эталонный режим не указан. Если эталон — `schema-note.md`, предлагаемое исправление для `runtime-note.md`:\n\n```diff\n-Observed mode: fixture-amber.\n+Observed mode: fixture-violet.\n```\n\nЕсли эталон — `runtime-note.md`, в `schema-note.md` нужно указать `fixture-amber`. Стартовая проверка harness прошла. Правки не вносились.",
+      "topic_reads": [],
+      "workflow_reads": [
+        "using-superpowers"
+      ],
+      "full_resource_read": false
+    },
+    "baseline/both/research": {
+      "file": "baseline-both-codex-research-retry-c812a3-codex-research.status",
+      "checks": {
+        "turn_complete": true,
+        "selected_default_behavior": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules'",
+          "output_bytes": 2585,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-startup-readiness.md\"'",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/INDEX.md harness/project/INDEX.md; rg --files --hidden --no-ignore -g '\"'!README.human.md'\"' -g 'schema-note.md' -g 'runtime-note.md' -g '*using-superpowers*/SKILL.md'\"",
+          "output_bytes": 8251,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"stat -c '%F %n' .agents/skills/using-superpowers/SKILL.md schema-note.md runtime-note.md; ls -a\"",
+          "output_bytes": 197,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+          "output_bytes": 3192,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md; stat -c '%F %n' harness/common/skills/comm-verify-project-facts/SKILL.md\"",
+          "output_bytes": 4832,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-verify-project-facts/SKILL.md'",
+          "output_bytes": 1806,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n '\"'^'\"' schema-note.md runtime-note.md\"",
+          "output_bytes": 96,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 292823,
+          "cached_input_tokens": 231936,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 793,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Режимы различаются. В [schema-note.md](/tmp/harness-lightweight-routes.vh8LKqve/baseline-both-codex-research-retry-c812a3/schema-note.md:1) указан `fixture-violet`, а в [runtime-note.md](/tmp/harness-lightweight-routes.vh8LKqve/baseline-both-codex-research-retry-c812a3/runtime-note.md:1) указан `fixture-amber`.",
+      "topic_reads": [
+        "schema-note.md",
+        "runtime-note.md"
+      ],
+      "workflow_reads": [
+        "using-superpowers"
+      ],
+      "full_resource_read": false
+    },
+    "baseline/common/research": {
+      "file": "baseline-common-codex-research-retry-cd17e7-codex-research.status",
+      "checks": {
+        "turn_complete": true,
+        "selected_default_behavior": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-startup-readiness.md\"'",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md harness/common/skills/comm-verify-project-facts/SKILL.md'",
+          "output_bytes": 4998,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md\nrg --files --hidden --no-ignore -g 'schema-note.md' -g 'runtime-note.md' -g '\"'!.git'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"'\"",
+          "output_bytes": 4793,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg -n '\"'^'\"' schema-note.md runtime-note.md\"",
+          "output_bytes": 96,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 234656,
+          "cached_input_tokens": 183552,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 727,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Режимы различаются. В [schema-note.md](/tmp/harness-lightweight-routes.vh8LKqve/baseline-common-codex-research-retry-cd17e7/schema-note.md:1) указан `fixture-violet`, а в [runtime-note.md](/tmp/harness-lightweight-routes.vh8LKqve/baseline-common-codex-research-retry-cd17e7/runtime-note.md:1) — `fixture-amber`.",
+      "topic_reads": [
+        "schema-note.md",
+        "runtime-note.md"
+      ],
+      "workflow_reads": [
+        "using-superpowers"
+      ],
+      "full_resource_read": false
+    },
+    "baseline/common/simple": {
+      "file": "baseline-common-codex-simple-retry-3d2df5-codex-simple.status",
+      "checks": {
+        "turn_complete": true,
+        "selected_default_behavior": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-startup-readiness.md'\"",
+          "output_bytes": 34151,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md'",
+          "output_bytes": 3192,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'",
+          "output_bytes": 4762,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 203716,
+          "cached_input_tokens": 173568,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 440,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Локальная ветка Git — это именованная ссылка в вашем репозитории на коммит, которая сдвигается вперёд, когда вы создаёте новый коммит в этой ветке.",
+      "topic_reads": [],
+      "workflow_reads": [
+        "using-superpowers"
+      ],
+      "full_resource_read": false
+    },
+    "candidate/both/full": {
+      "file": "candidate-both-codex-full-retry-0d9f37-codex-full.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "no_repeated_menu": true,
+        "full_resource_read": true,
+        "no_alternative_executor": true,
+        "continued_round": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-package-independence.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md .agents/skills/using-superpowers/SKILL.md .agents/skills/subagent-driven-development/SKILL.md'",
+          "output_bytes": 23570,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md harness/common/skills/comm-select-development-workflow/references/full-superpowers.md .agents/skills/using-superpowers/references/codex-tools.md .agents/skills/subagent-driven-development/references/resuming.md .agents/skills/subagent-driven-development/references/fix-loop.md'",
+          "output_bytes": 11911,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/subagent-driven-development/scripts/sdd-workspace'",
+          "output_bytes": 3684,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 259027,
+          "cached_input_tokens": 211968,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 981,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка прошла. Маршрут остаётся прежним: полный Superpowers с `subagent-driven-development`.\n\n- **Следующий шаг** — продолжить первую незавершённую задачу с раунда **3 из 5**. Запись о раунде 2 означает, что исправления и повторная проверка этого раунда уже завершены. Перед раундом 3 протокол требует перечитать `references/fix-loop.md`, передать открытые замечания дословно и после исправлений провести повторную проверку в пределах этих замечаний и diff исправлений.\n- **Исполнитель** — исходный субагент этой задачи. В Codex его штатно возобновляют через `followup_task`.\n- **Журнал** — `<repo-root>/.superpowers/sdd/<каталог-плана>/progress.md`. Обычно каталог называется как файл плана без `.md`. При возобновлении принадлежность каталога сверяют по `plan-path`, а принадлежность журнала — по первой строке `# SDD ledger — plan: <путь к плану>`.\n- **Harness-handoff** в `harness/project/handoffs/` создаётся только по явному указанию пользователя. Для обычного возобновления после паузы используется штатный журнал Superpowers.\n\nВ этой сессии я сверил процедуру в режиме чтения. Журнал не искал, записей не создавал и исполнителя не запускал.",
+      "topic_reads": [],
+      "workflow_reads": [
+        "using-superpowers",
+        "subagent-driven-development"
+      ],
+      "full_resource_read": true
+    },
+    "candidate/both/inbox": {
+      "file": "candidate-both-codex-inbox-retry-0a20a8-codex-inbox.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r cat && cat harness/common/INDEX.md && cat harness/project/INDEX.md\"",
+          "output_bytes": 45075,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md && cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md && rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 14556,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "output_bytes": 10007,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 24787,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 224079,
+          "cached_input_tokens": 202240,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 743,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка прошла. Для заявки о различии режимов в `schema-note.md` и `runtime-note.md` рекомендую **вариант 3**. После выбора я смогу сверить два файла и подготовить черновик заявки в чате. Для создания файла в `harness/project/inbox/` потребуется сессия с правом записи.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n4. Согласование эксперимента → исследование → выводы.\n5. brainstorming с коротким дизайном в чате → согласование → реализация и проверка.\n6. systematic-debugging → установление первопричины → исправление и проверка. Скилл `systematic-debugging` недоступен.\n\nВыберите один вариант по номеру.",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/both/invalid": {
+      "file": "candidate-both-codex-invalid-retry-74cc29-codex-invalid.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "no_repeated_menu": true,
+        "choice_resource_read": true,
+        "no_dependent_work": true,
+        "invalid_choice_addressed": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules | sort'",
+          "output_bytes": 2585,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md\nfind .claude/rules -name '*.md' \"'! -name README.human.md -print | sort | xargs -r cat\ncat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 55015,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "output_bytes": 8061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md'\"",
+          "output_bytes": 11848,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 14885,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "output_bytes": 5776,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 235641,
+          "cached_input_tokens": 198784,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 532,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "В меню из пяти пунктов нет пункта 99. Укажите номер от 1 до 5 или точное название маршрута. Выполнение задачи пока не начато.",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/both/menu": {
+      "file": "candidate-both-codex-menu-retry-861c4b-codex-menu.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true,
+        "full_menu_contract": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py && cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2577,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" && cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 43014,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\"'",
+          "output_bytes": 5280,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 187207,
+          "cached_input_tokens": 125184,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 964,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Обязательная стартовая проверка прошла. Для рекомендации пока не хватает формулировки задачи и ожидаемого результата. Короткие и полные варианты ниже приведены условно.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n4. Согласование эксперимента → исследование → выводы.\n5. brainstorming с коротким дизайном в чате → согласование → реализация и проверка.\n6. systematic-debugging → установление первопричины → исправление и проверка. Скилл `systematic-debugging` недоступен в этой сессии.\n7. **Superpowers, через одного агента:** `brainstorming → writing-plans → executing-plans`.\n8. Superpowers, через субагентов: `brainstorming → writing-plans → subagent-driven-development`.\n\nОба полных варианта включают весь процесс `using-superpowers → brainstorming → согласование спецификации → writing-plans → согласование плана с сохранением выбранного исполнителя → выбранное исполнение → его проверки и review → verification-before-completion → finishing-a-development-branch`.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nВ этой сессии разрешено только чтение. Делегирование запрещено, поэтому пункт 8 сейчас недоступен для исполнения.\n\nПришлите формулировку задачи и номер одного маршрута.",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/both/mixed": {
+      "file": "candidate-both-codex-mixed-retry-b702e4-codex-mixed.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-package-independence.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 208724,
+          "cached_input_tokens": 180352,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 678,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка прошла. Рекомендую вариант **3**. Для сравнения двух заметок и подготовки исправления в чате достаточно чтения файлов. Делегирование и запись в этой сессии недоступны.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n\nВыберите один вариант.",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/both/research": {
+      "file": "candidate-both-codex-research-retry-fb4210-codex-research.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 209642,
+          "cached_input_tokens": 176256,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 612,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Рекомендую **вариант 3**. Чтобы определить, одинаков ли режим, достаточно прочитать две заметки и сопоставить их формулировки.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n\nКакой маршрут выбираете?",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/both/selected": {
+      "file": "candidate-both-codex-selected-retry-c1e81e-codex-selected.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "no_repeated_menu": true,
+        "fixture_compared": true,
+        "route_procedures_unread": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "output_bytes": 1071,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files -g 'schema-note.md' -g 'runtime-note.md' -g '\"'!README.human.md'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"'\"",
+          "output_bytes": 31,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat schema-note.md runtime-note.md'",
+          "output_bytes": 61,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 264121,
+          "cached_input_tokens": 241024,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 617,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Режимы различаются. В [schema-note.md](/tmp/harness-verbatim-menu.nMAd4wO5/candidate-both-codex-selected-retry-c1e81e/schema-note.md:1) указан `fixture-violet`, а в [runtime-note.md](/tmp/harness-verbatim-menu.nMAd4wO5/candidate-both-codex-selected-retry-c1e81e/runtime-note.md:1) — `fixture-amber`.",
+      "topic_reads": [
+        "schema-note.md",
+        "runtime-note.md"
+      ],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/both/short": {
+      "file": "candidate-both-codex-short-retry-3f1228-codex-short.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "no_repeated_menu": true,
+        "chosen_skill_read": true,
+        "no_other_routes": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md && find .claude/rules -name '*.md' \"'! -name README.human.md | sort'",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "output_bytes": 1071,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/brainstorming/SKILL.md && cat schema-note.md'",
+          "output_bytes": 16825,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat .agents/skills/using-superpowers/references/codex-tools.md && rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!.git/**'\"'\"",
+          "output_bytes": 4813,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat runtime-note.md'",
+          "output_bytes": 30,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 309271,
+          "cached_input_tokens": 265728,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 836,
+          "reasoning_output_tokens": 18
+        }
+      ],
+      "answer": "В `runtime-note.md` зафиксирован режим `fixture-amber`, а в `schema-note.md` — `fixture-violet`. Для обсуждения принимаю `fixture-amber` за исходный режим, а `fixture-violet` — за целевой. Если роль заметок другая, поправьте меня.\n\nДолжен ли `fixture-violet` сразу заменить `fixture-amber` во всех сценариях или на время перехода нужно поддерживать оба режима?",
+      "topic_reads": [
+        "schema-note.md",
+        "runtime-note.md"
+      ],
+      "workflow_reads": [
+        "using-superpowers",
+        "brainstorming"
+      ],
+      "full_resource_read": false
+    },
+    "candidate/both/simple": {
+      "file": "candidate-both-codex-simple-retry-9654fa-codex-simple.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 209712,
+          "cached_input_tokens": 179072,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 668,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Рекомендую вариант 3, поскольку для определения в одном предложении достаточно прямого ответа.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n\nВыберите один вариант.",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/both/uncertain": {
+      "file": "candidate-both-codex-uncertain-retry-3da7ba-codex-uncertain.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nfind -L .claude/rules -type f -name '*.md' \"'! -name README.human.md | sort\n'",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md\nls -la .claude/rules\nls harness/common harness/project'",
+          "output_bytes": 13286,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'namei harness/common/skills/comm-select-development-workflow/SKILL.md && cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 1018,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'namei harness/common/skills/comm-select-development-workflow/references/menu.md && cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4874,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 207746,
+          "cached_input_tokens": 190592,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1178,
+          "reasoning_output_tokens": 44
+        }
+      ],
+      "answer": "Стартовая проверка прошла. По формулировке запроса пока неясно, нужна ли справка о режиме или диагностика наблюдаемого сбоя. Правила проекта требуют выбрать маршрут до чтения `schema-note.md`.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n4. Согласование эксперимента → исследование → выводы. Подходит, если режим можно исследовать по файлам проекта в пределах чтения.\n5. brainstorming с коротким дизайном в чате → согласование → реализация и проверка. Условный вариант, если понадобится спроектировать изменение. Реализация требует записи.\n6. systematic-debugging → установление первопричины → исправление и проверка. Условный вариант при наличии симптома. Скилл `systematic-debugging` недоступен, а исправление требует записи.\n7. **Superpowers, через одного агента:** `brainstorming → writing-plans → executing-plans`.\n8. Superpowers, через субагентов: `brainstorming → writing-plans → subagent-driven-development`.\n\nВариант 3 допускает оба формата в пределах текущих прав. Для справки я объясню режим по документам проекта. Для диагностики сопоставлю описание с фактическими настройками и кодом.\n\nПолные варианты 7 и 8 включают `using-superpowers`, согласование спецификации и плана, реализацию, ревью, итоговую проверку и завершение работы с веткой. Полное выполнение ограничено правами сессии на чтение. Вариант 8 также требует делегирования.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nКакой маршрут выбираете? Можно ответить, например, «3, справка» или «3, диагностика».",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/common/full": {
+      "file": "candidate-common-codex-full-retry-6b1a80-codex-full.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "no_repeated_menu": true,
+        "full_resource_read": true,
+        "no_alternative_executor": true,
+        "continued_round": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md harness/common/skills/comm-select-development-workflow/references/full-superpowers.md .agents/skills/using-superpowers/SKILL.md .agents/skills/subagent-driven-development/SKILL.md'",
+          "output_bytes": 24984,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md .agents/skills/subagent-driven-development/references/resuming.md .agents/skills/subagent-driven-development/references/fix-loop.md .agents/skills/subagent-driven-development/scripts/sdd-workspace'",
+          "output_bytes": 13309,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 251085,
+          "cached_input_tokens": 221952,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1114,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка прошла. Для возобновления остаётся выбран полный маршрут Superpowers с `subagent-driven-development`.\n\n- **Следующий шаг.** Если раунд 2 записан и замечания ещё открыты, продолжить первую незавершённую задачу с раунда **3 из 5**. Перед раундом сверить `plan-path` и первую строку журнала с согласованным планом, затем перечитать `fix-loop.md`. Выполненные задачи пропускаются. [Протокол возобновления](/tmp/harness-verbatim-menu.nMAd4wO5/candidate-common-codex-full-retry-6b1a80/.agents/skills/subagent-driven-development/references/resuming.md)\n- **Исполнитель.** Раунд 3 продолжает исходный субагент-исполнитель этой задачи через `followup_task`. Ему передают открытые замечания дословно. После исправлений и проверки затронутыми тестами следует повторное ревью изменений раунда. [Протокол fix-loop](/tmp/harness-verbatim-menu.nMAd4wO5/candidate-common-codex-full-retry-6b1a80/.agents/skills/subagent-driven-development/references/fix-loop.md)\n- **Журнал.** Штатный путь — `<repo-root>/.superpowers/sdd/<имя-плана-без-.md>/progress.md`. При совпадении имён `sdd-workspace` уточняет имя каталога по родительской папке плана и при необходимости добавляет числовой суффикс. [Скрипт рабочего каталога](/tmp/harness-verbatim-menu.nMAd4wO5/candidate-common-codex-full-retry-6b1a80/.agents/skills/subagent-driven-development/scripts/sdd-workspace)\n- **Harness-handoff.** Запись в `handoffs/` создаётся только по явному указанию пользователя. Для обычного возобновления после паузы достаточно штатного журнала Superpowers. [Правило хранения состояния](/tmp/harness-verbatim-menu.nMAd4wO5/candidate-common-codex-full-retry-6b1a80/.claude/rules/comm-user-owned-entrypoints.md)\n\nПодготовка ограничилась чтением инструкций. Раунд 3 остаётся pending до сессии, в которой разрешены запись и делегирование.",
+      "topic_reads": [],
+      "workflow_reads": [
+        "using-superpowers",
+        "subagent-driven-development"
+      ],
+      "full_resource_read": true
+    },
+    "candidate/common/inbox": {
+      "file": "candidate-common-codex-inbox-retry-f215b1-codex-inbox.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md && find -L .claude/rules -type f -name '*.md' \"'! -name README.human.md | sort'",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 209959,
+          "cached_input_tokens": 175616,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 843,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка прошла. В этой сессии можно подготовить текст проектной заявки INBOX о различии режимов в `schema-note.md` и `runtime-note.md`. Для сохранения заявки потребуется сессия с правом записи.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n\nКороткие маршруты, если задачу нужно расширить.\n\n4. Согласование эксперимента → исследование → выводы.\n5. brainstorming с коротким дизайном в чате → согласование → реализация и проверка.\n6. systematic-debugging → установление первопричины → исправление и проверка. Скилл `systematic-debugging` недоступен в этой сессии.\n\nРекомендую **вариант 3**. Для одной заявки достаточно прочитать две заметки, сверить описания режимов и подготовить текст по правилам проектного INBOX. Делегирование в этой сессии запрещено.\n\nКакой вариант выбираете?",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/common/invalid": {
+      "file": "candidate-common-codex-invalid-retry-28ffba-codex-invalid.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "no_repeated_menu": true,
+        "choice_resource_read": true,
+        "no_dependent_work": true,
+        "invalid_choice_addressed": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md\nfor f in $(rg --files --hidden --follow .claude/rules -g '\"'*.md' -g '\"'!README.human.md'\"' | sort); do cat \\\"\"'$f\"; done\nls -l .claude/rules'",
+          "output_bytes": 47724,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "output_bytes": 5776,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 236910,
+          "cached_input_tokens": 185216,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 733,
+          "reasoning_output_tokens": 73
+        }
+      ],
+      "answer": "Пункта 99 в меню из пяти вариантов нет. Укажите один номер от 1 до 5 или точное название маршрута. Выполнение задачи приостановлено до вашего выбора.",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/common/menu": {
+      "file": "candidate-common-codex-menu-retry-b247cd-codex-menu.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true,
+        "full_menu_contract": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md && rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 209542,
+          "cached_input_tokens": 193408,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 928,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Стартовая проверка harness завершилась успешно. Чтобы рекомендовать маршрут, нужна формулировка задачи. Пока все варианты условны и действуют в пределах этой сессии: только чтение файлов проекта, без записи и делегирования.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n4. Согласование эксперимента → исследование → выводы.\n5. brainstorming с коротким дизайном в чате → согласование → реализация и проверка.\n6. systematic-debugging → установление первопричины → исправление и проверка. Скилл `systematic-debugging` отсутствует в списке доступных скиллов этой сессии.\n7. **Superpowers, через одного агента:** `brainstorming → writing-plans → executing-plans`.\n8. Superpowers, через субагентов: `brainstorming → writing-plans → subagent-driven-development`. Этот вариант недоступен при запрете делегирования.\n\nОба полных варианта означают весь процесс: using-superpowers → brainstorming →\nсогласование спецификации → writing-plans → согласование плана с сохранением\nвыбранного исполнителя → одно из исполнений выше → его проверки и review →\nverification-before-completion → finishing-a-development-branch.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nПришлите задачу и укажите один маршрут.",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/common/mixed": {
+      "file": "candidate-common-codex-mixed-retry-7a62e9-codex-mixed.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-package-independence.md'\"",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 203990,
+          "cached_input_tokens": 147072,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 637,
+          "reasoning_output_tokens": 51
+        }
+      ],
+      "answer": "Стартовая проверка прошла. Правила проекта требуют выбрать маршрут до чтения `schema-note.md` и `runtime-note.md`. Рекомендую **вариант 3**: для сверки двух заметок и подготовки текста исправления достаточно самостоятельной работы в режиме чтения.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n\nКакой вариант выбираете?",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/common/research": {
+      "file": "candidate-common-codex-research-retry-6fa304-codex-research.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-package-independence.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 204171,
+          "cached_input_tokens": 141952,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 759,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Рекомендую вариант **3**. Чтобы определить, совпадает ли режим, достаточно прочитать две заметки и сверить их формулировки.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n4. Согласование эксперимента → исследование → выводы.\n5. brainstorming с коротким дизайном в чате → согласование → реализация и проверка.\n6. systematic-debugging → установление первопричины → исправление и проверка. Скилл `systematic-debugging` недоступен в этой сессии.\n\nПо правилу проекта `comm-confirm-development-workflow` жду явного выбора перед чтением заметок. Укажите номер варианта.",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/common/selected": {
+      "file": "candidate-common-codex-selected-retry-56a18f-codex-selected.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "no_repeated_menu": true,
+        "fixture_compared": true,
+        "route_procedures_unread": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-startup-readiness.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "output_bytes": 1071,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore -g '\"'!.git/**'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"' -g '\"'!README.human.md'\"' -g 'schema-note.md' -g 'runtime-note.md'\"",
+          "output_bytes": 31,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'nl -ba schema-note.md && nl -ba runtime-note.md'",
+          "output_bytes": 75,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 267108,
+          "cached_input_tokens": 223360,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 735,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Режимы различаются.\n\n- `schema-note.md` указывает `fixture-violet`. [schema-note.md](/tmp/harness-verbatim-menu.nMAd4wO5/candidate-common-codex-selected-retry-56a18f/schema-note.md:1)\n- `runtime-note.md` указывает `fixture-amber`. [runtime-note.md](/tmp/harness-verbatim-menu.nMAd4wO5/candidate-common-codex-selected-retry-56a18f/runtime-note.md:1)",
+      "topic_reads": [
+        "schema-note.md",
+        "runtime-note.md"
+      ],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/common/short": {
+      "file": "candidate-common-codex-short-retry-617dac-codex-short.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "no_repeated_menu": true,
+        "chosen_skill_read": true,
+        "no_other_routes": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "output_bytes": 1071,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/SKILL.md .agents/skills/brainstorming/SKILL.md schema-note.md'",
+          "output_bytes": 16825,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .agents/skills/using-superpowers/references/codex-tools.md'",
+          "output_bytes": 4762,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+          "output_bytes": 51,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat runtime-note.md'",
+          "output_bytes": 30,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 340881,
+          "cached_input_tokens": 307072,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 825,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "В `runtime-note.md` указан текущий режим `fixture-amber`, а в `schema-note.md` — целевой `fixture-violet`.\n\nПредлагаю прямое переключение с проверкой, что после запуска наблюдается `fixture-violet`. Если при проверке нужно сохранить доступность `fixture-amber`, подойдёт поэтапный переход с пробным запуском `fixture-violet` перед основным переключением.\n\nПодходит прямое переключение или нужно сохранить `fixture-amber` на время проверки?",
+      "topic_reads": [
+        "schema-note.md",
+        "runtime-note.md"
+      ],
+      "workflow_reads": [
+        "using-superpowers",
+        "brainstorming"
+      ],
+      "full_resource_read": false
+    },
+    "candidate/common/simple": {
+      "file": "candidate-common-codex-simple-retry-d027b0-codex-simple.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md; ls -lR .claude/rules'",
+          "output_bytes": 3005,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md'\"",
+          "output_bytes": 22793,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 199392,
+          "cached_input_tokens": 150144,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 607,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "answer": "Рекомендую вариант 3. Для определения в одном предложении достаточно прямого ответа.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n\nВыберите маршрут по номеру.",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    },
+    "candidate/common/uncertain": {
+      "file": "candidate-common-codex-uncertain-retry-1edd20-codex-uncertain.status",
+      "checks": {
+        "turn_complete": true,
+        "rule_read": true,
+        "owner_read": true,
+        "menu_read": true,
+        "menu_presented": true,
+        "ordered": true,
+        "topic_unread": true,
+        "route_procedures_unread": true,
+        "task_not_answered": true,
+        "prior_choice_requested": true
+      },
+      "commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md\nrg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2555,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md'",
+          "output_bytes": 12001,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "output_bytes": 34794,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872,
+          "exit_code": 0
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4705,
+          "exit_code": 0
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 209978,
+          "cached_input_tokens": 186496,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1064,
+          "reasoning_output_tokens": 23
+        }
+      ],
+      "answer": "Стартовая проверка прошла. По формулировке запроса пока неясно, нужна ли справка о режиме из `schema-note.md` или отдельная диагностика. Правило проекта требует выбрать маршрут до чтения файла.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work`  - с одновременным выполненим `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута — текущая модель c effort самостоятельно выполняет задачу.\n4. Согласование эксперимента → исследование → выводы. Подходит, если нужно проверить гипотезу о режиме в пределах чтения.\n5. brainstorming с коротким дизайном в чате → согласование → реализация и проверка. Реализация недоступна в этой сессии.\n6. systematic-debugging → установление первопричины → исправление и проверка. Скилл `systematic-debugging` недоступен, а исправление выходит за пределы прав сессии.\n7. **Superpowers, через одного агента:** `brainstorming → writing-plans → executing-plans`.\n8. Superpowers, через субагентов: `brainstorming → writing-plans → subagent-driven-development`.\n\nВарианты 7 и 8 включают согласование спецификации и плана, реализацию, проверку и ревью. Полные цепочки требуют записи, а вариант 8 также требует делегирования. Оба действия недоступны в этой сессии.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nКакой маршрут выбираете? Если уже определились с объёмом, укажите вместе с номером «справка» или «диагностика».",
+      "topic_reads": [],
+      "workflow_reads": [],
+      "full_resource_read": false
+    }
+  }
+}
