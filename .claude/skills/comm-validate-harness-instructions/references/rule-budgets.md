@@ -11,10 +11,15 @@ Preserve analyzer findings/bands/thresholds; estimates are not usage or cost.
 W≤150 good; 151–300 moderate; 301–500 heavy-warn; >500 excessive-fail.
 Heavy-warn recommends coherent splitting; excessive-fail strongly recommends it.
 Target T≤1000; >1000 warns/recommends remediation; >1200 strongly recommends.
-Evaluate both axes independently. If W>300 or T>1000, show options and await an
-explicit decision on current rule/version and word/token exceptions before
-dependent work. Refusal,
-ambiguity, silence or generic prior permission keeps it stopped. Preserve
-measurements/bands and other gates. Shortening/splitting preserves obligations
-and ownership; measure combined reading, since splitting alone proves no saving.
+Evaluate both axes independently. If W>300 or T>1000, first attempt to shorten
+the authorized candidate before asking for a budget decision. Preserve triggers,
+obligations, exceptions, stop points and boundaries before procedure selection.
+For amendments preserve existing behavior except for approved changes.
+Re-measure both axes and repeat mandatory checks on the revised version.
+Resolve the excess only when both budgets pass and behavior preservation is
+verified. Otherwise report before/after values and gaps, show options, and wait
+for an explicit decision before dependent work. Bind any exception to the exact
+rule/version and exceeded measures. Refusal, ambiguity, silence or generic
+permission keeps it stopped. Preserve bands, ownership and other gates.
+Measure combined reading when splitting.
 Re-evaluate edits. No whole-startup cap or publication waiver.
