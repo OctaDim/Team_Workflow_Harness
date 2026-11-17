@@ -5,14 +5,13 @@ description: Use when an implementation task needs a workflow route menu or a re
 
 # Confirm one workflow route
 
-Inputs: operation, authorized scope, available skills, prior menu and user choice.
-The current comm-confirm-development-workflow rule determines eligibility.
-Analytics or an already unambiguous route need no new menu.
+Apply comm-confirm-development-workflow to the operation and prior choice.
+Analytics and unambiguous routes need no new menu.
 
-Before presenting routes read [menu](references/menu.md).
+For a menu, read [menu](references/menu.md) and leave the full process unread.
 Before interpreting a reply read [choice](references/choice.md).
 Show the required menu, ask for one route and wait; never choose automatically.
-Apply only the confirmed route within its authorized scope.
+Only after explicit confirmation of a full Superpowers route, read
+[full process](references/full-superpowers.md).
 
-Done: an unambiguous choice, or a precise question with dependent work stopped.
-Other permissions and applicable instructions remain required.
+Apply only the confirmed route within its authorized scope.
