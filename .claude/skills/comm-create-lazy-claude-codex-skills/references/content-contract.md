@@ -46,6 +46,12 @@ Remove repeats/advice/history; examples prevent mistakes.
 Rationale/evidence permanent outside instructions/inbox. Preserve obligations/
 both-mode dependencies with tested pointers, no mandatory chain of all skills.
 
+In both rules and skills, make every cross-skill transition a lookup by exact
+YAML `name` in the current installation. State when to look up, read and apply
+the skill. If a required name has no unique installed owner, explain why and
+stop the dependent action. Relative links may point to the skill’s own
+`references/` resources.
+
 Goals: SKILL usually ≤200 words; resource sum ≤1000 static tokens,
 resolve >1200 deferred; evaluate-skill A/no errors. No raised thresholds,
 hidden resources or fake manifests/coverage.

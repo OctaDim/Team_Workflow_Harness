@@ -1,0 +1,49 @@
+{
+  "exit": 0,
+  "command": [
+    "bwrap",
+    "--die-with-parent",
+    "--unshare-pid",
+    "--ro-bind",
+    "/",
+    "/",
+    "--dev-bind",
+    "/dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--tmpfs",
+    "/home/octadim",
+    "--tmpfs",
+    "/tmp",
+    "--ro-bind",
+    "/home/octadim/MyProjects/Team_Workflow_Harness",
+    "/home/octadim/MyProjects/Team_Workflow_Harness",
+    "--bind",
+    "/tmp/harness-skill-deps-publish.1kqs5o33/catalogue-runtime-published",
+    "/home/octadim/.codex",
+    "--ro-bind",
+    "/home/octadim/.codex/packages",
+    "/home/octadim/.codex/packages",
+    "--chdir",
+    "/home/octadim/MyProjects/Team_Workflow_Harness",
+    "--",
+    "/home/octadim/.codex/packages/standalone/current/bin/codex",
+    "app-server",
+    "--listen",
+    "stdio://"
+  ],
+  "matched": [
+    {
+      "name": "comm-create-lazy-claude-codex-skills",
+      "description": "Use when designing, creating or substantially editing working Codex and Claude skills or rules.",
+      "path": "/home/octadim/MyProjects/Team_Workflow_Harness/.agents/skills/comm-create-lazy-claude-codex-skills/SKILL.md",
+      "scope": "repo",
+      "enabled": true,
+      "pluginId": null
+    }
+  ],
+  "pass_listing": true,
+  "errors": [],
+  "stderr": "2026-11-18T14:57:50.753329Z ERROR codex_app_server: Project-local config, hooks, and exec policies are disabled in the following folders until the project is trusted, but skills still load.\n    1. /home/octadim/MyProjects/Team_Workflow_Harness/.codex\n       To load project-local config, hooks, and exec policies, add /home/octadim/MyProjects/Team_Workflow_Harness as a trusted project in /home/octadim/.codex/config.toml.\n\n"
+}
