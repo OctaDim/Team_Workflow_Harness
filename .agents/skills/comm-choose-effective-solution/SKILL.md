@@ -19,9 +19,12 @@ Inputs: required outcome, constraints, existing solution, evidence and prior dec
 4. Recommend the best complete solution for these constraints. Explain the benefit;
    recency or a shorter implementation alone is insufficient. Retain an adequate
    baseline when improvement is unsupported; do not invent comparison results.
-5. Preserve prior approvals/delegation; obtain required decisions before changes.
-   Record deliberate simplifications with their applicability limit and review
-   condition. Preserve safety, validation, error handling and accessibility.
+5. Record the cause, applicability limits and a reachable, observable review
+   trigger for deliberate simplifications and temporary refusals, disablements
+   or workarounds. On the trigger, recheck the cause and update the decision.
+   Resume after successful verification and required authorization. Preserve
+   prior approvals/delegation, safety, validation, error handling and accessibility.
+   Obtain required decisions before changes.
 
 Done: options, evidence, tradeoffs, recommendation and open decisions are clear.
 Selection does not authorize installation or implementation.
