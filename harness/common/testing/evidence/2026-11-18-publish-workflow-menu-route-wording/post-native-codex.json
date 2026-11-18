@@ -1,0 +1,95 @@
+{
+  "version_sha256": "28dcd8694a638c11330480b640c51106dbac4325870fce136cd9e869b7fc75b2",
+  "matrix": {
+    "common": {
+      "verified": true,
+      "answer": "Стартовая проверка прошла. `using-superpowers` открою после явного выбора маршрута, который его предусматривает.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work` - одновременное выполнение `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу.\n4. Обязательного плагина нет: **эксперимент → исследование → выводы**. Инструменты выбираются под согласованный эксперимент.\n5. **Superpowers**, скилл `brainstorming`: **короткий дизайн → согласование → реализация и проверка.**\n6. **Superpowers**, скилл `systematic-debugging`: **Диагностика → первопричина → исправление и проверка.**\n7. **Superpowers, через одного агента:** `brainstorming → writing-plans → executing-plans`.\n8. Superpowers, через субагентов: `brainstorming → writing-plans → subagent-driven-development`.\n\nОба полных варианта включают `using-superpowers → brainstorming → согласование спецификации → writing-plans → согласование плана с сохранением выбранного исполнителя → исполнение → проверки и ревью → verification-before-completion → finishing-a-development-branch`. Разрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nПри вашем ограничении на делегирование пункт 8 недоступен, а в пункте 7 ревью субагентом исключено. Эксперимент из пункта 4 запускается после согласования. Любой выбранный маршрут ограничен чтением в пределах этого проекта.\n\nДля рекомендации нужны цель задачи и ожидаемый результат. Какой маршрут выбираете?",
+      "usage": {
+        "input_tokens": 212987,
+        "cached_input_tokens": 185216,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1020,
+        "reasoning_output_tokens": 0
+      },
+      "read_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md\nrg --files --hidden --follow .claude/rules | sort\nls -la .claude/rules'",
+          "output_bytes": 3613
+        },
+        {
+          "command": "/bin/bash -lc \"cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md\nfind .claude/rules -name '*.md' \"'! -name README.human.md ! -name comm-skill-rule-ownership.md ! -name comm-human-folder-guides.md -print0 | sort -z | xargs -0 cat'",
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\"'",
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4849
+        }
+      ]
+    },
+    "both": {
+      "verified": true,
+      "answer": "Стартовая проверка завершилась успешно. Полное меню маршрутов:\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work` - одновременное выполнение `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу.\n4. Обязательного плагина нет: **эксперимент → исследование → выводы**. Инструменты выбираются под согласованный эксперимент.\n5. **Superpowers**, скилл `brainstorming`: **короткий дизайн → согласование → реализация и проверка.**\n6. **Superpowers**, скилл `systematic-debugging`: **Диагностика → первопричина → исправление и проверка.**\n7. **Superpowers, через одного агента:** `brainstorming → writing-plans → executing-plans`.\n8. Superpowers, через субагентов: `brainstorming → writing-plans → subagent-driven-development`.\n\nВ обоих полных вариантах сначала идут `using-superpowers`, `brainstorming` и согласование спецификации, затем `writing-plans` и согласование плана с выбранным исполнителем. После исполнения идут проверки и ревью, `verification-before-completion` и `finishing-a-development-branch`.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nПри вашем ограничении на делегирование пункт 8 недоступен, а пункт 7 возможен только без ревью субагентом. Режим чтения действует для любого выбора. Для рекомендации пока нужны цель задачи и ожидаемый результат.\n\nКакой один маршрут выбираете?",
+      "usage": {
+        "input_tokens": 207137,
+        "cached_input_tokens": 149120,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 998,
+        "reasoning_output_tokens": 0
+      },
+      "read_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2555
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md; ls -l .claude/rules'",
+          "output_bytes": 12930
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-skill-rule-ownership.md\" \".claude/rules/comm-package-independence.md\" \".claude/rules/comm-entrypoint-links-rule.md\" \".claude/rules/comm-instruction-order.md\" \".claude/rules/comm-dependencies-through-uv.md\" \".claude/rules/comm-confirm-development-workflow.md\" \".claude/rules/comm-ban-harness-symlinks.md\" \".claude/rules/comm-application-startup-readiness.md\" \".claude/rules/comm-user-owned-entrypoints.md\" \".claude/rules/comm-application-config-git.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4849
+        }
+      ]
+    }
+  }
+}
