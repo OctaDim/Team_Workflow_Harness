@@ -1,0 +1,101 @@
+{
+  "version_sha256": "c6d1db5f5010f41970acb0b17fdd0f2fdac5b9094b8caa623851a4b15ae4155a",
+  "matrix": {
+    "common": {
+      "verified": true,
+      "premature_route_reads": [],
+      "answer": "Стартовая проверка прошла. Рекомендую **пункт 3**: для определения в одном предложении достаточно самостоятельного ответа.\n\n1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work` - одновременное выполнение `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу.\n4. **Superpowers, через одного агента:** `brainstorming → writing-plans → executing-plans`.\n5. Superpowers, через субагентов: `brainstorming → writing-plans → subagent-driven-development`.\n\nОба полных варианта включают: using-superpowers → brainstorming →\nсогласование спецификации → writing-plans → согласование плана с сохранением\nвыбранного исполнителя → выбранное исполнение → его проверки и review →\nverification-before-completion → finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nПункт 5 недоступен при вашем ограничении на делегирование. Выберите один маршрут.",
+      "usage": {
+        "input_tokens": 236892,
+        "cached_input_tokens": 216192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 844,
+        "reasoning_output_tokens": 0
+      },
+      "read_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc \"cat harness/common/START.md harness/project/START.md; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 2555
+        },
+        {
+          "command": "/bin/bash -lc \"cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md; ls -l .claude/rules; rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r -d '\\\\n' cat\"",
+          "output_bytes": 47961
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort\"",
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "output_bytes": 14459
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 20572
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4793
+        }
+      ]
+    },
+    "both": {
+      "verified": true,
+      "premature_route_reads": [],
+      "answer": "1. **Superpowers + Compound Engineering:** `using-superpowers + ce-brainstorm → ce-plan → ce-work` - одновременное выполнение `using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `ce-brainstorm → ce-plan → ce-work`  - нативный ce-маршрут\n3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу.\n4. **Superpowers, через одного агента:** `brainstorming → writing-plans → executing-plans`.\n5. Superpowers, через субагентов: `brainstorming → writing-plans → subagent-driven-development`.\n\nОба полных варианта включают: using-superpowers → brainstorming →\nсогласование спецификации → writing-plans → согласование плана с сохранением\nвыбранного исполнителя → выбранное исполнение → его проверки и review →\nverification-before-completion → finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nРекомендую **пункт 3**. Для определения термина в одном предложении достаточно прямого ответа, и этот маршрут соблюдает ваше условие работать без делегирования.\n\nВыберите один маршрут.",
+      "usage": {
+        "input_tokens": 205264,
+        "cached_input_tokens": 155264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 730,
+        "reasoning_output_tokens": 0
+      },
+      "read_commands": [
+        {
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "output_bytes": 516
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "output_bytes": 2061
+        },
+        {
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md .claude/rules/comm-skill-rule-ownership.md'",
+          "output_bytes": 12001
+        },
+        {
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "output_bytes": 494
+        },
+        {
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "output_bytes": 35031
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "output_bytes": 8220
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "output_bytes": 872
+        },
+        {
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "output_bytes": 4793
+        }
+      ]
+    }
+  }
+}
