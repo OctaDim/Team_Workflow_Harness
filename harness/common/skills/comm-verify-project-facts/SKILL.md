@@ -14,7 +14,8 @@ Inputs: claim/decision, project/version/environment, authorized evidence.
    alone do not prove today's state.
 3. For absence search relevant locations/naming variants; check coverage, filters
    and available positive controls. Failed/incomplete searches prove uncertainty,
-   not absence; qualify conclusions.
+   not absence; qualify conclusions. For an empty log result read
+   [empty log results](references/empty-log-results.md).
 4. Probe availability safely within authority when needed. Catalog/health alone
    is insufficient. Missing permission/evidence remains unresolved; never bypass restrictions.
 5. Read only the applicable Git resource:
@@ -23,7 +24,7 @@ Inputs: claim/decision, project/version/environment, authorized evidence.
    or requirements, their continued presence or deployment;
    [operation result](references/git-operation-result.md) for uncertain effects
    of an attempted mutation. Frozen comparisons use integration, not base;
-   PR-field edits use operation result, not integration. Other facts need none.
+   PR-field edits use operation result, not integration. Other facts need no Git resource.
 6. Report sources/version/date, observations, contradictions, limits, conclusions
    and affected current statements. Follow recording/evidence
    routes and preserve history.
