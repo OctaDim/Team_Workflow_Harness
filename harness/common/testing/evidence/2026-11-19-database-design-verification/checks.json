@@ -1,0 +1,293 @@
+{
+  "date": "2026-11-19",
+  "approved_candidate_commit": "ebc2407392be4ed1f8cd3bdd232b6d741c2d181b",
+  "full_skill_manifest_sha256": "df50ee6552e7c4ba8411033099068aeef663f28ea9a86752a674573d728231ab",
+  "codex_version": "0.166.0",
+  "codex_native_checks": {
+    "combined": {
+      "status": "passed",
+      "points": {
+        "1": {
+          "db_rejected_invalid": true,
+          "existing_record": [
+            99,
+            2
+          ],
+          "existing_revision": 2,
+          "fresh_revision": 2,
+          "models_only_accepts_invalid": true,
+          "permitted": true
+        },
+        "2": {
+          "database_and_driver": "SQLite / sqlite3 in fixture runtime and test",
+          "inside_transaction": [
+            20,
+            "update"
+          ],
+          "new_session_after_rollback": [
+            10,
+            []
+          ]
+        },
+        "4": {
+          "compatible": {
+            "blocked": false,
+            "revision": 1,
+            "rows": [
+              [
+                1
+              ]
+            ],
+            "schema_data_revision_unchanged": false
+          },
+          "incompatible": {
+            "blocked": true,
+            "revision": 2,
+            "rows": [
+              [
+                1,
+                "history"
+              ]
+            ],
+            "schema_data_revision_unchanged": true
+          }
+        },
+        "5": {
+          "answer_matches": [
+            "empty",
+            "missing",
+            "null"
+          ],
+          "database": "TinyDB document store",
+          "date_matches": [
+            "date-unset"
+          ],
+          "explicit_values_excluded": [
+            "zero",
+            "false",
+            "present",
+            "date-set"
+          ],
+          "written_none": "explicit JSON null"
+        },
+        "6": {
+          "actual_apply": {
+            "apply_target": "test.sqlite",
+            "revision": 2,
+            "step": 3,
+            "working_database_untouched": true
+          },
+          "attempts_before_explicit_decision": 0,
+          "configuration_rechecked": true,
+          "explained_schema_impact": [
+            "applied_migration",
+            "user_version"
+          ]
+        },
+        "7": {
+          "application_order": [
+            "base",
+            "left",
+            "right",
+            "merged"
+          ],
+          "applied": [
+            "base",
+            "left",
+            "merged",
+            "right"
+          ],
+          "columns": [
+            "id",
+            "left_value",
+            "right_value"
+          ],
+          "existing_record": [
+            99,
+            null,
+            null
+          ],
+          "final_heads": [
+            "merged"
+          ],
+          "from_database_revision": "left",
+          "git_merge_parents": [
+            "b4afff11bf21901a5a37109b4cf8a11d906940f3",
+            "073672ccb10c52c8672cbf82d000d59b52b20f01"
+          ],
+          "migration_heads_after_git_merge": [
+            "left",
+            "right"
+          ]
+        }
+      }
+    },
+    "common": {
+      "status": "passed",
+      "points": {
+        "1": {
+          "db_rejected_invalid": true,
+          "existing_record": [
+            99,
+            2
+          ],
+          "existing_revision": 2,
+          "fresh_revision": 2,
+          "models_only_accepts_invalid": true,
+          "permitted": true
+        },
+        "2": {
+          "database_and_driver": "SQLite / sqlite3 in fixture runtime and test",
+          "inside_transaction": [
+            20,
+            "update"
+          ],
+          "new_session_after_rollback": [
+            10,
+            []
+          ]
+        },
+        "4": {
+          "compatible": {
+            "blocked": false,
+            "revision": 1,
+            "rows": [
+              [
+                1
+              ]
+            ],
+            "schema_data_revision_unchanged": false
+          },
+          "incompatible": {
+            "blocked": true,
+            "revision": 2,
+            "rows": [
+              [
+                1,
+                "history"
+              ]
+            ],
+            "schema_data_revision_unchanged": true
+          }
+        },
+        "5": {
+          "answer_matches": [
+            "empty",
+            "missing",
+            "null"
+          ],
+          "database": "TinyDB document store",
+          "date_matches": [
+            "date-unset"
+          ],
+          "explicit_values_excluded": [
+            "zero",
+            "false",
+            "present",
+            "date-set"
+          ],
+          "written_none": "explicit JSON null"
+        },
+        "6": {
+          "actual_apply": {
+            "apply_target": "test.sqlite",
+            "revision": 2,
+            "step": 3,
+            "working_database_untouched": true
+          },
+          "attempts_before_explicit_decision": 0,
+          "configuration_rechecked": true,
+          "explained_schema_impact": [
+            "applied_migration",
+            "user_version"
+          ]
+        },
+        "7": {
+          "application_order": [
+            "base",
+            "left",
+            "right",
+            "merged"
+          ],
+          "applied": [
+            "base",
+            "left",
+            "merged",
+            "right"
+          ],
+          "columns": [
+            "id",
+            "left_value",
+            "right_value"
+          ],
+          "existing_record": [
+            99,
+            null,
+            null
+          ],
+          "final_heads": [
+            "merged"
+          ],
+          "from_database_revision": "left",
+          "git_merge_parents": [
+            "99a9dac848cc24b292c4610464613fe57776cd6d",
+            "f0a2e67830f5e5f399f181fbddbf0dc43e817491"
+          ],
+          "migration_heads_after_git_merge": [
+            "left",
+            "right"
+          ]
+        }
+      }
+    }
+  },
+  "claude_status": {
+    "common": "unverified",
+    "combined": "unverified"
+  },
+  "overall_status": "unverified",
+  "point_3": {
+    "status": "closed_rejected_transfer",
+    "candidate_scope_checked": true
+  },
+  "published_copies": {
+    "harness/common/skills/comm-confirm-database-design": {
+      "file_count": 4,
+      "manifest_sha256": "df50ee6552e7c4ba8411033099068aeef663f28ea9a86752a674573d728231ab"
+    },
+    ".agents/skills/comm-confirm-database-design": {
+      "file_count": 4,
+      "manifest_sha256": "df50ee6552e7c4ba8411033099068aeef663f28ea9a86752a674573d728231ab"
+    },
+    ".claude/skills/comm-confirm-database-design": {
+      "file_count": 4,
+      "manifest_sha256": "df50ee6552e7c4ba8411033099068aeef663f28ea9a86752a674573d728231ab"
+    }
+  },
+  "post_publication": {
+    "startup": "passed",
+    "catalogue": {
+      "installation": "Team_Workflow_Harness",
+      "repo_skill_count": 36,
+      "guard_bytes": 48254,
+      "repo_skill_metadata_bytes": 5750,
+      "skill": "comm-confirm-database-design",
+      "relative_path": ".agents/skills/comm-confirm-database-design/SKILL.md",
+      "scope": "repo",
+      "description": "Use when designing SQL schemas, startup, migrations, queries, transactions or sessions, or agreeing field storage and empty-value searches in any database."
+    },
+    "pytest": {
+      "status": "passed",
+      "passed": 92
+    },
+    "plugin_eval": {
+      "grade": "A",
+      "score": 95,
+      "errors": 0,
+      "warnings": 1,
+      "trigger_tokens": 46,
+      "invoked_tokens": 419,
+      "deferred_tokens": 995
+    }
+  }
+}

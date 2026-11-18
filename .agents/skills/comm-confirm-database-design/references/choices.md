@@ -1,76 +1,65 @@
-# Decisions before SQL work
+# Database design choices
 
-Read before questions. Ground comparisons and recommendations in the inspected
-project. Name missing evidence and ask; existing code is not consent.
+## Any database
 
-## Three independent choices
+- Agree whether each affected field can store `NULL` or its equivalent and
+  whether omission is allowed if supported. If the application uses `None` or
+  `nil`, agree its representation on write.
+- For empty-value searches separately agree whether to return records with
+  `NULL`, a missing field, `""`, `0`, `False`, or an unset date or time.
+  Encode and test each applicable case using the database's query semantics.
+  Zero and false can be explicit answers. Follow the field and query contracts.
 
-For each open block compare all three alternatives below (including a suitable
-third approach), recommend with project-specific reasons and obtain an explicit
-decision. A broad instruction to choose autonomously is not a choice among
-these alternatives; ask after comparing. Preserve specific choices already made:
+## SQL decisions
 
-| Block | Required alternatives |
-|---|---|
-| Schema creation and initialization | Parameterized SQL via `.execute()` with explicit schema evolution; SQLAlchemy models/queries plus Alembic for schema creation and migrations; another suitable approach with project-specific justification. |
-| Queries | Direct parameterized SQL via `.execute()`; SQLAlchemy Core and/or ORM query expressions, specifying the chosen API; another suitable approach with justification. |
-| Resource ownership | Separate functions/context managers; a dedicated class owning engine and session factory; another suitable approach with justification. |
+Compare three distinct alternatives for each open block. Recommend one with
+project-specific reasons and get explicit approval.
 
-Use distinct mechanisms and owners. Versioned raw-SQL scripts remain in the
-`.execute()` schema-evolution option; a third needs another migration tool/ORM
-or a distinct justified mechanism. Functions and context managers are one
-ownership option. Another is an application/framework-owned connection injected
-into helpers; connection duration alone does not define another owner.
+| Block | Alternatives |
+| --- | --- |
+| Schema and initialization | Explicit evolution via parameterized SQL `.execute()`. SQLAlchemy models/queries with Alembic. A justified distinct mechanism. |
+| Queries | Direct parameterized SQL via `.execute()`. SQLAlchemy Core and/or ORM expressions, naming the API. Another suitable query builder, ORM or approach. |
+| Resource ownership | Functions/context managers. A class owning engine and session factory. Another owner, such as framework-owned injected connections. |
 
-Before asking, show each schema alternative in its own row with: mechanism |
-who/tool applies migrations | fit/tradeoff for this project. Do not give reasons
-only for the recommendation. Then self-check all three alternatives in each
-open block: differences must be in mechanisms/owners, not names, numbering,
-version metadata or SQL-file layout. Example: "raw SQL; SQLAlchemy + Alembic;
-SQL + user_version" fails without an explained difference; user_version alone
-neither executes migrations nor rules out a distinct tool. Replace duplicates.
-If no suitable third is known, state the gap and ask how to proceed; do not
-invent one or declare the comparison complete. All three remain required before
-approval.
+Show each schema alternative in its own row with mechanism, migration executor
+and project fit/tradeoff. Check mechanism and owner for real differences.
+SQL files and `user_version` are variants of explicit SQL. Core and ORM are
+SQLAlchemy subchoices. Connection duration alone leaves ownership unchanged.
+If a distinct third approach is missing, explain the gap and ask. Use
+stack-appropriate tools, explain inapplicable ORM sessions and handle DDL
+identifiers separately from bound values.
 
-The schema choice does not settle queries or lifecycle. SQLAlchemy also executes
-expressions through `.execute()`; distinguish expressions from handwritten SQL.
-Core and ORM are subchoices of the SQLAlchemy option, not the separate third
-query alternative; offer another approach, such as a different query builder
-or ORM, with project-specific justification.
-Do not force Python tools into another stack. If ORM sessions are inapplicable,
-state that explicitly rather than introducing them. Values and DDL identifiers
-need different safe handling; do not promise bind parameters cover identifiers.
+- Separate provisioning from schema/table creation. Agree empty/existing,
+  first/repeated/concurrent startup, DDL owner and startup/deploy migrations.
+- Agree model modules, metadata, relationships, constraints and indexes.
+  Agree migration tooling, legacy history, preservation, failures and recovery.
+  Decide `create_all()` and startup migration generation separately.
+- Agree sync/async use, engine ownership per process, creation/closure,
+  connection/session scope and passing, pools/timeouts, background tasks
+  and concurrent isolation.
+- Agree transaction boundaries, commit/rollback, locks, retries, cancellation
+  and query organization, composition, helpers and style mixing.
+- Scope third-party SQL exceptions to their tables/migrations and agreed callers.
 
-## Applicable scope to resolve
+## Migration and transaction checks
 
-- Separate provisioning the database from creating schemas/tables. Agree empty
-  and existing database behavior, first/repeated/concurrent startup, DDL owner
-  and migration application during startup versus deployment.
-- Agree model modules, metadata, relationships, constraints and indexes at the
-  level needed by this task; capture explicitly delegated implementation details.
-- Agree migration tooling, legacy-history adoption, data preservation, failure
-  and recovery behavior. Ask separately about `create_all()` and startup
-  migration generation; neither follows automatically from ORM/Alembic selection.
-- Agree sync/async use, per-process engine ownership, creation/closure,
-  connection/session scope and passing, pool/timeouts where applicable,
-  background tasks and isolation of concurrent operations.
-- Agree transaction boundaries, commit/rollback, locks, retries and cancellation;
-  query-layer organization, composable expressions and partial-query helpers;
-  whether mixing query styles is allowed and its boundaries.
-- Agree third-party internal SQL exceptions and ownership of their tables and
-  migrations. A narrow exception is not permission for application-wide raw SQL.
-- Agree verification of empty/existing schemas, upgrades/data preservation,
-  repeated/concurrent startup and failure recovery; respect actual database
-  access permissions. Do not silently run against production.
-
-## Approval and record
-
-Group questions only when the reply unambiguously covers every open choice.
-Explain applicability or obtain delegation; never silently omit material issues.
-Clarify ambiguous replies; elapsed time is not approval. Compare before asking,
-not after selecting.
-
-Follow the skill's approval and recording steps. Library exceptions do not
-authorize converting application queries to raw SQL. This common procedure
-contains no project-specific database policy.
+- Verify the affected contract on a temporary database built by the project's
+  migrations. For existing data start at a supported earlier version with
+  representative records. Test permitted and prohibited operations for affected
+  constraints or triggers. Cover applicable startup and recovery paths.
+- When the caller owns commit, test on an isolated database with the production
+  database system and driver. After caller `ROLLBACK`, verify the original
+  affected data in a new session.
+- For supported schema rollback agree data compatibility. Incompatible data
+  must stop rollback before schema or data changes. Test success and rejection
+  in isolation. After rejection check unchanged schema, data and revision.
+- Before applying migrations verify the command's actual target using the
+  tool's configuration precedence. Match the designated test or agreed working
+  database. If unclear, stop before applying. Explain in detail which settings
+  determine the target, what is unknown, and which data or schema objects the
+  command could change on a wrong target. Ask for an explicit decision and wait.
+  Recheck the resolved target before applying. Respect access permissions.
+- After integrating branches that both changed migrations, check order,
+  dependencies and expected target revisions with project tooling. In isolation run
+  the normal upgrade from the integration branch's schema to the agreed target
+  and verify all expected steps applied.
