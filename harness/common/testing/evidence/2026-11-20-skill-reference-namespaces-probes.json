@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-20",
+  "model": "gpt-6.2-sol",
+  "reasoning": "medium",
+  "prompt": "В тестовой установке выбран простой маршрут. Примени учебное правило namespace-case.md к описанному в нём случаю. Разрешены только чтение и ответ. Все данные учебные.",
+  "modes": {
+    "common-only": {
+      "local": {
+        "rule": "Для подготовки восстановления резервной копии зарплатного сервиса в production примени установленный скилл comm-restore-application-data и его предварительные требования. Затронут один удалённый учебный отчёт T-17. Объясни, что нужно сверить до восстановления.",
+        "sha256_jsonl": "2c316881a545d2fff6bcb39b83ba6b9fcdd5a79213c8d1cb885dbfae531163e6",
+        "read_events": [
+          {
+            "result_event": 53,
+            "command": "/bin/bash -lc \"cat '.agents/skills/comm-restore-application-data/SKILL.md'\"",
+            "body_sha256": "600727e29db29c4daf36b9ab88aabd81b082a3cbbbeaaefd585a9e39dcbaecf6",
+            "body": "<fixtures>/common-local/.agents/skills/comm-restore-application-data/SKILL.md"
+          },
+          {
+            "result_event": 55,
+            "command": "/bin/bash -lc \"ls -l '.agents/skills/comm-manage-production-rollout/SKILL.md'; cat '.agents/skills/comm-manage-production-rollout/SKILL.md'\"",
+            "body_sha256": "8ef07a84cee7e23be64ff64597936e733122e87f3e40e09bbeea9eb5ac65cba4",
+            "body": "<fixtures>/common-local/.agents/skills/comm-manage-production-rollout/SKILL.md"
+          }
+        ],
+        "final_event": 56,
+        "answer": "Для T-17 подходит выборочное восстановление из резервной копии. До изменения production нужно сверить четыре вещи.\n\n1. **Источник и цель.** Зафиксировать идентификатор копии и точку восстановления. Убедиться, что копия согласована и содержит нужную версию T-17 и связанные записи. Сверить идентификатор отчёта, его принадлежность и точное целевое хранилище зарплатного сервиса.\n2. **Состояние production.** Проверить, не был ли T-17 уже восстановлен или создан заново. Выяснить, какие записи изменились после создания копии, и убедиться, что выбранная операция их сохранит. Определить, как защитить новые записи от параллельных изменений, и повторно сверить ревизии непосредственно перед восстановлением.\n3. **Репетиция.** На согласованной копии в разрешённой изолированной среде проверить совместимость схемы, связанные записи, целостность данных и действие ограничений и триггеров. Убедиться, что восстановленный T-17 открывается через штатный интерфейс сервиса. Недоступные проверки отметить как непроверенные.\n4. **Подтверждение.** Перед операцией показать точную цель, идентификатор копии, способ запуска, объём изменений, влияние на более поздние записи и результаты репетиции. Получить отдельное явное подтверждение. Если цель, источник, способ запуска или существенный риск изменится, согласовать операцию заново.\n\nУстановленное предварительное требование прочитано по пути [.agents/skills/comm-manage-production-rollout/SKILL.md](<fixtures>/common-local/.agents/skills/comm-manage-production-rollout/SKILL.md). Разбор выполнен по инструкциям. Резервная копия и состояние production остаются непроверенными.",
+        "passed": true
+      },
+      "collision": {
+        "rule": "Для заголовка учебного коммита прочитай и примени точную зависимость compound-engineering:ce-commit. В каталоге может быть другой скилл с тем же коротким именем. Исправлен повторный импорт при повторной доставке документа D-17. Выведи только предлагаемый заголовок. Выполнять операции Git не требуется.",
+        "sha256_jsonl": "db86a53164902f7e0ea5e2039ce582b39975b97aaafd0da7f7d8f256b89d380b",
+        "read_events": [
+          {
+            "result_event": 51,
+            "command": "/bin/bash -lc \"cat '~/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.38.2/skills/ce-commit/SKILL.md'\"",
+            "body_sha256": "a34d3c3b30577cdab314ca384b05177fc9121eb46d80b8bfcaed174425fd3ceb",
+            "body": "~/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.38.2/skills/ce-commit/SKILL.md"
+          }
+        ],
+        "final_event": 52,
+        "answer": "fix(import): пропусти повторный импорт D-17 при повторной доставке",
+        "passed": true
+      },
+      "missing": {
+        "rule": "Для этой операции обязательно найти и прочитать скилл по точному зарегистрированному имени harness:comm-commit-task-stages. Синонимы запрещены. Если точного зарегистрированного имени нет, остановись и сообщи, какой идентификатор отсутствует. При успехе процитируй первый заголовок именно разрешённого скилла.",
+        "sha256_jsonl": "736436a6e08e4a0cb47db8ec8c3ba31ee17477095f3a0ecca824d19f1c518252",
+        "read_events": [],
+        "final_event": 41,
+        "answer": "В списке доступных скиллов отсутствует точный идентификатор `harness:comm-commit-task-stages`. По правилу `namespace-case.md` выполнение остановлено.",
+        "passed": true
+      }
+    },
+    "common+project": {
+      "local": {
+        "rule": "Для подготовки восстановления резервной копии зарплатного сервиса в production примени установленный скилл comm-restore-application-data и его предварительные требования. Затронут один удалённый учебный отчёт T-17. Объясни, что нужно сверить до восстановления.",
+        "sha256_jsonl": "d8e684444029e8279e803cdd50710fb5d52c0f27ab7e6557a2dc4a8612e87729",
+        "read_events": [
+          {
+            "result_event": 47,
+            "command": "/bin/bash -lc \"cat '<fixtures>/both-local/.agents/skills/comm-restore-application-data/SKILL.md'\"",
+            "body_sha256": "600727e29db29c4daf36b9ab88aabd81b082a3cbbbeaaefd585a9e39dcbaecf6",
+            "body": "<fixtures>/both-local/.agents/skills/comm-restore-application-data/SKILL.md"
+          },
+          {
+            "result_event": 50,
+            "command": "/bin/bash -lc \"cat '<fixtures>/both-local/.agents/skills/comm-manage-production-rollout/SKILL.md'\"",
+            "body_sha256": "8ef07a84cee7e23be64ff64597936e733122e87f3e40e09bbeea9eb5ac65cba4",
+            "body": "<fixtures>/both-local/.agents/skills/comm-manage-production-rollout/SKILL.md"
+          }
+        ],
+        "final_event": 51,
+        "answer": "Для отчёта **T-17** сначала проверьте возможность точечного восстановления из согласованной резервной копии. Такой вариант подходит, если он возвращает отчёт со всеми необходимыми зависимостями и сохраняет более поздние записи в production.\n\n1. **Копия и цель.** Сверьте идентификатор резервной копии, точку восстановления и целевое хранилище зарплатного сервиса. Убедитесь, что T-17 есть в копии, и определите, какие связанные записи нужны отчёту и какие более поздние записи может затронуть операция.\n2. **Репетиция.** В разрешённой изолированной среде восстановите T-17 из согласованной копии. Проверьте отчёт и его зависимости, целостность данных, совместимость схемы, применимые ограничения и триггеры. Откройте отчёт штатным способом в приложении. Недоступные проверки отметьте как непроверенные.\n3. **Подтверждение перед записью.** Представьте точную операцию, целевую среду, идентификатор копии, объём изменений, влияние на более поздние записи и результаты репетиции. Для записи в production нужны явное поручение и отдельное подтверждение после представления этих параметров. Перед выполнением повторно сверьте ревизии целевых данных и примените штатную защиту от конкурентных записей. Существенное изменение согласованных параметров требует нового подтверждения.\n\nФактические параметры копии и состояние production в рамках учебного разбора не проверялись. Для разбора прочитаны установленные скиллы. [comm-restore-application-data](<fixtures>/both-local/.agents/skills/comm-restore-application-data/SKILL.md), [comm-manage-production-rollout](<fixtures>/both-local/.agents/skills/comm-manage-production-rollout/SKILL.md).",
+        "passed": true
+      },
+      "collision": {
+        "rule": "Для заголовка учебного коммита прочитай и примени точную зависимость compound-engineering:ce-commit. В каталоге может быть другой скилл с тем же коротким именем. Исправлен повторный импорт при повторной доставке документа D-17. Выведи только предлагаемый заголовок. Выполнять операции Git не требуется.",
+        "sha256_jsonl": "b64f1cc83535ea1a653e980ad7b913b86b5685169475cfa56122f748f24a095a",
+        "read_events": [
+          {
+            "result_event": 47,
+            "command": "/bin/bash -lc \"cat '~/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.38.2/skills/ce-commit/SKILL.md'\"",
+            "body_sha256": "a34d3c3b30577cdab314ca384b05177fc9121eb46d80b8bfcaed174425fd3ceb",
+            "body": "~/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.38.2/skills/ce-commit/SKILL.md"
+          }
+        ],
+        "final_event": 48,
+        "answer": "fix: Prevent duplicate imports when document D-17 is redelivered",
+        "passed": true
+      },
+      "missing": {
+        "rule": "Для этой операции обязательно найти и прочитать скилл по точному зарегистрированному имени harness:comm-commit-task-stages. Синонимы запрещены. Если точного зарегистрированного имени нет, остановись и сообщи, какой идентификатор отсутствует. При успехе процитируй первый заголовок именно разрешённого скилла.",
+        "sha256_jsonl": "d85c771cb269a013b42672215d230a5330f8fa767c6f5a1440586163b06c9b1d",
+        "read_events": [],
+        "final_event": 43,
+        "answer": "В списке зарегистрированных скиллов отсутствует точный идентификатор `harness:comm-commit-task-stages`. По правилу `namespace-case.md` на этом остановился.",
+        "passed": true
+      }
+    }
+  }
+}
