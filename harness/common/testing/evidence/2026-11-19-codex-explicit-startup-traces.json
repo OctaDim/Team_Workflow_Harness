@@ -1,0 +1,1263 @@
+{
+  "base_commit": "0cf282c6b8e7bb504db0ba8c8772e80b7a31aacf",
+  "codex": "0.166.0",
+  "skill_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb",
+  "original_checker": "2f7e7c52174996664ad755964dda67c17d9eb6fc12cad067bb50a40169eb80cb",
+  "candidate_checker": "a0516e40a19d808e7d5bed75a92fe64b1cde97936d2fdef3cc7cc85350d6048e",
+  "explicit_prompt": "Use $comm-retry-external-operations. Review the API and caller for a synthetic submission client. The supplier might commit even when the reply is lost. Status can be looked up by client reference but may be stale. SDK has its own retries. Describe what should be returned on failures, how to recover, and the deterministic acceptance cases. A supplier asks the caller to wait 12s with 8s left. Provide concrete decisions. Route 3, simple independent execution, already chosen for this fixture task. Use the installed project instructions. No external tools/services, no edits.",
+  "catalogue": [
+    {
+      "installation": "baseline-common",
+      "repo_skill_count": 37,
+      "guard_bytes": 48254,
+      "repo_skill_metadata_bytes": 5899,
+      "skill": "comm-retry-external-operations",
+      "relative_path": ".agents/skills/comm-retry-external-operations/SKILL.md",
+      "scope": "repo",
+      "description": "Use when designing API errors, client timeouts, retries or recovery after losing the response to an external operation."
+    },
+    {
+      "installation": "baseline-combined",
+      "repo_skill_count": 37,
+      "guard_bytes": 48254,
+      "repo_skill_metadata_bytes": 5899,
+      "skill": "comm-retry-external-operations",
+      "relative_path": ".agents/skills/comm-retry-external-operations/SKILL.md",
+      "scope": "repo",
+      "description": "Use when designing API errors, client timeouts, retries or recovery after losing the response to an external operation."
+    },
+    {
+      "installation": "candidate-common",
+      "repo_skill_count": 37,
+      "guard_bytes": 48254,
+      "repo_skill_metadata_bytes": 5899,
+      "skill": "comm-retry-external-operations",
+      "relative_path": ".agents/skills/comm-retry-external-operations/SKILL.md",
+      "scope": "repo",
+      "description": "Use when designing API errors, client timeouts, retries or recovery after losing the response to an external operation."
+    },
+    {
+      "installation": "candidate-combined",
+      "repo_skill_count": 37,
+      "guard_bytes": 48254,
+      "repo_skill_metadata_bytes": 5899,
+      "skill": "comm-retry-external-operations",
+      "relative_path": ".agents/skills/comm-retry-external-operations/SKILL.md",
+      "scope": "repo",
+      "description": "Use when designing API errors, client timeouts, retries or recovery after losing the response to an external operation."
+    }
+  ],
+  "native_runs": [
+    {
+      "run": "baseline-combined-explicit",
+      "trace_sha256": "da3c287997e5cb3dc371f1816d626a150eda7ce21bb1e25e4e8f555813560f64",
+      "full_rule_read_before_first_index": false,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/references/choice.md"
+      ],
+      "tool_output_bytes": 117347,
+      "native_usage": {
+        "input_tokens": 216189,
+        "cached_input_tokens": 183296,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1545,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 10,
+      "answer_sha256": "11fafaba345e00fcafe177926586eb1b9e200df9ba58b0e4f5e4f09b242915d4"
+    },
+    {
+      "run": "baseline-common-explicit",
+      "trace_sha256": "ee42b69ee6fc7653f5b37e3c6fac28ec4ec40f07614c25a2ab5e3c5dde574a90",
+      "full_rule_read_before_first_index": false,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/references/choice.md"
+      ],
+      "tool_output_bytes": 95171,
+      "native_usage": {
+        "input_tokens": 214259,
+        "cached_input_tokens": 183296,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1623,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 8,
+      "answer_sha256": "eb61334acfde68e865a8acac0092d87dc4267923133771c7c10388f94c78e1a3"
+    },
+    {
+      "run": "candidate-combined-actions",
+      "trace_sha256": "69f0420700357d6ade5db22cc3aa5f7dea1b184186e9eec7c21fcabf61cd9142",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/references/choice.md",
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "tool_output_bytes": 68285,
+      "native_usage": {
+        "input_tokens": 243344,
+        "cached_input_tokens": 212096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 621,
+        "reasoning_output_tokens": 46
+      },
+      "command_count": 9,
+      "answer_sha256": "a6cfe0792da7fbe2afe8f8467e452f46a2acfd2c2cb67a7877073f38434cb327"
+    },
+    {
+      "run": "candidate-combined-explicit",
+      "trace_sha256": "f3613b725c8d7aba3233c1fe75ce5da62de3cb2c33b44ca84b8bf0f13f212088",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/SKILL.md",
+        "comm-select-development-workflow/references/choice.md"
+      ],
+      "tool_output_bytes": 63512,
+      "native_usage": {
+        "input_tokens": 238779,
+        "cached_input_tokens": 181376,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1634,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 10,
+      "answer_sha256": "b24ad7bdc09dc799b2d188f0c4309454a601176aad90a8b0074c83466c7359ad"
+    },
+    {
+      "run": "candidate-combined-filecontrol",
+      "trace_sha256": "457aebf4eed02bd2c9da7dad7768f0dc0ae34b1f00ea2941a81ad3f3c3fce1c9",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": false,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-select-development-workflow/references/choice.md",
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "tool_output_bytes": 66837,
+      "native_usage": {
+        "input_tokens": 235430,
+        "cached_input_tokens": 205312,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 470,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 9,
+      "answer_sha256": "52f11620e397f867b7d9f19e48caeb64658356a6b5d17138c00dd9feaf5d7ad6"
+    },
+    {
+      "run": "candidate-combined-implicit",
+      "trace_sha256": "04be4dd96d8c454792b5fc1e0c867154588a090189c005b74a2cd8f233bf6be1",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/references/choice.md"
+      ],
+      "tool_output_bytes": 68878,
+      "native_usage": {
+        "input_tokens": 210356,
+        "cached_input_tokens": 181376,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1500,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 9,
+      "answer_sha256": "246ab9ed2af9bb80a06fec7685fcaf18d4933de71ac5b1f8d3003b3d5a780adb"
+    },
+    {
+      "run": "candidate-combined-isolated",
+      "trace_sha256": "05feaa8650b8b069524946aea4138dff84b4a36cbd4b9bd623891a476251978c",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-retry-external-operations/SKILL.md"
+      ],
+      "tool_output_bytes": 61569,
+      "native_usage": {
+        "input_tokens": 208293,
+        "cached_input_tokens": 185472,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1544,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 9,
+      "answer_sha256": "78d5b057456d39f9cf56206f26a458afba1631d8b7f3bf678fdee9944a9243d8"
+    },
+    {
+      "run": "candidate-combined-ordinary",
+      "trace_sha256": "ee720065afc14d52b818611dce9437b6bbeb7518df0d433396b37d876614fb21",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-retry-external-operations/SKILL.md"
+      ],
+      "tool_output_bytes": 61623,
+      "native_usage": {
+        "input_tokens": 209280,
+        "cached_input_tokens": 179072,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1053,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 8,
+      "answer_sha256": "5acf29333abda9d22fd187ee64a7243b1526cef4c27d39b2322aa553a67b4009"
+    },
+    {
+      "run": "candidate-combined-unrelated",
+      "trace_sha256": "e1b550978919396bd9b60678fbe37edb819e9be59f0625c544633be1f90c2a9d",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": false,
+      "human_body_seen": false,
+      "task_material_read": [],
+      "tool_output_bytes": 60097,
+      "native_usage": {
+        "input_tokens": 149959,
+        "cached_input_tokens": 128640,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 416,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 6,
+      "answer_sha256": "52f11620e397f867b7d9f19e48caeb64658356a6b5d17138c00dd9feaf5d7ad6"
+    },
+    {
+      "run": "candidate-common-actions",
+      "trace_sha256": "d0987c9d38e8648c0990940fc93f3509e54b639e32b92c0281637b53dc70eeab",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-retry-external-operations/SKILL.md"
+      ],
+      "tool_output_bytes": 61426,
+      "native_usage": {
+        "input_tokens": 184022,
+        "cached_input_tokens": 125952,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 557,
+        "reasoning_output_tokens": 111
+      },
+      "command_count": 7,
+      "answer_sha256": "a6cfe0792da7fbe2afe8f8467e452f46a2acfd2c2cb67a7877073f38434cb327"
+    },
+    {
+      "run": "candidate-common-explicit",
+      "trace_sha256": "2ef308161deef3c2e15f6bf6df639bcd001495009aca3a3d75a44715df060753",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/references/choice.md"
+      ],
+      "tool_output_bytes": 63439,
+      "native_usage": {
+        "input_tokens": 209912,
+        "cached_input_tokens": 186752,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1496,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 9,
+      "answer_sha256": "38df29f592968ecc6c6bc1863f4e1b50565657534fa9ccaa4fa496f444543090"
+    },
+    {
+      "run": "candidate-common-filecontrol",
+      "trace_sha256": "70342a1584025aef6bf312cb8794197a563e90d4d35f3c0e4bd51da69c78fb73",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": false,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-select-development-workflow/references/choice.md",
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "tool_output_bytes": 66837,
+      "native_usage": {
+        "input_tokens": 265279,
+        "cached_input_tokens": 247424,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 666,
+        "reasoning_output_tokens": 21
+      },
+      "command_count": 10,
+      "answer_sha256": "52f11620e397f867b7d9f19e48caeb64658356a6b5d17138c00dd9feaf5d7ad6"
+    },
+    {
+      "run": "candidate-common-implicit",
+      "trace_sha256": "72dd760777dfe02761c24e46e08f3803859cd0dd98dc2936b3d15e855c506f1e",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/references/choice.md"
+      ],
+      "tool_output_bytes": 63486,
+      "native_usage": {
+        "input_tokens": 207404,
+        "cached_input_tokens": 191360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1467,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 9,
+      "answer_sha256": "4f4a0149534f4e113ae06dc4d915491d6fc5bce46cf5284dedc60f77ce885f4f"
+    },
+    {
+      "run": "candidate-common-isolated",
+      "trace_sha256": "9a6d788baf4588e2cb585c410f5c49e74992f270deab60c7bc52557dbbea13e2",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/references/choice.md"
+      ],
+      "tool_output_bytes": 63540,
+      "native_usage": {
+        "input_tokens": 208554,
+        "cached_input_tokens": 185472,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1331,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 8,
+      "answer_sha256": "7bd08ad052fc523557dfe83022fba836fa57d604b1dc7654089ebb725d8e5660"
+    },
+    {
+      "run": "candidate-common-ordinary",
+      "trace_sha256": "bacb4c83405999bed9b359cc5d8ee8801b85e05913550eb6be68ca900b0591e9",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-retry-external-operations/SKILL.md"
+      ],
+      "tool_output_bytes": 61496,
+      "native_usage": {
+        "input_tokens": 180878,
+        "cached_input_tokens": 152576,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 938,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 7,
+      "answer_sha256": "cbf902776be8f8c503ed70916c2d00340d774e948af3522a65cfeb36e00a76e4"
+    },
+    {
+      "run": "candidate-common-unrelated",
+      "trace_sha256": "f419b64d79f38c5db3f81814383cf66c9d9b54e0a583f152c5034a67fbebba4d",
+      "scope": "arithmetic control without project access",
+      "command_count": 0,
+      "candidate_read": false,
+      "answer": "184"
+    },
+    {
+      "run": "combined-timer",
+      "trace_sha256": "e064391490b90c9ff1835d1ed04ce1d79e20ca278395edf1dc2158b27c58d1a8",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/references/choice.md"
+      ],
+      "tool_output_bytes": 63369,
+      "native_usage": {
+        "input_tokens": 207232,
+        "cached_input_tokens": 150144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 448,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 8,
+      "answer_sha256": "9be012d705d42f1965e3c85766027b23c72738511d5b795ca113193dbf2f6f97"
+    },
+    {
+      "run": "common-timer",
+      "trace_sha256": "55e2a751d623f352d1f29a23a2e314e7af318af28b19df10bb9aae25b5dac002",
+      "full_rule_read_before_first_index": true,
+      "rules_audit": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "index_order": true,
+      "all_loaded_skill_bodies_and_resources_started_after_indexes": true,
+      "candidate_read": true,
+      "human_body_seen": false,
+      "task_material_read": [
+        "comm-select-development-workflow/SKILL.md",
+        "comm-retry-external-operations/SKILL.md",
+        "comm-select-development-workflow/references/choice.md",
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "tool_output_bytes": 68162,
+      "native_usage": {
+        "input_tokens": 305638,
+        "cached_input_tokens": 268416,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 469,
+        "reasoning_output_tokens": 0
+      },
+      "command_count": 9,
+      "answer_sha256": "9be012d705d42f1965e3c85766027b23c72738511d5b795ca113193dbf2f6f97"
+    }
+  ],
+  "negative_controls_rejected": [
+    "missing rule body",
+    "skill joined to rules command"
+  ],
+  "replay": {
+    "common": {
+      "decisions": {
+        "lost": [
+          "lookup",
+          "report_success"
+        ],
+        "stale": [
+          "lookup",
+          "report_unknown"
+        ],
+        "recover": [
+          "wait",
+          "send",
+          "report_success"
+        ],
+        "slow": [
+          "cap_timeout",
+          "send",
+          "timeout"
+        ],
+        "abort": [
+          "cancel"
+        ],
+        "bad": [
+          "reject"
+        ],
+        "sdk": [
+          "exhaust"
+        ],
+        "hint": [
+          "exhaust"
+        ],
+        "allowed": [
+          "lookup",
+          "wait",
+          "send",
+          "report_success"
+        ]
+      },
+      "observed": {
+        "lost": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "stale": {
+          "passed": true,
+          "result": "report_unknown",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "recover": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 1,
+          "elapsed": 1
+        },
+        "slow": {
+          "passed": true,
+          "result": "timeout",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 2
+        },
+        "abort": {
+          "passed": true,
+          "result": "cancel",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "bad": {
+          "passed": true,
+          "result": "reject",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "sdk": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 3,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "hint": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "allowed": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 1
+        }
+      },
+      "timers": {
+        "attempt_timeout": 2,
+        "hint_delay": 3,
+        "new_sends_after_cancel": 0
+      }
+    },
+    "combined": {
+      "decisions": {
+        "lost": [
+          "lookup",
+          "report_success"
+        ],
+        "stale": [
+          "lookup",
+          "report_unknown"
+        ],
+        "recover": [
+          "wait",
+          "send",
+          "report_success"
+        ],
+        "slow": [
+          "cap_timeout",
+          "send",
+          "timeout"
+        ],
+        "abort": [
+          "cancel"
+        ],
+        "bad": [
+          "reject"
+        ],
+        "sdk": [
+          "exhaust"
+        ],
+        "hint": [
+          "exhaust"
+        ],
+        "allowed": [
+          "lookup",
+          "wait",
+          "send",
+          "report_success"
+        ]
+      },
+      "observed": {
+        "lost": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "stale": {
+          "passed": true,
+          "result": "report_unknown",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "recover": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 1,
+          "elapsed": 1
+        },
+        "slow": {
+          "passed": true,
+          "result": "timeout",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 2
+        },
+        "abort": {
+          "passed": true,
+          "result": "cancel",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "bad": {
+          "passed": true,
+          "result": "reject",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "sdk": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 3,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "hint": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "allowed": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 1
+        }
+      },
+      "timers": {
+        "attempt_timeout": 2,
+        "hint_delay": 3,
+        "new_sends_after_cancel": 0
+      }
+    }
+  },
+  "trace_steps": {
+    "baseline-combined-explicit": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "exit": 0,
+        "stdout_sha256": "27dffe85d76b512c1376079e09f1f5c4fd4b624fc24ff175e94d68dbae378460",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && find -L .claude/rules -type f -name '*.md' \"'! -name README.human.md -print0 | sort -z | xargs -0 -r cat && cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+        "exit": 0,
+        "stdout_sha256": "cdb1783ba2b33767a1d577c9dc80ce9c2bedbad3dc4fd2372705c1ea0c89f2bf",
+        "matching_bodies_in_output_order": [
+          "harness/common/START.md",
+          "harness/project/START.md",
+          ".claude/rules/comm-application-config-git.md",
+          ".claude/rules/comm-application-startup-readiness.md",
+          ".claude/rules/comm-ban-harness-symlinks.md",
+          ".claude/rules/comm-confirm-development-workflow.md",
+          ".claude/rules/comm-dependencies-through-uv.md",
+          ".claude/rules/comm-entrypoint-links-rule.md",
+          ".claude/rules/comm-human-folder-guides.md",
+          ".claude/rules/comm-instruction-order.md",
+          ".claude/rules/comm-package-independence.md",
+          ".claude/rules/comm-skill-rule-ownership.md",
+          ".claude/rules/comm-task-commit-on-completion.md",
+          ".claude/rules/comm-user-owned-entrypoints.md",
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "exit": 0,
+        "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "exit": 0,
+        "stdout_sha256": "1f7da53ceaf61218e024025286e25a6fa3644511e51e826d5a6e183ec50c6bed",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-application-config-git.md",
+          ".claude/rules/comm-application-startup-readiness.md",
+          ".claude/rules/comm-ban-harness-symlinks.md",
+          ".claude/rules/comm-confirm-development-workflow.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-instruction-order.md'\"",
+        "exit": 0,
+        "stdout_sha256": "da75664c3b21c849f6625d53a77acf148d46b4bb16e645b8dac3f32ac9ea12fe",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-dependencies-through-uv.md",
+          ".claude/rules/comm-entrypoint-links-rule.md",
+          ".claude/rules/comm-human-folder-guides.md",
+          ".claude/rules/comm-instruction-order.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-task-commit-on-completion.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+        "exit": 0,
+        "stdout_sha256": "c0056e76b95146a5b5b6fde5c4a46e799c4418984f9918fb94734b15d596f4e7",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-package-independence.md",
+          ".claude/rules/comm-skill-rule-ownership.md",
+          ".claude/rules/comm-task-commit-on-completion.md",
+          ".claude/rules/comm-user-owned-entrypoints.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+        "exit": 0,
+        "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c",
+        "matching_bodies_in_output_order": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md && cat .agents/skills/comm-retry-external-operations/SKILL.md'",
+        "exit": 0,
+        "stdout_sha256": "ec1573efe9863e38a649f0821078dbcd53027d2c4a763ef21ff4c2e32cd836e2",
+        "matching_bodies_in_output_order": [
+          ".agents/skills/comm-retry-external-operations/SKILL.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!.git/**'\"' -g '\"'!harness/common/**'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"' -g '\"'!README.human.md'\"' | rg -v '\"'^'\"\\\\.(agents|claude)/' | head -100\"",
+        "exit": 0,
+        "stdout_sha256": "cc0eb36b42378d6c2885f840e2b030a2813e7e9616dbc4587a20a8fa82165e81",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md && cat harness/project/decisions/existing.md && git status --short --untracked-files=all'",
+        "exit": 0,
+        "stdout_sha256": "8260636668c1b2f4fc2fff65630ace1cae88298900d50cdf961581a89c569e12",
+        "matching_bodies_in_output_order": []
+      }
+    ],
+    "baseline-common-explicit": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "exit": 0,
+        "stdout_sha256": "27dffe85d76b512c1376079e09f1f5c4fd4b624fc24ff175e94d68dbae378460",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r -d '\\\\n' cat && cat harness/common/INDEX.md && cat harness/project/INDEX.md\"",
+        "exit": 0,
+        "stdout_sha256": "cdb1783ba2b33767a1d577c9dc80ce9c2bedbad3dc4fd2372705c1ea0c89f2bf",
+        "matching_bodies_in_output_order": [
+          "harness/common/START.md",
+          "harness/project/START.md",
+          ".claude/rules/comm-application-config-git.md",
+          ".claude/rules/comm-application-startup-readiness.md",
+          ".claude/rules/comm-ban-harness-symlinks.md",
+          ".claude/rules/comm-confirm-development-workflow.md",
+          ".claude/rules/comm-dependencies-through-uv.md",
+          ".claude/rules/comm-entrypoint-links-rule.md",
+          ".claude/rules/comm-human-folder-guides.md",
+          ".claude/rules/comm-instruction-order.md",
+          ".claude/rules/comm-package-independence.md",
+          ".claude/rules/comm-skill-rule-ownership.md",
+          ".claude/rules/comm-task-commit-on-completion.md",
+          ".claude/rules/comm-user-owned-entrypoints.md",
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "exit": 0,
+        "stdout_sha256": "599a2a9d0d0312652b5fe6745c790a8858282c42fdd140e3e65948e7d8ac5049",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-confirm-development-workflow.md'\"",
+        "exit": 0,
+        "stdout_sha256": "414cad9290d73bfc7410806a633bdd4937e5d7935f03fb0a269310927d141d9b",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-skill-rule-ownership.md",
+          ".claude/rules/comm-human-folder-guides.md",
+          ".claude/rules/comm-application-config-git.md",
+          ".claude/rules/comm-application-startup-readiness.md",
+          ".claude/rules/comm-ban-harness-symlinks.md",
+          ".claude/rules/comm-confirm-development-workflow.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-task-commit-on-completion.md' '.claude/rules/comm-user-owned-entrypoints.md'\"",
+        "exit": 0,
+        "stdout_sha256": "0d7ff04c61c12b29e64f19675c947261c58142a48548c853253b5a83243af694",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-dependencies-through-uv.md",
+          ".claude/rules/comm-entrypoint-links-rule.md",
+          ".claude/rules/comm-instruction-order.md",
+          ".claude/rules/comm-package-independence.md",
+          ".claude/rules/comm-task-commit-on-completion.md",
+          ".claude/rules/comm-user-owned-entrypoints.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+        "exit": 0,
+        "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c",
+        "matching_bodies_in_output_order": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"cat harness/common/skills/comm-select-development-workflow/SKILL.md && cat .agents/skills/comm-retry-external-operations/SKILL.md && rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/common/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"'\"",
+        "exit": 0,
+        "stdout_sha256": "285543f63ebca4ff5178917262af91823f0309a4059540fb468d8985849b46a2",
+        "matching_bodies_in_output_order": [
+          ".agents/skills/comm-retry-external-operations/SKILL.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"cat harness/common/skills/comm-select-development-workflow/references/choice.md && rg -il 'submission client|client reference' harness/project -g '\"'!README.human.md'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"'\"",
+        "exit": 1,
+        "stdout_sha256": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f",
+        "matching_bodies_in_output_order": []
+      }
+    ],
+    "candidate-combined-explicit": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "exit": 0,
+        "stdout_sha256": "ef2a1af26f16714954578fab49503513e14864db5158bee4ae435e8472cb75de",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "exit": 0,
+        "stdout_sha256": "7e8bdea3014915560df44e80a5cb3a4aa34a25240219106c6afef37169d8310a",
+        "matching_bodies_in_output_order": [
+          "harness/common/START.md",
+          "harness/project/START.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "exit": 0,
+        "stdout_sha256": "86f5c58c821f2c4ca48b28bc8e972e507568fa6aa23f512b136088226c6d62d3",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-skill-rule-ownership.md",
+          ".claude/rules/comm-human-folder-guides.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "exit": 0,
+        "stdout_sha256": "ef4bda1872bb7703552a5d4db391175041dd36451d48ba2a3e263e556216d558",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-task-commit-on-completion.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-skill-rule-ownership.md'\"",
+        "exit": 0,
+        "stdout_sha256": "12730f613d5ee2bc153ca265f28eaa59539e521e01322cece6479e70458332d7",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-application-config-git.md",
+          ".claude/rules/comm-human-folder-guides.md",
+          ".claude/rules/comm-confirm-development-workflow.md",
+          ".claude/rules/comm-task-commit-on-completion.md",
+          ".claude/rules/comm-ban-harness-symlinks.md",
+          ".claude/rules/comm-application-startup-readiness.md",
+          ".claude/rules/comm-user-owned-entrypoints.md",
+          ".claude/rules/comm-entrypoint-links-rule.md",
+          ".claude/rules/comm-instruction-order.md",
+          ".claude/rules/comm-dependencies-through-uv.md",
+          ".claude/rules/comm-package-independence.md",
+          ".claude/rules/comm-skill-rule-ownership.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "exit": 0,
+        "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c",
+        "matching_bodies_in_output_order": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat .agents/skills/comm-retry-external-operations/SKILL.md'",
+        "exit": 0,
+        "stdout_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb",
+        "matching_bodies_in_output_order": [
+          ".agents/skills/comm-retry-external-operations/SKILL.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!.git/**'\"' -g '\"'!README.human.md'\"' -g '\"'!harness/common/**'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' | head -100\"",
+        "exit": 0,
+        "stdout_sha256": "cc0eb36b42378d6c2885f840e2b030a2813e7e9616dbc4587a20a8fa82165e81",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md harness/project/decisions/existing.md'",
+        "exit": 0,
+        "stdout_sha256": "189da9a3e49a69e6d3dca347cd230876c512a36b6d51eeef18391cb60eb69880",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+        "exit": 0,
+        "stdout_sha256": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f",
+        "matching_bodies_in_output_order": []
+      }
+    ],
+    "candidate-common-explicit": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "exit": 0,
+        "stdout_sha256": "ef2a1af26f16714954578fab49503513e14864db5158bee4ae435e8472cb75de",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "exit": 0,
+        "stdout_sha256": "7e8bdea3014915560df44e80a5cb3a4aa34a25240219106c6afef37169d8310a",
+        "matching_bodies_in_output_order": [
+          "harness/common/START.md",
+          "harness/project/START.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md .claude/rules/comm-human-folder-guides.md'",
+        "exit": 0,
+        "stdout_sha256": "86f5c58c821f2c4ca48b28bc8e972e507568fa6aa23f512b136088226c6d62d3",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-skill-rule-ownership.md",
+          ".claude/rules/comm-human-folder-guides.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "exit": 0,
+        "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-task-commit-on-completion.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md'\"",
+        "exit": 0,
+        "stdout_sha256": "4613243417d2697d60901ae298d3b48cdd10c8bd38617c02505d9c96e096debc",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-skill-rule-ownership.md",
+          ".claude/rules/comm-package-independence.md",
+          ".claude/rules/comm-entrypoint-links-rule.md",
+          ".claude/rules/comm-instruction-order.md",
+          ".claude/rules/comm-dependencies-through-uv.md",
+          ".claude/rules/comm-confirm-development-workflow.md",
+          ".claude/rules/comm-task-commit-on-completion.md",
+          ".claude/rules/comm-ban-harness-symlinks.md",
+          ".claude/rules/comm-application-startup-readiness.md",
+          ".claude/rules/comm-user-owned-entrypoints.md",
+          ".claude/rules/comm-application-config-git.md",
+          ".claude/rules/comm-human-folder-guides.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+        "exit": 0,
+        "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c",
+        "matching_bodies_in_output_order": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md .agents/skills/comm-retry-external-operations/SKILL.md'",
+        "exit": 0,
+        "stdout_sha256": "ec1573efe9863e38a649f0821078dbcd53027d2c4a763ef21ff4c2e32cd836e2",
+        "matching_bodies_in_output_order": [
+          ".agents/skills/comm-retry-external-operations/SKILL.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+        "exit": 0,
+        "stdout_sha256": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"' | awk '\"'!/''^harness'\"\\\\/common\\\\// && \"'!/''^'\"\\\\.agents\\\\// && \"'!/''^'\"\\\\.claude\\\\//' | head -100\"",
+        "exit": 0,
+        "stdout_sha256": "bf14505565e30e23ae489974f0496461fbb97ae416ed696d7852dc33e4b557aa",
+        "matching_bodies_in_output_order": []
+      }
+    ],
+    "intermediate-combined-timer": [
+      {
+        "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "exit": 0,
+        "stdout_sha256": "f580d5479d8e03cdcf44d32e174dd7a5cbaff8ef07aff15d015e0231589dbb79",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "exit": 0,
+        "stdout_sha256": "7e8bdea3014915560df44e80a5cb3a4aa34a25240219106c6afef37169d8310a",
+        "matching_bodies_in_output_order": [
+          "harness/common/START.md",
+          "harness/project/START.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md harness/common/rules/comm-human-folder-guides.md'",
+        "exit": 0,
+        "stdout_sha256": "86f5c58c821f2c4ca48b28bc8e972e507568fa6aa23f512b136088226c6d62d3",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-skill-rule-ownership.md",
+          ".claude/rules/comm-human-folder-guides.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "exit": 0,
+        "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222",
+        "matching_bodies_in_output_order": []
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-skill-rule-ownership.md' '.claude/rules/comm-package-independence.md' '.claude/rules/comm-entrypoint-links-rule.md' '.claude/rules/comm-instruction-order.md' '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-task-commit-on-completion.md' '.claude/rules/comm-ban-harness-symlinks.md' '.claude/rules/comm-application-startup-readiness.md' '.claude/rules/comm-user-owned-entrypoints.md' '.claude/rules/comm-application-config-git.md' '.claude/rules/comm-human-folder-guides.md' && cat harness/common/INDEX.md harness/project/INDEX.md\"",
+        "exit": 0,
+        "stdout_sha256": "82e267c1b7790324de0e6dc80e57bd23025c42be2059433995c1d6e0e7ed3b1e",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-skill-rule-ownership.md",
+          ".claude/rules/comm-package-independence.md",
+          ".claude/rules/comm-entrypoint-links-rule.md",
+          ".claude/rules/comm-instruction-order.md",
+          ".claude/rules/comm-dependencies-through-uv.md",
+          ".claude/rules/comm-confirm-development-workflow.md",
+          ".claude/rules/comm-task-commit-on-completion.md",
+          ".claude/rules/comm-ban-harness-symlinks.md",
+          ".claude/rules/comm-application-startup-readiness.md",
+          ".claude/rules/comm-user-owned-entrypoints.md",
+          ".claude/rules/comm-application-config-git.md",
+          ".claude/rules/comm-human-folder-guides.md",
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md' '.claude/rules/comm-confirm-development-workflow.md' '.claude/rules/comm-task-commit-on-completion.md'\"",
+        "exit": 0,
+        "stdout_sha256": "40438ffcacc2a9dd986fd64795443a22e2b9b5634536aec38a3d8193df1ec730",
+        "matching_bodies_in_output_order": [
+          ".claude/rules/comm-dependencies-through-uv.md",
+          ".claude/rules/comm-confirm-development-workflow.md",
+          ".claude/rules/comm-task-commit-on-completion.md"
+        ]
+      },
+      {
+        "command": "/bin/bash -lc 'cat harness/common/skills/comm-retry-external-operations/SKILL.md'",
+        "exit": 0,
+        "stdout_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb",
+        "matching_bodies_in_output_order": [
+          ".agents/skills/comm-retry-external-operations/SKILL.md"
+        ]
+      }
+    ]
+  },
+  "intermediate_checker": "88f7f108d24ab6716c82feea810f0bc13620055ad9995a648d672f9369768515"
+}

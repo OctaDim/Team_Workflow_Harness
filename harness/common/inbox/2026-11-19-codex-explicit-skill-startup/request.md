@@ -27,3 +27,17 @@ Status: new
 Result: not executed
 Reason: Пользователь отдельно разрешил создать заявку. Выполнение и публикация требуют отдельных явных разрешений.
 Updated: 2026-11-19
+
+## Выполнение от 2026-11-19
+
+Status: in progress
+Result: Начата проверка обычного явного вызова до изменения и с кандидатом в двух режимах установки.
+Reason: Пользователь поручил выполнить эту заявку первой и затем повторить проверку скилла.
+Updated: 2026-11-19
+
+## Результат выполнения от 2026-11-19
+
+Status: in progress
+Result: [Полный кандидат стартовой команды](ensure_entrypoint_links.py) и [регрессионный тест](test_ensure_entrypoint_links.py) подготовлены для штатных путей `harness/common/checks/ensure_entrypoint_links.py` и `harness/common/testing/tests/test_ensure_entrypoint_links.py`. Полная проверка Codex пройдена в обоих режимах. [Отчёт и точная версия](../../testing/evidence/2026-11-19-codex-explicit-startup.md)
+Reason: Выполнение завершено до стадии публикации. Требуется отдельное разрешение на публикацию проверенной редакции с её фактическими статусами.
+Updated: 2026-11-19
