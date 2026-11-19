@@ -46,14 +46,16 @@ Remove repeats/advice/history; examples prevent mistakes.
 Rationale/evidence permanent outside instructions/inbox. Preserve obligations/
 both-mode dependencies with tested pointers, no mandatory chain of all skills.
 
-In both rules and skills, make every cross-skill transition a lookup by exact
-YAML `name` in the current installation. State when to look up, read and apply
-the skill. If a required name has no unique installed owner, explain why and
-stop the dependent action. Relative links may point to the skill’s own
-`references/` resources.
+When creating or editing a rule or skill, check every by-name dependency,
+including existing references in the instruction and its working resources.
+Use the exact enabled catalogue name: `plugin:skill` for plugins, the
+registered name for local and system skills. Verify one intended owner per
+supported host. Preserve when to look up, read and apply it, and its inputs.
+If a required name is absent or ambiguous, explain and stop that action.
+Keep direct resource links.
 
 Goals: SKILL usually ≤200 words; resource sum ≤1000 static tokens,
-resolve >1200 deferred; evaluate-skill A/no errors. No raised thresholds,
+resolve >1200 deferred; plugin-eval:evaluate-skill A/no errors. No raised thresholds,
 hidden resources or fake manifests/coverage.
 
 Profile: nonempty YAML name/description; name 1–64 [a-z0-9-], no edge hyphen/--,

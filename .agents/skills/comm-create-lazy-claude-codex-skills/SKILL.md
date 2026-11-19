@@ -5,7 +5,7 @@ description: Use when designing, creating or substantially editing working Codex
 
 # Author one instruction
 
-Use using-superpowers before authoring. Establish task, useful result, intended
+Use superpowers:using-superpowers before authoring. Establish task, useful result, intended
 harness and destination; cwd is not proof. Before design/substantial edits read
 [content and form selection](references/content-contract.md).
 

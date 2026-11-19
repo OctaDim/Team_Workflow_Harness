@@ -25,6 +25,6 @@ Run appropriate checks. Inspect current ownership; the orchestrator commits
 only authorized owned changes through explicit file lists, preserving unrelated
 work and exclude: paths. No empty/duplicate commits.
 
-Missing Git/ce-commit, failed checks/commit: preserve changes and report.
+Missing Git/compound-engineering:ce-commit, failed checks/commit: preserve changes and report.
 Done: hash/subject for completed owned results or clean skip. No push, PR,
 merge, history rewriting, route choice or verification upgrade is granted.

@@ -1,22 +1,18 @@
 # Full Superpowers
 
-After either full choice, apply all harness rules. Load using-superpowers, then
-brainstorming. Agree the specification before writing-plans. Agree its linked
-plan and verification before implementing. Keep the chosen executor.
+Both routes follow harness rules. Load superpowers:using-superpowers, then
+superpowers:brainstorming. Agree the spec before superpowers:writing-plans;
+agree the linked plan and verification before implementation. Keep the executor.
 
-Invoke the chosen executing-plans or subagent-driven-development. Apply
-test-driven-development: observed expected RED before changes, GREEN after,
-with applicable authorized exceptions. Follow its reviews and
-fix loops once. Load helpers when applicable. If the executor or required tools
-are forbidden or unavailable, stop the dependent step. Keep the selected route.
+Invoke the selected superpowers:executing-plans or superpowers:subagent-driven-development.
+Apply superpowers:test-driven-development (expected RED before edits, GREEN after,
+unless explicitly excepted). Run its review/fix loops once. Load applicable helpers.
+If executor/tools are unavailable or forbidden, pause that step; keep the route.
 
-Use native Superpowers paths and scripts for its specs, plans, verification
-records, workspace and ledger. Follow native resume and temporary cleanup under
-`comm-user-owned-entrypoints.md`. Check the plan marker and ledger identity.
-Resume the first unfinished task or pending fix round. Preserve approval,
-commit and check evidence. Apply verification-before-completion, then
-finishing-a-development-branch.
+Use native Superpowers paths/scripts for specs, plans, verification records, workspace
+and ledger. Follow native resume/cleanup per `comm-user-owned-entrypoints.md`.
+Check plan marker and ledger identity; resume the first unfinished task or fix round.
+Keep approval, commit and test evidence. Apply superpowers:verification-before-completion
+then superpowers:finishing-a-development-branch.
 
-Store harness materials by its placement and evidence rules. Create a harness
-handoff only on explicit user instruction. Honor INBOX, integration and
-publication permissions throughout.
+Honor placement, evidence, INBOX, integration and publication permissions. Handoff only on explicit request.
