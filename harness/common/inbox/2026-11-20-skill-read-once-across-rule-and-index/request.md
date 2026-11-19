@@ -20,9 +20,9 @@
 
 ## Execution
 
-Status: in progress
-Result: кандидат подготовлен, проверка Codex пройдена в common-only и common+project. Итоговый статус — непроверенный.
-Reason: кандидат ожидает решения пользователя о публикации.
+Status: completed
+Result: версия из `ef5c1f8` опубликована. Проверка Codex пройдена в common-only и common+project. Проверка Claude пропущена. Итоговый статус — непроверенный.
+Reason: пользователь подтвердил публикацию этой версии. Установленные файлы сверены с кандидатом, стартовая проверка успешна, прошли все 232 теста. См. [отчёт о публикации](../../testing/evidence/2026-11-20-skill-read-once-across-rule-and-index-publication.md).
 Updated: 2026-11-20
 
 Кандидат основан на `c9a2184`. Для публикации подготовлены [правило](comm-instruction-order.md), [анализатор](check_human_guide_search.py) и [парные регрессии](test_human_guide_reader.py). Контрольные суммы, события повторного чтения, остановка, явный ответ и продолжение в обоих режимах приведены в [отчёте проверки](../../testing/evidence/2026-11-20-skill-read-once-across-rule-and-index.md).

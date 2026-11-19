@@ -182,8 +182,56 @@ def content_access_targets(tokens):
     return targets
 
 
+def installed_skill_aliases(root, bodies):
+    """Match ordinary, identical native copies to their unique shared package owner."""
+    shared = [Path('harness') / package / 'skills' for package in ('common', 'project')]
+    native = [Path('.agents/skills'), Path('.claude/skills')]
+    aliases = {}
+    for source, body in bodies.items():
+        path = Path(source)
+        if path.name != 'SKILL.md':
+            continue
+        location = next((base for base in shared + native if base in path.parents), None)
+        if location is None:
+            continue
+        relative = path.relative_to(location)
+        if '..' in relative.parts:
+            continue
+        sources = [ordinary_path(root / base / relative) for base in shared]
+        owners = [file for file in sources if file.is_file()]
+        if len(owners) != 1 or owners[0].read_text() != body:
+            continue
+        source_file = ordinary_path(root / path)
+        if not source_file.is_file() or source_file.read_bytes() != owners[0].read_bytes():
+            continue
+        for base in shared + native:
+            alias = base / relative
+            file = ordinary_path(root / alias)
+            if file.is_file() and file.read_bytes() == source_file.read_bytes():
+                aliases[str(alias)] = source
+    return aliases
+
+
+def skill_read_lines(tokens, path, output, body):
+    """Bind a standalone read to complete lines of the independently known version."""
+    lines = body.splitlines(keepends=True)
+    if tokens in (['cat', path], ['cat', '--', path]):
+        if output == body:
+            return range(len(lines))
+        if not output or not body.startswith(output):
+            return None
+        count = sum(line.endswith('\n') for line in output.splitlines(keepends=True))
+        return range(count) if count else None
+    bounds = line_slice(tokens, len(lines)) if tokens[-1] == path else None
+    if bounds:
+        first, last = bounds
+        if first < last and output == ''.join(lines[first:last]):
+            return range(first, last)
+    return None
+
+
 def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None, search_at=None, immutable_fixture=False,
-                        skill_links=None, skill_bodies=None, task_skills=()):
+                        skill_links=None, skill_bodies=None, task_skills=(), skill_updates=None):
     """Audit completed reads against the fixture's current bodies and byte-verified aliases."""
     starts = starts or {}
     aliases = aliases or {}
@@ -216,6 +264,17 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
     inspect_skills = skill_bodies is not None
     task_skills = set(task_skills)
     skill_reads = []
+    # Snapshots come from the observer, independently of tool output.
+    versions = dict(skill_bodies or {})
+    skill_updates = skill_updates or {}
+    # Cross-path identity is proven only while the fixture is immutable.
+    skill_aliases = installed_skill_aliases(root, versions) if root and immutable_fixture else {}
+    if skill_aliases:
+        task_skills = {skill_aliases.get(path, path) for path in task_skills}
+        skill_links = {owner: {skill_aliases.get(path, path): since for path, since in targets.items()}
+                       for owner, targets in skill_links.items()}
+    skill_fragments = {}
+    duplicate_skills = {}
     current_skills = set()
     full_before_first_skill = None
     full_before_first_index = None
@@ -245,20 +304,26 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
             covered.clear()
 
     for number, item in enumerate(tools):
+        started = item.get('start_event', number)
+        for path, body in skill_updates.get(started, {}).items():
+            if body != versions.get(path):
+                versions[path] = body
+                current_skills.discard(path)
+                skill_fragments.pop(path, None)
         tokens = command_tokens(item.get('command', ''))
         if root is not None:
             tokens = [t[len(str(root))+1:] if t.startswith(str(root) + '/') else t for t in tokens]
         tokens = [t.removeprefix('./') for t in tokens]
+        tokens = [skill_aliases.get(t, t) for t in tokens]
         output = item.get('aggregated_output', '')
         success = item.get('exit_code') == 0
         if not tokens:
-            current_skills.clear()
+            skill_fragments.clear()
             for path in list(origins.keys() | partial.keys()):
                 forget(path)
             continue
         listing_only = tokens[0] == 'rg' and '--files' in tokens and not any(t in ('cat', 'sed', 'head', 'tail') for t in tokens)
         skill_access = not listing_only and any('/skills/' in '/' + t and not t.startswith(('!', '-')) for t in tokens)
-        started = item.get('start_event', number)
         ended = item.get('end_event', number)
         index_access = any(t in ('harness/common/INDEX.md', 'harness/project/INDEX.md') for t in tokens)
         cat_targets = []
@@ -273,15 +338,18 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
             index_access = any(t in ('harness/common/INDEX.md', 'harness/project/INDEX.md') for t in operands)
             accessed = [t for t in operands if 'skills' in Path(t).parts]
             skill_access = bool(accessed)
-            if not immutable_fixture and may_change_files(tokens):
-                current_skills.clear()
+            # An unrelated operation does not prove a new skill version. Fragments
+            # cannot span an unobserved mutation; a standalone sed -n read is safe.
+            is_slice = len(accessed) == 1 and line_slice(tokens, 1) is not None
+            if not immutable_fixture and not is_slice and may_change_files(tokens):
+                skill_fragments.clear()
             due = set()
             for owner in origins:
                 for target, since in skill_links.get(owner, {}).items():
                     name = Path(target).parent.name
                     if since <= started and re.search(r'(?<![\w-])' + re.escape(name) + r'(?![\w-])', expected[owner]):
                         due.add(target)
-            pending = due.difference(current_skills)
+            pending = due.difference(current_skills, skill_fragments)
             if skill_access and full_before_first_skill is None:
                 full_before_first_skill = (listing is not None and bool(expected)
                                            and set(expected) == set(origins)
@@ -299,17 +367,25 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
                 target = accessed[0]
                 early = first_boundary is None
                 allowed = due if early else due | task_skills
-                one_body = tokens in (['cat', target], ['cat', '--', target])
-                valid = (started > max([listing_end, index_end, skill_end, *rule_read_ends])
-                         and (early or indexes_seen == expected_indexes)
-                         and one_body and success and target in allowed and target in skill_bodies
-                         and output == skill_bodies[target] and target not in current_skills)
-                if valid:
-                    skill_reads.append(target)
-                    current_skills.add(target)
-                    skill = True
+                span = (skill_read_lines(tokens, target, output, versions[target])
+                        if success and target in versions else None)
+                ordered = (started > max([listing_end, index_end, skill_end, *rule_read_ends])
+                           and (early or indexes_seen == expected_indexes))
+                if span is None or target not in allowed or not ordered:
+                    issues.append(f'необоснованное, неполное или совмещённое чтение скилла: {target}')
                 else:
-                    issues.append(f'необоснованное, неполное, совмещённое или повторное чтение скилла: {target}')
+                    covered = skill_fragments.setdefault(target, set())
+                    covered.update(span)
+                    if len(covered) == len(versions[target].splitlines(keepends=True)):
+                        del skill_fragments[target]
+                        if target in current_skills:
+                            duplicate_skills[target] = duplicate_skills.get(target, 0) + 1
+                            issues.append(f'повторное полное чтение неизменного скилла: {target}; '
+                                          'сообщить ошибку и путь, запросить решение пользователя и ждать ответа')
+                        else:
+                            skill_reads.append(target)
+                            current_skills.add(target)
+                            skill = True
                 skill_end = ended
                 continue
             rule_targets = [t for t in cat_targets if t in paths]
@@ -421,8 +497,11 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
         issues.append('нарушен порядок перечисления и явного чтения')
     if expected_indexes - indexes_seen:
         issues.append('нет отдельного чтения обязательных INDEX перед скиллом')
-    if inspect_skills and task_skills.difference(skill_reads):
-        issues.append('не прочитаны нужные для задачи скиллы: ' + ', '.join(sorted(task_skills.difference(skill_reads))))
+    incomplete_skills = set(skill_fragments).difference(current_skills)
+    if incomplete_skills:
+        issues.append('не завершено чтение скилла: ' + ', '.join(sorted(incomplete_skills)))
+    if inspect_skills and task_skills.difference(current_skills):
+        issues.append('не прочитаны нужные для задачи скиллы: ' + ', '.join(sorted(task_skills.difference(current_skills))))
     if not skill and search_at is None:
         issues.append('нет подтверждённого открытия скилла')
     def value(n):
@@ -438,7 +517,7 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
     return {'rule_listing_completed': listed, 'expected_rule_paths': list(expected),
             'missing_rule_paths': sorted(set(expected) - origins.keys()), 'first_reads': origins,
             'duplicate_rule_reads': duplicates, 'all_rule_bodies_read': bool(total) and count == total,
-            'skill_reads': skill_reads, 'explicit_rule_paths': explicit, 'separate_rule_reads': separate,
+            'skill_reads': skill_reads, 'duplicate_skill_reads': duplicate_skills, 'explicit_rule_paths': explicit, 'separate_rule_reads': separate,
             'full_rule_read_before_index': full_before_first_index,
             'full_rule_read_before_skill': (bool(full_before_first_skill) if inspect_skills
                                             else listed and bool(total) and count == total and skill),
@@ -546,7 +625,10 @@ def main():
             target.write_bytes(ordinary_path(REPO / filename).read_bytes())
     for start, body in starts.items():
      (root / start).write_text(body)
-     (root / start).with_name('INDEX.md').write_text('# Index\n')
+     index_body = '# Index\n'
+     if args.task == 'linked' and start == 'harness/common/START.md':
+      index_body += f'Configuration checklist: [config-check](../../{linked_skill})\n'
+     (root / start).with_name('INDEX.md').write_text(index_body)
     if not check_links:
         with (root/'AGENTS.md').open('a') as entry:
             entry.write('First read ' + ', '.join(starts) + ' and their linked rules. '

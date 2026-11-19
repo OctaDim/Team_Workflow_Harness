@@ -277,3 +277,63 @@ def test_rule_link_applies_after_owner_before_next_rule(mode, linked, body_lines
                       [*ordered, event('cat .agents/skills/*/SKILL.md')],
                       [*ordered[:offset], dict(step, aggregated_output='partial'), *ordered[offset+1:]]):
         assert not audit(forbidden, links)['rule_reading_pass']
+
+
+@pytest.mark.parametrize('mode', ['common', 'both'])
+def test_skill_read_once_across_rule_and_index(mode, tmp_path):
+    trace, rules, starts, aliases = fixture_trace(mode, linked=2)
+    target = '.agents/skills/example/SKILL.md'
+    body = '# Skill\nUse the existing default.\n'
+    owner = next(iter(rules))
+    before = rules[owner]
+    rules[owner] += f'When needed, read {target}.\n'
+    for row in trace:
+        if row['aggregated_output'] == before:
+            row['aggregated_output'] = rules[owner]
+    pos = next(i for i,row in enumerate(trace) if row['aggregated_output'] == rules[owner]) + 1
+    trace[-2]['aggregated_output'] += f'[Required procedure](../../{target})\n'
+    full = event('cat ' + target, body)
+    first = event('head -n 1 ' + target, '# Skill\n')
+    last = event('tail -n 1 ' + target, 'Use the existing default.\n')
+    root = next(p for p in Path(__file__).absolute().parents
+                if (p / 'harness/common/checks/ensure_entrypoint_links.py').is_file())
+    audit = runpy.run_path(str(root / 'harness/common/checks/check_human_guide_search.py'))['assess_rule_reading']
+
+    def check(early=(), late=(), due=True, **kwargs):
+        events = trace[:pos] + list(early) + trace[pos:-1] + list(late)
+        return audit(events, rules, starts=starts, aliases=aliases,
+                     skill_links={owner: {target: 0}} if due else {},
+                     skill_bodies={target: body}, task_skills={target}, **kwargs)
+
+    positive = check([full])
+    assert positive['rule_reading_pass'] and positive['skill_reads'] == [target]
+    negative = check([full], [full])
+    assert not negative['rule_reading_pass']
+    assert negative['duplicate_skill_reads'] == {target: 1}
+    assert target in negative['rule_read_report'][-1] and 'решение пользователя' in negative['rule_read_report'][-1]
+    assert check([], [full], due=False)['rule_reading_pass']
+    assert check([first], [last])['rule_reading_pass']
+    assert not check([first], [])['rule_reading_pass']
+    assert not check([first], [event('tail -n 1 ' + target, 'Incorrect\n')])['rule_reading_pass']
+    unrelated = event('touch unrelated.txt')
+    assert check([full], [unrelated, full])['duplicate_skill_reads'] == {target: 1}
+
+    changed = '# Skill\nUse the revised default.\n'
+    reread = event('cat ' + target, changed)
+    at = len(trace)  # after the inserted early read and both INDEX reads
+    updated = check([full], [reread], skill_updates={at: {target: changed}})
+    assert updated['rule_reading_pass'] and updated['skill_reads'] == [target, target]
+    assert not check([first], [event('tail -n 1 ' + target, changed.splitlines(True)[1])],
+                     skill_updates={at: {target: changed}})['rule_reading_pass']
+
+    canonical = 'harness/common/skills/example/SKILL.md'
+    for path in (target, canonical):
+        file = tmp_path / path
+        file.parent.mkdir(parents=True)
+        file.write_text(body)
+    canonical_read = event('cat ' + canonical, body)
+    alias_repeat = check([canonical_read], [full], root=tmp_path, immutable_fixture=True)
+    assert alias_repeat['duplicate_skill_reads'] == {target: 1}
+    (tmp_path / canonical).write_text(changed)
+    distinct = check([event('cat ' + canonical, changed)], [full], root=tmp_path, immutable_fixture=True)
+    assert not distinct['rule_reading_pass'] and not distinct['duplicate_skill_reads']
