@@ -1,0 +1,825 @@
+{
+  "date": "2026-11-19",
+  "cli": "codex-cli 0.166.0",
+  "candidate_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb",
+  "catalogue": [
+    {
+      "installation": "baseline-common",
+      "repo_skill_count": 36,
+      "guard_bytes": 48254,
+      "repo_skill_metadata_bytes": 5750,
+      "skill": null,
+      "relative_path": ".",
+      "scope": null,
+      "description": ""
+    },
+    {
+      "installation": "baseline-combined",
+      "repo_skill_count": 36,
+      "guard_bytes": 48254,
+      "repo_skill_metadata_bytes": 5750,
+      "skill": null,
+      "relative_path": ".",
+      "scope": null,
+      "description": ""
+    },
+    {
+      "installation": "candidate-common",
+      "repo_skill_count": 37,
+      "guard_bytes": 48254,
+      "repo_skill_metadata_bytes": 5899,
+      "skill": "comm-retry-external-operations",
+      "relative_path": ".agents/skills/comm-retry-external-operations/SKILL.md",
+      "scope": "repo",
+      "description": "Use when designing API errors, client timeouts, retries or recovery after losing the response to an external operation."
+    },
+    {
+      "installation": "candidate-combined",
+      "repo_skill_count": 37,
+      "guard_bytes": 48254,
+      "repo_skill_metadata_bytes": 5899,
+      "skill": "comm-retry-external-operations",
+      "relative_path": ".agents/skills/comm-retry-external-operations/SKILL.md",
+      "scope": "repo",
+      "description": "Use when designing API errors, client timeouts, retries or recovery after losing the response to an external operation."
+    }
+  ],
+  "plugin_eval_summary": {
+    "score": 100,
+    "grade": "A",
+    "riskLevel": "low",
+    "riskReasons": [
+      "No failing or warning checks were found; remaining items are informational only."
+    ],
+    "scoreBreakdown": {
+      "startingScore": 100,
+      "totalDeductions": 0.25,
+      "finalScore": 100,
+      "gradeThresholds": {
+        "A": 93,
+        "B": 85,
+        "C": 70,
+        "D": 55
+      }
+    },
+    "checkCounts": {
+      "total": 1,
+      "pass": 0,
+      "warn": 0,
+      "fail": 0,
+      "info": 2,
+      "error": 0,
+      "warning": 0
+    },
+    "deductions": [
+      {
+        "id": "coverage-artifacts-unavailable",
+        "category": "coverage",
+        "severity": "info",
+        "status": "info",
+        "message": "No coverage artifacts were found for this target.",
+        "penalty": 0.25,
+        "remediation": [
+          "Generate `lcov.info`, `coverage.xml`, or an Istanbul coverage JSON file if you want coverage scoring."
+        ],
+        "source": "core"
+      }
+    ],
+    "categoryDeductions": [
+      {
+        "category": "coverage",
+        "totalPenalty": 0.25,
+        "checks": 1
+      }
+    ],
+    "topRecommendations": [],
+    "whyBullets": [
+      "coverage is the largest source of score loss at -0.25 points.",
+      "Budget pressure is not the dominant issue right now.",
+      "No observed usage is attached yet, so budget conclusions are still based on static estimates."
+    ],
+    "fixFirst": [],
+    "watchNext": []
+  },
+  "native_runs": {
+    "baseline-combined-implicit": {
+      "trace_sha256": "6e7a5a9d24f17aad55cb55208d669bdc39a7d1b519fcad4c2c4cb1f2c6f9edd3",
+      "rule_order": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "candidate_body_in_tool_output": false,
+      "command_output_bytes": 108993,
+      "turn_usage": {
+        "input_tokens": 222168,
+        "cached_input_tokens": 200192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1622,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        "harness/common/skills/comm-assess-project-tests/SKILL.md",
+        "harness/common/skills/comm-choose-effective-solution/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/references/choice.md"
+      ],
+      "answer": "Return **`UnknownOutcome`** when the supplier may have committed and the reply is lost. Treat the client reference as a lookup handle. Replay an ambiguous submission only if the supplier provides a verified idempotency guarantee for that operation.\n\nI found no submission API or caller source in the workspace, so this is a proposed contract for the synthetic fixture. The acceptance cases below were designed, not run.\n\n### API and caller contract\n\n| Evidence | API result | Caller action |\n|---|---|---|\n| Supplier confirms the submission | `Confirmed(reference, supplierId)` | Record success. |\n| Local validation fails or the supplier definitively rejects the operation | `Rejected(reference, reason)` | Surface the reason. Correct the input before starting a new logical submission. |\n| Every attempt is proven to have had no effect and the failure is transient | `NotSubmitted(reference, reason, retryAt?)` | Retry the same logical submission when eligible and within budget. |\n| A timeout, disconnect, cancellation, or supplier error leaves any attempt’s effect uncertain | `UnknownOutcome(reference, reason, nextCheckAt?)` | Persist the unresolved operation and reconcile by reference. |\n\nPersist the reference and original payload before the first send. A later pre-send error, throttle response, or stale `NotFound` cannot clear uncertainty from an earlier attempt. During reconciliation, accept an authoritative terminal result and keep polling through stale misses, pending statuses, and transient lookup failures within a bounded recovery window. When that window expires, leave the operation unresolved for follow-up. Without supplier-side deduplication, resend only when authoritative evidence rules out both a prior commit and any still-in-flight commit. With verified deduplication, replay the same key and payload within the supplier’s guarantee window.\n\nGive the caller sole ownership of submission retries and disable SDK retries for writes. If SDK retries cannot be disabled, use an SDK path with verified safe replay, a known attempt bound, and enforcement of the same end-to-end deadline. The caller must not wrap that path in another write retry loop. Measure the deadline with a monotonic clock and include each attempt, delay, and synchronous status lookup in the remaining budget.\n\n**12 seconds requested, 8 seconds left.** Return immediately. Do not sleep, shorten the delay, or send another write within this call. If the supplier guarantees the throttled attempt had no effect and there is no earlier ambiguity, return `NotSubmitted` with `retryAt` set to response receipt time plus 12 seconds. If an earlier write may have committed, return `UnknownOutcome` and defer recovery. Apply the 12-second restriction to the operations it covers.\n\n### Deterministic acceptance cases\n\nUse a fake monotonic clock, scripted supplier and SDK responses, and counters at the transport and supplier commit boundaries.\n\n| Scenario | Required result and side effects |\n|---|---|\n| Confirmed success or definitive rejection | Return the matching terminal result. No replay or status polling. Local validation failure sends zero requests. |\n| Proven pre-send transient failure, then success | Retry within the shared budget with the original reference and payload. Exactly one supplier commit. |\n| Supplier commits, reply is lost, lookup returns stale `NotFound` then `Confirmed` | Return `UnknownOutcome` after the lost reply. Recovery records confirmation. Exactly one write and one commit. |\n| Reply is lost, then lookup stays stale, pending, or unavailable | Recovery stops at its bound and preserves the unresolved state. Zero recovery writes. |\n| Verified idempotent replay after a lost reply | Replay uses the original key and payload and resolves to the same supplier record. Exactly one commit across both writes. An expired guarantee blocks replay. |\n| A later throttle follows an ambiguous write | Return `UnknownOutcome` even if the throttled attempt itself had no effect. |\n| Supplier requests 12 seconds with 8 seconds left | Return immediately with the appropriate outcome and defer any eligible resend until at least receipt time plus 12 seconds. Assert zero sleeps and zero additional writes in the call. Also cover delay equal to remaining budget, which leaves no time for an attempt, and a shorter delay that leaves enough time. |\n| SDK retries and deadline enforcement | Assert actual wire attempts stay within the configured cap, no attempt starts at or after the deadline, and an SDK configuration that cannot enforce safe replay and the deadline is rejected before sending. |"
+    },
+    "baseline-common-actions": {
+      "trace_sha256": "9a6c494a7bb0c1d2ca56174609ba0a5480eab2b79a73a4507391a785139c032b",
+      "rule_order": {
+        "rule_listing_completed": false,
+        "all_rule_bodies_read": false,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": false,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "candidate_body_in_tool_output": false,
+      "command_output_bytes": 109059,
+      "turn_usage": {
+        "input_tokens": 192427,
+        "cached_input_tokens": 156928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 893,
+        "reasoning_output_tokens": 141
+      },
+      "skill_files_named_in_commands": []
+    },
+    "baseline-common-implicit": {
+      "trace_sha256": "b885e3e68097865e221443efceec503fb5bac70c21263fa3cd831d04c4d83c6e",
+      "rule_order": {
+        "rule_listing_completed": false,
+        "all_rule_bodies_read": false,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "candidate_body_in_tool_output": false,
+      "command_output_bytes": 52858,
+      "turn_usage": {
+        "input_tokens": 141313,
+        "cached_input_tokens": 127232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1361,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        "harness/common/skills/comm-assess-project-tests/SKILL.md",
+        "harness/common/skills/comm-choose-effective-solution/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/references/choice.md"
+      ],
+      "answer": "The submission API should return **`OutcomeUnknown` with the original client reference** whenever the supplier may have committed but the caller lacks confirmation. The caller should recover by looking up that reference. A stale `NotFound` leaves the outcome unknown.\n\nI found no submission implementation in the workspace, so this is a proposed contract and acceptance suite for the synthetic fixture.\n\n### API and caller decisions\n\n| What the client can establish | API result | Caller action |\n|---|---|---|\n| Supplier confirms the submission, directly or through status lookup | `Submitted(reference, supplierId)` | Record success and stop. |\n| Supplier definitively rejected this submission without committing | `Rejected(reference, reason)` | Surface the rejection. For a temporary rejection, also return the supplier’s retry delay. |\n| The request provably never reached the supplier | `NotSubmitted(reference, reason)` | Retry a transient failure only if the delay and another attempt fit the original deadline. |\n| A timeout, disconnect, or ambiguous error leaves a possible commit | `OutcomeUnknown(reference, reason)` | Keep the operation pending. Reconcile by reference. |\n\nPersist the client reference and associate it with the original payload before the first send. Reuse that identity across recovery and restarts. Treat pending, stale `NotFound`, and lookup failures as unresolved. A confirmed supplier record resolves the operation. If the foreground deadline expires, return the unknown outcome and let reconciliation resume later with the same reference.\n\nA client reference that supports lookup does not by itself guarantee deduplication. For this fixture, **disable SDK retries for submission and allow no replay after an ambiguous send**. The caller owns retries and uses one monotonic deadline across submissions, lookups, and waits. A replay after ambiguity becomes safe only if the supplier guarantees atomic deduplication for the same key and payload across the recovery window, or provides authoritative, final proof that the earlier attempt cannot commit. If SDK retries cannot be disabled or bounded, the SDK cannot enforce this contract for submission.\n\n**For a supplier delay of 12 seconds with 8 seconds left, return immediately.** Do not sleep, shorten the wait to 8 seconds, or send again. If the supplier definitively declined the current attempt and no earlier attempt remains ambiguous, return `Rejected` with a temporary reason and `retryAfter=12s`. If a commit remains possible, return `OutcomeUnknown` with the same reference and preserve the 12-second hint for any later permitted replay.\n\n### Deterministic acceptance cases\n\nUse a scripted supplier and transport, a fake monotonic clock, and a recorded sleeper. Assert returned results, physical sends, lookup references, waits, and supplier commit counts.\n\n| Scripted case | Expected result and side effects |\n|---|---|\n| Supplier accepts and replies | `Submitted`. One physical send, one commit, zero lookups. |\n| Transport proves the request was never sent | A transient failure gets one configured retry if it fits, using the same reference. With insufficient budget, return `NotSubmitted` and assert zero additional sends. |\n| Supplier definitively rejects invalid input | `Rejected` with the original reason. One send, zero commits, no retries. |\n| Supplier commits, reply is lost, lookup first returns stale `NotFound` and then confirms | The first lookup leaves the operation pending. Confirmation returns `Submitted` with the original supplier ID. One physical send and one commit throughout. |\n| Reply is lost and lookup stays pending, absent, or unavailable through the deadline | `OutcomeUnknown` with the original reference. No second send. A later lookup after caller restart can resolve the same operation. |\n| SDK would normally resend after a lost reply | Exercise the SDK’s transport boundary and assert one physical submission even though the error would normally trigger its retry policy. |\n| Supplier requests 12 seconds with 8 seconds remaining | Return immediately with the applicable outcome and the full 12-second hint. Zero sleep and zero additional sends. |\n| Retry delay fits, exactly exhausts, or exceeds the time available for a retry | Send again only when both the wait and an attempt fit. A delay that uses the entire remaining budget permits zero additional sends. |\n\nThese are acceptance criteria. No implementation or tests were run."
+    },
+    "candidate-combined-actions": {
+      "trace_sha256": "363f0e20ab3cdb9d0e22faec0c8886b4aba9f05615315b8574d2f0fc4e21bb42",
+      "rule_order": {
+        "rule_listing_completed": false,
+        "all_rule_bodies_read": false,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 84938,
+      "turn_usage": {
+        "input_tokens": 119509,
+        "cached_input_tokens": 88064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 547,
+        "reasoning_output_tokens": 119
+      },
+      "skill_files_named_in_commands": [
+        ".agents/skills/comm-retry-external-operations/SKILL.md"
+      ]
+    },
+    "candidate-combined-explicit": {
+      "trace_sha256": "8d21f400989837179b75f1a4ced92df69b8cce07fc2252f59a5371f10170b9b9",
+      "rule_order": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": false,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": false,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 82361,
+      "turn_usage": {
+        "input_tokens": 208844,
+        "cached_input_tokens": 177664,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1456,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        ".agents/skills/comm-retry-external-operations/SKILL.md",
+        "harness/common/skills/comm-retry-external-operations/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/references/choice.md",
+        "harness/common/skills/comm-select-development-workflow/references/menu.md"
+      ],
+      "answer": "With 8 seconds left and a supplier instruction to wait 12 seconds, **return immediately without sleeping or sending another request in that call**. If the supplier explicitly guaranteed that it rejected the submission before processing, return `retry_exhausted` with reason `retry_after_exceeds_deadline`, the client reference, and the earliest retry time. If any attempt may have committed, return `outcome_unknown` with the same metadata and keep the submission pending reconciliation.\n\nI found no API or caller implementation in the fixture. These are proposed contract decisions and acceptance cases for the supplied scenario.\n\n### API and caller contract\n\n| Event | Return and caller action |\n|---|---|\n| Supplier confirms commit | Return `submitted` with the client reference and supplier receipt. |\n| Supplier definitively rejects the submission with a permanent error | Return `rejected` with the supplier error code. Stop retrying. |\n| Transient failure with reliable proof the request never executed | Retry within the budget. If the attempt limit or deadline prevents another try, return `retry_exhausted` with the last cause and the limit reached. |\n| Request timeout, connection loss, or server error where a commit is possible | Return `outcome_unknown` unless reconciliation confirms a final result. Keep the operation pending under its original reference. |\n| Caller cancels | Stop in-flight work and scheduled waits promptly. Return `cancelled` if execution was ruled out. If the supplier may have acted, preserve `outcome_unknown` with reason `cancelled`. |\n\nAn ambiguous earlier attempt remains unresolved even if a later attempt fails definitively. Persist the client reference and original payload before sending, and reuse them across retries and restarts. Reconcile by that reference. A matching committed record resolves to `submitted`. A stale `not_found`, a pending record, or a lookup failure leaves the outcome unknown. Automatically resend only if the supplier guarantees deduplication for the same key and payload throughout the replay window, or can authoritatively confirm the original attempt never executed and can no longer commit. The fixture establishes lookup by reference, so the default after an ambiguous send is lookup only.\n\nFor the fixture, use a **15-second monotonic deadline**, **3 seconds per request capped by remaining time**, and **at most 3 submission attempts including the first**. Disable SDK retries so one caller policy controls the actual requests. Use backoff of 250 ms and 500 ms with bounded jitter, and wait until the later of the backoff time and the supplier’s earliest retry time. Requests, lookups, and waits share the same deadline. Any reconciliation after the call returns runs under a fresh bounded budget and uses the same reference.\n\n### Deterministic acceptance cases\n\nUse a fake monotonic clock, fixed jitter, and a scripted supplier. Assert the returned state and cause, actual request counts and timestamps, stable reference, and supplier commit count.\n\n| Scenario | Expected result |\n|---|---|\n| Supplier commits, reply is lost, lookup first returns stale `not_found` and later finds the commit | Preserve `outcome_unknown` until the matching record appears, then resolve to `submitted`. Exactly one submission request and one commit. |\n| In-flight request hangs | Time it out at 3 seconds when enough overall time remains. Preserve `outcome_unknown` if lookup is inconclusive. No second submission under the default contract. |\n| First request provably never executes, second succeeds | With zero jitter, the second request starts 250 ms after the first failure. Return `submitted` under the original reference with one commit. |\n| Caller cancels during backoff or after dispatch | During backoff, return `cancelled` and send no further requests. After dispatch with possible execution, preserve `outcome_unknown` with reason `cancelled` and end the call promptly. |\n| Supplier definitively rejects the first request | Return `rejected` after one request, with no retry wait. |\n| Three retryable failures are proven not to have executed, or the deadline arrives first | Return `retry_exhausted` with the applicable limit. Assert the wire-level attempt count and that no request starts at or after the deadline. |\n| Supplier asks for 12 seconds with 8 seconds left | Return at the current fake time, with zero additional sleep or requests. Assert `retry_exhausted` for proven non-execution and `outcome_unknown` for possible execution. |"
+    },
+    "candidate-combined-implicit": {
+      "trace_sha256": "3faa1f1be8cb72a94e745f74ecd2bc7fab92f1a241e53f69f4bd3971cadf297f",
+      "rule_order": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 95914,
+      "turn_usage": {
+        "input_tokens": 213838,
+        "cached_input_tokens": 189440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1630,
+        "reasoning_output_tokens": 10
+      },
+      "skill_files_named_in_commands": [
+        "harness/common/skills/comm-retry-external-operations/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/references/choice.md"
+      ],
+      "answer": "Return `OUTCOME_UNKNOWN` when the supplier may have committed and the reply is lost. Preserve the client reference and recover through status lookup. With **12 seconds requested and 8 seconds remaining**, return immediately with the 12-second retry hint and make zero further submission attempts in that call. The result is `RETRY_DEFERRED` if the supplier guarantees the request did not execute, or `OUTCOME_UNKNOWN` if it may have executed.\n\nThis is a proposed contract for the synthetic fixture. The workspace contains no submission API or caller implementation to inspect or test.\n\n### API contract\n\n| Evidence | Return |\n|---|---|\n| Submit response or authoritative lookup confirms the commit | `SUCCEEDED`, with the client reference and supplier receipt |\n| Supplier definitively rejected the submission without committing | `REJECTED`, with a stable reason code. The caller stops retrying. |\n| A transient failure is known to have occurred before dispatch, or the supplier guarantees no execution | `RETRY_DEFERRED` when the next eligible attempt falls outside the deadline, or `RETRY_EXHAUSTED` when the attempt limit is reached. Include the reason and any supplier retry hint. |\n| Timeout, disconnect, malformed reply, or API error after possible execution | `OUTCOME_UNKNOWN`, with the client reference, reason code, and `CHECK_STATUS` as the next action. A generic `5xx` stays in this category unless the supplier contract guarantees no execution. |\n| Caller cancellation | Stop waits and scheduling immediately and surface cancellation. If dispatch may have occurred, retain `OUTCOME_UNKNOWN` under the saved reference for later reconciliation. |\n\n### Caller and recovery\n\n- Persist one unique client reference and the original payload before the first send. After an ambiguous result or restart, look up that reference. A confirmed commit resolves the operation. A stale `not found`, a pending result, or a lookup failure leaves it unknown. When the lookup budget runs out, retain the unresolved record for later reconciliation.\n- Replay only if the supplier guarantees deduplication for the same reference or idempotency key and unchanged payload, within its documented scope and retention window, or if authoritative evidence establishes that the prior attempt did not and cannot subsequently execute. The fixture establishes lookup by reference but provides no deduplication guarantee, so an ambiguous submit gets status checks only.\n- Give the caller sole ownership of retries. Disable SDK retries and count actual requests in acceptance tests. If the SDK cannot disable submission retries, use a single-attempt transport for this operation.\n- For the fixture, use a monotonic **15-second overall deadline**, a **3-second timeout per request** capped by remaining time, and caps of **three submission attempts and three status lookups**. All requests and waits consume the same deadline. Use increasing backoff with jitter and treat the supplier’s retry time as a lower bound. Skip a wait and return when the next attempt cannot start before the deadline. Exhaustion after possible execution preserves `OUTCOME_UNKNOWN`.\n\n### Deterministic acceptance cases\n\nUse a fake monotonic clock, injected jitter, and a scripted supplier transport. Assert the returned state, saved reference, wire request counts and timestamps, and supplier commit count.\n\n| Scripted case | Expected result |\n|---|---|\n| Supplier commits, drops reply, then lookup confirms | `SUCCEEDED` with the original receipt. One submission and one commit. |\n| Supplier commits, drops reply, and lookup returns stale `not found` before confirming | The operation stays unknown after the miss and succeeds on confirmation. One submission and one commit. If all three lookups are inconclusive, return `OUTCOME_UNKNOWN` with the reference preserved. |\n| Submit hangs after dispatch | The request times out at 3 seconds, or earlier at the overall deadline. Reconcile if time remains. No automatic resubmission. |\n| Confirmed pre-dispatch transient failure, then success | Exactly one retry at the deterministic backoff time, with the same reference and payload. One supplier commit. |\n| Supplier definitively rejects the submission | `REJECTED`. One submission, zero retries and zero commits. |\n| Cancellation during backoff or after dispatch | During backoff, no further wire request. After dispatch, stop further calls and retain the reference and unknown outcome for later recovery. |\n| Three safe transient failures, or deadline expires first | Return `RETRY_EXHAUSTED` with the limiting reason. At most three submission attempts and zero attempts at or after the deadline. |\n| Supplier requests 12 seconds with 8 seconds left | Return at the current fake time with the full 12-second hint. Zero sleep and zero additional submission attempts. Test both confirmed non-execution and possible execution. |\n| SDK receives a retryable failure with the caller capped at one attempt | Exactly one wire submission. Any hidden SDK retry fails the test. |"
+    },
+    "candidate-combined-unrelated": {
+      "trace_sha256": "021dd0b5850ab1f4e343eb506d8318356b12a8b849a597fde924dc9e4d858d85",
+      "rule_order": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "candidate_body_in_tool_output": false,
+      "command_output_bytes": 90345,
+      "turn_usage": {
+        "input_tokens": 257775,
+        "cached_input_tokens": 233472,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 414,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        "harness/common/skills/comm-select-development-workflow/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/references/choice.md",
+        "harness/common/skills/comm-select-development-workflow/references/menu.md"
+      ]
+    },
+    "candidate-common-actions": {
+      "trace_sha256": "aca11c3e37c55e1d4e537af34366c54c30ad08c914885c95ffe763dad3fd7d14",
+      "rule_order": {
+        "rule_listing_completed": false,
+        "all_rule_bodies_read": false,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 48261,
+      "turn_usage": {
+        "input_tokens": 62922,
+        "cached_input_tokens": 37376,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 321,
+        "reasoning_output_tokens": 27
+      },
+      "skill_files_named_in_commands": [
+        ".agents/skills/comm-retry-external-operations/SKILL.md"
+      ]
+    },
+    "candidate-common-explicit": {
+      "trace_sha256": "de591d982d080c68e6f1a36f0d334866c14a0439c9ed30f32dce695201d6af67",
+      "rule_order": {
+        "rule_listing_completed": false,
+        "all_rule_bodies_read": false,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 107348,
+      "turn_usage": {
+        "input_tokens": 189646,
+        "cached_input_tokens": 163456,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1516,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        ".agents/skills/comm-retry-external-operations/SKILL.md"
+      ],
+      "answer": "**With 8 seconds left and a supplier instruction to wait 12 seconds, return immediately.** Do not sleep or send another request in this invocation. Return `NotSubmitted` with reason `retry_wait_exceeds_deadline` if the supplier definitively rejected the attempt before acting and no earlier attempt remains unresolved. Otherwise return `OutcomeUnknown` with the same reason. Include the client reference and the supplier’s earliest retry time for later recovery.\n\nI found no submission implementation in the local fixture. This is a proposed API and caller contract, with acceptance cases specified for a fake supplier and clock.\n\n### API and caller contract\n\n| What happened | Return to the caller | Caller action |\n|---|---|---|\n| The supplier confirms the submission | `Submitted` with the client reference and supplier receipt | Record success. |\n| The supplier definitively rejects the submission before acting, such as a validation error | `Rejected` with the client reference and supplier error code | Stop. |\n| A transient failure proves the request never reached execution, or the supplier explicitly confirms it did not execute | `NotSubmitted` with the cause and any retry timing | Retry only within the remaining budget and after the supplier’s earliest retry time. |\n| A timeout, connection loss, or ambiguous supplier error occurs after the request may have reached execution | `OutcomeUnknown` with the client reference and cause | Look up the existing submission by reference. |\n| The caller cancels | `Cancelled` with the client reference and last known submission state | Stop requests and waits immediately. If execution was possible, retain the unknown state for later reconciliation. |\n| The deadline or attempt limit is reached | `NotSubmitted` if non-execution is established for every attempt. `OutcomeUnknown` if any attempt is still unresolved. Include the exhaustion reason. | End this invocation. Retain the reference for recovery. |\n\nPersist one client reference per logical submission before sending, and reuse it across restarts. An authoritative committed status for that reference resolves the outcome to `Submitted`. A stale `NotFound`, a pending status, or a lookup failure leaves the result `OutcomeUnknown`. A subsequent rejection of a different attempt does not resolve an earlier ambiguous attempt.\n\nFor this fixture, assume the supplier has supplied **no idempotency guarantee**. The caller may automatically replay only after reliable confirmation that the original attempt did not execute and cannot still commit. If the supplier later guarantees deduplication, replay may use the same key and payload within the guaranteed scope and retention window. A lookup reference alone provides no deduplication guarantee.\n\n### Retry budget\n\nUse a **10-second overall deadline**, a **2-second cap per request**, and **three total supplier calls**, including the initial submission and status lookups. Cap each request at the remaining time. Disable SDK retries so the caller owns the budget and the decision to replay. If the SDK cannot disable retries or enforce that same budget and replay policy, keep it out of the submission path.\n\nFor eligible retries, use exponential backoff starting at 250 ms with jitter. Schedule the next request at the later of the backoff time and the supplier’s earliest retry time. If that time reaches or exceeds the deadline, return immediately. Any later reconciliation runs under a fresh, bounded budget using the same reference.\n\n### Deterministic acceptance cases\n\nUse a fake monotonic clock, fixed jitter samples, and a supplier stub that records request times, references, and commits.\n\n| Scenario | Expected result |\n|---|---|\n| Supplier commits, reply is lost, first lookup is stale, second confirms the commit | `Submitted`. One submission request, two lookups of the same reference, exactly one commit. |\n| Supplier commits, reply is lost, and every lookup is stale | `OutcomeUnknown` with the original reference. One submission request, exactly one commit. A later invocation can resolve it by lookup. |\n| Submission hangs after dispatch | Request stops at 2 seconds, or sooner if the overall deadline comes first. State remains unknown until authoritative reconciliation. |\n| First attempt fails with proof of non-execution, then the supplier accepts | Exactly one retry at the expected jittered time, with the same reference. `Submitted` and exactly one commit. |\n| Supplier returns a definitive validation rejection | `Rejected`. One request and no retry. |\n| Cancellation occurs during backoff or an in-flight request | `Cancelled` immediately. No further calls. An in-flight submission that could have executed remains unknown. |\n| Safe transient failures consume all three calls, or the deadline expires first | Return the applicable exhaustion reason. Assert no fourth call, no request at or after the deadline, and no hidden SDK retries. |\n| Supplier asks for 12 seconds with 8 seconds left | Return at the current fake time. No sleep and no further calls. Test both definitive non-execution and unresolved execution, and verify the supplier’s earliest retry time is preserved. |"
+    },
+    "candidate-common-implicit": {
+      "trace_sha256": "0a6dca7ab8d106d856590cd32ab9dafe5e7e9373cd4e120d081ada995b005ba1",
+      "rule_order": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 104903,
+      "turn_usage": {
+        "input_tokens": 215353,
+        "cached_input_tokens": 179456,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1753,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        "harness/common/skills/comm-retry-external-operations/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/SKILL.md",
+        "harness/common/skills/comm-select-development-workflow/references/choice.md"
+      ],
+      "answer": "With **12 seconds requested by the supplier and 8 seconds left**, return immediately. Make zero further requests in this call and preserve the supplier’s earliest retry time, `response_received_at + 12s`. If the supplier definitively declined the submission before committing, return `DEFERRED`. If any attempt may have committed, return `OUTCOME_UNKNOWN` with the same client reference. The wait instruction alone does not establish whether a submission committed.\n\nI found no submission implementation in the fixture, so this review proposes an API contract and acceptance cases. The cases were not run.\n\n### API contract\n\n| What is known | What to return |\n|---|---|\n| The supplier confirms the commit, directly or through lookup | `COMMITTED` with the client reference and supplier receipt or ID |\n| Validation or authorization fails, or the supplier definitively rejects the submission | `REJECTED` with a stable error code and actionable reason. Stop automatic retries. |\n| A transient failure is proven to have occurred before execution | Retry within the shared budget. If that budget is exhausted, return `NOT_SUBMITTED` with the cause. Use `DEFERRED` and include `retry_at` when a supplier wait prevents a safe retry in this call. |\n| A timeout, connection loss, ambiguous supplier error, or cancellation occurs after possible dispatch | `OUTCOME_UNKNOWN` with the client reference and cause. Preserve this state if reconciliation is inconclusive or the budget expires. |\n| The caller cancels before dispatch | `CANCELLED`. After possible dispatch, stop immediately and retain `OUTCOME_UNKNOWN` for later reconciliation. |\n\nA later failure that proves only *that attempt* did not execute cannot resolve an earlier ambiguous attempt.\n\n### Caller and recovery\n\n1. Persist a stable client reference and the original payload identity before sending. Reuse them after timeout, cancellation, or restart. A client reference supports lookup. Treat it as an idempotency key only if the supplier explicitly guarantees deduplication for that key and payload within a documented scope and retention window.\n2. After an ambiguous result, look up the same reference within the remaining budget. A confirmed match resolves the outcome. A stale `NOT_FOUND`, a pending result, or a lookup failure leaves it unknown. Resume lookup later using the same reference. Resubmit automatically only if supplier idempotency still covers the replay or authoritative evidence proves the original attempt cannot commit. If neither is available, retain the unknown state for reconciliation.\n3. Give the caller sole ownership of retries and disable SDK retries for this policy. Enforce an explicit attempt cap, a per-request timeout bounded by the remaining time, and one monotonic deadline across submissions, lookups, and waits. If SDK retries cannot be disabled, require their actual attempts and waits to fit those same limits before enabling caller retries. Use increasing backoff with jitter, honor the supplier’s earliest retry time, and start another request only if the wait and a usable request window fit. Cancellation stops requests and waits.\n\n### Deterministic acceptance cases\n\nUse a fake clock, scripted supplier responses, fixed jitter, and counters at the transport and supplier commit boundaries.\n\n| Scenario | Required observation |\n|---|---|\n| Supplier commits and drops the reply. Lookup first returns stale `NOT_FOUND`, then the receipt. | Outcome stays unknown after the miss and resolves to `COMMITTED` with the original receipt. One submission and one commit. |\n| Reply is lost and lookup stays inconclusive through the deadline. There is no deduplication guarantee. | `OUTCOME_UNKNOWN` with the original reference. Zero resubmissions. A later recovery call looks up the same reference. |\n| Supplier guarantees idempotency and the original reply is lost. | Any eligible replay uses the identical key and payload, returns the original receipt, and produces exactly one commit. |\n| First attempt definitively fails before execution, then the supplier recovers. | Exactly one retry after the configured delay, followed by `COMMITTED`. |\n| A request stalls or safe transient failures exhaust the attempt cap. | The request stops at its configured timeout. No dispatch exceeds the attempt cap or deadline. Exhaustion returns `NOT_SUBMITTED` when all attempts are proven unexecuted and `OUTCOME_UNKNOWN` when ambiguity remains. |\n| Cancellation occurs before dispatch, during backoff, or after possible dispatch. | No further requests after cancellation. Before dispatch the result is `CANCELLED`. After possible dispatch the client retains `OUTCOME_UNKNOWN`. |\n| Supplier definitively rejects the submission. | `REJECTED` with the expected reason and zero retries. |\n| Supplier requests 12 seconds with 8 seconds remaining. | Immediate return with `retry_at` set 12 seconds after receipt. Zero additional sleep or requests. Assert `DEFERRED` for a definitive decline and `OUTCOME_UNKNOWN` when a commit remains possible. |\n| SDK would normally retry an eligible failure. | Transport counts show no hidden retry with the caller-owned policy, and all attempts fit the shared budget. |"
+    },
+    "candidate-common-unrelated": {
+      "trace_sha256": "b67213c0690d5f43c792e371c323a46441cefc0d5e93d1392ef4f90014a14c24",
+      "rule_order": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "candidate_body_in_tool_output": false,
+      "command_output_bytes": 91829,
+      "turn_usage": {
+        "input_tokens": 146505,
+        "cached_input_tokens": 123904,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 316,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": []
+    },
+    "combined-strict": {
+      "trace_sha256": "8ab565c4da0b64b7b033c5b1249535e057937a2c9ebc23bb78b3ea2d7422da13",
+      "rule_order": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 64246,
+      "turn_usage": {
+        "input_tokens": 232574,
+        "cached_input_tokens": 216064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 639,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        ".agents/skills/comm-retry-external-operations/SKILL.md"
+      ]
+    },
+    "combined-timer": {
+      "trace_sha256": "601ff6ae83221036ec550799747652c0e184f050e904d310523cedb3d65df28c",
+      "rule_order": {
+        "rule_listing_completed": false,
+        "all_rule_bodies_read": false,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 48261,
+      "turn_usage": {
+        "input_tokens": 60992,
+        "cached_input_tokens": 36352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 219,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        ".agents/skills/comm-retry-external-operations/SKILL.md"
+      ]
+    },
+    "common-strict": {
+      "trace_sha256": "cf1cbf27c9f607f34f59cfa5f5d4cfb76df7332f8ce787805353d389eab087c0",
+      "rule_order": {
+        "rule_listing_completed": true,
+        "all_rule_bodies_read": true,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": true,
+        "rule_reading_pass": true
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 60804,
+      "turn_usage": {
+        "input_tokens": 228860,
+        "cached_input_tokens": 198912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 601,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        ".agents/skills/comm-retry-external-operations/SKILL.md"
+      ]
+    },
+    "common-timer": {
+      "trace_sha256": "e87306924fadff072a7c470d9a966ec78f3156114777c22275c495587f961fce",
+      "rule_order": {
+        "rule_listing_completed": false,
+        "all_rule_bodies_read": false,
+        "explicit_rule_paths": true,
+        "separate_rule_reads": true,
+        "full_rule_read_before_skill": false,
+        "rule_reading_pass": false
+      },
+      "candidate_body_in_tool_output": true,
+      "command_output_bytes": 48803,
+      "turn_usage": {
+        "input_tokens": 61033,
+        "cached_input_tokens": 36352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 204,
+        "reasoning_output_tokens": 0
+      },
+      "skill_files_named_in_commands": [
+        ".agents/skills/comm-retry-external-operations/SKILL.md"
+      ]
+    }
+  },
+  "simulation_prompt": "The following is a synthetic client acceptance simulation with a virtual clock. Return the ordered actions for each case, using action names as listed. The runner executes each action and checks the caller result, supplier write count, physical send count, sleeps and per-attempt deadline. No shell writes or live APIs. Route 3 already chosen. Apply the project guidance. Fields of the JSON answer are case names; each value is an ordered array of actions.\nThe action send starts a physical write whose result is given in the case. lookup reads by the original stable reference, wait follows the provider or scheduled backoff, report_unknown preserves ambiguity, report_success returns the server result, exhaust ends the budget, reject returns the permanent API error, cancel propagates cancellation, timeout returns a pre-dispatch timeout. cap_timeout caps the next attempt to the remaining overall time. Choose only actions needed AFTER the stated initial events.\nlost: The first send committed the single record but its reply was lost. The API has no deduplication guarantee. Lookup by its client reference is authoritative on match and will find it.\nstale: Same first send but a lookup returns a possibly stale miss.\nrecover: A temporary refusal definitively occurred before executing. Backoff is scheduled, a budgeted retry will succeed.\nslow: Per-request limit is 4, caller deadline in 2; SDK send blocks before transmitting, supports setting per-request timeout. Exactly one attempt permitted. Model the attempt and its caller result.\nabort: Caller cancelled before next attempt.\nbad: Permanent invalid-field API error.\nsdk: At most 3 physical attempts allowed. A first outer call including SDK retry already made all 3. Temporary failure, none sent successfully.\nhint: Caller deadline in 8 seconds, server forbids retry until 12. First attempt already got a temporary refusal.\nallowed: First attempt outcome unknown; lookup is stale; service guarantees deduplication for same key for next hour, same key will be reused, backoff scheduled, send will return the original outcome. Complete now within budget.\n",
+  "replay_oracle": "\"\"\"Execute a native client's selected actions against a synthetic supplier and clock.\"\"\"\nimport json\nimport sys\nfrom pathlib import Path\n\ndef replay(case, actions):\n    left = 2 if case == 'slow' else 8\n    wait = 12 if case == 'hint' else 1\n    timeout = 4\n    writes = int(case in ('lost', 'stale', 'allowed'))\n    initial = writes\n    sends = int(case == 'sdk') * 3\n    now = 0\n    result = None\n    confirmed = False\n    looked = False\n    for action in actions:\n        assert result is None\n        if action == 'lookup':\n            assert case in ('lost','stale','allowed')\n            looked = True\n            confirmed = case == 'lost'\n        elif action == 'wait':\n            now += wait\n            assert now < left\n        elif action == 'cap_timeout':\n            timeout = min(timeout, left-now)\n        elif action == 'send':\n            assert now < left\n            if case in ('recover','allowed'):\n                assert now >= wait\n            sends += 1\n            if case == 'slow':\n                now += timeout\n                assert now <= left\n            else:\n                writes += int(case != 'allowed' or writes == 0)\n                confirmed = True\n        else:\n            result = action\n    expected = {'lost':('report_success',1,0),'stale':('report_unknown',1,0),\n                'recover':('report_success',1,1),'slow':('timeout',0,1),\n                'abort':('cancel',0,0),'bad':('reject',0,0),'sdk':('exhaust',0,3),\n                'hint':('exhaust',0,0),'allowed':('report_success',1,1)}\n    assert (result,writes,sends)==expected[case]\n    if case in ('lost','stale'): assert looked\n    if result == 'report_success': assert confirmed\n    if case == 'slow': assert now==2\n    return {'result':result,'physical_sends':sends,'initial_writes':initial,'final_writes':writes,'elapsed':now}\n\nif __name__=='__main__':\n    p=Path(__file__).parent\n    for name in sys.argv[1:]:\n        cases=json.loads((p/(name+'.decision')).read_text())\n        report={}\n        for case,actions in cases.items():\n            try: report[case]=dict(passed=True,**replay(case,actions))\n            except AssertionError: report[case]=dict(passed=False,actions=actions)\n        (p/(name+'-replay.json')).write_text(json.dumps(report,indent=2)+'\\n')\n        print(name, [c for c in report if not report[c]['passed']])\n",
+  "simulation_results": {
+    "baseline-common": {
+      "actions": {
+        "lost": [
+          "lookup",
+          "report_success"
+        ],
+        "stale": [
+          "lookup",
+          "report_unknown"
+        ],
+        "recover": [
+          "wait",
+          "send",
+          "report_success"
+        ],
+        "slow": [
+          "cap_timeout",
+          "send",
+          "timeout"
+        ],
+        "abort": [
+          "cancel"
+        ],
+        "bad": [
+          "reject"
+        ],
+        "sdk": [
+          "exhaust"
+        ],
+        "hint": [
+          "exhaust"
+        ],
+        "allowed": [
+          "wait",
+          "send",
+          "report_success"
+        ]
+      },
+      "virtual_clock_results": {
+        "lost": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "stale": {
+          "passed": true,
+          "result": "report_unknown",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "recover": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 1,
+          "elapsed": 1
+        },
+        "slow": {
+          "passed": true,
+          "result": "timeout",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 2
+        },
+        "abort": {
+          "passed": true,
+          "result": "cancel",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "bad": {
+          "passed": true,
+          "result": "reject",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "sdk": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 3,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "hint": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "allowed": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 1
+        }
+      }
+    },
+    "candidate-common": {
+      "actions": {
+        "lost": [
+          "lookup",
+          "report_success"
+        ],
+        "stale": [
+          "lookup",
+          "report_unknown"
+        ],
+        "recover": [
+          "wait",
+          "send",
+          "report_success"
+        ],
+        "slow": [
+          "cap_timeout",
+          "send",
+          "timeout"
+        ],
+        "abort": [
+          "cancel"
+        ],
+        "bad": [
+          "reject"
+        ],
+        "sdk": [
+          "exhaust"
+        ],
+        "hint": [
+          "exhaust"
+        ],
+        "allowed": [
+          "wait",
+          "send",
+          "report_success"
+        ]
+      },
+      "virtual_clock_results": {
+        "lost": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "stale": {
+          "passed": true,
+          "result": "report_unknown",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "recover": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 1,
+          "elapsed": 1
+        },
+        "slow": {
+          "passed": true,
+          "result": "timeout",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 2
+        },
+        "abort": {
+          "passed": true,
+          "result": "cancel",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "bad": {
+          "passed": true,
+          "result": "reject",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "sdk": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 3,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "hint": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "allowed": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 1
+        }
+      }
+    },
+    "candidate-combined": {
+      "actions": {
+        "lost": [
+          "lookup",
+          "report_success"
+        ],
+        "stale": [
+          "lookup",
+          "report_unknown"
+        ],
+        "recover": [
+          "wait",
+          "send",
+          "report_success"
+        ],
+        "slow": [
+          "cap_timeout",
+          "send",
+          "timeout"
+        ],
+        "abort": [
+          "cancel"
+        ],
+        "bad": [
+          "reject"
+        ],
+        "sdk": [
+          "exhaust"
+        ],
+        "hint": [
+          "exhaust"
+        ],
+        "allowed": [
+          "lookup",
+          "wait",
+          "send",
+          "report_success"
+        ]
+      },
+      "virtual_clock_results": {
+        "lost": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "stale": {
+          "passed": true,
+          "result": "report_unknown",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "recover": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 1,
+          "elapsed": 1
+        },
+        "slow": {
+          "passed": true,
+          "result": "timeout",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 2
+        },
+        "abort": {
+          "passed": true,
+          "result": "cancel",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "bad": {
+          "passed": true,
+          "result": "reject",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "sdk": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 3,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "hint": {
+          "passed": true,
+          "result": "exhaust",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "allowed": {
+          "passed": true,
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 1
+        }
+      }
+    }
+  },
+  "timer_results": {
+    "common": {
+      "attempt_timeout": 2,
+      "hint_delay": 3,
+      "new_sends_after_cancel": 0
+    },
+    "combined": {
+      "attempt_timeout": 2,
+      "hint_delay": 3,
+      "new_sends_after_cancel": 0
+    }
+  }
+}
