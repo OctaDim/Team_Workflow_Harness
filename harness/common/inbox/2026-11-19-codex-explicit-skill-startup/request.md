@@ -41,3 +41,10 @@ Status: in progress
 Result: [Полный кандидат стартовой команды](ensure_entrypoint_links.py) и [регрессионный тест](test_ensure_entrypoint_links.py) подготовлены для штатных путей `harness/common/checks/ensure_entrypoint_links.py` и `harness/common/testing/tests/test_ensure_entrypoint_links.py`. Полная проверка Codex пройдена в обоих режимах. [Отчёт и точная версия](../../testing/evidence/2026-11-19-codex-explicit-startup.md)
 Reason: Выполнение завершено до стадии публикации. Требуется отдельное разрешение на публикацию проверенной редакции с её фактическими статусами.
 Updated: 2026-11-19
+
+## Проверка при публикации от 2026-11-19
+
+Status: blocked
+Result: При установке согласованной версии проверка common+project обнаружила пропуск двух вводных правил после перечисления файлов. Штатные пути возвращены к исходным байтам. [Уточнённый кандидат](revision-2/ensure_entrypoint_links.py) и [тест](revision-2/test_ensure_entrypoint_links.py) прошли целевую регрессию. В изолированном явном вызове этот кандидат получил первое чтение INDEX в составе заранее составленной команды. [Отчёт и результаты по режимам](../../testing/evidence/2026-11-19-codex-startup-publication-check.md)
+Reason: Инструкция из вывода процесса поступает после того, как Codex выбрал первую команду. Для проверки изменения статичного входа требуется отдельное согласование.
+Updated: 2026-11-19
