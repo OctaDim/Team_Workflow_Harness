@@ -1,0 +1,2188 @@
+{
+  "date": "2026-11-19",
+  "sha256": {
+    "comm-human-folder-guides.md": "62d1c55590f75cf70c6681f2ddbaede8c0f001708f75bfe02151a6a1a9e14de1",
+    "check_human_guide_search.py": "4c3b9b6705ccabd4285b0bb51f7fb467af07fc1856910c4078517cec2fe75ac0",
+    "test_human_guide_reader.py": "c3c32793b1558f05a8f30f7e0423472e9b51492c448f5f799e59484727d7816b"
+  },
+  "static": {
+    "baseline": {
+      "tool": {
+        "name": "plugin-eval",
+        "version": "0.1.0"
+      },
+      "grade": "A",
+      "budgets": 382,
+      "required": [],
+      "recommended": []
+    },
+    "compact": {
+      "tool": {
+        "name": "plugin-eval",
+        "version": "0.1.0"
+      },
+      "grade": "A",
+      "budgets": 528,
+      "required": [],
+      "recommended": []
+    }
+  },
+  "local_scenarios": [
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 2",
+        "Всего правил в `.claude/rules/`: 2",
+        "Всего правил прочитано: 2",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 2 из 2"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-a.md": "AGENTS",
+        ".claude/rules/nested/personal space.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-a.md": "AGENTS",
+        ".claude/rules/nested/personal space.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 2",
+        "Всего правил в `.claude/rules/`: 2",
+        "Всего правил прочитано: 2",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - дублированное чтение 3 из 2"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-a.md": "AGENTS",
+        ".claude/rules/nested/personal space.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {
+        ".claude/rules/comm-a.md": 1
+      },
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-a.md": "AGENTS",
+        ".claude/rules/nested/personal space.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-a.md": "AGENTS",
+        ".claude/rules/nested/personal space.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-a.md": "AGENTS",
+        ".claude/rules/nested/personal space.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 2",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 2"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/comm-a.md",
+        ".claude/rules/nested/personal space.md"
+      ],
+      "first_reads": {},
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 2",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 2, нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/comm-a.md",
+        ".claude/rules/nested/personal space.md"
+      ],
+      "first_reads": {},
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 2",
+        "Всего правил в `.claude/rules/`: 2",
+        "Всего правил прочитано: 2",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-a.md": "AGENTS",
+        ".claude/rules/nested/personal space.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 2",
+        "Всего правил в `.claude/rules/`: 2",
+        "Всего правил прочитано: 2",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-a.md": "AGENTS",
+        ".claude/rules/nested/personal space.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 2",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 2"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/comm-a.md",
+        ".claude/rules/nested/personal space.md"
+      ],
+      "first_reads": {},
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 2",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 2"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/comm-a.md",
+        ".claude/rules/nested/personal space.md"
+      ],
+      "first_reads": {},
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_rule_reader_rejects_globs_missing_files_and_combined_calls (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла, нет подтверждённого открытия скилла"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {},
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[0-skipped0-repeated0-12-0-common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "AGENTS",
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[0-skipped0-repeated0-12-0-both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "AGENTS",
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[1-skipped1-repeated1-12-0-common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[1-skipped1-repeated1-12-0-both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[2-skipped2-repeated2-12-0-common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[2-skipped2-repeated2-12-0-both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[5-skipped3-repeated3-12-0-common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[5-skipped3-repeated3-12-0-both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[12-skipped4-repeated4-12-0-common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 12",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "START",
+        ".claude/rules/nested/rule 6.md": "START",
+        ".claude/rules/nested/rule 7.md": "START",
+        ".claude/rules/nested/rule 8.md": "START",
+        ".claude/rules/nested/rule 9.md": "START",
+        ".claude/rules/nested/rule 10.md": "START",
+        ".claude/rules/nested/rule 11.md": "START"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[12-skipped4-repeated4-12-0-both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 12",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "START",
+        ".claude/rules/nested/rule 6.md": "START",
+        ".claude/rules/nested/rule 7.md": "START",
+        ".claude/rules/nested/rule 8.md": "START",
+        ".claude/rules/nested/rule 9.md": "START",
+        ".claude/rules/nested/rule 10.md": "START",
+        ".claude/rules/nested/rule 11.md": "START"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[2-skipped5-repeated5-10-0-common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 8",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 10",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 10 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 10.md",
+        ".claude/rules/nested/rule 9.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[2-skipped5-repeated5-10-0-both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 8",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 10",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 10 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 10.md",
+        ".claude/rules/nested/rule 9.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[2-skipped6-repeated6-12-3-common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 3",
+        "Результат: Ошибка - дублированное чтение 15 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {
+        ".claude/rules/nested/rule 1.md": 1,
+        ".claude/rules/nested/rule 4.md": 2
+      },
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[2-skipped6-repeated6-12-3-both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 3",
+        "Результат: Ошибка - дублированное чтение 15 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {
+        ".claude/rules/nested/rule 1.md": 1,
+        ".claude/rules/nested/rule 4.md": 2
+      },
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[2-skipped7-repeated7-11-1-common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 9",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - прочтено 11 из 12, дублированное чтение 12 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 11.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {
+        ".claude/rules/nested/rule 3.md": 1
+      },
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_start_rule_accounting[2-skipped7-repeated7-11-1-both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 9",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - прочтено 11 из 12, дублированное чтение 12 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 11.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {
+        ".claude/rules/nested/rule 3.md": 1
+      },
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 11 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 0.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 11 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 0.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 11 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 0.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 11 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 0.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 1.md",
+        ".claude/rules/nested/rule 10.md",
+        ".claude/rules/nested/rule 11.md",
+        ".claude/rules/nested/rule 2.md",
+        ".claude/rules/nested/rule 3.md",
+        ".claude/rules/nested/rule 4.md",
+        ".claude/rules/nested/rule 5.md",
+        ".claude/rules/nested/rule 6.md",
+        ".claude/rules/nested/rule 7.md",
+        ".claude/rules/nested/rule 8.md",
+        ".claude/rules/nested/rule 9.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 11 из 12, нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 11.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла, нет отдельного чтения обязательных INDEX перед скиллом"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 1.md",
+        ".claude/rules/nested/rule 10.md",
+        ".claude/rules/nested/rule 11.md",
+        ".claude/rules/nested/rule 2.md",
+        ".claude/rules/nested/rule 3.md",
+        ".claude/rules/nested/rule 4.md",
+        ".claude/rules/nested/rule 5.md",
+        ".claude/rules/nested/rule 6.md",
+        ".claude/rules/nested/rule 7.md",
+        ".claude/rules/nested/rule 8.md",
+        ".claude/rules/nested/rule 9.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 11 из 12, нарушен порядок перечисления и явного чтения, нет отдельного чтения обязательных INDEX перед скиллом"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 11.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 11 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 0.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 11 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 0.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_partial_current_reads_and_boundaries (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 11 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 0.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 1.md": "AGENTS",
+        ".claude/rules/nested/rule 2.md": "AGENTS",
+        ".claude/rules/nested/rule 3.md": "AGENTS",
+        ".claude/rules/nested/rule 4.md": "AGENTS",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_skill_and_listing_must_wait_for_rule_read_results[common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_skill_and_listing_must_wait_for_rule_read_results[common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_skill_and_listing_must_wait_for_rule_read_results[common] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_skill_and_listing_must_wait_for_rule_read_results[both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_skill_and_listing_must_wait_for_rule_read_results[both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_skill_and_listing_must_wait_for_rule_read_results[both] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_literal_reads_with_directory_output_and_named_loop[ls] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_literal_reads_with_directory_output_and_named_loop[ls] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 7",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 7 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 0.md",
+        ".claude/rules/nested/rule 1.md",
+        ".claude/rules/nested/rule 2.md",
+        ".claude/rules/nested/rule 3.md",
+        ".claude/rules/nested/rule 4.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_literal_reads_with_directory_output_and_named_loop[loop] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/nested/rule 0.md": "START",
+        ".claude/rules/nested/rule 1.md": "START",
+        ".claude/rules/nested/rule 2.md": "START",
+        ".claude/rules/nested/rule 3.md": "START",
+        ".claude/rules/nested/rule 4.md": "START",
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": true
+    },
+    {
+      "scenario": "harness/common/testing/tests/test_human_guide_reader.py::test_literal_reads_with_directory_output_and_named_loop[loop] (call)",
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 7",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 7 из 12"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/nested/rule 0.md",
+        ".claude/rules/nested/rule 1.md",
+        ".claude/rules/nested/rule 2.md",
+        ".claude/rules/nested/rule 3.md",
+        ".claude/rules/nested/rule 4.md"
+      ],
+      "first_reads": {
+        ".claude/rules/nested/rule 5.md": "AGENTS",
+        ".claude/rules/nested/rule 6.md": "AGENTS",
+        ".claude/rules/nested/rule 7.md": "AGENTS",
+        ".claude/rules/nested/rule 8.md": "AGENTS",
+        ".claude/rules/nested/rule 9.md": "AGENTS",
+        ".claude/rules/nested/rule 10.md": "AGENTS",
+        ".claude/rules/nested/rule 11.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "rule_reading_pass": false
+    }
+  ],
+  "installations": [
+    {
+      "mode": "common",
+      "check": "controlled real file reads",
+      "startup_runs": 2,
+      "rule_listing_completed": true,
+      "expected_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-user-owned-entrypoints.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "all_rule_bodies_read": true,
+      "explicit_rule_paths": true,
+      "separate_rule_reads": true,
+      "full_rule_read_before_skill": true,
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 9",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "rule_reading_pass": true
+    },
+    {
+      "mode": "both",
+      "check": "controlled real file reads",
+      "startup_runs": 2,
+      "rule_listing_completed": true,
+      "expected_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-user-owned-entrypoints.md": "START",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "all_rule_bodies_read": true,
+      "explicit_rule_paths": true,
+      "separate_rule_reads": true,
+      "full_rule_read_before_skill": true,
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 9",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "rule_reading_pass": true
+    }
+  ],
+  "codex": [
+    {
+      "iteration": 1,
+      "mode": "both",
+      "task": "read",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 1,
+      "native_completed": true,
+      "elapsed_seconds": 42.7,
+      "candidate_sha256": "8da8e918024233b462696a36c38c06a9d1332a319c59d5e35a00060e0e6e4b07",
+      "run_checker_sha256": "327001a1be7cf5b2e4b396e22da2dc258eb533a8e303dc90f530a58075b448b0",
+      "raw_sha256": "1ac5d69e03c22e2d4bc74c51bc6369ceaa7c27dbac7654cc9140651c8f707525",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 4"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 1,
+      "mode": "both",
+      "task": "search",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 0,
+      "native_completed": true,
+      "elapsed_seconds": 23.71,
+      "candidate_sha256": "8da8e918024233b462696a36c38c06a9d1332a319c59d5e35a00060e0e6e4b07",
+      "run_checker_sha256": "327001a1be7cf5b2e4b396e22da2dc258eb533a8e303dc90f530a58075b448b0",
+      "raw_sha256": "a7abf1c840be18141c70a8142bcb01c8147ea00c34eb4e7547e0585a4918f786",
+      "original_report": null,
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 1,
+      "mode": "common",
+      "task": "read",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 1,
+      "native_completed": true,
+      "elapsed_seconds": 39.02,
+      "candidate_sha256": "8da8e918024233b462696a36c38c06a9d1332a319c59d5e35a00060e0e6e4b07",
+      "run_checker_sha256": "327001a1be7cf5b2e4b396e22da2dc258eb533a8e303dc90f530a58075b448b0",
+      "raw_sha256": "75e665abaa5377fb98a06dc686329a6da3daa29c13cd288eb57726cde1e3b1e2",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 4, нарушен порядок перечисления и явного чтения"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 1,
+      "mode": "common",
+      "task": "search",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 1,
+      "native_completed": true,
+      "elapsed_seconds": 23.94,
+      "candidate_sha256": "8da8e918024233b462696a36c38c06a9d1332a319c59d5e35a00060e0e6e4b07",
+      "run_checker_sha256": "327001a1be7cf5b2e4b396e22da2dc258eb533a8e303dc90f530a58075b448b0",
+      "raw_sha256": "e6b386864325153dda3944e2f69e00538efde9a95a394c675dc35b8a2ff5169a",
+      "original_report": null,
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 2,
+      "mode": "both",
+      "task": "read",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 1,
+      "native_completed": true,
+      "elapsed_seconds": 39.6,
+      "candidate_sha256": "8da8e918024233b462696a36c38c06a9d1332a319c59d5e35a00060e0e6e4b07",
+      "run_checker_sha256": "e137d2f284643da245151f9ed5d51d7ac2a46a780b920e13a4e36b9c532c99d6",
+      "raw_sha256": "381edaf998da521d5072cc9f95d1c6c9dbe268bd80dbb3b2f0f5fcaed1013bc8",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 4, нарушен порядок перечисления и явного чтения, нет отдельного чтения обязательных INDEX перед скиллом"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 2,
+      "mode": "both",
+      "task": "search",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 0,
+      "native_completed": true,
+      "elapsed_seconds": 31.75,
+      "candidate_sha256": "8da8e918024233b462696a36c38c06a9d1332a319c59d5e35a00060e0e6e4b07",
+      "run_checker_sha256": "e137d2f284643da245151f9ed5d51d7ac2a46a780b920e13a4e36b9c532c99d6",
+      "raw_sha256": "929b129b2dde5b9052dd97632985c14152336c0cf8521efcf916d55c12be6068",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 2,
+      "mode": "common",
+      "task": "read",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 1,
+      "native_completed": true,
+      "elapsed_seconds": 34.97,
+      "candidate_sha256": "8da8e918024233b462696a36c38c06a9d1332a319c59d5e35a00060e0e6e4b07",
+      "run_checker_sha256": "e137d2f284643da245151f9ed5d51d7ac2a46a780b920e13a4e36b9c532c99d6",
+      "raw_sha256": "75627f1bd7f50599e930a5570b7314428180d78a2fa5ef661a31e137b2e5699f",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 4"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 2,
+      "mode": "common",
+      "task": "search",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 0,
+      "native_completed": true,
+      "elapsed_seconds": 30.35,
+      "candidate_sha256": "8da8e918024233b462696a36c38c06a9d1332a319c59d5e35a00060e0e6e4b07",
+      "run_checker_sha256": "e137d2f284643da245151f9ed5d51d7ac2a46a780b920e13a4e36b9c532c99d6",
+      "raw_sha256": "0117d3cadb465f4c8e4ab25f49c1e11821dec871032e9c1ecce61b0bdaf14cec",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 3,
+      "mode": "both",
+      "task": "read",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 1,
+      "native_completed": true,
+      "elapsed_seconds": 39.86,
+      "candidate_sha256": "62d1c55590f75cf70c6681f2ddbaede8c0f001708f75bfe02151a6a1a9e14de1",
+      "run_checker_sha256": "7671517981aee54b097a212293f1c9241a92a60afcf7065435008d3e761b18ba",
+      "raw_sha256": "7c6b198759809720e49bd41d9a5fc8acb5f9a22abf17e617d085dc08fb58080a",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 4"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 3,
+      "mode": "both",
+      "task": "search",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 0,
+      "native_completed": true,
+      "elapsed_seconds": 29.29,
+      "candidate_sha256": "62d1c55590f75cf70c6681f2ddbaede8c0f001708f75bfe02151a6a1a9e14de1",
+      "run_checker_sha256": "7671517981aee54b097a212293f1c9241a92a60afcf7065435008d3e761b18ba",
+      "raw_sha256": "2088d5edb636732518d23f4b2194877fa606562186a6b45856fe4994efa170cd",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 3,
+      "mode": "common",
+      "task": "read",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 1,
+      "native_completed": true,
+      "elapsed_seconds": 49.1,
+      "candidate_sha256": "62d1c55590f75cf70c6681f2ddbaede8c0f001708f75bfe02151a6a1a9e14de1",
+      "run_checker_sha256": "7671517981aee54b097a212293f1c9241a92a60afcf7065435008d3e761b18ba",
+      "raw_sha256": "4f7966357b7e95d9c16e9ce76181528e18245f277d590cedf88b005dc42b5c32",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 4"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 3,
+      "mode": "common",
+      "task": "search",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 0,
+      "native_completed": true,
+      "elapsed_seconds": 28.94,
+      "candidate_sha256": "62d1c55590f75cf70c6681f2ddbaede8c0f001708f75bfe02151a6a1a9e14de1",
+      "run_checker_sha256": "7671517981aee54b097a212293f1c9241a92a60afcf7065435008d3e761b18ba",
+      "raw_sha256": "04d59b53fcd06caee8802143c439f626a1838275c1b6c4a2491d20ab9eb0543d",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false
+    },
+    {
+      "iteration": 4,
+      "mode": "both",
+      "task": "read",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 0,
+      "native_completed": true,
+      "elapsed_seconds": 34.41,
+      "candidate_sha256": "62d1c55590f75cf70c6681f2ddbaede8c0f001708f75bfe02151a6a1a9e14de1",
+      "run_checker_sha256": "f4eb2f28b4eac170941667493365a619bea1427f0056f1f504a164fea7b0b00b",
+      "raw_sha256": "18cdaedd1e194712d51a99cb51a8aaa89ad550579ff62822b18cdde035970027",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false,
+      "final_audit": {
+        "rule_read_report": [
+          "Правила `.claude/rules/` через ссылки в START.md: 4",
+          "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+          "Всего правил в `.claude/rules/`: 4",
+          "Всего правил прочитано: 4",
+          "Повторно прочитанных правил: 0",
+          "Результат: Успешно - прочтено 4 из 4"
+        ],
+        "missing_rule_paths": [],
+        "first_reads": {
+          ".claude/rules/comm-human-folder-guides.md": "START",
+          ".claude/rules/nested/personal space.md": "START",
+          ".claude/rules/personal.md": "START",
+          ".claude/rules/ignored/machine.md": "START"
+        },
+        "duplicate_rule_reads": {},
+        "rule_reading_pass": true
+      },
+      "service_usage": {
+        "input_tokens": 152720,
+        "cached_input_tokens": 143744,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 596,
+        "reasoning_output_tokens": 0
+      },
+      "observed_tool_output_bytes": 5067,
+      "read_only_fixture": true,
+      "search_matches": null,
+      "final_pass": true
+    },
+    {
+      "iteration": 4,
+      "mode": "both",
+      "task": "search",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 0,
+      "native_completed": true,
+      "elapsed_seconds": 30.4,
+      "candidate_sha256": "62d1c55590f75cf70c6681f2ddbaede8c0f001708f75bfe02151a6a1a9e14de1",
+      "run_checker_sha256": "f4eb2f28b4eac170941667493365a619bea1427f0056f1f504a164fea7b0b00b",
+      "raw_sha256": "df729bda66c84edda1c90d64dceb02cbf206ee81c7f380a2754d739a76372c6f",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false,
+      "final_audit": {
+        "rule_read_report": [
+          "Правила `.claude/rules/` через ссылки в START.md: 1",
+          "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+          "Всего правил в `.claude/rules/`: 1",
+          "Всего правил прочитано: 1",
+          "Повторно прочитанных правил: 0",
+          "Результат: Успешно - прочтено 1 из 1"
+        ],
+        "missing_rule_paths": [],
+        "first_reads": {
+          ".claude/rules/comm-human-folder-guides.md": "START"
+        },
+        "duplicate_rule_reads": {},
+        "rule_reading_pass": true
+      },
+      "service_usage": {
+        "input_tokens": 116088,
+        "cached_input_tokens": 106624,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 442,
+        "reasoning_output_tokens": 10
+      },
+      "observed_tool_output_bytes": 4410,
+      "read_only_fixture": true,
+      "search_matches": true,
+      "search_contract_pass": true,
+      "final_pass": true
+    },
+    {
+      "iteration": 4,
+      "mode": "common",
+      "task": "read",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 0,
+      "native_completed": true,
+      "elapsed_seconds": 38.42,
+      "candidate_sha256": "62d1c55590f75cf70c6681f2ddbaede8c0f001708f75bfe02151a6a1a9e14de1",
+      "run_checker_sha256": "f4eb2f28b4eac170941667493365a619bea1427f0056f1f504a164fea7b0b00b",
+      "raw_sha256": "f965150410e661a9ac2cddcae088ce5f102ee92472a7d26a17ca75b7cee2cc5d",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false,
+      "final_audit": {
+        "rule_read_report": [
+          "Правила `.claude/rules/` через ссылки в START.md: 4",
+          "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+          "Всего правил в `.claude/rules/`: 4",
+          "Всего правил прочитано: 4",
+          "Повторно прочитанных правил: 0",
+          "Результат: Успешно - прочтено 4 из 4"
+        ],
+        "missing_rule_paths": [],
+        "first_reads": {
+          ".claude/rules/comm-human-folder-guides.md": "START",
+          ".claude/rules/personal.md": "START",
+          ".claude/rules/nested/personal space.md": "START",
+          ".claude/rules/ignored/machine.md": "START"
+        },
+        "duplicate_rule_reads": {},
+        "rule_reading_pass": true
+      },
+      "service_usage": {
+        "input_tokens": 170778,
+        "cached_input_tokens": 158976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 631,
+        "reasoning_output_tokens": 0
+      },
+      "observed_tool_output_bytes": 6354,
+      "read_only_fixture": true,
+      "search_matches": null,
+      "final_pass": true
+    },
+    {
+      "iteration": 4,
+      "mode": "common",
+      "task": "search",
+      "codex_version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "check_exit": 0,
+      "native_completed": true,
+      "elapsed_seconds": 29.0,
+      "candidate_sha256": "62d1c55590f75cf70c6681f2ddbaede8c0f001708f75bfe02151a6a1a9e14de1",
+      "run_checker_sha256": "f4eb2f28b4eac170941667493365a619bea1427f0056f1f504a164fea7b0b00b",
+      "raw_sha256": "04d1b05aebb707f932108ad319f96960dde7c1b165be75a5f6fc665e5ddbc700",
+      "original_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "human_body_seen": false,
+      "human_canary_seen": false,
+      "final_audit": {
+        "rule_read_report": [
+          "Правила `.claude/rules/` через ссылки в START.md: 1",
+          "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+          "Всего правил в `.claude/rules/`: 1",
+          "Всего правил прочитано: 1",
+          "Повторно прочитанных правил: 0",
+          "Результат: Успешно - прочтено 1 из 1"
+        ],
+        "missing_rule_paths": [],
+        "first_reads": {
+          ".claude/rules/comm-human-folder-guides.md": "START"
+        },
+        "duplicate_rule_reads": {},
+        "rule_reading_pass": true
+      },
+      "service_usage": {
+        "input_tokens": 116750,
+        "cached_input_tokens": 106112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 470,
+        "reasoning_output_tokens": 13
+      },
+      "observed_tool_output_bytes": 4349,
+      "read_only_fixture": true,
+      "search_matches": true,
+      "search_contract_pass": true,
+      "final_pass": true
+    }
+  ],
+  "historical_replay": [
+    {
+      "stage": "publication_check",
+      "mode": "common",
+      "trace_sha256": "5aa3f4cbc85df80e95340b31ff9dc58c0f3f885e48220cc4e0081f9eafb1eaaf",
+      "rule_listing_completed": true,
+      "expected_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": 1,
+        ".claude/rules/comm-human-folder-guides.md": 1
+      },
+      "all_rule_bodies_read": true,
+      "explicit_rule_paths": true,
+      "separate_rule_reads": true,
+      "full_rule_read_before_skill": true,
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 2",
+        "Результат: Ошибка - дублированное чтение 14 из 12"
+      ],
+      "rule_reading_pass": false
+    },
+    {
+      "stage": "publication_check",
+      "mode": "combined",
+      "trace_sha256": "0e91f9471d3965a5033a7d21d29bdfd8ef339b97e59c6a3c8ab8cc4bf5bc6a73",
+      "rule_listing_completed": true,
+      "expected_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {},
+      "all_rule_bodies_read": true,
+      "explicit_rule_paths": true,
+      "separate_rule_reads": true,
+      "full_rule_read_before_skill": true,
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "rule_reading_pass": true
+    },
+    {
+      "stage": "revision_2",
+      "mode": "common",
+      "trace_sha256": "df391ef0c3eca78c79c469a5f3bece87e771d20f52935d86f0039e67c5da2d37",
+      "rule_listing_completed": true,
+      "expected_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md"
+      ],
+      "missing_rule_paths": [],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-package-independence.md": "AGENTS"
+      },
+      "duplicate_rule_reads": {
+        ".claude/rules/comm-human-folder-guides.md": 1,
+        ".claude/rules/comm-skill-rule-ownership.md": 1
+      },
+      "all_rule_bodies_read": true,
+      "explicit_rule_paths": true,
+      "separate_rule_reads": true,
+      "full_rule_read_before_skill": true,
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 2",
+        "Результат: Ошибка - дублированное чтение 14 из 12"
+      ],
+      "rule_reading_pass": false
+    },
+    {
+      "stage": "revision_2",
+      "mode": "combined",
+      "trace_sha256": "ac66a7f0d1a0f9d6cda130abf87188e1dad9d7420b9ad508be00b6233cccbc5d",
+      "rule_listing_completed": false,
+      "expected_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "first_reads": {},
+      "duplicate_rule_reads": {},
+      "all_rule_bodies_read": false,
+      "explicit_rule_paths": true,
+      "separate_rule_reads": true,
+      "full_rule_read_before_skill": false,
+      "rule_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла"
+      ],
+      "rule_reading_pass": false
+    }
+  ]
+}
