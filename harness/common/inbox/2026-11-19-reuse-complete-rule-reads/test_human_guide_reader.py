@@ -96,7 +96,8 @@ def test_start_rule_accounting(mode, linked, skipped, repeated, unique, duplicat
     if unique != 12 or not duplicates:
         details.append(f'прочтено {unique} из 12')
     if duplicates:
-        details.append(f'дублированное чтение {unique + duplicates} из 12')
+        duplicate_paths = sorted({f'.claude/rules/nested/rule {n}.md' for n in repeated})
+        details.append(f'дублированное чтение {unique + duplicates} из 12 (' + ', '.join(duplicate_paths) + ')')
     assert result['rule_read_report'] == [
         f'Правила `.claude/rules/` через ссылки в START.md: {linked}',
         f'Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: {unique - linked}',
@@ -183,3 +184,30 @@ def test_literal_reads_with_directory_output_and_named_loop(form):
     assert evaluate([trace[0], reads, *trace[6:]], rules, starts, aliases)['rule_reading_pass']
     assert not evaluate([trace[0], dict(reads, aggregated_output=output[:-10]), *trace[6:]],
                         rules, starts, aliases)['rule_reading_pass']
+
+
+def test_duplicate_in_compound_literal_reads(tmp_path):
+    import shlex
+
+    trace, rules, starts, aliases = fixture_trace('both', 2, repeated=(0,))
+    paths = list(aliases)
+    installed = aliases[paths[0]]
+    extra = tmp_path / 'AGENTS.md'
+    extra.write_text('Fixture entry.\n')
+    reads = event('cat ' + shlex.quote(paths[0]) + '\ncat ' + shlex.quote(paths[1])
+                  + '\ncat AGENTS.md',
+                  rules[installed] + rules[aliases[paths[1]]] + extra.read_text())
+    compare = f'cmp {shlex.quote(paths[0])} {shlex.quote(installed)}'
+    repeat = event(compare + '\ncat ' + shlex.quote(installed), rules[installed])
+    root = next(p for p in Path(__file__).absolute().parents
+                if (p / 'harness/common/checks/ensure_entrypoint_links.py').is_file())
+    assess = runpy.run_path(str(root / 'harness/common/checks/check_human_guide_search.py'))['assess_rule_reading']
+    def audit(first):
+        return assess([*trace[:2], first, *trace[4:-3], repeat, *trace[-2:]], rules,
+                      starts=starts, aliases=aliases, root=tmp_path, immutable_fixture=True)
+    result = audit(reads)
+    assert result['duplicate_rule_reads'] == {installed: 1}
+    assert installed in result['rule_read_report'][-1]
+    for bad in (dict(reads, aggregated_output=extra.read_text()),
+                dict(reads, command=reads['command'].replace('cat AGENTS.md', 'echo unsafe'))):
+        assert not audit(bad)['duplicate_rule_reads']

@@ -80,6 +80,28 @@ def explicit_read(tokens, output, bodies):
                 return [], ''
             if output == observed or (suffix and output.startswith(observed)):
                 return names, plain
+    if tokens[:1] in (['cat'], ['cmp']) and any(t in (';', '&&') for t in tokens):
+        # Accept only literal reads and silent comparisons of identical known files.
+        # Bind the entire combined output to the operands before crediting any path.
+        names = []
+        group = []
+        for token in [*tokens, ';']:
+            if token not in (';', '&&'):
+                group.append(token)
+                continue
+            operands = group[1:]
+            if operands[:1] == ['--']:
+                operands = operands[1:]
+            if not operands or not all(name in bodies for name in operands):
+                return [], ''
+            if group[0] == 'cat':
+                names.extend(operands)
+            elif group[0] != 'cmp' or len(operands) != 2 or bodies[operands[0]] != bodies[operands[1]]:
+                return [], ''
+            group = []
+        if names and output == ''.join(bodies[name] for name in names):
+            return names, output
+        return [], ''
     prefix = False
     while tokens[:1] == ['ls'] and ';' in tokens:
         end = tokens.index(';')
@@ -160,6 +182,11 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
     issues = []
     bodies = dict(starts)
     bodies.update({source: expected[path] for source, path in paths.items()})
+    if immutable_fixture and root is not None:
+        for name in ('AGENTS.md', 'PERSONAL.md'):
+            extra = ordinary_path(root / name)
+            if extra.is_file():
+                bodies[name] = extra.read_text()
     listing_args = ['--files', '--hidden', '--no-ignore', '.claude/rules', '-g', '*.md', '-g', '!README.human.md']
     indexes_seen = set()
     expected_indexes = {str(Path(start).with_name('INDEX.md')) for start in starts}
@@ -259,7 +286,7 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
                         targets = start_rule_links(name, starts[name], paths)
                         links.update(targets)
                         links.update(paths[target] for target in targets)
-                    else:
+                    elif name in paths:
                         credit(name, 0, len(bodies[name].splitlines(True)))
             elif len(names) == 1 and names[0] in paths and bodies[names[0]].startswith(output):
                 complete_lines = sum(line.endswith('\n') for line in output.splitlines(True))
@@ -294,7 +321,8 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
     if listed and count < total:
         issues.append(f'прочтено {count} из {total}')
     if repeats:
-        issues.append(f'дублированное чтение {count + repeats} из {total}')
+        paths_read_again = ', '.join(sorted(duplicates))
+        issues.append(f'дублированное чтение {count + repeats} из {total} ({paths_read_again})')
     if not explicit or not separate:
         issues.append('нарушен порядок перечисления и явного чтения')
     if expected_indexes - indexes_seen:

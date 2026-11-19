@@ -1,0 +1,534 @@
+{
+  "date": "2026-11-20",
+  "base_commit": "a1aa2c4",
+  "candidate_files": {
+    "comm-human-folder-guides.md": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+    "check_human_guide_search.py": "b8cea987e41ba8c9dafd5d965f513de6899517c84f9553605e126ca3339ac892",
+    "test_human_guide_reader.py": "430960e1d4ae3f9ed7c9b8a1401d126afd7ce85179aed4513a6598900aa85ae8"
+  },
+  "install": {
+    "common": {
+      "exit_codes": [
+        0,
+        0
+      ],
+      "project_files_after": 20,
+      "original_project_files": 0
+    },
+    "both": {
+      "exit_codes": [
+        0,
+        0
+      ],
+      "project_files_after": 20,
+      "original_project_files": 20
+    }
+  },
+  "native_runs": [
+    {
+      "scenario": "read-both-native",
+      "version": "codex-cli 0.166.0",
+      "mode": "both",
+      "task": "read",
+      "prompt": "Прочитай полностью все обязательные машинные Markdown-правила в .claude/rules и подпапках, затем используй .agents/skills/example/SKILL.md. Верни пути всех прочитанных правил и результат 7 * 8. Файлы не изменяй.",
+      "exit_code": 0,
+      "read_rule_sha256": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+      "raw_run_sha256": "af540e38d14777ffe855e003eafb8e0988d4b925341a28579e8642edd53b4c68",
+      "original_runner_sha256": "e251bf69cc85fd76c770572988ab870b6cbd8a180c0bb6c9983dba7aa2504921",
+      "final_auditor_sha256": "b8cea987e41ba8c9dafd5d965f513de6899517c84f9553605e126ca3339ac892",
+      "read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "original_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "tool_output_characters": 4230,
+      "usage": [
+        {
+          "input_tokens": 135951,
+          "cached_input_tokens": 121088,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 743,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "human_canary_in_events": false,
+      "behavior_pass": true
+    },
+    {
+      "scenario": "read-common-native",
+      "version": "codex-cli 0.166.0",
+      "mode": "common",
+      "task": "read",
+      "prompt": "Прочитай полностью все обязательные машинные Markdown-правила в .claude/rules и подпапках, затем используй .agents/skills/example/SKILL.md. Верни пути всех прочитанных правил и результат 7 * 8. Файлы не изменяй.",
+      "exit_code": 0,
+      "read_rule_sha256": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+      "raw_run_sha256": "2335f3542ae39cd4217047505654a538cc222d63cd045951fe009036be34de87",
+      "original_runner_sha256": "e251bf69cc85fd76c770572988ab870b6cbd8a180c0bb6c9983dba7aa2504921",
+      "final_auditor_sha256": "b8cea987e41ba8c9dafd5d965f513de6899517c84f9553605e126ca3339ac892",
+      "read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "original_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "tool_output_characters": 4441,
+      "usage": [
+        {
+          "input_tokens": 152677,
+          "cached_input_tokens": 145536,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 594,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "human_canary_in_events": false,
+      "behavior_pass": true
+    },
+    {
+      "scenario": "search-both-native",
+      "version": "codex-cli 0.166.0",
+      "mode": "both",
+      "task": "search",
+      "prompt": "Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется.",
+      "exit_code": 0,
+      "read_rule_sha256": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+      "raw_run_sha256": "d4e2852a23bf6e6ce7046dbc864f4d32b57a64a72f337f8fd679bddfe9cea5dd",
+      "original_runner_sha256": "e251bf69cc85fd76c770572988ab870b6cbd8a180c0bb6c9983dba7aa2504921",
+      "final_auditor_sha256": "b8cea987e41ba8c9dafd5d965f513de6899517c84f9553605e126ca3339ac892",
+      "read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "original_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "tool_output_characters": 3023,
+      "usage": [
+        {
+          "input_tokens": 116587,
+          "cached_input_tokens": 108672,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 505,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "human_canary_in_events": false,
+      "behavior_pass": true
+    },
+    {
+      "scenario": "search-common-native",
+      "version": "codex-cli 0.166.0",
+      "mode": "common",
+      "task": "search",
+      "prompt": "Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется.",
+      "exit_code": 0,
+      "read_rule_sha256": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+      "raw_run_sha256": "fe30d85e021b8ca0255061fdd41ea93a98102b489895b11b1132a9b466418a42",
+      "original_runner_sha256": "e251bf69cc85fd76c770572988ab870b6cbd8a180c0bb6c9983dba7aa2504921",
+      "final_auditor_sha256": "b8cea987e41ba8c9dafd5d965f513de6899517c84f9553605e126ca3339ac892",
+      "read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "original_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "tool_output_characters": 2750,
+      "usage": [
+        {
+          "input_tokens": 116025,
+          "cached_input_tokens": 108672,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 372,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "human_canary_in_events": false,
+      "behavior_pass": true
+    },
+    {
+      "scenario": "stop-both-separate",
+      "version": "codex-cli 0.166.0",
+      "mode": "both",
+      "task": "read",
+      "prompt": "Выполни контрольный сценарий для правила чтения. Пройди обычный старт с чтением по ссылкам START. Для воспроизводимости вызывай cat каждый раз отдельной командой с одним явным путём, без циклов и цепочек. После отдельного получения полного списка специально воспроизведи одно лишнее полное чтение командой cat \".claude/rules/nested/personal space.md\". Обработай его согласно установленному правилу. Задача после старта — открыть скилл example и выполнить его вычисление.",
+      "exit_code": 0,
+      "read_rule_sha256": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+      "raw_run_sha256": "ad3ab18dd8301f2a08f78edde68afcf55fa305074a20eb5d4a628b7b3f23decf",
+      "original_runner_sha256": "6a859851363be9d8915641568051390afa1b9fae161eecb40e5cae4bce94d0b3",
+      "final_auditor_sha256": "b8cea987e41ba8c9dafd5d965f513de6899517c84f9553605e126ca3339ac892",
+      "read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - дублированное чтение 5 из 4 (.claude/rules/nested/personal space.md), нет отдельного чтения обязательных INDEX перед скиллом, нет подтверждённого открытия скилла"
+      ],
+      "original_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - дублированное чтение 5 из 4 (.claude/rules/nested/personal space.md), нет отдельного чтения обязательных INDEX перед скиллом, нет подтверждённого открытия скилла"
+      ],
+      "tool_output_characters": 3707,
+      "usage": [
+        {
+          "input_tokens": 119118,
+          "cached_input_tokens": 92928,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 671,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "human_canary_in_events": false,
+      "behavior_pass": true,
+      "agent_response": "Сценарий выявил ожидаемую ошибку. По правилу из `comm-human-folder-guides.md` я остановился до открытия `INDEX.md` и скилла `example`.\n\n- Впервые прочитано через `START.md` — 4 правила.\n- Впервые прочитано через `AGENTS.md` — 0 правил.\n- Размер полного списка — 4 пути.\n- Уникальных прочитанных путей — 4. Все четыре копии в `.claude/rules/` побайтово совпали с файлами по ссылкам `START.md`.\n- Лишних полных чтений — 1. Повторно прочитан `.claude/rules/nested/personal space.md`.\n- Результат — ошибка проверки из-за одного повторного полного чтения неизменённого правила. Вычисление ещё не выполнено.\n\nКак продолжить — открыть индексы и выполнить вычисление из скилла `example` или завершить сценарий на срабатывании правила?",
+      "commands": [
+        "/bin/bash -lc 'cat \"harness/common/START.md\"'",
+        "/bin/bash -lc 'cat \"harness/project/START.md\"'",
+        "/bin/bash -lc 'cat \"harness/project/rules/personal.md\"'",
+        "/bin/bash -lc 'cat \"harness/common/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cat \"harness/project/rules/ignored/machine.md\"'",
+        "/bin/bash -lc 'cat \"harness/common/rules/nested/personal space.md\"'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cat \".claude/rules/nested/personal space.md\"'",
+        "/bin/bash -lc 'ls -li \".claude/rules/comm-human-folder-guides.md\" \".claude/rules/nested/personal space.md\" \".claude/rules/personal.md\" \".claude/rules/ignored/machine.md\" \"harness/common/rules/comm-human-folder-guides.md\" \"harness/common/rules/nested/personal space.md\" \"harness/project/rules/personal.md\" \"harness/project/rules/ignored/machine.md\"'",
+        "/bin/bash -lc 'cmp -s \"harness/common/rules/nested/personal space.md\" \".claude/rules/nested/personal space.md\"'",
+        "/bin/bash -lc 'cmp -s \"harness/project/rules/ignored/machine.md\" \".claude/rules/ignored/machine.md\"'",
+        "/bin/bash -lc 'cmp -s \"harness/common/rules/comm-human-folder-guides.md\" \".claude/rules/comm-human-folder-guides.md\"'",
+        "/bin/bash -lc 'cmp -s \"harness/project/rules/personal.md\" \".claude/rules/personal.md\"'"
+      ],
+      "duplicate_paths": {
+        ".claude/rules/nested/personal space.md": 1
+      }
+    },
+    {
+      "scenario": "stop-both",
+      "version": "codex-cli 0.166.0",
+      "mode": "both",
+      "task": "read",
+      "prompt": "Выполни контрольный сценарий для правила чтения. Пройди обычный старт с чтением по ссылкам START. После отдельного получения полного списка специально воспроизведи одно лишнее полное чтение командой cat \".claude/rules/nested/personal space.md\". Обработай его согласно установленному правилу. Задача после старта — открыть скилл example и выполнить его вычисление.",
+      "exit_code": 0,
+      "read_rule_sha256": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+      "raw_run_sha256": "d5647b1b83c5a36ed45d5b87d54b27752282852de1e676b1cb54594e1c8f4a75",
+      "original_runner_sha256": "dc52c975970f81628f17613d8e355b0d7c97dac2ffa5d87120ed988fb3db964d",
+      "final_auditor_sha256": "b8cea987e41ba8c9dafd5d965f513de6899517c84f9553605e126ca3339ac892",
+      "read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - дублированное чтение 5 из 4 (.claude/rules/nested/personal space.md), нет отдельного чтения обязательных INDEX перед скиллом, нет подтверждённого открытия скилла"
+      ],
+      "original_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 0 из 4, нет отдельного чтения обязательных INDEX перед скиллом, нет подтверждённого открытия скилла"
+      ],
+      "tool_output_characters": 5756,
+      "usage": [
+        {
+          "input_tokens": 103205,
+          "cached_input_tokens": 95744,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 491,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "human_canary_in_events": false,
+      "behavior_pass": true,
+      "agent_response": "Впервые прочитано через START — 4 правила.  \nВпервые прочитано через AGENTS — 0 правил.  \nРазмер полного списка — 4 правила.  \nУникальных прочитанных путей из списка — 4.  \nЛишних полных чтений — 1, `.claude/rules/nested/personal space.md`.  \nРезультат — ошибка проверки. Все 4 правила прочитаны, одно неизменное правило прочитано повторно.\n\nПравило `comm-human-folder-guides.md` требует явного решения пользователя после повторного чтения. Остановился перед `INDEX.md` и скиллом `example`. Продолжить с чтения индексов и выполнить вычисление?",
+      "commands": [
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc 'rg --files --hidden harness\nls -la harness/common harness/project\nls -la'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md \"harness/common/rules/nested/personal space.md\" harness/project/rules/personal.md\ncat .claude/rules/ignored/machine.md\ncat AGENTS.md PERSONAL.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc 'cmp \"harness/common/rules/nested/personal space.md\" \".claude/rules/nested/personal space.md\" && cmp \"harness/common/rules/comm-human-folder-guides.md\" \".claude/rules/comm-human-folder-guides.md\" && cmp \"harness/project/rules/personal.md\" \".claude/rules/personal.md\"\ncat \".claude/rules/nested/personal space.md\"'"
+      ],
+      "duplicate_paths": {
+        ".claude/rules/nested/personal space.md": 1
+      }
+    },
+    {
+      "scenario": "stop-common",
+      "version": "codex-cli 0.166.0",
+      "mode": "common",
+      "task": "read",
+      "prompt": "Выполни контрольный сценарий для правила чтения. Пройди обычный старт с чтением по ссылкам START. После отдельного получения полного списка специально воспроизведи одно лишнее полное чтение командой cat \".claude/rules/nested/personal space.md\". Обработай его согласно установленному правилу. Задача после старта — открыть скилл example и выполнить его вычисление.",
+      "exit_code": 0,
+      "read_rule_sha256": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+      "raw_run_sha256": "423641cebc6eb17dca059abca81866016e556732b1b84be2f021ee55e03cff44",
+      "original_runner_sha256": "dc52c975970f81628f17613d8e355b0d7c97dac2ffa5d87120ed988fb3db964d",
+      "final_auditor_sha256": "b8cea987e41ba8c9dafd5d965f513de6899517c84f9553605e126ca3339ac892",
+      "read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - дублированное чтение 5 из 4 (.claude/rules/nested/personal space.md), нет отдельного чтения обязательных INDEX перед скиллом, нет подтверждённого открытия скилла"
+      ],
+      "original_read_report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - дублированное чтение 5 из 4 (.claude/rules/nested/personal space.md), нет отдельного чтения обязательных INDEX перед скиллом, нет подтверждённого открытия скилла"
+      ],
+      "tool_output_characters": 3301,
+      "usage": [
+        {
+          "input_tokens": 100207,
+          "cached_input_tokens": 93952,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 506,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "human_canary_in_events": false,
+      "behavior_pass": true,
+      "agent_response": "- Впервые прочитано через START — 4 правила.\n- Впервые прочитано через AGENTS — 0 правил.\n- Размер полного списка — 4 правила.\n- Уникальных прочитанных путей из списка — 4.\n- Лишних полных чтений — 1, `.claude/rules/nested/personal space.md`.\n- Результат — ошибка проверки. Все 4 правила прочитаны, одно неизменное правило повторно прочитано целиком.\n\nПравило требует остановиться до вашего явного решения. `PERSONAL.md`, индексы и скилл `example` ещё не открыты, вычисление не выполнено.\n\nКак продолжить?",
+      "commands": [
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md harness/common/rules/personal.md \"harness/common/rules/nested/personal space.md\" harness/common/rules/ignored/machine.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"for path in '.claude/rules/personal.md' '.claude/rules/comm-human-folder-guides.md' '.claude/rules/nested/personal space.md' '.claude/rules/ignored/machine.md'; do\n  canonical=\\\"harness/common/rules/\"'${path#.claude/rules/}\"\n  if cmp -s -- \"$path\" \"$canonical\"; then\n    printf '\"'match %s -> %s\\\\n' \\\"\"'$path\" \"$canonical\"\n  else\n    printf '\"'mismatch %s -> %s\\\\n' \\\"\"'$path\" \"$canonical\"\n  fi\ndone'",
+        "/bin/bash -lc 'cat \".claude/rules/nested/personal space.md\"'"
+      ],
+      "duplicate_paths": {
+        ".claude/rules/nested/personal space.md": 1
+      }
+    }
+  ],
+  "regression_reports": [
+    {
+      "mode": "common",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "both",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "common",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "both",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "common",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "both",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "common",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "both",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 5",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "common",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 12",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "both",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 12",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ]
+    },
+    {
+      "mode": "common",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 8",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 10",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 10 из 12"
+      ]
+    },
+    {
+      "mode": "both",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 8",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 10",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - прочтено 10 из 12"
+      ]
+    },
+    {
+      "mode": "common",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 3",
+        "Результат: Ошибка - дублированное чтение 15 из 12 (.claude/rules/nested/rule 1.md, .claude/rules/nested/rule 4.md)"
+      ]
+    },
+    {
+      "mode": "both",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 3",
+        "Результат: Ошибка - дублированное чтение 15 из 12 (.claude/rules/nested/rule 1.md, .claude/rules/nested/rule 4.md)"
+      ]
+    },
+    {
+      "mode": "common",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 9",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - прочтено 11 из 12, дублированное чтение 12 из 12 (.claude/rules/nested/rule 3.md)"
+      ]
+    },
+    {
+      "mode": "both",
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 9",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 1",
+        "Результат: Ошибка - прочтено 11 из 12, дублированное чтение 12 из 12 (.claude/rules/nested/rule 3.md)"
+      ]
+    }
+  ],
+  "claude": {
+    "version": "2.1.260",
+    "loggedIn": false,
+    "authMethod": "none",
+    "modes_tested": []
+  }
+}
