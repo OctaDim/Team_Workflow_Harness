@@ -211,3 +211,69 @@ def test_duplicate_in_compound_literal_reads(tmp_path):
     for bad in (dict(reads, aggregated_output=extra.read_text()),
                 dict(reads, command=reads['command'].replace('cat AGENTS.md', 'echo unsafe'))):
         assert not audit(bad)['duplicate_rule_reads']
+
+@pytest.mark.parametrize('mode', ['common', 'both'])
+@pytest.mark.parametrize('linked', [0, 2, 12])
+@pytest.mark.parametrize('body_lines', [1, 1200])
+def test_rule_link_applies_after_owner_before_next_rule(mode, linked, body_lines):
+    trace, rules, starts, aliases = fixture_trace(mode, linked)
+    early = '.agents/skills/config-check/SKILL.md'
+    late = '.agents/skills/example/SKILL.md'
+    body = '# Configuration procedure\n'
+    owner, other = list(rules)[:2]
+    for path in [owner, other]:
+        original = rules[path]
+        rules[path] += f'For a configuration change read {early}.\n' + ('Context.\n' * body_lines)
+        for row in trace:
+            if row['aggregated_output'] == original:
+                row['aggregated_output'] = rules[path]
+    lookup = next(i for i, row in enumerate(trace) if '--files' in row['command'])
+    offset = (next(i for i, row in enumerate(trace) if row['aggregated_output'] == rules[owner]) + 1
+              if linked else lookup + 2)
+    step = event('cat ' + early, body)
+    ordered = trace[:offset] + [step] + trace[offset:]
+    root = next(p for p in Path(__file__).absolute().parents
+                if (p / 'harness/common/checks/ensure_entrypoint_links.py').is_file())
+    assess = runpy.run_path(str(root / 'harness/common/checks/check_human_guide_search.py'))['assess_rule_reading']
+    def audit(events, active):
+        return assess(events, rules, starts=starts, aliases=aliases,
+                      skill_links=active, skill_bodies={early: body, late: '# Skill\n'}, task_skills={late})
+    links = {owner: {early: 0}, other: {early: 0}}
+    ok = audit(ordered, links)
+    assert ok['rule_reading_pass'], ok['rule_read_report']
+    assert ok['skill_reads'] == [early, late]
+    assert ok['full_rule_read_before_skill'] is False
+    assert ok['full_rule_read_before_index'] is True
+    assert audit(trace, {})['rule_reading_pass']
+    index = trace[-2]
+    # Listing and complete reading are independent requirements at the first INDEX.
+    for incomplete in ([*ordered[:offset+1], index, *ordered[offset+1:]],
+                       [row for row in ordered if '--files' not in row['command']],
+                       [*ordered[:lookup], event('ls .claude/rules'), index, *ordered[lookup:]]):
+        assert not audit(incomplete, links)['rule_reading_pass']
+    if linked == len(rules):
+        before_list = next(i for i,row in enumerate(ordered) if '--files' in row['command'])
+        failure = audit([*ordered[:before_list], index, *ordered[before_list:]], links)
+        assert not failure['rule_reading_pass']
+        assert 'INDEX открыт до получения полного списка правил' in failure['rule_read_report'][-1]
+        assert failure['full_rule_read_before_index'] is False
+    if linked:
+        short = dict(ordered[offset-1], aggregated_output=rules[owner].split('Context.')[0])
+        assert not audit([*ordered[:offset-1], short, *ordered[offset:]], links)['rule_reading_pass']
+        # A metadata probe does not open INDEX; its actual contents stay deferred.
+        assert audit([event('ls harness/common/INDEX.md'), *ordered], links)['rule_reading_pass']
+
+    assert not audit(ordered, {})['rule_reading_pass']
+    assert not audit(ordered, {owner: {early: 999}})['rule_reading_pass']
+    assert not audit(trace, links)['rule_reading_pass']
+    late_condition = {owner: {early: len(trace) - 1}}
+    assert audit([*trace[:-1], step, trace[-1]], late_condition)['rule_reading_pass']
+    metadata = event('ls -l ' + early)
+    assert audit([*ordered[:offset], metadata, *ordered[offset:]], links)['rule_reading_pass']
+    bulk = event('find .agents/skills -name SKILL.md -exec cat {} +')
+    assert not audit([*ordered, bulk], links)['rule_reading_pass']
+
+    for forbidden in ([step, *ordered], [*ordered, step],
+                      [*ordered, event('cat .agents/skills/*/SKILL.md')],
+                      [*ordered[:offset], dict(step, aggregated_output='partial'), *ordered[offset+1:]]):
+        assert not audit(forbidden, links)['rule_reading_pass']

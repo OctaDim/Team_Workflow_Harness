@@ -1,0 +1,407 @@
+{
+  "date": "2026-11-20",
+  "prompt": "Примени $comm-retry-external-operations к потере ответа после отправки документа",
+  "prompt_sha256": "21002db957bc761e989146608e9918162fcd699f5025ac72e035eae89585bfff",
+  "cli_version": "codex-cli 0.166.0",
+  "argv": [
+    "codex",
+    "exec",
+    "--ignore-user-config",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "-s",
+    "read-only",
+    "-C",
+    "/tmp/harness-acceptance",
+    "-m",
+    "gpt-6.2-sol",
+    "-c",
+    "model_reasoning_effort=\"medium\"",
+    "-c",
+    "features.multi_agent=false",
+    "--json",
+    "Примени $comm-retry-external-operations к потере ответа после отправки документа"
+  ],
+  "baseline_commit": "823637b246708daaa08e29b40cfd5d0bfa6dc65e",
+  "paired_file_changes": {
+    ".claude/rules/comm-human-folder-guides.md": {
+      "before": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+      "after": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+    },
+    ".claude/rules/comm-instruction-order.md": {
+      "before": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+      "after": "c807bcb3fe66631ea20d4bfe0588d94698c27b3a2e44d837192815fe287da417"
+    },
+    "harness/common/START.md": {
+      "before": "c50b2df5ee16df88a900fd7aeda88a234e9e004908f4006db3f0f92b615e88dd",
+      "after": "9158129ef41298e1ebdfd754d960430e5b212f7489ee90dda12a6a5f7d9b1dd9"
+    },
+    "harness/common/checks/check_human_guide_search.py": {
+      "before": "b8cea987e41ba8c9dafd5d965f513de6899517c84f9553605e126ca3339ac892",
+      "after": "db8df47c514771dde98b0492c5b73e58ba7632d16a7b487093b8d3477478a6fa"
+    },
+    "harness/common/rules/comm-human-folder-guides.md": {
+      "before": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+      "after": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+    },
+    "harness/common/rules/comm-instruction-order.md": {
+      "before": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+      "after": "c807bcb3fe66631ea20d4bfe0588d94698c27b3a2e44d837192815fe287da417"
+    },
+    "harness/common/testing/tests/test_human_guide_reader.py": {
+      "before": "430960e1d4ae3f9ed7c9b8a1401d126afd7ce85179aed4513a6598900aa85ae8",
+      "after": "be6eb68321f9a07080e2714a4c217aa54b2625c07b6c4a9512ae600243157861"
+    }
+  },
+  "trace_event_numbering": "one-based JSONL line",
+  "runs": [
+    {
+      "mode": "common-only",
+      "phase": "before",
+      "version": "823637b246708daaa08e29b40cfd5d0bfa6dc65e (#4)",
+      "rule_sha256": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+      "trace": "before-common.jsonl",
+      "trace_sha256": "6ee04de6533fdedf6835b065df19cec58e37cf657226a56f4b11ec7e2e5b30be",
+      "entrypoint_sha256": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11",
+      "skill_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb",
+      "cli_exit_code": 0,
+      "startup_check_completed_event": 5,
+      "starts_in_order_completed_event": 7,
+      "first_violation": {
+        "event": 6,
+        "command": "/bin/bash -lc \"cat harness/common/START.md &&\ncat harness/project/START.md &&\nrg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | while IFS= read -r file; do\n  printf '\\\\n%s\\\\n' \\\"\"'$file\"\n  cat \"$file\" || exit\ndone &&\ncat harness/common/INDEX.md &&\ncat harness/project/INDEX.md'",
+        "completed_event": 7,
+        "issue": "Обход установленного каталога и чтение тел правил в одном вызове с обоими START до отдельного получения списка."
+      },
+      "separate_list_completed_event": 9,
+      "same_twelve_paths_returned_at_event": 9,
+      "rule_text_returned_in_batch": {
+        ".claude/rules/comm-application-config-git.md": {
+          "sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333",
+          "event": 7
+        },
+        ".claude/rules/comm-application-startup-readiness.md": {
+          "sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+          "event": 7
+        },
+        ".claude/rules/comm-ban-harness-symlinks.md": {
+          "sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c",
+          "event": 7
+        },
+        ".claude/rules/comm-confirm-development-workflow.md": {
+          "sha256": "e39d33256af43173c66859fff186fdfde5d68873d63dc6bd2919dee0c380660b",
+          "event": 7
+        },
+        ".claude/rules/comm-dependencies-through-uv.md": {
+          "sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "event": 7
+        },
+        ".claude/rules/comm-entrypoint-links-rule.md": {
+          "sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2",
+          "event": 7
+        },
+        ".claude/rules/comm-human-folder-guides.md": {
+          "sha256": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+          "event": 7
+        },
+        ".claude/rules/comm-instruction-order.md": {
+          "sha256": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+          "event": 7
+        },
+        ".claude/rules/comm-package-independence.md": {
+          "sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e",
+          "event": 7
+        },
+        ".claude/rules/comm-skill-rule-ownership.md": {
+          "sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd",
+          "event": 7
+        },
+        ".claude/rules/comm-task-commit-on-completion.md": {
+          "sha256": "a15e372a37b16c7c440eaed5fcffae55e8b898155137d76fc836b65834893477",
+          "event": 7
+        },
+        ".claude/rules/comm-user-owned-entrypoints.md": {
+          "sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f",
+          "event": 7
+        }
+      },
+      "first_index_check": {
+        "both_in_common_project_order_at_event": 7,
+        "list_confirmed": false,
+        "full_path_coverage_confirmed": false,
+        "credited_start_reads": null,
+        "credited_agents_reads": null,
+        "list_size": null,
+        "unique_credited": null,
+        "duplicate_credited": null
+      },
+      "order_pass": false,
+      "target_skill_body_event": 15,
+      "early_skill_body_read": false,
+      "answer_event": 16,
+      "final_answer": "Если ответ потерялся после отправки документа, покажите **«Не удалось подтвердить отправку. Проверяем статус.»** Сервис мог уже принять документ, поэтому тайм-аут сам по себе не должен запускать повторную отправку.\n\n1. **До первого запроса** сохраните стабильный `operation_id` и привяжите его к документу и получателю. Если API поддерживает ключ идемпотентности, передавайте этот идентификатор во всех попытках той же отправки, в том числе после перезапуска клиента.\n2. **После тайм-аута или обрыва связи** проверьте статус по `operation_id`. Если сервис подтвердил приём, верните «Отправлен». Если сервис достоверно подтвердил, что исходный запрос не выполнился и больше не может выполниться, разрешите повтор. Пустой результат поиска оставляет исход неизвестным, если сервис может показывать операции с задержкой.\n3. **При неизвестном исходе** автоматически повторяйте отправку только с тем же ключом, пока действует гарантия идемпотентности API. По истечении гарантии сохраните статус «Отправка не подтверждена». Окончательный отказ завершает попытки. Отмена останавливает запросы и ожидания, сохраняя неизвестный исход, если запрос уже мог дойти до сервиса.\n\nПример бюджета для согласования с API — до 10 секунд на запрос и до трёх попыток отправки, включая первую, в пределах общего дедлайна в 30 секунд. Проверки статуса, ожидания и повторы SDK входят в тот же дедлайн. Увеличивайте задержку между повторами со случайным разбросом и учитывайте `Retry-After`. Если следующее разрешённое время запроса приходится на дедлайн или позже, завершайте обработку с последним подтверждённым статусом.\n\n**Главная проверка** — сервис принимает документ, а тестовый транспорт теряет ответ. После восстановления должна быть ровно одна принятая отправка. С управляемыми часами также проверьте тайм-аут запроса, восстановление после временного сбоя, отмену во время ожидания, окончательный отказ, исчерпание бюджета и отсутствие нового запроса, когда `Retry-After` выходит за дедлайн.\n\nВ рабочей области нет реализации отправки или контракта API, поэтому гарантия идемпотентности конкретного сервиса и тестовые сценарии остаются непроверенными.",
+      "application_pass": true
+    },
+    {
+      "mode": "common-only",
+      "phase": "after",
+      "version": "823637b246708daaa08e29b40cfd5d0bfa6dc65e + #5 revision-3 / comm-instruction-order-v4",
+      "rule_sha256": "c807bcb3fe66631ea20d4bfe0588d94698c27b3a2e44d837192815fe287da417",
+      "trace": "after-common.jsonl",
+      "trace_sha256": "e3e7d851d7f3bfda913fa39cde3c53b8d91d1ad78e05a7acde8a10dd4160cc71",
+      "entrypoint_sha256": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11",
+      "skill_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb",
+      "cli_exit_code": 0,
+      "startup_check_completed_event": 5,
+      "starts_in_order_completed_event": 7,
+      "first_violation": {
+        "event": 6,
+        "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && find -L .claude/rules -type f -name '*.md' \"'! -name README.human.md -print0 | sort -z | xargs -0 -r -n1 sh -c '\"'printf \\\"\\\\n%s\\\\n\\\" \\\"\"'$0\" && cat \"$0\"'\"' && cat harness/common/INDEX.md && cat harness/project/INDEX.md\"",
+        "completed_event": 7,
+        "issue": "Обход установленного каталога и чтение тел правил в одном вызове с обоими START до отдельного получения списка."
+      },
+      "separate_list_completed_event": null,
+      "same_twelve_paths_returned_at_event": 9,
+      "rule_text_returned_in_batch": {
+        ".claude/rules/comm-application-config-git.md": {
+          "sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333",
+          "event": 7
+        },
+        ".claude/rules/comm-application-startup-readiness.md": {
+          "sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+          "event": 7
+        },
+        ".claude/rules/comm-ban-harness-symlinks.md": {
+          "sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c",
+          "event": 7
+        },
+        ".claude/rules/comm-confirm-development-workflow.md": {
+          "sha256": "e39d33256af43173c66859fff186fdfde5d68873d63dc6bd2919dee0c380660b",
+          "event": 7
+        },
+        ".claude/rules/comm-dependencies-through-uv.md": {
+          "sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "event": 7
+        },
+        ".claude/rules/comm-entrypoint-links-rule.md": {
+          "sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2",
+          "event": 7
+        },
+        ".claude/rules/comm-human-folder-guides.md": {
+          "sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84",
+          "event": 7
+        },
+        ".claude/rules/comm-instruction-order.md": {
+          "sha256": "c807bcb3fe66631ea20d4bfe0588d94698c27b3a2e44d837192815fe287da417",
+          "event": 7
+        },
+        ".claude/rules/comm-package-independence.md": {
+          "sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e",
+          "event": 7
+        },
+        ".claude/rules/comm-skill-rule-ownership.md": {
+          "sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd",
+          "event": 7
+        },
+        ".claude/rules/comm-task-commit-on-completion.md": {
+          "sha256": "a15e372a37b16c7c440eaed5fcffae55e8b898155137d76fc836b65834893477",
+          "event": 7
+        },
+        ".claude/rules/comm-user-owned-entrypoints.md": {
+          "sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f",
+          "event": 7
+        }
+      },
+      "first_index_check": {
+        "both_in_common_project_order_at_event": 7,
+        "list_confirmed": false,
+        "full_path_coverage_confirmed": false,
+        "credited_start_reads": null,
+        "credited_agents_reads": null,
+        "list_size": null,
+        "unique_credited": null,
+        "duplicate_credited": null
+      },
+      "order_pass": false,
+      "target_skill_body_event": 17,
+      "early_skill_body_read": false,
+      "answer_event": 18,
+      "final_answer": "Если ответ потерялся после отправки документа, покажите пользователю **«Статус отправки уточняется»**. Сервис мог принять документ до обрыва связи. Повтор с новым идентификатором может создать дубликат.\n\n1. **Сохраните идентификатор операции до первого запроса.** При таймауте или обрыве связи сохраните состояние «исход неизвестен» и проверьте статус по этому идентификатору. Подтверждение приёма завершает операцию. Если проверка дала неоднозначный результат, сохраните неизвестный исход. Ответ «не найдено» разрешает повтор, только если API гарантирует, что первоначальная попытка уже не сможет завершиться отправкой.\n2. **Повторяйте отправку только при гарантии от дублей.** Если API поддерживает идемпотентность, используйте тот же ключ и то же содержимое в пределах срока действия гарантии. Без такой гарантии повторяйте только после достоверного подтверждения, что предыдущая попытка не выполнилась. При окончательной ошибке остановитесь и сообщите причину. При отмене прекратите запросы и ожидание, сохранив неизвестный исход, если документ уже мог быть принят.\n3. **Ограничьте время и число попыток.** Стартовый пример — до 5 секунд на запрос, максимум три попытки отправки вместе с первой и 20 секунд на всю операцию, включая сверку, паузы и повторы SDK. Увеличивайте задержку со случайным разбросом и учитывайте `Retry-After`. Если следующий запрос нельзя начать до общего дедлайна, завершите ожидание. По исчерпании бюджета верните «исход неизвестен», если приём всё ещё возможен.\n\nГлавная проверка — тестовый сервис сохраняет документ и обрывает соединение до ответа. После сверки или разрешённого повтора у сервиса должен остаться **ровно один документ**. С управляемыми часами проверьте таймаут запроса, восстановление после временного сбоя, отмену, окончательную ошибку, исчерпание бюджета и отсутствие нового запроса, когда `Retry-After` выходит за дедлайн.\n\nКонкретный API не указан, поэтому гарантии идемпотентности, срок действия ключа и поведение проверки статуса остаются условиями контракта. Проверки описаны как сценарии приёмки.",
+      "application_pass": true
+    },
+    {
+      "mode": "common+project",
+      "phase": "before",
+      "version": "823637b246708daaa08e29b40cfd5d0bfa6dc65e (#4)",
+      "rule_sha256": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+      "trace": "before-both.jsonl",
+      "trace_sha256": "9f38ab2cd20ed1ee31ed9a81bea4019014bcc2d60db95ca46e38021377242739",
+      "entrypoint_sha256": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11",
+      "skill_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb",
+      "cli_exit_code": 0,
+      "startup_check_completed_event": 5,
+      "starts_in_order_completed_event": 7,
+      "first_violation": {
+        "event": 6,
+        "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r -d '\\\\n' -I '{}' bash -c 'head -v -n -0 \\\"\"'$1\"'\"' bash '{}'\"",
+        "completed_event": 7,
+        "issue": "Обход установленного каталога и чтение тел правил в одном вызове с обоими START до отдельного получения списка."
+      },
+      "separate_list_completed_event": 9,
+      "same_twelve_paths_returned_at_event": 9,
+      "rule_text_returned_in_batch": {
+        ".claude/rules/comm-application-config-git.md": {
+          "sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333",
+          "event": 7
+        },
+        ".claude/rules/comm-application-startup-readiness.md": {
+          "sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+          "event": 7
+        },
+        ".claude/rules/comm-ban-harness-symlinks.md": {
+          "sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c",
+          "event": 7
+        },
+        ".claude/rules/comm-confirm-development-workflow.md": {
+          "sha256": "e39d33256af43173c66859fff186fdfde5d68873d63dc6bd2919dee0c380660b",
+          "event": 7
+        },
+        ".claude/rules/comm-dependencies-through-uv.md": {
+          "sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "event": 7
+        },
+        ".claude/rules/comm-entrypoint-links-rule.md": {
+          "sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2",
+          "event": 7
+        },
+        ".claude/rules/comm-human-folder-guides.md": {
+          "sha256": "2528129ee4a9222ee79efae777519dc7218ac9270b27e045268545e5c14b8320",
+          "event": 7
+        },
+        ".claude/rules/comm-instruction-order.md": {
+          "sha256": "2f6b9844d801331cf6caf1692fc4a05132555572bd278dc7caf49bfe622a5824",
+          "event": 7
+        },
+        ".claude/rules/comm-package-independence.md": {
+          "sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e",
+          "event": 7
+        },
+        ".claude/rules/comm-skill-rule-ownership.md": {
+          "sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd",
+          "event": 7
+        },
+        ".claude/rules/comm-task-commit-on-completion.md": {
+          "sha256": "a15e372a37b16c7c440eaed5fcffae55e8b898155137d76fc836b65834893477",
+          "event": 7
+        },
+        ".claude/rules/comm-user-owned-entrypoints.md": {
+          "sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f",
+          "event": 7
+        }
+      },
+      "first_index_check": {
+        "both_in_common_project_order_at_event": 13,
+        "list_confirmed": true,
+        "full_path_coverage_confirmed": false,
+        "credited_start_reads": 0,
+        "credited_agents_reads": 0,
+        "list_size": 12,
+        "unique_credited": 0,
+        "duplicate_credited": 0
+      },
+      "order_pass": false,
+      "target_skill_body_event": 15,
+      "early_skill_body_read": false,
+      "answer_event": 16,
+      "final_answer": "Если запрос на отправку документа ушёл, а ответ потерялся, сохраните статус **«Результат отправки неизвестен»** и проверьте операцию по её исходному идентификатору. Сервис мог принять документ до разрыва связи. Если проверка не дала однозначного результата, сохраните этот статус.\n\nИдентификатор операции нужно сохранить до первого запроса и использовать при всех повторах той же отправки. Для уже случившегося сбоя используйте идентификатор из исходного запроса или журнала отправки. Автоматически повторять отправку можно в двух случаях:\n\n- API гарантирует идемпотентность для того же ключа и содержимого, а срок действия ключа ещё не истёк.\n- Статус операции достоверно подтверждает, что исходная попытка не выполнилась и документ больше не может быть принят по ней.\n\n| Событие | Результат для вызывающей стороны |\n|---|---|\n| Сервис подтвердил приём | **«Принят сервисом»**. Если важна доставка получателю, проверяйте её отдельным статусом. |\n| Таймаут или обрыв связи после возможной отправки | **«Результат отправки неизвестен»**. Сверьте статус и повторяйте только на указанных выше условиях. |\n| Временная ошибка API | Примените условия безопасного повтора. Если ошибка оставляет возможность приёма документа, сохраните неопределённый результат. |\n| Окончательный отказ API | **«Отправка отклонена»**, если ответ однозначно подтверждает отказ. Завершите попытки. |\n| Пользователь отменил операцию | Прекратите запросы и ожидание. Если запрос уже мог дойти до сервиса, сохраните неопределённый результат. |\n\nДля автоматического восстановления задайте таймаут каждого запроса, лимиты попыток отправки и сверки, а также общий дедлайн с учётом ожиданий и внутренних повторов SDK. Увеличивайте паузу между попытками со случайным разбросом и учитывайте `Retry-After`, если сервис его вернул. Если разрешённое время следующей попытки выходит за дедлайн, завершите операцию без нового запроса. При исчерпании бюджета верните **«Результат отправки неизвестен»**, если приём всё ещё возможен, или **«Отправка не выполнена»**, если это установлено.\n\nГлавная проверка имитирует приём документа сервисом и потерю ответа. После восстановления должна существовать ровно одна запись о приёме. С управляемым временем проверьте также таймаут запроса, восстановление после временной ошибки, отмену во время запроса и ожидания, окончательный отказ, исчерпание бюджета и отсутствие нового запроса, когда `Retry-After` выходит за дедлайн.\n\nВ рабочей папке нет реализации отправки или контракта внешнего API. Поэтому я описал поведение без привязки к поставщику. Поддержку ключей идемпотентности, срок их действия и смысл статусов нужно сверить с контрактом конкретного сервиса. Тесты приложения не запускались.",
+      "application_pass": true
+    },
+    {
+      "mode": "common+project",
+      "phase": "after",
+      "version": "823637b246708daaa08e29b40cfd5d0bfa6dc65e + #5 revision-3 / comm-instruction-order-v4",
+      "rule_sha256": "c807bcb3fe66631ea20d4bfe0588d94698c27b3a2e44d837192815fe287da417",
+      "trace": "after-both.jsonl",
+      "trace_sha256": "2b6e540f347b3c4bfeff28a754b302a500d9926963b6b8586a6678efefd484d1",
+      "entrypoint_sha256": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11",
+      "skill_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb",
+      "cli_exit_code": 0,
+      "startup_check_completed_event": 5,
+      "starts_in_order_completed_event": 7,
+      "first_violation": {
+        "event": 6,
+        "command": "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r cat && cat harness/common/INDEX.md && cat harness/project/INDEX.md\"",
+        "completed_event": 7,
+        "issue": "Обход установленного каталога и чтение тел правил в одном вызове с обоими START до отдельного получения списка."
+      },
+      "separate_list_completed_event": 9,
+      "same_twelve_paths_returned_at_event": 9,
+      "rule_text_returned_in_batch": {
+        ".claude/rules/comm-application-config-git.md": {
+          "sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333",
+          "event": 7
+        },
+        ".claude/rules/comm-application-startup-readiness.md": {
+          "sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658",
+          "event": 7
+        },
+        ".claude/rules/comm-ban-harness-symlinks.md": {
+          "sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c",
+          "event": 7
+        },
+        ".claude/rules/comm-confirm-development-workflow.md": {
+          "sha256": "e39d33256af43173c66859fff186fdfde5d68873d63dc6bd2919dee0c380660b",
+          "event": 7
+        },
+        ".claude/rules/comm-dependencies-through-uv.md": {
+          "sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "event": 7
+        },
+        ".claude/rules/comm-entrypoint-links-rule.md": {
+          "sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2",
+          "event": 7
+        },
+        ".claude/rules/comm-human-folder-guides.md": {
+          "sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84",
+          "event": 7
+        },
+        ".claude/rules/comm-instruction-order.md": {
+          "sha256": "c807bcb3fe66631ea20d4bfe0588d94698c27b3a2e44d837192815fe287da417",
+          "event": 7
+        },
+        ".claude/rules/comm-package-independence.md": {
+          "sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e",
+          "event": 7
+        },
+        ".claude/rules/comm-skill-rule-ownership.md": {
+          "sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd",
+          "event": 7
+        },
+        ".claude/rules/comm-task-commit-on-completion.md": {
+          "sha256": "a15e372a37b16c7c440eaed5fcffae55e8b898155137d76fc836b65834893477",
+          "event": 7
+        },
+        ".claude/rules/comm-user-owned-entrypoints.md": {
+          "sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f",
+          "event": 7
+        }
+      },
+      "first_index_check": {
+        "both_in_common_project_order_at_event": 7,
+        "list_confirmed": false,
+        "full_path_coverage_confirmed": false,
+        "credited_start_reads": null,
+        "credited_agents_reads": null,
+        "list_size": null,
+        "unique_credited": null,
+        "duplicate_credited": null
+      },
+      "order_pass": false,
+      "target_skill_body_event": 19,
+      "early_skill_body_read": false,
+      "answer_event": 20,
+      "final_answer": "Если ответ потерялся после отправки документа, покажите статус **«Отправка не подтверждена»**. Сервис мог принять документ до обрыва связи, поэтому повтор с новым идентификатором может отправить дубликат.\n\n1. **Сохраните идентификатор операции до первого запроса.** Используйте его для проверки статуса после таймаута, обрыва связи или неоднозначной ошибки API. Если сервис подтвердил приём, завершите операцию со статусом «Отправлено». Если проверка ничего не прояснила, сохраните статус «Отправка не подтверждена».\n2. **Повторяйте отправку только при известной гарантии.** Если API поддерживает ключ идемпотентности, повторяйте тот же запрос с тем же ключом в пределах срока действия гарантии. В остальных случаях автоматический повтор допустим только после надёжного подтверждения, что первая попытка не была выполнена. Отсутствия записи недостаточно, если статус может отображаться с задержкой.\n3. **Задайте таймаут запроса, лимит попыток и общий дедлайн.** Учитывайте в общем бюджете проверки статуса, паузы и повторы SDK. Для временных ошибок используйте растущую задержку со случайным разбросом и соблюдайте `Retry-After`, если сервис его вернул. Если следующий запрос можно сделать только после дедлайна, завершите ожидание. При исчерпании бюджета сохраните неопределённый статус, если результат отправки всё ещё неизвестен.\n4. **Прекращайте автоматические запросы при отмене или окончательной ошибке API.** Подтверждённый отказ покажите как ошибку отправки. Если пользователь отменил ожидание после передачи запроса, сохраните идентификатор и неопределённый статус для последующей сверки.\n\nОсновная проверка — сервис принимает документ, тест разрывает соединение до получения ответа, а восстановление подтверждает приём и оставляет **ровно один принятый документ**. С управляемыми часами отдельно проверьте таймаут запроса, восстановление после временного сбоя, отмену, окончательный отказ, исчерпание бюджета и отсутствие нового запроса, когда `Retry-After` выходит за дедлайн.\n\nКонкретный API в задаче не указан, поэтому срок действия ключа, коды ошибок и возможность сверки по идентификатору остаются параметрами его контракта. Код не менялся, тесты не запускались.",
+      "application_pass": true
+    }
+  ]
+}

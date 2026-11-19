@@ -491,6 +491,7 @@ def main():
         print(f'Entrypoint check failed: {error}', file=sys.stderr)
         return 2
     print('Entrypoint check completed' + (': changed paths: ' + ', '.join(changed) if changed else ''))
+    print('Следующим вызовом прочитай только harness/common/START.md, затем harness/project/START.md. Дождись результата этого вызова. Дальше следуй указаниям прочитанных START.')
     return 0
 
 

@@ -165,7 +165,25 @@ def snapshot_rule_inputs(root):
     return expected, starts, aliases
 
 
-def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None, search_at=None, immutable_fixture=False):
+def content_access_targets(tokens):
+    """Identify content-access operands without treating directory/metadata probes as body reads."""
+    targets = []
+    group = []
+    for token in [*tokens, ';']:
+        if token not in (';', '&&', '||', '|'):
+            group.append(token)
+            continue
+        if group and group[0] not in ('ls', 'stat', 'test', 'pwd', 'readlink', 'realpath'):
+            listing = group[0] == 'rg' and '--files' in group
+            listing |= group[0] == 'find' and '-exec' not in group and '-execdir' not in group
+            if not listing:
+                targets.extend(t for t in group[1:] if not t.startswith(('!', '-')))
+        group = []
+    return targets
+
+
+def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None, search_at=None, immutable_fixture=False,
+                        skill_links=None, skill_bodies=None, task_skills=()):
     """Audit completed reads against the fixture's current bodies and byte-verified aliases."""
     starts = starts or {}
     aliases = aliases or {}
@@ -192,6 +210,19 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
     expected_indexes = {str(Path(start).with_name('INDEX.md')) for start in starts}
     rule_read_ends = []
     listing_end = -1
+    # A fixture supplies task-specific conditions; a mention alone grants no access.
+    # Values are the first event at which the corresponding condition is true.
+    skill_links = skill_links or {}
+    inspect_skills = skill_bodies is not None
+    task_skills = set(task_skills)
+    skill_reads = []
+    current_skills = set()
+    full_before_first_skill = None
+    full_before_first_index = None
+    skill_end = -1
+    index_end = -1
+    index_order = [f'harness/{package}/INDEX.md' for package in ('common', 'project')
+                   if f'harness/{package}/START.md' in starts]
 
     def forget(path):
         partial.pop(path, None)
@@ -200,6 +231,9 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
     def credit(source, first, last):
         path = paths[source]
         if source in aliases and source not in links:
+            return
+        if inspect_skills and listing is None and source not in links:
+            issues.append(f'прочитано правило вне ссылок START до перечисления: {path}')
             return
         covered = partial.setdefault(path, set())
         covered.update(range(first, last))
@@ -218,6 +252,7 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
         output = item.get('aggregated_output', '')
         success = item.get('exit_code') == 0
         if not tokens:
+            current_skills.clear()
             for path in list(origins.keys() | partial.keys()):
                 forget(path)
             continue
@@ -233,6 +268,64 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
                     if operand in (';', '|', '&&', '||'):
                         break
                     cat_targets.append(operand)
+        if inspect_skills:
+            operands = content_access_targets(tokens)
+            index_access = any(t in ('harness/common/INDEX.md', 'harness/project/INDEX.md') for t in operands)
+            accessed = [t for t in operands if 'skills' in Path(t).parts]
+            skill_access = bool(accessed)
+            if not immutable_fixture and may_change_files(tokens):
+                current_skills.clear()
+            due = set()
+            for owner in origins:
+                for target, since in skill_links.get(owner, {}).items():
+                    name = Path(target).parent.name
+                    if since <= started and re.search(r'(?<![\w-])' + re.escape(name) + r'(?![\w-])', expected[owner]):
+                        due.add(target)
+            pending = due.difference(current_skills)
+            if skill_access and full_before_first_skill is None:
+                full_before_first_skill = (listing is not None and bool(expected)
+                                           and set(expected) == set(origins)
+                                           and started > max([listing_end, *rule_read_ends]))
+            if index_access and full_before_first_index is None:
+                if listing is None:
+                    issues.append('INDEX открыт до получения полного списка правил')
+                missing_at_index = set(expected).difference(origins)
+                if missing_at_index:
+                    issues.append('до INDEX не подтверждены полные тексты: ' + ', '.join(sorted(missing_at_index)))
+                full_before_first_index = (listing is not None and bool(expected)
+                                           and set(expected) == set(origins)
+                                           and started > max([listing_end, *rule_read_ends]))
+            if skill_access:
+                target = accessed[0]
+                early = first_boundary is None
+                allowed = due if early else due | task_skills
+                one_body = tokens in (['cat', target], ['cat', '--', target])
+                valid = (started > max([listing_end, index_end, skill_end, *rule_read_ends])
+                         and (early or indexes_seen == expected_indexes)
+                         and one_body and success and target in allowed and target in skill_bodies
+                         and output == skill_bodies[target] and target not in current_skills)
+                if valid:
+                    skill_reads.append(target)
+                    current_skills.add(target)
+                    skill = True
+                else:
+                    issues.append(f'необоснованное, неполное, совмещённое или повторное чтение скилла: {target}')
+                skill_end = ended
+                continue
+            rule_targets = [t for t in cat_targets if t in paths]
+            if listing is not None and len(rule_targets) > 1:
+                issues.append('после списка каждое оставшееся правило требует отдельного вызова')
+            if index_access or listing_only or rule_targets or number == search_at:
+                if pending:
+                    issues.append('пропущен переход по применимой ссылке: ' + ', '.join(sorted(pending)))
+                if started <= skill_end:
+                    separate = False
+            if index_access:
+                new_indexes = [t for t in cat_targets if t in expected_indexes]
+                offset = len(indexes_seen)
+                if started <= index_end or new_indexes != index_order[offset:offset + len(new_indexes)]:
+                    issues.append('нарушен порядок чтения INDEX')
+                index_end = ended
         if index_access and success:
             indexes_seen.update(t for t in cat_targets if t in expected_indexes)
         if index_access or skill_access or number == search_at:
@@ -317,7 +410,8 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
     count = len(origins)
     repeats = sum(duplicates.values())
     if not listed or not total:
-        issues.append('нет подтверждённого полного списка правил до INDEX или скилла')
+        issues.append('нет отдельного подтверждённого полного списка правил' if inspect_skills
+                      else 'нет подтверждённого полного списка правил до INDEX или скилла')
     if listed and count < total:
         issues.append(f'прочтено {count} из {total}')
     if repeats:
@@ -327,6 +421,8 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
         issues.append('нарушен порядок перечисления и явного чтения')
     if expected_indexes - indexes_seen:
         issues.append('нет отдельного чтения обязательных INDEX перед скиллом')
+    if inspect_skills and task_skills.difference(skill_reads):
+        issues.append('не прочитаны нужные для задачи скиллы: ' + ', '.join(sorted(task_skills.difference(skill_reads))))
     if not skill and search_at is None:
         issues.append('нет подтверждённого открытия скилла')
     def value(n):
@@ -342,8 +438,10 @@ def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None
     return {'rule_listing_completed': listed, 'expected_rule_paths': list(expected),
             'missing_rule_paths': sorted(set(expected) - origins.keys()), 'first_reads': origins,
             'duplicate_rule_reads': duplicates, 'all_rule_bodies_read': bool(total) and count == total,
-            'explicit_rule_paths': explicit, 'separate_rule_reads': separate,
-            'full_rule_read_before_skill': listed and bool(total) and count == total and skill,
+            'skill_reads': skill_reads, 'explicit_rule_paths': explicit, 'separate_rule_reads': separate,
+            'full_rule_read_before_index': full_before_first_index,
+            'full_rule_read_before_skill': (bool(full_before_first_skill) if inspect_skills
+                                            else listed and bool(total) and count == total and skill),
             'rule_read_report': lines, 'rule_reading_pass': not issues}
 
 
@@ -352,7 +450,7 @@ def main():
     check_hash=hashlib.sha256(ordinary_path(__file__).read_bytes()).hexdigest()
     parser=argparse.ArgumentParser(description='Native Codex recursive rule-reading/content-search check; output contains no human guide bodies.')
     parser.add_argument('rule',type=Path)
-    parser.add_argument('--task',choices=['search','read'],default='search')
+    parser.add_argument('--task',choices=['search','read','linked','history'],default='search')
     parser.add_argument('--mode',choices=['common','both'],default='common')
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
@@ -383,7 +481,12 @@ def main():
     for d in [root/'harness']+[p for p in (root/'harness').rglob('*') if p.is_dir()]:
      (d/'README.human.md').write_text('заявка '+marker+'\n')
     expected_rule_bodies={'.claude/rules/comm-human-folder-guides.md':rule.decode()}
-    if args.task=='read':
+    check_links = args.task in ('linked', 'history')
+    linked_skill = '.agents/skills/config-check/SKILL.md'
+    task_skill = '.agents/skills/example/SKILL.md'
+    skill_bodies = {}
+    active_links = {}
+    if args.task != 'search':
      for name,body in [('personal.md','# Personal machine rule\nRead every machine rule, including nested rules.\n'),
                        ('nested/personal space.md','# Nested machine rule\nPaths with spaces must be read completely.\n'),
                        ('ignored/machine.md','# Ignored machine rule\nIgnore configuration does not remove mandatory rules.\n')]:
@@ -396,28 +499,66 @@ def main():
       (folder/'README.human.md').write_text(marker+'\n')
      skill=root/'.agents/skills/example/SKILL.md';skill.parent.mkdir(parents=True)
      skill.write_text('---\nname: example\ndescription: Use for the fixture calculation task.\n---\nReport 7 * 8 after reading all mandatory rules.\n')
+    if args.task != 'search':
+        skill_bodies[task_skill] = (root / task_skill).read_text()
+    if check_links:
+        # The scenario defines when a condition holds, independently of agent output.
+        owner = '.claude/rules/request-kind.md'
+        second = '.claude/rules/remaining.md'
+        config = f'Before drafting a configuration change, read {linked_skill}. Do not edit files.\n'
+        expected_rule_bodies[owner] = config
+        expected_rule_bodies[second] = (f'Read {linked_skill} now.\n' if args.task == 'linked' else config)
+        if args.task == 'linked':
+            active_links = {owner: {linked_skill: 0}, second: {linked_skill: 0}}
+        body = '---\nname: config-check\ndescription: Fixture configuration checklist.\n---\nKeep the existing default.\n'
+        skill_bodies[linked_skill] = body
+        (root / linked_skill).parent.mkdir(parents=True)
+        (root / linked_skill).write_text(body)
+        for name in ('comm-instruction-order.md', 'comm-skill-rule-ownership.md', 'comm-user-owned-entrypoints.md'):
+            expected_rule_bodies['.claude/rules/' + name] = ordinary_path(REPO / 'harness/common/rules' / name).read_text()
+        for path, body in expected_rule_bodies.items():
+            (root / path).write_text(body)
     starts = {}
     # Build START links from fixture paths. Never infer canonical identity from a basename.
     packages = ['common', 'project'] if mode == 'both' else ['common']
     for number, (installed, body) in enumerate(expected_rule_bodies.items()):
      package = packages[number % len(packages)]
+     if check_links and (Path(installed).name.startswith('comm-') or installed == owner):
+      package = 'common'
      relative = Path(installed).relative_to('.claude')
      start = f'harness/{package}/START.md'
-     starts[start] = starts.get(start, '') + f'Read [rule](<{relative}>) before listing.\n'
+     starts.setdefault(start, '')
+     if not check_links or installed != second:
+      starts[start] += f'Read [rule](<{relative}>) before listing.\n'
      canonical = Path(start).parent / relative
      target = root / canonical
      target.parent.mkdir(parents=True, exist_ok=True)
      target.write_text(body)
+    if check_links:
+        starts['harness/common/START.md'] = ordinary_path(REPO / 'harness/common/START.md').read_text()
+        starts['harness/common/START.md'] += '\nRead the fixture [request rule](rules/request-kind.md) before listing.\n'
+        starts['harness/project/START.md'] = ordinary_path(REPO / 'harness/project/START.md').read_text()
+        (root / 'harness/project').mkdir(exist_ok=True)
+        for filename in ('AGENTS.md', 'CLAUDE.md', 'harness/common/checks/ensure_entrypoint_links.py',
+                         'harness/common/base/project-skeleton.json'):
+            target = root / filename
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(ordinary_path(REPO / filename).read_bytes())
     for start, body in starts.items():
      (root / start).write_text(body)
      (root / start).with_name('INDEX.md').write_text('# Index\n')
-    with (root/'AGENTS.md').open('a') as entry:
-     entry.write('First read ' + ', '.join(starts) + ' and their linked rules. '
-                 'Follow the rule-reading procedure. After the complete list and all rules, '
-                 'read each package INDEX.md, then the requested skill in a separate call.\n')
+    if not check_links:
+        with (root/'AGENTS.md').open('a') as entry:
+            entry.write('First read ' + ', '.join(starts) + ' and their linked rules. '
+                        'Follow the rule-reading procedure. After the complete list and all rules, '
+                        'read each package INDEX.md, then the requested skill in a separate call.\n')
     prompt='Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется.'
     if args.task=='read':
      prompt='Прочитай полностью все обязательные машинные Markdown-правила в .claude/rules и подпапках, затем используй .agents/skills/example/SKILL.md. Верни пути всех прочитанных правил и результат 7 * 8. Файлы не изменяй.'
+    if check_links:
+        context = ('Подготовь предложение об изменении конфигурации, сохранив текущее значение.'
+                   if args.task == 'linked' else 'Поясни назначение git log для просмотра истории.')
+        prompt = context + ' После старта выполни вычисление по скиллу example. Файлы менять не требуется.'
     cmd=['codex','exec','--ignore-user-config','--ephemeral','--skip-git-repo-check','-s','read-only','-C',str(root),'-c','features.multi_agent=false','--json',prompt]
     # Keep CLI authentication/runtime available; hide source and author guidance from the child.
     isolation=['bwrap','--ro-bind','/','/','--bind',str(cli_home),str(cli_home),
@@ -461,7 +602,9 @@ def main():
     expected_rule_bodies, starts, aliases = snapshot_rule_inputs(root)
     search_at = tools.index(searches[0]) if args.task == 'search' and searches else None
     report.update(assess_rule_reading(tools, expected_rule_bodies, starts=starts, aliases=aliases,
-                                     root=root, search_at=search_at, immutable_fixture=True))
+                                     root=root, search_at=search_at, immutable_fixture=True,
+                                     skill_bodies=skill_bodies, skill_links=active_links,
+                                     task_skills={task_skill} if args.task != 'search' else set()))
     report['rule_read_observed'] = '.claude/rules/comm-human-folder-guides.md' in report['first_reads']
     report['full_rule_read_before_search'] = search_at is not None and report['all_rule_bodies_read']
     report['pass'] = (report['rule_reading_pass'] and report['native_completed'] and report['exit_code'] == 0

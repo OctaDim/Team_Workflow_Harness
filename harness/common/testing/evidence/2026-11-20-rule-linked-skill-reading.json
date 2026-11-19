@@ -1,0 +1,1618 @@
+{
+  "date": "2026-11-20",
+  "base_commit": "823637b",
+  "candidate_sha256": {
+    "comm-instruction-order-v2.md": "74afc719beb6c256aaaac1fbe167b9e20fa643afc79bdf344234acf17a9d88dc",
+    "comm-human-folder-guides.md": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84",
+    "START.md": "c2a9856fc678bdaad957fac31173e61f763cd96f3f6f77cc2ee6c3af7ec99f0c",
+    "check_human_guide_search.py": "49695ba497fb9c6c45392dfeb5b294d6de08a1ac8e121e6c8035f019da8e68d4",
+    "test_human_guide_reader.py": "a95c7245efacaf66aef90c2c21f45b102cef2c1d3da0489712d5e611b31e4d7c"
+  },
+  "runs": [
+    {
+      "scenario": "v1-history-both",
+      "mode": "both",
+      "task": "history",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 6",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 1",
+        "Всего правил в `.claude/rules/`: 7",
+        "Всего правил прочитано: 7",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 7 из 7"
+      ],
+      "skills": [
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "30d4a18bf69daf7818b319ab583ced02495b19fd66095a6bb54d26f57d4b2679",
+      "raw_path": "human-rule-history-both-hyzr_n32-raw.json",
+      "runner_sha256": "36b45dbc8bb5a8b299311f2e5b165014ba17b5eca866a7f223acdb9f54551244",
+      "command_output_characters": 7493,
+      "usage": {
+        "input_tokens": 177314,
+        "cached_input_tokens": 163328,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 741,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc 'for f in harness/common/START.md harness/project/START.md; do head -n 30 \"$f\"; done\nrg --files --hidden harness | sort'",
+        "/bin/bash -lc \"cat harness/common/rules/comm-human-folder-guides.md 'harness/common/rules/nested/personal space.md' harness/common/rules/request-kind.md harness/common/rules/comm-instruction-order.md harness/project/rules/personal.md harness/project/rules/ignored/machine.md\""
+      ],
+      "prompt": "Поясни назначение git log для просмотра истории. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v1-history-common",
+      "mode": "common",
+      "task": "history",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 6",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 1",
+        "Всего правил в `.claude/rules/`: 7",
+        "Всего правил прочитано: 7",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 7 из 7"
+      ],
+      "skills": [
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "2506789dc042f9c96312e4047e038f9b3b189913c8c2db531e230d6d4adcf5fd",
+      "raw_path": "human-rule-history-common-npq99yhg-raw.json",
+      "runner_sha256": "36b45dbc8bb5a8b299311f2e5b165014ba17b5eca866a7f223acdb9f54551244",
+      "command_output_characters": 5608,
+      "usage": {
+        "input_tokens": 137909,
+        "cached_input_tokens": 129024,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 495,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc \"cat harness/common/rules/comm-human-folder-guides.md harness/common/rules/personal.md 'harness/common/rules/nested/personal space.md' harness/common/rules/ignored/machine.md harness/common/rules/request-kind.md harness/common/rules/comm-instruction-order.md\"",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Поясни назначение git log для просмотра истории. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v1-linked-both",
+      "mode": "both",
+      "task": "linked",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 2",
+        "Всего правил в `.claude/rules/`: 7",
+        "Всего правил прочитано: 2",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, прочтено 2 из 7"
+      ],
+      "skills": [
+        ".agents/skills/config-check/SKILL.md",
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/ignored/machine.md",
+        ".claude/rules/nested/personal space.md",
+        ".claude/rules/personal.md"
+      ],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "9d77583dc8fe82fea54dde085018b56cc06c391f9faf502c1fa293d178a9e4eb",
+      "raw_path": "human-rule-linked-both-gyx4lcgu-raw.json",
+      "runner_sha256": "36b45dbc8bb5a8b299311f2e5b165014ba17b5eca866a7f223acdb9f54551244",
+      "command_output_characters": 7282,
+      "usage": {
+        "input_tokens": 197692,
+        "cached_input_tokens": 186496,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 850,
+        "reasoning_output_tokens": 197
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc \"for f in rules/comm-human-folder-guides.md 'rules/nested/personal space.md' rules/request-kind.md rules/comm-instruction-order.md rules/personal.md rules/ignored/machine.md; do for d in harness/common harness/project; do if test -f \\\"\"'$d/$f\"; then head -n 200 \"$d/$f\"; fi; done; done'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Подготовь предложение об изменении конфигурации, сохранив текущее значение. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v1-linked-common",
+      "mode": "common",
+      "task": "linked",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 6",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 1",
+        "Всего правил в `.claude/rules/`: 7",
+        "Всего правил прочитано: 7",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md"
+      ],
+      "skills": [
+        ".agents/skills/config-check/SKILL.md",
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "de0bd62888305c381c3a6cb75044fe524c006857800fea61e972d9d6252198ad",
+      "raw_path": "human-rule-linked-common-ullnyxi6-raw.json",
+      "runner_sha256": "36b45dbc8bb5a8b299311f2e5b165014ba17b5eca866a7f223acdb9f54551244",
+      "command_output_characters": 6871,
+      "usage": {
+        "input_tokens": 194277,
+        "cached_input_tokens": 179072,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 688,
+        "reasoning_output_tokens": 9
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+        "/bin/bash -lc \"cat harness/common/rules/comm-human-folder-guides.md harness/common/rules/personal.md 'harness/common/rules/nested/personal space.md' harness/common/rules/ignored/machine.md harness/common/rules/request-kind.md harness/common/rules/comm-instruction-order.md\"",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Подготовь предложение об изменении конфигурации, сохранив текущее значение. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v1-read-both",
+      "mode": "both",
+      "task": "read",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "skills": [
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "2dc06270f9d622e9dfee73b8bb9ff0404af1c0bbd031983135c699b136be6266",
+      "raw_path": "human-rule-read-both-v7znpcl8-raw.json",
+      "runner_sha256": "046ab3f823232a5ef3611d2cd06d86d2093dfafc77986d688fce23156e01b873",
+      "command_output_characters": 4783,
+      "usage": {
+        "input_tokens": 154253,
+        "cached_input_tokens": 145024,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 781,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'rg --files --hidden .claude/rules; cat .claude/rules/harness/common/START.md .claude/rules/harness/project/START.md'",
+        "/bin/bash -lc 'rg --files --hidden | sort'",
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'"
+      ],
+      "prompt": "Прочитай полностью все обязательные машинные Markdown-правила в .claude/rules и подпапках, затем используй .agents/skills/example/SKILL.md. Верни пути всех прочитанных правил и результат 7 * 8. Файлы не изменяй."
+    },
+    {
+      "scenario": "v1-read-common",
+      "mode": "common",
+      "task": "read",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "skills": [
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "1106db16af794adbc1330ef6ad4e762ffc563c356988eca7f2458d1650ea5fb9",
+      "raw_path": "human-rule-read-common-nezxjbzn-raw.json",
+      "runner_sha256": "36b45dbc8bb5a8b299311f2e5b165014ba17b5eca866a7f223acdb9f54551244",
+      "command_output_characters": 3411,
+      "usage": {
+        "input_tokens": 168622,
+        "cached_input_tokens": 115584,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 649,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'rg --files --hidden -g START.md -g PERSONAL.md'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc \"cat harness/common/rules/comm-human-folder-guides.md harness/common/rules/personal.md 'harness/common/rules/nested/personal space.md' harness/common/rules/ignored/machine.md\""
+      ],
+      "prompt": "Прочитай полностью все обязательные машинные Markdown-правила в .claude/rules и подпапках, затем используй .agents/skills/example/SKILL.md. Верни пути всех прочитанных правил и результат 7 * 8. Файлы не изменяй."
+    },
+    {
+      "scenario": "v1-search-both",
+      "mode": "both",
+      "task": "search",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "skills": [],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "61fafe49e6c7ac884220ea6f95b30a06e82d6adaa7bc8191bf78ccd0564dd2a9",
+      "raw_path": "human-rule-search-both-sr7flfqm-raw.json",
+      "runner_sha256": "046ab3f823232a5ef3611d2cd06d86d2093dfafc77986d688fce23156e01b873",
+      "command_output_characters": 3000,
+      "usage": {
+        "input_tokens": 116586,
+        "cached_input_tokens": 105856,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 595,
+        "reasoning_output_tokens": 37
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v1-search-common",
+      "mode": "common",
+      "task": "search",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "skills": [],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "c80135953cbf4bd157ccb3dfba537ef48c142712c088e7401740d7f6871964ee",
+      "raw_path": "human-rule-search-common-4mpxe2dm-raw.json",
+      "runner_sha256": "046ab3f823232a5ef3611d2cd06d86d2093dfafc77986d688fce23156e01b873",
+      "command_output_characters": 2810,
+      "usage": {
+        "input_tokens": 133225,
+        "cached_input_tokens": 125440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 418,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v2-history-both",
+      "mode": "both",
+      "task": "history",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/example/SKILL.md, нет подтверждённого полного списка правил до INDEX или скилла, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md, нет подтверждённого открытия скилла"
+      ],
+      "skills": [],
+      "missing_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/nested/personal space.md",
+        ".claude/rules/personal.md",
+        ".claude/rules/remaining.md",
+        ".claude/rules/request-kind.md"
+      ],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "b1b7b384d809748b3ee0e39a2374c22c9618410be2790b5634a61b8617deb496",
+      "raw_path": "human-rule-history-both-gzbk8b_p-raw.json",
+      "runner_sha256": "046ab3f823232a5ef3611d2cd06d86d2093dfafc77986d688fce23156e01b873",
+      "command_output_characters": 7650,
+      "usage": {
+        "input_tokens": 140260,
+        "cached_input_tokens": 130560,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 562,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!.git'\"' -g '*.md' -g '\"'!README.human.md'\"'\"",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' -0 | xargs -0 -r tail -n +1\ncat PERSONAL.md AGENTS.md\"",
+        "/bin/bash -lc 'cat harness/common/START.md\ncat harness/project/START.md'"
+      ],
+      "prompt": "Поясни назначение git log для просмотра истории. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v2-history-common",
+      "mode": "common",
+      "task": "history",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла, нарушен порядок перечисления и явного чтения, нет отдельного чтения обязательных INDEX перед скиллом, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md, нет подтверждённого открытия скилла"
+      ],
+      "skills": [],
+      "missing_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/ignored/machine.md",
+        ".claude/rules/nested/personal space.md",
+        ".claude/rules/personal.md",
+        ".claude/rules/remaining.md",
+        ".claude/rules/request-kind.md"
+      ],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "df774990442bafb0bb7213b03e3da66f59fb3f2c44e0ea3fd2fa0e179ab0170b",
+      "raw_path": "human-rule-history-common-nu2c_1q1-raw.json",
+      "runner_sha256": "046ab3f823232a5ef3611d2cd06d86d2093dfafc77986d688fce23156e01b873",
+      "command_output_characters": 8224,
+      "usage": {
+        "input_tokens": 123491,
+        "cached_input_tokens": 113280,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 778,
+        "reasoning_output_tokens": 190
+      },
+      "startup_commands": [
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!.git'\"' -g '*.md' | sort\"",
+        "/bin/bash -lc \"rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' -0 | sort -z | xargs -0 -r -n 1 sh -c 'head -n 999 -- \\\"\"'$1\"'\"' sh\ncat PERSONAL.md\ncat harness/common/START.md\"",
+        "/bin/bash -lc \"cat harness/project/START.md; rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort; git status --short\""
+      ],
+      "prompt": "Поясни назначение git log для просмотра истории. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v2-linked-both",
+      "mode": "both",
+      "task": "linked",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 7",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md, необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/example/SKILL.md, прочтено 0 из 7, нарушен порядок перечисления и явного чтения, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md, нет подтверждённого открытия скилла"
+      ],
+      "skills": [],
+      "missing_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/ignored/machine.md",
+        ".claude/rules/nested/personal space.md",
+        ".claude/rules/personal.md",
+        ".claude/rules/remaining.md",
+        ".claude/rules/request-kind.md"
+      ],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "8614c79a9821dc34867f574f9a2a1c90a68d94fdcd07c38cea47666c365602ac",
+      "raw_path": "human-rule-linked-both-sbwkaqwm-raw.json",
+      "runner_sha256": "046ab3f823232a5ef3611d2cd06d86d2093dfafc77986d688fce23156e01b873",
+      "command_output_characters": 9312,
+      "usage": {
+        "input_tokens": 180508,
+        "cached_input_tokens": 156672,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 666,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc \"rg --files --hidden -g '*.md' -g '\"'!.git'\"' | sort\"",
+        "/bin/bash -lc 'for f in AGENTS.md .claude/rules/*.md .claude/rules/nested/*.md PERSONAL.md; do\ncase \"$f\" in */README.human.md) continue;; esac\nprintf '\"'\\\\n%s\\\\n' \\\"\"'$f\"\ncat \"$f\"\ndone'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\ncat \\\"harness/common/START.md\\\"\""
+      ],
+      "prompt": "Подготовь предложение об изменении конфигурации, сохранив текущее значение. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v2-linked-common",
+      "mode": "common",
+      "task": "linked",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 7",
+        "Всего правил прочитано: 0",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md, необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/example/SKILL.md, прочтено 0 из 7, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md, нет подтверждённого открытия скилла"
+      ],
+      "skills": [],
+      "missing_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/ignored/machine.md",
+        ".claude/rules/nested/personal space.md",
+        ".claude/rules/personal.md",
+        ".claude/rules/remaining.md",
+        ".claude/rules/request-kind.md"
+      ],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "c6f63368cbf0ee77ea6891333137af8f793247b526830fdb18c6a2100906e542",
+      "raw_path": "human-rule-linked-common-zee9e026-raw.json",
+      "runner_sha256": "046ab3f823232a5ef3611d2cd06d86d2093dfafc77986d688fce23156e01b873",
+      "command_output_characters": 10852,
+      "usage": {
+        "input_tokens": 163973,
+        "cached_input_tokens": 137472,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 728,
+        "reasoning_output_tokens": 63
+      },
+      "startup_commands": [
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!.git'\"' | sort\"",
+        "/bin/bash -lc \"find .claude/rules -name '*.md' \"'! -name README.human.md -print0 | sort -z | xargs -0 -r tail -n +1\ncat PERSONAL.md\ncat harness/common/START.md\ncat harness/project/START.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Подготовь предложение об изменении конфигурации, сохранив текущее значение. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v3-history-both",
+      "mode": "both",
+      "task": "history",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - нарушен порядок чтения INDEX, необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/example/SKILL.md, нет подтверждённого полного списка правил до INDEX или скилла, нарушен порядок перечисления и явного чтения, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md, нет подтверждённого открытия скилла"
+      ],
+      "skills": [],
+      "missing_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/ignored/machine.md",
+        ".claude/rules/nested/personal space.md",
+        ".claude/rules/personal.md",
+        ".claude/rules/remaining.md",
+        ".claude/rules/request-kind.md"
+      ],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "0cbe58a9589290b861c6eb004e8c470928d5675433ab0895d8cd42409d26a77e",
+      "raw_path": "human-rule-history-both-jypv4dkb-raw.json",
+      "runner_sha256": "bc6f584086ae431fb8b6f0c933dde42902b2fe75032e0e70fddabd5307988dfa",
+      "command_output_characters": 14818,
+      "usage": {
+        "input_tokens": 112750,
+        "cached_input_tokens": 105472,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 435,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r -d '\\\\n' -n 1 sh -c 'head -v -n -0 \\\"\"'$0\"'\"' && cat harness/common/INDEX.md && cat harness/project/INDEX.md\"",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Поясни назначение git log для просмотра истории. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v3-history-common",
+      "mode": "common",
+      "task": "history",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/example/SKILL.md, нет подтверждённого полного списка правил до INDEX или скилла, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md, нет подтверждённого открытия скилла"
+      ],
+      "skills": [],
+      "missing_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/ignored/machine.md",
+        ".claude/rules/nested/personal space.md",
+        ".claude/rules/personal.md",
+        ".claude/rules/remaining.md",
+        ".claude/rules/request-kind.md"
+      ],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "b1649fe0e8e4fbd1cc93eb369245d7a328946257bc2311b9e368b3182b4eefc4",
+      "raw_path": "human-rule-history-common-czs7wvae-raw.json",
+      "runner_sha256": "bc6f584086ae431fb8b6f0c933dde42902b2fe75032e0e70fddabd5307988dfa",
+      "command_output_characters": 15312,
+      "usage": {
+        "input_tokens": 93437,
+        "cached_input_tokens": 85888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 451,
+        "reasoning_output_tokens": 11
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden --no-ignore -g '*.md' -g '\"'!README.human.md'\"' .claude/rules | sort | xargs -r -d '\\\\n' cat && cat harness/common/INDEX.md && cat harness/project/INDEX.md\"",
+        "/bin/bash -lc \"cat harness/common/rules/request-kind.md && ls -la .claude/rules && rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Поясни назначение git log для просмотра истории. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v3-linked-both",
+      "mode": "both",
+      "task": "linked",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 0",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 1",
+        "Всего правил в `.claude/rules/`: 9",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md, необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/example/SKILL.md, прочтено 1 из 9, нет отдельного чтения обязательных INDEX перед скиллом, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md, нет подтверждённого открытия скилла"
+      ],
+      "skills": [],
+      "missing_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/nested/personal space.md",
+        ".claude/rules/personal.md",
+        ".claude/rules/remaining.md",
+        ".claude/rules/request-kind.md"
+      ],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "1e6062d1431380b6b381539a5690b0ea44435d72db38c32f1f70db31fa94898c",
+      "raw_path": "human-rule-linked-both-hci5zz6g-raw.json",
+      "runner_sha256": "bc6f584086ae431fb8b6f0c933dde42902b2fe75032e0e70fddabd5307988dfa",
+      "command_output_characters": 15655,
+      "usage": {
+        "input_tokens": 154663,
+        "cached_input_tokens": 133376,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 557,
+        "reasoning_output_tokens": 58
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r -d '\\\\n' -n 1 cat\"",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Подготовь предложение об изменении конфигурации, сохранив текущее значение. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "v3-linked-common",
+      "mode": "common",
+      "task": "linked",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": false,
+      "pass_on_final_auditor": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+        "Всего правил в `.claude/rules/`: нет данных",
+        "Всего правил прочитано: нет данных",
+        "Повторно прочитанных правил: нет данных",
+        "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md, необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/example/SKILL.md, нет подтверждённого полного списка правил до INDEX или скилла, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md, нет подтверждённого открытия скилла"
+      ],
+      "skills": [],
+      "missing_rule_paths": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/ignored/machine.md",
+        ".claude/rules/nested/personal space.md",
+        ".claude/rules/personal.md",
+        ".claude/rules/remaining.md",
+        ".claude/rules/request-kind.md"
+      ],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "d6f3439c98d8153f22d49bf07d6cd41b1b160b0596553a2f6255512c8b0f4b3c",
+      "raw_path": "human-rule-linked-common-r23tb1pz-raw.json",
+      "runner_sha256": "bc6f584086ae431fb8b6f0c933dde42902b2fe75032e0e70fddabd5307988dfa",
+      "command_output_characters": 17020,
+      "usage": {
+        "input_tokens": 178771,
+        "cached_input_tokens": 169600,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 568,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc \"cat harness/common/START.md && cat harness/project/START.md && rg --files --hidden --follow .claude/rules -g '*.md' -g '\"'!README.human.md'\"' | sort | xargs -r -d '\\\\n' -n 1 cat && cat harness/common/INDEX.md && cat harness/project/INDEX.md\"",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'; ls -l harness/common/rules .claude/rules\""
+      ],
+      "prompt": "Подготовь предложение об изменении конфигурации, сохранив текущее значение. После старта выполни вычисление по скиллу example. Файлы менять не требуется."
+    },
+    {
+      "scenario": "control-history-both",
+      "mode": "both",
+      "task": "history",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 6",
+        "Всего правил в `.claude/rules/`: 9",
+        "Всего правил прочитано: 9",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 9 из 9"
+      ],
+      "skills": [
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "f540b2a0a6fb3dc7949ab6450fc83beaa91e7e910c8d2f850b35538636be2f57",
+      "raw_path": "human-rule-history-both-18r_nq0u-raw.json",
+      "runner_sha256": "9942c3732472be74a690da2a18c73bffa9006a7fb258f1110441e90128cfeebe",
+      "command_output_characters": 14977,
+      "usage": {
+        "input_tokens": 274468,
+        "cached_input_tokens": 258304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 739,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'"
+      ],
+      "prompt": "Поясни назначение git log для просмотра истории. После старта выполни вычисление по скиллу example. Файлы менять не требуется. Сначала отдельным вызовом запусти штатную стартовую проверку и дождись вывода. Следующим вызовом прочитай только оба START и дождись результата. Далее следуй полученным правилам. Для проверки трассы каждый файл читай отдельной командой cat с одним точным путём."
+    },
+    {
+      "scenario": "control-history-common",
+      "mode": "common",
+      "task": "history",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 6",
+        "Всего правил в `.claude/rules/`: 9",
+        "Всего правил прочитано: 9",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 9 из 9"
+      ],
+      "skills": [
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "80165cdfbd503637f0a988c02bca5b33ece01f2a7945d08bda5038775d12979f",
+      "raw_path": "human-rule-history-common-jg64nhmw-raw.json",
+      "runner_sha256": "9942c3732472be74a690da2a18c73bffa9006a7fb258f1110441e90128cfeebe",
+      "command_output_characters": 14446,
+      "usage": {
+        "input_tokens": 293757,
+        "cached_input_tokens": 277120,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 709,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'"
+      ],
+      "prompt": "Поясни назначение git log для просмотра истории. После старта выполни вычисление по скиллу example. Файлы менять не требуется. Сначала отдельным вызовом запусти штатную стартовую проверку и дождись вывода. Следующим вызовом прочитай только оба START и дождись результата. Далее следуй полученным правилам. Для проверки трассы каждый файл читай отдельной командой cat с одним точным путём."
+    },
+    {
+      "scenario": "control-linked-both",
+      "mode": "both",
+      "task": "linked",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 6",
+        "Всего правил в `.claude/rules/`: 9",
+        "Всего правил прочитано: 9",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 9 из 9"
+      ],
+      "skills": [
+        ".agents/skills/config-check/SKILL.md",
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "563122a8da6770c2ec4a4efd7d551b23eb48b244b2d97a800c673efee11de4ea",
+      "raw_path": "human-rule-linked-both-j70o9c_y-raw.json",
+      "runner_sha256": "9942c3732472be74a690da2a18c73bffa9006a7fb258f1110441e90128cfeebe",
+      "command_output_characters": 14717,
+      "usage": {
+        "input_tokens": 294372,
+        "cached_input_tokens": 278400,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 681,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/project/START.md'"
+      ],
+      "prompt": "Подготовь предложение об изменении конфигурации, сохранив текущее значение. После старта выполни вычисление по скиллу example. Файлы менять не требуется. Сначала отдельным вызовом запусти штатную стартовую проверку и дождись вывода. Следующим вызовом прочитай только оба START и дождись результата. Далее следуй полученным правилам. Для проверки трассы каждый файл читай отдельной командой cat с одним точным путём."
+    },
+    {
+      "scenario": "control-linked-common",
+      "mode": "common",
+      "task": "linked",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 6",
+        "Всего правил в `.claude/rules/`: 9",
+        "Всего правил прочитано: 9",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 9 из 9"
+      ],
+      "skills": [
+        ".agents/skills/config-check/SKILL.md",
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "c7b9ad034ba27da80c2d96ed045b08fd72f3bd8a89667516ef4c97e461e954cb",
+      "raw_path": "human-rule-linked-common-0s03filg-raw.json",
+      "runner_sha256": "9942c3732472be74a690da2a18c73bffa9006a7fb258f1110441e90128cfeebe",
+      "command_output_characters": 15600,
+      "usage": {
+        "input_tokens": 336823,
+        "cached_input_tokens": 319104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 788,
+        "reasoning_output_tokens": 9
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+        "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md'"
+      ],
+      "prompt": "Подготовь предложение об изменении конфигурации, сохранив текущее значение. После старта выполни вычисление по скиллу example. Файлы менять не требуется. Сначала отдельным вызовом запусти штатную стартовую проверку и дождись вывода. Следующим вызовом прочитай только оба START и дождись результата. Далее следуй полученным правилам. Для проверки трассы каждый файл читай отдельной командой cat с одним точным путём."
+    },
+    {
+      "scenario": "final-read-both",
+      "mode": "both",
+      "task": "read",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "skills": [
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "f1dfefce5ba201fe20915e916cedaeb55a1647304923f6a77685c5e98a9b7560",
+      "raw_path": "human-rule-read-both-bdmexsao-raw.json",
+      "runner_sha256": "49695ba497fb9c6c45392dfeb5b294d6de08a1ac8e121e6c8035f019da8e68d4",
+      "command_output_characters": 4772,
+      "usage": {
+        "input_tokens": 152999,
+        "cached_input_tokens": 141440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 579,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat .claude/rules/harness/common/START.md .claude/rules/harness/project/START.md'",
+        "/bin/bash -lc \"pwd && rg --files --hidden -g '*.md'\"",
+        "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'"
+      ],
+      "prompt": "Прочитай полностью все обязательные машинные Markdown-правила в .claude/rules и подпапках, затем используй .agents/skills/example/SKILL.md. Верни пути всех прочитанных правил и результат 7 * 8. Файлы не изменяй."
+    },
+    {
+      "scenario": "final-read-common",
+      "mode": "common",
+      "task": "read",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 4",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 4",
+        "Всего правил прочитано: 4",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 4 из 4"
+      ],
+      "skills": [
+        ".agents/skills/example/SKILL.md"
+      ],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "233836ef17650358b71b86d8e534316ea9ef9f12c8eef47102fd0d1feb93d561",
+      "raw_path": "human-rule-read-common-6t0iju6w-raw.json",
+      "runner_sha256": "49695ba497fb9c6c45392dfeb5b294d6de08a1ac8e121e6c8035f019da8e68d4",
+      "command_output_characters": 4564,
+      "usage": {
+        "input_tokens": 169511,
+        "cached_input_tokens": 160256,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 683,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat .claude/rules/harness/common/START.md'",
+        "/bin/bash -lc 'rg --files --hidden .claude/rules'",
+        "/bin/bash -lc \"rg --files --hidden -g '\"'!.git'\"'\""
+      ],
+      "prompt": "Прочитай полностью все обязательные машинные Markdown-правила в .claude/rules и подпапках, затем используй .agents/skills/example/SKILL.md. Верни пути всех прочитанных правил и результат 7 * 8. Файлы не изменяй."
+    },
+    {
+      "scenario": "final-search-both",
+      "mode": "both",
+      "task": "search",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "skills": [],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "522c120decad12ae3ad44ffcfed732f05780c790e713b536d2ce90c13af1c943",
+      "raw_path": "human-rule-search-both-wp7fvczx-raw.json",
+      "runner_sha256": "49695ba497fb9c6c45392dfeb5b294d6de08a1ac8e121e6c8035f019da8e68d4",
+      "command_output_characters": 3185,
+      "usage": {
+        "input_tokens": 133733,
+        "cached_input_tokens": 119296,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 488,
+        "reasoning_output_tokens": 0
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется."
+    },
+    {
+      "scenario": "final-search-common",
+      "mode": "common",
+      "task": "search",
+      "version": "codex-cli 0.166.0",
+      "cli_exit": 0,
+      "native_completed": true,
+      "original_pass": true,
+      "pass_on_final_auditor": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 1",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+        "Всего правил в `.claude/rules/`: 1",
+        "Всего правил прочитано: 1",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 1 из 1"
+      ],
+      "skills": [],
+      "missing_rule_paths": [],
+      "duplicate_rule_reads": {},
+      "native_raw_sha256": "efe550e000ae74e6d35c6df2f2a881f56ebc842de0ce75c3b7266d7704cce542",
+      "raw_path": "human-rule-search-common-k36hkrz1-raw.json",
+      "runner_sha256": "49695ba497fb9c6c45392dfeb5b294d6de08a1ac8e121e6c8035f019da8e68d4",
+      "command_output_characters": 2822,
+      "usage": {
+        "input_tokens": 116176,
+        "cached_input_tokens": 108928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 452,
+        "reasoning_output_tokens": 41
+      },
+      "startup_commands": [
+        "/bin/bash -lc 'cat harness/common/START.md'",
+        "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+        "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\""
+      ],
+      "prompt": "Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется."
+    }
+  ],
+  "authoring": [
+    {
+      "mode": "both",
+      "operation": "add",
+      "held": true,
+      "unchanged_before_confirmation": true,
+      "before_exit": 0,
+      "after_exit": 0,
+      "updated_after_confirmation": true,
+      "after_file": "Проверяй входные данные.\n\nПри чтении этого правила сразу прочитай [скилл `config-check`](.agents/skills/config-check/SKILL.md).\n"
+    },
+    {
+      "mode": "both",
+      "operation": "remove",
+      "held": true,
+      "unchanged_before_confirmation": true,
+      "before_exit": 0,
+      "after_exit": 0,
+      "updated_after_confirmation": true,
+      "after_file": "Прочитай скилл config-check.\n"
+    },
+    {
+      "mode": "common",
+      "operation": "add",
+      "held": true,
+      "unchanged_before_confirmation": true,
+      "before_exit": 0,
+      "after_exit": 0,
+      "updated_after_confirmation": true,
+      "after_file": "Проверяй входные данные.\n\nПри чтении этого правила сразу прочитай скилл [config-check](.agents/skills/config-check/SKILL.md).\n"
+    },
+    {
+      "mode": "common",
+      "operation": "remove",
+      "held": true,
+      "unchanged_before_confirmation": true,
+      "before_exit": 0,
+      "after_exit": 0,
+      "updated_after_confirmation": true,
+      "after_file": "Прочитай скилл config-check.\n"
+    }
+  ],
+  "budgets": {
+    "baseline": {
+      "grade": "A",
+      "required_fixes": [],
+      "recommended_fixes": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+          "remediation": [
+            "Reduce repeated instruction text and move detail into deferred supporting files."
+          ]
+        }
+      ],
+      "per_rule": {
+        "comm-human-folder-guides.md": {
+          "words": 288,
+          "characters": 2305,
+          "tokens": 577
+        },
+        "comm-instruction-order.md": {
+          "words": 230,
+          "characters": 1812,
+          "tokens": 453
+        }
+      }
+    },
+    "final": {
+      "grade": "A",
+      "required_fixes": [],
+      "recommended_fixes": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "message": "deferred_cost_tokens is heavy relative to the current Codex baseline.",
+          "remediation": [
+            "Reduce repeated instruction text and move detail into deferred supporting files."
+          ]
+        }
+      ],
+      "per_rule": {
+        "comm-human-folder-guides.md": {
+          "words": 295,
+          "characters": 2365,
+          "tokens": 592
+        },
+        "comm-instruction-order.md": {
+          "words": 261,
+          "characters": 1965,
+          "tokens": 492
+        }
+      }
+    }
+  },
+  "pytest_report_index_zero_based": [
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 2",
+      "Всего правил в `.claude/rules/`: 2",
+      "Всего правил прочитано: 2",
+      "Повторно прочитанных правил: 0",
+      "Результат: Успешно - прочтено 2 из 2"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+      "Всего правил в `.claude/rules/`: нет данных",
+      "Всего правил прочитано: нет данных",
+      "Повторно прочитанных правил: нет данных",
+      "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 2",
+      "Всего правил в `.claude/rules/`: 2",
+      "Всего правил прочитано: 2",
+      "Повторно прочитанных правил: 1",
+      "Результат: Ошибка - дублированное чтение 3 из 2 (.claude/rules/comm-a.md)"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+      "Всего правил в `.claude/rules/`: 2",
+      "Всего правил прочитано: 0",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - прочтено 0 из 2"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+      "Всего правил в `.claude/rules/`: 2",
+      "Всего правил прочитано: 0",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - прочтено 0 из 2, нарушен порядок перечисления и явного чтения"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 2",
+      "Всего правил в `.claude/rules/`: 2",
+      "Всего правил прочитано: 2",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+      "Всего правил в `.claude/rules/`: нет данных",
+      "Всего правил прочитано: нет данных",
+      "Повторно прочитанных правил: нет данных",
+      "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла, нет подтверждённого открытия скилла"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Успешно - прочтено 12 из 12"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 1",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Успешно - прочтено 12 из 12"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Успешно - прочтено 12 из 12"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 5",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Успешно - прочтено 12 из 12"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 12",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Успешно - прочтено 12 из 12"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 8",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 10",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - прочтено 10 из 12"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 3",
+      "Результат: Ошибка - дублированное чтение 15 из 12 (.claude/rules/nested/rule 1.md, .claude/rules/nested/rule 4.md)"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 9",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 11",
+      "Повторно прочитанных правил: 1",
+      "Результат: Ошибка - прочтено 11 из 12, дублированное чтение 12 из 12 (.claude/rules/nested/rule 3.md)"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 11",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 11",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - прочтено 11 из 12"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 1",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 11",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - прочтено 11 из 12, нарушен порядок перечисления и явного чтения"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: нет данных",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: нет данных",
+      "Всего правил в `.claude/rules/`: нет данных",
+      "Всего правил прочитано: нет данных",
+      "Повторно прочитанных правил: нет данных",
+      "Результат: Ошибка - нет подтверждённого полного списка правил до INDEX или скилла, нет отдельного чтения обязательных INDEX перед скиллом"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 1",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 11",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - прочтено 11 из 12, нарушен порядок перечисления и явного чтения, нет отдельного чтения обязательных INDEX перед скиллом"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 5",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - нарушен порядок перечисления и явного чтения"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 7",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 7",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - прочтено 7 из 12"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 1",
+      "Результат: Ошибка - дублированное чтение 13 из 12 (.claude/rules/nested/rule 0.md)"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/*/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 0",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 12",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/*/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 2",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 12",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 12",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 12",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 12",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/*/SKILL.md"
+    ],
+    [
+      "Правила `.claude/rules/` через ссылки в START.md: 12",
+      "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 0",
+      "Всего правил в `.claude/rules/`: 12",
+      "Всего правил прочитано: 12",
+      "Повторно прочитанных правил: 0",
+      "Результат: Ошибка - необоснованное, неполное, совмещённое или повторное чтение скилла: .agents/skills/config-check/SKILL.md, пропущен переход по применимой ссылке: .agents/skills/config-check/SKILL.md"
+    ]
+  ],
+  "pytest_case_results": {
+    "test_rule_reader_rejects_globs_missing_files_and_combined_calls": [
+      0,
+      1,
+      2,
+      1,
+      1,
+      1,
+      3,
+      4,
+      5,
+      5,
+      3,
+      3,
+      6
+    ],
+    "test_start_rule_accounting[0-skipped0-repeated0-12-0-common]": [
+      7
+    ],
+    "test_start_rule_accounting[0-skipped0-repeated0-12-0-both]": [
+      7
+    ],
+    "test_start_rule_accounting[1-skipped1-repeated1-12-0-common]": [
+      8
+    ],
+    "test_start_rule_accounting[1-skipped1-repeated1-12-0-both]": [
+      8
+    ],
+    "test_start_rule_accounting[2-skipped2-repeated2-12-0-common]": [
+      9
+    ],
+    "test_start_rule_accounting[2-skipped2-repeated2-12-0-both]": [
+      9
+    ],
+    "test_start_rule_accounting[5-skipped3-repeated3-12-0-common]": [
+      10
+    ],
+    "test_start_rule_accounting[5-skipped3-repeated3-12-0-both]": [
+      10
+    ],
+    "test_start_rule_accounting[12-skipped4-repeated4-12-0-common]": [
+      11
+    ],
+    "test_start_rule_accounting[12-skipped4-repeated4-12-0-both]": [
+      11
+    ],
+    "test_start_rule_accounting[2-skipped5-repeated5-10-0-common]": [
+      12
+    ],
+    "test_start_rule_accounting[2-skipped5-repeated5-10-0-both]": [
+      12
+    ],
+    "test_start_rule_accounting[2-skipped6-repeated6-12-3-common]": [
+      13
+    ],
+    "test_start_rule_accounting[2-skipped6-repeated6-12-3-both]": [
+      13
+    ],
+    "test_start_rule_accounting[2-skipped7-repeated7-11-1-common]": [
+      14
+    ],
+    "test_start_rule_accounting[2-skipped7-repeated7-11-1-both]": [
+      14
+    ],
+    "test_partial_current_reads_and_boundaries": [
+      8,
+      15,
+      15,
+      15,
+      8,
+      15,
+      8,
+      1,
+      16,
+      17,
+      18,
+      15,
+      15,
+      15
+    ],
+    "test_skill_and_listing_must_wait_for_rule_read_results[common]": [
+      19,
+      19,
+      19
+    ],
+    "test_skill_and_listing_must_wait_for_rule_read_results[both]": [
+      19,
+      19,
+      19
+    ],
+    "test_literal_reads_with_directory_output_and_named_loop[ls]": [
+      10,
+      20
+    ],
+    "test_literal_reads_with_directory_output_and_named_loop[loop]": [
+      10,
+      20
+    ],
+    "test_duplicate_in_compound_literal_reads": [
+      21,
+      15,
+      15
+    ],
+    "test_rule_link_applies_after_owner_before_next_rule[0-common]": [
+      7,
+      7,
+      22,
+      22,
+      23,
+      7,
+      7,
+      24,
+      22,
+      22,
+      25,
+      26
+    ],
+    "test_rule_link_applies_after_owner_before_next_rule[0-both]": [
+      7,
+      7,
+      22,
+      22,
+      23,
+      7,
+      7,
+      24,
+      22,
+      22,
+      25,
+      26
+    ],
+    "test_rule_link_applies_after_owner_before_next_rule[2-common]": [
+      9,
+      9,
+      27,
+      27,
+      28,
+      9,
+      9,
+      29,
+      27,
+      27,
+      30,
+      31
+    ],
+    "test_rule_link_applies_after_owner_before_next_rule[2-both]": [
+      9,
+      9,
+      27,
+      27,
+      28,
+      9,
+      9,
+      29,
+      27,
+      27,
+      30,
+      31
+    ],
+    "test_rule_link_applies_after_owner_before_next_rule[12-common]": [
+      11,
+      11,
+      32,
+      32,
+      33,
+      11,
+      11,
+      34,
+      32,
+      32,
+      35,
+      36
+    ],
+    "test_rule_link_applies_after_owner_before_next_rule[12-both]": [
+      11,
+      11,
+      32,
+      32,
+      33,
+      11,
+      11,
+      34,
+      32,
+      32,
+      35,
+      36
+    ]
+  },
+  "pytest": {
+    "full": 224,
+    "target": 30,
+    "failures": 0
+  },
+  "fresh_entrypoint": {
+    "common": "requires all rules before any skill",
+    "both": "requires all rules before any skill"
+  }
+}
