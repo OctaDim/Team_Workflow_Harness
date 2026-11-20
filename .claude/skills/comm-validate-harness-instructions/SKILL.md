@@ -1,6 +1,6 @@
 ---
 name: comm-validate-harness-instructions
-description: Use when checking an existing harness instruction or candidate, interpreting findings, or establishing its verification status without publication.
+description: Use when checking a harness instruction or candidate, interpreting findings, or verifying whether a named plugin skill runs in a Codex CLI profile.
 ---
 
 # Validate the current version
@@ -9,6 +9,7 @@ Identify version, target kind, contract, modes, available tools and authorized
 checks. Before tests read [validation](references/validation.md); before plugin-eval
 read [evaluation](references/evaluation.md). For content/profile checks read from
 root `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`.
+To test a plugin skill by name in Codex CLI, read [live invocation](references/codex-skill-invocation.md).
 For new/edited always-loaded rules, before checking/reporting read
 [rule budgets](references/rule-budgets.md).
 

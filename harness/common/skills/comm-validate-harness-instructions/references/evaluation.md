@@ -1,24 +1,11 @@
 # Evaluation
 
-Check Node, trusted ordinary JS entry and ancestors. Reject symlinks/shims
-without resolving. From root:
+Check Node and trusted ordinary JS entry/ancestors. Reject symlinks/shims before resolving. From root:
 
 ```sh
 node harness/common/scripts/plugin_eval_without_human.mjs "$entry" start "$skill_dir" --format json
 ```
 
-Then analyze a skill or bounded instruction folder. Save stdout outside it.
-No tool writes, external metric packs or author-home/cache paths. The API
-filter blocks nested/alias README.human.md reads and checks paths/tree.
-Trust interpreter/analyzer. No OS/race isolation. After filter edits run
-`harness/common/testing/tests/test_plugin_eval_without_human.py` in the venv.
+Analyze bounded targets. Save stdout elsewhere. Avoid tool writes, external packs and author paths. Trust the runtime and analyzer. The wrapper checks paths and blocks nested/alias human guides. It lacks OS/race isolation. Filter edits require venv test `harness/common/testing/tests/test_plugin_eval_without_human.py`.
 
-Review all findings, even A, and JSON improvementBrief/compare. Fix errors
-and requirements. Try minimal edits for applicable warnings (e.g. “Use when…”
-with triggers intact). First rerun static Plugin-eval and compare each trial.
-Revert failed edits; explain residual findings. Check if real code tests can
-produce coverage. Markdown-only: N/A. Assess and address other info as needed.
-
-Repeat final mandatory checks. Description edits require relevant discovery
-and unrelated non-loading. Report fixes, remaining findings, reasons and checks.
-Follow publication gate.
+Review findings and JSON improvementBrief/compare even at A. Fix errors/requirements. Try minimal warning fixes, preserving triggers. Compare static runs first and revert failed trials. Check real coverage when available (Markdown N/A). Assess info. Report fixes and residual reasons. Retest discovery and unrelated non-loading after description edits. Apply publication gate.
