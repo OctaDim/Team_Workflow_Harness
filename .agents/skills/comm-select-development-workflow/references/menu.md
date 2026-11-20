@@ -1,6 +1,6 @@
 # Route menu
 
-До выбора используй запрос, контекст и описания. Описания не заменяют процедуры; не открывай их для меню. Начни с 1, копируй пп. 1–3 дословно:
+До выбора используй только запрос, контекст и описания. Начни с 1, скопируй пп. 1–3 дословно:
 
 1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов
 2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work`  - нативный ce-маршрут
@@ -15,7 +15,7 @@
 2. **Superpowers**, скилл `superpowers:brainstorming`: **короткий дизайн → согласование → реализация и проверка.**
 3. **Superpowers**, скилл `superpowers:systematic-debugging`: **Диагностика → первопричина → исправление и проверка.**
 
-Эксперимент требует согласования. Добавь другие применимые короткие маршруты, отметь недоступные скиллы. Заверши обоими полными пунктами дословно, меняя только номера:
+Согласуй эксперимент. Добавь применимые короткие маршруты. Отсутствие имени в каталоге означает «доступность не проверена». Недоступность указывай только по отдельному свидетельству. Оба полных пункта дословно, меняй только номера:
 
 1. **Superpowers, через одного агента:** `superpowers:brainstorming → superpowers:writing-plans → superpowers:executing-plans`.
 2. Superpowers, через субагентов: `superpowers:brainstorming → superpowers:writing-plans → superpowers:subagent-driven-development`.
@@ -40,4 +40,4 @@ superpowers:verification-before-completion → superpowers:finishing-a-developme
 
 superpowers:using-superpowers и superpowers:brainstorming оставляют выбор цепочки/исполнителя пользователю. Короткий маршрут ограничен своими этапами.
 
-Сверь все шаблоны, включая «одновременное выполнение» в п. 1.
+Сверь шаблоны, включая п. 1.
