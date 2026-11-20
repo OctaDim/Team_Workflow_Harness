@@ -7,29 +7,72 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from string import Template
 
 
-BOOTSTRAP = '''# Harness
+BOOTSTRAP_RESOURCE = Path('harness/common/base/AGENTS.bootstrap.json')
+AUTHOR_LAYOUT = Path('harness/AGENTS.bootstrap.md.in')
+COMMAND_PATTERN = r'python3(?: -B)? harness/common/checks/ensure_entrypoint_links\.py'
+ORDER_HEADING = '## Порядок чтения после START'
 
-В начале каждой сессии до выполнения задачи запусти из корня проекта:
 
-```sh
-python3 harness/{package}/checks/ensure_entrypoint_links.py
-```
+def bootstrap_content(fields):
+    """Render only the two portable fields; never copy an entire project entrypoint."""
+    if not isinstance(fields, dict) or set(fields) != {'layout', 'command', 'reading_order'}:
+        raise ValueError('Invalid fields in ' + str(BOOTSTRAP_RESOURCE))
+    if not all(isinstance(v, str) and v.strip() for v in fields.values()):
+        raise ValueError('Empty or invalid BOOTSTRAP field')
+    if not re.fullmatch(COMMAND_PATTERN, fields['command']):
+        raise ValueError('Unsupported portable startup command')
+    layout = fields['layout']
+    if layout.splitlines().count('$command') != 1 or layout.splitlines().count('$reading_order') != 1:
+        raise ValueError('BOOTSTRAP requires a standalone command and reading_order field')
+    try:
+        return Template(layout).substitute(command=fields['command'], reading_order=fields['reading_order'])
+    except (ValueError, KeyError) as error:
+        raise ValueError('Invalid BOOTSTRAP layout placeholder') from error
 
-При ошибке проверки остановись и сообщи причину.
-Прочитай в следующем порядке (точный порядок очень важен): START.md обоих
-пакетов, все Markdown-правила .claude/rules и подпапок, затем INDEX.md обоих
-пакетов. В каждой группе сначала common, затем project. Все правила получи
-завершёнными вызовами до чтения тела скилла; не объединяй правила и скилл
-в одном вызове. Подробности открывай по задаче; README.human.md не читай.
-Индивидуальные инструкции не отменяют применимые канонические требования.
-Прямые правки AGENTS.md и CLAUDE.md запрещены договорённостью harness, но технически
-не заблокированы; изменения предлагай через inbox. Согласованное создание и восстановление
-стартовых ссылок — узкое исключение. Динамическую память harness сохраняй внутри
-harness. Исключение для штатных путей Superpowers определено в правиле
-`comm-user-owned-entrypoints.md`.
-'''
+
+def sync_bootstrap(root):
+    """Materialize publisher sources; package-only installations have no author layout."""
+    layout = ordinary_path(root / AUTHOR_LAYOUT)
+    if not layout.exists():
+        return
+    resource = root / BOOTSTRAP_RESOURCE
+    inputs = {name: snapshot_input(root / name, root) for name in
+              (AUTHOR_LAYOUT, Path('AGENTS.md'), Path('harness/common/START.md'))}
+    original = snapshot_input(resource, root)
+    try:
+        if any(value is None for value in inputs.values()):
+            raise ValueError('Missing author layout, AGENTS.md or harness/common/START.md')
+        previous = json.loads(original[0]) if original else {}
+        if not isinstance(previous, dict):
+            raise ValueError('Invalid existing BOOTSTRAP resource')
+        agent = utf8_text(inputs[Path('AGENTS.md')][0], 'AGENTS.md').splitlines()
+        commands = [line for line in agent if re.fullmatch(COMMAND_PATTERN, line)]
+        if len(commands) != 1:
+            raise ValueError('AGENTS.md must have exactly one supported startup command')
+        start = utf8_text(inputs[Path('harness/common/START.md')][0], 'harness/common/START.md')
+        sections = re.split(r'^' + re.escape(ORDER_HEADING) + r'[ \t]*\r?$', start, flags=re.M)
+        if len(sections) != 2:
+            raise ValueError('Expected one reading-order section in harness/common/START.md')
+        order = re.split(r'^#{1,2} ', sections[1], maxsplit=1, flags=re.M)[0].strip()
+        fields = {'layout': utf8_text(inputs[AUTHOR_LAYOUT][0], str(AUTHOR_LAYOUT)),
+                  'command': commands[0], 'reading_order': order}
+        bootstrap_content(fields)
+        changed = [key for key in fields if previous.get(key) != fields[key]]
+        if not changed and set(previous) == set(fields):
+            return
+        for name, snapshot in inputs.items():
+            if snapshot_input(root / name, root) != snapshot:
+                raise ValueError(f'Author input changed: {name}')
+        replace_input(resource, original, (json.dumps(fields, ensure_ascii=False, indent=2) + '\n').encode(), root)
+    except (ValueError, OSError) as error:
+        raise ValueError(f'BOOTSTRAP: обновлено 0; не согласован {BOOTSTRAP_RESOURCE} → AGENTS.md: {error}') from error
+    sources = {'layout': f'{AUTHOR_LAYOUT} (каркас)', 'command': 'AGENTS.md (команда запуска)',
+               'reading_order': 'harness/common/START.md (порядок чтения)'}
+    print('BOOTSTRAP: ' + ', '.join(sources[key] for key in changed) +
+          f' → {BOOTSTRAP_RESOURCE} → AGENTS.md', flush=True)
 
 
 def fenced_lines(text, *, reject_unclosed=True):
@@ -424,7 +467,11 @@ def ensure(root):
     snapshots = {path: snapshot_input(path, root) for path in (agents, claude)}
     report_history_changes(root)
     original_agents = utf8_text(snapshots[agents][0], agents.name) if snapshots[agents] is not None else ''
-    content = original_agents or BOOTSTRAP.replace('{package}', 'common')
+    if original_agents:
+        content = original_agents
+    else:
+        template = ordinary_path(script.parents[1] / 'base' / BOOTSTRAP_RESOURCE.name)
+        content = bootstrap_content(json.loads(template.read_text(encoding='utf-8')))
     _, present = startup_connections(content, resources)
     content, repaired_blocks = repair_startup_blocks(content, resources,
         bool(set(resources + ['.claude/rules']) - present))
@@ -477,6 +524,10 @@ def ensure(root):
     if bridge not in ('@AGENTS.md', '@AGENTS.md\n', '@AGENTS.md\r\n'):
         print('CLAUDE.md: требуется единственная строка @AGENTS.md; '
               'дополнительное или отличающееся содержимое сохранено. ' + WARNING)
+    try:
+        sync_bootstrap(root)
+    except (OSError, ValueError) as error:
+        raise ValueError(f'{error}; already changed: {changed}') from error
     return changed
 
 

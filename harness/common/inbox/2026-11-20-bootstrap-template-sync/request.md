@@ -23,7 +23,7 @@
 
 ## Execution
 
-Status: in progress
+Status: completed
 Result: Кандидат на базе `dba9ead` подготовлен. Прошли 235 тестов и сквозная проверка Codex в common-only и common+project с заново сгенерированным AGENTS.md. [Патч](candidate.patch), [полные файлы с манифестом](candidate.zip), [результаты и трассы](../../testing/evidence/2026-11-20-bootstrap-template-sync.md).
-Reason: Выполнение завершено до стадии публикации. Кандидат ожидает решения пользователя о публикации с итоговым статусом «непроверенный». Следующая согласованная заявка — [№ 3](../2026-11-19-codex-explicit-skill-startup/request.md).
+Reason: Пользователь подтвердил публикацию версии из `47bcdd0`. Все девять файлов установлены и сверены, 235 тестов прошли. Итоговый статус — непроверенный. [Отчёт о публикации](../../testing/evidence/2026-11-20-bootstrap-template-sync-publication.md). Следующая заявка — [№ 3](../2026-11-19-codex-explicit-skill-startup/request.md).
 Updated: 2026-11-20

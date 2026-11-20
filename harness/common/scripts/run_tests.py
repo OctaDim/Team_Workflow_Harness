@@ -16,6 +16,11 @@ ordinary_path, ordinary_tree = GUARDS['ordinary_path'], GUARDS['ordinary_tree']
 
 ROOT = SCRIPT.parents[3]
 ordinary_tree(ROOT / 'harness')
+try:
+    GUARDS['sync_bootstrap'](ROOT)
+except (OSError, ValueError) as error:
+    print(error, file=sys.stderr)
+    raise SystemExit(2)
 result = subprocess.run(
     [sys.executable, '-m', 'pytest', '--import-mode=importlib', '-q', '.',
      '--ignore=' + str(ROOT / 'harness/common/inbox'),
