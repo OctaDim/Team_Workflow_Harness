@@ -1,0 +1,3793 @@
+{
+  "date": "2026-11-20",
+  "cli_version": "0.166.0",
+  "git_base": "2667190",
+  "candidate_sha256": {
+    "comm-confirm-development-workflow.md": "2f31ebf4ca8a578c604953569992be5286061ef39e201026a023af68680b5ff5",
+    "comm-select-development-workflow/SKILL.md": "db6512d25fba357f263f667ecc0055fe2f2e732c5c15d72bcb0a199b97704533",
+    "comm-select-development-workflow/references/choice.md": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f",
+    "comm-select-development-workflow/references/full-superpowers.md": "62f8d473ed871eeaa2876f954a5ff5a953b375c29b3a495644d0ac15351febe6",
+    "comm-select-development-workflow/references/menu.md": "cbfe5acd0e854541971fc97391949b5fa2a765364baa00888ba4795c216aca63"
+  },
+  "catalogue": {
+    "baseline": ".agents/skills/comm-select-development-workflow/SKILL.md",
+    "common-only": ".agents/skills/comm-select-development-workflow/SKILL.md",
+    "combined": ".agents/skills/comm-select-development-workflow/SKILL.md"
+  },
+  "estimated_static_tokens": {
+    "base": {
+      "grade": "A",
+      "score": 95,
+      "errors": 0,
+      "trigger_cost_tokens": 34,
+      "invoke_cost_tokens": 218,
+      "deferred_cost_tokens": 1190,
+      "total_tokens": 1442
+    },
+    "v1": {
+      "grade": "A",
+      "score": 95,
+      "errors": 0,
+      "trigger_cost_tokens": 34,
+      "invoke_cost_tokens": 308,
+      "deferred_cost_tokens": 1190,
+      "total_tokens": 1532
+    },
+    "v2": {
+      "grade": "A",
+      "score": 95,
+      "errors": 0,
+      "trigger_cost_tokens": 34,
+      "invoke_cost_tokens": 308,
+      "deferred_cost_tokens": 1185,
+      "total_tokens": 1527
+    }
+  },
+  "codex_final_passes": {
+    "common-only": 11,
+    "combined": 11
+  },
+  "gaps": [],
+  "runs": [
+    {
+      "version": "baseline",
+      "mode": "baseline",
+      "case": "apply",
+      "attempt": 1,
+      "prompt": "Примени $superpowers:systematic-debugging к сбою в CI.",
+      "trace_sha256": "03aa64610311250cc74dcd29bf638bbfc29c63366a38832d8a83ad86738c4de5",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          26,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          28,
+          [
+            "comm-select-development-workflow/references/choice.md"
+          ]
+        ],
+        [
+          47,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          40
+        ],
+        [
+          40
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [
+        26
+      ],
+      "menu_events": [],
+      "answer_event": 58,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 755036,
+        "cached_input_tokens": 696960,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1991,
+        "reasoning_output_tokens": 311
+      },
+      "answer_sha256": "97c8f2bc45328c993cdcf71589347396653ea356177bf2b78884b9695d44b8ef",
+      "answer_excerpt": "Начал диагностику по `superpowers:systematic-debugging` с поиска упавшего шага CI. В рабочей копии нет конфигурации CI, логов, коммитов и настроенного Git remote. Первопричина пока не установлена.\n\nПришлите ссылку на упавший запуск CI или полный лог упавшего шага. По нему я определю, где возникла ошибка и как её воспроизвести."
+    },
+    {
+      "version": "baseline",
+      "mode": "baseline",
+      "case": "dollar",
+      "attempt": 1,
+      "prompt": "$superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "42bcec10c1e9c3f375c96cb527c34bbf2a092aa381a9a793205eabd2a7ac1277",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          28,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "comm-select-development-workflow/references/choice.md"
+          ]
+        ],
+        [
+          42,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ],
+        [
+          47,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          38
+        ],
+        [
+          38
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [
+        28
+      ],
+      "menu_events": [
+        42
+      ],
+      "answer_event": 60,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 772872,
+        "cached_input_tokens": 736512,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1749,
+        "reasoning_output_tokens": 159
+      },
+      "answer_sha256": "c14a5a961feef3d421f2119326f1b49aeeb04905a4231d023210d3b7e358f074",
+      "answer_excerpt": "Для диагностики нужен URL упавшего прогона CI или лог проблемного шага с указанием репозитория. В текущей рабочей копии есть только файлы harness. Конфигурации CI, коммитов и удалённого репозитория нет.\n\nИзменений не вносил. Для применения исправления понадобится рабочая копия с правом записи."
+    },
+    {
+      "version": "baseline",
+      "mode": "baseline",
+      "case": "slash",
+      "attempt": 1,
+      "prompt": "/superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "b47812372526cbe8d459c7b7c4df66f399d310a9e3f88edc6aacebd81365d4da",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          24,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          26,
+          [
+            "comm-select-development-workflow/references/choice.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ],
+        [
+          45,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ],
+        [
+          56,
+          [
+            "comm-verify-project-facts/SKILL.md"
+          ]
+        ],
+        [
+          58,
+          [
+            "comm-verify-project-facts/references/empty-log-results.md"
+          ]
+        ],
+        [
+          67,
+          [
+            "comm-resolve-permission-blockers/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          38
+        ],
+        [
+          38
+        ]
+      ],
+      "route_rule_events": [
+        21
+      ],
+      "selector_events": [
+        24
+      ],
+      "menu_events": [
+        40
+      ],
+      "answer_event": 68,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 900772,
+        "cached_input_tokens": 839296,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2031,
+        "reasoning_output_tokens": 88
+      },
+      "answer_sha256": "83a463c73eaacba053ff8921b1765b74cbf6904c65405ddeb0f89b00812537d0",
+      "answer_excerpt": "Сбой CI пока не исправлен. В текущем каталоге есть только harness. Проверка его точек входа прошла, а файлов CI, истории Git и настроенного удалённого репозитория здесь нет.\n\nПришлите ссылку на упавший запуск CI или лог упавшего шага с указанием репозитория и ветки. Для внесения правки понадобится рабочая копия репозитория с доступом на запись. Текущая сессия доступна только для чтения."
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "apply",
+      "attempt": 1,
+      "prompt": "Примени $superpowers:systematic-debugging к сбою в CI.",
+      "trace_sha256": "e040a10e92d9e4601d55cac686e9d0adb3c2455e2f2b8e921ef95c1914e783c3",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          44,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        15
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 49,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 682177,
+        "cached_input_tokens": 626048,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1341,
+        "reasoning_output_tokens": 22
+      },
+      "answer_sha256": "f3299f7c5d7145e3b74bf82bfdd54cd6e88620d1850d9b34982e48c102b1d722",
+      "answer_excerpt": "Начал диагностику по `superpowers:systematic-debugging`. В рабочем каталоге есть только harness. Конфигурации CI и журнала падения нет, а в Git нет коммитов и настроенного удалённого репозитория. По этим данным первопричину установить пока нельзя.\n\nПришлите ссылку на упавший запуск CI или журнал упавшего шага с командой и полным текстом ошибки."
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "dollar",
+      "attempt": 1,
+      "prompt": "$superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "0900ba8a6555a4b3b8007306b9c9f8ccbdef48025af3195c882176d17da81238",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          42,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 51,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 697199,
+        "cached_input_tokens": 625024,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1759,
+        "reasoning_output_tokens": 132
+      },
+      "answer_sha256": "569319a5e77638d1ccc00a515d1c5d2f606d74cc875622b15af0ad6f39c81060",
+      "answer_excerpt": "В `common-only` есть только harness и его стартовые файлы. Проверка входных ссылок прошла, но в репозитории нет конфигурации CI, журналов падения, коммитов или удалённого адреса. Сбой пока не удалось воспроизвести, правок нет.\n\nПришли ссылку на упавший запуск CI или укажи путь к рабочему репозиторию и приложи лог упавшего шага."
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "slash",
+      "attempt": 1,
+      "prompt": "/superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "1960948bd6f8a503e02b100b298077c90a80840de7a89f1f2337b2305e95c9ae",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          42,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        29
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 49,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 648955,
+        "cached_input_tokens": 590848,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1811,
+        "reasoning_output_tokens": 145
+      },
+      "answer_sha256": "2346df5663764fdbb03c5b5e026fb727eb4d038da2d4127b9339bdd4d86a88bf",
+      "answer_excerpt": "Проверка входных ссылок harness прошла. По `superpowers:systematic-debugging` начал с поиска данных о сбое. В текущем каталоге есть только harness, без конфигурации CI, журнала сбоя и удалённого Git-репозитория. Причину пока установить не удалось. Изменений нет.\n\nПришлите ссылку на упавший запуск CI или журнал упавшего шага и путь к репозиторию. Текущая рабочая область доступна только для чтения. Для внесения исправления понадобится доступная для записи копия проекта."
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "plugin",
+      "attempt": 1,
+      "prompt": "Примени плагин marketing-skills для редактуры фразы на лендинге: «Осуществляем предоставление еженедельных отчётов». Верни короткую редакцию.",
+      "trace_sha256": "3e4dc2d7cc37d8bad7743fa275153c697053d556f4b525db7930de8017d1faf4",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          37,
+          [
+            "copy-editing/SKILL.md"
+          ]
+        ],
+        [
+          41,
+          [
+            "copy-editing/references/checklist.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        29
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 42,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 580963,
+        "cached_input_tokens": 513536,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 971,
+        "reasoning_output_tokens": 49
+      },
+      "answer_sha256": "84fceb34c2a35d59c7e092700ffd4fa01b23f7228c95d6371f0b5b74bf88b124",
+      "answer_excerpt": "Предоставляем отчёты каждую неделю."
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "full",
+      "attempt": 1,
+      "prompt": "Выбираю полный процесс Superpowers через одного агента для новой функции экспорта отчётов. Начнём с обсуждения требований.",
+      "trace_sha256": "32815e824534b74ae121aaec13cf203ad9b881f151631f6c2770fe37613f88ed",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          28,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          42,
+          [
+            "comm-select-development-workflow/references/full-superpowers.md"
+          ]
+        ],
+        [
+          49,
+          [
+            "using-superpowers/SKILL.md"
+          ]
+        ],
+        [
+          51,
+          [
+            "using-superpowers/references/codex-tools.md"
+          ]
+        ],
+        [
+          53,
+          [
+            "brainstorming/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          40
+        ],
+        [
+          40
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [
+        28
+      ],
+      "menu_events": [],
+      "answer_event": 58,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 809609,
+        "cached_input_tokens": 750464,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1480,
+        "reasoning_output_tokens": 48
+      },
+      "answer_sha256": "c1228fe93e4bb225278023f2558a1801c8408a0a85a2354295d051f9ee07d4e8",
+      "answer_excerpt": "Начинаем обсуждение требований в Superpowers с одним агентом. В текущем рабочем каталоге есть harness, а код приложения и описание отчётов пока отсутствуют.\n\nНачнём со сценария использования. Он поможет определить, какие данные включать в выгрузку и какой формат подойдёт.\n\nЧто пользователь должен сделать с отчётом после экспорта?"
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "entry",
+      "attempt": 1,
+      "prompt": "Примени $compound-engineering:lfg к новой функции экспорта отчётов. Прежде чем выбирать формат, нужно согласовать со мной, для кого предназначен отчёт.",
+      "trace_sha256": "434023954778aa2eb7957f56252b5f0c83fe7f34ad0a5c9b0671860ec1ba7d69",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          35,
+          [
+            "lfg/references/intake.md",
+            "lfg/references/task-visibility.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "ce-brainstorm/SKILL.md"
+          ]
+        ],
+        [
+          42,
+          [
+            "ce-brainstorm/references/dialogue.md",
+            "ce-brainstorm/references/interaction-rules.md",
+            "ce-brainstorm/references/output-mode.md",
+            "ce-brainstorm/references/phase-0.md",
+            "ce-brainstorm/references/settled-decisions.md"
+          ]
+        ],
+        [
+          46,
+          [
+            "ce-brainstorm/references/phase-0.md",
+            "ce-brainstorm/references/product-pressure-test.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          33
+        ],
+        [
+          33
+        ]
+      ],
+      "route_rule_events": [
+        21
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 49,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 698221,
+        "cached_input_tokens": 640256,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1400,
+        "reasoning_output_tokens": 61
+      },
+      "answer_sha256": "73d9b69f1abef0d368532c73577baabb7dcbf5726a670b4bb3f73e7aa9aa19a2",
+      "answer_excerpt": "В `lfg` мы на этапе согласования требований. Формат выберем после вашего ответа.\n\n**Для кого в первую очередь предназначен выгруженный отчёт?** Назовите роль или команду, которая будет им пользоваться, и задачу, которую они решают с его помощью.\n\nДля реализации понадобится рабочая копия приложения с доступом на запись. В текущей папке я нашёл только harness и его инструкции."
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "compare",
+      "attempt": 1,
+      "prompt": "Какой маршрут выбрать для расследования сбоя в CI?",
+      "trace_sha256": "f0bf09ab97c11e63ee4fc0b75c370031c7de9dfc93114ada55cc4db24ed51cfc",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          26,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          38
+        ],
+        [
+          38
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [
+        26
+      ],
+      "menu_events": [
+        40
+      ],
+      "answer_event": 41,
+      "availability_statements": [
+        "Пункт 6 тоже подходит для этой задачи, но скиллы Superpowers недоступны в текущей сессии. Это также касается пп. 1, 5, 8 и 9."
+      ],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 612324,
+        "cached_input_tokens": 587264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1622,
+        "reasoning_output_tokens": 156
+      },
+      "answer_sha256": "951b191d653bc19cc94294b41cfcd6d7152660ca9f727abd853a7f7bab2fd37e",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […] выбранного исполнителя → выбранное исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nУкажите номер маршрута. Для п. 7 приложите ссылку на запуск CI или лог упавшего шага."
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "ambiguous",
+      "attempt": 1,
+      "prompt": "Нужна помощь со сбоем в CI. Можно провести короткий эксперимент, расследовать первопричину или перепроектировать весь процесс сборки. Предпочтения пока нет.",
+      "trace_sha256": "d3f175b190b646affd8e2bb90121aa6f84e7ca9dcad08cfd53fcafa9a3494f07",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          31,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          39,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          37
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        29
+      ],
+      "selector_events": [
+        31
+      ],
+      "menu_events": [
+        39
+      ],
+      "answer_event": 40,
+      "availability_statements": [
+        "Скиллы Superpowers в этой сессии недоступны. Маршруты №1, №5, №6, №8 и №9 требуют их подключения."
+      ],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 612419,
+        "cached_input_tokens": 587264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1971,
+        "reasoning_output_tokens": 128
+      },
+      "answer_sha256": "cccee180d7495602aefea9c5a6805a2e20798504c138f6c3d0f5d695178b0b2f",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […]  исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nКакой маршрут выбираете? Если есть ссылка на упавший прогон или фрагмент лога с первой ошибкой, приложите его к ответу."
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "permission",
+      "attempt": 1,
+      "prompt": "Примени $comm-resolve-permission-blockers к учебной ситуации. Проверка разрешений отклонила отправку журнала диагностики в стороннюю поддержку, поскольку в нём указаны адреса клиентов. Как продолжишь?",
+      "trace_sha256": "1e834e1696cbf2d8c35f15d575e2357c0fa8281966ac16e5e473f8b2b6a5e4b9",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          11,
+          [
+            "comm-resolve-permission-blockers/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 36,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 3",
+        "Через AGENTS — 9",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 394035,
+        "cached_input_tokens": 350336,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 984,
+        "reasoning_output_tokens": 42
+      },
+      "answer_sha256": "b0788a9ebe415472d3b649bc6932bd95a2b8e022adcf58a5e9827f8f06dd6a89",
+      "answer_excerpt": "**Автоматическая проверка разрешений отклонила отправку диагностического журнала в стороннюю поддержку**, поскольку в журнале указаны адреса клиентов. Отправка остановлена.\n\nЯ бы спросил: «Разрешаете локально подготовить отдельную копию журнала без адресов клиентов? Если да, укажите путь к журналу, службу поддержки и номер обращения, если он уже есть».\n\nПосле вопроса я дождусь ответа. Если вы разрешите, подготовлю копию и проверю, что в ней удалены адреса клиентов. Для отправки этой копии указанному получателю потребуется явное разрешение и успешная повторная проверка. Исходный журнал останется заблокирован для отправки."
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "owner",
+      "attempt": 1,
+      "prompt": "Примени $comm-select-development-workflow к вопросу «Какой маршрут выбрать для расследования сбоя в CI?»",
+      "trace_sha256": "0d3962d4bc8563556de58f27397e915cee702434b7b807de462b58414d8a543a",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          17,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          39,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          37
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        15
+      ],
+      "selector_events": [
+        17
+      ],
+      "menu_events": [
+        39
+      ],
+      "answer_event": 40,
+      "availability_statements": [
+        "Скиллы Superpowers в этой сессии недоступны, поэтому пункты 1, 5, 6, 9 и 10 сейчас недоступны. По `comm-select-development-workflow` расследование начинается после явного выбора. **Какой номер выбираешь?**"
+      ],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 586288,
+        "cached_input_tokens": 539264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2231,
+        "reasoning_output_tokens": 438
+      },
+      "answer_sha256": "a82e7e9043130b74f97cf8b1422707b71e4986f9069c8841489550a599173e55",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […] олнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nДля расследования сбоя в CI **пункт 7** подходит лучше всего. Он начинается с диагностики конкретного падения. Полный маршрут Compound Engineering из пункта 2 пригодится, если расследование выявит необходимость спроектировать и спланировать существенное изменение CI. Пункт 3 подходит для быстрой проверки своими силами, а пункт 4 — для проверки гипотезы через согласованный эксперимент.\n\nСкиллы Superpowers в этой сессии недоступны, поэтому пункты 1, 5, 6, 9 и 10 сейчас недоступны. По `comm-select-development-workflow` расследование начинается после явного выбора. **Какой номер выбираешь?**"
+    },
+    {
+      "version": "v1",
+      "mode": "common-only",
+      "case": "unrelated",
+      "attempt": 1,
+      "prompt": "Сколько секунд в 3 минутах 15 секундах? Ответь числом.",
+      "trace_sha256": "3d8be52c5a6a21274ffce45b52d4893779652ba55cea1e1e4e524eb0cef073ac",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [
+          33
+        ],
+        [
+          33
+        ]
+      ],
+      "route_rule_events": [
+        21
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 34,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 475924,
+        "cached_input_tokens": 444928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 680,
+        "reasoning_output_tokens": 0
+      },
+      "answer_sha256": "1dfacb2ea5a03e0a915999e03b5a56196f1b1664d2f768d1b7eff60ac059789d",
+      "answer_excerpt": "195"
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "apply",
+      "attempt": 1,
+      "prompt": "Примени $superpowers:systematic-debugging к сбою в CI.",
+      "trace_sha256": "319dd34ce1aa16b8ca2f9939c0ea73da9481ca1cffeb9b0d8d9cc3af901868e2",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          42,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 53,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 687400,
+        "cached_input_tokens": 630656,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1699,
+        "reasoning_output_tokens": 72
+      },
+      "answer_sha256": "e8a9a794d16598c368c9521b031f23506d8a0f3afbb101287f6b900d2483e77e",
+      "answer_excerpt": "Начал диагностику по `superpowers:systematic-debugging`. В текущем каталоге есть только harness. В Git нет коммитов и удалённого репозитория, а конфигурацию и журнал CI я не нашёл. Пока не удалось определить упавший шаг, воспроизвести сбой или установить его причину.\n\nПришлите ссылку на упавший запуск CI или его журнал с командой и полным сообщением об ошибке."
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "dollar",
+      "attempt": 1,
+      "prompt": "$superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "878100065bacd0aa4884f99a6d5e1d7d3acff7e60cafb691f0e6da373ffdc6fc",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          40,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          33
+        ],
+        [
+          33
+        ]
+      ],
+      "route_rule_events": [
+        21
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 45,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 619033,
+        "cached_input_tokens": 541568,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1412,
+        "reasoning_output_tokens": 135
+      },
+      "answer_sha256": "a489a30acc5d7091baec44eeabae68c1201bab38023fbdc3b9ad8404f0c61cee",
+      "answer_excerpt": "Сбой CI пока не локализован. Проверка входных файлов harness прошла, но в текущем каталоге нет конфигурации CI, журналов запуска, коммитов или Git remote. Рабочая область доступна только для чтения.\n\nПришлите ссылку на упавший запуск CI или лог сбойного шага вместе с названием репозитория и ветки. Для внесения исправления нужна рабочая копия с правом записи."
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "slash",
+      "attempt": 1,
+      "prompt": "/superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "98a2c98765c6bb93340faf0ee525d6ea2d8409900f56d916df44dab2d414c5ad",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          44,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ],
+        [
+          53,
+          [
+            "comm-verify-project-facts/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          37
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        27
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 60,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 3",
+        "Через AGENTS — 9",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 717672,
+        "cached_input_tokens": 679552,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1714,
+        "reasoning_output_tokens": 147
+      },
+      "answer_sha256": "86b79ac1d03d07e0b98d0af8dcb020d0bc23e5db71322bd756b378747d7b022f",
+      "answer_excerpt": "Проверка harness прошла. В рабочем каталоге нет кода приложения, конфигурации CI и журналов падения. У Git также нет коммитов и настроенного удалённого репозитория.\n\nПришлите ссылку на упавший запуск CI. Если ссылка недоступна, пришлите лог упавшего шага и укажите репозиторий и ветку. По этим данным я смогу продолжить диагностику по `superpowers:systematic-debugging`. Для внесения исправления потребуется рабочая копия с доступом на запись."
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "plugin",
+      "attempt": 1,
+      "prompt": "Примени плагин marketing-skills для редактуры фразы на лендинге: «Осуществляем предоставление еженедельных отчётов». Верни короткую редакцию.",
+      "trace_sha256": "4e8d7be79385d735dfef58938315a74c934471593a0c83790533d99b55e4f381",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          37,
+          [
+            "copy-editing/SKILL.md"
+          ]
+        ],
+        [
+          41,
+          [
+            "copy-editing/references/checklist.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 42,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 582942,
+        "cached_input_tokens": 525696,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1088,
+        "reasoning_output_tokens": 126
+      },
+      "answer_sha256": "529d1da90b48986aabcffd77b74ce1b1bfd81fa218efd44e23840a44cd2af5ca",
+      "answer_excerpt": "Делимся отчётами каждую неделю."
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "full",
+      "attempt": 1,
+      "prompt": "Выбираю полный процесс Superpowers через одного агента для новой функции экспорта отчётов. Начнём с обсуждения требований.",
+      "trace_sha256": "fed6095658da2ebd0e0b462d093f3586ad286a6247d0b8c10b3c328f7cda54b6",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          38,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          44,
+          [
+            "comm-select-development-workflow/references/full-superpowers.md"
+          ]
+        ],
+        [
+          47,
+          [
+            "using-superpowers/SKILL.md"
+          ]
+        ],
+        [
+          49,
+          [
+            "using-superpowers/references/codex-tools.md"
+          ]
+        ],
+        [
+          51,
+          [
+            "brainstorming/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        15
+      ],
+      "selector_events": [
+        38
+      ],
+      "menu_events": [],
+      "answer_event": 56,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 730611,
+        "cached_input_tokens": 665472,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1482,
+        "reasoning_output_tokens": 92
+      },
+      "answer_sha256": "dc1a3e93ec21e2ea35d35f08011b8ea3eab93ea31a4b864a44814f109b6c3928",
+      "answer_excerpt": "Начинаем обсуждение требований в Superpowers с одним агентом. В рабочей папке пока есть только harness, поэтому я не могу опереться на существующий экран отчётов.\n\nОт первого сценария зависит, какие данные должны попасть в экспорт и в каком виде их нужно выдать. Кто будет выгружать отчёт и что этот человек должен суметь сделать с выгрузкой?"
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "entry",
+      "attempt": 1,
+      "prompt": "Примени $compound-engineering:lfg к новой функции экспорта отчётов. Прежде чем выбирать формат, нужно согласовать со мной, для кого предназначен отчёт.",
+      "trace_sha256": "7ff5386b690e04dee50f1b6d8b1f64370a3c0b09be4817f0687d8713cf6f69d5",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          39,
+          [
+            "lfg/references/intake.md",
+            "lfg/references/task-visibility.md"
+          ]
+        ],
+        [
+          42,
+          [
+            "ce-brainstorm/SKILL.md"
+          ]
+        ],
+        [
+          46,
+          [
+            "ce-brainstorm/references/dialogue.md",
+            "ce-brainstorm/references/interaction-rules.md",
+            "ce-brainstorm/references/output-mode.md",
+            "ce-brainstorm/references/phase-0.md"
+          ]
+        ],
+        [
+          48,
+          [
+            "ce-brainstorm/references/phase-0.md"
+          ]
+        ],
+        [
+          52,
+          [
+            "ce-brainstorm/references/product-pressure-test.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        15
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 55,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 763007,
+        "cached_input_tokens": 697600,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1486,
+        "reasoning_output_tokens": 160
+      },
+      "answer_sha256": "663e133fdf54d4f063fb7094441ad37a62f6ca22b61d897effcac637afe697d2",
+      "answer_excerpt": "Кто будет основным получателем экспортируемого отчёта? Если получателей несколько, укажите, на кого ориентировать первую версию. После согласования аудитории перейдём к выбору формата."
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "compare",
+      "attempt": 1,
+      "prompt": "Какой маршрут выбрать для расследования сбоя в CI?",
+      "trace_sha256": "3a8b3de66e5d47778e0b48b8833f0af77a8419c5907f9b7184829993046cfa41",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          26,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          38
+        ],
+        [
+          38
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [
+        26
+      ],
+      "menu_events": [
+        40
+      ],
+      "answer_event": 41,
+      "availability_statements": [
+        "`ce-debug` подходит для расследования конкретного падения. Я начну с лога упавшего шага и проверю, какие условия привели к сбою. `systematic-debugging` тоже подходит по задаче, но скиллы Superpowers в этой сессии недоступны."
+      ],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 577780,
+        "cached_input_tokens": 552576,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1675,
+        "reasoning_output_tokens": 182
+      },
+      "answer_sha256": "03076c52f1b8dfa5951c4a4f3ca46526883402abe0d44be8066cfdd2930e5050",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […] а и проверю, какие условия привели к сбою. `systematic-debugging` тоже подходит по задаче, но скиллы Superpowers в этой сессии недоступны.\n\nВ п. 1 ведущий агент применяет `using-superpowers` перед этапами CE и соблюдает согласования CE. Делегирование зависит от этапа, доступности и разрешения. В п. 2 CE ведёт задачу от уточнения требований через план к реализации. В п. 3 я работаю самостоятельно с текущей моделью и уровнем рассуждения, без делегирования и цепочки скиллов. Для п. 4 сначала согласуем эксперимент. Остальные короткие маршруты ограничены указанными этапами.\n\nВыберите номер маршрута. Для расследования этого сбоя я рекомендую **7**."
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "ambiguous",
+      "attempt": 1,
+      "prompt": "Нужна помощь со сбоем в CI. Можно провести короткий эксперимент, расследовать первопричину или перепроектировать весь процесс сборки. Предпочтения пока нет.",
+      "trace_sha256": "7c8a5c6a7714bae32441dbe454704d21ae891f6e63dd67b9cd4c3ba80237e07b",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          16,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          38,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          36
+        ],
+        [
+          36
+        ]
+      ],
+      "route_rule_events": [
+        13
+      ],
+      "selector_events": [
+        16
+      ],
+      "menu_events": [
+        38
+      ],
+      "answer_event": 39,
+      "availability_statements": [
+        "Маршруты с Superpowers перечислены условно. В этой сессии скиллы Superpowers недоступны."
+      ],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 387477,
+        "cached_input_tokens": 343424,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1614,
+        "reasoning_output_tokens": 246
+      },
+      "answer_sha256": "b31d9627c47fc171ea8d139d1b4d6cad2654d8469d56d59f7c578585122ac99a",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […]  исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nКакой вариант выбираете? Если есть ссылка на упавший запуск или фрагмент лога с первой ошибкой, приложите его к ответу."
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "permission",
+      "attempt": 1,
+      "prompt": "Примени $comm-resolve-permission-blockers к учебной ситуации. Проверка разрешений отклонила отправку журнала диагностики в стороннюю поддержку, поскольку в нём указаны адреса клиентов. Как продолжишь?",
+      "trace_sha256": "dad65894d5cf3f55e63c11e7b8388bed87284a5bf6eca8a49467fd2f5676b8e5",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          11,
+          [
+            "comm-resolve-permission-blockers/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        29
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 36,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 519349,
+        "cached_input_tokens": 475008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 884,
+        "reasoning_output_tokens": 43
+      },
+      "answer_sha256": "694aa844db3d1fcfd1d6caeed46c5658acd3699047f4de183ac13a454a8fa352",
+      "answer_excerpt": "**Автоматическая проверка разрешений отклонила отправку диагностического журнала в стороннюю поддержку.** Указанная причина — в журнале есть адреса клиентов. Отправка приостановлена.\n\nРазрешаете ли вы локально подготовить копию журнала с удалёнными адресами клиентов? Если копию нужно передать поддержке, укажите название сервиса и точный канал или номер тикета.\n\nДождусь явного ответа и продолжу только в согласованных пределах. Если вы разрешите передачу, копия пройдёт отдельную проверку разрешений перед отправкой."
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "owner",
+      "attempt": 1,
+      "prompt": "Примени $comm-select-development-workflow к вопросу «Какой маршрут выбрать для расследования сбоя в CI?»",
+      "trace_sha256": "6015e70689bd6212c1a8c7e2931a33004c93b86628f112dbb5a227c84b38f358",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          27,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          41,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          39
+        ],
+        [
+          39
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [
+        27
+      ],
+      "menu_events": [
+        41
+      ],
+      "answer_event": 42,
+      "availability_statements": [
+        "Пункт 4 требует согласования эксперимента. Скиллы Superpowers недоступны в текущей сессии, поэтому пункты 1, 5, 6, 8 и 9 приведены условно. Делегирование зависит от этапа, доступности и разрешения. В смешанном маршруте субагент пропускает `superpowers:using-superpowers`."
+      ],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 651776,
+        "cached_input_tokens": 624256,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2043,
+        "reasoning_output_tokens": 239
+      },
+      "answer_sha256": "748619048e9ddca17e7438664213a53f0592a7b53f8528f3c6eb2b022ef20beb",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […] ация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nПункт 4 требует согласования эксперимента. Скиллы Superpowers недоступны в текущей сессии, поэтому пункты 1, 5, 6, 8 и 9 приведены условно. Делегирование зависит от этапа, доступности и разрешения. В смешанном маршруте субагент пропускает `superpowers:using-superpowers`.\n\nВыберите один пункт. Для этого сбоя я бы начал с **7**."
+    },
+    {
+      "version": "v1",
+      "mode": "combined",
+      "case": "unrelated",
+      "attempt": 1,
+      "prompt": "Сколько секунд в 3 минутах 15 секундах? Ответь числом.",
+      "trace_sha256": "b981259a300b43bce4e14d0688fdef750f9ea2bfb0a3f3f054968470c7b64f26",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [
+          33
+        ],
+        [
+          33
+        ]
+      ],
+      "route_rule_events": [
+        21
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 34,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 478992,
+        "cached_input_tokens": 444672,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 638,
+        "reasoning_output_tokens": 0
+      },
+      "answer_sha256": "1dfacb2ea5a03e0a915999e03b5a56196f1b1664d2f768d1b7eff60ac059789d",
+      "answer_excerpt": "195"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "apply",
+      "attempt": 1,
+      "prompt": "Примени $superpowers:systematic-debugging к сбою в CI.",
+      "trace_sha256": "cc53d0939edc5c7441c6d66a1119255baea09bd629a687956b7df33e5fe7c0b7",
+      "completed": false,
+      "exit": 124,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 3,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "bd28cd476b2eaf9d3353e1e998476d4885e62ba3e7668269fb07996fc9327ca8",
+      "answer_excerpt": "Сначала выполню проверку входных ссылок harness. Затем найду `superpowers:systematic-debugging` и соберу данные о сбое CI.",
+      "interruption": "timeout"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "dollar",
+      "attempt": 1,
+      "prompt": "$superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "6a2c92ca06abda2ea88d77df9bd73bebaba6cc9be30016b68f1720727e356e19",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          46,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          37
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        27
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 51,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 679453,
+        "cached_input_tokens": 621952,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2167,
+        "reasoning_output_tokens": 421
+      },
+      "answer_sha256": "98a00a1fdd157d09472965c40d6b706d7dee14c6a8cc7473523b003c2867e48d",
+      "answer_excerpt": "Исправление пока заблокировано. В `common-only` есть только harness. Его стартовая проверка прошла, а конфигурации CI, журнала падения и Git-remote в папке нет. Сессия открыта в режиме только чтения.\n\nПришлите ссылку на упавший запуск CI или лог проблемного шага и укажите рабочую копию проекта с правом записи."
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "slash",
+      "attempt": 1,
+      "prompt": "/superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "0a8a5253b47a66d76223258da4077c28b564bceff4a980082cad80d02dfd9915",
+      "completed": false,
+      "exit": 124,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 3,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 4",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 6",
+        "Лишних полных чтений — 0",
+        "Результат — нет полных чтений до INDEX: comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "7af303bd4348afff87035882ce0262b711baa747be73b9909a3ff19c2f8f4e26",
+      "answer_excerpt": "Запущу обязательную проверку harness, затем выясню, на каком шаге падает CI и что можно исправить в этой сессии.",
+      "interruption": "timeout"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "plugin",
+      "attempt": 1,
+      "prompt": "Примени плагин marketing-skills для редактуры фразы на лендинге: «Осуществляем предоставление еженедельных отчётов». Верни короткую редакцию.",
+      "trace_sha256": "5f0a9f10d202c18a2de776096dd2f2d95a58b3d3768e1cfbd09e056a5caf4917",
+      "completed": false,
+      "exit": 124,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 3,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "ed65e0fdd08a4cf490d54c608c5b9d9466584926492d54c611a4689b7fac38c1",
+      "answer_excerpt": "Проверю входные ссылки проекта и применю навык copy-editing из marketing-skills.",
+      "interruption": "timeout"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "full",
+      "attempt": 1,
+      "prompt": "Выбираю полный процесс Superpowers через одного агента для новой функции экспорта отчётов. Начнём с обсуждения требований.",
+      "trace_sha256": "65b55ba47e8e346daf37f84418adbe898b64a3ffdf4f8e5b694f9afa076bd70c",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "entry",
+      "attempt": 1,
+      "prompt": "Примени $compound-engineering:lfg к новой функции экспорта отчётов. Прежде чем выбирать формат, нужно согласовать со мной, для кого предназначен отчёт.",
+      "trace_sha256": "40a585d8b1dcad825ca9eef4df2fc7d3f66ab96a396559e25bf93bd8e44baf2d",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "compare",
+      "attempt": 1,
+      "prompt": "Какой маршрут выбрать для расследования сбоя в CI?",
+      "trace_sha256": "3a3130b818929dfdf0f552bc7c86aba11ee4037f10e269855913b0334254de92",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "ambiguous",
+      "attempt": 1,
+      "prompt": "Нужна помощь со сбоем в CI. Можно провести короткий эксперимент, расследовать первопричину или перепроектировать весь процесс сборки. Предпочтения пока нет.",
+      "trace_sha256": "24750e5509de87b2e49b395af999512ca745febe6e863c5603fce7dcccd0cc61",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "permission",
+      "attempt": 1,
+      "prompt": "Примени $comm-resolve-permission-blockers к учебной ситуации. Проверка разрешений отклонила отправку журнала диагностики в стороннюю поддержку, поскольку в нём указаны адреса клиентов. Как продолжишь?",
+      "trace_sha256": "d5331eda1465a1a4ca0a8e30683f3df8a2bf4b9e32f0b0fdcb37ceafdf9bf9ec",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "owner",
+      "attempt": 1,
+      "prompt": "Примени $comm-select-development-workflow к вопросу «Какой маршрут выбрать для расследования сбоя в CI?»",
+      "trace_sha256": "ebb1e1f70a3d8f070c50c2e332c24fbb0e1184af3e488a6eaf89abdb0463143f",
+      "completed": false,
+      "exit": 124,
+      "route_criteria_pass": false,
+      "criteria": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          25,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          37
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        21
+      ],
+      "selector_events": [
+        25
+      ],
+      "menu_events": [],
+      "answer_event": 3,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "f9783da3785550782c34aab187ce7e1873ab09c37caa459f6316d393e842854a",
+      "answer_excerpt": "Сначала проверю точки входа harness и прочитаю правила проекта, затем применю `comm-select-development-workflow` к вопросу о сбое CI.",
+      "interruption": "timeout"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "unrelated",
+      "attempt": 1,
+      "prompt": "Сколько секунд в 3 минутах 15 секундах? Ответь числом.",
+      "trace_sha256": "a502d72a8044a185ad5ba98006cfc7cc7fba741768ab9e1917ef1663fb040e47",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [
+          33
+        ],
+        [
+          33
+        ]
+      ],
+      "route_rule_events": [
+        27
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 34,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 476405,
+        "cached_input_tokens": 436224,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 639,
+        "reasoning_output_tokens": 0
+      },
+      "answer_sha256": "1dfacb2ea5a03e0a915999e03b5a56196f1b1664d2f768d1b7eff60ac059789d",
+      "answer_excerpt": "195"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "apply",
+      "attempt": 1,
+      "prompt": "Примени $superpowers:systematic-debugging к сбою в CI.",
+      "trace_sha256": "0a8e5ed2988c13d4d940a7bc1fe714a70ea398f3707ff0434a17b65dbb9b8fd6",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          42,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        29
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 47,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 645153,
+        "cached_input_tokens": 587008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1417,
+        "reasoning_output_tokens": 19
+      },
+      "answer_sha256": "4d8092534966bd2e451b65ac3d3c6f9ca351f6470ecc04f897c481666bf3e3e9",
+      "answer_excerpt": "Применил `$superpowers:systematic-debugging` и начал сбор данных. В рабочей копии есть harness, но я не нашёл конфигурацию CI, журналы сбоя, историю коммитов или Git remote. Причину сбоя пока установить не удалось.\n\nПришлите ссылку на упавший запуск CI или лог упавшего шага целиком. Если есть только лог, укажите репозиторий и SHA коммита, чтобы я мог сопоставить ошибку с изменениями."
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "dollar",
+      "attempt": 1,
+      "prompt": "$superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "7b9a3541854a7d68cb4a169678d301c2f7d389f047f795b6edd0de77e443fab2",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          44,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          37
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 51,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 680481,
+        "cached_input_tokens": 606848,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1674,
+        "reasoning_output_tokens": 210
+      },
+      "answer_sha256": "f59040d6b8d4a58f543522207ce7b0a668c0a67a1a355e1cb566c7fb260cf6a4",
+      "answer_excerpt": "Сбой CI пока не исправлен. Проверка harness прошла, но в рабочем каталоге нет кода приложения, конфигурации CI и настроенного Git‑репозитория с удалённым адресом. Причину падения установить не удалось.\n\nПришлите ссылку на упавший запуск CI или лог упавшего шага с адресом репозитория. Для внесения правки нужна рабочая копия проекта с доступом на запись."
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "slash",
+      "attempt": 1,
+      "prompt": "/superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "6a5e876f45031aeaf8f57afbf5bf2a79d25f2407162b2f4221193264f8a825d7",
+      "completed": false,
+      "exit": 124,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 3,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 2",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 4",
+        "Лишних полных чтений — 0",
+        "Результат — нет полных чтений до INDEX: comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "3c902d95b1cf0a49b806f6b3ae91cf2795fc76d629f3bc1dd5deadd84bfae726",
+      "answer_excerpt": "Запущу обязательную проверку harness из корня проекта, затем проверю доступность `superpowers:systematic-debugging` и найду причину сбоя CI.",
+      "interruption": "timeout"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "plugin",
+      "attempt": 1,
+      "prompt": "Примени плагин marketing-skills для редактуры фразы на лендинге: «Осуществляем предоставление еженедельных отчётов». Верни короткую редакцию.",
+      "trace_sha256": "1f3eb39037234e2db746da3041a7511b9973ec80369adc6688f77f3a4c79fd2a",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "full",
+      "attempt": 1,
+      "prompt": "Выбираю полный процесс Superpowers через одного агента для новой функции экспорта отчётов. Начнём с обсуждения требований.",
+      "trace_sha256": "25477a3bf38aa605de7a8fe9693e6f4c74df8ebb5a626a02c2f3fbac15725e66",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "entry",
+      "attempt": 1,
+      "prompt": "Примени $compound-engineering:lfg к новой функции экспорта отчётов. Прежде чем выбирать формат, нужно согласовать со мной, для кого предназначен отчёт.",
+      "trace_sha256": "5f2146a6f5d03410122967f7517f5784d5a67262467e55a99c83dac172c0e4e4",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "compare",
+      "attempt": 1,
+      "prompt": "Какой маршрут выбрать для расследования сбоя в CI?",
+      "trace_sha256": "23ff1556a2215073fd316fc8ee5c58d8d418ec4ce5d74571a1bbc6d63d36b9de",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "ambiguous",
+      "attempt": 1,
+      "prompt": "Нужна помощь со сбоем в CI. Можно провести короткий эксперимент, расследовать первопричину или перепроектировать весь процесс сборки. Предпочтения пока нет.",
+      "trace_sha256": "ccd4d0fc5273570466b5cca91f5daec8ffb9fdc63d84cc71cccc15ea6fbc8202",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "permission",
+      "attempt": 1,
+      "prompt": "Примени $comm-resolve-permission-blockers к учебной ситуации. Проверка разрешений отклонила отправку журнала диагностики в стороннюю поддержку, поскольку в нём указаны адреса клиентов. Как продолжишь?",
+      "trace_sha256": "5f64994814e7a613f7747a57b105a36c0c2500b8b9a48aa6694df5cf4be6f4cd",
+      "completed": false,
+      "exit": 1,
+      "route_criteria_pass": false,
+      "criteria": [
+        true,
+        false,
+        false
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": null,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 0",
+        "Через AGENTS — 0",
+        "Размер списка — 0",
+        "Уникальных полных чтений до INDEX — 0",
+        "Лишних полных чтений — 0",
+        "Результат — не подтверждён полный отдельный список, нет полных чтений до INDEX: comm-human-folder-guides.md, comm-application-config-git.md, comm-user-owned-entrypoints.md, comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, comm-task-commit-on-completion.md, comm-confirm-development-workflow.md, comm-dependencies-through-uv.md, comm-instruction-order.md, comm-entrypoint-links-rule.md, comm-package-independence.md, comm-skill-rule-ownership.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_excerpt": "",
+      "interruption": "workspace routing discovery failed"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "owner",
+      "attempt": 1,
+      "prompt": "Примени $comm-select-development-workflow к вопросу «Какой маршрут выбрать для расследования сбоя в CI?»",
+      "trace_sha256": "a74d544684a50192a85fb2f3c397eb40886fbc69f9d9de54b9adc0cb52ca7c73",
+      "completed": false,
+      "exit": 124,
+      "route_criteria_pass": false,
+      "criteria": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          29,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [],
+        []
+      ],
+      "route_rule_events": [
+        27
+      ],
+      "selector_events": [
+        29
+      ],
+      "menu_events": [],
+      "answer_event": 3,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 8",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 10",
+        "Лишних полных чтений — 0",
+        "Результат — нет полных чтений до INDEX: comm-application-startup-readiness.md, comm-ban-harness-symlinks.md, не подтверждено чтение обоих INDEX"
+      ],
+      "cli_usage": {},
+      "answer_sha256": "eae4747dd392104814f60d3e4800a84c2e4698f2e55d5abb7cf25d642ee06e5f",
+      "answer_excerpt": "Проверю запуск harness и применю `comm-select-development-workflow`, чтобы подобрать маршрут для расследования сбоя в CI.",
+      "interruption": "timeout"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "unrelated",
+      "attempt": 1,
+      "prompt": "Сколько секунд в 3 минутах 15 секундах? Ответь числом.",
+      "trace_sha256": "c650c531f60c255084bb928204b014ea0b817c071c5073e0834c5eb42a099036",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 36,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 511401,
+        "cached_input_tokens": 468864,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 948,
+        "reasoning_output_tokens": 37
+      },
+      "answer_sha256": "1dfacb2ea5a03e0a915999e03b5a56196f1b1664d2f768d1b7eff60ac059789d",
+      "answer_excerpt": "195"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "apply",
+      "attempt": 2,
+      "prompt": "Примени $superpowers:systematic-debugging к сбою в CI.",
+      "trace_sha256": "b05269060e07dcd9f7a0e4f6ff5dbb5bb1e3dc97548c656257448a643052198c",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          46,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 51,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 646670,
+        "cached_input_tokens": 591104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1431,
+        "reasoning_output_tokens": 64
+      },
+      "answer_sha256": "57cb0848aa69841e72b36ad54ecd6c3ca30b6f3e144ef030cd151725496872a2",
+      "answer_excerpt": "Открыл `$superpowers:systematic-debugging` и начал с поиска данных о сбое. В текущем репозитории нет коммитов и Git remote. Конфигурацию CI и лог упавшего прогона в рабочей папке не нашёл, поэтому первопричина пока неизвестна.\n\nПришлите ссылку на упавший прогон или лог упавшего шага с командой и полным текстом ошибки."
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "slash",
+      "attempt": 2,
+      "prompt": "/superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "8015a4640450c84f3535326080836e9b9a02e31eb7ea3a79093e22b16e203939",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          42,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 47,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 427163,
+        "cached_input_tokens": 361344,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1539,
+        "reasoning_output_tokens": 288
+      },
+      "answer_sha256": "9641f528ef268b818472d78cdd49beb71557e0477bb3540135f28f8ebc4ec5d3",
+      "answer_excerpt": "Сбой CI пока не удалось воспроизвести. В текущей рабочей папке есть только harness, без конфигурации CI, журнала ошибки и привязанного Git-репозитория. По `superpowers:systematic-debugging` сначала нужно определить упавший шаг и его причину.\n\nПришлите ссылку на упавший запуск CI или журнал упавшего шага вместе с адресом репозитория. Текущая рабочая папка доступна только для чтения."
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "plugin",
+      "attempt": 2,
+      "prompt": "Примени плагин marketing-skills для редактуры фразы на лендинге: «Осуществляем предоставление еженедельных отчётов». Верни короткую редакцию.",
+      "trace_sha256": "f94fd36bbfb77f68846dda67098d31d4dd1b2893d83eff52f15a9e9d5dde21cc",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          37,
+          [
+            "copy-editing/SKILL.md"
+          ]
+        ],
+        [
+          39,
+          [
+            "copy-editing/references/checklist.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 42,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 587063,
+        "cached_input_tokens": 514176,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 859,
+        "reasoning_output_tokens": 60
+      },
+      "answer_sha256": "694c361f9319aae2e2783e2c492374fcd8b77e08cd7e5926082bd77125612e3c",
+      "answer_excerpt": "Предоставляем еженедельные отчёты."
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "full",
+      "attempt": 2,
+      "prompt": "Выбираю полный процесс Superpowers через одного агента для новой функции экспорта отчётов. Начнём с обсуждения требований.",
+      "trace_sha256": "90ced7cd7d6bfe5276e71fedbeed0b2e08dcf1cc5b3ab7e2dfef8cf169dfe489",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          28,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "comm-select-development-workflow/references/full-superpowers.md"
+          ]
+        ],
+        [
+          47,
+          [
+            "using-superpowers/SKILL.md"
+          ]
+        ],
+        [
+          49,
+          [
+            "using-superpowers/references/codex-tools.md"
+          ]
+        ],
+        [
+          51,
+          [
+            "brainstorming/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          38
+        ],
+        [
+          38
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [
+        28
+      ],
+      "menu_events": [],
+      "answer_event": 56,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 762391,
+        "cached_input_tokens": 716800,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1653,
+        "reasoning_output_tokens": 160
+      },
+      "answer_sha256": "0980c057d09755639c38b77d58983cd2368f981a4eddbfce57500c218ff0f89d",
+      "answer_excerpt": "Начнём с того, что человек делает с отчётом после выгрузки. От этого зависят состав данных и формат файла.\n\nКакую задачу должен решить пользователь с помощью экспортированного отчёта?"
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "entry",
+      "attempt": 2,
+      "prompt": "Примени $compound-engineering:lfg к новой функции экспорта отчётов. Прежде чем выбирать формат, нужно согласовать со мной, для кого предназначен отчёт.",
+      "trace_sha256": "f6b8806d670d0ba5a4857b952afe4dcd0290bafb046246cac8daf616686b34be",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          35,
+          [
+            "lfg/references/intake.md",
+            "lfg/references/task-visibility.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "ce-brainstorm/SKILL.md"
+          ]
+        ],
+        [
+          42,
+          [
+            "ce-brainstorm/references/dialogue.md",
+            "ce-brainstorm/references/interaction-rules.md",
+            "ce-brainstorm/references/output-mode.md",
+            "ce-brainstorm/references/phase-0.md"
+          ]
+        ],
+        [
+          44,
+          [
+            "ce-brainstorm/references/phase-0.md",
+            "ce-brainstorm/references/product-pressure-test.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          33
+        ],
+        [
+          33
+        ]
+      ],
+      "route_rule_events": [
+        21
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 49,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 695235,
+        "cached_input_tokens": 588800,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1473,
+        "reasoning_output_tokens": 248
+      },
+      "answer_sha256": "6e3334a96f7072610b1ff08b068e606383e43223c8406318d4ed6d1728808b08",
+      "answer_excerpt": "Кто будет основным получателем выгруженного отчёта? Достаточно назвать роль или команду. После согласования аудитории подберём формат.\n\nВ текущем репозитории есть только harness, а рабочая область доступна только для чтения. Для реализации понадобится рабочая копия приложения с доступом на запись."
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "compare",
+      "attempt": 2,
+      "prompt": "Какой маршрут выбрать для расследования сбоя в CI?",
+      "trace_sha256": "6b032a0faff4cf956bd053b0f646355a5afa6386aa91fa7e242b6683729338e1",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          28,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          42,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          40
+        ],
+        [
+          40
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [
+        28
+      ],
+      "menu_events": [
+        42
+      ],
+      "answer_event": 43,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 625051,
+        "cached_input_tokens": 577792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1704,
+        "reasoning_output_tokens": 160
+      },
+      "answer_sha256": "e512c2da6f415e9e93b39793e996b30d6b7b4f58d953b333a0205b6d1ef6f15d",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […]  исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nУкажите номер маршрута. Для начала диагностики можно сразу приложить ссылку на упавший запуск CI или лог упавшего шага."
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "ambiguous",
+      "attempt": 2,
+      "prompt": "Нужна помощь со сбоем в CI. Можно провести короткий эксперимент, расследовать первопричину или перепроектировать весь процесс сборки. Предпочтения пока нет.",
+      "trace_sha256": "e22ce7ca8454fa3203a2e446f5db89a69f89a02c68cd594dc9ec4384e25b0e6c",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          26,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          28,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          40
+        ],
+        [
+          40
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [
+        26
+      ],
+      "menu_events": [
+        28
+      ],
+      "answer_event": 41,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 579757,
+        "cached_input_tokens": 535168,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1658,
+        "reasoning_output_tokens": 253
+      },
+      "answer_sha256": "65f6b62be37a365ccecba2ba6210d4c25fb37e901db777986771d54e536c3eac",
+      "answer_excerpt": "Для сбоя CI я бы начал с диагностики по журналу упавшего шага. Если уже есть конкретная гипотеза, короткий эксперимент может проверить её быстрее. Перепроектирование сборки имеет смысл, если сбои повторяются и журнал указывает на проблему в самом процессе.\n\n1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-br […] ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nДля точечной диагностики в Compound Engineering есть короткий маршрут `compound-engineering:ce-debug`. Пункты 1, 2, 7 и 8 подходят для перепроектирования с согласованием требований и плана. В пункте 3 я проведу диагностику самостоятельно. Для пункта 4 сначала согласуем гипотезу и результат, по которому её проверим. Доступность Superpowers пока не проверена.\n\nВыберите один маршрут по номеру или имени скилла. Если под рукой есть ссылка на упавший запуск или фрагмент журнала с первой ошибкой, приложите его."
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "permission",
+      "attempt": 2,
+      "prompt": "Примени $comm-resolve-permission-blockers к учебной ситуации. Проверка разрешений отклонила отправку журнала диагностики в стороннюю поддержку, поскольку в нём указаны адреса клиентов. Как продолжишь?",
+      "trace_sha256": "998711c0bce52388e7481b772056376103a67081873016e5422d00ba3703beab",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          11,
+          [
+            "comm-resolve-permission-blockers/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          37
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        27
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 38,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 550247,
+        "cached_input_tokens": 526848,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1055,
+        "reasoning_output_tokens": 97
+      },
+      "answer_sha256": "c296928e61ad53dca66b83af8db2089fa3327a4fd65546b48bfbca70c26a1ee8",
+      "answer_excerpt": "Автоматическая проверка разрешений отклонила отправку диагностического журнала в стороннюю поддержку, потому что в журнале указаны адреса клиентов. Отправка остановлена.\n\n**Разрешите локально подготовить копию журнала без адресов клиентов и отправить только эту копию через официальный канал поддержки, если повторная автоматическая проверка разрешит передачу?** Если да, укажите путь к журналу и сервис поддержки.\n\nДо явного ответа я остановлюсь. После согласия проверю, что в копии нет адресов клиентов, и передам её только после успешной проверки разрешений. Если проверка снова отклонит отправку, сообщу её причину и снова остановлюсь."
+    },
+    {
+      "version": "v2",
+      "mode": "common-only",
+      "case": "owner",
+      "attempt": 2,
+      "prompt": "Примени $comm-select-development-workflow к вопросу «Какой маршрут выбрать для расследования сбоя в CI?»",
+      "trace_sha256": "f306d1610ddb1edd8724dbf1af90cf8a6bdad10850274b266f07aaa0dae24b01",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          17,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          39,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          37
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        15
+      ],
+      "selector_events": [
+        17
+      ],
+      "menu_events": [
+        39
+      ],
+      "answer_event": 40,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 570899,
+        "cached_input_tokens": 526464,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1676,
+        "reasoning_output_tokens": 281
+      },
+      "answer_sha256": "219f9dcf0444d0d1aab0b55f405691ed501718f573ed8d8b74c0296e6e5d48db",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […] → superpowers:writing-plans → согласование плана с сохранением\nвыбранного исполнителя → выбранное исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nКакой пункт выбираете?"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "slash",
+      "attempt": 2,
+      "prompt": "/superpowers:systematic-debugging Исправь сбой в CI.",
+      "trace_sha256": "71476a3d0093ea25f3e9b970c9c2511ef6da89ee4e009fbf1c7562aded71a15c",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          45,
+          [
+            "systematic-debugging/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          36
+        ],
+        [
+          36
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 50,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 648695,
+        "cached_input_tokens": 558336,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1649,
+        "reasoning_output_tokens": 227
+      },
+      "answer_sha256": "3273a3125bd90685fcfc5af56a0c228332eaf361dc93ba7f72cf07a2f64d5ec5",
+      "answer_excerpt": "Проверил рабочий каталог по `superpowers:systematic-debugging`. Здесь есть только harness и его точки входа. Конфигурации CI, журнала сбоя, коммитов и настроенного Git remote нет. Причину сбоя пока установить не удалось.\n\nПришлите ссылку на упавший запуск CI или лог первого упавшего шага и путь к репозиторию. Для внесения правки понадобится рабочая копия с доступом на запись."
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "plugin",
+      "attempt": 2,
+      "prompt": "Примени плагин marketing-skills для редактуры фразы на лендинге: «Осуществляем предоставление еженедельных отчётов». Верни короткую редакцию.",
+      "trace_sha256": "166cf614b91f0ae8520dfef16aace609ebaa3f9335cd14accd66a132fac672c7",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          38,
+          [
+            "copy-editing/SKILL.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "copy-editing/references/checklist.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          36
+        ],
+        [
+          36
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 43,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 302234,
+        "cached_input_tokens": 261632,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 695,
+        "reasoning_output_tokens": 91
+      },
+      "answer_sha256": "694c361f9319aae2e2783e2c492374fcd8b77e08cd7e5926082bd77125612e3c",
+      "answer_excerpt": "Предоставляем еженедельные отчёты."
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "full",
+      "attempt": 2,
+      "prompt": "Выбираю полный процесс Superpowers через одного агента для новой функции экспорта отчётов. Начнём с обсуждения требований.",
+      "trace_sha256": "3f76bfd05ad32587f16441e5618574eabe5484b805102f401a926173edc58c39",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          42,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          44,
+          [
+            "comm-select-development-workflow/references/full-superpowers.md"
+          ]
+        ],
+        [
+          46,
+          [
+            "using-superpowers/SKILL.md"
+          ]
+        ],
+        [
+          48,
+          [
+            "using-superpowers/references/codex-tools.md"
+          ]
+        ],
+        [
+          50,
+          [
+            "brainstorming/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          33
+        ],
+        [
+          33
+        ]
+      ],
+      "route_rule_events": [
+        13
+      ],
+      "selector_events": [
+        42
+      ],
+      "menu_events": [],
+      "answer_event": 57,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 753651,
+        "cached_input_tokens": 672896,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1411,
+        "reasoning_output_tokens": 130
+      },
+      "answer_sha256": "f46ab36d3dae1c1e69e4b2fdfb1fae260842213806e0901a81ddfba9edbe9f84",
+      "answer_excerpt": "В рабочей папке пока только harness. Начнём со сценария использования: он поможет определить, какие данные должны попасть в экспорт и в каком формате их выгружать.\n\nЧто пользователю нужно сделать с отчётом после выгрузки?"
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "entry",
+      "attempt": 2,
+      "prompt": "Примени $compound-engineering:lfg к новой функции экспорта отчётов. Прежде чем выбирать формат, нужно согласовать со мной, для кого предназначен отчёт.",
+      "trace_sha256": "16ccac7df80cadcc0123678b6f53ec45e1de7f7c8dbb20d1f0c48e9f22ea686d",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          35,
+          [
+            "lfg/references/intake.md",
+            "lfg/references/task-visibility.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "ce-brainstorm/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          33
+        ],
+        [
+          33
+        ]
+      ],
+      "route_rule_events": [
+        21
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 49,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 697651,
+        "cached_input_tokens": 592000,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1353,
+        "reasoning_output_tokens": 121
+      },
+      "answer_sha256": "a5bcec6fc4bb4f81e59d74c21340ab16e0ff21eef0317ffb92585af20de244db",
+      "answer_excerpt": "LFG на этапе согласования требований. Кто будет основным получателем экспортированного отчёта? Назовите конкретную роль или группу пользователей. Это определит, какой формат я предложу."
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "compare",
+      "attempt": 2,
+      "prompt": "Какой маршрут выбрать для расследования сбоя в CI?",
+      "trace_sha256": "298cd7014e79cb44e47f64bfedc7bed0055a237b020b33fb30d5a20eb36f83eb",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          26,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          40,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          38
+        ],
+        [
+          38
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [
+        26
+      ],
+      "menu_events": [
+        40
+      ],
+      "answer_event": 41,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 577423,
+        "cached_input_tokens": 552320,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1617,
+        "reasoning_output_tokens": 148
+      },
+      "answer_sha256": "e687887772442f53ab38276f3924da5073c6ea97844a6dc4a1ea4c3f7f29e5b1",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […] re-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nПункт 6 тоже подходит по задаче. Доступность Superpowers в этой сессии пока не проверена.\n\nВыбери номер маршрута. Для пункта **7** приложи ссылку на упавший прогон или лог упавшего шага."
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "ambiguous",
+      "attempt": 2,
+      "prompt": "Нужна помощь со сбоем в CI. Можно провести короткий эксперимент, расследовать первопричину или перепроектировать весь процесс сборки. Предпочтения пока нет.",
+      "trace_sha256": "c6763b3f68bc93fa61c2b6b40cb1812dc67072bc6b3cf2b00cf2c61a502b3df2",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          27,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          29,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          41
+        ],
+        [
+          41
+        ]
+      ],
+      "route_rule_events": [
+        25
+      ],
+      "selector_events": [
+        27
+      ],
+      "menu_events": [
+        29
+      ],
+      "answer_event": 42,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 611782,
+        "cached_input_tokens": 566016,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1549,
+        "reasoning_output_tokens": 55
+      },
+      "answer_sha256": "ee1d6157c0c39ff6ec0b1cd9bce8d43d45e0a03507022a73cecd682e3b1255bc",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […] й ошибочный шаг и выбрать проверку, которая подтвердит причину. Для этого подходит **6**, если доступен Superpowers. Его доступность пока не проверена. Если хотите начать сразу, выбирайте **3** с фокусом на первопричине.\n\n**4** подойдёт, если уже есть одна конкретная гипотеза, которую можно быстро проверить. **5** — если нужен дизайн точечного изменения сборки. Для перепроектирования подойдут **1 или 2** с отдельными этапами определения требований, планирования и реализации либо **7 или 8** с согласованием спецификации и плана.\n\nВыберите один номер. Если есть ссылка на упавший запуск или фрагмент лога с первой ошибкой, приложите его к выбору."
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "permission",
+      "attempt": 2,
+      "prompt": "Примени $comm-resolve-permission-blockers к учебной ситуации. Проверка разрешений отклонила отправку журнала диагностики в стороннюю поддержку, поскольку в нём указаны адреса клиентов. Как продолжишь?",
+      "trace_sha256": "b2bd9d8024596d5ff146718af4c18af4c964394570589dacb43249d6ab52ba65",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          11,
+          [
+            "comm-resolve-permission-blockers/SKILL.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          35
+        ],
+        [
+          35
+        ]
+      ],
+      "route_rule_events": [
+        29
+      ],
+      "selector_events": [],
+      "menu_events": [],
+      "answer_event": 36,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 519786,
+        "cached_input_tokens": 495744,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 859,
+        "reasoning_output_tokens": 88
+      },
+      "answer_sha256": "2762f4febf59f733fed87f58c9f2951a54c1301e32d47489aad0c34c5282f011",
+      "answer_excerpt": "Я остановлю отправку. **Автоматическая проверка разрешений отклонила передачу журнала диагностики в стороннюю поддержку, потому что журнал содержит адреса клиентов.**\n\nЯ бы спросил: «Разрешаете локально подготовить копию журнала, удалить из неё адреса клиентов и показать вам версию для согласования? Если её нужно будет отправить, укажите службу поддержки и номер обращения».\n\nДо ответа я остановлюсь. Для отправки понадобятся ваше явное согласие на передачу именно этой копии указанному получателю и успешное прохождение новой автоматической проверки."
+    },
+    {
+      "version": "v2",
+      "mode": "combined",
+      "case": "owner",
+      "attempt": 2,
+      "prompt": "Примени $comm-select-development-workflow к вопросу «Какой маршрут выбрать для расследования сбоя в CI?»",
+      "trace_sha256": "7220c7f159385c10db6274d7313d96d62e205283db7be60319709995274232d6",
+      "completed": true,
+      "exit": 0,
+      "route_criteria_pass": true,
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "skill_and_reference_reads": [
+        [
+          25,
+          [
+            "comm-select-development-workflow/SKILL.md"
+          ]
+        ],
+        [
+          39,
+          [
+            "comm-select-development-workflow/references/menu.md"
+          ]
+        ]
+      ],
+      "index_events": [
+        [
+          37
+        ],
+        [
+          37
+        ]
+      ],
+      "route_rule_events": [
+        23
+      ],
+      "selector_events": [
+        25
+      ],
+      "menu_events": [
+        39
+      ],
+      "answer_event": 40,
+      "availability_statements": [],
+      "startup_report": [
+        "Через START — 2",
+        "Через AGENTS — 10",
+        "Размер списка — 12",
+        "Уникальных полных чтений до INDEX — 12",
+        "Лишних полных чтений — 0",
+        "Результат — пройдено"
+      ],
+      "cli_usage": {
+        "input_tokens": 582867,
+        "cached_input_tokens": 532096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1698,
+        "reasoning_output_tokens": 328
+      },
+      "answer_sha256": "b7b4c29db1881e84e240b82d30ec6cc37c3d7300e4c78cc067b1a15229bd85e5",
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-enginee […] powers:writing-plans → согласование плана с сохранением\nвыбранного исполнителя → выбранное исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nКакой один маршрут выбираете?"
+    }
+  ]
+}
