@@ -1,0 +1,3238 @@
+{
+  "date": "2026-11-20",
+  "revision": "dba9ead7584cdff455977ad43a95d898554881f8",
+  "codex": "0.166.0",
+  "versions": {
+    "AGENTS.md": "05cb20dfabc8b6d721f4e14fa01287a7512a27cf837a6a083dd94768e443cd11",
+    "harness/common/checks/ensure_entrypoint_links.py": "c822f2c386582657667d543d087ce9692d204e3eba1249d6cc714d1a88d47062",
+    "harness/common/checks/check_human_guide_search.py": "236f26d0d7e16863a47e039b8fef5ef07f608ddacb3e9b148a2b9f661b2665da",
+    "harness/common/START.md": "9158129ef41298e1ebdfd754d960430e5b212f7489ee90dda12a6a5f7d9b1dd9",
+    "harness/project/START.md": "b603941ec87b78d00f6e0608dd5a18ee98cef51a7ad6ea12e8a3645bf39fa8f4",
+    "harness/common/rules/comm-human-folder-guides.md": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84",
+    "harness/common/rules/comm-instruction-order.md": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213",
+    "harness/common/inbox/2026-11-19-01-external-operation-retries/comm-retry-external-operations/SKILL.md": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb"
+  },
+  "prompts": {
+    "short": "Примени $comm-retry-external-operations к потере ответа после отправки документа",
+    "explicit": "Use $comm-retry-external-operations. Review the API and caller for a synthetic submission client. The supplier might commit even when the reply is lost. Status can be looked up by client reference but may be stale. SDK has its own retries. Describe what should be returned on failures, how to recover, and the deterministic acceptance cases. A supplier asks the caller to wait 12s with 8s left. Provide concrete decisions. Route 3, simple independent execution, already chosen for this fixture task. Use the installed project instructions. No external tools/services, no edits.",
+    "implicit": "Review the API and caller for a synthetic submission client. The supplier might commit even when the reply is lost. Status can be looked up by client reference but may be stale. SDK has its own retries. Describe what should be returned on failures, how to recover, and the deterministic acceptance cases. A supplier asks the caller to wait 12s with 8s left. Provide concrete decisions. Route 3, simple independent execution, already chosen for this fixture task. Use the installed project instructions. No external tools/services, no edits.",
+    "csv": "Route 3 is already chosen. Return the product of quantity and unit_value in the single data row of inputs.csv. Read that file and give only the result. No edits.",
+    "actions": "The following is a synthetic client acceptance simulation with a virtual clock. Return the ordered actions for each case, using action names as listed. The runner executes each action and checks the caller result, supplier write count, physical send count, sleeps and per-attempt deadline. No shell writes or live APIs. Route 3 already chosen. Apply the project guidance. Fields of the JSON answer are case names; each value is an ordered array of actions.\nThe action send starts a physical write whose result is given in the case. lookup reads by the original stable reference, wait follows the provider or scheduled backoff, report_unknown preserves ambiguity, report_success returns the server result, exhaust ends the budget, reject returns the permanent API error, cancel propagates cancellation, timeout returns a pre-dispatch timeout. cap_timeout caps the next attempt to the remaining overall time. Choose only actions needed AFTER the stated initial events.\nlost: The first send committed the single record but its reply was lost. The API has no deduplication guarantee. Lookup by its client reference is authoritative on match and will find it.\nstale: Same first send but a lookup returns a possibly stale miss.\nrecover: A temporary refusal definitively occurred before executing. Backoff is scheduled, a budgeted retry will succeed.\nslow: Per-request limit is 4, caller deadline in 2; SDK send blocks before transmitting, supports setting per-request timeout. Exactly one attempt permitted. Model the attempt and its caller result.\nabort: Caller cancelled before next attempt.\nbad: Permanent invalid-field API error.\nsdk: At most 3 physical attempts allowed. A first outer call including SDK retry already made all 3. Temporary failure, none sent successfully.\nhint: Caller deadline in 8 seconds, server forbids retry until 12. First attempt already got a temporary refusal.\nallowed: First attempt outcome unknown; lookup is stale; service guarantees deduplication for same key for next hour, same key will be reused, backoff scheduled, send will return the original outcome. Complete now within budget.\n",
+    "timer": "Route 3 is already chosen. Synthetic external client uses integer seconds and a controlled clock. Decide (1) the effective attempt timeout when configured request timeout is 2 and overall remaining budget is 8. This single attempt would stall for 5 seconds before dispatch. (2) A safe retry has 8 seconds remaining and jittered backoff of 1 second, server requests a minimum delay of 3. Pick earliest legal retry delay. (3) Cancellation arrives during that wait. How many new sends afterward? No edits."
+  },
+  "catalogue": [
+    {
+      "installation": "candidate-common",
+      "repo_skill_count": 37,
+      "guard_bytes": 50883,
+      "repo_skill_metadata_bytes": 5899,
+      "skill": "comm-retry-external-operations",
+      "relative_path": ".agents/skills/comm-retry-external-operations/SKILL.md",
+      "scope": "repo",
+      "description": "Use when designing API errors, client timeouts, retries or recovery after losing the response to an external operation."
+    },
+    {
+      "installation": "candidate-combined",
+      "repo_skill_count": 37,
+      "guard_bytes": 50883,
+      "repo_skill_metadata_bytes": 5899,
+      "skill": "comm-retry-external-operations",
+      "relative_path": ".agents/skills/comm-retry-external-operations/SKILL.md",
+      "scope": "repo",
+      "description": "Use when designing API errors, client timeouts, retries or recovery after losing the response to an external operation."
+    }
+  ],
+  "runs": [
+    {
+      "mode": "common",
+      "scenario": "short",
+      "checked": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md",
+      "verified_resources": [
+        "harness/common/skills/comm-select-development-workflow/references/choice.md"
+      ],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          33,
+          34,
+          0
+        ],
+        [
+          33,
+          34,
+          3661
+        ]
+      ],
+      "target_hits": [
+        [
+          39,
+          40
+        ]
+      ],
+      "app": null,
+      "answer": "Если ответ потерялся после отправки документа, пометьте результат как **«Статус отправки неизвестен»**. Сервис мог уже принять документ, поэтому дальнейшие действия должны опираться на идентификатор исходной операции.\n\n1. **До первого запроса** сохраните устойчивый идентификатор операции. Если API поддерживает ключ идемпотентности, передайте его при отправке и используйте тот же ключ и те же данные при каждом повторе.\n2. **После таймаута или обрыва связи** запросите статус по идентификатору операции. Если сервис подтвердил приём, завершите операцию успешно. Если сервис достоверно подтвердил, что отправка не состоялась, допустим повтор. Неоднозначный ответ, включая отсутствие записи при задержке её появления, оставляет результат неизвестным.\n3. **Повторяйте автоматически**, пока действует гарантия идемпотентности API, либо после достоверного подтверждения, что исходная попытка не выполнилась. После отмены прекратите новые запросы и сохраните неизвестный результат, если отправка уже могла состояться. Окончательный отказ API завершает операцию ошибкой.\n4. **Ограничьте повторы** таймаутом на запрос, числом попыток и общим дедлайном, который включает ожидания, сверку статуса и повторы SDK. Используйте растущую задержку со случайным разбросом и учитывайте `Retry-After`, если сервис его вернул. Если ожидание выходит за дедлайн, завершите обработку без нового запроса, сохранив последний подтверждённый статус.\n\nДля проверки смоделируйте ситуацию, в которой сервис принял документ, а клиент потерял ответ. После сверки или допустимого повтора у сервиса должна остаться **ровно одна отправка**. С управляемым временем отдельно проверьте таймаут запроса, восстановление после временного сбоя, отмену, окончательный отказ, исчерпание попыток и отсутствие нового запроса, когда `Retry-After` выходит за дедлайн.\n\nЭто схема для API отправки документа. Конкретный сервис и его гарантии не были указаны, поэтому реализация и проверки на нём не выполнялись.",
+      "trace_sha256": "9acee20cb64283d64cea57dbdb410d3ae26210c4c8c03494aef4b710eb91b726",
+      "command_count": 19,
+      "observed_output_bytes": 53637,
+      "usage": {
+        "input_tokens": 463179,
+        "cached_input_tokens": 433664,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1268,
+        "reasoning_output_tokens": 20
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "dd52ffa8450c43d82b120c2d216611c968b1d3a223a5e84e8508f5afe869f5b4"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-task-commit-on-completion.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 27,
+          "end": 28,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 29,
+          "end": 30,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 31,
+          "end": 32,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 33,
+          "end": 34,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c"
+        },
+        {
+          "start": 35,
+          "end": 36,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 37,
+          "end": 38,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "exit_code": 0,
+          "stdout_sha256": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f"
+        },
+        {
+          "start": 39,
+          "end": 40,
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-retry-external-operations/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb"
+        }
+      ]
+    },
+    {
+      "mode": "combined",
+      "scenario": "short",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/SKILL.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md, нет подтверждённого открытия скилла, не подтверждено ожидаемое чтение или отсутствие тела целевого скилла"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/SKILL.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md, нет подтверждённого открытия скилла",
+      "verified_resources": [],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          33,
+          34,
+          0
+        ],
+        [
+          33,
+          34,
+          3661
+        ]
+      ],
+      "target_hits": [],
+      "app": null,
+      "answer": "Если после отправки документа ответ потерян, сохраните статус **«исход неизвестен»**. Сервис мог принять документ до разрыва соединения. Повторная отправка допустима только в пределах гарантий идемпотентности API или после достоверного подтверждения, что первая попытка не выполнилась.\n\n1. **До отправки** сохраните стабильный идентификатор операции. Если API поддерживает ключ идемпотентности, используйте его при первой отправке и сохраняйте тот же ключ и содержимое документа при каждом повторе.\n2. **При тайм-ауте или обрыве связи** запросите статус по идентификатору операции, если API это позволяет. Подтверждение приёма завершает операцию. Достоверное подтверждение, что отправка не выполнилась, разрешает повтор. Если проверка ничего не прояснила, сохраните неизвестный исход. Ответ «не найдено» годится для повтора только при соответствующей гарантии API.\n3. **При отмене или неповторяемой ошибке API** остановите автоматические попытки. Если запрос уже мог дойти до сервиса, отмена ожидания оставляет исход неизвестным. Временная ошибка допускает повтор при тех же условиях безопасности.\n4. **Ограничьте повторы** тайм-аутом запроса, числом попыток и общим дедлайном, включая сверку, ожидания и встроенные повторы SDK. Увеличивайте задержку со случайным разбросом и соблюдайте самое раннее время повтора, указанное сервисом. Если ожидание выходит за дедлайн, завершите обработку без нового запроса. Исчерпание бюджета оставляет исход неизвестным, если его так и не удалось установить.\n\n**Проверка на дубль.** Смоделируйте приём документа сервисом с последующей потерей ответа. После восстановления должна существовать ровно одна принятая отправка. С управляемым временем проверьте тайм-аут запроса, восстановление после временного сбоя, отмену, неповторяемую ошибку, исчерпание бюджета и отсутствие нового запроса, когда задержка сервиса выходит за дедлайн.\n\nСхема предполагает, что гарантии конкретного API ещё предстоит установить. Проверки описаны как критерии приёмки и не запускались.",
+      "trace_sha256": "024c6f63e2eb20b84084de7a2447a9c73cc5a61c433249b305d5c68fb00460ee",
+      "command_count": 17,
+      "observed_output_bytes": 51268,
+      "usage": {
+        "input_tokens": 408339,
+        "cached_input_tokens": 381184,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1311,
+        "reasoning_output_tokens": 56
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-task-commit-on-completion.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 27,
+          "end": 28,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 29,
+          "end": 30,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 31,
+          "end": 32,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 33,
+          "end": 34,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c"
+        },
+        {
+          "start": 35,
+          "end": 36,
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-select-development-workflow/SKILL.md && rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5f56215bc52102c2068eb588175437bdf78bed3ec9b8d1933d07f3ad9bf5fa04"
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "scenario": "explicit",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-retry-external-operations/SKILL.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/menu.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-retry-external-operations/SKILL.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md",
+      "verified_resources": [
+        "harness/common/skills/comm-select-development-workflow/references/choice.md",
+        "harness/common/skills/comm-select-development-workflow/references/menu.md"
+      ],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          40,
+          41,
+          0
+        ],
+        [
+          40,
+          41,
+          3661
+        ]
+      ],
+      "target_hits": [
+        [
+          42,
+          43
+        ]
+      ],
+      "app": null,
+      "answer": "**With 8 seconds remaining and a supplier-mandated 12-second wait, return immediately and send no further request.** Return `not_submitted` with reason `retry_after_deadline` if every attempt is known to have had no effect. Return `unknown` with the same reason if any attempt may have committed. Include the client reference and the supplier’s earliest retry time.\n\nThe local fixture contains no submission API or caller source, so this is a proposed contract and acceptance matrix. The cases were not executed.\n\n### API result and caller behavior\n\nReturn a structured result with `outcome`, `reason`, and `client_reference`. Include the supplier receipt on success and `retry_not_before` when the supplier provides a delay.\n\n| Event | Outcome and caller action |\n|---|---|\n| Supplier returns a receipt, or lookup reliably confirms a commit | Return `submitted` with the receipt. Stop sending submissions. |\n| Supplier definitively rejects the submission | Return `rejected` with the supplier error. Stop automatic retries. An earlier ambiguous attempt still requires reconciliation unless the rejection also resolves that attempt. |\n| Transient failure with reliable evidence that the request never executed | Retry within budget. If the budget runs out, return `not_submitted` with `attempt_limit` or `deadline_exceeded`. |\n| Request timeout, network disconnect, or supplier error after possible execution | Treat the outcome as `unknown`. Look up the original client reference within the remaining budget. If lookup is inconclusive, return `unknown` unless a replay is covered by the supplier’s idempotency guarantee. |\n| Caller cancels | Stop requests and waits immediately. Return reason `cancelled` with `not_submitted` if execution was ruled out, or `unknown` if it may have occurred. Preserve the reference for later reconciliation. |\n\nPersist one client reference and its payload before the first send. Use that reference for status lookup after a restart. A stale `not found`, a pending status, or a failed lookup leaves the outcome `unknown`. Replay only if the supplier guarantees deduplication for the same key and payload throughout the retry window, or reliably confirms that the original attempt did not execute and can no longer commit. For this fixture, assume the reference supports lookup only until supplier deduplication is established.\n\n### Retry budget and deterministic acceptance\n\nMake the caller the single retry owner and disable SDK retries for submission and lookup. Use one monotonic 20-second deadline, a 5-second timeout per request capped by remaining time, at most three submission sends, and at most two status lookups. Use exponential backoff starting at 250 ms with jitter. Wait until the later of the backoff and the supplier’s earliest retry time. If that leaves no time to send, return immediately. These values are fixture defaults.\n\nUse a fake clock, fixed jitter, a scripted supplier, and a transport that records every wire request.\n\n| Scenario | Expected result |\n|---|---|\n| Supplier commits, response is lost, lookup finds the receipt | `submitted`. One submission send and one supplier commit. |\n| Supplier commits, response is lost, both lookups return stale `not found` | `unknown` with the original reference. One submission send and one commit. A later lookup can resolve the result. |\n| Supplier guarantees idempotency and a replay follows a lost reply | Replay uses the same key and payload. `submitted`, two submission sends, and one commit. |\n| Request hangs after dispatch | Attempt times out at 5 seconds. An inconclusive lookup leaves `unknown`. No unprotected resend. |\n| First attempt provably never executes, second succeeds | `submitted` after the scripted backoff. Two submission sends and one commit. |\n| Caller cancels before dispatch or while waiting after an ambiguous send | Before dispatch, `not_submitted / cancelled` and zero sends. After an ambiguous send, `unknown / cancelled` and zero additional requests. |\n| Supplier definitively rejects the first attempt | `rejected` with supplier detail. One send and no retry. |\n| Three retryable attempts all provably fail before execution | `not_submitted / attempt_limit`. Three sends, including any SDK-level activity, and no fourth send. |\n| The overall deadline expires during reconciliation | `unknown / deadline_exceeded`. The in-flight lookup is capped by the remaining budget and no new request starts. |\n| Supplier requires 12 seconds with 8 seconds left | Immediate return with `retry_after_deadline`. Assert zero additional requests and zero time spent sleeping, both with and without a prior ambiguous attempt. |",
+      "trace_sha256": "7abd9c35a012953249f1b814dc25f5e5e3c7e8def48f2929eaafe1a4e0a451d2",
+      "command_count": 21,
+      "observed_output_bytes": 58494,
+      "usage": {
+        "input_tokens": 515623,
+        "cached_input_tokens": 497920,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1943,
+        "reasoning_output_tokens": 0
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "02b2d9fe6220d9267b76be8bbee9e3e79d201a459e083074b6ef58a6ced66c88"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-task-commit-on-completion.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 27,
+          "end": 28,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 29,
+          "end": 30,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 31,
+          "end": 32,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-select-development-workflow/SKILL.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-select-development-workflow/references/choice.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f"
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-select-development-workflow/references/menu.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5acd03a427a658a00722311f3f242d34f1e15dbdf8451cbafeac917f66cf5527"
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c"
+        },
+        {
+          "start": 42,
+          "end": 43,
+          "command": "/bin/bash -lc \"cat .agents/skills/comm-retry-external-operations/SKILL.md && rg --files --hidden -g '\"'!.git/**'\"' -g '\"'!README.human.md'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"' | rg -v '\"'^(harness/common/|'\"\\\\.agents/|\\\\.claude/)'\"",
+          "exit_code": 0,
+          "stdout_sha256": "15595b5c97dc728167572ec91d9fec07e5e9ea01972076fdd7f2cb417e4b487f"
+        },
+        {
+          "start": 44,
+          "end": 45,
+          "command": "/bin/bash -lc \"ls -a && rg -li --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"' -g '\"'!harness/common/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' 'supplier|submission|retry-after' .\"",
+          "exit_code": 1,
+          "stdout_sha256": "8726c5a2c81af01970cbb3853cfd3ee58cfc55899d54f1d36a8a663dc7246491"
+        }
+      ]
+    },
+    {
+      "mode": "combined",
+      "scenario": "explicit",
+      "checked": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md",
+      "verified_resources": [
+        "harness/common/skills/comm-select-development-workflow/references/choice.md"
+      ],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          38,
+          39,
+          0
+        ],
+        [
+          38,
+          39,
+          3661
+        ]
+      ],
+      "target_hits": [
+        [
+          40,
+          41
+        ]
+      ],
+      "app": null,
+      "answer": "With **8 seconds left** and a supplier instruction to **wait 12 seconds**, return immediately. Make no further supplier request in that call and pass the `retryAt` timestamp back to the caller. Return `NotSubmitted` if every attempt is known to have had no effect. Return `OutcomeUnknown` if any attempt may have committed. The caller must still satisfy the replay rules below when `retryAt` arrives.\n\nThe fixture supplies no API or caller implementation, so this is a contract review. The timeout and attempt limits below are proposed fixture settings.\n\n### API results and caller behavior\n\n| Situation | API result and caller action |\n|---|---|\n| Supplier confirms a commit | Return `Submitted` with the client reference and supplier receipt or ID. Stop submitting. |\n| Supplier definitively rejects the operation | Return `Rejected` with the supplier error. Stop automatic retries. A rejection of the latest attempt leaves an earlier ambiguous attempt unresolved. |\n| Transient failure with proof of no effect, such as a connection failure before any request bytes were sent | Retry within budget. On exhaustion, return `NotSubmitted` with the stop reason and `retryAt` when supplied. |\n| Timeout, broken connection after possible dispatch, or ambiguous supplier error | Preserve `OutcomeUnknown` with the client reference and failure cause until resolved. A generic `5xx` can be ambiguous. |\n| Caller cancels | Stop in-flight work and waits promptly. Return `Cancelled` before possible dispatch if there is no unresolved attempt. After possible dispatch, return `OutcomeUnknown` with `cancelled` as the stop reason and retain the reference for later reconciliation. |\n\nPersist the client reference and original payload before the first send. Use the same reference for status lookups and the same idempotency key and payload for any replay. A lookup that confirms the matching submission committed resolves the outcome. A stale `not found`, pending result, or failed lookup leaves it unknown. Replay only while the supplier’s documented idempotency guarantee covers the key, or after authoritative confirmation that the prior attempt did not execute and can no longer commit. A client reference alone provides correlation. If neither replay condition holds, keep the operation pending for reconciliation and have the caller resume by reference.\n\n### Retry budget\n\nUse one retry owner. Disable SDK retries and let the caller policy own scheduling. If the SDK cannot disable them, use it only if it exposes and enforces the same attempt budget, deadline, cancellation, and replay restrictions. Count every wire attempt, including SDK retries.\n\nFor the fixture, use a **15-second overall deadline**, a **3-second timeout per request** capped by remaining time, and **three total wire requests** across submission and inline status lookups. Use exponential backoff with jitter, starting at 250 ms and capped at 2 seconds before applying the supplier’s retry floor. Schedule a retry at the later of the backoff time and `retryAt`. If that leaves no time to start a request, return immediately. Exhaustion preserves the known operation state.\n\n### Deterministic acceptance cases\n\nUse a fake monotonic clock, fixed jitter, and a scripted supplier that records wire requests, references, keys, and commit count.\n\n| Script | Expected result |\n|---|---|\n| Supplier commits, reply is lost, and lookup first returns stale `not found`, then confirms the commit | The stale lookup leaves the result unknown. The next lookup resolves it to `Submitted`. Assert one submit and one commit. |\n| Supplier commits and loses the reply. Lookup stays inconclusive, and documented idempotency covers replay | Replay uses the original key and payload and returns the original receipt. Assert one commit. With idempotency disabled or expired, assert zero replay requests and `OutcomeUnknown`. |\n| A request hangs past 3 seconds after possible dispatch | The attempt ends at 3 seconds. If reconciliation stays inconclusive and replay is unsafe, return `OutcomeUnknown`. |\n| First attempt fails transiently before sending any bytes, then the supplier accepts | The second attempt starts at the scripted backoff time and returns `Submitted`. Assert one commit. |\n| Cancel during backoff, then separately after possible dispatch | Backoff cancellation prevents the next request and returns `Cancelled` when no attempt is unresolved. Cancellation after possible dispatch returns `OutcomeUnknown` and starts no further request. |\n| Supplier definitively rejects the first submission | Return `Rejected` after one request. |\n| Three known-no-effect failures exhaust the attempt limit, or the deadline expires after an ambiguous send | Return `NotSubmitted` in the first case and `OutcomeUnknown` in the second. Assert no extra SDK or caller request. |\n| Supplier says wait 12 seconds with 8 seconds remaining | Return at the current fake time with `retryAt` 12 seconds ahead. Assert no sleep and no further supplier request. Verify both the known-no-effect and unresolved-attempt outcomes. |",
+      "trace_sha256": "824cdf36a3d90f27951430343a44bddd46a3a9408064876657e4dd3325bedf92",
+      "command_count": 21,
+      "observed_output_bytes": 53693,
+      "usage": {
+        "input_tokens": 517189,
+        "cached_input_tokens": 486144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1936,
+        "reasoning_output_tokens": 6
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 24,
+          "end": 25,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 26,
+          "end": 27,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "exit_code": 0,
+          "stdout_sha256": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f"
+        },
+        {
+          "start": 28,
+          "end": 29,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-task-commit-on-completion.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c"
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-retry-external-operations/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb"
+        },
+        {
+          "start": 42,
+          "end": 43,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'; rg -l -i 'supplier|submission|client reference' harness/project -g '\"'!README.human.md'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"'\"",
+          "exit_code": 1,
+          "stdout_sha256": "f067dd9e7ec1d381e9c1216b5510320497274f9e416ffe64299c3e77e95ac621"
+        },
+        {
+          "start": 44,
+          "end": 45,
+          "command": "/bin/bash -lc 'head -c 2500 inputs.csv'",
+          "exit_code": 0,
+          "stdout_sha256": "92372c295f5b11adf52f8cc56756e00231f166755f666288654d166115450e0d"
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "scenario": "implicit",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 9",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 11",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - до INDEX не подтверждены полные тексты: .claude/rules/comm-task-commit-on-completion.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-retry-external-operations/SKILL.md, прочтено 11 из 12, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md"
+      ],
+      "raw_auditor": "Результат: Ошибка - до INDEX не подтверждены полные тексты: .claude/rules/comm-task-commit-on-completion.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-retry-external-operations/SKILL.md, прочтено 11 из 12, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md",
+      "verified_resources": [],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-package-independence.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          36,
+          37,
+          0
+        ],
+        [
+          36,
+          37,
+          3661
+        ]
+      ],
+      "target_hits": [
+        [
+          41,
+          42
+        ]
+      ],
+      "app": null,
+      "answer": "Return `OUTCOME_UNKNOWN` when a submission may have committed and the caller loses the reply. Include the original client reference so the caller can recover through status lookup. With **12 seconds of supplier-requested wait and 8 seconds left**, stop retrying immediately. Make no further submit request in that call and preserve the 12-second retry guidance. Return `OUTCOME_UNKNOWN` if any attempt may have committed, or `RETRY_EXHAUSTED` if every attempt is known to have had no effect.\n\nThe workspace contains fixture data but no submission API or caller implementation. The following is the proposed contract and its acceptance criteria.\n\n### API and caller contract\n\n| What the caller can establish | Return | Caller action |\n|---|---|---|\n| The supplier confirms the commit | `SUCCEEDED`, with the client reference and supplier result | Finish. |\n| The supplier definitively rejects the submission without committing it | `REJECTED`, with a structured reason | Stop automatic retries. |\n| A transient failure is proven to have had no effect | `RETRYABLE`, with the earliest retry time if supplied | Retry within the remaining deadline and attempt budget. Return `RETRY_EXHAUSTED` if another attempt cannot fit. |\n| A timeout, disconnect, or supplier error leaves the commit uncertain | `OUTCOME_UNKNOWN`, with the client reference | Reconcile by reference. Replay only under the conditions below. |\n| The caller cancels | `CANCELLED` if no attempt could have committed. Otherwise return `OUTCOME_UNKNOWN` with cancellation as the reason. | Stop in-flight work, waits, and new requests. Preserve the reference for later recovery. |\n\nPersist one client reference and its payload before the first send. On recovery, look up that reference. A confirmed commit resolves to `SUCCEEDED`. A stale `not found`, pending response, or failed lookup leaves the result `OUTCOME_UNKNOWN`. Resubmit only if the supplier guarantees idempotent replay for that same reference and payload within its documented scope and retention window, or if authoritative evidence establishes that the original attempt did not execute. A searchable reference alone provides no replay guarantee.\n\nMake the caller the retry owner and disable SDK retries. If the SDK cannot disable them, require its actual sends and waits to obey the same attempt cap, deadline, cancellation, and replay rules before using it for submission. Use one monotonic deadline across submits, lookups, and waits. Bound each request by the lesser of its configured timeout and the remaining budget. Use increasing backoff with jitter, treating the supplier’s earliest retry time as a lower bound. Deadline or attempt exhaustion preserves any unresolved commit uncertainty.\n\n### Deterministic acceptance cases\n\nUse a scripted supplier and SDK, a fake monotonic clock, and fixed jitter. Assert caller-visible outcomes, actual sends, and supplier commit counts.\n\n| Scenario | Expected result |\n|---|---|\n| Supplier commits, then drops the reply. Lookup first returns stale `not found`, then confirms the commit. | Remain `OUTCOME_UNKNOWN` after the first lookup, then resolve to `SUCCEEDED`. One submit and one commit. |\n| The reply is lost and lookup stays inconclusive through the deadline. | Return `OUTCOME_UNKNOWN` with the original reference. Zero resubmits without a replay guarantee. |\n| The supplier guarantees idempotent replay and the first reply is lost. | Replay with the same reference and payload. The supplier returns the original result. Two sends and one commit. |\n| A request reaches its per-request timeout after it may have been sent. | Stop waiting at the configured timeout and preserve `OUTCOME_UNKNOWN`. The overall deadline still bounds any lookup. |\n| A transient failure is proven to have had no effect, then the next attempt succeeds. | Retry at the expected fake-clock time and return `SUCCEEDED`. Two sends and one commit. |\n| The caller cancels during backoff, or cancels while a commit is possible. | During backoff after a confirmed no-effect attempt, return `CANCELLED`. With a possible commit, return `OUTCOME_UNKNOWN`. Neither case starts another request. |\n| The supplier returns a definitive validation rejection. | Return `REJECTED` after one send and zero commits. |\n| The attempt cap or deadline is exhausted. | Return `RETRY_EXHAUSTED` for proven no-effect attempts and `OUTCOME_UNKNOWN` for unresolved attempts. Assert the cap against actual sends, including any SDK retries. |\n| The supplier requests a 12-second wait with 8 seconds left. | Return immediately with the applicable outcome and retry guidance. Zero additional sends and zero time spent waiting for that retry. |",
+      "trace_sha256": "18f966cbdd2c1057a3318e8fb6116e8146692f640b154e86642f22d96b6de253",
+      "command_count": 19,
+      "observed_output_bytes": 53930,
+      "usage": {
+        "input_tokens": 454700,
+        "cached_input_tokens": 427776,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1877,
+        "reasoning_output_tokens": 7
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "54790fc256f7466d2cabfa51f0ac8fff2514b66173a1c2b6ee9ee3e7bac6972e"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc 'for f in comm-skill-rule-ownership comm-human-folder-guides; do cmp \".claude/rules/$f.md\" \"harness/common/rules/$f.md\" && realpath \".claude/rules/$f.md\"; done\ncat '\"'.claude/rules/comm-task-commit-on-completion.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "60221bec594f3e04a215c95d3c613528a0257d7a6ae48ce767b649bb804dc732"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 27,
+          "end": 28,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c"
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-select-development-workflow/references/choice.md && rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git/**'\"' -g '\"'!harness/common/**'\"' -g '\"'!harness/project/inbox/**'\"' -g '\"'!harness/project/testing/evidence/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "333dd80762bfd8849c1936d2927691aebae566a9c050bfe3717789876ee204cd"
+        },
+        {
+          "start": 41,
+          "end": 42,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-retry-external-operations/SKILL.md && cat inputs.csv'",
+          "exit_code": 0,
+          "stdout_sha256": "11e4f3bc731a9ca5da22beabd76b274d6b4f95b102f5847aded96cad1510d1f3"
+        }
+      ]
+    },
+    {
+      "mode": "combined",
+      "scenario": "implicit",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md",
+      "verified_resources": [],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          36,
+          37,
+          0
+        ],
+        [
+          38,
+          39,
+          0
+        ]
+      ],
+      "target_hits": [
+        [
+          40,
+          41
+        ]
+      ],
+      "app": null,
+      "answer": "Return `OUTCOME_UNKNOWN` when the supplier may have committed and the reply is lost. The caller should keep the original client reference and reconcile by that reference. If the supplier asks for a 12-second wait and only 8 seconds remain, end the synchronous operation immediately. Make zero further supplier calls in that operation.\n\nThe fixture contains no API or caller implementation. These are proposed contract decisions and acceptance cases.\n\n### API and caller contract\n\nReturn the client reference, an outcome, a machine-readable reason, and the supplier submission ID when known. Keep the submission outcome separate from why the caller stopped waiting.\n\n| Observation | Return | Caller action |\n|---|---|---|\n| Supplier confirms the submission | `COMMITTED` with supplier submission ID | Finish. |\n| Supplier definitively rejects the submission | `REJECTED` with a stable reason code | Stop retries. |\n| Failure is known to have occurred before dispatch, or the supplier contract guarantees no execution | `NOT_EXECUTED` with the failure reason | Retry only for a transient cause, within the remaining budget. |\n| Timeout, disconnect, cancellation after possible dispatch, or an ambiguous supplier error | `OUTCOME_UNKNOWN` with the stop reason | Preserve the reference and reconcile. |\n| Cancellation, attempt exhaustion, or deadline before any possible execution | `NOT_EXECUTED` with `CANCELLED`, `ATTEMPTS_EXHAUSTED`, or `DEADLINE_EXCEEDED` | End the current operation. |\n\nAn earlier ambiguous attempt keeps the outcome unknown until resolved. A later attempt that fails before dispatch cannot clear that uncertainty. Classify supplier errors using their documented execution semantics, since a transient error can still follow a commit.\n\n### Recovery and retry budget\n\n- Persist the client reference and the original payload before dispatch. On a lost reply or caller restart, look up the submission using that reference. A confirmed commit resolves the operation. A stale, missing, pending, or failed lookup leaves it `OUTCOME_UNKNOWN`. Reliable confirmation of non-execution permits another submission if the cause is retryable.\n- Treat the client reference as a lookup key. Replay an ambiguous submission only if the supplier explicitly guarantees idempotency for that key or a dedicated idempotency key. Reuse the same key and payload within the guarantee’s scope and validity window. Otherwise, continue reconciliation without resubmitting.\n- Make the caller the retry owner and disable SDK retries. If the SDK cannot disable them, count every internal attempt and wait against the same limits. If the SDK cannot enforce those limits or prevent unsafe replays, exclude that SDK configuration from submission.\n- For the fixture, use a **20-second overall deadline**, a **3-second timeout per supplier request** capped by time remaining, and at most **three submission attempts and three status lookups** within that deadline. Use increasing delays with jitter. Start the next request no earlier than both the backoff and the supplier’s requested retry time. Cancellation stops the active loop and pending waits.\n- For **12 seconds requested with 8 seconds remaining**, return `DEADLINE_EXCEEDED` as the stop reason and preserve the outcome. Return `NOT_EXECUTED` if non-execution is established, or `OUTCOME_UNKNOWN` if a commit is possible. Include the supplier’s earliest retry time. Any later recovery must honor that time for the operation it applies to.\n\n### Deterministic acceptance cases\n\nUse a fake monotonic clock, a scripted supplier and SDK, and fixed jitter. Assert the returned outcome and reason, exact request counts and timestamps, and the supplier’s commit count.\n\n| Scenario | Expected result |\n|---|---|\n| Supplier commits and drops the reply. Lookup confirms the commit. | `COMMITTED` with the original submission ID. One submission call and one supplier commit. |\n| Supplier commits and drops the reply. Lookups remain stale or fail. | `OUTCOME_UNKNOWN` at exhaustion. One submission call and one supplier commit. A later lookup can resolve the same reference. |\n| Reply is lost and the supplier guarantees same-key replay. | A permitted replay uses the original key and payload, returns the original submission ID, and leaves exactly one commit. |\n| First attempt fails before dispatch. The next attempt succeeds. | Retry starts at the fixed backoff time. Final result is `COMMITTED`, with one supplier commit. |\n| A dispatched request hangs. | The attempt stops at 3 seconds, or sooner if the overall deadline arrives first. A possible commit remains `OUTCOME_UNKNOWN` unless reconciliation resolves it. |\n| Caller cancels before dispatch, during backoff, or after possible dispatch. | The active loop stops with no later requests. Return `NOT_EXECUTED` if no attempt could have executed, or `OUTCOME_UNKNOWN` if an attempt could have committed. |\n| Supplier returns a definitive permanent rejection. | `REJECTED` after one submission call, with no retry or wait. |\n| Submission cap, lookup cap, or overall deadline is reached. | No call beyond the applicable limit. Preserve any unresolved outcome. Verify SDK-internal attempts and waits against the same budget if enabled. |\n| Supplier requests 12 seconds with 8 seconds remaining. | Immediate return with `DEADLINE_EXCEEDED` and the established outcome. No wait and no additional supplier request. |",
+      "trace_sha256": "0f6153a68739f11b744a837b1e9761f8706c1a71a484ad6d6971d764ab7aca9e",
+      "command_count": 21,
+      "observed_output_bytes": 53816,
+      "usage": {
+        "input_tokens": 319794,
+        "cached_input_tokens": 293120,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1792,
+        "reasoning_output_tokens": 0
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-package-independence.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-entrypoint-links-rule.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-instruction-order.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-dependencies-through-uv.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-confirm-development-workflow.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 24,
+          "end": 25,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 26,
+          "end": 27,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-task-commit-on-completion.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 28,
+          "end": 29,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-ban-harness-symlinks.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-startup-readiness.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "227d70eb6fc88c5e6d609740d6bec75d29f42d50d446d9b19231da3d9daf1a3c"
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "4ee56c9b8734b22c321394130c810dc8ff4e8fcc12b7b4df5eddccce1c7bcb6b"
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md harness/common/skills/comm-retry-external-operations/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "936bd602cd606c13c5cdae719b746850e520ff8746270c9bf41d809597d6d15f"
+        },
+        {
+          "start": 42,
+          "end": 43,
+          "command": "/bin/bash -lc \"rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"' -g '\"'!.git/**'\"' -g '\"'!.agents/**'\"' -g '\"'!.claude/**'\"' ; rg --files harness/project -g '\"'!README.human.md'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "1ee73c92692001becd96c4ac1707933604cef3033aeb419e3ef70e753d29f67f"
+        },
+        {
+          "start": 44,
+          "end": 45,
+          "command": "/bin/bash -lc 'cat harness/project/decisions/existing.md inputs.csv'",
+          "exit_code": 0,
+          "stdout_sha256": "2a4a84a680d41bb6ff7a3fd1dba5785c70894730af45c727e7b59ab110ece468"
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "scenario": "csv",
+      "checked": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/menu.md",
+      "verified_resources": [
+        "harness/common/skills/comm-select-development-workflow/references/choice.md",
+        "harness/common/skills/comm-select-development-workflow/references/menu.md"
+      ],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          40,
+          41,
+          0
+        ],
+        [
+          40,
+          41,
+          3661
+        ]
+      ],
+      "target_hits": [],
+      "app": true,
+      "answer": "184",
+      "trace_sha256": "4100938c27d516c546055875076dcd51c2529da26414793b2f7d6c9e4ff96782",
+      "command_count": 20,
+      "observed_output_bytes": 57023,
+      "usage": {
+        "input_tokens": 487509,
+        "cached_input_tokens": 457856,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 824,
+        "reasoning_output_tokens": 0
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 24,
+          "end": 25,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 26,
+          "end": 27,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "exit_code": 0,
+          "stdout_sha256": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f"
+        },
+        {
+          "start": 28,
+          "end": 29,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "exit_code": 0,
+          "stdout_sha256": "5acd03a427a658a00722311f3f242d34f1e15dbdf8451cbafeac917f66cf5527"
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-task-commit-on-completion.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c"
+        },
+        {
+          "start": 42,
+          "end": 43,
+          "command": "/bin/bash -lc \"python3 -B -c 'import csv; from decimal import Decimal; f = open(\\\"inputs.csv\\\", newline=\\\"\\\"); row, = csv.DictReader(f); print(Decimal(row[\\\"quantity\\\"]) * Decimal(row[\\\"unit_value\\\"]))'\"",
+          "exit_code": 0,
+          "stdout_sha256": "58f324108d121cf6db3f474460cddae0deb18ed351e863a00cf32b39c20387cd"
+        }
+      ]
+    },
+    {
+      "mode": "combined",
+      "scenario": "csv",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/menu.md"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/menu.md",
+      "verified_resources": [],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          38,
+          39,
+          0
+        ],
+        [
+          38,
+          39,
+          3661
+        ]
+      ],
+      "target_hits": [],
+      "app": true,
+      "answer": "184",
+      "trace_sha256": "54a3c86deced9fb9643e7733cd5e6d835f3caada37b024d12d23909828657c42",
+      "command_count": 19,
+      "observed_output_bytes": 57023,
+      "usage": {
+        "input_tokens": 458124,
+        "cached_input_tokens": 429056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 843,
+        "reasoning_output_tokens": 0
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "9054e3698933b0b686b776a746a0e264fcb8c7715dd66b0d1b04497666ccc288"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-task-commit-on-completion.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 26,
+          "end": 27,
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-select-development-workflow/SKILL.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 28,
+          "end": 29,
+          "command": "/bin/bash -lc \"cat 'harness/common/skills/comm-select-development-workflow/references/menu.md' 'harness/common/skills/comm-select-development-workflow/references/choice.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5bb43ce9eeb52809b93596ae5b9e7b27ee68d1775a08e65419f7fe4c5f199b2c"
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "command": "/bin/bash -lc \"cat 'harness/common/INDEX.md' 'harness/project/INDEX.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c"
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "command": "/bin/bash -lc \"python3 -B -c 'import csv; from decimal import Decimal; f=open(\\\"inputs.csv\\\", newline=\\\"\\\", encoding=\\\"utf-8-sig\\\"); row, = csv.DictReader(f); print(Decimal(row[\\\"quantity\\\"]) * Decimal(row[\\\"unit_value\\\"]))'\"",
+          "exit_code": 0,
+          "stdout_sha256": "58f324108d121cf6db3f474460cddae0deb18ed351e863a00cf32b39c20387cd"
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "scenario": "actions",
+      "checked": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/menu.md",
+      "verified_resources": [
+        "harness/common/skills/comm-select-development-workflow/references/choice.md",
+        "harness/common/skills/comm-select-development-workflow/references/menu.md"
+      ],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          39,
+          40,
+          0
+        ],
+        [
+          41,
+          42,
+          0
+        ]
+      ],
+      "target_hits": [
+        [
+          43,
+          44
+        ]
+      ],
+      "app": {
+        "lost": {
+          "result": "report_success",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "stale": {
+          "result": "report_unknown",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "recover": {
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 1,
+          "elapsed": 1
+        },
+        "slow": {
+          "result": "timeout",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 2
+        },
+        "abort": {
+          "result": "cancel",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "bad": {
+          "result": "reject",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "sdk": {
+          "result": "exhaust",
+          "physical_sends": 3,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "hint": {
+          "result": "exhaust",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "allowed": {
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 1
+        }
+      },
+      "answer": "{\n  \"lost\": [\"lookup\", \"report_success\"],\n  \"stale\": [\"lookup\", \"report_unknown\"],\n  \"recover\": [\"wait\", \"send\", \"report_success\"],\n  \"slow\": [\"cap_timeout\", \"send\", \"timeout\"],\n  \"abort\": [\"cancel\"],\n  \"bad\": [\"reject\"],\n  \"sdk\": [\"exhaust\"],\n  \"hint\": [\"exhaust\"],\n  \"allowed\": [\"lookup\", \"wait\", \"send\", \"report_success\"]\n}",
+      "trace_sha256": "1b30291956429a6cf7c805f201f6a8832a7865259b68e87a8dfb14d32a1d2e26",
+      "command_count": 21,
+      "observed_output_bytes": 58348,
+      "usage": {
+        "input_tokens": 531189,
+        "cached_input_tokens": 499328,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 989,
+        "reasoning_output_tokens": 41
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "d1d58f3e33db5dc3b13cbcf4be4638cb3f3ceb7474f7d3d5943878badc157e5d"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md'",
+          "exit_code": 0,
+          "stdout_sha256": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f"
+        },
+        {
+          "start": 27,
+          "end": 28,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/menu.md'",
+          "exit_code": 0,
+          "stdout_sha256": "5acd03a427a658a00722311f3f242d34f1e15dbdf8451cbafeac917f66cf5527"
+        },
+        {
+          "start": 29,
+          "end": 30,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-task-commit-on-completion.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 31,
+          "end": 32,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 33,
+          "end": 34,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 35,
+          "end": 36,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 37,
+          "end": 38,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 39,
+          "end": 40,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "227d70eb6fc88c5e6d609740d6bec75d29f42d50d446d9b19231da3d9daf1a3c"
+        },
+        {
+          "start": 41,
+          "end": 42,
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "4ee56c9b8734b22c321394130c810dc8ff4e8fcc12b7b4df5eddccce1c7bcb6b"
+        },
+        {
+          "start": 43,
+          "end": 44,
+          "command": "/bin/bash -lc 'cat .agents/skills/comm-retry-external-operations/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb"
+        }
+      ]
+    },
+    {
+      "mode": "combined",
+      "scenario": "actions",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-retry-external-operations/SKILL.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/menu.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-retry-external-operations/SKILL.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md",
+      "verified_resources": [
+        "harness/common/skills/comm-select-development-workflow/references/choice.md",
+        "harness/common/skills/comm-select-development-workflow/references/menu.md"
+      ],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          42,
+          43,
+          0
+        ],
+        [
+          42,
+          43,
+          3661
+        ]
+      ],
+      "target_hits": [
+        [
+          44,
+          45
+        ]
+      ],
+      "app": {
+        "lost": {
+          "result": "report_success",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "stale": {
+          "result": "report_unknown",
+          "physical_sends": 0,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 0
+        },
+        "recover": {
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 1,
+          "elapsed": 1
+        },
+        "slow": {
+          "result": "timeout",
+          "physical_sends": 1,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 2
+        },
+        "abort": {
+          "result": "cancel",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "bad": {
+          "result": "reject",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "sdk": {
+          "result": "exhaust",
+          "physical_sends": 3,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "hint": {
+          "result": "exhaust",
+          "physical_sends": 0,
+          "initial_writes": 0,
+          "final_writes": 0,
+          "elapsed": 0
+        },
+        "allowed": {
+          "result": "report_success",
+          "physical_sends": 1,
+          "initial_writes": 1,
+          "final_writes": 1,
+          "elapsed": 1
+        }
+      },
+      "answer": "{\n  \"lost\": [\"lookup\", \"report_success\"],\n  \"stale\": [\"lookup\", \"report_unknown\"],\n  \"recover\": [\"wait\", \"send\", \"report_success\"],\n  \"slow\": [\"cap_timeout\", \"send\", \"timeout\"],\n  \"abort\": [\"cancel\"],\n  \"bad\": [\"reject\"],\n  \"sdk\": [\"exhaust\"],\n  \"hint\": [\"exhaust\"],\n  \"allowed\": [\"lookup\", \"wait\", \"send\", \"report_success\"]\n}",
+      "trace_sha256": "2a8a7e594e9190aea6ea558fa589140cfb5e0f95905b3e5bb150786430c65e90",
+      "command_count": 21,
+      "observed_output_bytes": 58348,
+      "usage": {
+        "input_tokens": 524374,
+        "cached_input_tokens": 492928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1095,
+        "reasoning_output_tokens": 39
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc 'for n in comm-skill-rule-ownership comm-human-folder-guides; do cmp \".claude/rules/$n.md\" \"harness/common/rules/$n.md\" || exit; done'",
+          "exit_code": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-package-independence.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-entrypoint-links-rule.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-instruction-order.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-dependencies-through-uv.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-confirm-development-workflow.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 26,
+          "end": 27,
+          "command": "/bin/bash -lc 'cat \"harness/common/skills/comm-select-development-workflow/SKILL.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 28,
+          "end": 29,
+          "command": "/bin/bash -lc 'cat \"harness/common/skills/comm-select-development-workflow/references/choice.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f"
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "command": "/bin/bash -lc 'cat \"harness/common/skills/comm-select-development-workflow/references/menu.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "5acd03a427a658a00722311f3f242d34f1e15dbdf8451cbafeac917f66cf5527"
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-task-commit-on-completion.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-ban-harness-symlinks.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-startup-readiness.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 42,
+          "end": 43,
+          "command": "/bin/bash -lc 'cat \"harness/common/INDEX.md\" \"harness/project/INDEX.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c"
+        },
+        {
+          "start": 44,
+          "end": 45,
+          "command": "/bin/bash -lc \"cat \\\"harness/common/skills/comm-retry-external-operations/SKILL.md\\\"\nrg -il 'retry|idempotency|повтор.*запрос' harness/project -g '*.md' -g '\"'!README.human.md'\"' -g '\"'!**/inbox/**'\"' -g '\"'!**/evidence/**'\"'\"",
+          "exit_code": 1,
+          "stdout_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb"
+        }
+      ]
+    },
+    {
+      "mode": "common",
+      "scenario": "timer",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/menu.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md"
+      ],
+      "raw_auditor": "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/choice.md, необоснованное, неполное или совмещённое чтение скилла: harness/common/skills/comm-select-development-workflow/references/menu.md, не прочитаны нужные для задачи скиллы: harness/common/skills/comm-retry-external-operations/SKILL.md",
+      "verified_resources": [],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          36,
+          37,
+          0
+        ],
+        [
+          36,
+          37,
+          3661
+        ]
+      ],
+      "target_hits": [
+        [
+          38,
+          39
+        ]
+      ],
+      "app": {
+        "attempt_timeout": 2,
+        "hint_delay": 3,
+        "new_sends_after_cancel": 0
+      },
+      "answer": "{\n  \"attempt_timeout\": 2,\n  \"hint_delay\": 3,\n  \"new_sends_after_cancel\": 0\n}",
+      "trace_sha256": "db5906b8780abee5455bd9582d130a05ec98ab5114109c873b16d22fb729720d",
+      "command_count": 19,
+      "observed_output_bytes": 58410,
+      "usage": {
+        "input_tokens": 269931,
+        "cached_input_tokens": 214272,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 640,
+        "reasoning_output_tokens": 0
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-package-independence.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-entrypoint-links-rule.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-instruction-order.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-dependencies-through-uv.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-confirm-development-workflow.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 24,
+          "end": 25,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "a234971f55e7141b751be6ffb084ad86171a89ba1954a34fdd553e02286c2a2c"
+        },
+        {
+          "start": 26,
+          "end": 27,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-task-commit-on-completion.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 28,
+          "end": 29,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-ban-harness-symlinks.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-startup-readiness.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-application-config-git.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "f48ba2cbe9ab87a65b9fe0969d9b1e05dde33ce56e2b061e40e28db8e8a7ca5c"
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-select-development-workflow/references/choice.md && cat harness/common/skills/comm-retry-external-operations/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "936bd602cd606c13c5cdae719b746850e520ff8746270c9bf41d809597d6d15f"
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "command": "/bin/bash -lc \"cat harness/common/skills/comm-select-development-workflow/references/menu.md && rg --files harness/common/skills/comm-retry-external-operations -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "c2f6b7e6f0aa011ebac635fec5d95035e8e374431fdcb90d7d849e135878826b"
+        }
+      ]
+    },
+    {
+      "mode": "combined",
+      "scenario": "timer",
+      "checked": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 2",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 10",
+        "Всего правил в `.claude/rules/`: 12",
+        "Всего правил прочитано: 12",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 12 из 12"
+      ],
+      "raw_auditor": "Результат: Успешно - прочтено 12 из 12",
+      "verified_resources": [],
+      "first_reads": {
+        ".claude/rules/comm-skill-rule-ownership.md": "START",
+        ".claude/rules/comm-human-folder-guides.md": "START",
+        ".claude/rules/comm-package-independence.md": "AGENTS",
+        ".claude/rules/comm-entrypoint-links-rule.md": "AGENTS",
+        ".claude/rules/comm-instruction-order.md": "AGENTS",
+        ".claude/rules/comm-dependencies-through-uv.md": "AGENTS",
+        ".claude/rules/comm-confirm-development-workflow.md": "AGENTS",
+        ".claude/rules/comm-task-commit-on-completion.md": "AGENTS",
+        ".claude/rules/comm-ban-harness-symlinks.md": "AGENTS",
+        ".claude/rules/comm-application-startup-readiness.md": "AGENTS",
+        ".claude/rules/comm-user-owned-entrypoints.md": "AGENTS",
+        ".claude/rules/comm-application-config-git.md": "AGENTS"
+      },
+      "duplicates": {},
+      "skill_duplicates": {},
+      "starts": [
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          5,
+          6,
+          1087
+        ]
+      ],
+      "indexes": [
+        [
+          33,
+          34,
+          0
+        ],
+        [
+          35,
+          36,
+          0
+        ]
+      ],
+      "target_hits": [
+        [
+          37,
+          38
+        ]
+      ],
+      "app": {
+        "attempt_timeout": 2,
+        "hint_delay": 3,
+        "new_sends_after_cancel": 0
+      },
+      "answer": "{\n  \"attempt_timeout\": 2,\n  \"hint_delay\": 3,\n  \"new_sends_after_cancel\": 0\n}",
+      "trace_sha256": "3c831373a61c082e2796926e0619b56b96ab7f9f09e5dedd3c71d60d4adb9733",
+      "command_count": 18,
+      "observed_output_bytes": 51694,
+      "usage": {
+        "input_tokens": 217571,
+        "cached_input_tokens": 165120,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 484,
+        "reasoning_output_tokens": 0
+      },
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "554c9e361d5e3c5784a8217b6c8ac03ab79fe13ddb33707d23c12c9e932a3611"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7b36618a8ebe458e4cb0f6cdc236d9f15176f86eb4a8a4c10a6d872eb8f69957"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat .claude/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "23e7b2d274944eb484e014f54e619302c6210e75321e463e786ecaf309e1a222"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-package-independence.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "b4e2d649377a13d6f5a23802c2861e529d698875c1d35e918f39cac7cd11018e"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-entrypoint-links-rule.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "cb75466c882a85be39e675a20d124fc4dbc9b02db67ab1c7744721e1fc2323b2"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-dependencies-through-uv.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-confirm-development-workflow.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "e8ddbf51340f73fc7c4ffef0faae66f61e01c5a34859de716de0c5e46fec1d57"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-task-commit-on-completion.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "5c6edf318f06b51d29a40e886a823c64519a3c2c3f89e344276fbe48c4186a58"
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-ban-harness-symlinks.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "695f8a5cb9b56aa0c1101d21d8588e5801192014fe0cb2e16d5335d5b294f47c"
+        },
+        {
+          "start": 27,
+          "end": 28,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-startup-readiness.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "6ee8ae610d505ff72a1971419053412c33761f605ab54ea7b9eee5c003096658"
+        },
+        {
+          "start": 29,
+          "end": 30,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 31,
+          "end": 32,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-application-config-git.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "f83eb86bea352f1cdc487d1c28c9075af132b8b8adad8a8ec0de1aaefac40333"
+        },
+        {
+          "start": 33,
+          "end": 34,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "227d70eb6fc88c5e6d609740d6bec75d29f42d50d446d9b19231da3d9daf1a3c"
+        },
+        {
+          "start": 35,
+          "end": 36,
+          "command": "/bin/bash -lc 'cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "4ee56c9b8734b22c321394130c810dc8ff4e8fcc12b7b4df5eddccce1c7bcb6b"
+        },
+        {
+          "start": 37,
+          "end": 38,
+          "command": "/bin/bash -lc 'cat harness/common/skills/comm-retry-external-operations/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "62a3632dac09626f5e0567c32816e6134037e78db2823ee71631bbc84fd23edb"
+        }
+      ]
+    },
+    {
+      "scenario": "linked",
+      "mode": "common",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 6",
+        "Всего правил в `.claude/rules/`: 9",
+        "Всего правил прочитано: 9",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - необоснованное, неполное или совмещённое чтение скилла: .agents/skills/example/SKILL.md, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md"
+      ],
+      "duplicates": {},
+      "skill_duplicates": {},
+      "sha256": "da0d312e610d90e0991de38b4c90b3752ab39259b1e4bd27b4cf820eead6dd32",
+      "complete": true,
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "7ce794e5f81e66626b1ab056aa64d7626e59d04d5dcd353a5894e4c7b8a4f8c3"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "5790c88fabadc7231c00bd426f8e82bb34f54c7bc074a91622438ce6b93305fe"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc 'cat harness/common/rules/request-kind.md'",
+          "exit_code": 0,
+          "stdout_sha256": "91614c1e88a2a56c06474fc56aa0d64bc8860e4e282a571fb466b54bb9560dae"
+        },
+        {
+          "start": 14,
+          "end": 15,
+          "command": "/bin/bash -lc 'cat .agents/skills/config-check/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "e5ea30f0b5ac0f54c884195f175a22d12d9037ff59875420834e6b0138fbd6ac"
+        },
+        {
+          "start": 16,
+          "end": 17,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "8c24fe6cfa19af2f09084eded5a5c7a1190e91a178136053295666b175c2ed32"
+        },
+        {
+          "start": 18,
+          "end": 19,
+          "command": "/bin/bash -lc 'for f in comm-skill-rule-ownership comm-human-folder-guides request-kind; do realpath .claude/rules/$f.md; cmp .claude/rules/$f.md harness/common/rules/$f.md || exit; done'",
+          "exit_code": 0,
+          "stdout_sha256": "008dac1062b308a4abed4fff78a98da57fe9b4ae14b614511ea6d5c65aaf77ec"
+        },
+        {
+          "start": 20,
+          "end": 21,
+          "command": "/bin/bash -lc 'cat \".claude/rules/nested/personal space.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "68d83aef8dea6ec53c0885682b38e7793938df06944f23efdbd69fb4f57a49c7"
+        },
+        {
+          "start": 22,
+          "end": 23,
+          "command": "/bin/bash -lc 'cat \".claude/rules/personal.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "a275935495bf1e86f0cad04db5ce9fd1225f0e08cf3fce217d2787b178a5374c"
+        },
+        {
+          "start": 24,
+          "end": 25,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-instruction-order.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 26,
+          "end": 27,
+          "command": "/bin/bash -lc 'cat \".claude/rules/ignored/machine.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "1ac825a2fd95b68ef1036dcbd86cfc90f3e170bfa283f4af9973cb20bb9fb5c4"
+        },
+        {
+          "start": 28,
+          "end": 29,
+          "command": "/bin/bash -lc 'cat \".claude/rules/remaining.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "bd85b1e7920b72ee107f1002294c65ed982dc9d46e5fa834a9ba5b5c2bb006d6"
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7a3d51707cf8a5086fca55a00260a1997282cb6fa8c848e27cb2116ba054186"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc \"cat .agents/skills/example/SKILL.md && rg --files --hidden -g '\"'!README.human.md'\"' -g '\"'!.git'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "74a02910e419c04684dd887c9db5d48d9891ac174a94af697f0bddc9d60b542a"
+        }
+      ]
+    },
+    {
+      "scenario": "linked",
+      "mode": "combined",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 5",
+        "Всего правил в `.claude/rules/`: 9",
+        "Всего правил прочитано: 8",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - до INDEX не подтверждены полные тексты: .claude/rules/remaining.md, необоснованное, неполное или совмещённое чтение скилла: .agents/skills/example/SKILL.md, прочтено 8 из 9, не прочитаны нужные для задачи скиллы: .agents/skills/example/SKILL.md"
+      ],
+      "duplicates": {},
+      "skill_duplicates": {},
+      "sha256": "9a24d86cedf8377fe0a654144b0050e5d2fc50dc1372860228f655e95ea56ca5",
+      "complete": true,
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "7ce794e5f81e66626b1ab056aa64d7626e59d04d5dcd353a5894e4c7b8a4f8c3"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "5790c88fabadc7231c00bd426f8e82bb34f54c7bc074a91622438ce6b93305fe"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc 'cat harness/common/rules/request-kind.md'",
+          "exit_code": 0,
+          "stdout_sha256": "91614c1e88a2a56c06474fc56aa0d64bc8860e4e282a571fb466b54bb9560dae"
+        },
+        {
+          "start": 14,
+          "end": 15,
+          "command": "/bin/bash -lc 'cat .agents/skills/config-check/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "e5ea30f0b5ac0f54c884195f175a22d12d9037ff59875420834e6b0138fbd6ac"
+        },
+        {
+          "start": 16,
+          "end": 17,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "d55189baee0cc791929f9f4b57d69a9543796d65c1e114a90b243dc0a4e198ad"
+        },
+        {
+          "start": 18,
+          "end": 19,
+          "command": "/bin/bash -lc \"ls -l .claude/rules && cat '.claude/rules/remaining.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "d80640b824b3b573f7bb09ea735af32c02fd08381a99dbe280b5492d8c68f93e"
+        },
+        {
+          "start": 20,
+          "end": 21,
+          "command": "/bin/bash -lc 'for name in comm-skill-rule-ownership comm-human-folder-guides request-kind; do cmp \".claude/rules/$name.md\" \"harness/common/rules/$name.md\" || exit; done'",
+          "exit_code": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "start": 22,
+          "end": 23,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 24,
+          "end": 25,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 26,
+          "end": 27,
+          "command": "/bin/bash -lc \"cat '.claude/rules/nested/personal space.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "68d83aef8dea6ec53c0885682b38e7793938df06944f23efdbd69fb4f57a49c7"
+        },
+        {
+          "start": 28,
+          "end": 29,
+          "command": "/bin/bash -lc \"cat '.claude/rules/personal.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "a275935495bf1e86f0cad04db5ce9fd1225f0e08cf3fce217d2787b178a5374c"
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "command": "/bin/bash -lc \"cat '.claude/rules/ignored/machine.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "1ac825a2fd95b68ef1036dcbd86cfc90f3e170bfa283f4af9973cb20bb9fb5c4"
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7a3d51707cf8a5086fca55a00260a1997282cb6fa8c848e27cb2116ba054186"
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "command": "/bin/bash -lc \"cat .agents/skills/example/SKILL.md && rg --files --hidden -g '\"'!.git'\"' -g '\"'!README.human.md'\"' -g '\"'!harness/**'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "c4fbe423e48f2ba6d71eefc8986e2c6a1ea5b28a03a76e913731888aff77d16c"
+        }
+      ]
+    },
+    {
+      "scenario": "history",
+      "mode": "common",
+      "checked": true,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 6",
+        "Всего правил в `.claude/rules/`: 9",
+        "Всего правил прочитано: 9",
+        "Повторно прочитанных правил: 0",
+        "Результат: Успешно - прочтено 9 из 9"
+      ],
+      "duplicates": {},
+      "skill_duplicates": {},
+      "sha256": "9d60382d518469575f7ca8dd7e25c6e3ef2a9d93c43c522472ed4c9ec6280f07",
+      "complete": true,
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "7ce794e5f81e66626b1ab056aa64d7626e59d04d5dcd353a5894e4c7b8a4f8c3"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "5790c88fabadc7231c00bd426f8e82bb34f54c7bc074a91622438ce6b93305fe"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc 'cat harness/common/rules/request-kind.md'",
+          "exit_code": 0,
+          "stdout_sha256": "91614c1e88a2a56c06474fc56aa0d64bc8860e4e282a571fb466b54bb9560dae"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "d55189baee0cc791929f9f4b57d69a9543796d65c1e114a90b243dc0a4e198ad"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc 'for f in comm-skill-rule-ownership comm-human-folder-guides request-kind\ndo\ncmp -s \".claude/rules/$f.md\" \"harness/common/rules/$f.md\" && printf '\"'%s identical\\\\n' \\\"\"'$f\"\ndone'",
+          "exit_code": 0,
+          "stdout_sha256": "36c9ae10540acade0fba88437e56332fda0259b8b7e2f70e9a64c3bc5d8907e9"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc 'cat \".claude/rules/remaining.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "91614c1e88a2a56c06474fc56aa0d64bc8860e4e282a571fb466b54bb9560dae"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-user-owned-entrypoints.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc 'cat \".claude/rules/comm-instruction-order.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc 'cat \".claude/rules/nested/personal space.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "68d83aef8dea6ec53c0885682b38e7793938df06944f23efdbd69fb4f57a49c7"
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "command": "/bin/bash -lc 'cat \".claude/rules/personal.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "a275935495bf1e86f0cad04db5ce9fd1225f0e08cf3fce217d2787b178a5374c"
+        },
+        {
+          "start": 27,
+          "end": 28,
+          "command": "/bin/bash -lc 'cat \".claude/rules/ignored/machine.md\"'",
+          "exit_code": 0,
+          "stdout_sha256": "1ac825a2fd95b68ef1036dcbd86cfc90f3e170bfa283f4af9973cb20bb9fb5c4"
+        },
+        {
+          "start": 29,
+          "end": 30,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "56bbf9984c18f1db8a48467200c38f455b530b857380d3a051f633a738461f47"
+        },
+        {
+          "start": 31,
+          "end": 32,
+          "command": "/bin/bash -lc 'cat .agents/skills/example/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "e78dec733ef5aa024f5bf6850052fa7a3b6a5330deb4a528fb52d1a76a88dc98"
+        }
+      ]
+    },
+    {
+      "scenario": "history",
+      "mode": "combined",
+      "checked": false,
+      "report": [
+        "Правила `.claude/rules/` через ссылки в START.md: 3",
+        "Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: 5",
+        "Всего правил в `.claude/rules/`: 9",
+        "Всего правил прочитано: 8",
+        "Повторно прочитанных правил: 0",
+        "Результат: Ошибка - до INDEX не подтверждены полные тексты: .claude/rules/remaining.md, прочтено 8 из 9"
+      ],
+      "duplicates": {},
+      "skill_duplicates": {},
+      "sha256": "f07913153264ffa1dd3d383fadfbfc5ab6b7a398968261a15cb0ae943cb2622f",
+      "complete": true,
+      "command_receipts": [
+        {
+          "start": 3,
+          "end": 4,
+          "command": "/bin/bash -lc 'python3 harness/common/checks/ensure_entrypoint_links.py'",
+          "exit_code": 0,
+          "stdout_sha256": "7ce794e5f81e66626b1ab056aa64d7626e59d04d5dcd353a5894e4c7b8a4f8c3"
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "command": "/bin/bash -lc 'cat harness/common/START.md && cat harness/project/START.md'",
+          "exit_code": 0,
+          "stdout_sha256": "5790c88fabadc7231c00bd426f8e82bb34f54c7bc074a91622438ce6b93305fe"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-skill-rule-ownership.md'",
+          "exit_code": 0,
+          "stdout_sha256": "d7de6f642fcf86e91f451c7cb7aaf753682b35c013087a92ac8e32ed16a09efd"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "command": "/bin/bash -lc 'cat harness/common/rules/comm-human-folder-guides.md'",
+          "exit_code": 0,
+          "stdout_sha256": "7adc096cc718ec7f12a6d3c0e7e73f19593648210d3eaa5842ec9ce7615b9d84"
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "command": "/bin/bash -lc 'cat harness/common/rules/request-kind.md'",
+          "exit_code": 0,
+          "stdout_sha256": "91614c1e88a2a56c06474fc56aa0d64bc8860e4e282a571fb466b54bb9560dae"
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "command": "/bin/bash -lc \"rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '\"'!README.human.md'\"'\"",
+          "exit_code": 0,
+          "stdout_sha256": "d8ba18e8a1794cfa93d7f6c9f17329dbf9a430349b51701b9476141be90b8016"
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "command": "/bin/bash -lc 'for name in comm-skill-rule-ownership comm-human-folder-guides request-kind; do cmp -s \".claude/rules/$name.md\" \"harness/common/rules/$name.md\" || exit 1; done\ncat '\"'.claude/rules/remaining.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "91614c1e88a2a56c06474fc56aa0d64bc8860e4e282a571fb466b54bb9560dae"
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-user-owned-entrypoints.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "08684e97bb7c1a317222a7cbf7a731dd75db2f55cca350130927992675e3914f"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "command": "/bin/bash -lc \"cat '.claude/rules/comm-instruction-order.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "297fe8cea2c7f55ca4b7bbd7082304c1cbf0bc42ed70c289b780da9d709d5213"
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "command": "/bin/bash -lc \"cat '.claude/rules/personal.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "a275935495bf1e86f0cad04db5ce9fd1225f0e08cf3fce217d2787b178a5374c"
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "command": "/bin/bash -lc \"cat '.claude/rules/nested/personal space.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "68d83aef8dea6ec53c0885682b38e7793938df06944f23efdbd69fb4f57a49c7"
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "command": "/bin/bash -lc \"cat '.claude/rules/ignored/machine.md'\"",
+          "exit_code": 0,
+          "stdout_sha256": "1ac825a2fd95b68ef1036dcbd86cfc90f3e170bfa283f4af9973cb20bb9fb5c4"
+        },
+        {
+          "start": 27,
+          "end": 28,
+          "command": "/bin/bash -lc 'cat harness/common/INDEX.md && cat harness/project/INDEX.md'",
+          "exit_code": 0,
+          "stdout_sha256": "56bbf9984c18f1db8a48467200c38f455b530b857380d3a051f633a738461f47"
+        },
+        {
+          "start": 29,
+          "end": 30,
+          "command": "/bin/bash -lc 'cat .agents/skills/example/SKILL.md'",
+          "exit_code": 0,
+          "stdout_sha256": "e78dec733ef5aa024f5bf6850052fa7a3b6a5330deb4a528fb52d1a76a88dc98"
+        }
+      ]
+    }
+  ]
+}
