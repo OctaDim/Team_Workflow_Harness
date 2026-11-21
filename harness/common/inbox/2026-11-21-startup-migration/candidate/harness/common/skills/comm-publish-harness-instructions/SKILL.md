@@ -6,13 +6,10 @@ description: Use when publishing or restoring a prepared skill or rule version t
 # Publish an authorized version
 
 Identify full candidate, exact version/source/native scope, current reports and
-stage permissions. Before transfer read [gate.md](references/gate.md) and before
-placement/copy checks read [placement-contract.md](references/placement-contract.md).
+stage permissions. Перед переносом прочитай файл `harness/common/skills/comm-publish-harness-instructions/references/gate.md` и перед сверкой размещения и копий прочитай файл `harness/common/skills/comm-publish-harness-instructions/references/placement-contract.md`.
 
 1. Reconcile current mandatory checks and authorization. Changes reset status;
-   outdated/missing/failed checks cannot borrow earlier success. Use
-   [SKILL.md](../comm-validate-harness-instructions/SKILL.md) for required
-   validation, not a new design stage.
+   outdated/missing/failed checks cannot borrow earlier success. Для обязательной проверки прочитай файл `harness/common/skills/comm-validate-harness-instructions/SKILL.md`. Проектирование к этой стадии не относится.
 2. Report pass, observed failure or missing check per client and installation mode. Only missing checks may receive an explicit version-specific release exception. Resolve uncovered gaps before copying; preserve real
    statuses and scoped approvals. Other exceptions do not transfer.
 3. Publish approved files into canonical sources first. Synchronize working copies from those sources as one approved set. Stop on

@@ -52,7 +52,7 @@ Use the exact enabled catalogue name: `plugin:skill` for plugins, the
 registered name for local and system skills. Verify one intended owner per
 supported host. Preserve when to look up, read and apply it, and its inputs.
 If a required name is absent or ambiguous, explain and stop that action.
-For repository-local Markdown links use the exact destination basename and a single slash from the installation repository root. Use a unique verified fragment for a section. For every link to a skill state when to load it. A link alone never supplies the body. A skill linked by an always loaded правило keeps its own registered name and description and must also work when selected independently. Test each condition and the unrelated case.
+При оформлении внутренних ссылок применяй уже полученное always loaded правило `harness/common/rules/comm-human-folder-guides.md`. Use a unique verified fragment for a section. For every link to a skill state when to load it. A link alone never supplies the body. A skill linked by an always loaded правило keeps its own registered name and description and must also work when selected independently. Test each condition and the unrelated case.
 
 Goals: SKILL usually ≤200 words; resource sum ≤1000 static tokens,
 resolve >1200 deferred; plugin-eval:evaluate-skill A/no errors. No raised thresholds,
@@ -64,5 +64,4 @@ SKILL alone suffices; references/scripts/assets optional guidance/actions/output
 agents/openai.yaml UI/policy/deps. Exclude human bodies.
 Rules scope/behavior in body, no paths metadata; Claude ignores metadata
 except paths. Verify Codex loading separately.
-For new/edited always-loaded rules, before drafting/reporting read
-[rule-budgets.md](../../comm-validate-harness-instructions/references/rule-budgets.md).
+Перед подготовкой нового или изменённого always loaded правила либо отчёта о нём прочитай файл `harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md`.

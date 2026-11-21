@@ -17,8 +17,8 @@ import time
 
 
 OWNER = Path('harness/common/rules/comm-instruction-order.md')
-MANDATORY = 'После сверки до задачи прочитай [INDEX.md](/harness/common/INDEX.md), затем [INDEX.md](/harness/project/INDEX.md).'
-OPTIONAL = 'При необходимости навигации прочитай [INDEX.md](/harness/common/INDEX.md), затем [INDEX.md](/harness/project/INDEX.md).'
+MANDATORY = 'После сверки до задачи прочитай файл `harness/common/INDEX.md`, затем прочитай файл `harness/project/INDEX.md`.'
+OPTIONAL = 'При необходимости навигации прочитай файл `harness/common/INDEX.md`, затем прочитай файл `harness/project/INDEX.md`.'
 PROMPTS = {
     'answer': 'Сколько минут в трёх часах? Ответь по-русски.',
     'history': 'Какое значение параметра cache_ttl указано в действующей спецификации приложения? Укажи файл, из которого получен ответ.',

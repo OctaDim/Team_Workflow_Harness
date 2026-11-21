@@ -241,7 +241,7 @@ def create_project_skeleton(project, categories):
             '# Проектный harness\n\nЗдесь сохраняются материалы проекта. Например, '
             'согласованный контракт можно поместить в base/project-contract.md.\n',
             encoding='utf-8')
-        rows = ['# Проектный harness', '', '| Назначение | Каталог |', '|---|---|']
+        rows = ['# Проектный harness', '', '| Назначение | Открой каталог |', '|---|---|']
         for name, detail in categories.items():
             directory = staging / name
             directory.mkdir(parents=True, exist_ok=True)

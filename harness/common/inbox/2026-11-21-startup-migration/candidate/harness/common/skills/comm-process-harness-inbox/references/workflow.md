@@ -31,8 +31,7 @@ Creation, execution (including tests), publication and bypass have separate perm
 
 When authorized, run targeted checks for changed behavior and full project checks
 when compatibility needs them. Creation grants no candidate execution or all
-historical editions. Before suite use read
-[testing.md](../../comm-install-harness/references/testing.md).
+historical editions. Перед запуском тестов прочитай файл `harness/common/skills/comm-install-harness/references/testing.md`.
 Report scope/exit/limits: target success is not full, collection not execution.
 
 Create harness/<package>/inbox/YYYY-MM-DD-meaning/ using actual creation date;
@@ -52,8 +51,7 @@ Sequential earliest→latest; unclear chronology requires decision, not invented
 dates. Do not start next until result and required publication complete or user
 explicitly decides closure. Blocked/in progress/prepared candidate is not closure.
 Missing authorization/branch/conflict → precise question and wait, no dependent
-work. For permission/auto-review blockers read
-[SKILL.md](../../comm-resolve-permission-blockers/SKILL.md); known technical
+work. При блокировке разрешениями или автоматической проверкой прочитай файл `harness/common/skills/comm-resolve-permission-blockers/SKILL.md`; known technical
 errors within granted scope can be fixed without choosing for the user.
 Permanent result stands without inbox; its link is provenance. Accounting or
 unverified publication never upgrades agent statuses.

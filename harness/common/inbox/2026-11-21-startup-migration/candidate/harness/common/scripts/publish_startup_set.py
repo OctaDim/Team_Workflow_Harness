@@ -38,6 +38,23 @@ LEGACY = {"harness/common/START.md", "harness/project/START.md",
           "harness/common/base/AGENTS.bootstrap.json"}
 COMMON_PROGRAMS = {CHECKER, "harness/common/checks/check_human_guide_search.py",
                    "harness/common/scripts/publish_startup_set.py", "harness/common/scripts/run_tests.py"}
+# Existing documents included in the startup link migration. They have no installed mirrors.
+MIGRATION_DOCUMENTS = {
+    "harness/common/decisions/2026-10-04-user-owned-entrypoints.md",
+    "harness/common/decisions/2026-10-05-harness-architecture.md",
+    "harness/common/decisions/2026-10-05-inbox-execution-status.md",
+    "harness/common/decisions/2026-10-05-skill-rule-ownership.md",
+    "harness/common/decisions/2026-10-06-dependencies-through-uv.md",
+    "harness/common/decisions/2026-10-06-harness-structure.md",
+    "harness/common/decisions/2026-10-06-plugin-eval-human-filter.md",
+    "harness/common/decisions/2026-10-07-skills-first-knowledge.md",
+    "harness/common/docs/2026-10-05-compact-authoring.md",
+    "harness/common/docs/2026-10-05-protected-entrypoints.md",
+    "harness/common/docs/2026-10-05-skill-rule-ownership-contract.md",
+    "harness/common/docs/2026-10-06-plugin-eval-without-human.md",
+    "harness/common/docs/2026-10-06-run-tests.md",
+    "harness/common/specs/2026-10-06-structure-and-creation-dates.md",
+}
 DIGEST = re.compile(r"[a-f0-9]{64}")
 
 
@@ -302,7 +319,7 @@ def working_paths(path):
         require(parts[3].startswith(prefix), f"skill owner mismatch: {path}")
         suffix = "/".join(parts[3:])
         return [".agents/skills/" + suffix, ".claude/skills/" + suffix]
-    if path in LEGACY | COMMON_PROGRAMS or parts[2:] == ["INDEX.md"]:
+    if path in LEGACY | COMMON_PROGRAMS | MIGRATION_DOCUMENTS or parts[2:] == ["INDEX.md"]:
         return []
     if category == "testing" and len(parts) == 5:
         if parts[3:] == ["acceptance", "acceptance.md"]:
