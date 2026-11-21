@@ -1,3 +1,5 @@
-# Старт общего пакета
+# Harness
 
-[START.md](/harness/common/inbox/2026-11-21-startup-migration/history/harness/common/START.md) содержит исходный текст общего старта. На эту версию можно сослаться при разборе исторической ссылки на удаляемый общий файл.
+Рабочие переиспользуемые инструкции и опыт: skills и короткие rules.
+Основания: decisions/docs/specs/base; доказательства: testing/evidence; планы: docs/plans; временные кандидаты: inbox; незавершённое состояние: handoffs.
+Пример: skills содержит применимую процедуру, а testing/evidence сохраняет её фактическую проверку.
