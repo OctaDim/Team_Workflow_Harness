@@ -2,18 +2,18 @@
 
 | Задача | Каталог |
 |---|---|
-| Базовые контракты и настройки | [base](/harness/common/base) |
-| Решения и основания | [decisions](/harness/common/decisions) |
-| Критерии, тесты и свидетельства | [testing](/harness/common/testing) |
-| Always loaded правила | [rules](/harness/common/rules) |
-| Контекстные lazy скиллы и рабочий опыт | [skills](/harness/common/skills) |
-| Исполняемые проверки harness | [checks](/harness/common/checks) |
-| Служебные скрипты | [scripts](/harness/common/scripts) |
-| Спецификации | [specs](/harness/common/specs) |
-| Временные заявки | [inbox](/harness/common/inbox) |
-| Объяснения и исследования | [docs](/harness/common/docs) |
-| Планы | [plans](/harness/common/docs/plans) |
-| Продолжение задачи | [handoffs](/harness/common/handoffs) |
-| Критерии приёмки | [acceptance](/harness/common/testing/acceptance) |
-| Исполняемые тесты | [tests](/harness/common/testing/tests) |
-| Свидетельства механизма common | [evidence](/harness/common/testing/evidence) |
+| Базовые контракты и настройки | [base](base) |
+| Решения и основания | [decisions](decisions) |
+| Критерии, тесты и свидетельства | [testing](testing) |
+| Always loaded правила | [rules](rules) |
+| Контекстные lazy скиллы и рабочий опыт | [skills](skills) |
+| Исполняемые проверки harness | [checks](checks) |
+| Служебные скрипты | [scripts](scripts) |
+| Спецификации | [specs](specs) |
+| Временные заявки | [inbox](inbox) |
+| Объяснения и исследования | [docs](docs) |
+| Планы | [plans](docs/plans) |
+| Продолжение задачи | [handoffs](handoffs) |
+| Критерии приёмки | [acceptance](testing/acceptance) |
+| Исполняемые тесты | [tests](testing/tests) |
+| Свидетельства механизма common | [evidence](testing/evidence) |

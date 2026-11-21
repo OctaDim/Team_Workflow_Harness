@@ -6,17 +6,17 @@ description: Use when installing or moving harness packages, changing their inst
 # Install the chosen package mode
 
 Identify intended target and existing files; cwd is not proof. Before installation
-or template work read [checks.md](/harness/common/skills/comm-install-harness/references/checks.md). Common is mandatory;
+or template work read [checks.md](references/checks.md). Common is mandatory;
 project-only is unsupported.
 
 1. Choose common-only (create absent neutral project) or combined (preserve
    existing project byte-for-byte). Never replace/extend it from a changed template.
 2. Establish authorized transfer scope/current instruction gate. For publishing
-   skill/rule copies use from root
-   `harness/common/skills/comm-publish-harness-instructions/SKILL.md` only at that stage.
+   skill/rule copies use
+   [SKILL.md](../comm-publish-harness-instructions/SKILL.md) only at that stage.
 3. Install ordinary full sources/native copies and required resources; run the
    target-root startup check and two isolated-mode/negative checks.
-4. When installing/running the suite read [testing.md](/harness/common/skills/comm-install-harness/references/testing.md);
+4. When installing/running the suite read [testing.md](references/testing.md);
    preserve differing target configuration and use uv for Python dependencies.
 
 Done: chosen mode works without source-project/global-author dependencies,

@@ -6,7 +6,7 @@ description: Use when creating, executing, resuming or closing harness inbox req
 # Process one request
 
 Identify the request, status, chronology, contents and authorized stages. Before
-recording, executing or changing status read [workflow.md](/harness/common/skills/comm-process-harness-inbox/references/workflow.md).
+recording, executing or changing status read [workflow.md](references/workflow.md).
 Creation alone grants no execution.
 
 1. Reconcile results and resume remaining work. Process oldest first. Skip

@@ -4,7 +4,7 @@ Use unassisted RED, compact candidate, GREEN and skill-creator quick_validate at
 
 Use superpowers:using-superpowers, superpowers:writing-skills, plugin-eval start/analyze and plugin-eval:improve-skill (brief, fixes, comparison). plugin-eval:evaluate-plugin needs a manifest. Use openai-docs for official sources and plugin-management:plugin-management for installation. Offer missing tools; authorize benchmark, dependency and config writes. Use uv.
 
-Test Codex and Claude in neutral common-only and preserved combined installations. For installations/templates read `harness/common/skills/comm-install-harness/SKILL.md` and references/testing.md before the suite. Refuse project-only.
+Test Codex and Claude in neutral common-only and preserved combined installations. For installations/templates read [SKILL.md](../../comm-install-harness/SKILL.md) and [testing.md](../../comm-install-harness/references/testing.md) before the suite. Refuse project-only.
 
 Observe listing, explicit use with resources, implicit choice, unrelated non-loading, human exclusion and behavior separately. Before work verify every always loaded rule. Record native payload, explicit read or complete chunks of one version. Hidden delivery stays unknown. Reuse complete text. On missing text stop before dependent action and await a decision. Test unconditional, conditional and mixed links, shared targets, explanation then edit and independent selection by description.
 

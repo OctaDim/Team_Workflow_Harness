@@ -248,7 +248,7 @@ def create_project_skeleton(project, categories):
             (directory / HUMAN).write_text(f'# {name}\n\n{detail["purpose"]}\n\n'
                                            f'Пример: {detail["example"]}\n', encoding='utf-8')
             label = MAP_LABELS.get(name, detail['purpose'])
-            rows.append(f'| {label} | [{directory.name}](/harness/project/{name}) |')
+            rows.append(f'| {label} | [{directory.name}]({name}) |')
         for directory in staging.rglob('*'):
             if directory.is_dir() and not (directory / HUMAN).exists():
                 (directory / HUMAN).write_text(

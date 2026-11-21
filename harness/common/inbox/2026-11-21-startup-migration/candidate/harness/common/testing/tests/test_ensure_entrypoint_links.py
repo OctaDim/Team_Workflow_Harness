@@ -21,7 +21,7 @@ def test_neutral_project_uses_template_and_repeat_preserves_every_file(published
     for name in template:
         folder = project / name
         assert (folder / 'README.human.md').is_file()
-        assert f'[{folder.name}](/harness/project/{name})' in index
+        assert f'[{folder.name}]({name})' in index
     for parent in (project, *(p for p in project.rglob('*') if p.is_dir())):
         assert (parent / 'README.human.md').is_file()
     for excluded in ('START.md', 'lessons', 'checks/ensure_entrypoint_links.py'):

@@ -18,9 +18,9 @@ Exceptions: explicit commit-now instruction or justified checkpoint before
 concrete risk. Explain command/risk; preserve workflow gates, isolation and recovery.
 Group related steps before dispatch; never bypass a safety transaction.
 
-Before committing read [work-safety.md](/harness/common/skills/comm-commit-task-stages/references/work-safety.md) and
-[message-transfer.md](/harness/common/skills/comm-commit-task-stages/references/message-transfer.md), then apply
-harness/common/skills/comm-check-publication-data/SKILL.md.
+Before committing read [work-safety.md](references/work-safety.md) and
+[message-transfer.md](references/message-transfer.md), then apply
+[SKILL.md](../comm-check-publication-data/SKILL.md).
 Run appropriate checks. Inspect current ownership; the orchestrator commits
 only authorized owned changes through explicit file lists, preserving unrelated
 work and exclude: paths. No empty/duplicate commits.

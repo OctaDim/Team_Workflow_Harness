@@ -6,12 +6,12 @@ description: Use when checking a harness instruction or candidate, interpreting 
 # Validate the current version
 
 Identify version, target kind, contract, modes, available tools and authorized
-checks. Before tests read [validation.md](/harness/common/skills/comm-validate-harness-instructions/references/validation.md); before plugin-eval
-read [evaluation.md](/harness/common/skills/comm-validate-harness-instructions/references/evaluation.md). For content/profile checks read from
-root `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`.
-To test a plugin skill by name in Codex CLI, read [codex-skill-invocation.md](/harness/common/skills/comm-validate-harness-instructions/references/codex-skill-invocation.md).
+checks. Before tests read [validation.md](references/validation.md); before plugin-eval
+read [evaluation.md](references/evaluation.md). For content/profile checks read
+[content-contract.md](../comm-create-lazy-claude-codex-skills/references/content-contract.md).
+To test a plugin skill by name in Codex CLI, read [codex-skill-invocation.md](references/codex-skill-invocation.md).
 For new/edited always-loaded rules, before checking/reporting read
-[rule-budgets.md](/harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md).
+[rule-budgets.md](references/rule-budgets.md).
 
 1. Run applicable mandatory checks on the final compact version; separate
    structural, budget, code and native behavior findings. Missing tools/checks

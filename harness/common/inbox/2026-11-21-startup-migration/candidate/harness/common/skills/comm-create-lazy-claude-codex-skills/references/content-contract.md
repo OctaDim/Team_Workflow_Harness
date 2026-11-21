@@ -64,5 +64,5 @@ SKILL alone suffices; references/scripts/assets optional guidance/actions/output
 agents/openai.yaml UI/policy/deps. Exclude human bodies.
 Rules scope/behavior in body, no paths metadata; Claude ignores metadata
 except paths. Verify Codex loading separately.
-For new/edited always-loaded rules, before drafting/reporting read from root
-`harness/common/skills/comm-validate-harness-instructions/references/rule-budgets.md`.
+For new/edited always-loaded rules, before drafting/reporting read
+[rule-budgets.md](../../comm-validate-harness-instructions/references/rule-budgets.md).
