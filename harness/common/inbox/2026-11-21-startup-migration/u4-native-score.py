@@ -58,9 +58,9 @@ def inspect_rollout(work, directory, task, rules, skills, maps):
             calls[p['call_id']] = (i,cmd)
             if task == 'history' and boundary is None and re.search(r'cache_ttl|cache[-_]settings|harness/project/specs(?:/|\W)',cmd):
                 boundary = i
+            if task in ('explain', 'change') and boundary is None and re.search(r'app\.toml|git status|git ls-files',cmd):
+                boundary = i
             if task == 'change':
-                if boundary is None and re.search(r'app\.toml|git status|git ls-files',cmd):
-                    boundary = i
                 if write is None and 'app.toml' in cmd and re.search(r'apply_patch|sed -i|write_text|write_bytes|>\s*app\.toml|tee\s+app\.toml',cmd):
                     write = i
         if k not in ('custom_tool_call_output','function_call_output'):
@@ -82,18 +82,19 @@ def inspect_rollout(work, directory, task, rules, skills, maps):
                 standalone_listings.append(i)
         if task == 'history' and ('cache_ttl = 15' in body or 'old-cache-settings.md' in body):
             stale = True
-    if task in ('answer','explain'):
+    if task == 'answer':
         boundary = final_at
     def confirmed_before(keys,limit):
-        return [k for k in keys if limit is not None and any(i < limit for i in reads[k])]
+        return [k for k in keys if limit is not None and (k in initial_rules or any(i < limit for i in reads[k]))]
     counters = None
     if boundary is not None:
         record = next(((i,v) for i,v in usage if i > boundary),None)
         if record and not any(boundary < c < record[0] for c,_ in calls.values()):
             counters = record[1]
     return {'expected':len(rules),'rule_texts_before':len(confirmed_before(rules,boundary)),
-            'rule_texts_anytime':sum(bool(reads[k]) for k in rules),'multi_rule_returns':grouped,
+            'rule_texts_anytime':sum(k in initial_rules or bool(reads[k]) for k in rules),'multi_rule_returns':grouped,
             'repeated_complete_rules':[k for k in rules if len(reads[k])>1],
+            'missing_rules_before_task':sorted(set(rules) - set(confirmed_before(rules,boundary))) if boundary is not None else None,
             'complete_listing_events':listings,'standalone_listing_events':standalone_listings,
             'complete_rules_in_recorded_initial_messages':sorted(initial_rules),
             'checker_success_events':startup_checks,

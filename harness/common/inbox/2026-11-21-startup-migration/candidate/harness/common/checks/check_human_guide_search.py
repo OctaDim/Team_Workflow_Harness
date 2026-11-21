@@ -149,7 +149,10 @@ def audit(root, trace):
         if owner not in rules or condition is not None and not isinstance(condition, str):
             raise ValueError('Invalid link owner or condition')
         literals = [p for p in (path, *aliases) if resolve(p) == path]
-        if not any(p.encode() in bodies[owner] for p in literals):
+        # A registered name can be the entire textual reference in the rule.
+        name = Path(path).parent.name
+        named = re.search(r'(?<![\w/-])' + re.escape(name) + r'(?![\w/-])', bodies[owner].decode())
+        if not named and not any(p.encode() in bodies[owner] for p in literals):
             raise ValueError(f'Observer contract has no matching literal target in {owner}: {path}')
         before = link.get('before')
         if condition is not None and before not in dependent_actions:
@@ -185,6 +188,7 @@ def audit(root, trace):
     stopped = False
     action_started = False
     native_counts_visible = trace.get('startup_visible') is True
+    delivery_observed = native_counts_visible
     last_end = -1
 
     def unconditional():
@@ -192,30 +196,43 @@ def audit(root, trace):
 
     def startup_complete():
         missing = ({entry} | rules | unconditional()) - seen.keys()
-        if not listed:
-            gaps.append('полный список до действия не подтверждён')
         if missing:
             gaps.append('до действия не подтверждены полные тексты: ' + ', '.join(sorted(missing)))
 
-    for number, event in enumerate(trace['events']):
+    def observations():
+        for number, event in enumerate(trace['events']):
+            start = event.get('start', number)
+            end = event.get('end', start)
+            if type(start) is not int or type(end) is not int:
+                raise ValueError('Non-integer event boundary')
+            if event['type'] in ('read', 'native') and 'files' in event:
+                files = event['files']
+                if not isinstance(files, list) or not files:
+                    raise ValueError('Empty or invalid grouped delivery')
+                for index, file in enumerate(files):
+                    if set(file) - {'path', 'text', 'offset', 'sha256'} or resolve(file['path']) not in rules:
+                        raise ValueError('Invalid grouped rule payload')
+                    yield dict(file, type=event['type']), start, end, index == 0
+            else:
+                yield event, start, end, True
+
+    for event, start, end, first_in_delivery in observations():
         what = event['type']
-        start = event.get('start', number)
-        end = event.get('end', start)
-        if type(start) is not int or type(end) is not int:
-            raise ValueError('Non-integer event boundary')
-        if start <= last_end or end < start:
-            gaps.append('порядок получения и начала действия не доказан')
-        last_end = max(end, last_end)
+        if first_in_delivery:
+            if start <= last_end or end < start:
+                gaps.append('порядок получения и начала действия не доказан')
+            last_end = max(end, last_end)
+            # A rule in this return can first trigger a skill after delivery.
+            pending_at_start = unconditional() - seen.keys()
         path = resolve(event.get('path', ''))
         if stopped:
             issues.append('действие после остановки до решения пользователя')
             break
         if what == 'listing':
+            if pending_at_start:
+                issues.append('перечисление отложило безусловное чтение: ' + ', '.join(sorted(pending_at_start)))
             paths = event['paths']
-            if len(paths) != len(rules) or set(paths) != rules:
-                issues.append('неполный или повторяющийся набор в перечислении')
-            else:
-                listed = True
+            listed |= set(paths) == rules
         elif what == 'condition':
             condition = event['id']
             if condition in conditions:
@@ -242,6 +259,10 @@ def audit(root, trace):
                 issues.append('причина наблюдаемой остановки не совпадает с необходимым файлом и отказом чтения')
             stopped = True
         elif what == 'action':
+            missing_rules = rules - seen.keys()
+            if missing_rules and delivery_observed:
+                issues.append('критическая ошибка: до действия отсутствует полный текст: ' +
+                              ', '.join(sorted(missing_rules)))
             startup_complete()
             action_started = True
             name = event['id']
@@ -272,11 +293,9 @@ def audit(root, trace):
                 partial.pop(path, None)
                 gaps.append(f'версия или полнота выдачи не подтверждена: {path}')
                 continue
-            if what == 'native' and path in rules | {entry} and (action_started or listed):
+            if what == 'native' and path in rules | {entry} and action_started:
                 issues.append('поздняя выдача помечена как стартовая: ' + path)
-            if what == 'read' and path in rules and not listed:
-                issues.append('явное чтение always loaded правила до отдельного перечисления: ' + path)
-            pending = unconditional() - seen.keys()
+            pending = pending_at_start - seen.keys()
             if pending and what == 'read' and path not in pending:
                 issues.append('отложено немедленное получение: ' + ', '.join(sorted(pending)))
             if path in INDEXES:
@@ -286,11 +305,13 @@ def audit(root, trace):
             if Path(path).name == 'SKILL.md':
                 allowed = selected | invoked | unconditional() | {
                     p for owner, p, cond, _ in links if owner in seen and cond in conditions}
-                if path not in allowed:
+                already_supplied = what == 'native' and any(
+                    target == path and condition is None for _, target, condition, _ in links)
+                if path not in allowed and not already_supplied:
                     issues.append('преждевременная загрузка контекстного lazy скилла: ' + path)
                 linked_due = unconditional() | {
                     p for owner, p, cond, _ in links if owner in seen and cond in conditions}
-                if path in required_skills and path not in linked_due:
+                if path in required_skills and path not in linked_due and not already_supplied:
                     startup_complete()
                     if order == 'required' and any(p not in seen for p in INDEXES):
                         gaps.append('скилл задачи открыт до обязательных карт')
@@ -326,6 +347,7 @@ def audit(root, trace):
         elif what == 'violation':
             issues.append(event['reason'])
         elif what == 'unobserved':
+            delivery_observed = False
             gaps.append('нет данных: ' + event['reason'])
         else:
             raise ValueError(f'Unknown event type: {what}')
@@ -358,7 +380,7 @@ def audit(root, trace):
     report = [
         f'Впервые получено нативно: {sum(v == "native" for v in first.values()) if known else "не проверено"}',
         f'Впервые открыто явно: {sum(v == "read" for v in first.values()) if known else "не проверено"}',
-        f'Размер списка: {len(rules) if listed else "не проверено"}',
+        f'Размер списка: {len(rules)}',
         f'Уникальных полностью полученных путей always loaded правил: {len(first)}',
         f'Лишние полные чтения always loaded правил: {sum(n for p, n in duplicates.items() if p in rules) if known else "не проверено"}',
         'Результат: ' + status + ('. ' + '. '.join(reasons) if reasons else ''),
@@ -478,6 +500,32 @@ def observe_codex(events, root, task, marker, expected, links, mode):
             continue
         if 'заявка' in command:
             other_search_commands.append(command)
+        paths = normalized[1:]
+        if paths[:1] == ['--']:
+            paths = paths[1:]
+        if normalized[:1] == ['cat'] and len(paths) > 1 and success and all(
+                aliases.get(path, path) in rules for path in paths):
+            # Only attribute the visible prefix to its named files. A truncation
+            # marker or unrelated output cannot stand in for missing bytes.
+            remaining = output.encode()
+            files = []
+            for source in paths:
+                body = bodies[aliases.get(source, source)]
+                if remaining.startswith(body):
+                    files.append(dict(path=source, text=body.decode()))
+                    remaining = remaining[len(body):]
+                elif remaining and body.startswith(remaining):
+                    files.append(dict(path=source, text=remaining.decode(), offset=0,
+                                      sha256=hashlib.sha256(body).hexdigest()))
+                    remaining = b''
+                    break
+                else:
+                    break
+            if files:
+                # Earlier complete bodies survive even when the remaining output
+                # ends in an unrecognised truncation marker.
+                stream.append(dict(type='read', files=files, **span))
+                continue
         source = normalized[-1] if normalized else ''
         key = aliases.get(source, source)
         body = bodies.get(key)

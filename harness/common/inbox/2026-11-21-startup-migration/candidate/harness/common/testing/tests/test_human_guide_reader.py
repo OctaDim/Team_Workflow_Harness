@@ -74,8 +74,8 @@ def test_six_lines_and_delivery_method(root,index,client,mode):
     assert result['observed_actions']==['explain']
 
 
-@pytest.mark.parametrize('mutation', ['no-native','truncated-entry','no-task','wrong-answer','no-list',
-                                     'incomplete-list','parallel','unclassified','removed-file',
+@pytest.mark.parametrize('mutation', ['no-native','truncated-entry','no-task','wrong-answer',
+                                     'parallel','unclassified','removed-file',
                                      'repeated','stale','incomplete-rules','early-map','wrong-map-order',
                                      'missing-map','leaked-human','unfinished'])
 def test_incomplete_or_wrong_evidence_never_passes(root,mutation):
@@ -84,8 +84,6 @@ def test_incomplete_or_wrong_evidence_never_passes(root,mutation):
     if mutation=='truncated-entry': events.pop(0)
     if mutation=='no-task': events.pop()
     if mutation=='wrong-answer': events[-1]['observed']='something else'
-    if mutation=='no-list': events.pop(1)
-    if mutation=='incomplete-list': events[1]['paths'].pop()
     if mutation=='parallel': events[3].update(start=2,end=4)
     if mutation=='unclassified':events.insert(-1,dict(type='unobserved',reason='incomplete payload'))
     if mutation=='removed-file':events.insert(-1,dict(type='invalidate',path=ENTRY_RULE))
@@ -113,6 +111,82 @@ def config_case(root):
     t['events'].extend([dict(type='condition',id='change'), read(root,ALIAS),
                         dict(type='action',id='write',observed='value=3')])
     return t
+
+
+@pytest.mark.parametrize('client', ['codex', 'claude'])
+def test_single_return_without_listing_and_immediate_skill(root, client):
+    trace = observe(root, client=client)
+    method = 'native' if client == 'claude' else 'read'
+    trace['events'][1:4] = [
+        dict(type=method, files=[dict(path=p, text=(root/p).read_text()) for p in (ENTRY_RULE, ALWAYS)]),
+        read(root, SKILL)]
+    trace['links'] = [dict(owner=ENTRY_RULE, path=SKILL, condition=None)]
+    result = AUDIT(root, trace)
+    assert result['rule_reading_pass'], result
+    assert not result['rule_listing_completed']
+    assert set(result['first_reads']) == {ENTRY_RULE, ALWAYS}
+
+
+def test_native_skill_already_in_context_and_optional_listing(root):
+    trace = observe(root)
+    trace['links'] = [dict(owner=ENTRY_RULE, path=SKILL, condition=None)]
+    trace['events'].insert(1, read(root, SKILL, 'native'))
+    assert AUDIT(root, trace)['rule_reading_pass']
+    trace['events'].pop(1)
+    trace['events'].insert(3, trace['events'].pop(1))
+    trace['events'].insert(4, read(root, SKILL))
+    assert not AUDIT(root, trace)['rule_reading_pass']
+
+
+def test_partial_rule_in_batch_must_be_completed_before_action(root):
+    trace = observe(root, index='on-demand')
+    content = (root/ALWAYS).read_bytes()
+    digest = hashlib.sha256(content).hexdigest()
+    files = [dict(path=ENTRY_RULE, text=OWNER),
+             dict(path=ALWAYS, text=content[:2].decode(), offset=0, sha256=digest)]
+    trace['events'][1:4] = [dict(type='read', files=files)]
+    critical = AUDIT(root, trace)
+    assert critical['status'] == 'ошибка' and ALWAYS in critical['missing_rule_paths']
+    assert 'критическая ошибка' in critical['rule_read_report'][-1]
+    trace['events'].insert(-1, dict(type='read', path=ALWAYS, text=content[2:].decode(),
+                                    offset=2, sha256=digest))
+    assert AUDIT(root, trace)['rule_reading_pass']
+    trace['events'][-2]['sha256'] = '0'*64
+    assert not AUDIT(root, trace)['rule_reading_pass']
+
+
+def test_inaccessible_rule_stops_before_task(root):
+    trace = observe(root, index='on-demand')
+    trace.update(expected_stop=ALWAYS, actions=[])
+    trace['events'][3:] = [dict(type='error', path=ALWAYS),
+                            dict(type='stop', path=ALWAYS, reason='permission denied')]
+    assert AUDIT(root, trace)['rule_reading_pass']
+
+
+@pytest.mark.parametrize('reference', ['config', SKILL])
+@pytest.mark.parametrize('trigger', ['immediate', 'at-start', 'mid-task', 'inactive'])
+def test_when_each_textual_reference_is_due(root, reference, trigger):
+    owner = ('Сразу прочитай файл ' if trigger == 'immediate' else 'Перед правкой прочитай файл ') + reference
+    for path in (ENTRY_RULE, 'harness/project/rules/sub/config.md'):
+        put(root, path, owner)
+    trace = observe(root, index='on-demand')
+    write = dict(type='action', id='write', observed='value=3')
+    trace['events'].insert(1, dict(type='metadata', path=SKILL, name='config', description='Use before edits.'))
+    trace['links'] = [dict(owner=ENTRY_RULE, path=SKILL, condition=None if trigger=='immediate' else 'change',
+                           before='explain' if trigger=='inactive' else 'write')]
+    if trigger == 'immediate':
+        trace['events'].insert(4, read(root, SKILL))
+    elif trigger != 'inactive':
+        if trigger == 'at-start':
+            trace['actions'].clear()
+            trace['events'].pop()
+        trace['expected_conditions'] = ['change']
+        trace['actions'].append(dict(id='write', expected='value=3'))
+        trace['events'].extend([dict(type='condition', id='change'), read(root, SKILL), write])
+    assert AUDIT(root, trace)['rule_reading_pass']
+    if trigger != 'inactive':
+        trace['events'] = [e for e in trace['events'] if e.get('path') != SKILL or e['type']=='metadata']
+        assert not AUDIT(root, trace)['rule_reading_pass']
 
 
 def test_condition_when_discovered_mid_task(root):
@@ -239,6 +313,14 @@ def test_native_command_adapter_does_not_credit_hidden_payloads(tmp_path):
     assert observed['all_machine_matches_present'] and observed['searches_exclude_human_guides']
     assert observed['native_completed'] and observed['status']=='не проверено'
     assert set(observed['first_reads'])==set(rules)
+    # The actual command adapter can identify complete files inside a single
+    # return, even without a listing and with a truncated final body.
+    joined = shell('cat -- '+' '.join(shlex.quote(p) for p in rules),
+                   ''.join((tmp_path/p).read_text() for p in rules), 2)
+    events[:] = joined + events[-3:]
+    assert set(report()['first_reads']) == set(rules)
+    joined[-1]['item']['aggregated_output'] = (tmp_path/rules[0]).read_text() + '[truncated]'
+    assert set(report()['first_reads']) == {rules[0]}
     events[-2]['item']['aggregated_output']+='\nREADME.human.md:1:'+marker
     observed=report()
     assert observed['human_canary_in_any_native_event'] and observed['human_body_line_in_tool_output']

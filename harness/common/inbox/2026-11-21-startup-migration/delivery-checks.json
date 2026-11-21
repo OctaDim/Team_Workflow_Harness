@@ -1,0 +1,210 @@
+{
+  "baseline": [
+    {
+      "mode": "common-only",
+      "task": "answer",
+      "correct": true,
+      "tested_sha256": {
+        "harness/common/rules/comm-instruction-order.md": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+        "AGENTS.md": "c9c036ed4b22d88174a0bdc3017797ddbf00c7c580deea08007b7ace133fc797",
+        "harness/common/checks/ensure_entrypoint_links.py": "5761e534c89ca9a935d35bcba07f0f58466074386f6416ca34cb1a4c303e087a",
+        "harness/common/skills/comm-process-harness-inbox/references/workflow.md": "917888534291ebde7ab7816dfdf986f754e1792856aa82004c1a1a8a17369ced",
+        "harness/common/skills/comm-validate-harness-instructions/references/validation.md": "17b603432c9a03d42603afbd3ff9a272c3aa8c08f6764ed940f6fdf6a43294d6"
+      },
+      "expected": 12,
+      "rule_texts_before": 12,
+      "missing_rules_before_task": [],
+      "multi_rule_returns": [
+        12
+      ],
+      "repeated_complete_rules": [],
+      "complete_rules_in_recorded_initial_messages": [],
+      "maps_before": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "checker_success_events": [
+        33
+      ]
+    },
+    {
+      "mode": "common-project",
+      "task": "answer",
+      "correct": true,
+      "tested_sha256": {
+        "harness/common/rules/comm-instruction-order.md": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+        "AGENTS.md": "c9c036ed4b22d88174a0bdc3017797ddbf00c7c580deea08007b7ace133fc797",
+        "harness/common/checks/ensure_entrypoint_links.py": "5761e534c89ca9a935d35bcba07f0f58466074386f6416ca34cb1a4c303e087a",
+        "harness/common/skills/comm-process-harness-inbox/references/workflow.md": "917888534291ebde7ab7816dfdf986f754e1792856aa82004c1a1a8a17369ced",
+        "harness/common/skills/comm-validate-harness-instructions/references/validation.md": "17b603432c9a03d42603afbd3ff9a272c3aa8c08f6764ed940f6fdf6a43294d6"
+      },
+      "expected": 12,
+      "rule_texts_before": 12,
+      "missing_rules_before_task": [],
+      "multi_rule_returns": [
+        12
+      ],
+      "repeated_complete_rules": [],
+      "complete_rules_in_recorded_initial_messages": [],
+      "maps_before": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "checker_success_events": [
+        28
+      ]
+    }
+  ],
+  "link_scenarios": [
+    {
+      "mode": "common-only",
+      "scenario": "conditional-at-start",
+      "status": "failed",
+      "problems": [
+        "repeated complete text",
+        "incomplete startup before first task command",
+        "unconditional skill missing or late"
+      ],
+      "rules_expected": 13,
+      "missing_before_action": [
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-user-owned-entrypoints.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-fixture-reading.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md"
+      ],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 0,
+      "repeated_full_rules": 0,
+      "repeated_paths": {
+        "comm-fixture-entry": 1
+      },
+      "owner_return": 23,
+      "unconditional_return": 18,
+      "conditional_return": 18,
+      "task_events": {
+        "measure.txt": 20,
+        "first task command": 15
+      }
+    },
+    {
+      "mode": "common-only",
+      "scenario": "conditional-mid-task",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 23,
+      "unconditional_return": 30,
+      "conditional_return": 52,
+      "task_events": {
+        "order.txt": 42,
+        "order result": 45,
+        "measure.txt": 54,
+        "first task command": 37
+      }
+    },
+    {
+      "mode": "common-only",
+      "scenario": "inactive",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 23,
+      "unconditional_return": 30,
+      "conditional_return": -1,
+      "task_events": {
+        "order.txt": 42,
+        "order result": 45,
+        "measure.txt": 47,
+        "first task command": 37
+      }
+    },
+    {
+      "mode": "common-project",
+      "scenario": "conditional-at-start",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 23,
+      "unconditional_return": 30,
+      "conditional_return": 45,
+      "task_events": {
+        "measure.txt": 47,
+        "first task command": 42
+      }
+    },
+    {
+      "mode": "common-project",
+      "scenario": "conditional-mid-task",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 23,
+      "unconditional_return": 30,
+      "conditional_return": 47,
+      "task_events": {
+        "order.txt": 37,
+        "order result": 40,
+        "measure.txt": 49,
+        "first task command": 32
+      }
+    },
+    {
+      "mode": "common-project",
+      "scenario": "inactive",
+      "status": "failed",
+      "problems": [
+        "repeated complete text",
+        "intervening tool call before unconditional skill"
+      ],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 4,
+      "repeated_paths": {
+        ".claude/rules/comm-application-config-git.md": 1,
+        ".claude/rules/comm-user-owned-entrypoints.md": 1,
+        ".claude/rules/comm-fixture-reading.md": 1,
+        ".claude/rules/comm-confirm-development-workflow.md": 1
+      },
+      "owner_return": 23,
+      "unconditional_return": 40,
+      "conditional_return": -1,
+      "task_events": {
+        "order.txt": 42,
+        "order result": 45,
+        "measure.txt": 47,
+        "first task command": 42
+      }
+    }
+  ]
+}
