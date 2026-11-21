@@ -207,18 +207,29 @@ def replace_input(path, original, updated, root, new_mode=None):
             temporary.unlink(missing_ok=True)
 
 
+def decode_text(path, raw):
+    try:
+        return raw.decode('utf-8')
+    except UnicodeDecodeError as error:
+        raise ValueError(f'Invalid UTF-8 in {path} at byte {error.start}') from error
+
+
 def load_project_skeleton(common, root):
-    raw, _ = require_file(common / 'base/project-skeleton.json', root)
-    template = json.loads(raw.decode('utf-8'))
+    path = common / 'base/project-skeleton.json'
+    raw, _ = require_file(path, root)
+    try:
+        template = json.loads(decode_text(path, raw))
+    except json.JSONDecodeError as error:
+        raise ValueError(f'Invalid JSON in {path}: {error}') from error
     categories = template.get('categories') if isinstance(template, dict) else None
     if not isinstance(categories, dict) or not categories:
-        raise ValueError('Project skeleton requires nonempty categories.')
+        raise ValueError(f'Project skeleton requires nonempty categories: {path}')
     for name, detail in categories.items():
         if (not re.fullmatch(r'[a-z0-9][a-z0-9_-]*(?:/[a-z0-9][a-z0-9_-]*)*', name)
                 or not isinstance(detail, dict)
                 or any(not isinstance(detail.get(k), str) or not detail[k].strip()
                        for k in ('purpose', 'example'))):
-            raise ValueError(f'Invalid project skeleton category: {name}')
+            raise ValueError(f'Invalid project skeleton category in {path}: {name}')
     return categories
 
 
@@ -285,7 +296,7 @@ def check_rule_copies(root):
     copies = rule_destinations(root)
     for target, source in copies.items():
         expected = require_file(source, root)[0]
-        if not expected.decode('utf-8').strip():
+        if not decode_text(source, expected).strip():
             raise ValueError(f'Empty canonical rule: {source}')
         actual = snapshot_input(target, root)
         if actual is None or actual[0] != expected:
@@ -363,7 +374,8 @@ def ensure(root):
         categories = load_project_skeleton(common, root)
         create_project = not project.exists()
         for package in [common] + ([] if create_project else [project]):
-            if not require_file(package / 'INDEX.md', root)[0].decode('utf-8').strip():
+            index = package / 'INDEX.md'
+            if not decode_text(index, require_file(index, root)[0]).strip():
                 raise ValueError(f'Empty map: {package / "INDEX.md"}')
 
         copies = rule_destinations(root)
@@ -379,11 +391,11 @@ def ensure(root):
                 sources[source] = require_file(source, root)
             expected = sources[source][0]
             if source in rule_sources or source.name == 'SKILL.md':
-                if not expected.decode('utf-8').strip():
+                if not decode_text(source, expected).strip():
                     raise ValueError(f'Empty canonical file: {source}')
             if target == root / 'CLAUDE.md' and expected:
                 raise ValueError(f'Canonical CLAUDE template must be empty: {source}')
-            if target == root / 'AGENTS.md' and not expected.decode('utf-8').strip():
+            if target == root / 'AGENTS.md' and not decode_text(source, expected).strip():
                 raise ValueError(f'Empty canonical AGENTS template: {source}')
             actual = originals[target] = snapshot_input(target, root)
             if actual is not None and actual[0] == expected:
@@ -401,14 +413,17 @@ def ensure(root):
             if snapshot_input(target, root) != snapshot:
                 raise ValueError(f'Working file changed during checking: {target}')
 
+        missing_folders = [folder for folder in sorted(directories, key=lambda p: (len(p.parts), p))
+                           if not folder.exists()]
+        planned = ([project] if create_project else []) + missing_folders + repairs
+        if planned:
+            print('Восстановление рабочих файлов из канонических источников.', flush=True)
         changed = []
         try:
             if create_project:
                 create_project_skeleton(project, categories)
                 changed.append(project)
-            if repairs:
-                print('Восстановление рабочих файлов из канонических источников.', flush=True)
-            for folder in sorted(directories, key=lambda p: (len(p.parts), p)):
+            for folder in missing_folders:
                 if not ordinary_directory(folder, root).exists():
                     folder.mkdir(parents=True, exist_ok=True)
                     changed.append(folder)
@@ -423,9 +438,10 @@ def ensure(root):
                 if require_file(target, root)[0] != expected[0]:
                     raise ValueError(f'Incomplete recovery: {target}')
         except (OSError, ValueError) as error:
-            if changed:
-                raise ValueError(f'{error}; already updated: {", ".join(map(str, changed))}') from error
-            raise
+            completed = set(changed)
+            remaining = [str(path) for path in planned if path not in completed]
+            raise ValueError(f'{error}; already updated: {", ".join(map(str, changed)) or "none"}; '
+                             f'pending: {", ".join(remaining) or "none"}') from error
         return changed
 
 

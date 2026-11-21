@@ -37,7 +37,7 @@ TEMPLATES = {"harness/common/base/AGENTS.template": "AGENTS.md",
 LEGACY = {"harness/common/START.md", "harness/project/START.md",
           "harness/common/base/AGENTS.bootstrap.json"}
 COMMON_PROGRAMS = {CHECKER, "harness/common/checks/check_human_guide_search.py",
-                   "harness/common/scripts/publish_startup_set.py"}
+                   "harness/common/scripts/publish_startup_set.py", "harness/common/scripts/run_tests.py"}
 DIGEST = re.compile(r"[a-f0-9]{64}")
 
 
@@ -307,7 +307,8 @@ def working_paths(path):
     if category == "testing" and len(parts) == 5:
         if parts[3:] == ["acceptance", "acceptance.md"]:
             return []
-        if parts[3] == "tests" and re.fullmatch(r"test_[A-Za-z0-9_]+\.py", parts[4]):
+        if parts[3] == "tests" and (parts[4] == "conftest.py" or
+                                    re.fullmatch(r"test_[A-Za-z0-9_]+\.py", parts[4])):
             return []
     raise ValueError(f"outside startup publication scope: {path}")
 

@@ -151,8 +151,8 @@ sys.exit(main())
     print(root.name, 'v1/v2 / approval / interruption / resume / removed request: OK')
 
 
-def verify_initial_switch(workspace):
-    """Switch a copy of the old installation, including the actual legacy entrypoints."""
+def prepare_initial_switch(workspace):
+    """Build a disposable copy of the prior layout and its synthetic release receipt."""
     root = workspace / 'first-switch'
     for subtree in ('harness/common', 'harness/project', '.agents/skills', '.claude/skills',
                     '.claude/rules'):
@@ -199,6 +199,11 @@ def verify_initial_switch(workspace):
     (dest / 'publication-approval.json').write_text(json.dumps(approval), encoding='utf-8')
     args = ['--request', request.as_posix(), '--approve-sha256', sha(raw),
             '--approval-id', 'isolated-first-switch']
+    return root, publisher, args, canonical, working, retire
+
+
+def verify_initial_switch(workspace):
+    root, publisher, args, canonical, working, retire = prepare_initial_switch(workspace)
     command(root, publisher, args, 2)
     assert (root / 'CLAUDE.md').read_bytes() == (REPOSITORY / 'CLAUDE.md').read_bytes()
     command(root, publisher, [*args, '--initial-cutover'], 0)
