@@ -67,7 +67,7 @@
 
 ## Execution
 
-- Status: new
-- Result: not executed. Согласованные требования и критерии приёмки записаны. Канидат INBOX, архив, исторические копии и результаты миграционных проверок предстоит подготовить на соответствующих стадиях.
-- Reason: 2026-11-21 пользователь разрешил создать заявку и записать решения. Выполнение миграции и публикация требуют разрешений своих стадий.
+- Status: in progress
+- Result: 2026-11-21 создана заявка со статусом `new` и записаны согласованные решения. По следующему разрешению выполнена инвентаризация. На согласовании [specification.md](/harness/common/inbox/2026-11-21-startup-migration/specification.md) и [plan.md](/harness/common/inbox/2026-11-21-startup-migration/plan.md). Пофайловая ведомость — [inventory.tsv](/harness/common/inbox/2026-11-21-startup-migration/inventory.tsv), исходные переходы для отдельного разбора — [link-review.tsv](/harness/common/inbox/2026-11-21-startup-migration/link-review.tsv).
+- Reason: план выносится на согласование до реализации. Проверки ссылок и комплектности при планировании не присваивают статуса приёмки миграции.
 - Updated: 2026-11-21 (Europe/Minsk)
