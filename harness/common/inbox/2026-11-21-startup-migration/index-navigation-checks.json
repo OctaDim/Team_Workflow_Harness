@@ -1,0 +1,205 @@
+{
+  "date": "2026-11-22",
+  "scope": "V5, утверждённый выбор карт в Канидате INBOX",
+  "codex_cli": "0.166.0",
+  "owner_sha256": "3c50d29ae0c2a2cbe6cddaacc252755a7fa6f840268a051ab3606921a3d8f1c2",
+  "agents_sha256": "212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24",
+  "maps_sha256": {
+    "harness/common/INDEX.md": "607b11a883a108e04ef4b4843096e150894bea7010cbecb6b03e867c2040acc1",
+    "harness/project/INDEX.md": "c15bf54a72eb39b66e41f971f78a374a1da00542ad6f9d18e66352323122786e"
+  },
+  "method": "Свежий изолированный сеанс Codex на сценарий и установку. Вариант installed сохраняет байты Канидата INBOX. Сверены запросы к картам, возвращённые строки handoffs и финальные ответы. Полные тексты always loaded правил сверены по выдачам до запроса карты или до ответа в сценарии без карты.",
+  "prompts": {
+    "none": "Сколько минут в трёх часах? Ответь по-русски.",
+    "common": "Как дословно обозначено назначение каталога handoffs в карте общего пакета? Приведи подпись из карты.",
+    "project": "Как дословно обозначено назначение каталога handoffs в карте проектного пакета? Приведи подпись из карты.",
+    "both": "Сопоставь дословные подписи каталога handoffs в картах общего и проектного пакетов. Приведи обе подписи."
+  },
+  "runs": [
+    {
+      "installation": "common-only",
+      "scenario": "none",
+      "expected_maps": [],
+      "requested_maps": [],
+      "returned_map_rows": [],
+      "rules_received_before_task": 12,
+      "rules_installed": 12,
+      "missing_rules": [],
+      "startup_check": true,
+      "answer_correct": true,
+      "passed": true
+    },
+    {
+      "installation": "common-only",
+      "scenario": "common",
+      "expected_maps": [
+        "common"
+      ],
+      "requested_maps": [
+        "common"
+      ],
+      "returned_map_rows": [
+        "common"
+      ],
+      "rules_received_before_task": 12,
+      "rules_installed": 12,
+      "missing_rules": [],
+      "startup_check": true,
+      "answer_correct": true,
+      "passed": true
+    },
+    {
+      "installation": "common-only",
+      "scenario": "project",
+      "expected_maps": [
+        "project"
+      ],
+      "requested_maps": [
+        "project"
+      ],
+      "returned_map_rows": [
+        "project"
+      ],
+      "rules_received_before_task": 12,
+      "rules_installed": 12,
+      "missing_rules": [],
+      "startup_check": true,
+      "answer_correct": true,
+      "passed": true
+    },
+    {
+      "installation": "common-only",
+      "scenario": "both",
+      "expected_maps": [
+        "common",
+        "project"
+      ],
+      "requested_maps": [
+        "common",
+        "project"
+      ],
+      "returned_map_rows": [
+        "common",
+        "project"
+      ],
+      "rules_received_before_task": 12,
+      "rules_installed": 12,
+      "missing_rules": [],
+      "startup_check": true,
+      "answer_correct": true,
+      "passed": true
+    },
+    {
+      "installation": "common-project",
+      "scenario": "none",
+      "expected_maps": [],
+      "requested_maps": [],
+      "returned_map_rows": [],
+      "rules_received_before_task": 12,
+      "rules_installed": 12,
+      "missing_rules": [],
+      "startup_check": true,
+      "answer_correct": true,
+      "passed": true
+    },
+    {
+      "installation": "common-project",
+      "scenario": "common",
+      "expected_maps": [
+        "common"
+      ],
+      "requested_maps": [
+        "common"
+      ],
+      "returned_map_rows": [
+        "common"
+      ],
+      "rules_received_before_task": 12,
+      "rules_installed": 12,
+      "missing_rules": [],
+      "startup_check": true,
+      "answer_correct": true,
+      "passed": true
+    },
+    {
+      "installation": "common-project",
+      "scenario": "project",
+      "expected_maps": [
+        "project"
+      ],
+      "requested_maps": [
+        "project"
+      ],
+      "returned_map_rows": [
+        "project"
+      ],
+      "rules_received_before_task": 12,
+      "rules_installed": 12,
+      "missing_rules": [],
+      "startup_check": true,
+      "answer_correct": true,
+      "passed": true
+    },
+    {
+      "installation": "common-project",
+      "scenario": "both",
+      "expected_maps": [
+        "common",
+        "project"
+      ],
+      "requested_maps": [
+        "common",
+        "project"
+      ],
+      "returned_map_rows": [
+        "common",
+        "project"
+      ],
+      "rules_received_before_task": 12,
+      "rules_installed": 12,
+      "missing_rules": [],
+      "startup_check": true,
+      "answer_correct": true,
+      "passed": true
+    }
+  ],
+  "local_checks": {
+    "pytest": {
+      "common-only": 192,
+      "common-project": 192
+    },
+    "active_documents_per_installation": 504,
+    "markdown_links_per_installation": 96,
+    "repository_paths_per_installation": 351,
+    "startup_and_recovery": "passed",
+    "interrupted_publication_in_fixtures": "passed",
+    "historical_comparison_owner_hashes_reproduced": true,
+    "current_request_links": 41
+  },
+  "status": {
+    "Codex": "проверено",
+    "Claude Code": "не проверено",
+    "overall": "не проверено"
+  },
+  "additional_codex_run": {
+    "mode": "common-only",
+    "scenario": "conditional-mid-task",
+    "status": "pass",
+    "problems": [],
+    "rules_expected": 13,
+    "missing_before_action": [],
+    "observed_native_rules": 0,
+    "rules_read_before_action": 13,
+    "repeated_full_rules": 0,
+    "repeated_paths": {},
+    "owner_return": 23,
+    "unconditional_return": 30,
+    "conditional_return": 47,
+    "task_events": {
+      "order.txt": 37,
+      "order result": 40,
+      "measure.txt": 49,
+      "first task command": 32
+    }
+  }
+}

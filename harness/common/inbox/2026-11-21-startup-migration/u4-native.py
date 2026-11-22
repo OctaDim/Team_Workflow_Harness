@@ -130,9 +130,15 @@ def prepare(source, policy, base):
     original = file.read_text()
     native = work / '.claude/rules' / OWNER.name
     assert native.read_bytes() == file.read_bytes()
-    assert original.count(MANDATORY) == 1
-    if policy == 'optional':
-        file.write_text(original.replace(MANDATORY, OPTIONAL))
+    if policy != 'installed':
+        # Only comparison cells replace the navigation clause in the disposable copy.
+        lines = original.splitlines(keepends=True)
+        pointers = [i for i, line in enumerate(lines)
+                    if '`harness/common/INDEX.md`' in line and '`harness/project/INDEX.md`' in line]
+        if len(pointers) != 1:
+            raise ValueError('Expected one navigation clause for the INDEX comparison')
+        lines[pointers[0]] = {'mandatory': MANDATORY, 'optional': OPTIONAL}[policy] + '\n'
+        file.write_text(''.join(lines))
         native.write_bytes(file.read_bytes())
     (work / 'app.toml').write_text('timeout = 20\n')
     (work / 'harness/project/specs/cache-settings.md').write_text('# Текущая спецификация\n\ncache_ttl = 45\n')
@@ -272,7 +278,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('root', type=Path)
     parser.add_argument('client', choices=('codex', 'claude'))
-    parser.add_argument('policy', choices=('mandatory', 'optional'))
+    parser.add_argument('policy', choices=('installed', 'mandatory', 'optional'))
     parser.add_argument('task', choices=tuple(PROMPTS))
     parser.add_argument('repeat', type=int, choices=(1, 2))
     group = parser.add_mutually_exclusive_group(required=True)

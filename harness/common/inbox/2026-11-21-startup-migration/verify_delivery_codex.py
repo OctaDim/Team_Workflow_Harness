@@ -132,7 +132,7 @@ def main():
         prompt = ('Заказ янтарный. ' if args.scenario == 'conditional-at-start'
                   else 'Определи тип заказа из order.txt. ')
         NATIVE['PROMPTS']['answer'] = prompt + 'Сообщи итоговое измерение по значению из measure.txt.'
-        run = NATIVE['evaluate'](root, 'codex', 'mandatory', 'answer', 1)
+        run = NATIVE['evaluate'](root, 'codex', 'installed', 'answer', 1)
         result = score(Path(run['local_trace']), rule, args.scenario) if run.get('model_answers') else {
             'status': 'unverified', 'reason': run['error_classes']}
         print(json.dumps({'mode': root.name, 'scenario': args.scenario, **result}, ensure_ascii=False))
