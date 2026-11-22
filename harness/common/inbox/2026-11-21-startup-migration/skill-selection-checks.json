@@ -1,0 +1,3395 @@
+{
+  "version": "6621e627680ecd6971b527467dcc4564acc4f1a6",
+  "candidate_tree": "71ff0b82ac726434c0fac506d16a1feb9c54764c",
+  "codex_cli": "0.166.0",
+  "date": "2026-11-22",
+  "operating_conditions": {
+    "installations": [
+      "common-only",
+      "common-project"
+    ],
+    "policy": "installed",
+    "task": "answer",
+    "task_permissions": "read",
+    "native_runner": "u4-native.py / evaluate",
+    "implicit_suffix": " Give your decision in English. This is a read-only assessment.",
+    "explicit_prefix": "Apply the {owner} skill to this task. ",
+    "negative_prompt": "How many minutes are in three hours?",
+    "native_catalogue": {
+      "common-only": {
+        "expected": 36,
+        "names": 36,
+        "descriptions": 36,
+        "full_skill_bodies_at_startup": 0,
+        "complete_AGENTS": true
+      },
+      "common-project": {
+        "expected": 36,
+        "names": 36,
+        "descriptions": 36,
+        "full_skill_bodies_at_startup": 0,
+        "complete_AGENTS": true
+      }
+    },
+    "diagnostic_prompts": {
+      "comm-select-development-workflow": "У меня новая идея продукта, пока с неясными требованиями. Хочу сравнить доступные маршруты разработки, в том числе Superpowers. Покажи варианты и дождись моего выбора.",
+      "comm-commit-task-stages": "I'm halfway through a feature and have only added an empty placeholder. Another developer has a staged fix. Is this a useful commit boundary and what should happen to their staged work? Do not commit. The fixture's ordinary startup check is authorized. Give your assessment in English."
+    }
+  },
+  "skills": {
+    "comm-assess-project-tests": {
+      "task": "The purchase service must reject a negative quantity without charging. Our application test stubs the entire purchase method to return success, calls it with -1 and only checks that it didn't throw. Review this test and propose a sensitive replacement.",
+      "expected_decision": "Exercise the real service with negative quantity, assert rejection and no charge, mock only the payment boundary.",
+      "files_sha256": {
+        "README.human.md": "99759a7eeee0f6c924c5730a0c60b322ac288f4dec67315c1bb2ee36d2658a69",
+        "SKILL.md": "e4e986b400a661f009d7fa3ec15bf9b10d70ae38935f971a2eaf61b4d703d55d",
+        "references/README.human.md": "8feb98211d3f8125fc6b90c5c97acf31712b4356f57bf5b9c57f335d7472d7c7",
+        "references/isolated-mutations.md": "7c53b6ca5418a3eff4f43c519b206a8bcbfd1eff46a85a8be417725a4d7b61fb"
+      }
+    },
+    "comm-commit-task-stages": {
+      "task": "I'm halfway through a feature and have only added an empty placeholder. Another developer has a staged fix. Is this a useful commit boundary and what should happen to their staged work? Do not commit.",
+      "expected_decision": "Defer placeholder commit until a verified useful result and preserve someone else's staging.",
+      "files_sha256": {
+        "README.human.md": "47b80410fa8b2426612864e2292a4458ef29a471f0f839ad5f2cfb5d164d234b",
+        "SKILL.md": "8a9a0383e6265b3d303b8a2adb07c3d270941f4d2113714b3d1b5ffd14c818e5",
+        "references/README.human.md": "cf7222c2022d86494613de5259c06e87ebbd770fe6487fe88922bf7a3810e6d0",
+        "references/message-transfer.md": "d016cb6a685ac559d147071c3b32b1912a88e00cee8d237b80e64617436be210",
+        "references/work-safety.md": "b9238c835338e28bab7dbbd969c07f53df13a24c62621ec797a179ba5041433e"
+      }
+    },
+    "comm-confirm-database-design": {
+      "task": "We are designing an optional survey field in a document database. The team hasn't decided what an unanswered field means. Can I treat 0, false, null and a missing key as equivalent in storage and search? Recommend the next decision before implementation.",
+      "expected_decision": "Separate storage/omission from search membership, preserve zero/false as possible answers, ask for agreement.",
+      "files_sha256": {
+        "README.human.md": "a9a1b47d12a17a8583c696fe2fdba3496d7371ec0b89d3eb2361b09b363337f7",
+        "SKILL.md": "413c4fec9f524baf5c841a3e6d11b8471b1e9c253612cee26b0c10008053776c",
+        "references/README.human.md": "1205d36607867888e3aec05a5d0846ddcb2ba06dc5a6348aec55f51c42627cec",
+        "references/choices.md": "7381daa5877b419fff52de0f1b20f8705d5c3c068f7d1a76d263fe81184a8d19"
+      }
+    },
+    "comm-create-git-branch": {
+      "task": "I need an independent branch for receipt export, but my current checkout is an unfinished billing feature. Where should the new branch start and what checks protect the old work? Planning only.",
+      "expected_decision": "Use verified fresh integration revision, do not inherit unfinished HEAD, preserve edits.",
+      "files_sha256": {
+        "README.human.md": "b428798170321f11cc02900d2a7ee0663edfb63e98e4367208e0b05cbbe445bd",
+        "SKILL.md": "44db1c268875a1c789c1266435f0b7009f188fa68bc420c0922c1bce97622ad0",
+        "references/README.human.md": "cf7222c2022d86494613de5259c06e87ebbd770fe6487fe88922bf7a3810e6d0",
+        "references/naming.md": "e2a62bc1b98f75132d0717acded3f1d7f8e2568c754c3f320bcae8d1a5ad4ca4"
+      }
+    },
+    "comm-create-lazy-claude-codex-skills": {
+      "task": "Design how to teach both coding clients a procedure that is needed only when exporting invoices. No startup failure has been observed. Which form should we choose, and where should we check for existing coverage before authoring? Provide a recommendation only.",
+      "expected_decision": "Prefer a context-selected skill, inspect existing owners for reuse, justify any always-loaded cost.",
+      "files_sha256": {
+        "README.human.md": "4b7875ec969eaa303557f76ddb01acfe5dd8c17719ec9832db6fe6a5dd68b50f",
+        "SKILL.md": "f03e1c521f7834626cb3a1d66609c95808560447af5af9746f98f019c53fea2a",
+        "references/README.human.md": "d836dc9339025e065bfb6078fb470ad745a43342a79f3e7d882d0c57d2718e45",
+        "references/content-contract.md": "e7f4a8cf86ce8f54c71793013ec39b34ad3c3c785ebaf4f2d3914dddc4c07797"
+      }
+    },
+    "comm-diagnose-harness-entrypoints": {
+      "task": "A colleague's harness startup stopped because their existing root AGENTS.md has extra bytes compared with the published template. How should we diagnose and deal with this existing file? This is a reported incident in another installation.",
+      "expected_decision": "Preserve divergent protected file, diagnose exact path and conflict, route decision through INBOX.",
+      "files_sha256": {
+        "README.human.md": "2cfcae4948004289efc53de4c710fffd92596e3043f24d86f7a9cda0c4258a84",
+        "SKILL.md": "7c1dc639ae7ae30fa47c51976f197af93b07fcfe45a763b46070166f2d70bf45",
+        "references/README.human.md": "2cfcae4948004289efc53de4c710fffd92596e3043f24d86f7a9cda0c4258a84",
+        "references/entrypoints.md": "d44f97d0dbdbfee97ee82fb1dbbbb6decc00ea8cfc5e30d2c69b9618cafa6465"
+      }
+    },
+    "comm-install-harness": {
+      "task": "We want to transfer the common harness into two new checkouts. One lacks a project package, the other already contains project material. What exactly should happen in each installation and what should a second startup do? Give a transfer plan only.",
+      "expected_decision": "Create a neutral project only if absent, preserve existing project, verify repeat startup.",
+      "files_sha256": {
+        "README.human.md": "45f7c0bfe7b6dc0eccf450de22b041a81c621fdc3e8a84bc96f82d37368eb16a",
+        "SKILL.md": "232a9f57614b37aadfa93502cc8eceead106bf9c0138b816827205cd4fe9039e",
+        "references/README.human.md": "efab7cf83a2902e32195144a65f07e53f696e4990fa9116f5f2b15b3cffc4168",
+        "references/checks.md": "328c7f557bfa4eb6bacb3d3e93aa61b3b6090d690b2be33c262f5eb5665c6aec",
+        "references/testing.md": "e0d23d1add24490178e4694588506b11aaaad70472f598c7126afdd1badbe3b1"
+      }
+    },
+    "comm-manage-local-models": {
+      "task": "A team proposes keeping our local inference weights inside the Python venv and committing the downloads alongside our source. Design the reproducible replacement layout and identity checks. Do not download anything.",
+      "expected_decision": "Store weights under rag/local_models outside venv, exclude downloads, keep a versioned manifest and verify checksums.",
+      "files_sha256": {
+        "README.human.md": "3e5f20be13be129d233aca9f916a5333af567b6910fc50482ec9b3cb66c5500f",
+        "SKILL.md": "fc56d60492ffe34b580544d585b5b2866a27aa071fdbcf25fd46632b250aa9c0",
+        "references/README.human.md": "c79ca470b4c7f650cb636963a701f39bf85008f2089ca8e30d9dd67ad23d260d",
+        "references/lifecycle.md": "46b1dce7feb10cb271eed023d2136ef5b66ab99a2c41cfd1b09e32437fd78681"
+      }
+    },
+    "comm-manage-production-rollout": {
+      "task": "The deployment dashboard is green for release R17, but one live replica still reports R16 and no functional probe was run. Assess whether the change is live, and what to establish before any retry. Advisory review, no access to production.",
+      "expected_decision": "Recognize partial rollout; check live artifacts on targets and affected behavior; avoid blind retry.",
+      "files_sha256": {
+        "README.human.md": "dcee77ff786b63e4bb4bea000a621019a69158799e0d8f5769bb6d0c3ffdf29b",
+        "SKILL.md": "7b1a68bc9a52caa7f83f33bf9486df19e1bc6acbf96a7ad3448db181c04997c6",
+        "references/README.human.md": "d915791367d66aed2b54addfe42f6efcf0dc85697dabc13ddede0a8c1052ddd4",
+        "references/partial-rollout.md": "5e6fb02cd71635a8cfdb1c505c969308766b9648f53cbf681c405628267db8e8"
+      }
+    },
+    "comm-migrate-git-repository": {
+      "task": "We need to move our Git repository to a different owner and keep issue history, release assets and existing integrations. Is a mirror push enough? Give a migration plan; owner and hosting details are undecided.",
+      "expected_decision": "Distinguish identity-preserving transfer from Git mirror, inventory non-Git data/integrations, obtain method decision.",
+      "files_sha256": {
+        "README.human.md": "b428798170321f11cc02900d2a7ee0663edfb63e98e4367208e0b05cbbe445bd",
+        "SKILL.md": "c7d708e03863191b79ec77c05f35d76f574da3efb4f6159babdc6d90c091258e",
+        "references/README.human.md": "cf7222c2022d86494613de5259c06e87ebbd770fe6487fe88922bf7a3810e6d0",
+        "references/inventory.md": "604a1a9ad969f604f7f887c11f99b02410aaff8f2c08c54bb3dd4b2b9eaa8b72",
+        "references/platform.md": "44dc4ed4f29b6fea0552340c609c3fb1985d37b0224a71c6d8930e8ca7fa6bb9"
+      }
+    },
+    "comm-prepare-browser-check": {
+      "task": "The preview intermittently shows yesterday's UI, and the screenshot came from an unknown build and browser profile. Outline how to establish reproducible browser check conditions before blaming the application.",
+      "expected_decision": "Establish served build identity and browser storage/cache/profile, then repeat under known conditions.",
+      "files_sha256": {
+        "README.human.md": "0c01bcad82f572a84ffdc2d60a879c1abba5cfe0a92364bc32f0c3effdad3fd3",
+        "SKILL.md": "3e5d355b922a96a3f60cc9d856499d1c25f6ea4d8a8ddd1132bd37832f63fc68",
+        "references/README.human.md": "c2dfdedc63a9aed0a0f1d1b24a26d9c5fdea38eb2586a5b19bcc1da94ca3b101",
+        "references/artifacts.md": "9593c602ac71140fb0c12253d45fb9b3cd257bdae1bdc74035b9787303fe9184",
+        "references/lifecycle.md": "685ed89937ae14647d835f70b5000b156d7810f45156aa494bf1fed9ee5d8f50",
+        "references/preconditions.md": "8e7d7f758ae896738c9c563c3044a7e6917c6780173f95c336e9a2f4ad94e22d",
+        "references/state.md": "fa997f9c63a57bfac7220da797d0c2e383d7d46eeaaa22cbdb4180b1700606c9"
+      }
+    },
+    "comm-preserve-harness-knowledge": {
+      "task": "We discovered reusable advice on handling a harness operation. An existing procedure already expresses this same advice in full. Where should I store the lesson, and do I need a new agent-facing document? Give the placement decision only.",
+      "expected_decision": "Reuse existing owner; avoid duplicate behavior record; distinguish independently useful rationale/evidence.",
+      "files_sha256": {
+        "README.human.md": "2cfcae4948004289efc53de4c710fffd92596e3043f24d86f7a9cda0c4258a84",
+        "SKILL.md": "e2433207f94a524771613d5d8103d78d5b9ca896df8eed02ad0451ed57ff7e02",
+        "references/README.human.md": "2cfcae4948004289efc53de4c710fffd92596e3043f24d86f7a9cda0c4258a84",
+        "references/experience-routing.md": "7a2ca759a364f70de6492e0aff6f8fa3e99d160d0ca619f8102d6ea856571a06",
+        "references/material-placement.md": "490539c882f185a5dd5e2f5430399c0e5296f3cbf2da3a828637712139ad26aa"
+      }
+    },
+    "comm-preserve-text-line-endings": {
+      "task": "A UTF-8 text repair must replace exactly one word in a file with mixed CRLF and LF endings. An editor proposes reading it with universal newline conversion then writing the whole string. Review the repair and give the byte-level acceptance test.",
+      "expected_decision": "Preserve original bytes outside the edit, avoid universal newline conversion, verify byte equality and idempotence.",
+      "files_sha256": {
+        "README.human.md": "cd200c0ff8370d59af77d8963d575a24b3193846869e083798cc43c7424fd31b",
+        "SKILL.md": "e5889baa6f828b8b62a2157657d000840d972c91549701ae05f062060650b5de",
+        "references/README.human.md": "cd200c0ff8370d59af77d8963d575a24b3193846869e083798cc43c7424fd31b",
+        "references/regressions.md": "b4a134096ecddf847384b39c064be8e0f3860ab5128e25839d2e899060f34653"
+      }
+    },
+    "comm-preserve-visual-design": {
+      "task": "A signed-off wireframe fixes the checkout's button hierarchy. There's no approved colour or spacing reference. Does this approve the final visual design? State what to request and how to check conformance.",
+      "expected_decision": "Distinguish structure from style approval; obtain actual visual reference or delegation; compare rendered states.",
+      "files_sha256": {
+        "README.human.md": "91c28c609ad73fca539da8a4a8d2be31e160433916656c80f5d1452b1a42d225",
+        "SKILL.md": "fa97672b1788c467ad315cfae6d885d1f59beb454c1218e14faad60d3ab7efd8",
+        "references/README.human.md": "c2dfdedc63a9aed0a0f1d1b24a26d9c5fdea38eb2586a5b19bcc1da94ca3b101",
+        "references/value-semantics.md": "596974922ed1f42fae08d8deda1311efed7e40a8ac1f3d07ec424d99c6e0b3c6"
+      }
+    },
+    "comm-process-harness-inbox": {
+      "task": "An existing common harness INBOX request is marked new. The owner only authorized creating the request. A teammate wants to implement, copy the proposal into place and mark it complete immediately. What stage can actually proceed?",
+      "expected_decision": "Creation grants neither execution nor publication; obtain stage approval; do not close on candidate alone.",
+      "files_sha256": {
+        "README.human.md": "28837accdfa77dc1b0040488066585971ac75b4f4219b10ab17a6407b3152f93",
+        "SKILL.md": "77e1db58812011d8e76f75d5e227e92728a354965bc857f8e3b0887b45ba17bd",
+        "references/README.human.md": "90930c1a7a163844b2521f2044e316722be946dab01556850fb934d1ed1272e4",
+        "references/workflow.md": "917888534291ebde7ab7816dfdf986f754e1792856aa82004c1a1a8a17369ced"
+      }
+    },
+    "comm-process-pull-request": {
+      "task": "Prepare the choice I need to make before you open a pull request for the current feature. I haven't decided what to do after review. I want the options now, with no changes to branches or remotes.",
+      "expected_decision": "Offer PR only, PR plus squash, PR plus squash and remote branch deletion; await choice and preserve local branch.",
+      "files_sha256": {
+        "README.human.md": "b428798170321f11cc02900d2a7ee0663edfb63e98e4367208e0b05cbbe445bd",
+        "SKILL.md": "211982f3595888e39cabf46e676d8f95eca7d90840d749b998ad49e9e5a4ff6e",
+        "references/README.human.md": "cf7222c2022d86494613de5259c06e87ebbd770fe6487fe88922bf7a3810e6d0",
+        "references/merge.md": "cc418af1edff8e68b00affd33de5f40e608e4128e9b77509ccde260fd5e8a2da",
+        "references/preparation.md": "cd4ec4e80cac8e38291b13f1d6228d41e5843db2dddd81d76daeb0f495ca2af4",
+        "references/remote-deletion.md": "95e52eda00ad07e618d6818bf458661f21c7ef706cd3ed6001c282e579432c5e"
+      }
+    },
+    "comm-protect-harness-evidence": {
+      "task": "A teammate wants to overwrite a completed common harness verification report and its original raw log to correct an old conclusion. What form and route should the correction take? Advise only.",
+      "expected_decision": "Preserve original completed report and raw log, create linked dated addition through common INBOX.",
+      "files_sha256": {
+        "README.human.md": "5cd65d4319b9e24d67a2b081513846a05c79ce3c1427ab55d23220d51aced557",
+        "SKILL.md": "9325019fa80c96c69e0b3cb1ad95a1a8f3b59795776eb2fed05ec6bdebb121cd",
+        "references/README.human.md": "9adf62c4677c5548d21a627919c1aa05df3dc879b487edcbb9c8a452e2d7733e",
+        "references/operations.md": "d222cc04b99990f53abab2c35522aacb0599320a66f46bbfd9a4085446ff5b6e"
+      }
+    },
+    "comm-publish-harness-instructions": {
+      "task": "Version 1 of a shared procedure was approved and published. Version 2 is pending in the request. A working copy has disappeared. Which bytes should be restored today, from where, and how could version 2 later reach both native copies?",
+      "expected_decision": "Restore published v1 from canonical, require explicit matching v2 approval, publish canonical first then synchronize clients.",
+      "files_sha256": {
+        "README.human.md": "2cfcae4948004289efc53de4c710fffd92596e3043f24d86f7a9cda0c4258a84",
+        "SKILL.md": "b1f620353d072a30a17ec172afa4a35e10acce2a87959923b5d58ce8116172bf",
+        "references/README.human.md": "2cfcae4948004289efc53de4c710fffd92596e3043f24d86f7a9cda0c4258a84",
+        "references/gate.md": "4f723dc73594343e03a1844e3bfc27e4664b417ab1045bef32da1b867cd4a587",
+        "references/placement-contract.md": "3cf645576a069619e6ca23d720d80b3eda317aa844d013af9877eee1133566a4"
+      }
+    },
+    "comm-recover-git-state": {
+      "task": "After an interrupted Git operation a colleague believes their local commits vanished. Other people's changes are staged. They suggest immediately resetting hard to a guessed SHA. Give a read-only diagnosis and the next decision.",
+      "expected_decision": "Inspect refs/reflog and working/index state, identify commits and preserve staged work; request decision before destructive recovery.",
+      "files_sha256": {
+        "README.human.md": "b428798170321f11cc02900d2a7ee0663edfb63e98e4367208e0b05cbbe445bd",
+        "SKILL.md": "478850cda1d4c535b35aa893ac5d85ceca22f75de55ae598b4b3066947e2345b",
+        "references/README.human.md": "cf7222c2022d86494613de5259c06e87ebbd770fe6487fe88922bf7a3810e6d0",
+        "references/modes.md": "fd9bc005863217e955462e10620339f10168107d72cfa8807e43a9d34344f889"
+      }
+    },
+    "comm-restore-application-data": {
+      "task": "One product record was accidentally deleted at noon. A full database snapshot from 11:55 exists and unrelated orders were written at 12:10. Design a recovery rehearsal for a staging installation. No live access or writes.",
+      "expected_decision": "Prefer targeted restore in isolated consistent copy, verify dependencies/integrity and behavior; preserve newer orders.",
+      "files_sha256": {
+        "README.human.md": "2646ab9c5d323b316384c5017777f20d0d63092cd5f376c640ed9f8b1df65143",
+        "SKILL.md": "600727e29db29c4daf36b9ab88aabd81b082a3cbbbeaaefd585a9e39dcbaecf6"
+      }
+    },
+    "comm-select-development-workflow": {
+      "task": "I have a new, unclear product idea and want to compare the available development workflows, including Superpowers. Show the choices and wait for my selection.",
+      "expected_decision": "Present workflow choices including independent execution and composed workflow and wait for selection.",
+      "files_sha256": {
+        "README.human.md": "5aea1bfb011eca02438aabd4157fe76b944f0acb9807a2829de9988c56a27d87",
+        "SKILL.md": "b190dcfbfdc83f339a6d45b60dbf9937932c061f35c691a9383720444c7d6c1c",
+        "references/README.human.md": "5997be5203fe22f34bd145e6478978aea777d1b64ca3f7c20b12f71f07dd0789",
+        "references/choice.md": "953e6b9de86dc5aa0ec7c7e7fc8b38e21a561dbb5f50249cfa086d461bb6dd8f",
+        "references/full-superpowers.md": "62f8d473ed871eeaa2876f954a5ff5a953b375c29b3a495644d0ac15351febe6",
+        "references/menu.md": "cbfe5acd0e854541971fc97391949b5fa2a765364baa00888ba4795c216aca63"
+      }
+    },
+    "comm-update-git-branch": {
+      "task": "We are resuming an old unfinished branch after its integration branch advanced. Local edits remain and both sides changed the invoice calculation differently. How do we decide what to preserve and report before resuming? Planning only.",
+      "expected_decision": "Verify target/base freshness, inspect both changes, agree preservation for semantic conflicts, recheck combined behavior.",
+      "files_sha256": {
+        "README.human.md": "b428798170321f11cc02900d2a7ee0663edfb63e98e4367208e0b05cbbe445bd",
+        "SKILL.md": "3e1fc78e00e8cedc57910c33ce4dcfb78d8ff8d30a2e2232e8107f6809e20e42",
+        "references/README.human.md": "cf7222c2022d86494613de5259c06e87ebbd770fe6487fe88922bf7a3810e6d0",
+        "references/conflicts.md": "293f5a902ed9531c16d963bd2c8ca929c2f873f8c530a4b5afe7b89905def785",
+        "references/methods.md": "004dd256f0ad8cbd96fe5d342fdf4918394396e5f95053e6840de2cccdf760c3"
+      }
+    },
+    "comm-validate-harness-instructions": {
+      "task": "Review this readiness claim about a new agent procedure: the static grader gave it an A and the CLI exited 0. Neither profile has traced selection or behavior yet. What must be observed before calling it checked? Advisory review only.",
+      "expected_decision": "Separate static results from native selection, full reads and application; check both clients and install modes and record gaps.",
+      "files_sha256": {
+        "README.human.md": "ea9014c7118b459b68f51ac04a91ee6a93299d0218c2151a24cfaa569a8adfd2",
+        "SKILL.md": "91fc23226e958963168c207388493d172b7842731a6d26a88f67ef003baff04e",
+        "references/README.human.md": "d836dc9339025e065bfb6078fb470ad745a43342a79f3e7d882d0c57d2718e45",
+        "references/codex-skill-invocation.md": "b2fb97faf4a1a0b47f5c82080072bc32984d478bffb16ccb9348c524bd342d0c",
+        "references/evaluation.md": "dca33342591fe48cc5d3e100e1f95d318067f21ce0424eb30b7bbc5b4d2ea665",
+        "references/rule-budgets.md": "ee30226fa8164797e2c5e9031402e33ef70d67d3cf68b9e9829540d39cc9bc73",
+        "references/validation.md": "17b603432c9a03d42603afbd3ff9a272c3aa8c08f6764ed940f6fdf6a43294d6"
+      }
+    },
+    "comm-verify-browser-ui": {
+      "task": "A unit test calls a dropdown's handler directly and asserts state changed. We need to verify keyboard navigation, focus and visible behavior on a real checkout page. Can we sign this off, and what test would count?",
+      "expected_decision": "Elicit actual keyboard interaction in a real browser and assert visible/focus contract; distinguish coverage from handler unit test.",
+      "files_sha256": {
+        "README.human.md": "0c01bcad82f572a84ffdc2d60a879c1abba5cfe0a92364bc32f0c3effdad3fd3",
+        "SKILL.md": "eb84f97f22276d6fa9446669514a5390ec8d0137d6d3a260b00c159794ed2702",
+        "references/README.human.md": "c2dfdedc63a9aed0a0f1d1b24a26d9c5fdea38eb2586a5b19bcc1da94ca3b101",
+        "references/coverage.md": "f3e8d2f9182d33630c8ed69289fd9dd4a82b6d5cdca4029de6cc916ce74cba77",
+        "references/fidelity.md": "6e590105d8ca7fa69e890f5a81b2ae9ac415438443e760bce6b579891211641a"
+      }
+    },
+    "comm-verify-project-facts": {
+      "task": "The on-call report claims an event never happened because one log query returned no rows. The running version, time zone and replica coverage are unknown. Assess that claim and specify a positive control.",
+      "expected_decision": "Qualify absence by log coverage/window, verify event filter against running version and a known record in same stream.",
+      "files_sha256": {
+        "README.human.md": "dc4b2b58cb532108a18f6fe90ef861697a3911e33ef1eda4f45af214285f53f7",
+        "SKILL.md": "a0418b1919023b73ea5b47fcaa9ae30c656a1cd5aa636d40633e217937e52789",
+        "references/README.human.md": "072229640f5f119209500daf3bb54c6f25782905598ff40fbafb5df7a481d5e4",
+        "references/empty-log-results.md": "742d47e44c5a48672a5860a63d516a01b469128c465695bcba6ca0dd799a4d1c",
+        "references/git-base-state.md": "435ab7f70569afa09329dcc6d1c880612006296645e7efd948dada10640afc0d",
+        "references/git-integration.md": "40dece0a5d9085e527c4f54fa45e165a000db7301124136483a20fc4ff4673a1",
+        "references/git-operation-result.md": "4fc9e2e0a91ba9ffdab37d93aef15cf711f0f52fa651d67d4e6da08c9d96d549"
+      }
+    }
+  },
+  "runs": [
+    {
+      "mode": "common-only",
+      "trial": "negative",
+      "owner": "control",
+      "exit": 0,
+      "errors": [],
+      "first_task": 35,
+      "owner_call": null,
+      "owner_full_at": [],
+      "skill_bodies": [],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "7dce02e91be2d4db27b20b8f4643ed2f3a3134c6231a7ee82c155cc9ef39489d",
+      "answer_excerpt": "Three hours equals **180 minutes**."
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-assess-project-tests",
+      "exit": 0,
+      "errors": [],
+      "first_task": 37,
+      "owner_call": 37,
+      "owner_full_at": [
+        40
+      ],
+      "skill_bodies": [
+        "comm-assess-project-tests"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 33,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "49a9d3303f2b2f091fb8bbafee937e95288f6a57e9c3b9ba1b25fb473913fb2f",
+      "answer_excerpt": "**Replace the test.** Stubbing `purchase` to return success bypasses quantity validation and payment logic. The no-throw assertion passes even if the real service accepts negative quantities and charges for them. Call the real purchase service with quantity `-1` and otherwise valid inputs. Inject a spy at the payment gateway and configure it to succeed if called. Assert both the contract-defined rejection and zero calls to the gateway’s charge operation. Add a companion case with quantity `1` using the same setup and assert success and one char",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-commit-task-stages",
+      "exit": 0,
+      "errors": [],
+      "first_task": 47,
+      "owner_call": 47,
+      "owner_full_at": [
+        50
+      ],
+      "skill_bodies": [
+        "comm-commit-task-stages"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 43,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "17c732f0dec1f9c7b21c4317b1061d1133d0167d17b0e7cb00391896e6b6e27f",
+      "answer_excerpt": "Skip the commit. An empty placeholder has no independently useful result to preserve. Continue until the feature or a standalone part of it is complete and verified. Leave the other developer’s fix staged as-is. Keep it out of the feature commit and let its owner decide when to commit it separately. I based this assessment on your description. I made no commit and did not modify the index.",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-confirm-database-design",
+      "exit": 0,
+      "errors": [],
+      "first_task": 30,
+      "owner_call": 30,
+      "owner_full_at": [
+        33
+      ],
+      "skill_bodies": [
+        "comm-confirm-database-design"
+      ],
+      "references": [
+        "comm-confirm-database-design/references/choices.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "560255451f799dad075dba119e642af7ef7043e27d44c9ee606b5c39c2120cf5",
+      "answer_excerpt": "**Keep the four cases distinct until the team agrees on what “unanswered” means.** `0` and `false` are explicit answers when the field’s type allows them. Treating either as empty would hide valid responses. **Approve the storage and search rules separately before implementation.** I recommend this starting contract: | Value | Storage | Include in “unanswered” search? | |---|---|---| | Missing key | Omit the key when no answer is supplied | Yes | | `null` | Allow only if the team defines a distinct meaning for explicit `null` | Decide explicitl",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-create-git-branch",
+      "exit": 0,
+      "errors": [],
+      "first_task": 54,
+      "owner_call": 54,
+      "owner_full_at": [
+        57
+      ],
+      "skill_bodies": [
+        "comm-create-git-branch",
+        "comm-verify-project-facts"
+      ],
+      "references": [
+        "comm-commit-task-stages/references/work-safety.md",
+        "comm-create-git-branch/references/naming.md",
+        "comm-verify-project-facts/references/git-base-state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 50,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "2fed52338a23e273d72083b8c58e6f5050a392d2dd80a847be8025ddcc19f8be",
+      "answer_excerpt": "Start receipt export from **the verified tip of the project’s remote integration branch**, pinned to its exact commit SHA. Use a separate worktree when you create the branch so the billing checkout can stay in place. `/workspace` has no Git checkout, so I couldn’t verify the integration remote, branch, or SHA, or inspect the billing checkout. This was a read-only assessment. No branch or worktree was created. Before creating the branch: 1. Confirm the intended remote and integration branch from project evidence. Query the remote for its current",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-create-lazy-claude-codex-skills",
+      "exit": 0,
+      "errors": [],
+      "first_task": 48,
+      "owner_call": 48,
+      "owner_full_at": [
+        51
+      ],
+      "skill_bodies": [
+        "comm-check-current-harness-duplicates",
+        "comm-create-lazy-claude-codex-skills"
+      ],
+      "references": [
+        "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 44,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "61cdc43f490c90b4f35966684aa1f29e29d4fc9e5779bb7a29681503f42b46f8",
+      "answer_excerpt": "Use a **project-scoped contextual lazy skill** for Claude Code and Codex. Make invoice export explicit in its name and description so both clients can discover it when the task calls for the procedure. An always-loaded rule serves a requirement that must apply before skill selection. A rule paired with a skill would require a concrete pre-selection failure that skill discovery cannot prevent. No such failure has been observed. Before authoring, check the current canonical owners in `harness/project/` and `harness/common/`, starting with their r",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-diagnose-harness-entrypoints",
+      "exit": 0,
+      "errors": [],
+      "first_task": 26,
+      "owner_call": 26,
+      "owner_full_at": [
+        29
+      ],
+      "skill_bodies": [
+        "comm-diagnose-harness-entrypoints"
+      ],
+      "references": [
+        "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 34,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "90c223026676dbacc54004061ccfbed8559723bb07d2ae6d0181f85d654bcfb7",
+      "answer_excerpt": "**Keep the existing root `AGENTS.md` byte-for-byte intact and leave startup stopped.** If the byte mismatch is confirmed, the startup guard is behaving as designed. An existing protected entrypoint requires an explicit decision through `harness/common/inbox/`. comm-user-owned-entrypoints.md 1. Record the colleague’s installation root, startup command, exit code, full diagnostic, and affected path. Verify that `AGENTS.md`, its published `harness/common/base/AGENTS.template`, and their parent paths are accessible and free of symlinks. Use the tem",
+      "checker_relative_to_target": "after_full_owner"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-install-harness",
+      "exit": 0,
+      "errors": [],
+      "first_task": 28,
+      "owner_call": 28,
+      "owner_full_at": [
+        31
+      ],
+      "skill_bodies": [
+        "comm-install-harness"
+      ],
+      "references": [
+        "comm-install-harness/references/checks.md",
+        "comm-install-harness/references/testing.md",
+        "comm-publish-harness-instructions/references/placement-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "d3065b06929c489041a43d1c3f4423fa128bbe6a4ffd1d7c4982da4ac67721f7",
+      "answer_excerpt": "Use **common-only installation** in the checkout without `harness/project` and **combined installation** in the checkout that already has it. | Checkout | Expected first startup | |---|---| | **No `harness/project`** | Transfer the published `harness/common` package. The startup checker creates a neutral `harness/project` from `harness/common/base/project-skeleton.json`, including `INDEX.md`, folder guides, and both `testing/evidence/work` and `testing/evidence/harness`. The new package contains no source-project material. | | **Existing `harne",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-manage-local-models",
+      "exit": 0,
+      "errors": [],
+      "first_task": 34,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-manage-local-models"
+      ],
+      "references": [
+        "comm-manage-local-models/references/lifecycle.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "fce3b62acb65bedef2897289ad9981cdfda97e7f4e194a6ce8d03a2015f6e337",
+      "answer_excerpt": "**Decision: keep local inference artifacts in project-root `rag/local_models/`. Commit the directory scaffold, model manifest, preparation code, runtime profiles, and tests. Keep the downloaded weights and companion files out of Git and outside `.venv`.** Recreating the Python environment should leave the prepared models available. ### Layout and identity ```text rag/ models.toml # Proposed tracked manifest local_models/ .gitignore # Tracked scaffold <manifest-digest>/ # Ignored, verified artifact set ``` Use `*` and `!.gitignore` as the two li",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-manage-production-rollout",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-manage-production-rollout"
+      ],
+      "references": [
+        "comm-manage-production-rollout/references/partial-rollout.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "5493c160ceffeb558f856c513c68ced192bbe27b0fd6c89e2b1135f3c9ab2a99",
+      "answer_excerpt": "**Decision: R17 is not verified live. Hold any retry.** The dashboard reports success for R17, one live replica still reports R16, and no functional probe was run. Treat delivery as potentially partial and the affected behavior as unverified. This assessment is based on the supplied evidence. Before any retry, establish: 1. **What the rollout applied.** Match the exact deployment run to the intended R17 commit SHA or immutable artifact ID. Record which steps completed, partially applied, or remain unknown. 2. **What is serving traffic.** Verify",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-migrate-git-repository",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 25,
+      "owner_full_at": [
+        28
+      ],
+      "skill_bodies": [
+        "comm-migrate-git-repository",
+        "comm-choose-effective-solution"
+      ],
+      "references": [
+        "comm-migrate-git-repository/references/inventory.md",
+        "comm-migrate-git-repository/references/platform.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 23,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "2ba76eb8b50aa8997b0428e37d74f59b8ccf69c0b26243a31a93f50e71f71241",
+      "answer_excerpt": "**No. A mirror push is insufficient.** It copies Git refs and the objects they point to, including commit history and tags. Issue history, uploaded release assets, and integration settings live on the hosting platform. `git push --mirror` can also force-update or delete destination refs. [Git push documentation](https://git-scm.com/docs/git-push) **Decision. Prefer a native repository transfer** if the new owner can stay on the same hosting instance and the destination’s permissions and policies meet your requirements. If the hosting instance c",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-prepare-browser-check",
+      "exit": 0,
+      "errors": [],
+      "first_task": 34,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-prepare-browser-check"
+      ],
+      "references": [
+        "comm-prepare-browser-check/references/preconditions.md",
+        "comm-prepare-browser-check/references/artifacts.md",
+        "comm-prepare-browser-check/references/lifecycle.md",
+        "comm-prepare-browser-check/references/state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "d3674c4775c0f2f63076cbd82d8683f90b47ac06dc56e6f3209bff3513eeb371",
+      "answer_excerpt": "**Decision:** Keep the stale preview unclassified until it reproduces under recorded browser conditions. Preserve the existing screenshot as a symptom report. Its build and browser profile are unknown, so it cannot establish which UI was served. 1. **Verify the build the browser actually loads.** Record the intended revision or build ID, preview URL, serving root, and final URL. Use a build manifest or asset fingerprints to verify that the loaded HTML, JavaScript, CSS, and critical assets belong to the intended build. Check that the stylesheet ",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-preserve-harness-knowledge",
+      "exit": 0,
+      "errors": [],
+      "first_task": 36,
+      "owner_call": 36,
+      "owner_full_at": [
+        39
+      ],
+      "skill_bodies": [
+        "comm-preserve-harness-knowledge"
+      ],
+      "references": [
+        "comm-preserve-harness-knowledge/references/material-placement.md",
+        "comm-preserve-harness-knowledge/references/experience-routing.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "85d42e3544b5f7634b26d73e67491a616bc3ac87a30633ab39585195ed4f6202",
+      "answer_excerpt": "Keep the lesson in the existing procedure. No separate record or new agent-facing document is needed.",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-preserve-text-line-endings",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 39,
+      "owner_full_at": [
+        42
+      ],
+      "skill_bodies": [
+        "comm-preserve-text-line-endings"
+      ],
+      "references": [
+        "comm-preserve-text-line-endings/references/regressions.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 37,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "0e8161f7bb12106e7939eda1b2c04fb19a383ab09fe3584d34b67a9e7d69fb4a",
+      "answer_excerpt": "**Reject the proposed repair.** Universal newline conversion turns `CRLF` into `LF` on read, so writing the resulting string can change bytes outside the target word. Read the file as bytes and use strict UTF-8 decoding to identify the intended occurrence. Replace only that occurrence’s byte span with the UTF-8 bytes of the new word. If UTF-8 validation fails, stop before writing. **Byte-level acceptance test.** Capture the original bytes before the repair. Independently identify the intended word’s byte offsets `start` and `end`, then compare ",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-preserve-visual-design",
+      "exit": 0,
+      "errors": [],
+      "first_task": 36,
+      "owner_call": 36,
+      "owner_full_at": [
+        39
+      ],
+      "skill_bodies": [
+        "comm-preserve-visual-design"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "68fcc079da496c5485b2ac83a9058ef2aa026653de910e12d745422b2fd2b915",
+      "answer_excerpt": "**No.** The signed-off wireframe approves the checkout’s button hierarchy. Final visual approval is still pending because colour and spacing have no approved reference. **Request** explicit sign-off on a versioned visual mockup or prototype that keeps the approved hierarchy and shows the proposed colours, spacing, and button styling at relevant screen sizes and in key checkout states. If the approver wants to delegate any styling decisions, ask them to confirm which ones. **Check conformance** by comparing the rendered checkout with the signed-",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-process-harness-inbox",
+      "exit": 0,
+      "errors": [],
+      "first_task": 26,
+      "owner_call": 31,
+      "owner_full_at": [
+        34
+      ],
+      "skill_bodies": [
+        "comm-process-harness-inbox"
+      ],
+      "references": [
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 34,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "18b28f9f3fae0bde2885b862c1c99e01915b333ad26c32b551c2ca2eafa6ab78",
+      "answer_excerpt": "**The request stays `new`.** The owner authorized creation, and that stage is already complete. Read-only assessment can proceed. Implementation and testing require explicit authorization to execute the request. Publication requires separate approval for the exact candidate version. Once approved, publish to the canonical location, synchronize the working copies from there, and verify that they match before marking the request `completed`. Direct copying from INBOX to working locations is prohibited. INBOX workflow",
+      "checker_relative_to_target": "shared_delivery_or_interleaved"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-process-pull-request",
+      "exit": 0,
+      "errors": [],
+      "first_task": 37,
+      "owner_call": 37,
+      "owner_full_at": [
+        40
+      ],
+      "skill_bodies": [
+        "comm-process-pull-request"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 33,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "54ad96e3ec185b3118885f4f7a24c62e2a99e3217e4aa0bfa20c8e0739209b71",
+      "answer_excerpt": "**I recommend option 1 for the current feature.** It lets you open the pull request for review and decide what to do afterward. 1. **Open the pull request only.** Decide whether to merge and whether to delete the remote feature branch after review. 2. **Open the pull request and squash-merge after review.** The feature lands as one commit, and the remote feature branch stays in place. 3. **Open the pull request, squash-merge after review, and delete the remote feature branch.** The feature lands as one commit, and the remote branch is removed a",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-protect-harness-evidence",
+      "exit": 0,
+      "errors": [],
+      "first_task": 36,
+      "owner_call": 36,
+      "owner_full_at": [
+        39
+      ],
+      "skill_bodies": [
+        "comm-protect-harness-evidence",
+        "comm-process-harness-inbox"
+      ],
+      "references": [
+        "comm-protect-harness-evidence/references/operations.md",
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "75509686946b9a96bce3550d241370e62130502fab26d0de242ea8ef3eedbbc9",
+      "answer_excerpt": "Preserve the completed verification report and its original raw log byte-for-byte at their existing paths. Correct the conclusion in a **new addendum dated on the day it is created**. Link to the original report, identify the conclusion being corrected, and explain the revised conclusion and the evidence supporting it. If verification is rerun, save the new raw output in a separate file and link it from the addendum. Evidence operations Route the addendum through a dated request in `harness/common/inbox/`. Creation, execution (including any rer",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-publish-harness-instructions",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 24,
+      "owner_full_at": [
+        27
+      ],
+      "skill_bodies": [
+        "comm-validate-harness-instructions",
+        "comm-publish-harness-instructions"
+      ],
+      "references": [
+        "comm-publish-harness-instructions/references/gate.md",
+        "comm-publish-harness-instructions/references/placement-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "745d47654b2e4a3b0a9f908fef58210c2e4f2849968b8f39d7f18b1a38b34993",
+      "answer_excerpt": "Restore the **exact published version 1 bytes** from the procedure’s canonical directory under `harness/common/skills/comm-…/`. If the whole working directory disappeared, restore the complete directory, including its resources, to the missing location under `.agents/skills/` for Codex or `.claude/skills/` for Claude Code. The pending version 2 stays in the request. To publish version 2, obtain explicit approval to execute the same request, then validate the final candidate in both clients under `common-only` and `common+project`. Record the ex",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-recover-git-state",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 24,
+      "owner_full_at": [
+        27
+      ],
+      "skill_bodies": [
+        "comm-recover-git-state"
+      ],
+      "references": [
+        "comm-recover-git-state/references/modes.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 44,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "eb24ab6fd13d37e5e432440033946731f5dc8f64d7ef0078ade3f59d09e59835",
+      "answer_excerpt": "**Decision: Keep the current worktree and index intact.** A hard reset to a guessed SHA can discard other people’s staged changes and move the branch to the wrong commit. I found no Git repository under `/workspace`, so the interrupted operation, staged changes, and commit SHAs remain unverified. In the affected worktree, use these read-only checks: ```bash export GIT_OPTIONAL_LOCKS=0 GIT_NO_LAZY_FETCH=1 git status git diff --cached --name-status git reflog show --all --date=iso ``` Use `git status` to identify any operation still in progress. ",
+      "checker_relative_to_target": "after_full_owner"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-restore-application-data",
+      "exit": 0,
+      "errors": [],
+      "first_task": 22,
+      "owner_call": 22,
+      "owner_full_at": [
+        25
+      ],
+      "skill_bodies": [
+        "comm-restore-application-data"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "066844513a9fe527b3da4afd28aa43a671ab61faa60f98bb24a1600da642f0c8",
+      "answer_excerpt": "**Decision:** Rehearse a selective restore of the deleted product from the 11:55 snapshot into a disposable staging copy that contains the 12:10 orders. A full rollback to 11:55 would discard those orders and any other later writes. 1. Prepare two isolated databases. Restore the 11:55 snapshot into a source database. Use an authorized post-12:10 copy as the staging target, or build a synthetic target with the same schema and incident sequence. Disable outbound integrations. Confirm the product exists in the source, is absent from the target, an",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-select-development-workflow",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-select-development-workflow"
+      ],
+      "references": [
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "template_mismatch",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "5d2ccc567e8de0ef077c69986941b0f227975e33f5c03e32827928169c76abf3",
+      "verbatim_menu_fragments": 0,
+      "expected_verbatim_fragments": 10,
+      "answer_excerpt": "1. **Superpowers + Compound Engineering** — `superpowers:using-superpowers` → `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`. The lead agent starts with Superpowers and follows Compound Engineering’s approval points. 2. **Compound Engineering** — `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`. Explore the idea, agree on a plan, then implement it. **For your unclear product idea, I recommend starting with brainstorming here if you want",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-update-git-branch",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 51,
+      "owner_full_at": [
+        53
+      ],
+      "skill_bodies": [
+        "comm-update-git-branch"
+      ],
+      "references": [
+        "comm-commit-task-stages/references/work-safety.md",
+        "comm-update-git-branch/references/methods.md",
+        "comm-update-git-branch/references/conflicts.md",
+        "comm-verify-project-facts/references/git-base-state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 47,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "8aa95c14e6470cba64f7d143777297cf5cf04cd0a7797122e43287415370375e",
+      "answer_excerpt": "**Decision: Preserve the unfinished work and resolve the invoice behavior on paper before updating the branch.** The approved invoice contract should determine which changes carry forward. If the two branches produce different totals for the same invoice and the approved outcome is unclear, show the discrepancy, propose an expected result, and get a decision before editing the calculation. 1. **Inventory the work.** Identify the old branch, its full SHA, the intended integration branch and remote, and the common ancestor. Record the freshly ver",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-validate-harness-instructions",
+      "exit": 0,
+      "errors": [],
+      "first_task": 28,
+      "owner_call": 28,
+      "owner_full_at": [
+        31
+      ],
+      "skill_bodies": [
+        "comm-validate-harness-instructions"
+      ],
+      "references": [
+        "comm-validate-harness-instructions/references/evaluation.md",
+        "comm-validate-harness-instructions/references/validation.md",
+        "comm-validate-harness-instructions/references/rule-budgets.md",
+        "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "7e6d75a3bb4f3d84db25cf65bb039e735e525302333ae1e926f30eca2a79b504",
+      "answer_excerpt": "**Decision: unchecked.** The reported A establishes the static grader’s result, and exit code `0` establishes that the CLI completed successfully. Selection and behavior remain unverified in both profiles. Before calling the exact candidate version checked, collect native traces from **Codex and Claude Code**, each in **common-only and combined installations**. In each client and mode, observe: - **Selection and loading.** An explicit invocation selects the intended procedure and reads its full instructions and required resources. A matching re",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-verify-browser-ui",
+      "exit": 0,
+      "errors": [],
+      "first_task": 31,
+      "owner_call": 31,
+      "owner_full_at": [
+        34
+      ],
+      "skill_bodies": [
+        "comm-assess-project-tests",
+        "comm-verify-browser-ui"
+      ],
+      "references": [
+        "comm-verify-browser-ui/references/fidelity.md",
+        "comm-verify-browser-ui/references/coverage.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "9c687d5062c73bb7fa226027cc98909f4abe51ab6318018bbff2f8ee055eb007",
+      "answer_excerpt": "**Hold sign-off.** The unit test shows that calling the handler changes state. Keyboard event wiring, focus movement, and the rendered dropdown on the checkout page are still unverified. A passing browser test on the actual checkout route would count. Use browser keyboard input and assert the dropdown’s documented behavior. For a dropdown that supports Enter, arrow keys, and Escape, the test should cover these paths: 1. Press Tab from the preceding checkout control and verify the dropdown trigger receives focus and shows a visible focus indicat",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "implicit",
+      "owner": "comm-verify-project-facts",
+      "exit": 0,
+      "errors": [],
+      "first_task": 38,
+      "owner_call": 38,
+      "owner_full_at": [
+        41
+      ],
+      "skill_bodies": [
+        "comm-verify-project-facts"
+      ],
+      "references": [
+        "comm-verify-project-facts/references/empty-log-results.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "cf388c391d7d3831be075c5fd6108f4ad7bc10f42386498c6bec3cbae5f3b6aa",
+      "answer_excerpt": "**Decision. The event’s occurrence remains unknown.** The report establishes that one query returned zero rows. The running version, time zone, and replica coverage are unverified, so the query cannot establish that the event never happened. **Positive control.** Use an existing log record independently known to have been emitted in the same environment, stream, and incident window, such as a request log tied to a confirmed trace ID. Rerun the query with only the event-specific filter relaxed and verify that it retrieves the known record with t",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-assess-project-tests",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 25,
+      "owner_full_at": [
+        28
+      ],
+      "skill_bodies": [
+        "comm-assess-project-tests"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 23,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "089909a88fa858ec965cd67d7609b50793b0f274e0905e6ecf1f2f9b498455ed",
+      "answer_excerpt": "**Replace the test.** Stubbing `purchase` to return success bypasses quantity validation and payment logic. The no-throw assertion passes even if the real service accepts `-1` and charges the customer. Call the real `purchase` method with `-1` and otherwise valid inputs. Replace only the payment boundary with a spy or fake that records charge attempts. Assert that the service rejects the purchase using its public contract, such as a specific validation error or failure result, and that the payment boundary records **zero charge attempts**. Add ",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-commit-task-stages",
+      "exit": 0,
+      "errors": [],
+      "first_task": 34,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-commit-task-stages"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "bb07628c8c783d6db8c1cf7281bd587c41403e8bb74829d7946fe794681cb9ea",
+      "answer_excerpt": "The empty placeholder is too early for a commit. Keep it with the feature changes until there’s a substantive, independently useful result that you’ve verified. Leave the other developer’s fix staged as-is so they can commit it separately. When your feature is ready, limit its commit to the files you’re authorized to include. This assessment was read-only.",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-confirm-database-design",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-confirm-database-design"
+      ],
+      "references": [
+        "comm-confirm-database-design/references/choices.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "1be9cea4189c7a1f41d6d51e8bfdc7ed7dae42af54d165c32103ef8a688f7654",
+      "answer_excerpt": "**No.** Preserve `0` and `false` as explicit answers wherever the field’s type permits them. Treating them as unanswered would cause searches for skipped questions to return valid responses. **Before implementation, agree on what “unanswered” means and which documents an unanswered search should return.** I recommend omitting the key when no answer was supplied and having the search match missing keys only. If existing documents contain `null`, confirm what it means before deciding whether to include those documents. If the survey needs to dist",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-create-git-branch",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 39,
+      "owner_full_at": [
+        42
+      ],
+      "skill_bodies": [
+        "comm-create-git-branch"
+      ],
+      "references": [
+        "comm-commit-task-stages/references/work-safety.md",
+        "comm-create-git-branch/references/naming.md",
+        "comm-verify-project-facts/references/git-base-state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 37,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "e83a97c013cd97c6d3669ae5a13da3274ed02dad2f15dc79064840a2aa1189e4",
+      "answer_excerpt": "Start the receipt-export branch at the freshly verified commit SHA of the project’s integration branch on its intended remote. Use that SHA explicitly. The unfinished billing checkout should stay in place. When branch creation is authorized, use a separate worktree if you need to check out the new branch. `/workspace` contains no Git checkout, so the remote, integration branch, base SHA, branch name availability, and billing changes are unverified. This was a read-only assessment. Before creating the branch: 1. Confirm the intended remote and i",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-create-lazy-claude-codex-skills",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-create-lazy-claude-codex-skills"
+      ],
+      "references": [
+        "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "3b0d2ea08cf3af5350a4e13babf6e10f9dedebc020230314d4bbfb70632782f3",
+      "answer_excerpt": "Choose a **contextual lazy skill** for Claude Code and Codex. Give it a shared `name` and a `description` that explicitly identifies invoice export as the trigger. A rule alone fits a short constraint that must apply before skill selection. A rule plus a skill would require a concrete failure before selection that metadata cannot prevent. No such failure has been observed. Before authoring, check the canonical project and common harness packages, starting with `harness/project/INDEX.md` and `harness/common/INDEX.md`. Inspect the relevant skills",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-diagnose-harness-entrypoints",
+      "exit": 0,
+      "errors": [],
+      "first_task": 30,
+      "owner_call": 35,
+      "owner_full_at": [
+        38
+      ],
+      "skill_bodies": [
+        "comm-diagnose-harness-entrypoints"
+      ],
+      "references": [
+        "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 38,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "a18e5fce4af324749e56ddb11d681d3ccf3da3713f9968f63edeb2eeedb79328",
+      "answer_excerpt": "**Keep the existing root `AGENTS.md` byte-for-byte and leave startup stopped in the affected installation.** If the reported extra bytes are confirmed against that installation’s published `harness/common/base/AGENTS.template`, this is a protected entrypoint conflict. The startup checker can create a missing entrypoint from its template. A mismatch in an existing entrypoint requires an explicit decision through `harness/common/inbox/`. comm-user-owned-entrypoints.md 1. **Confirm the mismatch read-only.** Record the installation root, original s",
+      "checker_relative_to_target": "shared_delivery_or_interleaved"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-install-harness",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-install-harness"
+      ],
+      "references": [
+        "comm-install-harness/references/checks.md",
+        "comm-install-harness/references/testing.md",
+        "comm-publish-harness-instructions/references/placement-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "7d5be7f8487a1c2ebd52005c43beb4e068b4fc1ab765945e04ab927b39e82d73",
+      "answer_excerpt": "Use **common-only installation** for the checkout without `harness/project` and **combined installation** for the checkout that already has it. The same startup command applies to both. 1. **Prepare both checkouts.** Confirm each target root and inventory its existing files. Transfer the published `harness/common` package as ordinary files and directories, with all required resources and no dependency on the source checkout or the author’s global configuration. Install managed rules under `.claude/rules/`, excluding `README.human.md`, and compl",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-manage-local-models",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-manage-local-models"
+      ],
+      "references": [
+        "comm-manage-local-models/references/lifecycle.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "20b91dc3c096ece341e8192ed0b84b2f031e17b02d943f20d5c2074e69015d7b",
+      "answer_excerpt": "Reject the proposal. Store local inference artifacts in project-root `rag/local_models/`, independently of the Python virtual environment. Track the model manifest, preparation code, compatible runtime profiles, and tests in Git. Provision the weights and their companion files as a separate, pinned artifact set. ### Layout and identity | Location | Contents | |---|---| | `rag/local_models/.gitignore` | Tracked scaffold with `*` followed by `!.gitignore`. This excludes downloaded weights, tokenizer and JSON files, projectors, nested files, and s",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-manage-production-rollout",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-manage-production-rollout"
+      ],
+      "references": [
+        "comm-manage-production-rollout/references/partial-rollout.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "f1398a0dd14ada19ccc6fdcab8e054de267ac465fcf607fe6c48a38df15036de",
+      "answer_excerpt": "**R17 is unverified as live. Hold any retry.** Treat the replica mismatch as a possible partial rollout until the production owner reconciles the live state. - **Deployment run:** The dashboard is green for R17. The exact run and immutable artifact ID remain unverified. - **Delivery:** One live replica reports R16. Confirm which replicas run each artifact and which receive traffic. R17 may already serve some requests. - **Behavior:** No functional probe was run. Verify the affected function through its normal entry point and confirm which versi",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-migrate-git-repository",
+      "exit": 0,
+      "errors": [],
+      "first_task": 20,
+      "owner_call": 20,
+      "owner_full_at": [
+        25
+      ],
+      "skill_bodies": [
+        "comm-migrate-git-repository",
+        "comm-choose-effective-solution"
+      ],
+      "references": [
+        "comm-migrate-git-repository/references/inventory.md",
+        "comm-migrate-git-repository/references/platform.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 25,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "28ccdf322bc4ff8788f0ef2e0a3dd9ccc44a8409ef1d5a3bb35ee8b37d0f5d04",
+      "answer_excerpt": "**No—a mirror push is not enough.** It copies Git refs and associated Git objects; it does not migrate issue history, release records/assets, or hosting integrations. It can also force-update or delete destination refs, so it should not be the default migration method. [Git documentation](https://git-scm.com/docs/git-push) Applying `comm-migrate-git-repository`, my recommendation is: | Option | Decision | |---|---| | Native ownership transfer on the same host | Preferred, provided destination permissions and retention guarantees meet your requi",
+      "checker_relative_to_target": "shared_delivery_or_interleaved"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-prepare-browser-check",
+      "exit": 0,
+      "errors": [],
+      "first_task": 20,
+      "owner_call": 30,
+      "owner_full_at": [
+        33
+      ],
+      "skill_bodies": [
+        "comm-prepare-browser-check",
+        "comm-choose-effective-solution"
+      ],
+      "references": [
+        "comm-prepare-browser-check/references/preconditions.md",
+        "comm-prepare-browser-check/references/artifacts.md",
+        "comm-prepare-browser-check/references/lifecycle.md",
+        "comm-prepare-browser-check/references/state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "4525acb4f3bf1764ab46866135d37f591a6db4eb2d86cd1c80c270bd95fa1a26",
+      "answer_excerpt": "**Decision:** The stale preview is an unverified symptom. Keep the screenshot as a diagnostic clue. Its build and browser profile are unknown, so the application defect remains unconfirmed. 1. **Verify what the browser actually loads.** Use the project’s existing preview workflow for a known revision and build. Record the preview URL, base path, serving root, and build ID or asset fingerprints. Check that the browser receives and applies the expected JavaScript, CSS, templates, and critical assets. A matching Git revision or an HTTP 200 alone i",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-preserve-harness-knowledge",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-preserve-harness-knowledge"
+      ],
+      "references": [
+        "comm-preserve-harness-knowledge/references/material-placement.md",
+        "comm-preserve-harness-knowledge/references/experience-routing.md",
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "a1ddca8c6951f270deafe5bf35a51835a0948941c6c81d4c09d9af617f22c88b",
+      "answer_excerpt": "Reuse the existing procedure as the sole home for the advice. No separate lesson record or new agent-facing document is needed.",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-preserve-text-line-endings",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 25,
+      "owner_full_at": [
+        28
+      ],
+      "skill_bodies": [
+        "comm-preserve-text-line-endings"
+      ],
+      "references": [
+        "comm-preserve-text-line-endings/references/regressions.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 23,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "465b47920b0aba35b0c5818418931ec66119f9a46dc4bd36c63461024d2a674b",
+      "answer_excerpt": "Reject the proposed repair. Universal newline conversion turns `\\r\\n` into `\\n` on read, so rewriting the string can change bytes outside the one authorized word. Use strict UTF-8 decoding and encoding with newline conversion disabled, or splice the replacement directly into the original bytes after validating UTF-8. **Byte-level acceptance test** Capture the original bytes before editing. Identify the authorized occurrence by its byte offsets `[start, end)` and verify that the span contains the expected word. Read the repaired file in binary m",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-preserve-visual-design",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-preserve-visual-design"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "8e3b392e812a0901fde946471fed3cba48a91c2effefe3fe731a9f34d203cdfa",
+      "answer_excerpt": "**No.** The signed-off wireframe approves the checkout button hierarchy shown in that version. Final visual approval is still pending for colour, spacing, and any other styling the wireframe leaves unspecified. **Request approval** for a specific, versioned checkout mockup or prototype that preserves the signed-off hierarchy and shows the proposed colours and spacing across relevant screen sizes and key checkout states. Get explicit approval for the reference or explicit delegation of the remaining styling decisions before implementing them. An",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-process-harness-inbox",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 25,
+      "owner_full_at": [
+        28
+      ],
+      "skill_bodies": [
+        "comm-process-harness-inbox"
+      ],
+      "references": [
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 23,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "914705de31de51205901e13a41b79a874f7139f1ae1c377f2df840b9000a2fe5",
+      "answer_excerpt": "Only request creation was authorized, and that stage is already complete. Leave the request marked `new` until the owner explicitly authorizes execution, including implementation and testing. INBOX workflow Publication requires separate explicit approval for the exact candidate version. Once approved, publish to the canonical source, synchronize working copies from that source, and verify them before marking the request `completed`. Direct copying from INBOX to working copies is prohibited. INBOX skill",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-process-pull-request",
+      "exit": 0,
+      "errors": [],
+      "first_task": 44,
+      "owner_call": 44,
+      "owner_full_at": [
+        47
+      ],
+      "skill_bodies": [
+        "comm-process-pull-request"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 42,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "e625c0a3b9dd8728c9c03e4dbe438ae5ac3d7c30f92ee1a5dad226f5b78eddd1",
+      "answer_excerpt": "**I recommend option 1** because you’re still deciding what should happen after review. You can authorize a merge separately once the review is complete. 1. **Open the PR only.** Decide what happens after review later. 2. **Open the PR and squash-merge it after review.** Keep the remote feature branch. 3. **Open the PR, squash-merge it after review, and delete the remote feature branch.** Your local branch stays intact. Opening the PR requires your explicit choice. I couldn’t verify the current feature branch because `/workspace` isn’t a Git ch",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-protect-harness-evidence",
+      "exit": 0,
+      "errors": [],
+      "first_task": 39,
+      "owner_call": 39,
+      "owner_full_at": [
+        42
+      ],
+      "skill_bodies": [
+        "comm-protect-harness-evidence",
+        "comm-process-harness-inbox"
+      ],
+      "references": [
+        "comm-protect-harness-evidence/references/operations.md",
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 37,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "d85a2eec806fdecc9cb88151a6f80b51a74ab4ba0c65bfa845d7a2cb3f2bef9d",
+      "answer_excerpt": "Keep the completed report and its original raw log byte-for-byte intact at their existing paths. Correct the conclusion in a **new addendum dated when it is created**. Link to the original report and the supporting raw log, identify the conclusion being corrected, and explain the revised conclusion and its basis. If fresh verification is needed, save its raw output in a new file and link it from the addendum. Use a **common INBOX request** under `harness/common/inbox/YYYY-MM-DD-meaning/`. Request creation, execution (including any rerun), and p",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-publish-harness-instructions",
+      "exit": 0,
+      "errors": [],
+      "first_task": 30,
+      "owner_call": 30,
+      "owner_full_at": [
+        33
+      ],
+      "skill_bodies": [
+        "comm-publish-harness-instructions"
+      ],
+      "references": [
+        "comm-publish-harness-instructions/references/gate.md",
+        "comm-publish-harness-instructions/references/placement-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "a22f82fc0758c84bc185d5f7313706cde0e57d284e6a1dcbf4295fe56e55c929",
+      "answer_excerpt": "**Restore the published version 1 bytes from the canonical source.** For a shared skill, use the complete published `comm-*` folder under `harness/common/skills/`, including its working resources. Restore the missing copy at the corresponding path under `.agents/skills/` for Codex or `.claude/skills/` for Claude Code. The pending version 2 stays in the INBOX request until publication is authorized. **Version 2 reaches both native copies through the same INBOX request.** Record the exact source and destination paths and the old and new hashes. R",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-recover-git-state",
+      "exit": 0,
+      "errors": [],
+      "first_task": 20,
+      "owner_call": 53,
+      "owner_full_at": [
+        55
+      ],
+      "skill_bodies": [
+        "comm-recover-git-state"
+      ],
+      "references": [
+        "comm-recover-git-state/references/modes.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 51,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "7abf935633616a2bfa6acb755125634195afcb4327aa337b1dac0148313ef7f2",
+      "answer_excerpt": "**Decision: Defer the hard reset.** A guessed SHA could move the branch to the wrong commit. `git reset --hard` would also replace the index and tracked working-tree contents, discarding the staged changes your colleagues need to keep. `/workspace` has no Git repository, so I couldn’t verify the interrupted operation, the staged changes, or whether the commits survive. In the affected worktree, these commands inspect the state without changing refs, files, or staging: ```sh git --no-optional-locks status git --no-optional-locks diff --cached --",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-restore-application-data",
+      "exit": 0,
+      "errors": [],
+      "first_task": 30,
+      "owner_call": 30,
+      "owner_full_at": [
+        33
+      ],
+      "skill_bodies": [
+        "comm-restore-application-data"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "e2ddccdd25bc40b0d914e8bad2899b677b77873af0bdf1198e238f343bf39288",
+      "answer_excerpt": "**Decision:** Rehearse a selective restore of the deleted product from the 11:55 snapshot. Use an isolated staging copy that reflects the state after 12:10. A full rollback to 11:55 would discard the unrelated orders written at 12:10. 1. **Establish the baseline.** Use a consistent staging copy and load the 11:55 snapshot into a separate recovery database. Confirm the product’s original ID, that it exists in the snapshot and is missing from the staging copy, and that the 12:10 orders are present. Capture the orders and their line items for an e",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-select-development-workflow",
+      "exit": 0,
+      "errors": [],
+      "first_task": 34,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-select-development-workflow"
+      ],
+      "references": [
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "1f244699093fee579aed0c63426017df5a502fa6dcff8b24492e535e3aff66bc",
+      "verbatim_menu_fragments": 10,
+      "expected_verbatim_fragments": 10,
+      "answer_excerpt": "I recommend **option 5, short Superpowers brainstorming**, if you want to turn the unclear idea into a small design you can review before deciding whether to build it. If the main uncertainty is whether a specific assumption holds, choose **option 4** and agree on an experiment first. If you already expect a multi-stage build, option 2 gives you a structured path from discovery through implementation. The workflow skill uses the fixed menu wording below. Plugin availability is unverified. 1. **Superpowers + Compound Engineering:** `superpowers:",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-update-git-branch",
+      "exit": 0,
+      "errors": [],
+      "first_task": 34,
+      "owner_call": 44,
+      "owner_full_at": [
+        46
+      ],
+      "skill_bodies": [
+        "comm-update-git-branch"
+      ],
+      "references": [
+        "comm-commit-task-stages/references/work-safety.md",
+        "comm-update-git-branch/references/methods.md",
+        "comm-update-git-branch/references/conflicts.md",
+        "comm-verify-project-facts/references/git-base-state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 42,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "04a1ec7aa1730f28df33ae8ee7217fe89abb2bbc9f96a40e48a368265b65090b",
+      "answer_excerpt": "**Decision:** Use fresh integration as the base for resumed work. Preserve the original branch and local edits until you can identify which changes still serve the task. For invoice calculation, preserve the current approved behavior and carry forward any still-required behavior from the old branch. If the two requirements produce different totals for the same invoice and the intended result is unclear, get a decision from the invoice behavior owner before resuming that work. 1. **Establish the baseline.** Confirm the task branch, intended inte",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-validate-harness-instructions",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 24,
+      "owner_full_at": [
+        27
+      ],
+      "skill_bodies": [
+        "comm-validate-harness-instructions"
+      ],
+      "references": [
+        "comm-validate-harness-instructions/references/codex-skill-invocation.md",
+        "comm-validate-harness-instructions/references/evaluation.md",
+        "comm-validate-harness-instructions/references/validation.md",
+        "comm-validate-harness-instructions/references/rule-budgets.md",
+        "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "c5d429aa6df9c61c96bd016ad8823b4324ca980599cb9706df0f20a128fa7609",
+      "answer_excerpt": "**Decision: the procedure is not yet checked.** The A is a static grading result, and exit code 0 records successful CLI termination. Selection and behavior remain unverified in both profiles. Before calling the exact version checked, observe the following separately in each profile and applicable installation mode: - **Selection and loading.** A matching task selects the intended procedure implicitly, and an explicit invocation loads that same procedure. The trace shows the intended owner, the current instruction text, and any required resourc",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-verify-browser-ui",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-verify-browser-ui"
+      ],
+      "references": [
+        "comm-verify-browser-ui/references/fidelity.md",
+        "comm-verify-browser-ui/references/coverage.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "9f11d76549a8fcad2180e9b8f57c14765be063a6837ccee3fc90e3552b94c6e3",
+      "answer_excerpt": "**Sign-off is pending.** The unit test shows that calling the handler changes state. Keyboard navigation, focus, and visible behavior on the checkout page remain unverified. A passing end-to-end test in a real browser would count. Open the actual checkout page in a state where the dropdown is available, then use browser keyboard input to exercise the supported interaction: 1. Tab to the dropdown and verify that it receives focus and shows a visible focus indicator. 2. Open it with the supported key and verify that the options are visible. Use t",
+      "checker_relative_to_target": "shared_delivery_or_interleaved"
+    },
+    {
+      "mode": "common-only",
+      "trial": "explicit",
+      "owner": "comm-verify-project-facts",
+      "exit": 0,
+      "errors": [],
+      "first_task": 20,
+      "owner_call": 40,
+      "owner_full_at": [
+        43
+      ],
+      "skill_bodies": [
+        "comm-verify-project-facts"
+      ],
+      "references": [
+        "comm-verify-project-facts/references/empty-log-results.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 38,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "72aa936f51a48cef02e9d2e382bda89e26e9ef3a18395489dc6e0af0cad37769",
+      "answer_excerpt": "**Decision: Event occurrence is unknown.** The on-call report establishes only that one query returned zero rows. The running version, timestamp time zone, and replica coverage are unverified, so the result does not support the claim that the event never happened. **Positive control.** Use an independently confirmed request from the incident window that the service is known to log. In the same log stream and time window, remove the target-event filter and look up the request by its trace or request ID. Confirm that the returned record has the e",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "diagnostic",
+      "owner": "comm-commit-task-stages",
+      "exit": 0,
+      "errors": [],
+      "first_task": 36,
+      "owner_call": 36,
+      "owner_full_at": [
+        39
+      ],
+      "skill_bodies": [
+        "comm-commit-task-stages"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "302e599184551b54503664f272defe5a862184f311c971ac2d9ada9e1c19628c",
+      "answer_excerpt": "An empty placeholder is too early for a commit. Wait until the feature is complete or you have a verified piece that’s useful on its own. Leave the other developer’s fix staged and let them commit it separately. When your feature is ready, stage and commit only the files you own. The authorized fixture startup check passed. `/workspace` has no Git repository, so I couldn’t verify the staged changes directly. I made no commit or staging changes.",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-only",
+      "trial": "diagnostic",
+      "owner": "comm-select-development-workflow",
+      "exit": 0,
+      "errors": [],
+      "first_task": 30,
+      "owner_call": 30,
+      "owner_full_at": [
+        33
+      ],
+      "skill_bodies": [
+        "comm-select-development-workflow"
+      ],
+      "references": [
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "7d3de73d1073d09b550894e5952aaec37a40dc8b1322e0831a5dbf3acff99c6f",
+      "verbatim_menu_fragments": 10,
+      "expected_verbatim_fragments": 10,
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов 2. **Compound Engineering:** `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - нативный ce-маршрут 3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу. 4. Обязательного плагина нет: **эксперимент → исследование → выводы*",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "negative",
+      "owner": "control",
+      "exit": 0,
+      "errors": [],
+      "first_task": 31,
+      "owner_call": null,
+      "owner_full_at": [],
+      "skill_bodies": [],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "b9a1cc8721298a7eff3025462b6069d245d2535e11aa6cdf3e3b2e7b2f1f9699",
+      "answer_excerpt": "Three hours is 180 minutes."
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-assess-project-tests",
+      "exit": 0,
+      "errors": [],
+      "first_task": 37,
+      "owner_call": 37,
+      "owner_full_at": [
+        40
+      ],
+      "skill_bodies": [
+        "comm-assess-project-tests"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 33,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "68ce48319b5c9c565d27e6f19036cc1ecd715da822f79760844e0f8b990173cb",
+      "answer_excerpt": "**Decision: Replace the test.** Stubbing `purchase` bypasses the code that validates quantities and initiates payment. The no-throw assertion passes when the stub returns success, so the test can stay green even if the real service accepts `-1` and charges the customer. Call the real purchase service with an otherwise valid request and `quantity = -1`. Inject a mock at the payment gateway boundary and assert both outcomes: - The service rejects the request with the documented invalid-quantity error or failure result. - The gateway receives zero",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-commit-task-stages",
+      "exit": 0,
+      "errors": [],
+      "first_task": 22,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-commit-task-stages"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "c8297f9d61e95ec99e3865e8c7ea2cfbdc15e6ef8abfc80252347d3eab573a7e",
+      "answer_excerpt": "Skip the commit. An empty placeholder is part of the unfinished feature. Wait until the feature is complete or you have an independently useful, verified part of it. Leave the other developer’s fix staged exactly as it is. They can commit it separately when it’s ready. This assessment is based on the state you described. I made no commit or Git index changes and skipped the startup check because it can write files.",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-confirm-database-design",
+      "exit": 0,
+      "errors": [],
+      "first_task": 32,
+      "owner_call": 32,
+      "owner_full_at": [
+        35
+      ],
+      "skill_bodies": [
+        "comm-confirm-database-design"
+      ],
+      "references": [
+        "comm-confirm-database-design/references/choices.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "b231a8611ecb6a74bfcf96080431d9d63eb1b6cc21f02690a5c62728e577971a",
+      "answer_excerpt": "Keep `0` and `false` as explicit answers wherever the field type permits them. Treating either as unanswered would lose a respondent’s answer. **Before implementation, agree on what “unanswered” means for both writes and searches.** I recommend omitting the key for new unanswered responses. Use `null` only if it represents a distinct state the team needs to preserve. If existing documents already use `null` to mean unanswered, include those documents alongside missing keys in the unanswered search. Exclude `0` and `false` from that search. This",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-create-git-branch",
+      "exit": 0,
+      "errors": [],
+      "first_task": 41,
+      "owner_call": 41,
+      "owner_full_at": [
+        44
+      ],
+      "skill_bodies": [
+        "comm-create-git-branch",
+        "comm-verify-project-facts"
+      ],
+      "references": [
+        "comm-commit-task-stages/references/work-safety.md",
+        "comm-create-git-branch/references/naming.md",
+        "comm-verify-project-facts/references/git-base-state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 37,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "b832f387a4f698baf76e648778a639419aec04b808cb316bf191805b26e07a79",
+      "answer_excerpt": "Start receipt export from the **verified current commit on the project’s intended remote integration branch**. Use that exact SHA as the branch point so receipt export starts without the unfinished billing commits. `/workspace` contains no Git checkout, so I couldn’t verify the remote, integration branch, or SHA. This was a read-only assessment. To protect the billing work when branch creation is authorized: 1. **Record the billing checkout’s state.** Capture its worktree path, branch, HEAD SHA, staged and unstaged changes, and untracked files.",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-create-lazy-claude-codex-skills",
+      "exit": 0,
+      "errors": [],
+      "first_task": 53,
+      "owner_call": 53,
+      "owner_full_at": [
+        58
+      ],
+      "skill_bodies": [
+        "comm-check-current-harness-duplicates",
+        "comm-validate-harness-instructions",
+        "comm-create-lazy-claude-codex-skills"
+      ],
+      "references": [
+        "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 49,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "4ba5e4632ed5a443146304246bb3f498b45695b6584ec9aafc1e8b992304f4cf",
+      "answer_excerpt": "Choose a **contextual lazy skill** for Claude Code and Codex. Give it a name and description that explicitly trigger on invoice-export requests. An always-loaded rule serves a boundary that must apply before skill selection. A rule-plus-skill pair would require a concrete failure that skill discovery cannot prevent. The invoice-export procedure has no established need for either form. Before authoring, check the current canonical rules, skills, supporting resources, and checks under `harness/project/` and `harness/common/`. Then check the relev",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-diagnose-harness-entrypoints",
+      "exit": 0,
+      "errors": [],
+      "first_task": 26,
+      "owner_call": 26,
+      "owner_full_at": [
+        29
+      ],
+      "skill_bodies": [
+        "comm-diagnose-harness-entrypoints",
+        "comm-validate-harness-instructions"
+      ],
+      "references": [
+        "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "43de1b4ef7c4490a6d302a0bf65270ef8ad2e2994bb40ea783cd365d77b1986b",
+      "answer_excerpt": "**Preserve the existing `AGENTS.md` byte for byte and leave the affected startup stopped.** The harness checks exact bytes, so an appended newline can trigger the same stop as an added instruction. The automatic creation path applies only when the entrypoint is missing. comm-user-owned-entrypoints.md 1. **Confirm the mismatch in the affected installation.** Record the installation root, installed harness version and mode, startup command, exit code, and exact error. Check that the paths and their parent components are ordinary paths without sym",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-install-harness",
+      "exit": 0,
+      "errors": [],
+      "first_task": 26,
+      "owner_call": 26,
+      "owner_full_at": [
+        29
+      ],
+      "skill_bodies": [
+        "comm-validate-harness-instructions",
+        "comm-install-harness"
+      ],
+      "references": [
+        "comm-install-harness/references/checks.md",
+        "comm-install-harness/references/testing.md",
+        "comm-publish-harness-instructions/references/placement-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "f390c1b1e3357f5819c29cfd53129808eec8fa83298894585e63701646ffe8d8",
+      "answer_excerpt": "Use the same published `harness/common` package in both checkouts. Install it as ordinary files and directories, including its checks, templates, rules, skills, and resources. Verify the target paths and their parents for symlinks before copying or running anything. | Checkout | First startup | |---|---| | **No `harness/project`** | Run the common startup checker. It creates a neutral `harness/project` from the published `project-skeleton.json`, including a nonempty `INDEX.md`, the template’s categories and folder guides, and both `testing/evid",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-manage-local-models",
+      "exit": 0,
+      "errors": [],
+      "first_task": 36,
+      "owner_call": 36,
+      "owner_full_at": [
+        39
+      ],
+      "skill_bodies": [
+        "comm-manage-local-models"
+      ],
+      "references": [
+        "comm-manage-local-models/references/lifecycle.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "ffe71ff5faf7ba0e0a66073e9a6dc63f338c1aeaf6370f19bda25f3270e2d951",
+      "answer_excerpt": "**Decision:** Store inference artifacts under the project root at `rag/local_models/`, outside `.venv`. Commit the directory scaffold, a pinned model manifest, the preparation command, compatible runtime profiles, and tests. Keep weights and all downloaded companion files out of Git. Recreating the Python environment then leaves the installed model sets intact. ### Layout and identity - **`rag/local_models/.gitignore`** is the tracked scaffold. Use `*` followed by `!.gitignore` to exclude weights, tokenizers, model configuration, and nested dow",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-manage-production-rollout",
+      "exit": 0,
+      "errors": [],
+      "first_task": 39,
+      "owner_call": 39,
+      "owner_full_at": [
+        42
+      ],
+      "skill_bodies": [
+        "comm-manage-production-rollout"
+      ],
+      "references": [
+        "comm-manage-production-rollout/references/partial-rollout.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 37,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "b1e4ceccc2eb5f60485ba5de3596b422dd29a9fba0b445513b791f87d0f06291",
+      "answer_excerpt": "**Decision: Treat R17 as a partial rollout and hold any retry.** The available evidence leaves open whether some traffic already reaches R17. - **Deployment run:** The dashboard reports green. Match that status to the exact production run and immutable R17 artifact. - **Live delivery:** One live replica reports R16. Verify the artifact on each affected replica and determine which replicas are healthy and receiving traffic. - **Functional behavior:** Unverified. No functional probe was run. Exercise the changed behavior through its normal produc",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-migrate-git-repository",
+      "exit": 0,
+      "errors": [],
+      "first_task": 44,
+      "owner_call": 44,
+      "owner_full_at": [
+        47
+      ],
+      "skill_bodies": [
+        "comm-migrate-git-repository",
+        "comm-choose-effective-solution"
+      ],
+      "references": [
+        "comm-migrate-git-repository/references/inventory.md",
+        "comm-migrate-git-repository/references/platform.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 42,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "012ebc0a1864589419045836205d35669d301f8129bc1157d9b4b134268f6eda",
+      "answer_excerpt": "**Decision: A mirror push is insufficient.** It copies Git refs and their history. Issue history, uploaded release assets, and integration settings need a host-level transfer or a separate migration. A mirror push can also overwrite or delete destination refs. [Git push documentation](https://git-scm.com/docs/git-push#Documentation/git-push.txt---mirror) Prefer a **native ownership transfer on the same hosting instance** if the destination account is eligible and its plan and policies support the features you use. That is the best starting poin",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-prepare-browser-check",
+      "exit": 0,
+      "errors": [],
+      "first_task": 37,
+      "owner_call": 37,
+      "owner_full_at": [
+        40
+      ],
+      "skill_bodies": [
+        "comm-prepare-browser-check"
+      ],
+      "references": [
+        "comm-prepare-browser-check/references/preconditions.md",
+        "comm-prepare-browser-check/references/artifacts.md",
+        "comm-prepare-browser-check/references/lifecycle.md",
+        "comm-prepare-browser-check/references/state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 33,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "5d95cfe1789e7d733e1525d057e85d62f56f706d2c073a104667dfa61152d68a",
+      "answer_excerpt": "**Decision:** Treat yesterday’s UI as an unverified observation. The screenshot’s build and browser profile are unknown, so it cannot establish which version the preview served or why the UI looked stale. 1. **Verify what the browser loaded.** Record the intended revision or build ID, preview URL, and serving root. Use the build manifest or asset fingerprints to match the delivered HTML, JavaScript, CSS, and critical assets to that build. Check that those assets actually load and apply. 2. **Establish a clean baseline.** Use a dedicated browser",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-preserve-harness-knowledge",
+      "exit": 0,
+      "errors": [],
+      "first_task": 31,
+      "owner_call": 31,
+      "owner_full_at": [
+        34
+      ],
+      "skill_bodies": [
+        "comm-preserve-harness-knowledge"
+      ],
+      "references": [
+        "comm-preserve-harness-knowledge/references/material-placement.md",
+        "comm-preserve-harness-knowledge/references/experience-routing.md",
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "495c0eda8e122bf8a46591965287a52f49e7d04c3a77b7b2de4537a8857cdbaa",
+      "answer_excerpt": "Keep the lesson in the existing procedure. It already covers the advice in full, so no separate record or new agent-facing document is needed.",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-preserve-text-line-endings",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-preserve-text-line-endings"
+      ],
+      "references": [
+        "comm-preserve-text-line-endings/references/regressions.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "f289a97226bb98d8081a0ff202886b8c359a5f6276717aa63d1a0892c809b8a3",
+      "answer_excerpt": "Reject the proposed repair. Universal newline conversion turns CRLF (`0D 0A`) into LF (`0A`) during the read, erasing the distinction between the file’s two line endings. Writing the resulting string can change bytes outside the selected word. **Byte-level acceptance test.** Capture the original bytes and identify the exact half-open byte range `[start, end)` of the intended occurrence. Verify that the range contains the old word’s UTF-8 bytes, then require this exact equality: ```python assert original[start:end] == old_word.encode(\"utf-8\") as",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-preserve-visual-design",
+      "exit": 0,
+      "errors": [],
+      "first_task": 36,
+      "owner_call": 36,
+      "owner_full_at": [
+        39
+      ],
+      "skill_bodies": [
+        "comm-preserve-visual-design"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "7f093afcf40f2b755bf80bc0ac1ace572c8a943009ff1373372315947e6b2e22",
+      "answer_excerpt": "**No.** The sign-off approves the checkout button hierarchy shown in the wireframe. Colour and spacing still need approval. **Request** explicit sign-off on a specific version of a high-fidelity mockup or accessible prototype that shows the colour, spacing, and button treatments at relevant viewport sizes and in key checkout states. Confirm any visual decisions delegated to the implementation team. **Check conformance** by comparing the rendered checkout with the signed-off wireframe for button hierarchy and with the approved visual reference f",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-process-harness-inbox",
+      "exit": 0,
+      "errors": [],
+      "first_task": 31,
+      "owner_call": 31,
+      "owner_full_at": [
+        34
+      ],
+      "skill_bodies": [
+        "comm-process-harness-inbox"
+      ],
+      "references": [
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "5fa51e5f7d38685ffb58a23a4133aee0a9520ef07d944b578975501261696f8c",
+      "answer_excerpt": "Only request creation was authorized, and it’s already complete. Leave the common harness INBOX request marked `new`. The next stage is execution, which requires explicit approval before implementation or testing. INBOX workflow Publication requires separate approval for the exact candidate version. Once approved, publish to the canonical source, synchronize working copies from that source, verify the copies, and then mark the request `completed`. Direct copying from INBOX into the working installation is prohibited. INBOX workflow",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-process-pull-request",
+      "exit": 0,
+      "errors": [],
+      "first_task": 36,
+      "owner_call": 36,
+      "owner_full_at": [
+        39
+      ],
+      "skill_bodies": [
+        "comm-process-pull-request"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "6917ca31038588f0d1ab3df3c2f35fed223566dba24e7ff06b41f700602f3019",
+      "answer_excerpt": "I recommend **Option 1: open the pull request for review**. It lets you decide what to do after you’ve seen the review. 1. **Open the PR only.** Defer the merge and branch cleanup decisions. 2. **Open the PR and squash-merge after review.** Keep the remote feature branch. 3. **Open the PR, squash-merge after review, and delete the remote feature branch.** Keep the local feature branch. The repository workflow requires an explicit choice before opening the PR. This was a read-only assessment. I found no Git checkout in `/workspace`, so I couldn’",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-protect-harness-evidence",
+      "exit": 0,
+      "errors": [],
+      "first_task": 32,
+      "owner_call": 32,
+      "owner_full_at": [
+        35
+      ],
+      "skill_bodies": [
+        "comm-validate-harness-instructions",
+        "comm-protect-harness-evidence",
+        "comm-process-harness-inbox"
+      ],
+      "references": [
+        "comm-protect-harness-evidence/references/operations.md",
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "3473c4d628de809d9aa30134725f09409af037ed666923314fae303f4503339f",
+      "answer_excerpt": "Correct the conclusion in a **new addendum dated on the day it is created**. Link to the completed report, identify the conclusion being corrected, and explain what the evidence supports. Preserve the original report and raw log byte-for-byte at their existing paths. If a fresh verification is needed, save its raw output in a new file and link it from the addendum. operations.md Route the correction through `harness/common/inbox/`. Obtain explicit authorization for request creation, execution (including any rerun), and publication. Publish the ",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-publish-harness-instructions",
+      "exit": 0,
+      "errors": [],
+      "first_task": 26,
+      "owner_call": 26,
+      "owner_full_at": [
+        29
+      ],
+      "skill_bodies": [
+        "comm-diagnose-harness-entrypoints",
+        "comm-validate-harness-instructions",
+        "comm-process-harness-inbox",
+        "comm-publish-harness-instructions"
+      ],
+      "references": [
+        "comm-diagnose-harness-entrypoints/references/entrypoints.md",
+        "comm-validate-harness-instructions/references/validation.md",
+        "comm-process-harness-inbox/references/workflow.md",
+        "comm-publish-harness-instructions/references/gate.md",
+        "comm-publish-harness-instructions/references/placement-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 34,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "4027a951d20f3d80b3e43c9bd1a1662ee78a01b16967a9f8f98041474dd16edd",
+      "answer_excerpt": "**Restore the exact published version 1 bytes today.** For a managed skill, restore the full directory, including its resources, from the owning package’s published canonical source under `harness/common/skills/` or `harness/project/skills/`. The startup check uses that source to restore the missing native copy. Version 2 stays in the INBOX request while publication is pending. This assessment made no restoration or publication changes. Recovery procedure **Publish version 2 through the same request.** With execution authorized, validate the fi",
+      "checker_relative_to_target": "after_full_owner"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-recover-git-state",
+      "exit": 0,
+      "errors": [],
+      "first_task": 20,
+      "owner_call": 20,
+      "owner_full_at": [
+        23
+      ],
+      "skill_bodies": [
+        "comm-recover-git-state",
+        "comm-verify-project-facts"
+      ],
+      "references": [
+        "comm-recover-git-state/references/modes.md",
+        "comm-verify-project-facts/references/git-operation-result.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "fdb1dde1aab40fd2d6d983c72635c9e3a7c4db066e9cc5940dfe8aa72af151f8",
+      "answer_excerpt": "**Decision: hold the Git state as it is.** A hard reset to a guessed SHA could overwrite the staged changes and tracked working-tree edits before the missing commits are identified. Git found no repository at `/workspace`, and I found no nested worktree in the accessible project tree I checked. The interrupted operation, staged changes, and commit SHAs remain unverified. In the affected worktree, use these read-only checks: ```bash git --no-optional-locks status git --no-pager diff --cached --no-ext-diff --no-textconv --name-status git --no-pag",
+      "checker_relative_to_target": "after_full_owner"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-restore-application-data",
+      "exit": 0,
+      "errors": [],
+      "first_task": 20,
+      "owner_call": 25,
+      "owner_full_at": [
+        28
+      ],
+      "skill_bodies": [
+        "comm-restore-application-data"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "42e04685d17b03caa09e8967153f3c338963920b56f3bbf4af238eff839a30d5",
+      "answer_excerpt": "**Decision:** Rehearse a selective restore of the deleted product from the 11:55 snapshot into an isolated staging copy whose baseline includes the 12:10 orders. A full rollback to 11:55 would discard those orders. Use the snapshot as the recovery source and preserve the newer staging state. 1. **Establish the baseline.** For an authorized rehearsal, prepare a consistent post-12:10 staging copy with the product missing and the later orders present. Open the 11:55 snapshot in a separate isolated instance. Confirm the product’s original primary k",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-select-development-workflow",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-select-development-workflow"
+      ],
+      "references": [
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "template_mismatch",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "3258e6ed82a09cd48eaf89f1453d6568c3b83e694ddb0e4175390af69dff645c",
+      "verbatim_menu_fragments": 0,
+      "expected_verbatim_fragments": 10,
+      "answer_excerpt": "1. **Superpowers + Compound Engineering.** Apply `superpowers:using-superpowers`, then follow `ce-brainstorm` → `ce-plan` → `ce-work` with Compound Engineering’s approval checkpoints. 2. **Compound Engineering.** Follow `ce-brainstorm` → `ce-plan` → `ce-work` to clarify the idea, agree on a plan, and implement it. **Recommended if you want structured discovery and expect to build once the idea is clear.** 3. **No specialized workflow.** The current model handles the task directly at its current reasoning effort, without delegation or a prescrib",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-update-git-branch",
+      "exit": 0,
+      "errors": [],
+      "first_task": 36,
+      "owner_call": 36,
+      "owner_full_at": [
+        39
+      ],
+      "skill_bodies": [
+        "comm-update-git-branch"
+      ],
+      "references": [
+        "comm-update-git-branch/references/methods.md",
+        "comm-update-git-branch/references/conflicts.md",
+        "comm-verify-project-facts/references/git-base-state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "b82faa62454403e43a1995fdd62072ad928f03a274caf1199a8d583b32ae7672",
+      "answer_excerpt": "**Decision:** Preserve the unfinished branch and all local edits in place. Once the integration tip is verified and the invoice behavior is agreed, prefer a fresh branch from that tip and transfer only the unfinished work that is still needed, including its dependencies. If the existing branch carries a shared PR or review history that needs to be preserved, use the project’s approved update method on that branch. Compare three versions of the invoice calculation: the common ancestor, the current integration tip, and the unfinished branch inclu",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-validate-harness-instructions",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 36,
+      "owner_full_at": [
+        39
+      ],
+      "skill_bodies": [
+        "comm-validate-harness-instructions"
+      ],
+      "references": [
+        "comm-validate-harness-instructions/references/evaluation.md",
+        "comm-validate-harness-instructions/references/validation.md",
+        "comm-validate-harness-instructions/references/rule-budgets.md",
+        "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "1536680aaee2531d53462ea2896de19634aa29fd50a5bbc5f540676078ccf5ce",
+      "answer_excerpt": "**Decision: runtime verification is pending.** The reported A records the static grader’s result, and exit code 0 records successful CLI process completion. Selection, instruction loading, and behavior remain unverified in both profiles. Before calling the procedure checked, capture traces for the exact candidate version in Codex and Claude Code, in both common-only and combined installations: - **Selection.** A matching request selects the procedure implicitly, explicit invocation loads it with its required resources, and an unrelated request ",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-verify-browser-ui",
+      "exit": 0,
+      "errors": [],
+      "first_task": 27,
+      "owner_call": 27,
+      "owner_full_at": [
+        31
+      ],
+      "skill_bodies": [
+        "comm-assess-project-tests",
+        "comm-verify-browser-ui"
+      ],
+      "references": [
+        "comm-verify-browser-ui/references/fidelity.md",
+        "comm-verify-browser-ui/references/coverage.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 23,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "a8516fdb250fc3eef5b9664dadffa8bcbf456bd3605e801ee0539163f647593d",
+      "answer_excerpt": "**Hold sign-off.** The unit test shows that calling the handler directly changes state. Keyboard event wiring, focus behavior, and what the shopper sees on checkout remain unverified. A passing test in a real browser on the actual checkout route would count. Start with a checkout fixture that makes the dropdown available, then use browser keyboard input and verify the checkout’s intended behavior: 1. **Reach and open.** Tab to the control, verify focus and its visible indicator, then use the supported opening key. Confirm the options are visibl",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "implicit",
+      "owner": "comm-verify-project-facts",
+      "exit": 0,
+      "errors": [],
+      "first_task": 38,
+      "owner_call": 38,
+      "owner_full_at": [
+        41
+      ],
+      "skill_bodies": [
+        "comm-verify-project-facts"
+      ],
+      "references": [
+        "comm-verify-project-facts/references/empty-log-results.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "53b1237248b01127a932fb767ab968cb727ada7425d7d125527528055cf80481",
+      "answer_excerpt": "**Decision:** The report’s claim is unsupported. The query returned zero matching rows under its current filters. Whether the event happened remains unknown because the running version, query time zone, and replica coverage are unverified. **Positive control:** Use a request independently confirmed by an existing trace or access log, with a known request ID, timestamp, and serving replica. Query the same application log stream and time window, keep the environment, service, and replica filters, and replace the event filter with the known reques",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-assess-project-tests",
+      "exit": 0,
+      "errors": [],
+      "first_task": 20,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-assess-project-tests"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "e02850d9e81f1ef7c49dde994b52019c7cb18b1a838854c0bc9c6e39c06feb2a",
+      "answer_excerpt": "**Decision: Replace the test.** The purchase-method stub bypasses the validation and payment logic and returns success for `-1`. The “didn’t throw” assertion passes even if the real service accepts the negative quantity and charges the customer. Run the real purchase method with `quantity = -1` and otherwise valid inputs. Stub only the payment gateway. Assert that the call rejects the quantity in the form specified by the service contract, and verify that the gateway’s charge method was called zero times. Add a companion case with `quantity = 1",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-commit-task-stages",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-commit-task-stages"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "5dbed3d418a75ccf7b641fb597f687237b5a5abcf9841c5bb91c16dc174d5ef6",
+      "answer_excerpt": "**Skip the commit.** An empty placeholder halfway through the feature is not a completed, independently useful, verified result. Keep it with the related feature changes until they reach that point. Leave the other developer’s fix staged exactly as it is. Keep it out of any future feature commit by explicitly selecting only your authorized changes. No commit was made and the index was untouched.",
+      "checker_relative_to_target": "shared_delivery_or_interleaved"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-confirm-database-design",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-confirm-database-design"
+      ],
+      "references": [
+        "comm-confirm-database-design/references/choices.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "39a377ed306306e1656bf33f56b36011c8d620407da3c5dcdebf0ffc86f05519",
+      "answer_excerpt": "No. Keep `0` and `false` as explicit answers wherever the field type allows them. The meaning of `null` and a missing key is still open. **Before implementation, agree on what counts as unanswered and approve the storage and search rules separately.** I recommend omitting the key when no answer was given. Allow explicit `null` only if the team needs a distinct state, such as a deliberately cleared answer. Also agree on how a client-supplied `null` is handled on write. For search, I recommend that “unanswered” match missing keys. Include explici",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-create-git-branch",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 48,
+      "owner_full_at": [
+        50
+      ],
+      "skill_bodies": [
+        "comm-create-git-branch"
+      ],
+      "references": [
+        "comm-commit-task-stages/references/work-safety.md",
+        "comm-create-git-branch/references/naming.md",
+        "comm-verify-project-facts/references/git-base-state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 46,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "48cdfc7beecac3c8199f9a824a2467c0ae10c195210b9eed1ea885cc5114a722",
+      "answer_excerpt": "Start receipt export from the **verified current commit SHA of the project’s integration branch on its intended remote**. The unfinished billing branch stays in its current checkout. Use the explicit SHA when creating the receipt-export branch, ideally in a separate worktree. Before creating the branch: 1. Confirm the Git repository, intended remote, and integration branch. Verify the remote ref is fresh and record its exact SHA. Using a stale local ref requires an explicit decision. 2. Record the billing branch, its HEAD SHA, and its staged, u",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-create-lazy-claude-codex-skills",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 30,
+      "owner_full_at": [
+        33
+      ],
+      "skill_bodies": [
+        "comm-validate-harness-instructions",
+        "comm-create-lazy-claude-codex-skills"
+      ],
+      "references": [
+        "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "44811675586918a0299eef91768dcac12526000be9363874a6cdb8115c04c5c6",
+      "answer_excerpt": "Choose a **context-dependent lazy skill** shared by Claude Code and Codex. Give it a name and description that explicitly mention invoice exports so both clients can discover it when the task calls for the procedure. A rule-only form fits a short boundary that must apply before skill selection. A rule plus a lazy skill fits when an observed failure before selection requires an always-loaded boundary and skill metadata cannot prevent it. The invoice-export procedure is task-specific, and no such failure has been observed, so the lazy skill alone",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-diagnose-harness-entrypoints",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 30,
+      "owner_full_at": [
+        33
+      ],
+      "skill_bodies": [
+        "comm-diagnose-harness-entrypoints"
+      ],
+      "references": [
+        "comm-diagnose-harness-entrypoints/references/entrypoints.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 33,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "3ef658b695e24a84f81912156cf5771f6fe21546ec4a618216c5af33202b36e3",
+      "answer_excerpt": "**Preserve the existing root `AGENTS.md` byte-for-byte and keep startup stopped in the affected installation.** If the reported byte difference is confirmed against that installation’s published `harness/common/base/AGENTS.template`, treat it as a conflict in a protected entrypoint. Automatic creation from the template applies only when the entrypoint is missing. 1. **Confirm the cause read-only.** Record the affected installation root, startup command, exit code, and exact path from the error. Check that both paths and their parent components ",
+      "checker_relative_to_target": "shared_delivery_or_interleaved"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-install-harness",
+      "exit": 0,
+      "errors": [],
+      "first_task": 35,
+      "owner_call": 35,
+      "owner_full_at": [
+        38
+      ],
+      "skill_bodies": [
+        "comm-install-harness"
+      ],
+      "references": [
+        "comm-install-harness/references/checks.md",
+        "comm-install-harness/references/testing.md",
+        "comm-preserve-harness-knowledge/references/material-placement.md",
+        "comm-publish-harness-instructions/references/placement-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "8a792572527b2d3044b02d6b04fc76f52509fd31d6395ff0bde6af9174b68de9",
+      "answer_excerpt": "## Harness transfer plan 1. **Preflight both checkouts.** Confirm each target root and inventory its `harness/project`, root `AGENTS.md` and `CLAUDE.md`, native rules and skills, and local configuration. Check the transfer paths and their parent components for symlinks before accessing them. Install the published `harness/common` in each checkout. Use its canonical rules and complete skill folders, including resources, to populate `.claude/rules/`, `.claude/skills/`, and `.agents/skills/`. Keep `README.human.md` out of `.claude/rules/`. Verify ",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-manage-local-models",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-manage-local-models"
+      ],
+      "references": [
+        "comm-manage-local-models/references/lifecycle.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "974d9ecfac365694a4e743cdf84d6688216f9a96f16c500d802cf8b7a20e669e",
+      "answer_excerpt": "**Decision.** Reject the proposal to store inference weights in the Python venv and commit them with source. Put each verified model set under `<project-root>/rag/local_models/<set-id>/`. This lets the team recreate the venv independently and provision the same model set on each target host. ### Storage and identity - Track `rag/local_models/.gitignore` with `*` and `!.gitignore` on separate lines. This keeps the scaffold in Git and excludes downloaded weights, tokenizers, projectors, and other companion files. Keep the manifest, preparation co",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-manage-production-rollout",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 24,
+      "owner_full_at": [
+        27
+      ],
+      "skill_bodies": [
+        "comm-manage-production-rollout"
+      ],
+      "references": [
+        "comm-manage-production-rollout/references/partial-rollout.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "0ee4e316df1b461e4c999c7b398ff3728bed6638974175b91c3e1df320497194",
+      "answer_excerpt": "**Decision: R17 is not verified live. Hold the retry.** Based on the reported replica state, the rollout appears partial. Whether R17 is serving traffic remains unverified. | Check | Assessment | |---|---| | Deployment run | The dashboard reports green. The exact run and its step results have not been independently verified. | | Live delivery | One live replica reports R16. The immutable artifacts on the other replicas and the versions receiving traffic are unverified. | | Functional behavior | No functional probe was run. The affected behavior",
+      "checker_relative_to_target": "after_full_owner"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-migrate-git-repository",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 30,
+      "owner_full_at": [
+        33
+      ],
+      "skill_bodies": [
+        "comm-migrate-git-repository",
+        "comm-choose-effective-solution"
+      ],
+      "references": [
+        "comm-migrate-git-repository/references/inventory.md",
+        "comm-migrate-git-repository/references/platform.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "4f2101d50cfb7da4b84213cc3c334c201b3f4db6b33662d0f5341bf39d315674",
+      "answer_excerpt": "**A mirror push is insufficient.** It copies Git refs and their history. Issue records, uploaded release assets, and integration settings live on the hosting platform. A mirror push can also force-update or delete destination refs, so reserve it for an approved Git-only copy into an empty destination. [Git push documentation](https://git-scm.com/docs/git-push#Documentation/git-push.txt---mirror) **Prefer a native ownership transfer if the repository stays on the same host** and the receiving owner’s plan and policies support what you need to re",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-prepare-browser-check",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 35,
+      "owner_full_at": [
+        38
+      ],
+      "skill_bodies": [
+        "comm-prepare-browser-check",
+        "comm-choose-effective-solution"
+      ],
+      "references": [
+        "comm-prepare-browser-check/references/preconditions.md",
+        "comm-prepare-browser-check/references/artifacts.md",
+        "comm-prepare-browser-check/references/lifecycle.md",
+        "comm-prepare-browser-check/references/state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 33,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "36b5e545882d60c40dcb7494d5ce9d11f6c98fb94495284e17f209f777ed7b35",
+      "answer_excerpt": "**Decision:** Treat the stale preview as an unverified observation. Keep the screenshot as a symptom report. Its build and browser profile are unknown, so it cannot establish which UI the intended build served. 1. **Verify the build the browser receives.** Record the intended commit, build ID or asset manifest, serving root, and preview URL. Check the browser’s final URL and match the loaded HTML, JavaScript, CSS, and critical assets to that build using available IDs or fingerprints. Confirm the critical assets apply to the page. A matching che",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-preserve-harness-knowledge",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-preserve-harness-knowledge"
+      ],
+      "references": [
+        "comm-preserve-harness-knowledge/references/experience-routing.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "85d42e3544b5f7634b26d73e67491a616bc3ac87a30633ab39585195ed4f6202",
+      "answer_excerpt": "Keep the lesson in the existing procedure. No separate record or new agent-facing document is needed.",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-preserve-text-line-endings",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-preserve-text-line-endings"
+      ],
+      "references": [
+        "comm-preserve-text-line-endings/references/regressions.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "4a6c36a44aca64daea14105ceedcf591212fe2cd91f12cdb53656d17ff2ba23a",
+      "answer_excerpt": "Reject the proposed repair. Universal newline conversion turns CRLF into LF on read, erasing the information needed to reconstruct the file’s mixed line endings. Read the original bytes and replace only the authorized word at its exact byte offset. Use strict UTF‑8 if decoding or encoding is needed. **Byte-level acceptance test.** Capture `before` and `after` as raw bytes. Identify `offset` independently as the start of the authorized occurrence. Let `old` and `new` be the UTF‑8 byte sequences for the original and replacement words. ```python e",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-preserve-visual-design",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 39,
+      "owner_full_at": [
+        42
+      ],
+      "skill_bodies": [
+        "comm-preserve-visual-design"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 37,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "f33613000f49cc7062291db91f3da091e5f4e0854a124030df9fd023f2fc5e20",
+      "answer_excerpt": "**No.** The signed-off wireframe approves the checkout button hierarchy it shows. The final visual design, including colour and spacing, still needs approval. **Request** the exact signed-off wireframe version and explicit approval of an accessible visual mockup or prototype that specifies colour and spacing across relevant viewport sizes and key checkout states. Confirm which styling decisions, if any, have been delegated. Get approval for material deviations from the wireframe before implementation. **Check conformance** by comparing the rend",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-process-harness-inbox",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-process-harness-inbox"
+      ],
+      "references": [
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "122f064c128f7b13b6f28d48d8ffce0c5b06a06261ecea89998e9004e44a65a6",
+      "answer_excerpt": "Only request creation was authorized, and it’s already complete. The INBOX request stays `new` until the owner explicitly authorizes execution, including implementation and testing. Publication requires separate explicit approval for the exact candidate. Once approved, publish to the canonical source, synchronize the working copies from it, and verify them before marking the request `completed`. Direct copying from INBOX into the working copies is prohibited. INBOX workflow",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-process-pull-request",
+      "exit": 0,
+      "errors": [],
+      "first_task": 34,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-process-pull-request"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "2401e7894804c861b4d7feff1e2f420200a36210126c2c3f1c9b5790d48ad2e0",
+      "answer_excerpt": "**My recommendation is option 1.** Since you haven’t decided what should happen after review, this keeps the merge and remote branch decisions open. The `comm-process-pull-request` skill requires you to explicitly select one option before I open the PR. 1. **Open a PR for review.** Decide separately whether to merge it after review. 2. **Open a PR and squash-merge it after review.** The feature lands as one commit, and the remote feature branch stays available. 3. **Open a PR, squash-merge it after review, and delete the remote feature branch.*",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-protect-harness-evidence",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-protect-harness-evidence",
+        "comm-process-harness-inbox"
+      ],
+      "references": [
+        "comm-protect-harness-evidence/references/operations.md",
+        "comm-process-harness-inbox/references/workflow.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "6f59260f29cbbd8b0fb9979a060425e96b470db3916d7c536b38936c905c3c38",
+      "answer_excerpt": "Correct the completed verification report with a **new addendum dated on the day it is created**. Link to the original report and raw log, identify the conclusion being corrected, and explain the evidence for the revised conclusion. Preserve both originals byte-for-byte at their existing paths. If verification is rerun, save its raw log as a new file and record the actual result. operations.md Route the correction through `harness/common/inbox/`. Creation, execution, and publication each require explicit authorization. Once publication is autho",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-publish-harness-instructions",
+      "exit": 0,
+      "errors": [],
+      "first_task": 21,
+      "owner_call": 31,
+      "owner_full_at": [
+        34
+      ],
+      "skill_bodies": [
+        "comm-publish-harness-instructions",
+        "comm-validate-harness-instructions"
+      ],
+      "references": [
+        "comm-publish-harness-instructions/references/gate.md",
+        "comm-publish-harness-instructions/references/placement-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 29,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "daecbd821425bd448e63ab75347dfb852685bb93ed0d560d41dbbbc05716d3f9",
+      "answer_excerpt": "**Restore the exact published version 1 bytes from the shared procedure’s canonical folder under `harness/common/skills/`.** If the whole working copy disappeared, restore the complete folder, including `SKILL.md` and its resources, to whichever native location is missing it. Codex uses `.agents/skills/` and Claude Code uses `.claude/skills/`. The startup check uses the published canonical source for this recovery. This read-only assessment made no changes. **Version 2 can reach both native copies through publication of the pending INBOX reques",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-recover-git-state",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 30,
+      "owner_full_at": [
+        33
+      ],
+      "skill_bodies": [
+        "comm-recover-git-state",
+        "comm-verify-project-facts"
+      ],
+      "references": [
+        "comm-recover-git-state/references/modes.md",
+        "comm-verify-project-facts/references/git-operation-result.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 28,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "9b489c3fd893446ff46b89fa44c7af60e97b3a62ca776fa16469210b6668ee72",
+      "answer_excerpt": "**Decision: leave the branch, index, and working tree untouched.** A hard reset to a guessed SHA would replace the index and could discard other people’s staged changes. Git did not identify `/workspace` as a repository. The affected worktree was unspecified, so the interrupted operation, reported staging, commit reachability, and publication status remain unverified. The commits may still be reachable through a ref or reflog. In the affected worktree, use these read-only checks: ```sh git --no-optional-locks status git --no-optional-locks diff",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-restore-application-data",
+      "exit": 0,
+      "errors": [],
+      "first_task": 20,
+      "owner_call": 35,
+      "owner_full_at": [
+        38
+      ],
+      "skill_bodies": [
+        "comm-restore-application-data"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 38,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "f96fbf4429987b3caca563199ae7fd0b617b2038c544d276c8cde0b10d5e9390",
+      "answer_excerpt": "**Decision:** Rehearse a selective restore of the deleted product from the 11:55 snapshot into an isolated staging copy that contains the 12:10 orders. Replacing the staging database with the 11:55 snapshot would remove those orders and any other later writes from that copy. ### Staging rehearsal 1. Restore the 11:55 snapshot into a separate, isolated source database. Use a consistent post-12:10 copy already authorized for staging, or build a staging fixture with the same sequence of events. Confirm that the source contains the product, the tar",
+      "checker_relative_to_target": "shared_delivery_or_interleaved"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-select-development-workflow",
+      "exit": 0,
+      "errors": [],
+      "first_task": 34,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-select-development-workflow"
+      ],
+      "references": [
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "template_mismatch",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "f6906d49a8f599c3ed5317b04bb0caf610a1d17ee34fe3878898c792ca11fa02",
+      "verbatim_menu_fragments": 0,
+      "expected_verbatim_fragments": 10,
+      "answer_excerpt": "I recommend **option 5, a short Superpowers brainstorming pass**. Your idea is still unclear, so the first useful step is to agree on the problem, who it affects, and what a first version should accomplish. If the biggest uncertainty is a specific assumption you can test, option 4 is a better fit. | # | Workflow | What it gives you | |---|---|---| | 1 | **Superpowers + Compound Engineering** | Start with `superpowers:using-superpowers`, then follow `ce-brainstorm` → `ce-plan` → `ce-work` with Compound Engineering’s approval steps. | | 2 | **Com",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-update-git-branch",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        31
+      ],
+      "skill_bodies": [
+        "comm-update-git-branch"
+      ],
+      "references": [
+        "comm-commit-task-stages/references/work-safety.md",
+        "comm-update-git-branch/references/methods.md",
+        "comm-update-git-branch/references/conflicts.md",
+        "comm-verify-project-facts/references/git-base-state.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "675c4ad116b5c6b4a35bb31729c482fc6b13ca9d8e207feb3e1744feb9892192",
+      "answer_excerpt": "**Decision. Preserve all local work and retain the current approved invoice behavior.** Compare the common base, both branches’ changes, and the staged, unstaged, and untracked edits. Identify which feature changes are still needed, which are already integrated, and which were deliberately superseded. If the two calculations produce different totals for the same invoice and the approved outcome is unclear, report a concrete example with both totals, propose the expected result, and get agreement before editing the calculation. 1. **Confirm the ",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-validate-harness-instructions",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-validate-harness-instructions"
+      ],
+      "references": [
+        "comm-validate-harness-instructions/references/validation.md",
+        "comm-validate-harness-instructions/references/rule-budgets.md",
+        "comm-create-lazy-claude-codex-skills/references/content-contract.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": null,
+      "decision_check": "pass",
+      "startup_check": "no_success_observed",
+      "required_resources_missing": [],
+      "answer_sha256": "c9c2b8eb492da0d8902c19637f651d428fca2f6c5c509d92df6e6cce3f315568",
+      "answer_excerpt": "**Decision: Record the static A and CLI exit 0 as reported. Leave the procedure’s native selection and behavior unverified in both profiles.** Before calling the procedure checked, collect traces for the exact candidate version in Codex and Claude Code, in both the common-only and combined common+project installations. In each client and mode, observe: - **Selection.** An explicit invocation opens the intended procedure and its required resources. A matching request without the procedure name selects it through native discovery. An unrelated re",
+      "checker_relative_to_target": "no_success_observed"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-verify-browser-ui",
+      "exit": 0,
+      "errors": [],
+      "first_task": 25,
+      "owner_call": 25,
+      "owner_full_at": [
+        28
+      ],
+      "skill_bodies": [
+        "comm-verify-browser-ui",
+        "comm-prepare-browser-check"
+      ],
+      "references": [
+        "comm-verify-browser-ui/references/fidelity.md",
+        "comm-verify-browser-ui/references/coverage.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 23,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "84e6d6917a3566499b1220229966df687b2885be989eb768e2c8c9cb78f2b7aa",
+      "answer_excerpt": "**No.** The unit test confirms that calling the handler changes state. Sign-off requires evidence that keyboard input on the rendered checkout page reaches the dropdown and produces the expected focus and visible behavior. A manual test or an automated end-to-end test in a real browser would count. Start from a known checkout state and use keyboard input to exercise the dropdown’s intended interaction: - Tab from the preceding control to the dropdown. Verify its place in the tab order and its visible focus indicator. - Open it with the supporte",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "explicit",
+      "owner": "comm-verify-project-facts",
+      "exit": 0,
+      "errors": [],
+      "first_task": 24,
+      "owner_call": 34,
+      "owner_full_at": [
+        37
+      ],
+      "skill_bodies": [
+        "comm-verify-project-facts"
+      ],
+      "references": [
+        "comm-verify-project-facts/references/empty-log-results.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 32,
+      "decision_check": "pass",
+      "startup_check": "same_or_later_than_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "9254bbcdad423561c99fcc1659917b1f30759b7f58dc6616dec9b93086b44972",
+      "answer_excerpt": "**Decision: the report’s claim is unsupported.** The query returned zero rows. Whether the event occurred remains unknown because the running version, time basis, and replica coverage are unverified. **Positive control:** Use an independently confirmed request from the incident window that should have produced a log record in the same service and environment. Rerun the query against the same stream and window, keeping its scope filters and replacing the target-event predicate with the known request or trace ID. Verify that the expected record a",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "diagnostic",
+      "owner": "comm-commit-task-stages",
+      "exit": 0,
+      "errors": [],
+      "first_task": 31,
+      "owner_call": 31,
+      "owner_full_at": [
+        34
+      ],
+      "skill_bodies": [
+        "comm-commit-task-stages",
+        "comm-verify-application-startup"
+      ],
+      "references": [],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "9eb60b9915311f73ea4611c9a1b653c2be21e71ca04d3e87c8032f433cc826e4",
+      "answer_excerpt": "**Skip the commit.** An empty placeholder has no independently useful result to verify. Keep it with the feature until you’ve completed and verified the feature or a useful part that can stand on its own. A passing startup check alone would not make the placeholder a useful commit boundary. **Leave the other developer’s fix staged.** Its owner can review and commit it separately. I made no commit and ran no staging commands. Git reported that `/workspace` is outside a repository, so I couldn’t inspect the staged fix directly. The harness entryp",
+      "checker_relative_to_target": "before_owner_call"
+    },
+    {
+      "mode": "common-project",
+      "trial": "diagnostic",
+      "owner": "comm-select-development-workflow",
+      "exit": 0,
+      "errors": [],
+      "first_task": 29,
+      "owner_call": 29,
+      "owner_full_at": [
+        32
+      ],
+      "skill_bodies": [
+        "comm-select-development-workflow"
+      ],
+      "references": [
+        "comm-select-development-workflow/references/menu.md"
+      ],
+      "missing_startup_rules": [],
+      "repeat_rules": [],
+      "full_human_guide_returned": false,
+      "startup_success_at": 27,
+      "decision_check": "pass",
+      "startup_check": "before_task_request",
+      "required_resources_missing": [],
+      "answer_sha256": "e00bfc5d6f198f5998f7ae670aa61d935ec974abc76754c13c2e33a4f3970e19",
+      "verbatim_menu_fragments": 10,
+      "expected_verbatim_fragments": 10,
+      "answer_excerpt": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов 2. **Compound Engineering:** `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - нативный ce-маршрут 3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу. 4. Обязательного плагина нет: **эксперимент → исследование → выводы*",
+      "checker_relative_to_target": "before_owner_call"
+    }
+  ],
+  "counts": {
+    "implicit": {
+      "runs": 50,
+      "full_target": 50,
+      "decision": {
+        "pass": 48,
+        "template_mismatch": 2
+      },
+      "startup": {
+        "before_task_request": 31,
+        "same_or_later_than_task_request": 10,
+        "no_success_observed": 9
+      }
+    },
+    "explicit": {
+      "runs": 50,
+      "full_target": 50,
+      "decision": {
+        "pass": 49,
+        "template_mismatch": 1
+      },
+      "startup": {
+        "before_task_request": 22,
+        "same_or_later_than_task_request": 24,
+        "no_success_observed": 4
+      }
+    },
+    "negative": {
+      "runs": 2,
+      "full_target": 0,
+      "decision": {
+        "pass": 2
+      },
+      "startup": {
+        "before_task_request": 2
+      }
+    },
+    "diagnostic": {
+      "runs": 4,
+      "full_target": 4,
+      "decision": {
+        "pass": 4
+      },
+      "startup": {
+        "before_task_request": 4
+      }
+    },
+    "checker_relative_to_target": {
+      "before_owner_call": 75,
+      "after_full_owner": 5,
+      "no_success_observed": 13,
+      "shared_delivery_or_interleaved": 7
+    }
+  }
+}
