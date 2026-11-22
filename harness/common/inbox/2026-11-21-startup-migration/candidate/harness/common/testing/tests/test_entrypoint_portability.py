@@ -50,7 +50,10 @@ class TestPortability:
                 assert (project / 'base/README.human.md').is_file()
                 assert not (project / 'docs/local-task').exists()
             text = (root / 'AGENTS.md').read_text()
-            assert 'открой каталог `.claude/rules`' in text
+            assert (root / 'AGENTS.md').read_bytes() == (root / 'harness/common/base/AGENTS.template').read_bytes()
+            assert '`.claude/rules`' in text and '`README.human.md`' in text
+            assert 'включая поиск её файлов' in text and 'проверил полноту каждого файла' in text
+            assert 'применяй полученные always loaded правила' in text
             assert 'START.md' not in text
             assert not (root / 'CLAUDE.md').read_bytes()
             rule = (root / '.claude/rules/comm-entrypoint-links-rule.md').read_text()
