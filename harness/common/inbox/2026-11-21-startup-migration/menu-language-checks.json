@@ -1,0 +1,362 @@
+{
+  "date": "2026-11-22",
+  "candidate_tree": "064971aafe9d3faff75dd10597f0327b61909817",
+  "resource": "harness/common/skills/comm-select-development-workflow/references/menu.md",
+  "menu_sha256": "072850b049b46ad1e8ca6fdc9f96cbdc5126639722a380d1612ad31130880c20",
+  "client": "Codex CLI 0.166.0",
+  "method": "Один свежий сеанс на сочетание. Нативный профиль использовал установленную редакцию. Трасса подтверждает получение полных тел SKILL.md и menu.md. Ответы сверены с русским образцом и по смыслу английских вариантов, порядку пунктов, полным именам скиллов, двум пояснениям и ожиданию выбора. Индексы событий относятся к конкретному сеансу.",
+  "local_checks": {
+    "pytest_per_installation": 192,
+    "quick_validate": "pass",
+    "plugin_eval_grade": "A",
+    "original_files_in_verified_archive": 1347,
+    "archive_sha256": "7b50bf72cc2809556ef77c6ee5838feb32efae8b6a1f451f3bb79cb14032c9e0"
+  },
+  "earlier_editions": [
+    {
+      "menu_sha256": "dc21ab93bbc5a9c970ed63599fce7c062dca881c4552ecb385b0e8d1182495e4",
+      "sessions": 8,
+      "nonverbatim_ru": [
+        {
+          "mode": "common-only",
+          "trigger": "implicit",
+          "missing_fragments": [
+            7
+          ]
+        },
+        {
+          "mode": "common-project",
+          "trigger": "explicit",
+          "missing_fragments": [
+            9
+          ]
+        }
+      ],
+      "english_identifier_mismatches": []
+    },
+    {
+      "menu_sha256": "e3953b560e834d479687e8af5699d957641d58aa3c6bd001de301d3ae03b98c2",
+      "sessions": 8,
+      "nonverbatim_ru": [],
+      "english_identifier_mismatches": [
+        {
+          "mode": "common-project",
+          "trigger": "implicit",
+          "missing": {
+            "1": [
+              "compound-engineering:ce-brainstorm",
+              "compound-engineering:ce-plan",
+              "compound-engineering:ce-work"
+            ],
+            "2": [
+              "compound-engineering:ce-brainstorm",
+              "compound-engineering:ce-plan",
+              "compound-engineering:ce-work"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "menu_sha256": "091a3eb56becd8abcc56f9e8c89af6c5dcb621f7be7d61fb511befabb6f6a6f1",
+      "sessions": 8,
+      "nonverbatim_ru": [
+        {
+          "mode": "common-only",
+          "trigger": "explicit",
+          "missing_fragments": [
+            9
+          ]
+        },
+        {
+          "mode": "common-project",
+          "trigger": "explicit",
+          "missing_fragments": [
+            2,
+            9,
+            10
+          ]
+        }
+      ],
+      "english_identifier_mismatches": []
+    }
+  ],
+  "runs": [
+    {
+      "install": "common-only",
+      "language": "en",
+      "trigger": "explicit",
+      "prompt": "Apply the comm-select-development-workflow skill. I have a new product idea with unclear requirements. I want to compare the available development workflows, including Superpowers. Show me the options and wait for my choice.",
+      "client_exit": 0,
+      "rules_received_before_skill_call": 12,
+      "expected_rules": 12,
+      "skill_returned": 28,
+      "menu_returned": 33,
+      "startup_check": 23,
+      "first_owner_call": 25,
+      "option_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "russian_verbatim": null,
+      "english_without_cyrillic": true,
+      "missing_identifiers_by_option": {},
+      "answer": "I recommend **option 7, full Superpowers with one implementing agent**. Your requirements are still open, so brainstorming can turn the idea into a specification you approve before planning. You then approve the plan before implementation starts. If the idea is small enough for one short design discussion, option 5 is a lighter route.\n\n1. **Superpowers + Compound Engineering.** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work`. The lead agent starts with `superpowers:using-superpowers`, then follows the CE stages and approval points.\n2. **Compound Engineering.** `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work`. The native CE workflow takes the idea through brainstorming, planning, and implementation. For a shorter CE route, you can choose `compound-engineering:ce-brainstorm` on its own to clarify the idea.\n3. **Direct execution.** The current model works independently at its current reasoning effort. This suits a clearly bounded task you want handled without a formal workflow.\n4. **Experiment → research → conclusions.** No plugin is required. Agree on an experiment first, then choose tools that fit it. This suits a specific product assumption you want to test before committing to a design.\n5. **Short Superpowers design.** `superpowers:brainstorming` takes you through a short design, approval, implementation, and verification.\n6. **Superpowers debugging.** `superpowers:systematic-debugging` goes from diagnosis to root cause, then to a fix and verification. This suits an existing defect.\n7. **Full Superpowers with one implementing agent.** `superpowers:brainstorming → superpowers:writing-plans → superpowers:executing-plans`.\n8. **Full Superpowers with subagents.** `superpowers:brainstorming → superpowers:writing-plans → superpowers:subagent-driven-development`.\n\nBoth full Superpowers routes start with `superpowers:using-superpowers` and `superpowers:brainstorming`. You approve the specification, then `superpowers:writing-plans` produces a plan for your approval with your chosen implementation route. Execution includes checks and review, followed by `superpowers:verification-before-completion` and `superpowers:finishing-a-development-branch`. Any permissions required for the chosen executor are handled separately.\n\nWith `superpowers:executing-plans`, the main agent writes all the code and the workflow calls for a separate final-review subagent when one is available. With `superpowers:subagent-driven-development`, separate implementers and reviewers participate in each plan task. Plugin availability is unverified in this session.\n\nWhich route would you like? I’ll wait for your choice.",
+      "answer_sha256": "08409728100a4ea95f97270d4a1569f3333f68719e9241e465e695c8b25e8b78",
+      "menu_pass": true
+    },
+    {
+      "install": "common-only",
+      "language": "en",
+      "trigger": "implicit",
+      "prompt": "I have a new product idea with unclear requirements. I want to compare the available development workflows, including Superpowers. Show me the options and wait for my choice.",
+      "client_exit": 0,
+      "rules_received_before_skill_call": 12,
+      "expected_rules": 12,
+      "skill_returned": 34,
+      "menu_returned": 39,
+      "startup_check": 27,
+      "first_owner_call": 31,
+      "option_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "russian_verbatim": null,
+      "english_without_cyrillic": true,
+      "missing_identifiers_by_option": {},
+      "answer": "For a new product idea with unclear requirements, I’d start with **option 2, Compound Engineering**. Its brainstorm stage helps turn the idea into a defined scope before planning and implementation. **Option 5** is a shorter route if you already have a narrow first version in mind. **Option 4** fits if a specific assumption needs testing before you can settle the requirements.\n\n1. **Superpowers + Compound Engineering** — `superpowers:using-superpowers` first, then `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`. Applies Superpowers guidance while following the Compound Engineering stages.\n2. **Compound Engineering** — `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`. Explore the idea, agree on scope, then plan and implement.\n3. **Direct execution** — The current model works independently at the current reasoning effort, without delegation or a prescribed skill sequence.\n4. **Experiment → research → conclusions** — Agree on an experiment and choose tools suited to it. No plugin is required.\n5. **Short Superpowers design route** — `superpowers:brainstorming` → short design → approval → implementation and verification.\n6. **Superpowers debugging** — `superpowers:systematic-debugging` → diagnosis → root cause → fix and verification. Fits an existing failure with observable symptoms.\n7. **Full Superpowers with one implementing agent** — `superpowers:brainstorming` → `superpowers:writing-plans` → `superpowers:executing-plans`.\n8. **Full Superpowers with subagents** — `superpowers:brainstorming` → `superpowers:writing-plans` → `superpowers:subagent-driven-development`.\n\nBoth full Superpowers routes start with `superpowers:using-superpowers`, then proceed through `superpowers:brainstorming`, specification approval, `superpowers:writing-plans`, and plan approval with the chosen execution mode retained. Implementation, checks, and review are followed by `superpowers:verification-before-completion` and `superpowers:finishing-a-development-branch`. Any permissions required for the chosen execution mode are handled separately.\n\nIn `superpowers:executing-plans`, the lead agent writes all the code and the workflow calls for a separate final reviewer when one is available. In `superpowers:subagent-driven-development`, separate implementers and reviewers participate in each task. Plugin availability is unverified.\n\nWhich option would you like to use? I’ll wait for your choice.",
+      "answer_sha256": "83978220176f4ccec8313b71018c2432bbb35e5fc3e5d118177d9cde512f1b66",
+      "menu_pass": true
+    },
+    {
+      "install": "common-only",
+      "language": "ru",
+      "trigger": "explicit",
+      "prompt": "Примени контекстный lazy скилл comm-select-development-workflow. У меня новая идея продукта, пока с неясными требованиями. Хочу сравнить доступные маршруты разработки, в том числе Superpowers. Покажи варианты и дождись моего выбора.",
+      "client_exit": 0,
+      "rules_received_before_skill_call": 12,
+      "expected_rules": 12,
+      "skill_returned": 32,
+      "menu_returned": 37,
+      "startup_check": 27,
+      "first_owner_call": 29,
+      "option_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "russian_verbatim": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "english_without_cyrillic": null,
+      "missing_identifiers_by_option": {},
+      "answer": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work`  - нативный ce-маршрут\n3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу.\n4. Обязательного плагина нет: **эксперимент → исследование → выводы**. Инструменты выбираются под согласованный эксперимент.\n5. **Superpowers**, скилл `superpowers:brainstorming`: **короткий дизайн → согласование → реализация и проверка.**\n6. **Superpowers**, скилл `superpowers:systematic-debugging`: **Диагностика → первопричина → исправление и проверка.**\n7. **Superpowers, через одного агента:** `superpowers:brainstorming → superpowers:writing-plans → superpowers:executing-plans`.\n8. Superpowers, через субагентов: `superpowers:brainstorming → superpowers:writing-plans → superpowers:subagent-driven-development`.\n\nОба полных варианта включают: superpowers:using-superpowers → superpowers:brainstorming →\nсогласование спецификации → superpowers:writing-plans → согласование плана с сохранением\nвыбранного исполнителя → выбранное исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nДля новой идеи с неясными требованиями выбор зависит от того, что нужно выяснить первым.\n\n- **1–2** подходят, если нужна последовательность от обсуждения идеи до плана и реализации в Compound Engineering. Вариант 1 добавляет вводный этап Superpowers. Рядом с ними стоит короткий **5**, если достаточно согласовать дизайн небольшого первого релиза и сразу его проверить.\n- **3** подходит для самостоятельной проработки, когда порядок шагов удобнее определить по ходу разговора.\n- **4** подходит, если решение о разработке зависит от проверяемой гипотезы, например о спросе или технической осуществимости. Сначала согласуем эксперимент и критерий результата.\n- **6** подходит, если уже есть конкретный сбой, причину которого нужно найти.\n- **7–8** подходят, если нужны отдельные согласования спецификации и плана. Вариант 7 оставляет реализацию ведущему агенту. Вариант 8 имеет смысл, когда план можно разбить на задачи с отдельным исполнением и ревью.\n\nПока неизвестно, нужно ли сначала проверить гипотезу, определить требования или спроектировать первый релиз. Доступность плагинов в этой сессии пока не подтверждена.\n\nКакой маршрут выбираешь? Достаточно номера от 1 до 8.",
+      "answer_sha256": "cdee45b01f6155a168bfdc0070eaa8a3d41fe5b3d0396c36fab5663ee04f9b73",
+      "menu_pass": true
+    },
+    {
+      "install": "common-only",
+      "language": "ru",
+      "trigger": "implicit",
+      "prompt": "У меня новая идея продукта, пока с неясными требованиями. Хочу сравнить доступные маршруты разработки, в том числе Superpowers. Покажи варианты и дождись моего выбора.",
+      "client_exit": 0,
+      "rules_received_before_skill_call": 12,
+      "expected_rules": 12,
+      "skill_returned": 32,
+      "menu_returned": 37,
+      "startup_check": 27,
+      "first_owner_call": 29,
+      "option_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "russian_verbatim": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "english_without_cyrillic": null,
+      "missing_identifiers_by_option": {},
+      "answer": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work`  - нативный ce-маршрут\n3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу.\n4. Обязательного плагина нет: **эксперимент → исследование → выводы**. Инструменты выбираются под согласованный эксперимент.\n5. **Superpowers**, скилл `superpowers:brainstorming`: **короткий дизайн → согласование → реализация и проверка.**\n6. **Superpowers**, скилл `superpowers:systematic-debugging`: **Диагностика → первопричина → исправление и проверка.**\n7. **Superpowers, через одного агента:** `superpowers:brainstorming → superpowers:writing-plans → superpowers:executing-plans`.\n8. Superpowers, через субагентов: `superpowers:brainstorming → superpowers:writing-plans → superpowers:subagent-driven-development`.\n\nОба полных варианта включают: superpowers:using-superpowers → superpowers:brainstorming →\nсогласование спецификации → superpowers:writing-plans → согласование плана с сохранением\nвыбранного исполнителя → выбранное исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nДля выбора важны три детали: для кого продукт, какую проблему он решает и что сейчас нужно выяснить.\n\n- Если нужно проверить спрос или самое рискованное предположение, подойдёт **4**. Сначала согласуем гипотезу, эксперимент и критерий результата.\n- Если проблема уже понятна и нужен первый прототип, подойдёт **5**. Если нужен отдельный этап планирования перед реализацией, подойдёт **2**, а **1** добавляет к тому же циклу вводный скилл Superpowers.\n- Если хотите полный процесс Superpowers с согласованием спецификации и плана, выбирайте **7** для реализации основным агентом или **8** для распределения задач между субагентами.\n- **3** подойдёт для небольшой, уже понятной задачи, **6** — для диагностики конкретного сбоя в существующем продукте.\n\nДоступность плагинов пока не проверена. Какой номер выбираете? Дождусь вашего выбора.",
+      "answer_sha256": "911a9cad2773f3ec5371b06df8c4aeaaee12decc363fe8440a568a3b9c5192b3",
+      "menu_pass": true
+    },
+    {
+      "install": "common-project",
+      "language": "en",
+      "trigger": "explicit",
+      "prompt": "Apply the comm-select-development-workflow skill. I have a new product idea with unclear requirements. I want to compare the available development workflows, including Superpowers. Show me the options and wait for my choice.",
+      "client_exit": 0,
+      "rules_received_before_skill_call": 12,
+      "expected_rules": 12,
+      "skill_returned": 32,
+      "menu_returned": 37,
+      "startup_check": 27,
+      "first_owner_call": 29,
+      "option_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "russian_verbatim": null,
+      "english_without_cyrillic": true,
+      "missing_identifiers_by_option": {},
+      "answer": "For a new product idea with unclear requirements, I’d start with **5. Superpowers brainstorming** if the main goal is to define what to build. It gives us a short design and an approval point before implementation. If the decision depends on testing an assumption first, **4. Experiment** is a better fit. Choose **2. Compound Engineering** if you already want a formal plan and a structured path through implementation.\n\n1. **Superpowers + Compound Engineering**  \n   `superpowers:using-superpowers` followed by `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`. Applies Superpowers guidance throughout the Compound Engineering stages.\n\n2. **Compound Engineering**  \n   `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`. The native Compound Engineering workflow for brainstorming, planning, and implementation. **Option 5** is the shorter design-to-implementation route.\n\n3. **Direct execution**  \n   The current model works independently at the current reasoning effort. Fits a bounded task with a clear deliverable.\n\n4. **Experiment**  \n   Agree on an experiment, investigate, and summarize the findings. Tools depend on the experiment, and it requires no specific plugin.\n\n5. **Superpowers brainstorming**  \n   `superpowers:brainstorming` → short design → approval → implementation and verification.\n\n6. **Superpowers systematic debugging**  \n   `superpowers:systematic-debugging` → diagnosis → root cause → fix and verification. Fits an existing problem with observable symptoms.\n\n7. **Full Superpowers with one implementation agent**  \n   `superpowers:brainstorming` → `superpowers:writing-plans` → `superpowers:executing-plans`.\n\n8. **Full Superpowers with subagents**  \n   `superpowers:brainstorming` → `superpowers:writing-plans` → `superpowers:subagent-driven-development`.\n\nBoth full Superpowers routes start with `superpowers:using-superpowers` and `superpowers:brainstorming`, then pause for specification approval. After `superpowers:writing-plans`, they pause for plan approval with the chosen executor. Execution includes checks and review, followed by `superpowers:verification-before-completion` and `superpowers:finishing-a-development-branch`. Permissions for the chosen executor are handled separately.\n\nWith `superpowers:executing-plans`, the primary agent writes all the code and the skill calls for a separate final reviewer when one is available. With `superpowers:subagent-driven-development`, separate implementers and reviewers participate in each planned task.\n\n**Which option would you like to use?** I’ll wait for your choice before starting.",
+      "answer_sha256": "9f892977506576d6ccd524201d8f598e30421ee2a9211634481305fbdc7d21f7",
+      "menu_pass": true
+    },
+    {
+      "install": "common-project",
+      "language": "en",
+      "trigger": "implicit",
+      "prompt": "I have a new product idea with unclear requirements. I want to compare the available development workflows, including Superpowers. Show me the options and wait for my choice.",
+      "client_exit": 0,
+      "rules_received_before_skill_call": 12,
+      "expected_rules": 12,
+      "skill_returned": 33,
+      "menu_returned": 38,
+      "startup_check": 28,
+      "first_owner_call": 30,
+      "option_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "russian_verbatim": null,
+      "english_without_cyrillic": true,
+      "missing_identifiers_by_option": {},
+      "answer": "For a new product idea with unclear requirements, **Compound Engineering (2)** is a good default if you want to turn the idea into an implementation plan. **Superpowers brainstorming (5)** fits if you want a shorter path from idea to agreed design. If the main uncertainty is whether the idea is valuable or feasible, **an experiment (4)** can help answer that before you plan a build.\n\n1. **Superpowers + Compound Engineering**  \n   `superpowers:using-superpowers` guides the lead agent through `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`. The Compound Engineering approval steps still apply.\n2. **Compound Engineering**  \n   `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`. Explore the idea, turn requirements into a plan, then implement it. This is my default recommendation for your request.\n3. **Direct execution**  \n   The current model works independently at its current reasoning effort, without delegation or a prescribed workflow. This fits a clearly bounded task.\n4. **Experiment**  \n   Agree on a question and an experiment, run the investigation, then draw conclusions. Tools depend on what the experiment needs. This fits a specific assumption you want to test.\n5. **Superpowers brainstorming**  \n   `superpowers:brainstorming` takes you through a short design, approval, implementation, and verification. This fits an idea whose scope can be settled in a short design discussion.\n6. **Superpowers systematic debugging**  \n   `superpowers:systematic-debugging` goes from diagnosis to root cause, fix, and verification. This fits an existing problem you can investigate.\n7. **Full Superpowers, lead-agent implementation**  \n   `superpowers:brainstorming` → `superpowers:writing-plans` → `superpowers:executing-plans`. The lead agent implements the plan.\n8. **Full Superpowers, subagent implementation**  \n   `superpowers:brainstorming` → `superpowers:writing-plans` → `superpowers:subagent-driven-development`. Separate implementers and reviewers participate in each plan task.\n\nBoth full Superpowers routes start with `superpowers:using-superpowers`, then move through `superpowers:brainstorming`, specification approval, `superpowers:writing-plans`, and plan approval with your chosen execution mode. Implementation and review are followed by `superpowers:verification-before-completion` and `superpowers:finishing-a-development-branch`. Execution permissions are handled separately.\n\nIn `superpowers:executing-plans`, the lead agent writes all the code and the workflow calls for a separate final-review subagent when available. In `superpowers:subagent-driven-development`, delegation is part of each plan task. Plugin availability remains unverified.\n\nWhich option would you like to use? I’ll wait for your choice.",
+      "answer_sha256": "bda787238dea64ab2932ed049a98f0c16cf14ea3407b85fea6dbfc080eacf3a1",
+      "menu_pass": true
+    },
+    {
+      "install": "common-project",
+      "language": "ru",
+      "trigger": "explicit",
+      "prompt": "Примени контекстный lazy скилл comm-select-development-workflow. У меня новая идея продукта, пока с неясными требованиями. Хочу сравнить доступные маршруты разработки, в том числе Superpowers. Покажи варианты и дождись моего выбора.",
+      "client_exit": 0,
+      "rules_received_before_skill_call": 12,
+      "expected_rules": 12,
+      "skill_returned": 32,
+      "menu_returned": 37,
+      "startup_check": 27,
+      "first_owner_call": 29,
+      "option_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "russian_verbatim": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "english_without_cyrillic": null,
+      "missing_identifiers_by_option": {},
+      "answer": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work`  - нативный ce-маршрут\n3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу.\n4. Обязательного плагина нет: **эксперимент → исследование → выводы**. Инструменты выбираются под согласованный эксперимент.\n5. **Superpowers**, скилл `superpowers:brainstorming`: **короткий дизайн → согласование → реализация и проверка.**\n6. **Superpowers**, скилл `superpowers:systematic-debugging`: **Диагностика → первопричина → исправление и проверка.**\n7. **Superpowers, через одного агента:** `superpowers:brainstorming → superpowers:writing-plans → superpowers:executing-plans`.\n8. Superpowers, через субагентов: `superpowers:brainstorming → superpowers:writing-plans → superpowers:subagent-driven-development`.\n\nОба полных варианта включают: superpowers:using-superpowers → superpowers:brainstorming →\nсогласование спецификации → superpowers:writing-plans → согласование плана с сохранением\nвыбранного исполнителя → выбранное исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nДля уверенной рекомендации пока нужно понять, кто будущий пользователь, какую проблему решает продукт и какой результат нужен первым — проверка гипотезы, прототип или рабочая версия.\n\n- **1–2. Compound Engineering** подходит, если нужен последовательный переход от проработки требований к плану и реализации. Вариант 1 добавляет вводный этап Superpowers. Если достаточно короткого согласования дизайна, рядом с CE стоит рассмотреть **5**.\n- **3. Самостоятельная работа** подходит для ограниченной задачи, например сформулировать проблему и собрать открытые вопросы.\n- **4. Эксперимент** подходит, если решение о разработке зависит от проверяемой гипотезы. Перед запуском согласуем гипотезу, способ проверки и критерий результата.\n- **5. Короткий Superpowers** подходит, если уже можно очертить первый прототип и хочется согласовать его дизайн перед реализацией.\n- **6. Диагностика** подходит, если уже есть прототип с конкретным сбоем.\n- **7–8. Полный Superpowers** подходит, если нужны отдельные согласования спецификации и плана. Вариант 7 сохраняет реализацию у основного агента. Вариант 8 подходит, если план можно разбить на самостоятельные задачи и делегировать их с отдельным ревью.\n\nДоступность плагинов в этой сессии пока не проверена. Какой маршрут выбираешь? Достаточно номера от 1 до 8.",
+      "answer_sha256": "b8c4d11241a6f0930bf2fb231a83542acf2b2c01bb2386cc6b680a21199145e2",
+      "menu_pass": true
+    },
+    {
+      "install": "common-project",
+      "language": "ru",
+      "trigger": "implicit",
+      "prompt": "У меня новая идея продукта, пока с неясными требованиями. Хочу сравнить доступные маршруты разработки, в том числе Superpowers. Покажи варианты и дождись моего выбора.",
+      "client_exit": 0,
+      "rules_received_before_skill_call": 12,
+      "expected_rules": 12,
+      "skill_returned": 32,
+      "menu_returned": 37,
+      "startup_check": 27,
+      "first_owner_call": 29,
+      "option_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "russian_verbatim": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "english_without_cyrillic": null,
+      "missing_identifiers_by_option": {},
+      "answer": "1. **Superpowers + Compound Engineering:** `superpowers:using-superpowers + compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work` - одновременное выполнение `superpowers:using-superpowers и ce-`этапов\n2. **Compound Engineering:**  `compound-engineering:ce-brainstorm → compound-engineering:ce-plan → compound-engineering:ce-work`  - нативный ce-маршрут\n3. Без специального маршрута: текущая модель c effort самостоятельно выполняет задачу.\n4. Обязательного плагина нет: **эксперимент → исследование → выводы**. Инструменты выбираются под согласованный эксперимент.\n5. **Superpowers**, скилл `superpowers:brainstorming`: **короткий дизайн → согласование → реализация и проверка.**\n6. **Superpowers**, скилл `superpowers:systematic-debugging`: **Диагностика → первопричина → исправление и проверка.**\n7. **Superpowers, через одного агента:** `superpowers:brainstorming → superpowers:writing-plans → superpowers:executing-plans`.\n8. Superpowers, через субагентов: `superpowers:brainstorming → superpowers:writing-plans → superpowers:subagent-driven-development`.\n\nОба полных варианта включают: superpowers:using-superpowers → superpowers:brainstorming →\nсогласование спецификации → superpowers:writing-plans → согласование плана с сохранением\nвыбранного исполнителя → выбранное исполнение → его проверки и review →\nsuperpowers:verification-before-completion → superpowers:finishing-a-development-branch.\nРазрешения при выборе исполнителя остаются отдельными.\n\n> **Самостоятельная реализация не означает полного отсутствия субагентов**.\n> В `superpowers:executing-plans` основной агент пишет весь код сам, но скилл предусматривает\n> отдельного субагента для итогового ревью, когда он доступен.\n> В `superpowers:subagent-driven-development` отдельные исполнители и ревьюеры участвуют\n> в каждой задаче плана.\n\nПри неясных требованиях я бы выбрал **№ 2, Compound Engineering**. Этап `ce-brainstorm` поможет прояснить, для кого продукт, какую проблему он решает и что войдёт в первую версию. Затем `ce-plan` превратит согласованные решения в план, а `ce-work` проведёт его через реализацию и проверку. Если хочется быстрее очертить первую версию в Superpowers, короткий вариант **№ 5** ведёт от обсуждения дизайна и его согласования сразу к реализации и проверке.\n\nЕсли главный вопрос пока в том, **нужен ли продукт пользователям или осуществима ли ключевая функция**, подойдёт **№ 4**. Сначала согласуем гипотезу, эксперимент и критерий результата. Если нужен полный процесс Superpowers с отдельными согласованиями спецификации и плана, выбирайте **№ 7** для реализации основным агентом или **№ 8** для распределения задач плана между субагентами.\n\nДоступность плагинов в этой сессии пока не подтверждена. Какой маршрут выбираете? Достаточно номера.",
+      "answer_sha256": "05f2e35e724e59f90f88b3c7e6e7b6c9e35e2d92d602cb4a80e5b9db0f812221",
+      "menu_pass": true
+    }
+  ]
+}
