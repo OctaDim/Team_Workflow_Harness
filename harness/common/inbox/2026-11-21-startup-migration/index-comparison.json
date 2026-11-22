@@ -1,0 +1,1957 @@
+{
+  "baseline": "eba6ba43ab41ae4318cd9d4f9ccaf5f9a9bd8f97",
+  "codex_cli": "0.166.0",
+  "template_sha256": "212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24",
+  "maps": {
+    "harness/common/INDEX.md": "607b11a883a108e04ef4b4843096e150894bea7010cbecb6b03e867c2040acc1",
+    "harness/project/INDEX.md": "c15bf54a72eb39b66e41f971f78a374a1da00542ad6f9d18e66352323122786e"
+  },
+  "skill_catalogue_count": 36,
+  "prompts": {
+    "answer": "Сколько минут в трёх часах? Ответь по-русски.",
+    "history": "Какое значение параметра cache_ttl указано в действующей спецификации приложения? Укажи файл, из которого получен ответ.",
+    "explain": "Объясни, какое значение тайм-аута сейчас задано в конфигурации приложения app.toml. Ответь по-русски.",
+    "change": "Измени общее значение timeout в app.toml с 20 на 25 секунд. Работай только с этим параметром. Коммит не нужен."
+  },
+  "policies": {
+    "mandatory": "После сверки до задачи прочитай файл `harness/common/INDEX.md`, затем прочитай файл `harness/project/INDEX.md`.",
+    "optional": "При необходимости навигации прочитай файл `harness/common/INDEX.md`, затем прочитай файл `harness/project/INDEX.md`."
+  },
+  "runs": [
+    {
+      "repeat": 1,
+      "task": "answer",
+      "install": "common-only",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "b1db1e6759579ea4860dd76e3d26a9acb375d67ef53b00063996300e4dbfb0fe",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 40,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 127071,
+        "cached_input_tokens": 111360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 458,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 127529
+      },
+      "whole_turn": {
+        "input_tokens": 127071,
+        "cached_input_tokens": 111360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 458,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "answer",
+      "install": "common-only",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "b1db1e6759579ea4860dd76e3d26a9acb375d67ef53b00063996300e4dbfb0fe",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 35,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 100852,
+        "cached_input_tokens": 89984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 391,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 101243
+      },
+      "whole_turn": {
+        "input_tokens": 100852,
+        "cached_input_tokens": 89984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 391,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "answer",
+      "install": "common-project",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "b1db1e6759579ea4860dd76e3d26a9acb375d67ef53b00063996300e4dbfb0fe",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 31,
+      "startup_check_returns": [
+        28
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 82967,
+        "cached_input_tokens": 68352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 307,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 83274
+      },
+      "whole_turn": {
+        "input_tokens": 82967,
+        "cached_input_tokens": 68352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 307,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "answer",
+      "install": "common-project",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "b1db1e6759579ea4860dd76e3d26a9acb375d67ef53b00063996300e4dbfb0fe",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 26,
+      "startup_check_returns": [
+        23
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 63995,
+        "cached_input_tokens": 56704,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 176,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 64171
+      },
+      "whole_turn": {
+        "input_tokens": 63995,
+        "cached_input_tokens": 56704,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 176,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "change",
+      "install": "common-only",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "0ae1996a7117eaef73e186ca095d0a449017e5d645042a19e83cd2fb8367ac01",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 32,
+      "startup_check_returns": [
+        28
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [],
+      "selected_full_skills": [
+        "comm-separate-application-config"
+      ],
+      "config_skill_before_edit": true,
+      "first_write_call": 42,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 82688,
+        "cached_input_tokens": 62592,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 451,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 83139
+      },
+      "whole_turn": {
+        "input_tokens": 158011,
+        "cached_input_tokens": 134016,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 733,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [
+        "mandatory-maps-before-task"
+      ],
+      "result": "failed"
+    },
+    {
+      "repeat": 1,
+      "task": "change",
+      "install": "common-only",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "0ae1996a7117eaef73e186ca095d0a449017e5d645042a19e83cd2fb8367ac01",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 41,
+      "startup_check_returns": [
+        37
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [
+        "comm-separate-application-config"
+      ],
+      "config_skill_before_edit": true,
+      "first_write_call": 50,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 125537,
+        "cached_input_tokens": 110336,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 542,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 126079
+      },
+      "whole_turn": {
+        "input_tokens": 201259,
+        "cached_input_tokens": 184448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 896,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "change",
+      "install": "common-project",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "0ae1996a7117eaef73e186ca095d0a449017e5d645042a19e83cd2fb8367ac01",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 36,
+      "startup_check_returns": [
+        27
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [
+        "comm-separate-application-config"
+      ],
+      "config_skill_before_edit": true,
+      "first_write_call": 41,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 106940,
+        "cached_input_tokens": 85632,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 587,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 107527
+      },
+      "whole_turn": {
+        "input_tokens": 157025,
+        "cached_input_tokens": 123776,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 849,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "change",
+      "install": "common-project",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "0ae1996a7117eaef73e186ca095d0a449017e5d645042a19e83cd2fb8367ac01",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 27,
+      "startup_check_returns": [
+        23
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [
+        "comm-separate-application-config"
+      ],
+      "config_skill_before_edit": true,
+      "first_write_call": 36,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 64067,
+        "cached_input_tokens": 50304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 251,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 64318
+      },
+      "whole_turn": {
+        "input_tokens": 136383,
+        "cached_input_tokens": 121088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 461,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "explain",
+      "install": "common-only",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "d088a672cd225d1dd0864e6ffa9d194780d4b9fe862066f2bf60ccaea6e78b9c",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 35,
+      "startup_check_returns": [
+        28
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 106738,
+        "cached_input_tokens": 95360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 407,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 107145
+      },
+      "whole_turn": {
+        "input_tokens": 155834,
+        "cached_input_tokens": 133504,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 483,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "explain",
+      "install": "common-only",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "d088a672cd225d1dd0864e6ffa9d194780d4b9fe862066f2bf60ccaea6e78b9c",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 34,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 101287,
+        "cached_input_tokens": 86144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 486,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 101773
+      },
+      "whole_turn": {
+        "input_tokens": 149763,
+        "cached_input_tokens": 127872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 558,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "explain",
+      "install": "common-project",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "d088a672cd225d1dd0864e6ffa9d194780d4b9fe862066f2bf60ccaea6e78b9c",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 39,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 132254,
+        "cached_input_tokens": 105984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 485,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 132739
+      },
+      "whole_turn": {
+        "input_tokens": 182723,
+        "cached_input_tokens": 155904,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 560,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "explain",
+      "install": "common-project",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "d088a672cd225d1dd0864e6ffa9d194780d4b9fe862066f2bf60ccaea6e78b9c",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 25,
+      "startup_check_returns": [
+        23
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 64546,
+        "cached_input_tokens": 54144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 324,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 64870
+      },
+      "whole_turn": {
+        "input_tokens": 112173,
+        "cached_input_tokens": 101248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 402,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "history",
+      "install": "common-only",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "00e329ab06bfb99a5b6ee0040e7a9ece7543d000961c9535dc3db27b4e9000b9",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 34,
+      "startup_check_returns": [
+        27
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 107097,
+        "cached_input_tokens": 95616,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 488,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 107585
+      },
+      "whole_turn": {
+        "input_tokens": 156541,
+        "cached_input_tokens": 133760,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 570,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "search_scope": "harness/project/specs",
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "history",
+      "install": "common-only",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "00e329ab06bfb99a5b6ee0040e7a9ece7543d000961c9535dc3db27b4e9000b9",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 34,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 107056,
+        "cached_input_tokens": 92032,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 443,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 107499
+      },
+      "whole_turn": {
+        "input_tokens": 155934,
+        "cached_input_tokens": 140160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 528,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "search_scope": "repository excluding inbox, evidence and human guides",
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "history",
+      "install": "common-project",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "00e329ab06bfb99a5b6ee0040e7a9ece7543d000961c9535dc3db27b4e9000b9",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 41,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [
+        "comm-verify-project-facts"
+      ],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 126981,
+        "cached_input_tokens": 110592,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 547,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 127528
+      },
+      "whole_turn": {
+        "input_tokens": 177787,
+        "cached_input_tokens": 149248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 629,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "search_scope": "harness/project/specs",
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 1,
+      "task": "history",
+      "install": "common-project",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "00e329ab06bfb99a5b6ee0040e7a9ece7543d000961c9535dc3db27b4e9000b9",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 32,
+      "startup_check_returns": [
+        23
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [
+        "comm-verify-project-facts"
+      ],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 89412,
+        "cached_input_tokens": 77824,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 348,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 89760
+      },
+      "whole_turn": {
+        "input_tokens": 139678,
+        "cached_input_tokens": 116224,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 419,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "search_scope": "harness/project/specs",
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "answer",
+      "install": "common-only",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "b1db1e6759579ea4860dd76e3d26a9acb375d67ef53b00063996300e4dbfb0fe",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 30,
+      "startup_check_returns": [
+        27
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 83331,
+        "cached_input_tokens": 64512,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 374,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 83705
+      },
+      "whole_turn": {
+        "input_tokens": 83331,
+        "cached_input_tokens": 64512,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 374,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "answer",
+      "install": "common-only",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "b1db1e6759579ea4860dd76e3d26a9acb375d67ef53b00063996300e4dbfb0fe",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 35,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 100896,
+        "cached_input_tokens": 89984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 367,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 101263
+      },
+      "whole_turn": {
+        "input_tokens": 100896,
+        "cached_input_tokens": 89984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 367,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "answer",
+      "install": "common-project",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "b1db1e6759579ea4860dd76e3d26a9acb375d67ef53b00063996300e4dbfb0fe",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 35,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 108102,
+        "cached_input_tokens": 96384,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 373,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 108475
+      },
+      "whole_turn": {
+        "input_tokens": 108102,
+        "cached_input_tokens": 96384,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 373,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "answer",
+      "install": "common-project",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "b1db1e6759579ea4860dd76e3d26a9acb375d67ef53b00063996300e4dbfb0fe",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 35,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 106584,
+        "cached_input_tokens": 92032,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 364,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 106948
+      },
+      "whole_turn": {
+        "input_tokens": 106584,
+        "cached_input_tokens": 92032,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 364,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "change",
+      "install": "common-only",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "0ae1996a7117eaef73e186ca095d0a449017e5d645042a19e83cd2fb8367ac01",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 36,
+      "startup_check_returns": [
+        27
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [
+        "comm-separate-application-config"
+      ],
+      "config_skill_before_edit": true,
+      "first_write_call": 45,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 107161,
+        "cached_input_tokens": 95872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 507,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 107668
+      },
+      "whole_turn": {
+        "input_tokens": 182217,
+        "cached_input_tokens": 169984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 816,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "change",
+      "install": "common-only",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "0ae1996a7117eaef73e186ca095d0a449017e5d645042a19e83cd2fb8367ac01",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 27,
+      "startup_check_returns": [
+        23
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [
+        "comm-separate-application-config"
+      ],
+      "config_skill_before_edit": true,
+      "first_write_call": 32,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 64205,
+        "cached_input_tokens": 54400,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 321,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 64526
+      },
+      "whole_turn": {
+        "input_tokens": 112994,
+        "cached_input_tokens": 102016,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 635,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "change",
+      "install": "common-project",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "0ae1996a7117eaef73e186ca095d0a449017e5d645042a19e83cd2fb8367ac01",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 29,
+      "startup_check_returns": [
+        36
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [],
+      "selected_full_skills": [
+        "comm-separate-application-config"
+      ],
+      "config_skill_before_edit": true,
+      "first_write_call": 49,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 77326,
+        "cached_input_tokens": 62976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 333,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 77659
+      },
+      "whole_turn": {
+        "input_tokens": 203366,
+        "cached_input_tokens": 185984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 825,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [
+        "startup-check-before-task-unconfirmed",
+        "mandatory-maps-before-task"
+      ],
+      "result": "failed"
+    },
+    {
+      "repeat": 2,
+      "task": "change",
+      "install": "common-project",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "0ae1996a7117eaef73e186ca095d0a449017e5d645042a19e83cd2fb8367ac01",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 31,
+      "startup_check_returns": [
+        27
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [
+        "comm-separate-application-config"
+      ],
+      "config_skill_before_edit": true,
+      "first_write_call": 40,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 82887,
+        "cached_input_tokens": 68352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 513,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 83400
+      },
+      "whole_turn": {
+        "input_tokens": 157224,
+        "cached_input_tokens": 141440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 742,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "explain",
+      "install": "common-only",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "d088a672cd225d1dd0864e6ffa9d194780d4b9fe862066f2bf60ccaea6e78b9c",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 34,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 108098,
+        "cached_input_tokens": 99968,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 561,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 108659
+      },
+      "whole_turn": {
+        "input_tokens": 157842,
+        "cached_input_tokens": 149120,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 645,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "explain",
+      "install": "common-only",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "d088a672cd225d1dd0864e6ffa9d194780d4b9fe862066f2bf60ccaea6e78b9c",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 25,
+      "startup_check_returns": [
+        23
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 64640,
+        "cached_input_tokens": 54144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 279,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 64919
+      },
+      "whole_turn": {
+        "input_tokens": 88504,
+        "cached_input_tokens": 77824,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 323,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "explain",
+      "install": "common-project",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "d088a672cd225d1dd0864e6ffa9d194780d4b9fe862066f2bf60ccaea6e78b9c",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 34,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 107745,
+        "cached_input_tokens": 85632,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 529,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 108274
+      },
+      "whole_turn": {
+        "input_tokens": 157711,
+        "cached_input_tokens": 124032,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 614,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "explain",
+      "install": "common-project",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "d088a672cd225d1dd0864e6ffa9d194780d4b9fe862066f2bf60ccaea6e78b9c",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 39,
+      "startup_check_returns": [
+        37
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 125567,
+        "cached_input_tokens": 103936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 449,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 126016
+      },
+      "whole_turn": {
+        "input_tokens": 174471,
+        "cached_input_tokens": 152064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 534,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "history",
+      "install": "common-only",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "00e329ab06bfb99a5b6ee0040e7a9ece7543d000961c9535dc3db27b4e9000b9",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 39,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 131128,
+        "cached_input_tokens": 112640,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 475,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 131603
+      },
+      "whole_turn": {
+        "input_tokens": 180964,
+        "cached_input_tokens": 161024,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 560,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "search_scope": "harness/project/specs",
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "history",
+      "install": "common-only",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "00e329ab06bfb99a5b6ee0040e7a9ece7543d000961c9535dc3db27b4e9000b9",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 30,
+      "startup_check_returns": [
+        28
+      ],
+      "maps_before_action": [],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 88329,
+        "cached_input_tokens": 77568,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 283,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 88612
+      },
+      "whole_turn": {
+        "input_tokens": 137646,
+        "cached_input_tokens": 125696,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 353,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "search_scope": "repository excluding inbox, evidence and human guides",
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "history",
+      "install": "common-project",
+      "policy": "mandatory",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "00e329ab06bfb99a5b6ee0040e7a9ece7543d000961c9535dc3db27b4e9000b9",
+      "owner_sha256": "dead262ac57b607dada0dab9fa4f2eca6028c1facd077d8122b8d832fc854c60",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 35,
+      "startup_check_returns": [
+        28
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 111881,
+        "cached_input_tokens": 97408,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 363,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 112244
+      },
+      "whole_turn": {
+        "input_tokens": 160808,
+        "cached_input_tokens": 145792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 454,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "search_scope": "harness/project/specs",
+      "result": "passed for tested checks"
+    },
+    {
+      "repeat": 2,
+      "task": "history",
+      "install": "common-project",
+      "policy": "optional",
+      "model": [
+        "gpt-6.2-sol"
+      ],
+      "prompt_sha256": "00e329ab06bfb99a5b6ee0040e7a9ece7543d000961c9535dc3db27b4e9000b9",
+      "owner_sha256": "d788ba9b28aa6f859d80b9fec66a057a795b71e24a33e436aa143113c6743527",
+      "answer_or_edit_correct": true,
+      "exit": 0,
+      "entry_seen": true,
+      "expected_rules": 12,
+      "first_native_rules": 0,
+      "first_explicit_rules_before_action": 12,
+      "unique_rules_before_action": 12,
+      "unique_rules_anytime": 12,
+      "repeated_rule_paths": [],
+      "missing_rules_before_action": [],
+      "first_task_call": 42,
+      "startup_check_returns": [
+        32
+      ],
+      "maps_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "maps_anytime": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "map_order_before_action": [
+        "harness/common/INDEX.md",
+        "harness/project/INDEX.md"
+      ],
+      "selected_full_skills": [
+        "comm-verify-project-facts"
+      ],
+      "config_skill_before_edit": null,
+      "first_write_call": null,
+      "stale_evidence_observed": false,
+      "through_first_action": {
+        "input_tokens": 132772,
+        "cached_input_tokens": 120064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 539,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 133311
+      },
+      "whole_turn": {
+        "input_tokens": 184519,
+        "cached_input_tokens": 171264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 624,
+        "reasoning_output_tokens": 0
+      },
+      "contract_findings": [],
+      "search_scope": "harness/project/specs",
+      "result": "passed for tested checks"
+    }
+  ],
+  "pairs": [
+    {
+      "task": "answer",
+      "install": "common-only",
+      "repeat": 1,
+      "comparable": true,
+      "a": 127071,
+      "b": 100852,
+      "skills_match": true,
+      "delta": 26219
+    },
+    {
+      "task": "answer",
+      "install": "common-only",
+      "repeat": 2,
+      "comparable": true,
+      "a": 83331,
+      "b": 100896,
+      "skills_match": true,
+      "delta": -17565
+    },
+    {
+      "task": "answer",
+      "install": "common-project",
+      "repeat": 1,
+      "comparable": true,
+      "a": 82967,
+      "b": 63995,
+      "skills_match": true,
+      "delta": 18972
+    },
+    {
+      "task": "answer",
+      "install": "common-project",
+      "repeat": 2,
+      "comparable": true,
+      "a": 108102,
+      "b": 106584,
+      "skills_match": true,
+      "delta": 1518
+    },
+    {
+      "task": "history",
+      "install": "common-only",
+      "repeat": 1,
+      "comparable": true,
+      "a": 107097,
+      "b": 107056,
+      "skills_match": true,
+      "delta": 41
+    },
+    {
+      "task": "history",
+      "install": "common-only",
+      "repeat": 2,
+      "comparable": true,
+      "a": 131128,
+      "b": 88329,
+      "skills_match": true,
+      "delta": 42799
+    },
+    {
+      "task": "history",
+      "install": "common-project",
+      "repeat": 1,
+      "comparable": true,
+      "a": 126981,
+      "b": 89412,
+      "skills_match": true,
+      "delta": 37569
+    },
+    {
+      "task": "history",
+      "install": "common-project",
+      "repeat": 2,
+      "comparable": true,
+      "a": 111881,
+      "b": 132772,
+      "skills_match": false,
+      "delta": -20891
+    },
+    {
+      "task": "explain",
+      "install": "common-only",
+      "repeat": 1,
+      "comparable": true,
+      "a": 106738,
+      "b": 101287,
+      "skills_match": true,
+      "delta": 5451
+    },
+    {
+      "task": "explain",
+      "install": "common-only",
+      "repeat": 2,
+      "comparable": true,
+      "a": 108098,
+      "b": 64640,
+      "skills_match": true,
+      "delta": 43458
+    },
+    {
+      "task": "explain",
+      "install": "common-project",
+      "repeat": 1,
+      "comparable": true,
+      "a": 132254,
+      "b": 64546,
+      "skills_match": true,
+      "delta": 67708
+    },
+    {
+      "task": "explain",
+      "install": "common-project",
+      "repeat": 2,
+      "comparable": true,
+      "a": 107745,
+      "b": 125567,
+      "skills_match": true,
+      "delta": -17822
+    },
+    {
+      "task": "change",
+      "install": "common-only",
+      "repeat": 1,
+      "comparable": false,
+      "a": 82688,
+      "b": 125537,
+      "skills_match": true,
+      "delta": -42849
+    },
+    {
+      "task": "change",
+      "install": "common-only",
+      "repeat": 2,
+      "comparable": true,
+      "a": 107161,
+      "b": 64205,
+      "skills_match": true,
+      "delta": 42956
+    },
+    {
+      "task": "change",
+      "install": "common-project",
+      "repeat": 1,
+      "comparable": true,
+      "a": 106940,
+      "b": 64067,
+      "skills_match": true,
+      "delta": 42873
+    },
+    {
+      "task": "change",
+      "install": "common-project",
+      "repeat": 2,
+      "comparable": false,
+      "a": 77326,
+      "b": 82887,
+      "skills_match": true,
+      "delta": -5561
+    }
+  ],
+  "date": "2026-11-22",
+  "maps_bytes": {
+    "harness/common/INDEX.md": 1064,
+    "harness/project/INDEX.md": 1583
+  },
+  "pair_order": {
+    "1": [
+      "mandatory",
+      "optional"
+    ],
+    "2": [
+      "optional",
+      "mandatory"
+    ]
+  },
+  "counter_definition": "Cumulative turn input through the request that starts the first task action. For answer: final answer. Cached input is included and recorded separately. Whole-turn counters include later calls.",
+  "catalogue_sha256": "10c72903d86a0e6ba820ef89d392a138693c7a7df250d53436d795b6933c2bbc"
+}
