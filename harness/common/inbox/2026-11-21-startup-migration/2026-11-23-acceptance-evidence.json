@@ -1,0 +1,2866 @@
+{
+  "date": "2026-11-23",
+  "commit": "e65dcab17ba5605a863b840936306e941edaab9d",
+  "candidate_tree": "e56bec054ec71a8177b7e1611a22cf0602f2d736",
+  "manifest_sha256": "6d223555f8313a06da7c00dcac906d37103c8920a4a4717b5fc4472f8c9a7fae",
+  "native_client": "Codex CLI 0.166.0",
+  "trace_indices": "С нуля в нативном JSONL Codex. SHA-256 относится ко всей локальной трассе. Ответы включены только для непройденных проверок и двух контрольных продолжений.",
+  "environment": {
+    "python": "3.12.15",
+    "pytest": "8.4.2",
+    "plugin_eval": "0.1.2",
+    "modes": [
+      "common-only",
+      "common-project"
+    ]
+  },
+  "file_and_archive_checks": {
+    "provenance": {
+      "archive_sha256": "7b50bf72cc2809556ef77c6ee5838feb32efae8b6a1f451f3bb79cb14032c9e0",
+      "archive_originals": 1347,
+      "snapshot_files": 300
+    },
+    "modes": [
+      {
+        "mode": "common-only",
+        "bootstrap_and_repeat": [
+          3,
+          0
+        ],
+        "candidate_files": 167,
+        "v2_without_approval": 2,
+        "checks_v1_missing_damaged": [
+          4,
+          4
+        ],
+        "restore_version1": [
+          3,
+          3
+        ],
+        "publish_version2": 0,
+        "restore_version2_before_after_request_removal": [
+          3,
+          3
+        ],
+        "native_rule_and_two_skill_copies_verified_each_time": 3
+      },
+      {
+        "mode": "common-project",
+        "bootstrap_and_repeat": [
+          3,
+          0
+        ],
+        "candidate_files": 168,
+        "v2_without_approval": 2,
+        "checks_v1_missing_damaged": [
+          4,
+          4
+        ],
+        "restore_version1": [
+          3,
+          3
+        ],
+        "publish_version2": 0,
+        "restore_version2_before_after_request_removal": [
+          3,
+          3
+        ],
+        "native_rule_and_two_skill_copies_verified_each_time": 3
+      }
+    ]
+  },
+  "protected_entrypoint_checks": [
+    {
+      "mode": "common-only",
+      "file": "AGENTS.md",
+      "status": "пройден",
+      "ordinary_conflict": 2,
+      "ordinary_missing": 3,
+      "ordinary_repeat": 0,
+      "check_rules_each": 0,
+      "sha256": "212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24"
+    },
+    {
+      "mode": "common-only",
+      "file": "CLAUDE.md",
+      "status": "пройден",
+      "ordinary_conflict": 2,
+      "ordinary_missing": 3,
+      "ordinary_repeat": 0,
+      "check_rules_each": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "mode": "common-project",
+      "file": "AGENTS.md",
+      "status": "пройден",
+      "ordinary_conflict": 2,
+      "ordinary_missing": 3,
+      "ordinary_repeat": 0,
+      "check_rules_each": 0,
+      "sha256": "212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24"
+    },
+    {
+      "mode": "common-project",
+      "file": "CLAUDE.md",
+      "status": "пройден",
+      "ordinary_conflict": 2,
+      "ordinary_missing": 3,
+      "ordinary_repeat": 0,
+      "check_rules_each": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "refused_inbox_working_source": [
+    {
+      "mode": "common-only",
+      "exit": 2,
+      "diagnostic": "Publication stopped: unbound working copy: .claude/rules/comm-application-config-git.md",
+      "before_after_sha256": "e8135a4a42918cf0b36cc64b70d55497478bdf37abe25a951951516a26773d10"
+    },
+    {
+      "mode": "common-project",
+      "exit": 2,
+      "diagnostic": "Publication stopped: unbound working copy: .claude/rules/comm-application-config-git.md",
+      "before_after_sha256": "e8135a4a42918cf0b36cc64b70d55497478bdf37abe25a951951516a26773d10"
+    }
+  ],
+  "suite": {
+    "common-only": {
+      "exit": 0,
+      "passed": 192
+    },
+    "common-project": {
+      "exit": 0,
+      "passed": 192
+    }
+  },
+  "link_recheck": {
+    "common-only": {
+      "exit": 0,
+      "documents": 504,
+      "markdown": 96,
+      "root": 351,
+      "external": 1
+    },
+    "common-project": {
+      "exit": 0,
+      "documents": 504,
+      "markdown": 96,
+      "root": 351,
+      "external": 1
+    }
+  },
+  "quick_validate_skill_directories": 25,
+  "plugin_eval_summary": [
+    {
+      "skill": "comm-assess-project-tests",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 340,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 519,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-commit-task-stages",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 420,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 426,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-confirm-database-design",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 431,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 995,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-create-git-branch",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 386,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 222,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-create-lazy-claude-codex-skills",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 441,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 1085,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-diagnose-harness-entrypoints",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 233,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 549,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-install-harness",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 410,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 931,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-manage-local-models",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 350,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 858,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-manage-production-rollout",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 373,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 223,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-migrate-git-repository",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 450,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 346,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-prepare-browser-check",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 285,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 702,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-preserve-harness-knowledge",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 402,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 1141,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-preserve-text-line-endings",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 294,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 197,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-preserve-visual-design",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 480,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 283,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-process-harness-inbox",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 383,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 1184,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-process-pull-request",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 428,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 755,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-protect-harness-evidence",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 362,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 395,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-publish-harness-instructions",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 435,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 697,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-recover-git-state",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 399,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 298,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-restore-application-data",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 407,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 0,
+          "band": "good"
+        }
+      ]
+    },
+    {
+      "skill": "comm-select-development-workflow",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 354,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 1199,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-update-git-branch",
+      "grade": "A",
+      "score": 100,
+      "unmet": [],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 463,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 487,
+          "band": "moderate"
+        }
+      ]
+    },
+    {
+      "skill": "comm-validate-harness-instructions",
+      "grade": "C",
+      "score": 81,
+      "unmet": [
+        {
+          "id": "invoke_cost_tokens-budget-high",
+          "status": "warn"
+        },
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "fail"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 526,
+          "band": "heavy"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 1274,
+          "band": "excessive"
+        }
+      ]
+    },
+    {
+      "skill": "comm-verify-browser-ui",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 378,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 521,
+          "band": "heavy"
+        }
+      ]
+    },
+    {
+      "skill": "comm-verify-project-facts",
+      "grade": "A",
+      "score": 95,
+      "unmet": [
+        {
+          "id": "deferred_cost_tokens-budget-high",
+          "status": "warn"
+        }
+      ],
+      "budget_metrics": [
+        {
+          "id": "invoke_cost_tokens",
+          "value": 429,
+          "band": "moderate"
+        },
+        {
+          "id": "deferred_cost_tokens",
+          "value": 755,
+          "band": "heavy"
+        }
+      ]
+    }
+  ],
+  "native_tests": [
+    {
+      "id": "index-0",
+      "mode": "common-only",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "both",
+      "maps": {
+        "common": [
+          25
+        ],
+        "project": [
+          25
+        ]
+      },
+      "map_rows": {
+        "common": [
+          28
+        ],
+        "project": [
+          28
+        ]
+      },
+      "rules": 12,
+      "check_events": [
+        [
+          20,
+          23
+        ]
+      ],
+      "boundary": 25,
+      "final": 31,
+      "trace_sha256": "56f0ae0677bd798938cbb130f6beb0aba599993cbffdd81be20bacf388c43e21"
+    },
+    {
+      "id": "index-1",
+      "mode": "common-only",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "common",
+      "maps": {
+        "common": [
+          29
+        ],
+        "project": []
+      },
+      "map_rows": {
+        "common": [
+          32
+        ],
+        "project": []
+      },
+      "rules": 12,
+      "check_events": [
+        [
+          24,
+          27
+        ]
+      ],
+      "boundary": 29,
+      "final": 35,
+      "trace_sha256": "24c46fa045e44edee3d20d16dc5b32771cfe1ab22968c134db654e8511272c29"
+    },
+    {
+      "id": "index-2",
+      "mode": "common-only",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "none",
+      "maps": {
+        "common": [],
+        "project": []
+      },
+      "map_rows": {
+        "common": [],
+        "project": []
+      },
+      "rules": 12,
+      "check_events": [
+        [
+          30,
+          33
+        ]
+      ],
+      "boundary": 36,
+      "final": 36,
+      "trace_sha256": "a4ade4b7acad60176b383e3e90ad9c008c1bb01d2c2233fba535d3afe841bcfa"
+    },
+    {
+      "id": "index-3",
+      "mode": "common-only",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "project",
+      "maps": {
+        "common": [],
+        "project": [
+          29
+        ]
+      },
+      "map_rows": {
+        "common": [],
+        "project": [
+          32
+        ]
+      },
+      "rules": 12,
+      "check_events": [
+        [
+          24,
+          27
+        ]
+      ],
+      "boundary": 29,
+      "final": 35,
+      "trace_sha256": "4d661034e5ae86402977e14975e458a49702de693f16fa3108778350fb110fe4"
+    },
+    {
+      "id": "index-4",
+      "mode": "common-project",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "both",
+      "maps": {
+        "common": [
+          34
+        ],
+        "project": [
+          34
+        ]
+      },
+      "map_rows": {
+        "common": [
+          37
+        ],
+        "project": [
+          37
+        ]
+      },
+      "rules": 12,
+      "check_events": [
+        [
+          29,
+          32
+        ]
+      ],
+      "boundary": 34,
+      "final": 40,
+      "trace_sha256": "6d647480f91f57d64337c95237558719be75c30416cea52f1e0ddfbcade82100"
+    },
+    {
+      "id": "index-5",
+      "mode": "common-project",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "common",
+      "maps": {
+        "common": [
+          29
+        ],
+        "project": []
+      },
+      "map_rows": {
+        "common": [
+          32
+        ],
+        "project": []
+      },
+      "rules": 12,
+      "check_events": [
+        [
+          24,
+          27
+        ]
+      ],
+      "boundary": 29,
+      "final": 35,
+      "trace_sha256": "79a619cc53c39efd82a48cefbca1b165d3bf6dcef0dabb6b5ca70dd2355bd0c6"
+    },
+    {
+      "id": "index-6",
+      "mode": "common-project",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "none",
+      "maps": {
+        "common": [],
+        "project": []
+      },
+      "map_rows": {
+        "common": [],
+        "project": []
+      },
+      "rules": 12,
+      "check_events": [
+        [
+          25,
+          28
+        ]
+      ],
+      "boundary": 31,
+      "final": 31,
+      "trace_sha256": "db380ab2fb81b08e60f76953c795d5e3de0cc3f05463223e6e870537a0f0fcb8"
+    },
+    {
+      "id": "index-7",
+      "mode": "common-project",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "project",
+      "maps": {
+        "common": [],
+        "project": [
+          25
+        ]
+      },
+      "map_rows": {
+        "common": [],
+        "project": [
+          28
+        ]
+      },
+      "rules": 12,
+      "check_events": [
+        [
+          20,
+          23
+        ]
+      ],
+      "boundary": 25,
+      "final": 31,
+      "trace_sha256": "10ac39a57cca3df7f1f14c44e9f1837a8d058a41a7d952a68d192ae209a92839"
+    },
+    {
+      "id": "menu-0",
+      "mode": "common-only",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "en / explicit",
+      "skill_events": [
+        28
+      ],
+      "menu_events": [
+        33
+      ],
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rules": 12,
+      "check_events": [
+        [
+          20,
+          23
+        ]
+      ],
+      "boundary": 25,
+      "final": 36,
+      "trace_sha256": "d48e837db4b092cb2ab8174340345fea8fe5ad1bc4b01efc3c23b3909580bca6"
+    },
+    {
+      "id": "menu-1",
+      "mode": "common-only",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "en / implicit",
+      "skill_events": [
+        35
+      ],
+      "menu_events": [
+        40
+      ],
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rules": 12,
+      "check_events": [
+        [
+          25,
+          28
+        ]
+      ],
+      "boundary": 32,
+      "final": 43,
+      "trace_sha256": "459aa0753916216841d51bb6b394611afa593edec8250c57a3ead72edb70cabf"
+    },
+    {
+      "id": "menu-2",
+      "mode": "common-only",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "ru / explicit",
+      "skill_events": [
+        32
+      ],
+      "menu_events": [
+        37
+      ],
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rules": 12,
+      "check_events": [
+        [
+          24,
+          27
+        ]
+      ],
+      "boundary": 29,
+      "final": 40,
+      "trace_sha256": "c7bc9043526e180498e5baec69910e3a0e97bcd1eeb5affecb1250e466061180"
+    },
+    {
+      "id": "menu-3",
+      "mode": "common-only",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "ru / implicit",
+      "skill_events": [
+        33
+      ],
+      "menu_events": [
+        38
+      ],
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rules": 12,
+      "check_events": [
+        [
+          25,
+          28
+        ]
+      ],
+      "boundary": 30,
+      "final": 41,
+      "trace_sha256": "3cefbf6a885a177f4551f7abfd37ce2b28da62c1059316be07b4fad46b678837"
+    },
+    {
+      "id": "menu-4",
+      "mode": "common-project",
+      "family": "native",
+      "status": "не пройден",
+      "scenario": "en / explicit",
+      "skill_events": [
+        33
+      ],
+      "menu_events": [
+        38
+      ],
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rules": 12,
+      "check_events": [
+        [
+          25,
+          28
+        ]
+      ],
+      "boundary": 30,
+      "final": 41,
+      "trace_sha256": "0f8516b1d84cea4bdd8ef43a9129426b965cc5bf699febae4b76ed8cea1ca302",
+      "answer": "I’d recommend **option 7, full Superpowers with one implementation agent**. Your requirements are still open, so you can use brainstorming to define the product, approve the specification, and review the implementation plan before coding begins. If the biggest unknown is whether a specific product assumption holds, option 4 gives you a way to test it first.\n\n| # | Workflow | What it covers |\n|---|---|---|\n| 1 | **Superpowers + Compound Engineering** | The lead starts with `superpowers:using-superpowers` and follows `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`, including the Compound Engineering approvals. |\n| 2 | **Compound Engineering** | `compound-engineering:ce-brainstorm` → `compound-engineering:ce-plan` → `compound-engineering:ce-work`. Use the native Compound Engineering process to shape the idea, plan the work, and implement it. |\n| 3 | **Direct execution** | The current model and reasoning effort handle the task independently, with no delegation or prescribed skill sequence. Best for a clearly scoped task. |\n| 4 | **Experiment → research → conclusions** | Agree on an experiment and choose tools for it. No plugin is required. Best when a specific uncertainty should drive the next product decision. |\n| 5 | **Short Superpowers design route** | `superpowers:brainstorming` → brief design → approval → implementation and verification. Best when a focused design discussion is enough to start. |\n| 6 | **Superpowers systematic debugging** | `superpowers:systematic-debugging` → diagnosis → root cause → fix and verification. Fits an existing defect. |\n| 7 | **Full Superpowers with one implementation agent** | `superpowers:brainstorming` → `superpowers:writing-plans` → `superpowers:executing-plans`. The lead agent writes all the code. The skill calls for a separate final review agent when one is available and authorized. |\n| 8 | **Full Superpowers with subagents** | `superpowers:brainstorming` → `superpowers:writing-plans` → `superpowers:subagent-driven-development`. Separate implementation and review agents participate in each plan task, subject to availability and authorization. |\n\nBoth full Superpowers routes begin with `superpowers:using-superpowers` and `superpowers:brainstorming`, then pause for specification approval. Next comes `superpowers:writing-plans` and approval of the plan with the chosen executor. Implementation, checks, and review follow, then `superpowers:verification-before-completion` and `superpowers:finishing-a-development-branch`. Executor permissions are handled separately. Plugin availability in this session is unverified.\n\n**Which option do you choose?** I’ll wait for your selection before starting."
+    },
+    {
+      "id": "menu-5",
+      "mode": "common-project",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "en / implicit",
+      "skill_events": [
+        32
+      ],
+      "menu_events": [
+        37
+      ],
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rules": 12,
+      "check_events": [
+        [
+          24,
+          27
+        ]
+      ],
+      "boundary": 29,
+      "final": 40,
+      "trace_sha256": "bcde16270251f1022118015ee645e76abafe994d9e0fe9d7076d911c4c5fd0f9"
+    },
+    {
+      "id": "menu-6",
+      "mode": "common-project",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "ru / explicit",
+      "skill_events": [
+        47
+      ],
+      "menu_events": [
+        52
+      ],
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rules": 12,
+      "check_events": [
+        [
+          34,
+          37
+        ]
+      ],
+      "boundary": 39,
+      "final": 55,
+      "trace_sha256": "03ae98830da5d87eac079099d9284816237f7fb57bb6f9d3fde55c6c485c8608"
+    },
+    {
+      "id": "menu-7",
+      "mode": "common-project",
+      "family": "native",
+      "status": "пройден",
+      "scenario": "ru / implicit",
+      "skill_events": [
+        28
+      ],
+      "menu_events": [
+        33
+      ],
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rules": 12,
+      "check_events": [
+        [
+          20,
+          23
+        ]
+      ],
+      "boundary": 25,
+      "final": 36,
+      "trace_sha256": "ab4a7ed816c5887a1e6d3bb29fbef1ee8c8d3ac2c81c6668e1e1b8bca1262a1b"
+    },
+    {
+      "id": "common-only-missing",
+      "mode": "common-only",
+      "family": "admission",
+      "status": "пройден",
+      "scenario": "missing",
+      "check_events": [
+        [
+          29,
+          31
+        ]
+      ],
+      "rule_reads": [],
+      "gate": [
+        27
+      ],
+      "partial_output": -1,
+      "subject": [],
+      "trace_sha256": "5dce3588eb10ec78a693f22c8a4fb005ba74a82291f86a698f3a4042874c2b9a",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20905-44b3-7432-ac88-933a8cc2d8e3"
+        }
+      ],
+      "final_events": [
+        49
+      ]
+    },
+    {
+      "id": "common-only-partial",
+      "mode": "common-only",
+      "family": "admission",
+      "status": "пройден",
+      "scenario": "partial",
+      "check_events": [
+        [
+          27,
+          30
+        ]
+      ],
+      "rule_reads": [
+        23
+      ],
+      "gate": [
+        23
+      ],
+      "partial_output": 18,
+      "subject": [
+        32,
+        37
+      ],
+      "trace_sha256": "ed457ee525d31e6f9a270fb2f883113ef754b547c0c58b627b408cbdd32a099a",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20905-44d9-7d91-83e3-987b7094946a"
+        }
+      ],
+      "final_events": [
+        43
+      ]
+    },
+    {
+      "id": "common-only-refuse",
+      "mode": "common-only",
+      "family": "admission",
+      "status": "пройден",
+      "scenario": "refuse",
+      "check_events": [
+        [
+          25,
+          27
+        ]
+      ],
+      "rule_reads": [
+        23
+      ],
+      "gate": [
+        23
+      ],
+      "partial_output": -1,
+      "subject": [],
+      "trace_sha256": "4ac1c6872f76581d43b1cfbd2c9a4151c515b78cc098440f1d56584f631823d7",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20905-44bb-70b1-bf4a-0ba76fb1608b"
+        },
+        {
+          "exit": 0,
+          "session_id": "01a20905-44bb-70b1-bf4a-0ba76fb1608b"
+        }
+      ],
+      "final_events": [
+        39,
+        52
+      ]
+    },
+    {
+      "id": "common-only-unreadable",
+      "mode": "common-only",
+      "family": "admission",
+      "status": "пройден",
+      "scenario": "unreadable",
+      "check_events": [
+        [
+          25,
+          27
+        ]
+      ],
+      "rule_reads": [],
+      "gate": [
+        18
+      ],
+      "partial_output": -1,
+      "subject": [],
+      "trace_sha256": "009f07d85d8655720395d179b8ee65d36594b51f1e9d5716afafdaa9e2b92728",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20905-44a5-7350-adf0-6355876f28ef"
+        }
+      ],
+      "final_events": [
+        39
+      ]
+    },
+    {
+      "id": "common-project-missing",
+      "mode": "common-project",
+      "family": "admission",
+      "status": "пройден",
+      "scenario": "missing",
+      "check_events": [
+        [
+          24,
+          26
+        ]
+      ],
+      "rule_reads": [],
+      "gate": [
+        22
+      ],
+      "partial_output": -1,
+      "subject": [],
+      "trace_sha256": "678850962b87fbd03b8ea7f2f694a7d0f6f18ad8fba6bbfc52c068d264c4c8df",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20905-f605-70d0-b1fd-c4ff5dd56bfb"
+        }
+      ],
+      "final_events": [
+        38
+      ]
+    },
+    {
+      "id": "common-project-partial",
+      "mode": "common-project",
+      "family": "admission",
+      "status": "пройден",
+      "scenario": "partial",
+      "check_events": [
+        [
+          39,
+          42
+        ]
+      ],
+      "rule_reads": [
+        32
+      ],
+      "gate": [
+        32
+      ],
+      "partial_output": 18,
+      "subject": [
+        44,
+        49
+      ],
+      "trace_sha256": "b1d3ead4cef98505d77512322287e475aa7736127802493bb6b4d6a80918f0be",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20905-e55b-73c2-9b76-5d9e3a84ec47"
+        }
+      ],
+      "final_events": [
+        55
+      ]
+    },
+    {
+      "id": "common-project-refuse",
+      "mode": "common-project",
+      "family": "admission",
+      "status": "пройден",
+      "scenario": "refuse",
+      "check_events": [
+        [
+          29,
+          31
+        ]
+      ],
+      "rule_reads": [
+        22
+      ],
+      "gate": [
+        22
+      ],
+      "partial_output": -1,
+      "subject": [],
+      "trace_sha256": "ee09386e0b18863edba98f84b0e865ed89c5181ec67d26be76ff159fcdded1b3",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20905-c777-7250-ba7f-13f38a837b06"
+        },
+        {
+          "exit": 0,
+          "session_id": "01a20905-c777-7250-ba7f-13f38a837b06"
+        }
+      ],
+      "final_events": [
+        41,
+        54
+      ]
+    },
+    {
+      "id": "common-project-unreadable",
+      "mode": "common-project",
+      "family": "admission",
+      "status": "не пройден",
+      "scenario": "unreadable",
+      "check_events": [
+        [
+          41,
+          43
+        ]
+      ],
+      "rule_reads": [],
+      "gate": [
+        32
+      ],
+      "partial_output": -1,
+      "subject": [],
+      "finals": [
+        [
+          48,
+          "Поиск `v1-proof.txt` остановлен до первого действия по задаче. Обязательная сверка вернула код `4`: доступ к `.claude/rules/comm-application-config-git.md` запрещён, поэтому удалось полностью прочитать только 11 из 12 правил.\n\nЗначение `v1-proof.txt` пока неизвестно. Чтобы продолжить поиск, нужно восстановить доступ к правилу или явно разрешить выполнить эту задачу без его текста."
+        ]
+      ],
+      "trace_sha256": "8753b0564a774b2e6b6b02f8bca78edfc312f2e593e6ee774fc8eac99a4868d4",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20906-0168-76e3-8ebc-d0529484938c"
+        }
+      ]
+    },
+    {
+      "id": "common-only-checker-unreadable",
+      "mode": "common-only",
+      "family": "admission-startup",
+      "status": "пройден",
+      "scenario": "checker-unreadable",
+      "check_events": [
+        [
+          29,
+          31
+        ]
+      ],
+      "rule_reads": [
+        27
+      ],
+      "gate": [
+        27
+      ],
+      "partial_output": -1,
+      "subject": [],
+      "trace_sha256": "23fe63edfee77cdfc090ce013a854a6ddb5e5a9aaf3e4c399a7bc4c844760c43",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20909-58e0-7dc0-ae21-0c16c60fa779"
+        }
+      ],
+      "final_events": [
+        34
+      ]
+    },
+    {
+      "id": "common-project-checker-unreadable",
+      "mode": "common-project",
+      "family": "admission-startup",
+      "status": "пройден",
+      "scenario": "checker-unreadable",
+      "check_events": [
+        [
+          29,
+          32
+        ],
+        [
+          34,
+          36
+        ]
+      ],
+      "rule_reads": [],
+      "gate": [],
+      "partial_output": -1,
+      "subject": [],
+      "trace_sha256": "5d712f1ddf809c38b7c7642a2684f646e7e73920064f98ff24febe87e9a52e99",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20909-58e3-7c51-ab44-2a63f70f7a3e"
+        }
+      ],
+      "final_events": [
+        53
+      ]
+    },
+    {
+      "id": "common-only-conditional-at-start",
+      "mode": "common-only",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "conditional-at-start",
+      "checks": [
+        [
+          20,
+          23
+        ]
+      ],
+      "subject": [
+        37,
+        42
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        18
+      ],
+      "unconditional": [
+        35
+      ],
+      "conditional": [
+        35
+      ],
+      "unconditional_calls": [
+        27,
+        32
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "f671f0577c70248686b5d786e9286a6cd88156db7c4057406ed05787fcdd03d1",
+      "final": 48,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-only-conditional-mid-task",
+      "mode": "common-only",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "conditional-mid-task",
+      "checks": [
+        [
+          20,
+          23
+        ]
+      ],
+      "subject": [
+        32,
+        37,
+        54
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        18
+      ],
+      "unconditional": [
+        30
+      ],
+      "conditional": [
+        52
+      ],
+      "unconditional_calls": [
+        27
+      ],
+      "order_receipt": [
+        40
+      ],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "4e6d379e64610f8b709831c4009c81f2f78fa8f4e880c18ae6b260196111cc50",
+      "final": 60,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-only-grouped",
+      "mode": "common-only",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "grouped",
+      "checks": [
+        [
+          27,
+          30
+        ]
+      ],
+      "subject": [
+        39,
+        44
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        18
+      ],
+      "unconditional": [
+        37
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        34
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "8fb3cc73bd86d635f3c4072502474b236f908b8685ed794dd5bb9e374f91026e",
+      "final": 50,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "id": "common-only-inactive",
+      "mode": "common-only",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "inactive",
+      "checks": [
+        [
+          24,
+          27
+        ]
+      ],
+      "subject": [
+        36,
+        41
+      ],
+      "owner_rule": [
+        22
+      ],
+      "gate_rule": [
+        22
+      ],
+      "unconditional": [
+        34
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        31
+      ],
+      "order_receipt": [
+        39
+      ],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "6550e710d9a6e114cd7115e46544ac6e57a9fbf6277b250136884f1e78c525c7",
+      "final": 47,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-only-partial-skill",
+      "mode": "common-only",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "partial-skill",
+      "checks": [
+        [
+          24,
+          27
+        ]
+      ],
+      "subject": [
+        39,
+        44
+      ],
+      "owner_rule": [
+        22
+      ],
+      "gate_rule": [
+        22
+      ],
+      "unconditional": [
+        37
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        29,
+        34
+      ],
+      "order_receipt": [],
+      "partial_receipt": [
+        32
+      ],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "e2dd4bf9277883bb557353b7b787be6b4f8255f9cf8d9f628fcbcc5a0fec44c3",
+      "final": 50,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-only-separate",
+      "mode": "common-only",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "separate",
+      "checks": [
+        [
+          32,
+          35
+        ]
+      ],
+      "subject": [
+        37
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        30
+      ],
+      "unconditional": [
+        25
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        22
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "32c69735209821c99efea38675fc9bcc1b919bb456bd424a4314a3a99759e45d",
+      "final": 43,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "id": "common-only-unreadable-skill",
+      "mode": "common-only",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "unreadable-skill",
+      "checks": [
+        [
+          24,
+          27
+        ]
+      ],
+      "subject": [],
+      "owner_rule": [
+        22
+      ],
+      "gate_rule": [
+        22
+      ],
+      "unconditional": [],
+      "conditional": [],
+      "unconditional_calls": [
+        31,
+        36,
+        42
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "82825f4ccd643c5a1dfa38f71b610ca85709b9cef166ce9832d92f8e5cf890be",
+      "final": 48,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-project-conditional-at-start",
+      "mode": "common-project",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "conditional-at-start",
+      "checks": [
+        [
+          20,
+          23
+        ]
+      ],
+      "subject": [
+        32,
+        37
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        18
+      ],
+      "unconditional": [
+        30
+      ],
+      "conditional": [
+        30
+      ],
+      "unconditional_calls": [
+        27
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "cac06378a7584a24c466f7f2fae72c66a27140d14e2d94b76a6c5494110bf787",
+      "final": 43,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-project-conditional-mid-task",
+      "mode": "common-project",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "conditional-mid-task",
+      "checks": [
+        [
+          20,
+          23
+        ]
+      ],
+      "subject": [
+        32,
+        37,
+        49
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        18
+      ],
+      "unconditional": [
+        30
+      ],
+      "conditional": [
+        47
+      ],
+      "unconditional_calls": [
+        27
+      ],
+      "order_receipt": [
+        40
+      ],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "2766fa70be3ab7805b5425b99b0bdb28c4d64a6977ad2506435f56ba9633dd98",
+      "final": 55,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-project-grouped",
+      "mode": "common-project",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "grouped",
+      "checks": [
+        [
+          27,
+          30
+        ]
+      ],
+      "subject": [
+        39,
+        44
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        18
+      ],
+      "unconditional": [
+        37
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        34
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "58769282eee215b8d487622b306850329ce0c0824647eab5186102b359b175e2",
+      "final": 50,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "id": "common-project-inactive",
+      "mode": "common-project",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "inactive",
+      "checks": [
+        [
+          25,
+          28
+        ]
+      ],
+      "subject": [
+        37,
+        42
+      ],
+      "owner_rule": [
+        23
+      ],
+      "gate_rule": [
+        23
+      ],
+      "unconditional": [
+        35
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        32
+      ],
+      "order_receipt": [
+        40
+      ],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "70441ad5cd701ce032d5dc25d2a95211c18e879a01577eda53df1459adc91641",
+      "final": 48,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-project-partial-skill",
+      "mode": "common-project",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "partial-skill",
+      "checks": [
+        [
+          20,
+          23
+        ]
+      ],
+      "subject": [
+        35,
+        40
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        18
+      ],
+      "unconditional": [
+        33
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        25,
+        30
+      ],
+      "order_receipt": [],
+      "partial_receipt": [
+        28
+      ],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "0c6d3b847097284b3a5d63539def2d5d5225555a26c809279271d7ea96ccc6d7",
+      "final": 46,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-project-separate",
+      "mode": "common-project",
+      "family": "links-native",
+      "status": "не пройден",
+      "scenario": "separate",
+      "checks": [
+        [
+          32,
+          35
+        ]
+      ],
+      "subject": [
+        42
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        30
+      ],
+      "unconditional": [
+        30
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        27
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "b10522cf8b2b3b4b3a1f9fef27b01d5840780330b6a0f60d963931fc60a52d02",
+      "answer": "Измерение в [measure.txt](/workspace/measure.txt) — **84**.\n\nНавык `comm-fixture-entry` прочитан до сверки с каноном. Сверка подтвердила совпадение всех 13 правил до чтения измерения.\n\nКод начала — **4319**.",
+      "final": 48,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "id": "common-project-unreadable-skill",
+      "mode": "common-project",
+      "family": "links-native",
+      "status": "пройден",
+      "scenario": "unreadable-skill",
+      "checks": [
+        [
+          24,
+          27
+        ]
+      ],
+      "subject": [],
+      "owner_rule": [
+        22
+      ],
+      "gate_rule": [
+        22
+      ],
+      "unconditional": [],
+      "conditional": [],
+      "unconditional_calls": [
+        36,
+        43
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "8fe5c1c9bf5a392bd53344a4d7669d1e331666bddac09c48a5e8f607d923d35f",
+      "final": 51,
+      "synthetic_links": "безусловная по имени, условная по пути"
+    },
+    {
+      "id": "common-only-conditional-at-start",
+      "mode": "common-only",
+      "family": "links-native-reverse",
+      "status": "пройден",
+      "scenario": "conditional-at-start",
+      "checks": [
+        [
+          25,
+          28
+        ]
+      ],
+      "subject": [
+        44,
+        49
+      ],
+      "owner_rule": [
+        18
+      ],
+      "gate_rule": [
+        18
+      ],
+      "unconditional": [
+        33
+      ],
+      "conditional": [
+        42
+      ],
+      "unconditional_calls": [
+        30
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "ad4ddc1760259ac1d136cf2e0b96c41348992fc90f2a06aff3fdff808c44ede5",
+      "final": 55,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "id": "common-only-conditional-mid-task",
+      "mode": "common-only",
+      "family": "links-native-reverse",
+      "status": "пройден",
+      "scenario": "conditional-mid-task",
+      "checks": [
+        [
+          24,
+          27
+        ]
+      ],
+      "subject": [
+        36,
+        48
+      ],
+      "owner_rule": [
+        22
+      ],
+      "gate_rule": [
+        22
+      ],
+      "unconditional": [
+        34
+      ],
+      "conditional": [
+        46
+      ],
+      "unconditional_calls": [
+        31
+      ],
+      "order_receipt": [
+        39
+      ],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "4eb0aca419beabd9c9288667042e519e83a2bc3896eed74082195dcef9c8cff1",
+      "final": 54,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "id": "common-only-inactive",
+      "mode": "common-only",
+      "family": "links-native-reverse",
+      "status": "пройден",
+      "scenario": "inactive",
+      "checks": [
+        [
+          24,
+          27
+        ]
+      ],
+      "subject": [
+        36,
+        41
+      ],
+      "owner_rule": [
+        22
+      ],
+      "gate_rule": [
+        22
+      ],
+      "unconditional": [
+        34
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        31
+      ],
+      "order_receipt": [
+        39
+      ],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "acb228c00526fcbbb1f878c6c361cc285565a04cef7735838427d696ce38b422",
+      "final": 47,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "id": "common-project-conditional-at-start",
+      "mode": "common-project",
+      "family": "links-native-reverse",
+      "status": "пройден",
+      "scenario": "conditional-at-start",
+      "checks": [
+        [
+          24,
+          27
+        ]
+      ],
+      "subject": [
+        34,
+        39
+      ],
+      "owner_rule": [
+        22
+      ],
+      "gate_rule": [
+        22
+      ],
+      "unconditional": [
+        32
+      ],
+      "conditional": [
+        32
+      ],
+      "unconditional_calls": [
+        29
+      ],
+      "order_receipt": [],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "2977d524122e297b4d3d05bed2e46e1584d86e443514261685584b8cbf570f86",
+      "final": 45,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "id": "common-project-conditional-mid-task",
+      "mode": "common-project",
+      "family": "links-native-reverse",
+      "status": "пройден",
+      "scenario": "conditional-mid-task",
+      "checks": [
+        [
+          24,
+          27
+        ]
+      ],
+      "subject": [
+        36,
+        48
+      ],
+      "owner_rule": [
+        22
+      ],
+      "gate_rule": [
+        22
+      ],
+      "unconditional": [
+        34
+      ],
+      "conditional": [
+        46
+      ],
+      "unconditional_calls": [
+        31
+      ],
+      "order_receipt": [
+        39
+      ],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "c9e30751eb8fe100f7109f2a81accbd3b7870455145b1d7cd2685db8d7839d6e",
+      "final": 54,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "id": "common-project-inactive",
+      "mode": "common-project",
+      "family": "links-native-reverse",
+      "status": "пройден",
+      "scenario": "inactive",
+      "checks": [
+        [
+          24,
+          27
+        ]
+      ],
+      "subject": [
+        36,
+        41,
+        46
+      ],
+      "owner_rule": [
+        22
+      ],
+      "gate_rule": [
+        22
+      ],
+      "unconditional": [
+        34
+      ],
+      "conditional": [],
+      "unconditional_calls": [
+        31
+      ],
+      "order_receipt": [
+        44
+      ],
+      "partial_receipt": [],
+      "fully_received": 13,
+      "repeat_full": [],
+      "trace_sha256": "6a8e08464cfbe9d4b6c4a71f7d95e4f1972e347fd5d87b5979d521a337e73ff7",
+      "final": 52,
+      "synthetic_links": "безусловная по пути, условная по имени"
+    },
+    {
+      "status": "пройден",
+      "scenario": "truncated",
+      "check_events": [
+        [
+          31,
+          33
+        ]
+      ],
+      "rule_reads": [
+        27
+      ],
+      "gate": [
+        27
+      ],
+      "partial_output": -1,
+      "subject": [],
+      "trace_sha256": "58a2b27bd4962c6e6556ca5b774bdcfb654e7abe8504952065850d63ed0c6bce",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20911-d8ee-7c63-999a-37c3509dc08a"
+        }
+      ],
+      "id": "common-only-truncated",
+      "family": "admission-truncated",
+      "mode": "common-only",
+      "final_events": [
+        50
+      ]
+    },
+    {
+      "status": "пройден",
+      "scenario": "truncated",
+      "check_events": [
+        [
+          41,
+          43
+        ]
+      ],
+      "rule_reads": [
+        27
+      ],
+      "gate": [
+        27
+      ],
+      "partial_output": -1,
+      "subject": [],
+      "trace_sha256": "b0539329b2cfc68786380532a640fee4b622bbecfc7ce93d5a27c350ecf17536",
+      "same_bytes": true,
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a20911-d902-7df3-97b6-51442f9a4918"
+        }
+      ],
+      "id": "common-project-truncated",
+      "family": "admission-truncated",
+      "mode": "common-project",
+      "final_events": [
+        53
+      ]
+    }
+  ],
+  "continuations": [
+    {
+      "mode": "common-only",
+      "status": "пройден",
+      "trace_sha256": "331feeb4472a2573759001bf57450a92db9ade16c7deb5710d2441ad41779842",
+      "initial_rules": true,
+      "initial_skill": [
+        34
+      ],
+      "second_prompt": [
+        57
+      ],
+      "second_tool_requests": [],
+      "repeated": [],
+      "finals": [
+        [
+          47,
+          "Итоговое измерение в [measure.txt](/workspace/measure.txt) — **84**.\n\nКод начала — 4319."
+        ],
+        [
+          60,
+          "Итоговое измерение — **84**, код начала — **4319**."
+        ]
+      ],
+      "check": [
+        [
+          24,
+          27
+        ]
+      ],
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a2090e-daf7-7640-bb61-2efa8261c3f7"
+        },
+        {
+          "exit": 0,
+          "session_id": "01a2090e-daf7-7640-bb61-2efa8261c3f7"
+        }
+      ]
+    },
+    {
+      "mode": "common-project",
+      "status": "пройден",
+      "trace_sha256": "f908e1b7f4fc9433cbfd7d6ef0f35a7ba550971817c868ff8061f5f893fc44e8",
+      "initial_rules": true,
+      "initial_skill": [
+        39
+      ],
+      "second_prompt": [
+        62
+      ],
+      "second_tool_requests": [],
+      "repeated": [],
+      "finals": [
+        [
+          52,
+          "Итоговое измерение в [measure.txt](/workspace/measure.txt) — **84**.\n\nКод начала — 4319."
+        ],
+        [
+          65,
+          "Итоговое измерение — 84, код начала — 4319."
+        ]
+      ],
+      "check": [
+        [
+          29,
+          32
+        ]
+      ],
+      "cli": [
+        {
+          "exit": 0,
+          "session_id": "01a2090e-db00-71c2-9f13-c6aebcc1d122"
+        },
+        {
+          "exit": 0,
+          "session_id": "01a2090e-db00-71c2-9f13-c6aebcc1d122"
+        }
+      ]
+    }
+  ],
+  "index_ab": {
+    "results": {
+      "common-only-answer-installed": {
+        "status": "пройден",
+        "trace_sha": "ef8d591c2bf31e80e292e0d5e37af1c1e959ed8333c9599cf5ddc674509f403f",
+        "boundary": 35,
+        "observed_tokens": 101510,
+        "observed_cached_tokens": 90496,
+        "check": [
+          [
+            29,
+            32
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [],
+        "requested_maps": [],
+        "got_skills": [],
+        "correct": true,
+        "stale": false
+      },
+      "common-only-answer-mandatory": {
+        "status": "пройден",
+        "trace_sha": "11b34b737d49c355d313e270de77e77ba42b1ea03b7149fc2066e20390766ee9",
+        "boundary": 35,
+        "observed_tokens": 107377,
+        "observed_cached_tokens": 97920,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "requested_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "got_skills": [],
+        "correct": true,
+        "stale": false
+      },
+      "common-only-change-installed": {
+        "status": "пройден",
+        "trace_sha": "dba60f0311f98ec8e10f7cd6824c8a04a37884b8a160ab017b7c3aa17ed182c0",
+        "boundary": 36,
+        "observed_tokens": 107636,
+        "observed_cached_tokens": 96384,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [],
+        "requested_maps": [],
+        "got_skills": [
+          "comm-separate-application-config"
+        ],
+        "correct": true,
+        "stale": false
+      },
+      "common-only-change-mandatory": {
+        "status": "пройден",
+        "trace_sha": "b48a2e3b9c7e27849d38beddd4e5f7543e05fb2367de67ef6a2cefaf3975003c",
+        "boundary": 38,
+        "observed_tokens": 107777,
+        "observed_cached_tokens": 96128,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "requested_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "got_skills": [
+          "comm-separate-application-config",
+          "comm-verify-application-startup",
+          "comm-run-project-checks",
+          "comm-test-project-behavior"
+        ],
+        "correct": true,
+        "stale": false
+      },
+      "common-only-explain-installed": {
+        "status": "пройден",
+        "trace_sha": "412d4b47da65d2a562c37db6300b375b286fce56950175f2b5bd6f87031a8327",
+        "boundary": 42,
+        "observed_tokens": 84031,
+        "observed_cached_tokens": 73216,
+        "check": [
+          [
+            37,
+            40
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [],
+        "requested_maps": [],
+        "got_skills": [],
+        "correct": true,
+        "stale": false
+      },
+      "common-only-explain-mandatory": {
+        "status": "пройден",
+        "trace_sha": "5402dca35a711e959fa2e47bd69d7459c8d441ae4023431479d35b56f41648f4",
+        "boundary": 34,
+        "observed_tokens": 107363,
+        "observed_cached_tokens": 95616,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "requested_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "got_skills": [],
+        "correct": true,
+        "stale": false
+      },
+      "common-only-history-installed": {
+        "status": "пройден",
+        "trace_sha": "dfd07bc3fa1ca550f715c85922d267d90075fab566f7d076d2e5700227e1bad4",
+        "boundary": 39,
+        "observed_tokens": 107071,
+        "observed_cached_tokens": 92032,
+        "check": [
+          [
+            25,
+            28
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [],
+        "requested_maps": [],
+        "got_skills": [
+          "comm-verify-project-facts"
+        ],
+        "correct": true,
+        "stale": false
+      },
+      "common-only-history-mandatory": {
+        "status": "пройден",
+        "trace_sha": "e7101e4966a3ec03ae5a05427b9e1fd236a2efd15540f2acb3a27cd98bcdfb33",
+        "boundary": 41,
+        "observed_tokens": 131556,
+        "observed_cached_tokens": 109056,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "requested_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "got_skills": [
+          "comm-verify-project-facts"
+        ],
+        "correct": true,
+        "stale": false
+      },
+      "common-project-answer-installed": {
+        "status": "пройден",
+        "trace_sha": "9049255bff21a4145daedfb23a01d73d3764006eeec2b4e76b2cb1375c21a298",
+        "boundary": 32,
+        "observed_tokens": 82596,
+        "observed_cached_tokens": 73728,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [],
+        "requested_maps": [],
+        "got_skills": [],
+        "correct": true,
+        "stale": false
+      },
+      "common-project-answer-mandatory": {
+        "status": "пройден",
+        "trace_sha": "74baae5b327cb0a53f5f884b354517f4faa4184056442bb8f40c36cdb1c4183b",
+        "boundary": 36,
+        "observed_tokens": 107082,
+        "observed_cached_tokens": 91776,
+        "check": [
+          [
+            25,
+            28
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "requested_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "got_skills": [],
+        "correct": true,
+        "stale": false
+      },
+      "common-project-change-installed": {
+        "status": "пройден",
+        "trace_sha": "115ed31d20f78ffc35423c9b26cca2d7e19dbced23adb6850deb22b5eeb2a52a",
+        "boundary": 31,
+        "observed_tokens": 82766,
+        "observed_cached_tokens": 72448,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [],
+        "requested_maps": [],
+        "got_skills": [
+          "comm-commit-task-stages",
+          "comm-separate-application-config",
+          "comm-run-project-checks",
+          "comm-test-project-behavior"
+        ],
+        "correct": true,
+        "stale": false
+      },
+      "common-project-change-mandatory": {
+        "status": "пройден",
+        "trace_sha": "b1cb1894da76940ef652dd80f197a946bbae4595af5508806a0053a3bd8cf39b",
+        "boundary": 41,
+        "observed_tokens": 126183,
+        "observed_cached_tokens": 104448,
+        "check": [
+          [
+            29,
+            32
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "requested_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "got_skills": [
+          "comm-separate-application-config"
+        ],
+        "correct": true,
+        "stale": false
+      },
+      "common-project-explain-installed": {
+        "status": "пройден",
+        "trace_sha": "1e0dd226680dc4080089016b9fa73f2737f58e67cca6dbb9772ae5573e4558e5",
+        "boundary": 29,
+        "observed_tokens": 82910,
+        "observed_cached_tokens": 62464,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [],
+        "requested_maps": [],
+        "got_skills": [],
+        "correct": true,
+        "stale": false
+      },
+      "common-project-explain-mandatory": {
+        "status": "пройден",
+        "trace_sha": "5e6a39736e97f1cab3df1124bb902f98a2cfc29199f92713aa1ddb9f388b40ac",
+        "boundary": 34,
+        "observed_tokens": 107469,
+        "observed_cached_tokens": 97920,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "requested_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "got_skills": [],
+        "correct": true,
+        "stale": false
+      },
+      "common-project-history-installed": {
+        "status": "пройден",
+        "trace_sha": "d4b635df5ff358eef197fa46fa2031b31519601a452e9e800cde11ff8f83eaba",
+        "boundary": 43,
+        "observed_tokens": 126254,
+        "observed_cached_tokens": 117760,
+        "check": [
+          [
+            29,
+            32
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [],
+        "requested_maps": [],
+        "got_skills": [
+          "comm-verify-project-facts"
+        ],
+        "correct": true,
+        "stale": false
+      },
+      "common-project-history-mandatory": {
+        "status": "пройден",
+        "trace_sha": "692baae9258e29d718dc5aa587989e236d57d71f21b2244c0380e58c75c2f475",
+        "boundary": 34,
+        "observed_tokens": 107861,
+        "observed_cached_tokens": 91776,
+        "check": [
+          [
+            24,
+            27
+          ]
+        ],
+        "got_rules": 12,
+        "got_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "requested_maps": [
+          "harness/common/INDEX.md",
+          "harness/project/INDEX.md"
+        ],
+        "got_skills": [],
+        "correct": true,
+        "stale": false
+      }
+    },
+    "pairs": [
+      {
+        "mode": "common-only",
+        "task": "answer",
+        "comparable": true,
+        "optional": 101510,
+        "mandatory": 107377
+      },
+      {
+        "mode": "common-only",
+        "task": "history",
+        "comparable": true,
+        "optional": 107071,
+        "mandatory": 131556
+      },
+      {
+        "mode": "common-only",
+        "task": "explain",
+        "comparable": true,
+        "optional": 84031,
+        "mandatory": 107363
+      },
+      {
+        "mode": "common-only",
+        "task": "change",
+        "comparable": false,
+        "optional": 107636,
+        "mandatory": 107777
+      },
+      {
+        "mode": "common-project",
+        "task": "answer",
+        "comparable": true,
+        "optional": 82596,
+        "mandatory": 107082
+      },
+      {
+        "mode": "common-project",
+        "task": "history",
+        "comparable": false,
+        "optional": 126254,
+        "mandatory": 107861
+      },
+      {
+        "mode": "common-project",
+        "task": "explain",
+        "comparable": true,
+        "optional": 82910,
+        "mandatory": 107469
+      },
+      {
+        "mode": "common-project",
+        "task": "change",
+        "comparable": false,
+        "optional": 82766,
+        "mandatory": 126183
+      }
+    ]
+  },
+  "claude_code": "не проверено"
+}
