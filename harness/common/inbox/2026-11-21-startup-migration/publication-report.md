@@ -1,8 +1,12 @@
 # Публикация миграции старта
 
+## Проверка защищённых входов только из always loaded правила
+
+Текущее дерево Канидата INBOX — `debf99da46d58194444d0b966344c3cd3a201167`. Внутренняя проверка обоих защищённых входов отделена от копирования из канонических образцов. В Codex прошли 8 из 10 основных нативных сценариев. Claude Code — не проверено. Допуск к публикации заблокирован. Прочитай файл [2026-11-24-read-only-start-entrypoints-checks.md](2026-11-24-read-only-start-entrypoints-checks.md). SHA-256 отчёта — `e503c7e3e84875f0cdeb7eb88e6919ff92c8931fd0c2e58e9e7e6f28577f84f8`.
+
 ## Уточнение от 2026-11-24
 
-Текущее дерево Канидата INBOX — `ebcb35a8e7cdfacb5c3faea515ba29a5c5bd0c88`. Для Codex и Claude Code явно закреплена проверка обоих защищённых входов до открытия сеанса и из always loaded правила. Нативная проверка Codex — 10 из 12, Claude Code — не проверено. Допуск к публикации заблокирован. Прочитай файл [2026-11-24-both-protected-start-entrypoints-checks.md](2026-11-24-both-protected-start-entrypoints-checks.md). SHA-256 отчёта — `c320ca59ff88ef6d65573f2edda42b8a836b1a2a8e66ff4256332d7d2e98bc1b`.
+Дерево прежней редакции от 2026-11-24 — `ebcb35a8e7cdfacb5c3faea515ba29a5c5bd0c88`. Для Codex и Claude Code явно закреплена проверка обоих защищённых входов до открытия сеанса и из always loaded правила. Нативная проверка Codex — 10 из 12, Claude Code — не проверено. Допуск к публикации заблокирован. Прочитай файл [2026-11-24-both-protected-start-entrypoints-checks.md](2026-11-24-both-protected-start-entrypoints-checks.md). SHA-256 отчёта — `c320ca59ff88ef6d65573f2edda42b8a836b1a2a8e66ff4256332d7d2e98bc1b`.
 
 ## Дополнение по согласованной проверке защищённых входов
 

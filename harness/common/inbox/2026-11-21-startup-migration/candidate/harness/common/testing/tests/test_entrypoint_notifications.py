@@ -104,6 +104,63 @@ def test_check_start_publication_marker_blocks_repairs(installed, startup):
     assert not entry.exists()
 
 
+@pytest.mark.parametrize(('name', 'empty'), [
+    ('AGENTS.md', False), ('CLAUDE.md', False), ('AGENTS.md', True),
+])
+def test_read_only_check_reports_missing_or_empty_without_writing(installed, startup, name, empty):
+    entry = installed / name
+    canonical = entry.read_bytes()
+    if empty:
+        entry.write_bytes(b'')
+    else:
+        entry.unlink()
+    result = check_start(installed, startup, CHECK_START, '--no-repair')
+    assert result.returncode == 5 and str(entry) in result.stderr
+    assert ('файл пуст' if empty else 'файл отсутствует') in result.stderr
+    if empty:
+        assert entry.read_bytes() == b''
+    else:
+        assert not entry.exists()
+    assert check_start(installed, startup, CHECK_START).returncode == 3
+    assert entry.read_bytes() == canonical
+    assert check_start(installed, startup, CHECK_START, '--no-repair').returncode == 0
+
+
+def test_read_only_mixed_case_requires_approval_and_preserves_both_states(installed, startup):
+    agents, claude = installed / 'AGENTS.md', installed / 'CLAUDE.md'
+    agents.unlink()
+    claude.write_bytes(b'@AGENTS.md\n')
+    result = check_start(installed, startup, CHECK_START, '--no-repair')
+    assert result.returncode == 2
+    assert str(agents) in result.stderr and str(claude) in result.stderr
+    assert 'резервный коммит' in result.stderr
+    assert not agents.exists() and claude.read_bytes() == b'@AGENTS.md\n'
+
+
+def test_read_only_mode_uses_no_writer_lock(published, checker, monkeypatch):
+    def forbidden(*args, **kwargs):
+        pytest.fail('Read-only check attempted a writer operation')
+    monkeypatch.setattr(checker, 'root_lock', forbidden)
+    monkeypatch.setattr(checker, 'replace_input', forbidden)
+    with pytest.raises(checker.EntrypointRepairRequired):
+        checker.check_start_entrypoints(published, no_repair=True)
+    assert not (published / checker.WINDOWS_LOCK_FILE).exists()
+
+
+def test_read_only_mode_refuses_an_unfinished_publication(installed, startup):
+    (installed / '.harness-publication.json').write_bytes(b'{}')
+    entry = installed / 'AGENTS.md'
+    entry.unlink()
+    result = check_start(installed, startup, CHECK_START, '--no-repair')
+    assert result.returncode == 2 and 'Unfinished publication' in result.stderr
+    assert not entry.exists()
+
+
+def test_no_repair_cannot_be_used_with_other_modes(installed, startup):
+    result = check_start(installed, startup, '--check-rules', '--no-repair')
+    assert result.returncode == 2 and 'requires --check-start-entrypoints' in result.stderr
+
+
 def test_approved_protected_repair_uses_exact_backup_and_preserves_other_staging(installed, startup):
     def git(*args):
         return subprocess.check_output(['git', *args], cwd=installed)

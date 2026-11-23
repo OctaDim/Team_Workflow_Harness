@@ -8,7 +8,7 @@ import stat
 import subprocess
 import sys
 import tempfile
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from pathlib import Path
 
 
@@ -23,6 +23,7 @@ PACKAGES = (('common', 'comm-'), ('project', 'proj-'))
 SKILL_CLIENTS = ('.agents/skills', '.claude/skills')
 RESTART_REQUIRED = 3
 RULE_MISMATCH = 4
+ENTRYPOINT_REPAIR_REQUIRED = 5
 MAP_LABELS = {
     'rules': 'Always loaded правила проекта',
     'skills': 'Контекстные lazy скиллы и рабочий опыт проекта',
@@ -442,12 +443,18 @@ def verify_entrypoint_backup(root, commit, approvals):
             raise ValueError(f'Backup commit bytes differ from the approved version: {root / name}')
 
 
-def check_start_entrypoints(root, backup_commit=None, approvals=None):
+class EntrypointRepairRequired(ValueError):
+    """A protected entrypoint can be repaired automatically before the next session."""
+
+
+def check_start_entrypoints(root, backup_commit=None, approvals=None, *, no_repair=False):
     """Check protected inputs, repairing only empty/missing or explicitly backed-up files."""
-    with root_lock(root):
+    # The Windows writer lock can create a file. Read-only checks use snapshots instead.
+    with nullcontext() if no_repair else root_lock(root):
         check_publication_marker(root)
         repairs = {}
         conflicts = []
+        checked = []
         if backup_commit is not None:
             verify_entrypoint_backup(root, backup_commit, approvals)
         for name in PROTECTED:
@@ -455,6 +462,8 @@ def check_start_entrypoints(root, backup_commit=None, approvals=None):
             source = root / 'harness/common/base' / path.with_suffix('.template').name
             expected = protected_template(source, root)
             actual = snapshot_input(path, root)
+            if no_repair:
+                checked.extend(((source, expected), (path, actual)))
             if backup_commit is not None:
                 if name not in approvals:
                     continue
@@ -474,6 +483,20 @@ def check_start_entrypoints(root, backup_commit=None, approvals=None):
                     continue
                 reason = 'файл отсутствует' if actual is None else 'файл пуст'
             repairs[path] = (source, expected, actual, reason)
+
+        if no_repair:
+            for path, original in checked:
+                if snapshot_input(path, root) != original:
+                    raise ValueError(f'Entrypoint changed during checking: {path}')
+            check_publication_marker(root)
+            if repairs:
+                needed = '\n'.join(f'{path} ({reason}); образец: {source}'
+                                   for path, (source, _, _, reason) in repairs.items())
+                notice = 'Защищённые входы требуют восстановления из канона:\n' + needed
+                if not conflicts:
+                    raise EntrypointRepairRequired(notice)
+                conflicts.append(notice)
+            repairs.clear()
 
         changed = []
         for path, (source, expected, actual, reason) in repairs.items():
@@ -602,12 +625,16 @@ def main():
                        help='Check AGENTS.md and CLAUDE.md and recover missing or empty inputs.')
     modes.add_argument('--restore-start-entrypoints', metavar='BACKUP_COMMIT',
                        help='Restore only the confirmed protected entries backed up in this commit.')
+    parser.add_argument('--no-repair', action='store_true',
+                        help='With --check-start-entrypoints, compare without writing and report required repair.')
     parser.add_argument('--entrypoint', action='append', default=[], metavar='NAME:OBSERVED:CANONICAL',
                         help='File and both SHA-256 values approved for protected recovery.')
     parser.add_argument('project_root', nargs='?', type=Path, default=Path.cwd())
     args = parser.parse_args()
     if bool(args.entrypoint) != (args.restore_start_entrypoints is not None):
         parser.error('--entrypoint and --restore-start-entrypoints must be used together.')
+    if args.no_repair and not args.check_start_entrypoints:
+        parser.error('--no-repair requires --check-start-entrypoints.')
     root = args.project_root.absolute()
     try:
         if args.check_rules:
@@ -616,11 +643,15 @@ def main():
             return 0
         if args.check_start_entrypoints or args.restore_start_entrypoints is not None:
             changed = check_start_entrypoints(root, args.restore_start_entrypoints,
-                                              parse_entrypoint_approvals(args.entrypoint))
+                                              parse_entrypoint_approvals(args.entrypoint),
+                                              no_repair=args.no_repair)
         elif args.restore_rules:
             changed = restore_rule_copies(root)
         else:
             changed = ensure(root)
+    except EntrypointRepairRequired as error:
+        print(error, file=sys.stderr)
+        return ENTRYPOINT_REPAIR_REQUIRED
     except (ImportError, OSError, UnicodeError, ValueError) as error:
         print(f'Entrypoint check failed: {error}', file=sys.stderr)
         return RULE_MISMATCH if (args.check_rules or args.restore_rules) and isinstance(error, RuleMismatch) else 2
