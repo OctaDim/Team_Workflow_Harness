@@ -1,0 +1,525 @@
+{
+  "date": "2026-11-23",
+  "client": "Codex CLI 0.166.0",
+  "base_commit": "13118c4",
+  "candidate_tree": "e56bec054ec71a8177b7e1611a22cf0602f2d736",
+  "path": "harness/common/skills/comm-verify-project-facts/SKILL.md",
+  "skill_sha256": "687d20a041ffb467ac4b01d1877d992dc0f9239e4a45f2082e61d1a00c2e5505",
+  "plugin_eval": {
+    "baseline": {
+      "score": 91,
+      "grade": "B",
+      "budgets": {
+        "trigger_cost_tokens": 37,
+        "invoke_cost_tokens": 518,
+        "deferred_cost_tokens": 755
+      }
+    },
+    "current": {
+      "score": 95,
+      "grade": "A",
+      "budgets": {
+        "trigger_cost_tokens": 67,
+        "invoke_cost_tokens": 429,
+        "deferred_cost_tokens": 755
+      }
+    }
+  },
+  "quick_validate": "pass",
+  "pytest": {
+    "common-only": "192 passed in 24.93s",
+    "common-project": "192 passed in 24.94s"
+  },
+  "method": "В каждом режиме проверены исходный английский пересказ, русский пересказ без файлов, явный вызов, историческое утверждение о доступности и несвязанный запрос. Для каждого пересказа проверено получение полной версии SKILL.md и применимого ресурса до ответа. Два языковых варианта без имени покрывают выбор из нативного метаописания. Сравнение Plugin Eval выполнено на тех же ресурсах с исключением README.human.md. Полная матрица остальных контекстных lazy скиллов относится к 05034a7.",
+  "claude_code": "не проверено",
+  "runs": [
+    {
+      "mode": "common-only",
+      "name": "comm-verify-project-facts",
+      "trigger": "explicit",
+      "prompt": "Apply the comm-verify-project-facts skill to this task. The on-call report claims an event never happened because one log query returned no rows. The running version, time zone and replica coverage are unknown. Assess that claim and specify a positive control. Give your decision in English. This is a read-only assessment.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "d4fe5de35d734651cd6ca03e8c59b7c89f19c5818a66f2891567179fccddb84a",
+      "final_event": 40,
+      "expected_rules": 12,
+      "successful_check_events": [
+        27
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {
+        "comm-verify-project-facts": [
+          32
+        ]
+      },
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "843baf1e8277cdd7931e3558fbe079c41964a492173b2e51f27eb7b2ab620ae7",
+      "answer_excerpt": "**Decision: The event’s occurrence is unknown.** The on-call report says one query returned zero rows. The deployed version, timestamp basis and time zone, and replica coverage during the incident window are unverified, so the result does not establish that the event never happened.\n\n**Positive control:** Identify a log record independently known to have been emitted during the incident window, such as a request with",
+      "boundary": 29,
+      "target_received": true,
+      "target_sha256": "687d20a041ffb467ac4b01d1877d992dc0f9239e4a45f2082e61d1a00c2e5505",
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "explicit",
+      "resource_reads_before_answer": [
+        37
+      ],
+      "expects_resource": true,
+      "selection_passed": true,
+      "answer": "**Decision: The event’s occurrence is unknown.** The on-call report says one query returned zero rows. The deployed version, timestamp basis and time zone, and replica coverage during the incident window are unverified, so the result does not establish that the event never happened.\n\n**Positive control:** Identify a log record independently known to have been emitted during the incident window, such as a request with a trace ID and timestamp confirmed by an upstream service. Query the same log stream and time window with the suspected event filter relaxed, and confirm that the expected record appears. Check coverage across all relevant replicas and process generations, including any retention or collection gaps. Separately verify that the event name and fields in the original filter match what the deployed version emits.\n\nIf those checks pass and the query still returns zero rows, report “No matching log records were found in the verified scope.” The positive control was specified but not run because the query and log records were not provided."
+    },
+    {
+      "mode": "common-only",
+      "name": "comm-verify-project-facts",
+      "trigger": "implicit",
+      "prompt": "An old project note says the current CLI no longer offers the export command. We do not know which executable or version the note checked. How would you verify whether the command is available in this project today? This is a read-only assessment.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "12b61897f0f88cb9d3ced74afc84ba828b6e85c5e75608e314fe9d0623e9ff3c",
+      "final_event": 48,
+      "expected_rules": 12,
+      "successful_check_events": [
+        28
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {
+        "comm-verify-project-facts": [
+          35
+        ]
+      },
+      "maps_requested": [
+        "project"
+      ],
+      "map_rows_received": [
+        "project"
+      ],
+      "answer_sha256": "31485488bbfded63b5ff790ebce702f611f906c6db45d11e6feb68eb1ef5cbbf",
+      "answer_excerpt": "**`export` availability is unverified in this workspace.** The read-only inspection found an `app.toml` containing only `timeout = 20`. The visible project files did not identify an application CLI entry point or version, and there is no Git metadata here to identify the revision. The old note leaves both the executable and version unknown. [app.toml](/workspace/app.toml)\n\nI would verify availability against the proj",
+      "boundary": 32,
+      "target_received": true,
+      "target_sha256": "687d20a041ffb467ac4b01d1877d992dc0f9239e4a45f2082e61d1a00c2e5505",
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "historical-availability",
+      "resource_reads_before_answer": [],
+      "expects_resource": false,
+      "selection_passed": true,
+      "answer": "**`export` availability is unverified in this workspace.** The read-only inspection found an `app.toml` containing only `timeout = 20`. The visible project files did not identify an application CLI entry point or version, and there is no Git metadata here to identify the revision. The old note leaves both the executable and version unknown. [app.toml](/workspace/app.toml)\n\nI would verify availability against the project’s normal CLI entry point in the intended environment:\n\n1. **Identify the executable.** Check the project’s current launch instructions, package manifest, and wrappers. Resolve the documented command in the intended environment, check for aliases or other installs on `PATH`, and record the executable path, reported version, and source revision if available.\n2. **Probe command recognition.** After confirming that the help path is read-only, run the resolved CLI’s top-level help, then use its documented subcommand help syntax, such as `<cli> export --help`. Run the same probe on a known command as a positive control. Record exit codes and output. A missing top-level help entry alone is inconclusive because commands can be hidden, nested, aliased, or registered by plugins.\n3. **Check the command registry if the probe is inconclusive.** Trace the entry point into command registration and check aliases, plugins, feature flags, and configuration for that version. Report any absence only for the executable, version, and configuration actually checked.\n\nA successful command-specific help probe would establish that the CLI recognizes `export`. This assessment did not execute an export or verify that an export would complete."
+    },
+    {
+      "mode": "common-only",
+      "name": "comm-verify-project-facts",
+      "trigger": "implicit",
+      "prompt": "The on-call report claims an event never happened because one log query returned no rows. The running version, time zone and replica coverage are unknown. Assess that claim and specify a positive control. Give your decision in English. This is a read-only assessment.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "ee3128be105e793d77e47cc15a0275ecf200bb9a8e5ac4059d11411dfd4eb9b3",
+      "final_event": 40,
+      "expected_rules": 12,
+      "successful_check_events": [
+        27
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {
+        "comm-verify-project-facts": [
+          32
+        ]
+      },
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "5017f7c855302e22f40569310e7678faaf9c2285979b67bf65d7530fa351669f",
+      "answer_excerpt": "**Decision: The event’s occurrence remains unknown.** The report says one query returned zero rows. With the running version, time zone, and replica coverage unverified, that result does not establish that the event never happened.\n\n**Positive control.** Take a request independently confirmed to have reached the same service during the incident window, with a known request or trace ID. Query the same log stream and t",
+      "boundary": 29,
+      "target_received": true,
+      "target_sha256": "687d20a041ffb467ac4b01d1877d992dc0f9239e4a45f2082e61d1a00c2e5505",
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "incident-en",
+      "resource_reads_before_answer": [
+        37
+      ],
+      "expects_resource": true,
+      "selection_passed": true,
+      "answer": "**Decision: The event’s occurrence remains unknown.** The report says one query returned zero rows. With the running version, time zone, and replica coverage unverified, that result does not establish that the event never happened.\n\n**Positive control.** Take a request independently confirmed to have reached the same service during the incident window, with a known request or trace ID. Query the same log stream and time window, replacing the event-specific filter with that ID. Confirm the expected record appears with the correct timestamp and replica. Use known records from each relevant replica or process generation to test coverage across the service.\n\nBefore interpreting the empty result, verify the time window against the source clock and time zone, check retention and collection gaps, and confirm the event name and fields emitted by the deployed version. If those checks and the control pass, report that **no records matched the verified query scope**. This assessment did not run the query or the control."
+    },
+    {
+      "mode": "common-only",
+      "name": "comm-verify-project-facts",
+      "trigger": "implicit",
+      "prompt": "Пересказываю отчёт дежурного. Он сделал вывод, что событие не произошло, потому что поиск по журналу вернул ноль строк. Охват реплик, часовой пояс и версия неизвестны. Оцени вывод и предложи положительный контроль. Файлов отчёта у меня нет.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "d2f2ef07e04b1d17daab32a4d12d078b720d6d4a0023ba375a53ff23e8f69cee",
+      "final_event": 43,
+      "expected_rules": 12,
+      "successful_check_events": [
+        28
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {
+        "comm-verify-project-facts": [
+          35
+        ]
+      },
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "515024fe7375f16050d4866f83d53e2a232e21ddc5e0fd424044e99b64187e90",
+      "answer_excerpt": "По пересказу известно только, что запрос вернул ноль строк. Вывод «событие не произошло» преждевременен. Неизвестно, какие реплики охватил поиск, как часовой пояс повлиял на границы окна и соответствует ли фильтр формату события в работавшей версии. Факт события остаётся неизвестным.\n\n**Положительный контроль.** Возьмите операцию, которая заведомо произошла в том же окне и оставила запись в том же потоке журнала. Нап",
+      "boundary": 32,
+      "target_received": true,
+      "target_sha256": "687d20a041ffb467ac4b01d1877d992dc0f9239e4a45f2082e61d1a00c2e5505",
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "incident-ru",
+      "resource_reads_before_answer": [
+        40
+      ],
+      "expects_resource": true,
+      "selection_passed": true,
+      "answer": "По пересказу известно только, что запрос вернул ноль строк. Вывод «событие не произошло» преждевременен. Неизвестно, какие реплики охватил поиск, как часовой пояс повлиял на границы окна и соответствует ли фильтр формату события в работавшей версии. Факт события остаётся неизвестным.\n\n**Положительный контроль.** Возьмите операцию, которая заведомо произошла в том же окне и оставила запись в том же потоке журнала. Например, найдите запрос по `request_id`, известному из трассировки. Повторите поиск по тому же источнику и окну, заменив фильтр события на этот идентификатор. Проверьте время записи и реплику. Если вывод касается всех реплик, проверьте охват каждой из них. Отдельно сверьте имя и поля искомого события с тем, что пишет работавшая версия.\n\nЕсли контроль найден, охват подтверждён и фильтр корректен, итог можно сформулировать так: «В проверенных журналах за указанный интервал записей, соответствующих фильтру, не найдено». Без исходного запроса и журналов эту проверку провести нельзя."
+    },
+    {
+      "mode": "common-only",
+      "name": "control",
+      "trigger": "negative",
+      "prompt": "How many minutes are in three hours?",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "cc128ef9ae4fa0282f8a819fe4e11de5a9eb336f5070ccdb82e0a4f1ab77848e",
+      "final_event": 35,
+      "expected_rules": 12,
+      "successful_check_events": [
+        32
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "b9a1cc8721298a7eff3025462b6069d245d2535e11aa6cdf3e3b2e7b2f1f9699",
+      "answer_excerpt": "Three hours is 180 minutes.",
+      "boundary": 35,
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "negative",
+      "resource_reads_before_answer": [],
+      "expects_resource": false,
+      "selection_passed": true,
+      "answer": "Three hours is 180 minutes."
+    },
+    {
+      "mode": "common-project",
+      "name": "comm-verify-project-facts",
+      "trigger": "explicit",
+      "prompt": "Apply the comm-verify-project-facts skill to this task. The on-call report claims an event never happened because one log query returned no rows. The running version, time zone and replica coverage are unknown. Assess that claim and specify a positive control. Give your decision in English. This is a read-only assessment.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "a8b766ea4ac967960f2ab36d80417fdec101add3cd98ece93546b4d582facab1",
+      "final_event": 50,
+      "expected_rules": 12,
+      "successful_check_events": [
+        32
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {
+        "comm-verify-project-facts": [
+          42
+        ]
+      },
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "5c5d2fb431bb3f266d7ba1e63d0b17d802d91f53f8165ee12ac3f9412aeeb81d",
+      "answer_excerpt": "**Decision: Event occurrence is unknown.** The on-call report says one log query returned zero rows. The running version, time zone, and replica coverage are unverified, so the result does not establish that the event never happened.\n\n**Positive control:** Choose a record independently known to have been emitted by the target service during the incident window, such as a request with a confirmed trace ID. Query the s",
+      "boundary": 34,
+      "target_received": true,
+      "target_sha256": "687d20a041ffb467ac4b01d1877d992dc0f9239e4a45f2082e61d1a00c2e5505",
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "explicit",
+      "resource_reads_before_answer": [
+        47
+      ],
+      "expects_resource": true,
+      "selection_passed": true,
+      "answer": "**Decision: Event occurrence is unknown.** The on-call report says one log query returned zero rows. The running version, time zone, and replica coverage are unverified, so the result does not establish that the event never happened.\n\n**Positive control:** Choose a record independently known to have been emitted by the target service during the incident window, such as a request with a confirmed trace ID. Query the same log source, environment, service, replica scope, and time window. Remove the target-event filter and search for the control’s trace ID. The query should return the expected record with the expected timestamp and replica. A hit confirms visibility for that record’s replica and time, so verify coverage across all relevant replicas and process generations separately.\n\nBefore interpreting the empty result, confirm the deployed version’s event name and fields, the time zone used to define the incident window, and any collection or retention gaps. If those checks and the control pass, report **“No matching records were found in the verified scope.”** This assessment used the report summary. The original query and control were not run."
+    },
+    {
+      "mode": "common-project",
+      "name": "comm-verify-project-facts",
+      "trigger": "implicit",
+      "prompt": "An old project note says the current CLI no longer offers the export command. We do not know which executable or version the note checked. How would you verify whether the command is available in this project today? This is a read-only assessment.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "3e72779d4b9f367d4aec4d92fc07f0d4a1358bd424178f729ea358e4b28336cd",
+      "final_event": 48,
+      "expected_rules": 12,
+      "successful_check_events": [
+        23
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {
+        "comm-verify-project-facts": [
+          30
+        ]
+      },
+      "maps_requested": [
+        "project"
+      ],
+      "map_rows_received": [
+        "project"
+      ],
+      "answer_sha256": "8a9cf96a5a96c2adbdd50146d20ab49cf57958e9007a6f95f14903cf06745a98",
+      "answer_excerpt": "**`export` is unverified in this workspace.** I inspected the project files and found an [app.toml](/workspace/app.toml) with a timeout setting, but no application entry point, package manifest, or CLI version that identifies the executable. The old note leaves the executable and version unknown.\n\nI’d verify availability with these read-only checks:\n\n1. **Identify the CLI the project actually uses.** Check its curren",
+      "boundary": 27,
+      "target_received": true,
+      "target_sha256": "687d20a041ffb467ac4b01d1877d992dc0f9239e4a45f2082e61d1a00c2e5505",
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "historical-availability",
+      "resource_reads_before_answer": [],
+      "expects_resource": false,
+      "selection_passed": true,
+      "answer": "**`export` is unverified in this workspace.** I inspected the project files and found an [app.toml](/workspace/app.toml) with a timeout setting, but no application entry point, package manifest, or CLI version that identifies the executable. The old note leaves the executable and version unknown.\n\nI’d verify availability with these read-only checks:\n\n1. **Identify the CLI the project actually uses.** Check its current launch instructions, package entry point, or wrapper. For a named command, use `type -a <name>` in the project’s normal shell and environment to expose aliases, wrappers, and competing installations. Record the selected path and version.\n2. **Probe the same entry point.** Capture output and exit status for `--version`, `--help`, and `export --help`, after confirming those help invocations are read-only. Run help for a known subcommand as a positive control. If `export` is missing from top-level help, check the current command registration for aliases, nested commands, hidden entries, or configuration-dependent plugins.\n3. **Scope the conclusion to the tested version and environment.** `export`-specific help confirms command recognition. An explicit unknown-command response, with a working positive control and the relevant configuration checked, supports absence in that environment. A startup failure or generic help leaves availability unresolved.\n\nNo files were changed, and no export was run."
+    },
+    {
+      "mode": "common-project",
+      "name": "comm-verify-project-facts",
+      "trigger": "implicit",
+      "prompt": "The on-call report claims an event never happened because one log query returned no rows. The running version, time zone and replica coverage are unknown. Assess that claim and specify a positive control. Give your decision in English. This is a read-only assessment.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "5381f31c2bf0d21bf45177c6c5295f50b9c24b933f71ee488b1fe8a6b9379053",
+      "final_event": 41,
+      "expected_rules": 12,
+      "successful_check_events": [
+        28
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {
+        "comm-verify-project-facts": [
+          33
+        ]
+      },
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "99966395042583f8741a4fdd6dc11e32cb54c152b2d39f2e9be952b9d65bb41e",
+      "answer_excerpt": "**Decision: the event’s occurrence is unresolved.** The on-call report says one query returned zero rows. The deployed version, query time zone, and replica coverage are unknown, so the result does not establish that the event never happened.\n\n**Positive control:** Pick a request independently confirmed by a trace or request ID in the incident window that the deployed version is expected to log. Search the same log s",
+      "boundary": 30,
+      "target_received": true,
+      "target_sha256": "687d20a041ffb467ac4b01d1877d992dc0f9239e4a45f2082e61d1a00c2e5505",
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "incident-en",
+      "resource_reads_before_answer": [
+        38
+      ],
+      "expects_resource": true,
+      "selection_passed": true,
+      "answer": "**Decision: the event’s occurrence is unresolved.** The on-call report says one query returned zero rows. The deployed version, query time zone, and replica coverage are unknown, so the result does not establish that the event never happened.\n\n**Positive control:** Pick a request independently confirmed by a trace or request ID in the incident window that the deployed version is expected to log. Search the same log stream with the same environment, service, time window, and replica scope. Relax the target-event filter and look for that request’s expected log record. Use a known record from each relevant replica or process generation to validate coverage across them.\n\nBefore interpreting the result, confirm the window in UTC against the log timestamps, check for retention or collection gaps, and verify the event name, route, and fields emitted by the deployed version. Record the source, window, replica scope, filters, and control results. If those checks pass and the target query is still empty, revise the report to say **“No matching records were found in the verified scope.”** The control was specified but could not be run from the evidence provided."
+    },
+    {
+      "mode": "common-project",
+      "name": "comm-verify-project-facts",
+      "trigger": "implicit",
+      "prompt": "Пересказываю отчёт дежурного. Он сделал вывод, что событие не произошло, потому что поиск по журналу вернул ноль строк. Охват реплик, часовой пояс и версия неизвестны. Оцени вывод и предложи положительный контроль. Файлов отчёта у меня нет.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "bbfa6d8b1d6e77a1a0f02bd182642ee9e1df10a63698736513539101917795a3",
+      "final_event": 47,
+      "expected_rules": 12,
+      "successful_check_events": [
+        32
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {
+        "comm-verify-project-facts": [
+          39
+        ]
+      },
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "5c774721d5cde15d5c1e53eeb5b7077c72af1cbe644b96012067ee18fe386823",
+      "answer_excerpt": "**По пересказу известно только, что запрос вернул ноль строк. Произошло ли событие, остаётся неизвестным.** Неясно, охватил ли запрос нужные реплики и нужный интервал с учётом часового пояса, а также соответствовал ли фильтр формату записей в работавшей версии.\n\n**Положительный контроль** — найти в том же потоке журналов и за тот же интервал запись о заведомо произошедшем действии, например запросе с известным `reque",
+      "boundary": 36,
+      "target_received": true,
+      "target_sha256": "687d20a041ffb467ac4b01d1877d992dc0f9239e4a45f2082e61d1a00c2e5505",
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "incident-ru",
+      "resource_reads_before_answer": [
+        44
+      ],
+      "expects_resource": true,
+      "selection_passed": true,
+      "answer": "**По пересказу известно только, что запрос вернул ноль строк. Произошло ли событие, остаётся неизвестным.** Неясно, охватил ли запрос нужные реплики и нужный интервал с учётом часового пояса, а также соответствовал ли фильтр формату записей в работавшей версии.\n\n**Положительный контроль** — найти в том же потоке журналов и за тот же интервал запись о заведомо произошедшем действии, например запросе с известным `request_id`, подтверждённом по журналу клиента. Сохраните источник, интервал и ограничения по окружению и репликам, ослабив только фильтр по типу события. По возможности возьмите по контрольной записи для каждой нужной реплики. Если контрольная запись не находится, сначала проверьте границы интервала в UTC, охват реплик и возможные пропуски сбора или хранения логов.\n\nОтдельно проверьте, под каким именем и с какими полями работавшая версия пишет целевое событие. Если охват подтверждён, контроль проходит и уточнённый запрос снова пуст, корректная формулировка для отчёта — «В проверенных журналах за указанный интервал записей, соответствующих фильтру, не найдено»."
+    },
+    {
+      "mode": "common-project",
+      "name": "control",
+      "trigger": "negative",
+      "prompt": "How many minutes are in three hours?",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "74a0791e849c521671fe5a91f53abf8d8abe204ab5c8372e465dbec1630a3123",
+      "final_event": 37,
+      "expected_rules": 12,
+      "successful_check_events": [
+        34
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "b9a1cc8721298a7eff3025462b6069d245d2535e11aa6cdf3e3b2e7b2f1f9699",
+      "answer_excerpt": "Three hours is 180 minutes.",
+      "boundary": 37,
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "passed": true,
+      "case": "negative",
+      "resource_reads_before_answer": [],
+      "expects_resource": false,
+      "selection_passed": true,
+      "answer": "Three hours is 180 minutes."
+    }
+  ]
+}
