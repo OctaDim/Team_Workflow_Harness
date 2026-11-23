@@ -492,7 +492,8 @@ def check_start_entrypoints(root, backup_commit=None, approvals=None):
         if conflicts:
             if changed:
                 print('Начните новую сессию после разрешения оставшихся расхождений.', flush=True)
-            raise ValueError('\n'.join(conflicts))
+            raise ValueError('\n'.join(conflicts) + '\nПредложите явно согласовать через INBOX '
+                             'резервный коммит и последующее восстановление этих входов из канона.')
         return changed
 
 

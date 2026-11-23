@@ -77,6 +77,7 @@ def test_check_start_preserves_nonempty_inputs_and_reports_all_paths(installed, 
         (installed / name).write_bytes(value)
     result = check_start(installed, startup, CHECK_START)
     assert result.returncode == 2 and 'INBOX' in result.stderr
+    assert 'резервный коммит' in result.stderr and 'восстановление этих входов из канона' in result.stderr
     for name, value in unexpected.items():
         assert str(installed / name) in result.stderr and digest(value) in result.stderr
         assert (installed / name).read_bytes() == value
