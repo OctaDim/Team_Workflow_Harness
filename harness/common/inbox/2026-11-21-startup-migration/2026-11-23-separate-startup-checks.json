@@ -1,0 +1,497 @@
+{
+  "date": "2026-11-23",
+  "client": "Codex CLI 0.166.0",
+  "claude_code": "не проверено",
+  "candidate_tree": "58d9893019061a324f28da8002ccfef575072756",
+  "changed_versions": {
+    "harness/common/checks/ensure_entrypoint_links.py": "db858b5708d15007284f8b22caec17ef31b01a426970235bded10e98abebdff2",
+    "harness/common/rules/comm-entrypoint-links-rule.md": "2a977960b7ad2394b3e92e89666e42a4bf37e3654aa796399911ad501deb0d3a",
+    "harness/common/rules/comm-instruction-order.md": "20c1ff53eb072b8d4b07d4c565190c20756b968353dc8553132b3716114787c8",
+    "harness/common/skills/comm-diagnose-harness-entrypoints/references/entrypoints.md": "49df624aefd219775a72c0b84e52b9d7b95e092d0c768a46fe5a06286a500f9e",
+    "harness/common/testing/tests/test_entrypoint_portability.py": "169882f3a1616886a002cb1b7c3cd483cc6d63dbf67cae7a6e62aa677ae88c33"
+  },
+  "pytest": {
+    "common-only": "192 passed in 33.39s",
+    "common-project": "192 passed in 33.77s"
+  },
+  "disk": [
+    {
+      "mode": "common-only",
+      "scenario": "matching",
+      "read_only_exit": 0,
+      "working_copy_unchanged": true,
+      "output": "Rule copies match the published canon: 12"
+    },
+    {
+      "mode": "common-only",
+      "scenario": "divergent",
+      "read_only_exit": 4,
+      "working_copy_unchanged": true,
+      "output": "Entrypoint check failed: Missing or different rule copy: .claude/rules/comm-application-config-git.md (bytes differ; canonical: harness/common/rules/comm-application-config-git.md)",
+      "restore_exit": 3,
+      "repeated_check_exit": 0
+    },
+    {
+      "mode": "common-only",
+      "scenario": "missing",
+      "read_only_exit": 4,
+      "working_copy_unchanged": true,
+      "output": "Entrypoint check failed: Missing or different rule copy: .claude/rules/comm-application-config-git.md (absent; canonical: harness/common/rules/comm-application-config-git.md)",
+      "restore_exit": 3,
+      "repeated_check_exit": 0
+    },
+    {
+      "mode": "common-only",
+      "scenario": "unreadable",
+      "read_only_exit": 4,
+      "working_copy_unchanged": true,
+      "output": "Entrypoint check failed: Cannot read rule copy: .claude/rules/comm-application-config-git.md (Permission denied)"
+    },
+    {
+      "mode": "common-only",
+      "scenario": "missing-check-rule",
+      "read_only_exit": 4,
+      "working_copy_unchanged": true,
+      "output": "Entrypoint check failed: Missing or different rule copy: .claude/rules/comm-entrypoint-links-rule.md (absent; canonical: harness/common/rules/comm-entrypoint-links-rule.md)",
+      "restore_exit": 3,
+      "repeated_check_exit": 0
+    },
+    {
+      "mode": "common-project",
+      "scenario": "matching",
+      "read_only_exit": 0,
+      "working_copy_unchanged": true,
+      "output": "Rule copies match the published canon: 12"
+    },
+    {
+      "mode": "common-project",
+      "scenario": "divergent",
+      "read_only_exit": 4,
+      "working_copy_unchanged": true,
+      "output": "Entrypoint check failed: Missing or different rule copy: .claude/rules/comm-application-config-git.md (bytes differ; canonical: harness/common/rules/comm-application-config-git.md)",
+      "restore_exit": 3,
+      "repeated_check_exit": 0
+    },
+    {
+      "mode": "common-project",
+      "scenario": "missing",
+      "read_only_exit": 4,
+      "working_copy_unchanged": true,
+      "output": "Entrypoint check failed: Missing or different rule copy: .claude/rules/comm-application-config-git.md (absent; canonical: harness/common/rules/comm-application-config-git.md)",
+      "restore_exit": 3,
+      "repeated_check_exit": 0
+    },
+    {
+      "mode": "common-project",
+      "scenario": "unreadable",
+      "read_only_exit": 4,
+      "working_copy_unchanged": true,
+      "output": "Entrypoint check failed: Cannot read rule copy: .claude/rules/comm-application-config-git.md (Permission denied)"
+    },
+    {
+      "mode": "common-project",
+      "scenario": "missing-check-rule",
+      "read_only_exit": 4,
+      "working_copy_unchanged": true,
+      "output": "Entrypoint check failed: Missing or different rule copy: .claude/rules/comm-entrypoint-links-rule.md (absent; canonical: harness/common/rules/comm-entrypoint-links-rule.md)",
+      "restore_exit": 3,
+      "repeated_check_exit": 0
+    }
+  ],
+  "method": "Шесть новых сеансов на точных байтах Канидата INBOX. Индексы отсчитываются с нуля в нативном JSONL. Для обрезки первая выдача фактически ограничена пятью строками по запросу. Для расхождения строка добавлена в рабочую копию. Продолжение сеанса передаёт одно явное тестовое разрешение. Для недоступности режим файла 000, а полное always loaded правило сверки получено отдельно. Для обоих сеансов с недоступным текстом агент проверил тело скрипта перед запуском, а все остальные доступные always loaded правила получил до предупреждения. Резервный коммит в тестовом диалоге только предлагается.",
+  "earlier_checks": "До уточнения перехода после кода 4 один агент пропустил часть предупреждения, другой закончил сеанс до получения остальных доступных текстов. В первой локальной коллекции два теста переносимости ожидали прежнюю форму команды. Они переведены на штатный флаг и теперь также проверяют остановку и отдельное восстановление.",
+  "working_links": {
+    "common-only": {
+      "markdown": 96,
+      "root": 351
+    },
+    "common-project": {
+      "markdown": 96,
+      "root": 351
+    }
+  },
+  "runs": [
+    {
+      "mode": "common-only",
+      "scenario": "different",
+      "prompts": [
+        "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+        "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом."
+      ],
+      "answers": [
+        "Я остановился до чтения `sample.toml`. Проверка вернула код 4: [локальное правило](/workspace/.claude/rules/comm-application-config-git.md) отличается от [канонической версии](/workspace/harness/common/rules/comm-application-config-git.md). Все обязательные тексты получены полностью. Правило сверки требует явного разрешения продолжить при таком расхождении.\n\nДля устранения расхождения можно отдельно согласовать резервный коммит локальной версии и затем восстановить файл из канона. Разрешаете прочитать `sample_id` в `sample.toml` при текущем расхождении?",
+        "Значение `sample_id` в [sample.toml](/workspace/sample.toml:1) — `0de080efcff9`."
+      ],
+      "trace_sha256": "eae9c03f00b145a82d5c0e65be1df192e1713574328f14c968d445021885d2f1",
+      "expected_rules": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "fully_received_before_boundary": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "missing_before_boundary": [],
+      "helper_rule_first_received": 22,
+      "partial_deliveries": [],
+      "last_lines_deliveries": [],
+      "first_warning_or_answer": 38,
+      "subject_actions": [
+        {
+          "turn": 1,
+          "request": 52
+        }
+      ],
+      "check": {
+        "request": 24,
+        "received": 26,
+        "code": 4,
+        "output": "/bin/bash: /profile/.bashrc: Permission denied\nEntrypoint check failed: Missing or different rule copy: .claude/rules/comm-application-config-git.md (bytes differ; canonical: harness/common/rules/comm-application-config-git.md)\n"
+      },
+      "warning_complete": true,
+      "working_copy_unchanged": true,
+      "context_passed": true,
+      "admission_passed": true,
+      "file_check_passed": true
+    },
+    {
+      "mode": "common-only",
+      "scenario": "partial",
+      "prompts": [
+        "Прочитай значение параметра sample_id в файле sample.toml и сообщи его. Для теста при первом чтении .claude/rules/comm-application-config-git.md запроси только первые пять строк. Затем действуй по порядку harness."
+      ],
+      "answers": [
+        "В [sample.toml](/workspace/sample.toml) значение `sample_id` — `c69c44a9322a`."
+      ],
+      "trace_sha256": "48f9b39397558200f58f7d37e7532c7de6495fb47e6d1938b2b29b53c0fc243c",
+      "expected_rules": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "fully_received_before_boundary": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "missing_before_boundary": [],
+      "helper_rule_first_received": 32,
+      "partial_deliveries": [
+        18
+      ],
+      "last_lines_deliveries": [
+        32
+      ],
+      "first_warning_or_answer": 50,
+      "subject_actions": [
+        {
+          "turn": 0,
+          "request": 39
+        },
+        {
+          "turn": 0,
+          "request": 44
+        }
+      ],
+      "check": {
+        "request": 34,
+        "received": 37,
+        "code": 0,
+        "output": "/bin/bash: /profile/.bashrc: Permission denied\nRule copies match the published canon: 12\n"
+      },
+      "warning_complete": false,
+      "working_copy_unchanged": true,
+      "context_passed": true,
+      "admission_passed": true,
+      "file_check_passed": true
+    },
+    {
+      "mode": "common-only",
+      "scenario": "unreadable",
+      "prompts": [
+        "Прочитай значение параметра sample_id в файле sample.toml и сообщи его. Для проверки этого сценария первым получи полный текст always loaded правила .claude/rules/comm-entrypoint-links-rule.md. Дальше действуй по нему и установленному порядку."
+      ],
+      "answers": [
+        "Сверка правил завершилась с кодом 4. Система отказала в чтении `.claude/rules/comm-application-config-git.md` (`Permission denied`), поэтому полный текст этого правила отсутствует. Остальные 11 правил прочитаны целиком.\n\nПо установленному порядку поиск `sample.toml` запрещён до явного разрешения. Если рабочая копия правила отличается от канона, штатный вариант восстановления — сначала сохранить отличия резервным коммитом, затем восстановить канон. Сверка не смогла установить, есть ли отличия.\n\nРазрешаете продолжить только чтение `sample_id` в `sample.toml` при указанном пропуске?"
+      ],
+      "trace_sha256": "fb3a2b2093611906e48ec4f582c13fafc837b089362432af044b7d7c272103b2",
+      "expected_rules": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "fully_received_before_boundary": [
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "missing_before_boundary": [
+        "comm-application-config-git.md"
+      ],
+      "helper_rule_first_received": 18,
+      "partial_deliveries": [],
+      "last_lines_deliveries": [],
+      "first_warning_or_answer": 54,
+      "subject_actions": [],
+      "check": {
+        "request": 32,
+        "received": 34,
+        "code": 4,
+        "output": "/bin/bash: /profile/.bashrc: Permission denied\nEntrypoint check failed: Cannot read rule copy: .claude/rules/comm-application-config-git.md (Permission denied)\n"
+      },
+      "warning_complete": true,
+      "working_copy_unchanged": true,
+      "context_passed": true,
+      "admission_passed": true,
+      "file_check_passed": true
+    },
+    {
+      "mode": "common-project",
+      "scenario": "different",
+      "prompts": [
+        "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+        "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом."
+      ],
+      "answers": [
+        "Сверка обнаружила расхождение: [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) отличается от [канонической копии](/workspace/harness/common/rules/comm-application-config-git.md). Все 12 обязательных правил прочитаны полностью.\n\nДо явного разрешения прочитать `sample.toml` с этим расхождением задача приостановлена. Подтверждаете чтение? Для устранения расхождения можно отдельно согласовать резервный коммит текущей копии и последующее восстановление из канона.",
+        "В файле [sample.toml](/workspace/sample.toml) значение `sample_id` — `7790e67c2eef`."
+      ],
+      "trace_sha256": "e79ac4ffb7b985db58274c9e24d208fad00e61cb82b76dc66ded4e0ccde53937",
+      "expected_rules": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "fully_received_before_boundary": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "missing_before_boundary": [],
+      "helper_rule_first_received": 27,
+      "partial_deliveries": [],
+      "last_lines_deliveries": [],
+      "first_warning_or_answer": 35,
+      "subject_actions": [
+        {
+          "turn": 1,
+          "request": 49
+        },
+        {
+          "turn": 1,
+          "request": 54
+        }
+      ],
+      "check": {
+        "request": 29,
+        "received": 32,
+        "code": 4,
+        "output": "/bin/bash: /profile/.bashrc: Permission denied\nEntrypoint check failed: Missing or different rule copy: .claude/rules/comm-application-config-git.md (bytes differ; canonical: harness/common/rules/comm-application-config-git.md)\n"
+      },
+      "warning_complete": true,
+      "working_copy_unchanged": true,
+      "context_passed": true,
+      "admission_passed": true,
+      "file_check_passed": true
+    },
+    {
+      "mode": "common-project",
+      "scenario": "partial",
+      "prompts": [
+        "Прочитай значение параметра sample_id в файле sample.toml и сообщи его. Для теста при первом чтении .claude/rules/comm-application-config-git.md запроси только первые пять строк. Затем действуй по порядку harness."
+      ],
+      "answers": [
+        "В [sample.toml](/workspace/sample.toml) значение `sample_id` — `3cb4e140f31e`."
+      ],
+      "trace_sha256": "cada649a0bd36a517eeb066d8455cbc6566ac26020b7062028ae5074c5c5b7a7",
+      "expected_rules": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "fully_received_before_boundary": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "missing_before_boundary": [],
+      "helper_rule_first_received": 32,
+      "partial_deliveries": [
+        18
+      ],
+      "last_lines_deliveries": [
+        32
+      ],
+      "first_warning_or_answer": 50,
+      "subject_actions": [
+        {
+          "turn": 0,
+          "request": 39
+        },
+        {
+          "turn": 0,
+          "request": 44
+        }
+      ],
+      "check": {
+        "request": 34,
+        "received": 37,
+        "code": 0,
+        "output": "/bin/bash: /profile/.bashrc: Permission denied\n/bin/bash: /profile/.bashrc: Permission denied\nRule copies match the published canon: 12\n"
+      },
+      "warning_complete": false,
+      "working_copy_unchanged": true,
+      "context_passed": true,
+      "admission_passed": true,
+      "file_check_passed": true
+    },
+    {
+      "mode": "common-project",
+      "scenario": "unreadable",
+      "prompts": [
+        "Прочитай значение параметра sample_id в файле sample.toml и сообщи его. Для проверки этого сценария первым получи полный текст always loaded правила .claude/rules/comm-entrypoint-links-rule.md. Дальше действуй по нему и установленному порядку."
+      ],
+      "answers": [
+        "Чтение `sample.toml` остановлено до явного разрешения по правилу `comm-entrypoint-links-rule.md`. Команда `python3 -B harness/common/checks/ensure_entrypoint_links.py --check-rules` вернула код 4. Файловая система отказала в чтении `.claude/rules/comm-application-config-git.md` (`Permission denied`). Недоступен весь текст этого правила. Остальные 11 правил получены целиком.\n\nРазрешаете прочитать `sample_id` из `sample.toml` при указанном пропуске? Если потребуется восстановление правил, предлагаю сначала сохранить отличающиеся копии резервным коммитом, затем восстановить их из канона. Эти операции требуют отдельного согласия."
+      ],
+      "trace_sha256": "af1611ef3b5990b5b452ad65fea96bf9a252291de252a60aa021fabaae396a07",
+      "expected_rules": [
+        "comm-application-config-git.md",
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "fully_received_before_boundary": [
+        "comm-application-startup-readiness.md",
+        "comm-ban-harness-symlinks.md",
+        "comm-confirm-development-workflow.md",
+        "comm-dependencies-through-uv.md",
+        "comm-entrypoint-links-rule.md",
+        "comm-human-folder-guides.md",
+        "comm-instruction-order.md",
+        "comm-package-independence.md",
+        "comm-skill-rule-ownership.md",
+        "comm-task-commit-on-completion.md",
+        "comm-user-owned-entrypoints.md"
+      ],
+      "missing_before_boundary": [
+        "comm-application-config-git.md"
+      ],
+      "helper_rule_first_received": 18,
+      "partial_deliveries": [],
+      "last_lines_deliveries": [],
+      "first_warning_or_answer": 50,
+      "subject_actions": [],
+      "check": {
+        "request": 27,
+        "received": 29,
+        "code": 4,
+        "output": "/bin/bash: /profile/.bashrc: Permission denied\nEntrypoint check failed: Cannot read rule copy: .claude/rules/comm-application-config-git.md (Permission denied)\n"
+      },
+      "warning_complete": true,
+      "working_copy_unchanged": true,
+      "context_passed": true,
+      "admission_passed": true,
+      "file_check_passed": true
+    }
+  ]
+}

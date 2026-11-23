@@ -1,0 +1,3039 @@
+{
+  "date": "2026-11-23",
+  "client": "Codex CLI 0.166.0",
+  "scope": "Изолированный прототип штатной сверки без защищённых входов. В каждом режиме прежняя установка сначала развёрнута из Канидата INBOX. Затем изменена только область штатной сверки и её always loaded правило. Код установки и независимая сверка единой версии между проектами не реализовывались. Нативная работа Claude Code не проверена.",
+  "protected_inputs": {
+    "AGENTS.md": {
+      "bytes": 549,
+      "sha256": "212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24"
+    },
+    "CLAUDE.md": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "prototype": {
+    "harness/common/checks/ensure_entrypoint_links.py": {
+      "candidate_sha256": "5761e534c89ca9a935d35bcba07f0f58466074386f6416ca34cb1a4c303e087a",
+      "experiment_sha256": "46a627c84ad005efefcabb506850efbc7439faf0443b81f777e894c1dade8ef5",
+      "patch": "--- candidate/harness/common/checks/ensure_entrypoint_links.py\n+++ experiment/harness/common/checks/ensure_entrypoint_links.py\n@@ -382,9 +382,6 @@\n         rule_sources = set(copies.values())\n         skills, directories = skill_destinations(root)\n         copies.update(skills)\n-        for name in PROTECTED:\n-            copies[root / name] = common / 'base' / (name.split('.')[0] + '.template')\n-\n         originals, sources, repairs = {}, {}, []\n         for target, source in copies.items():\n             if source not in sources:\n"
+    },
+    "harness/common/rules/comm-entrypoint-links-rule.md": {
+      "candidate_sha256": "ef4130553a681a18766926549ff1fe61a29364d12446c57349d5074fa920f448",
+      "experiment_sha256": "7f0374bec50549457bc1e95a370841064d5ac9ec207d4de91ed8f49ba7919407",
+      "patch": "--- candidate/harness/common/rules/comm-entrypoint-links-rule.md\n+++ experiment/harness/common/rules/comm-entrypoint-links-rule.md\n@@ -6,11 +6,11 @@\n python3 -B harness/common/checks/ensure_entrypoint_links.py\n ```\n \n-Выполняй команду и для задач только на чтение. Штатное восстановление harness разрешено. Дождись результата. Код 0, включая пустую выдачу, разрешает запросить первое действие по задаче. Если проверка восстановила файлы и потребовала нового сеанса, остановись и сообщи об этом. Если запуск невозможен, результат недоступен или проверка завершилась ошибкой, остановись и сообщи команду, известную причину и затронутые пути из выдачи. При расхождении существующего защищённого входа направь пользователя в INBOX.\n+Выполняй команду и для задач только на чтение. Штатное восстановление harness разрешено. Дождись результата. Код 0, включая пустую выдачу, разрешает запросить первое действие по задаче. Если проверка восстановила файлы и потребовала нового сеанса, остановись и сообщи об этом. Если запуск невозможен, результат недоступен или проверка завершилась ошибкой, остановись и сообщи команду, известную причину и затронутые пути из выдачи. \n \n-Эта команда восстанавливает и утраченный вход Codex или само always loaded правило. Project требует common. При отсутствии project проверка создаёт нейтральный каркас из `harness/common/base/project-skeleton.json`. Существующий project сохраняется побайтно. Изменения проверь в обеих установках, включая повторный старт.\n+Project требует common. При отсутствии project проверка создаёт нейтральный каркас из `harness/common/base/project-skeleton.json`. Существующий project сохраняется побайтно. Изменения проверь в обеих установках, включая повторный старт.\n \n-Управляемые always loaded правила и целые папки контекстных lazy скиллов с ресурсами сверяй с опубликованными каноническими источниками из соответствующих `harness/{common,project}/{rules,skills}/`. Потерянные и повреждённые рабочие копии восстанавливай только оттуда. Для защищённых входов прочитай файл `harness/common/rules/comm-user-owned-entrypoints.md`. Исключи человеческие пояснения из каталога always loaded правил.\n+Управляемые always loaded правила и целые папки контекстных lazy скиллов с ресурсами сверяй с опубликованными каноническими источниками из соответствующих `harness/{common,project}/{rules,skills}/`. Потерянные и повреждённые рабочие копии восстанавливай только оттуда. Исключи человеческие пояснения из каталога always loaded правил.\n \n До записи проверь конфликты, права, обычные пути и их предков, включая путь запуска. Для неизвестного источника, коллизии имён или дополнительного always loaded правила в `.claude/rules/` укажи путь и остановись до задачи. Сохрани файл для решения пользователя. Принятие проектного файла — через project INBOX, удаление требует явного решения.\n \n"
+    }
+  },
+  "methods": {
+    "context": "36 запросов без имени целевого скилла в каждом режиме. Реальный полный текст SKILL.md до финального ответа подтверждён по выдаче модели. Содержание всех ответов и произвольные формулировки этим измерением не проверены. Выбор по ссылке always loaded правила и нативный выбор по description не всегда различимы. Повтором считается повторная полная выдача в другом событии. Временные индексы внутри discovery и partial отсчитываются среди response_item своего сеанса. В links используются индексы исходного JSONL.",
+    "partial": "В отдельных трассах агенту задали первое чтение первых 10 строк или реальное ограничение вывода инструмента в 100 токенов. Сверены выданные строки той же версии файла до запроса receipt.txt, наличие обрезки, повторное чтение и ответ по скрытому в середине коду. Совмещённая выдача с уже полным текстом не доказывает реакцию агента на сигнал об обрезке.",
+    "links": "Проверены время выдачи, отрицательное условие и применение к измерению. При перепроверке первичного отчёта распознаны строковые представления Python со сверкой длины в байтах.",
+    "disk": "Временный скрипт сравнивает байты. Успех, требование нового сеанса и ошибка наблюдаются раздельно. В штатную выдачу тела always loaded правил не передаются. Для опыта с различными каноническими версиями в стендах искусственно создали разные эталоны."
+  },
+  "discovery": [
+    {
+      "mode": "common-only",
+      "owner": "comm-assess-project-tests",
+      "prompt": "The purchase service must reject a negative quantity without charging. Our application test stubs the entire purchase method to return success, calls it with -1 and only checks that it didn't throw. Review this test and propose a sensitive replacement. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "0526ec5e09db8c523a180b6538083635663a74db2433002078bf45f212f9e5e8",
+      "owner_sha256": "e4e986b400a661f009d7fa3ec15bf9b10d70ae38935f971a2eaf61b4d703d55d",
+      "owner_full_before_answer": [
+        15
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "df020c7561bb6691c07291fd15b88f554a55728fbe5529bd0572a1852910431b"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-check-current-harness-duplicates",
+      "prompt": "We have a proposal to teach agents how to deal with mixed line endings. How would you establish whether an existing harness procedure or pending request already owns this behavior? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "ebd281456a84d6b3e27df34e793742f08054b43dbd6aeca4971e9b1a78e48f3c",
+      "owner_sha256": "37ade42e9eaf81dbb4087ca6586b3032338c2ac97b9bcbcb4a793015df85f29d",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-normalize-text-line-endings",
+        "comm-preserve-text-line-endings"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "48e273226307181c41be57bc0b4688203a0b29800db0d0f4bdb4d1d76831a465"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-check-publication-data",
+      "prompt": "I am about to push three commits. A deployment credential was added in the first commit and deleted in the third. Is reviewing only the final diff sufficient? Explain the review scope without displaying any credential. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "d63eeab8f50ee0378d20161c9881a77c02a034833a5006366b919077f0e86557",
+      "owner_sha256": "21215593f1abe9db1c4d131578a03b48e61ba142bd075925dad92de621cf3c2e",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "8fe25bb974e2bfb3c43bc72c1f5f5c6d86efee193197c4c95ef67a4105b65980"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-choose-effective-solution",
+      "prompt": "Our CSV exporter only needs per-customer totals. Compare reusing our streaming aggregate to adding a distributed SQL dependency and recommend an implementation approach. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "04a1fe2334c72fcee4a86da6bc84bc3cc978b2b843d7f1a726163c05e1eaa5e6",
+      "owner_sha256": "4603439230cd38147be5c7664893053fcd9c58944fee3d079e5f91991dca709b",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-select-development-workflow",
+        "comm-verify-project-facts"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        11
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "e57fd8f95c10dde24fc8da5b1a9764e3a05722e832b3bb4991a1f5284e75b637"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-commit-task-stages",
+      "prompt": "I'm halfway through a feature and have only added an empty placeholder. Another developer has a staged fix. Is this a useful commit boundary and what should happen to their staged work? Do not commit. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "196f379769c4c8609dd453e7b2d598b64803ba0dd62d92a18fb4c8a44a235fa4",
+      "owner_sha256": "8a9a0383e6265b3d303b8a2adb07c3d270941f4d2113714b3d1b5ffd14c818e5",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "ba82c20066b2b3c9db730a64368565caad778e50f96655aab03ad056d6ecf035"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-confirm-database-design",
+      "prompt": "We are designing an optional survey field in a document database. The team hasn't decided what an unanswered field means. Can I treat 0, false, null and a missing key as equivalent in storage and search? Recommend the next decision before implementation. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "132d2e4a88bc306a6b12e4e77bd73ce1a288fe6588b9f0528bdcd5265a31a462",
+      "owner_sha256": "413c4fec9f524baf5c841a3e6d11b8471b1e9c253612cee26b0c10008053776c",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "670e33746001dd0e9020f0000c0a66bc70f079bbe4010c6bb99ce048588c7853"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-create-git-branch",
+      "prompt": "I need an independent branch for receipt export, but my current checkout is an unfinished billing feature. Where should the new branch start and what checks protect the old work? Planning only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "d5358fe8801522eb75494e49d0615d48f6753ec43fc1e4b901569db58993993b",
+      "owner_sha256": "44db1c268875a1c789c1266435f0b7009f188fa68bc420c0922c1bce97622ad0",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "0b1ef6716e012c958cc5b4488fcd972ebdb7ffa9a4e32bdf9f43d1b1142d747e"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-create-lazy-claude-codex-skills",
+      "prompt": "Design how to teach both coding clients a procedure that is needed only when exporting invoices. No startup failure has been observed. Which form should we choose, and where should we check for existing coverage before authoring? Provide a recommendation only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "8d967cbec017094a0869905ce7dc3a50877d76c43fc6e3ea7c3b8548f875ab61",
+      "owner_sha256": "f03e1c521f7834626cb3a1d66609c95808560447af5af9746f98f019c53fea2a",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-check-current-harness-duplicates",
+        "comm-validate-harness-instructions"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "584570170062d16a1b0342b57f94a4303d424db79c2392797cd9f61a4c96a234"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-diagnose-harness-entrypoints",
+      "prompt": "A colleague's harness startup stopped because their existing root AGENTS.md has extra bytes compared with the published template. How should we diagnose and deal with this existing file? This is a reported incident in another installation. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "f942e475b401495f5fcc0a09e79a9c1d64588ff0048b8b54d8ecf5e1bda531bf",
+      "owner_sha256": "7c1dc639ae7ae30fa47c51976f197af93b07fcfe45a763b46070166f2d70bf45",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "01f2e201c307176c9abdc97d470c0d3a79dfc410c2f16436ead125b3693b09c5"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-fix-shared-causes",
+      "prompt": "A shared date parser uses the wrong month index. Billing and exports consume it and our active docs repeat the wrong assumption. Describe how to repair the shared defect and check all affected callers. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "a57a0c8f8f63f7a3189e7d50cae13ad2261d5e4ee34c4c3712d55fefcb85251a",
+      "owner_sha256": "13b437f6804f2397fa06da01a589534cebe5c37ccd12399315c15d87a73f1a18",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-assess-project-tests",
+        "comm-run-project-checks",
+        "comm-test-project-behavior"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "6fd385c21fe2ff29a72329b2d114efb470993e16fc13e220bbbdec6bd3ec2c8b"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-install-harness",
+      "prompt": "We want to transfer the common harness into two new checkouts. One lacks a project package, the other already contains project material. What exactly should happen in each installation and what should a second startup do? Give a transfer plan only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "4ea423fbc7902dfe7ffe836b8b1f583ce309389e05b521a6c64ea49abbf73bc5",
+      "owner_sha256": "232a9f57614b37aadfa93502cc8eceead106bf9c0138b816827205cd4fe9039e",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "4c3333bcf14cee7398993a3cfd2405bf5d0eb6b65bf1ad48f7df0fef1810bee1"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-manage-local-models",
+      "prompt": "A team proposes keeping our local inference weights inside the Python venv and committing the downloads alongside our source. Design the reproducible replacement layout and identity checks. Do not download anything. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "9eeb781944726a4e1e07a450f4f722f5207eda812b93f962693e2734bc409e4c",
+      "owner_sha256": "fc56d60492ffe34b580544d585b5b2866a27aa071fdbcf25fd46632b250aa9c0",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "24519ff8cd8937cd6c77240aa7d904168b49a8331252b21923ca7dbbc639c113"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-manage-production-rollout",
+      "prompt": "The deployment dashboard is green for release R17, but one live replica still reports R16 and no functional probe was run. Assess whether the change is live, and what to establish before any retry. Advisory review, no access to production. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "500baf4d222fb416d3b6d0e9b9d0981a536f311778ab40bad8c2a3469f04c570",
+      "owner_sha256": "7b1a68bc9a52caa7f83f33bf9486df19e1bc6acbf96a7ad3448db181c04997c6",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        11
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "143c4ed536e5622d281ef7a21cd3ea9d990a4eec4e3133c6c227af858699207a"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-migrate-git-repository",
+      "prompt": "We need to move our Git repository to a different owner and keep issue history, release assets and existing integrations. Is a mirror push enough? Give a migration plan; owner and hosting details are undecided. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "44d1150c3ee6c646fc782e75977658c76927d6532371bba504e4125168adcf2b",
+      "owner_sha256": "c7d708e03863191b79ec77c05f35d76f574da3efb4f6159babdc6d90c091258e",
+      "owner_full_before_answer": [
+        17
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-choose-effective-solution"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "cc450efab41f1453f5551ba0f568379a9f2d6be5f319c081c3eb7d2a31dbaf4a"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-normalize-text-line-endings",
+      "prompt": "We explicitly want to normalize mixed line endings across cross-platform text files, while preserving required Windows batch behavior. Describe what to change and verify. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "d10e2d7ff2831e6e28dfd22da0fcbfbe99a4a67029907a003ed2551a7ffb9a04",
+      "owner_sha256": "f026597aca7ff151e49a410b5fae97f319583024c0742543c43977daf071d4c5",
+      "owner_full_before_answer": [
+        15
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "ebf147adf171b77e63c36151c5d73a846621ed9b79e84d11735bd97c44083577"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-prepare-browser-check",
+      "prompt": "The preview intermittently shows yesterday's UI, and the screenshot came from an unknown build and browser profile. Outline how to establish reproducible browser check conditions before blaming the application. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "b99f472baca7e46143ba9584739e126b0692f547558a833e6d0a618c2fbf2008",
+      "owner_sha256": "3e5d355b922a96a3f60cc9d856499d1c25f6ea4d8a8ddd1132bd37832f63fc68",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "9140221929b12cc6d0810bd89e092620a5e2ea953fac9ef455a371424789a9f3"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-preserve-harness-knowledge",
+      "prompt": "We discovered reusable advice on handling a harness operation. An existing procedure already expresses this same advice in full. Where should I store the lesson, and do I need a new agent-facing document? Give the placement decision only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "214bd6976f889ad93eae517d0829f328b7ee27fe2c5a57ed5c7fe1ef4591bcf3",
+      "owner_sha256": "e2433207f94a524771613d5d8103d78d5b9ca896df8eed02ad0451ed57ff7e02",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "85d42e3544b5f7634b26d73e67491a616bc3ac87a30633ab39585195ed4f6202"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-preserve-text-line-endings",
+      "prompt": "A UTF-8 text repair must replace exactly one word in a file with mixed CRLF and LF endings. An editor proposes reading it with universal newline conversion then writing the whole string. Review the repair and give the byte-level acceptance test. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "73c3ac39cdc59b260e624ab75ffe1bf30dab4d2a0d318f7448fe0ef815ddef2a",
+      "owner_sha256": "e5889baa6f828b8b62a2157657d000840d972c91549701ae05f062060650b5de",
+      "owner_full_before_answer": [
+        15
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "43b43ea8387841e2a9eb5ce38b2606f889547660f7f6aa415cca58329674dc31"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-preserve-visual-design",
+      "prompt": "A signed-off wireframe fixes the checkout's button hierarchy. There's no approved colour or spacing reference. Does this approve the final visual design? State what to request and how to check conformance. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "57e8e0d8e481f5e56c977f20bf73b105f6bb446aa3cd317d2709033d83f8e226",
+      "owner_sha256": "fa97672b1788c467ad315cfae6d885d1f59beb454c1218e14faad60d3ab7efd8",
+      "owner_full_before_answer": [
+        20
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        17
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "0c5ea4b43f4a3cd8cf4e9694c5c81fedcdf8100808a9e3f067a353ebbb11a636"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-process-harness-inbox",
+      "prompt": "An existing common harness INBOX request is marked new. The owner only authorized creating the request. A teammate wants to implement, copy the proposal into place and mark it complete immediately. What stage can actually proceed? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "d6261bb4de8111002ea4084e94039e6afddec3563732b035e442e65db6edd4e1",
+      "owner_sha256": "77e1db58812011d8e76f75d5e227e92728a354965bc857f8e3b0887b45ba17bd",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "52e0fbc020817cb721dd211c8f4074833dd25ad21d108ebb9ff18fe1938c817b"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-process-pull-request",
+      "prompt": "Prepare the choice I need to make before you open a pull request for the current feature. I haven't decided what to do after review. I want the options now, with no changes to branches or remotes. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "fc903d8241c7c92446b117f20afff7b45323ac3ada9cee59b883994e82499f3b",
+      "owner_sha256": "211982f3595888e39cabf46e676d8f95eca7d90840d749b998ad49e9e5a4ff6e",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "24ca555c589bfde9182675caf5d6a894a65a60f193be461012eca7d2a4cbd23b"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-protect-harness-evidence",
+      "prompt": "A teammate wants to overwrite a completed common harness verification report and its original raw log to correct an old conclusion. What form and route should the correction take? Advise only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "fd3260c0fc31e4b3cbfa366b87f0f9bf9caad538fd71d3e04cd2d552df15da17",
+      "owner_sha256": "9325019fa80c96c69e0b3cb1ad95a1a8f3b59795776eb2fed05ec6bdebb121cd",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-process-harness-inbox"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "d8b500dc8acb2aec8d0fe8cc1b5d1951d04730d39bba9a5801c443c6d712ac7c"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-publish-harness-instructions",
+      "prompt": "Version 1 of a shared procedure was approved and published. Version 2 is pending in the request. A working copy has disappeared. Which bytes should be restored today, from where, and how could version 2 later reach both native copies? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "e1b8a811ceae66419b26e342dfbe624b98e31a3f88ee5546ad146a50b1760929",
+      "owner_sha256": "b1f620353d072a30a17ec172afa4a35e10acce2a87959923b5d58ce8116172bf",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-validate-harness-instructions",
+        "comm-process-harness-inbox"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "093b64ac406f95cff4a0094d188bf9366a36cf1c3c31e776bf6273f35ba1eb47"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-recover-git-state",
+      "prompt": "After an interrupted Git operation a colleague believes their local commits vanished. Other people's changes are staged. They suggest immediately resetting hard to a guessed SHA. Give a read-only diagnosis and the next decision. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "cd863d9be1445395464e2ccbba95263073a7a72265d306f0e6159c98d3987d20",
+      "owner_sha256": "478850cda1d4c535b35aa893ac5d85ceca22f75de55ae598b4b3066947e2345b",
+      "owner_full_before_answer": [
+        20
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-verify-project-facts"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        17
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "05ee2cb089ef6b02ce64f04be7c080085a7e81b267ef54edbadc85fe826cfa78"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-report-plugin-eval-budget",
+      "prompt": "Plugin Eval reports 1,305 deferred tokens for one skill and 1,750 for its directory. Explain how to report the per-reference breakdown and address the excess. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "d6dd1fbd750b15d940f9e5cef5c73f456d00f91cd4c33bae605442fc1ba3bedf",
+      "owner_sha256": "7e4f0bbc85413efb432a97b283245d88ae21b7d1e523b5db76c21eb6d0aa05bd",
+      "owner_full_before_answer": [
+        13
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        11
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "22ff079f4cc8740a1099ad999585ea4bb146bb48abf9a79204e5f6193e912580"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-resolve-permission-blockers",
+      "prompt": "Automatic approval rejected the requested operation on a protected filesystem path; proceeding would need new permission. Explain the next step to the owner without performing the operation. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "b7e57676d8d477285cc8f2a4d1d1fe0ecda7aea076f35265597478037d391df0",
+      "owner_sha256": "6a414239b66a63c7889f74cf10c9150ab608ed663024bd1eecd24bd4a8f398e0",
+      "owner_full_before_answer": [
+        15
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        11
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "7c191dcfc62359017b3d4d1bed799ffc249d7f852362945024696007e8c76a3b"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-restore-application-data",
+      "prompt": "One product record was accidentally deleted at noon. A full database snapshot from 11:55 exists and unrelated orders were written at 12:10. Design a recovery rehearsal for a staging installation. No live access or writes. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "706346a5583c3b45c8c24359ccb1968aefc59e0be969b91024d4d99f4a9de448",
+      "owner_sha256": "600727e29db29c4daf36b9ab88aabd81b082a3cbbbeaaefd585a9e39dcbaecf6",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "51f82e6b47450db29c8b039993c9da01cd833d8464084e773892617c67d288de"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-run-project-checks",
+      "prompt": "A web application changed its invoice calculation. How should we select and run the existing application checks, and distinguish a targeted pass from a complete suite? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "60678ad8f7326857974bf551fba26e533f082bdcdebd9cec93bfdbf034fe8f51",
+      "owner_sha256": "edf914e97a5a1625fa075f7fa9c5e773bf8329c43460acaefac35addf8270bad",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "1a755eebda21e27be63cbc0833787c91b3072c5e0e53c1af72e4e946c8e3973e"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-select-development-workflow",
+      "prompt": "I have a new, unclear product idea and want to compare the available development workflows, including Superpowers. Show the choices and wait for my selection. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "73baf2873f098d2d8ad5f3d4b88e0f52f2f1e05d6b3812b93bdc0f6520a7f4db",
+      "owner_sha256": "b190dcfbfdc83f339a6d45b60dbf9937932c061f35c691a9383720444c7d6c1c",
+      "owner_full_before_answer": [
+        17
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        14
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "6543b510d1aa32fc3c537efef7b2aa0f56f4d66043dff624c4a97cf3abd72b11"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-separate-application-config",
+      "prompt": "We need to add a payment provider endpoint and installation-specific credentials. Design the application config, example file and Git exclusions. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "a3c94ce6c8d5540711bbc4e993d43772946f86f98ad73eda6ebf1d63e88389d5",
+      "owner_sha256": "e9c43d44cb7a3714f7a18e71587af732ef72cf009d1e04957261506335732af0",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "190535cf0644b5e7e4c9932df0cf4b215be84f8ff1a0731ea23c4d5e87155848"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-test-project-behavior",
+      "prompt": "An application bug fix changes the cart total when the last item is removed. Describe the before/after behavioral checks for this code change. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "56f391c7a16b19e2ae0f32a7c1c4017ca5c0efab4107a1f23661dc69ce357b6c",
+      "owner_sha256": "460bb2cb17aa8285270916792b5486e62edcd4cae99edef475fd1496f1a3ac71",
+      "owner_full_before_answer": [
+        20
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-assess-project-tests",
+        "comm-run-project-checks"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        17
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "a6f09a73986fdf143ec10960c4ed5bf074df7617dd215b6c8b63bea4236e0208"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-update-git-branch",
+      "prompt": "We are resuming an old unfinished branch after its integration branch advanced. Local edits remain and both sides changed the invoice calculation differently. How do we decide what to preserve and report before resuming? Planning only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "89f55af843271ff448dd385aaf6c945d4edecf865ed561c13bff85689e1cd226",
+      "owner_sha256": "3e1fc78e00e8cedc57910c33ce4dcfb78d8ff8d30a2e2232e8107f6809e20e42",
+      "owner_full_before_answer": [
+        15
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-select-development-workflow"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "e78c1f5977345bdade5fb6f84314bd65c637132100cacb36602fc1e46c41e24c"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-validate-harness-instructions",
+      "prompt": "Review this readiness claim about a new agent procedure: the static grader gave it an A and the CLI exited 0. Neither profile has traced selection or behavior yet. What must be observed before calling it checked? Advisory review only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "b465ace6024092160d2a2cebf3d9e93efb8ee170e72abacc3e15e3db6809b098",
+      "owner_sha256": "91fc23226e958963168c207388493d172b7842731a6d26a88f67ef003baff04e",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "1f22090ff26aa92cae89f74e97cfec80dad8eb1ae5d217977c9a34e305a385b3"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-verify-application-startup",
+      "prompt": "Tests pass using a fake database. After moving a required config file, how should I verify that the ordinary user startup command still works before declaring the app ready? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "10a491a428b969ab3db6aeb754262a1b61252973b9e4a8584ab3a6bc1fd17403",
+      "owner_sha256": "f94252cf1f55f21c5a8ee2637e4d1e0d0905ed32556c701d25425cbfea4b0c68",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "c49bea639c61367465c0fbbc83271375d88980bb9c9fd9014487ac7c48619460"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-verify-browser-ui",
+      "prompt": "A unit test calls a dropdown's handler directly and asserts state changed. We need to verify keyboard navigation, focus and visible behavior on a real checkout page. Can we sign this off, and what test would count? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "b6f0a5617cc84ac864dd78c4284fea8cd7e14936bfb27259f44294bd09679f12",
+      "owner_sha256": "eb84f97f22276d6fa9446669514a5390ec8d0137d6d3a260b00c159794ed2702",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-assess-project-tests",
+        "comm-prepare-browser-check"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "b518acbaac61a38242e7aa0defda4d869fb5454c728eea8736fee685648dbe08"
+    },
+    {
+      "mode": "common-only",
+      "owner": "comm-verify-project-facts",
+      "prompt": "The on-call report claims an event never happened because one log query returned no rows. The running version, time zone and replica coverage are unknown. Assess that claim and specify a positive control. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "6cf05d67831f72d6aacf2ed3f1ccf0bc2be5dd03fb970b285cb6951c10a7fd0d",
+      "owner_sha256": "a0418b1919023b73ea5b47fcaa9ae30c656a1cd5aa636d40633e217937e52789",
+      "owner_full_before_answer": [
+        17
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "60e74b3bf51559dfa664b4aad71d5fb856ba8dbcaf3108f43538f3a8ee0d03cc"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-assess-project-tests",
+      "prompt": "The purchase service must reject a negative quantity without charging. Our application test stubs the entire purchase method to return success, calls it with -1 and only checks that it didn't throw. Review this test and propose a sensitive replacement. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "cd200cb8aaf59a009a0cc15346275f50899ba2560202e79d94d03b5c9a929b2f",
+      "owner_sha256": "e4e986b400a661f009d7fa3ec15bf9b10d70ae38935f971a2eaf61b4d703d55d",
+      "owner_full_before_answer": [
+        20
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        17
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "d2c18fa1c6d31e30101db82ee956f64fd3a3a9f7b7c8bfbb0d7bffa65e56be1d"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-check-current-harness-duplicates",
+      "prompt": "We have a proposal to teach agents how to deal with mixed line endings. How would you establish whether an existing harness procedure or pending request already owns this behavior? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "a28d59bc8302437d718809c1b80b9989c70f162e25ecce54699ca7d4c10de1b3",
+      "owner_sha256": "37ade42e9eaf81dbb4087ca6586b3032338c2ac97b9bcbcb4a793015df85f29d",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-normalize-text-line-endings",
+        "comm-preserve-text-line-endings"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "f8391830027e68caa77cb42d82deff7da2d151cda56c0674642afd397ad2cc9e"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-check-publication-data",
+      "prompt": "I am about to push three commits. A deployment credential was added in the first commit and deleted in the third. Is reviewing only the final diff sufficient? Explain the review scope without displaying any credential. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "a88ddad396af830dead3fa9e442c6f2038d6e34aaccc12d239c857dbe7826931",
+      "owner_sha256": "21215593f1abe9db1c4d131578a03b48e61ba142bd075925dad92de621cf3c2e",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "f2e533a3fd45f5728fd67179ebd3dd15f5fd2c90bbd89acadaff8fdde1edad71"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-choose-effective-solution",
+      "prompt": "Our CSV exporter only needs per-customer totals. Compare reusing our streaming aggregate to adding a distributed SQL dependency and recommend an implementation approach. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "69e5ac3e4aab0a901843e00fe866131863ac4a193ebf92361ddd398798e78cd8",
+      "owner_sha256": "4603439230cd38147be5c7664893053fcd9c58944fee3d079e5f91991dca709b",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "c9df28a667c419c80be390b3512cfcc2b8b4b604d9bc655496b40ebe4f2b5e54"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-commit-task-stages",
+      "prompt": "I'm halfway through a feature and have only added an empty placeholder. Another developer has a staged fix. Is this a useful commit boundary and what should happen to their staged work? Do not commit. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "b5d786ed037503593b696cd88b54ebbf2c892e37d72554b786c6ec50759cf6b6",
+      "owner_sha256": "8a9a0383e6265b3d303b8a2adb07c3d270941f4d2113714b3d1b5ffd14c818e5",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "e56c45b051e53927dfd76a11a28d762eeb6a2431ba225ff969da7a6d36214888"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-confirm-database-design",
+      "prompt": "We are designing an optional survey field in a document database. The team hasn't decided what an unanswered field means. Can I treat 0, false, null and a missing key as equivalent in storage and search? Recommend the next decision before implementation. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "6db147ed0b9c62dfd13fd72541d1d67af015a5960f0b68f2d45f47b3eadf9168",
+      "owner_sha256": "413c4fec9f524baf5c841a3e6d11b8471b1e9c253612cee26b0c10008053776c",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "3b4bba5667362760d8e2037da40af813a90c9f48b8ca2f19a6a5aee3aed69a34"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-create-git-branch",
+      "prompt": "I need an independent branch for receipt export, but my current checkout is an unfinished billing feature. Where should the new branch start and what checks protect the old work? Planning only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "824ebe69cd5d9cef0e63cfaad83762a18a476accf8b0a9e557b6842e46f3d9e9",
+      "owner_sha256": "44db1c268875a1c789c1266435f0b7009f188fa68bc420c0922c1bce97622ad0",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "2445fafc09b0e9d6de5cb2294fffca1bd36f07141d48ef74b4e63f82c70e6c4c"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-create-lazy-claude-codex-skills",
+      "prompt": "Design how to teach both coding clients a procedure that is needed only when exporting invoices. No startup failure has been observed. Which form should we choose, and where should we check for existing coverage before authoring? Provide a recommendation only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "86b0b8205bef6f664a45f89ada4f880e192537fbc3b80feea0d005a4e0f31469",
+      "owner_sha256": "f03e1c521f7834626cb3a1d66609c95808560447af5af9746f98f019c53fea2a",
+      "owner_full_before_answer": [
+        14
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-check-current-harness-duplicates"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        11
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "7d34d9118ee57e122f64313c8b9da6541263cf5784d2a47f35ec1c5b7bcc07ed"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-diagnose-harness-entrypoints",
+      "prompt": "A colleague's harness startup stopped because their existing root AGENTS.md has extra bytes compared with the published template. How should we diagnose and deal with this existing file? This is a reported incident in another installation. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "32c0ab40e2c585289864cb488be89ad1cfe7a56a8084ad6bce5984ba906a2dff",
+      "owner_sha256": "7c1dc639ae7ae30fa47c51976f197af93b07fcfe45a763b46070166f2d70bf45",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "c40eea062c839668531a6d923d523b348a9f9a71e39b195f8710595c9398af2e"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-fix-shared-causes",
+      "prompt": "A shared date parser uses the wrong month index. Billing and exports consume it and our active docs repeat the wrong assumption. Describe how to repair the shared defect and check all affected callers. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "d247d5c17a05c9865c2daa84a89eaa49601c03fe08e29371764b9fe0fb6473ef",
+      "owner_sha256": "13b437f6804f2397fa06da01a589534cebe5c37ccd12399315c15d87a73f1a18",
+      "owner_full_before_answer": [
+        14
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-assess-project-tests",
+        "comm-run-project-checks",
+        "comm-test-project-behavior"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        11
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "391073998ced04c9f94f49d61425d10def0c334bc4a26ea3aada57bdfdd6a147"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-install-harness",
+      "prompt": "We want to transfer the common harness into two new checkouts. One lacks a project package, the other already contains project material. What exactly should happen in each installation and what should a second startup do? Give a transfer plan only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "6123a4e80cd4bb6207c2c7e49fddeef045946fc35bddaab1b89931800afeca3f",
+      "owner_sha256": "232a9f57614b37aadfa93502cc8eceead106bf9c0138b816827205cd4fe9039e",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "296ace5074dfb15079f8c3fe1ed8d39e3a814f6085e92a3dcfe15a08b752af58"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-manage-local-models",
+      "prompt": "A team proposes keeping our local inference weights inside the Python venv and committing the downloads alongside our source. Design the reproducible replacement layout and identity checks. Do not download anything. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "fa6b0c3015b4d55d00613815d0531490418cf46b791cd49da103ba88232099ab",
+      "owner_sha256": "fc56d60492ffe34b580544d585b5b2866a27aa071fdbcf25fd46632b250aa9c0",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "fb24720b7637c760bdaac10fc3f94493a5f34cd889b4f42f49a42b40d50d54b2"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-manage-production-rollout",
+      "prompt": "The deployment dashboard is green for release R17, but one live replica still reports R16 and no functional probe was run. Assess whether the change is live, and what to establish before any retry. Advisory review, no access to production. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "d54933519f8c6c9af47b1530435220dc39c86a31ca7de7aab96e0cfbc00cdc12",
+      "owner_sha256": "7b1a68bc9a52caa7f83f33bf9486df19e1bc6acbf96a7ad3448db181c04997c6",
+      "owner_full_before_answer": [
+        14
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        11
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "0830b2e50cbad3ae341e6b5e0f0266697e4fc4ad98744af47065fadb9ea456f2"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-migrate-git-repository",
+      "prompt": "We need to move our Git repository to a different owner and keep issue history, release assets and existing integrations. Is a mirror push enough? Give a migration plan; owner and hosting details are undecided. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "7095583b2bd54f30a66bd493dffc2e762c3fdc46585079ded26690862266fc8c",
+      "owner_sha256": "c7d708e03863191b79ec77c05f35d76f574da3efb4f6159babdc6d90c091258e",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-choose-effective-solution"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "91270d8ea2bf976747fa350736d5a421dd9f7ab61d7fbd0638d99e7d27a1c0d3"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-normalize-text-line-endings",
+      "prompt": "We explicitly want to normalize mixed line endings across cross-platform text files, while preserving required Windows batch behavior. Describe what to change and verify. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "e57c5856e23aaff76717fec168ab510f899096f64ffec0e1c8f7bd0468cd74fe",
+      "owner_sha256": "f026597aca7ff151e49a410b5fae97f319583024c0742543c43977daf071d4c5",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "bfb40b0c00c1650dd9a104bf30173aa7e0bdb89ddcf06f02e79bd9bdb57a5c05"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-prepare-browser-check",
+      "prompt": "The preview intermittently shows yesterday's UI, and the screenshot came from an unknown build and browser profile. Outline how to establish reproducible browser check conditions before blaming the application. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "0c361677cce56a82c0780bc5127f486e5fd1229b5f8cf6c84dae4277da3dc78c",
+      "owner_sha256": "3e5d355b922a96a3f60cc9d856499d1c25f6ea4d8a8ddd1132bd37832f63fc68",
+      "owner_full_before_answer": [
+        14
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        11
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "7364693fcb1aff8c00491ed06e6aac09cf8099981fada37b3049da9cae8ba0e3"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-preserve-harness-knowledge",
+      "prompt": "We discovered reusable advice on handling a harness operation. An existing procedure already expresses this same advice in full. Where should I store the lesson, and do I need a new agent-facing document? Give the placement decision only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "54f7e02cfc4f7247655e611e58f2ca123b1189c93a64cec9e126beefc1b51e8b",
+      "owner_sha256": "e2433207f94a524771613d5d8103d78d5b9ca896df8eed02ad0451ed57ff7e02",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "85d42e3544b5f7634b26d73e67491a616bc3ac87a30633ab39585195ed4f6202"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-preserve-text-line-endings",
+      "prompt": "A UTF-8 text repair must replace exactly one word in a file with mixed CRLF and LF endings. An editor proposes reading it with universal newline conversion then writing the whole string. Review the repair and give the byte-level acceptance test. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "ad35b0ac3bb5f4483a59613a9711a404e6531961eba7c5f48d167f2f5b82f528",
+      "owner_sha256": "e5889baa6f828b8b62a2157657d000840d972c91549701ae05f062060650b5de",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "980a7a63fa1148e278def1ce134bc0cef130785c8267796f69d8fabba42daa0e"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-preserve-visual-design",
+      "prompt": "A signed-off wireframe fixes the checkout's button hierarchy. There's no approved colour or spacing reference. Does this approve the final visual design? State what to request and how to check conformance. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "61e8340f46ececf4c40ede8a3b47342208ae3c613dba8b2ec5fe83d66ce9e032",
+      "owner_sha256": "fa97672b1788c467ad315cfae6d885d1f59beb454c1218e14faad60d3ab7efd8",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "c88cffccf99134b71ff59de19102ddd9513e33cd704d1d70660314ecc3a32e93"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-process-harness-inbox",
+      "prompt": "An existing common harness INBOX request is marked new. The owner only authorized creating the request. A teammate wants to implement, copy the proposal into place and mark it complete immediately. What stage can actually proceed? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "5e7f93557bcbacb1293ad8a29bd7183073a235a214e04529c653b4feca8adb13",
+      "owner_sha256": "77e1db58812011d8e76f75d5e227e92728a354965bc857f8e3b0887b45ba17bd",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "2095747ccc1f4be7b84191047414effa3724990a7d9f6cf01094dd0099026593"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-process-pull-request",
+      "prompt": "Prepare the choice I need to make before you open a pull request for the current feature. I haven't decided what to do after review. I want the options now, with no changes to branches or remotes. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "bf8ba2a369e08303caefa6b2791566de581ce775cc0a6e752aa1b6868ce88ba1",
+      "owner_sha256": "211982f3595888e39cabf46e676d8f95eca7d90840d749b998ad49e9e5a4ff6e",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "eb73e4c493c29b44e1c5b60264e279a95c8c9a20584a1cc8ebe4a2ca655a2eb0"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-protect-harness-evidence",
+      "prompt": "A teammate wants to overwrite a completed common harness verification report and its original raw log to correct an old conclusion. What form and route should the correction take? Advise only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "7965054a4c0fa14442cce4debb770da21ed07c85b83ce886504993dfb9f53f7a",
+      "owner_sha256": "9325019fa80c96c69e0b3cb1ad95a1a8f3b59795776eb2fed05ec6bdebb121cd",
+      "owner_full_before_answer": [
+        20
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-process-harness-inbox"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        17
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "e6a31afd240993e0efb8587de6ba5143735c7a56ae2e096f73f72211f15a7ffe"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-publish-harness-instructions",
+      "prompt": "Version 1 of a shared procedure was approved and published. Version 2 is pending in the request. A working copy has disappeared. Which bytes should be restored today, from where, and how could version 2 later reach both native copies? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "2481041a658c1be1615c3f2a2c8cee44cfbe35e9c4c55fdaa62255552554f381",
+      "owner_sha256": "b1f620353d072a30a17ec172afa4a35e10acce2a87959923b5d58ce8116172bf",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-validate-harness-instructions",
+        "comm-process-harness-inbox"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "44a5eda1597101789d8684c58a0ce053bcb03c67221b05625757c669c356fbf4"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-recover-git-state",
+      "prompt": "After an interrupted Git operation a colleague believes their local commits vanished. Other people's changes are staged. They suggest immediately resetting hard to a guessed SHA. Give a read-only diagnosis and the next decision. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "4aa73d4d4dca715be6be6968b478147657dfa31e7ac252fb3d0d5c19fc724005",
+      "owner_sha256": "478850cda1d4c535b35aa893ac5d85ceca22f75de55ae598b4b3066947e2345b",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-verify-project-facts"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "da474ba10eae860851506262f66cdc2509a766738f35cfe19ea4651bbf3bd4d7"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-report-plugin-eval-budget",
+      "prompt": "Plugin Eval reports 1,305 deferred tokens for one skill and 1,750 for its directory. Explain how to report the per-reference breakdown and address the excess. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "4afc44a35b69b07e352312b0e8753c576c7d6b13af98a06bfbd73fbbcaf3e0ad",
+      "owner_sha256": "7e4f0bbc85413efb432a97b283245d88ae21b7d1e523b5db76c21eb6d0aa05bd",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-validate-harness-instructions"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "0626e58eac2982388ae2794cdeb9afc14844a8b67868476cbf4dd6bcaa39baef"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-resolve-permission-blockers",
+      "prompt": "Automatic approval rejected the requested operation on a protected filesystem path; proceeding would need new permission. Explain the next step to the owner without performing the operation. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "81531c5102b3d6c6ce15edfc5ac70f65f8532317da11bebef67b38238ff5112d",
+      "owner_sha256": "6a414239b66a63c7889f74cf10c9150ab608ed663024bd1eecd24bd4a8f398e0",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "6127db55c023bc85ffc0dcbe99542df25b35049e6453f9059532125d64fb40f3"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-restore-application-data",
+      "prompt": "One product record was accidentally deleted at noon. A full database snapshot from 11:55 exists and unrelated orders were written at 12:10. Design a recovery rehearsal for a staging installation. No live access or writes. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "59c9a337c2c53ee13b015e0450d54dafb98bc68376b88c99671f08944492906e",
+      "owner_sha256": "600727e29db29c4daf36b9ab88aabd81b082a3cbbbeaaefd585a9e39dcbaecf6",
+      "owner_full_before_answer": [
+        20
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        17
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "41e0499bd860add8807a3875dad561d0ec3ef5dc3692204a70ef1e94a40608a1"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-run-project-checks",
+      "prompt": "A web application changed its invoice calculation. How should we select and run the existing application checks, and distinguish a targeted pass from a complete suite? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "cadae99e15a0b506686cbae71765e521ac362f6c03c6e2a23ca47dfca1ef0fe3",
+      "owner_sha256": "edf914e97a5a1625fa075f7fa9c5e773bf8329c43460acaefac35addf8270bad",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-assess-project-tests",
+        "comm-test-project-behavior"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "96712261b31fe08f1952827f13fec7000a56e8e6d085b4d6d9a5acef586d6d41"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-select-development-workflow",
+      "prompt": "I have a new, unclear product idea and want to compare the available development workflows, including Superpowers. Show the choices and wait for my selection. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "035e7c0d211c7c58be4ae66e4e5a6813c430710bf727667443adfddf4ceb8d9d",
+      "owner_sha256": "b190dcfbfdc83f339a6d45b60dbf9937932c061f35c691a9383720444c7d6c1c",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "6a5f06bcebd108779dff73d204c6b5e0031057a8e47ba456e1235ef0d9ca505e"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-separate-application-config",
+      "prompt": "We need to add a payment provider endpoint and installation-specific credentials. Design the application config, example file and Git exclusions. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "7b0d786a5d167cdfc5deea277efabf5886e5430bc5e34c010a8fedcd1006ed92",
+      "owner_sha256": "e9c43d44cb7a3714f7a18e71587af732ef72cf009d1e04957261506335732af0",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "a60afbbaeeb03a054d8d56a8e4b2db7a868ffe50008cc4c9c3d8f216c2c92587"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-test-project-behavior",
+      "prompt": "An application bug fix changes the cart total when the last item is removed. Describe the before/after behavioral checks for this code change. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "319df987b7bdacdec3b42d0e4aa218aff85dc515d2910d91b717b1af384776e0",
+      "owner_sha256": "460bb2cb17aa8285270916792b5486e62edcd4cae99edef475fd1496f1a3ac71",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-assess-project-tests",
+        "comm-run-project-checks"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "4a2352a9f1f2b20a4cf8690253d661821a5c5ef8c9b9ba741ea039687689ccfe"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-update-git-branch",
+      "prompt": "We are resuming an old unfinished branch after its integration branch advanced. Local edits remain and both sides changed the invoice calculation differently. How do we decide what to preserve and report before resuming? Planning only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "934b55f2246daabc1d51599665c2360dfe0847ba0bba2b66ed5eeb2c47d13c6b",
+      "owner_sha256": "3e1fc78e00e8cedc57910c33ce4dcfb78d8ff8d30a2e2232e8107f6809e20e42",
+      "owner_full_before_answer": [
+        18
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        15
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "ce66db7e7c027d00007224af5ddda336ea1a0f259c8f698e63f56d5f2e1ed3b8"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-validate-harness-instructions",
+      "prompt": "Review this readiness claim about a new agent procedure: the static grader gave it an A and the CLI exited 0. Neither profile has traced selection or behavior yet. What must be observed before calling it checked? Advisory review only. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "1e551cdffb1d874e12170887b458c5b66cfc6720f584a16ecf74ae1cd2825eae",
+      "owner_sha256": "91fc23226e958963168c207388493d172b7842731a6d26a88f67ef003baff04e",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "df0d628dd97c2600e982d171a847c5c523273786426ffb12219348389a91776e"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-verify-application-startup",
+      "prompt": "Tests pass using a fake database. After moving a required config file, how should I verify that the ordinary user startup command still works before declaring the app ready? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "d1f8c900c06560e87c76536498ee1ada8bb93158832ea81e581f8732896b2da4",
+      "owner_sha256": "f94252cf1f55f21c5a8ee2637e4d1e0d0905ed32556c701d25425cbfea4b0c68",
+      "owner_full_before_answer": [
+        14
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        11
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "0fa827665c3603202b650414dcdeb73f67cfbe033cfd37dfcd0df16a0113ca92"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-verify-browser-ui",
+      "prompt": "A unit test calls a dropdown's handler directly and asserts state changed. We need to verify keyboard navigation, focus and visible behavior on a real checkout page. Can we sign this off, and what test would count? Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "a6ac1ab1447ff9fd1eeede9315c07d3772649684562485dd3f8a3cf507662bb2",
+      "owner_sha256": "eb84f97f22276d6fa9446669514a5390ec8d0137d6d3a260b00c159794ed2702",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [
+        "comm-assess-project-tests",
+        "comm-run-project-checks",
+        "comm-prepare-browser-check"
+      ],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "f28c590c498408c78c5e902b11edc051259170e38bf371d42d1da35275c915c0"
+    },
+    {
+      "mode": "common-project",
+      "owner": "comm-verify-project-facts",
+      "prompt": "The on-call report claims an event never happened because one log query returned no rows. The running version, time zone and replica coverage are unknown. Assess that claim and specify a positive control. Answer the question using this project’s established procedures. Do not perform the proposed application or publishing operations.",
+      "client_exit": 0,
+      "error_classes": [],
+      "answer_present": true,
+      "sha256_trace": "cebfad8ea93d878955900dfb453f01dec2eba1aec0c398a2148eb85b68bb2f99",
+      "owner_sha256": "a0418b1919023b73ea5b47fcaa9ae30c656a1cd5aa636d40633e217937e52789",
+      "owner_full_before_answer": [
+        16
+      ],
+      "rules_before_first_owner_request": 12,
+      "other_full_skills": [],
+      "rule_repeats": {},
+      "rules_seen_before_answer": 12,
+      "startup_success": [
+        13
+      ],
+      "startup_before_owner_call": true,
+      "answer_sha256": "2e16155e4e15f73aea3687c135fefe3921be8f1dea89d835e1b608f41ab15596"
+    }
+  ],
+  "links": [
+    {
+      "mode": "common-only",
+      "scenario": "conditional-at-start",
+      "prompt": "Заказ янтарный. Сообщи итоговое измерение по значению из measure.txt.",
+      "raw_status": "pass",
+      "raw_problems": [],
+      "trace_sha256": "9ea837183f707d3ad937ee6ae7010798a6ea6ee13f0e2fc0c25110964dea5257",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 27,
+      "unconditional_return": 34,
+      "conditional_return": 44,
+      "task_events": {
+        "measure.txt": 51,
+        "first task command": 46
+      }
+    },
+    {
+      "mode": "common-only",
+      "scenario": "conditional-mid-task",
+      "prompt": "Определи тип заказа из order.txt. Сообщи итоговое измерение по значению из measure.txt.",
+      "raw_status": "pass",
+      "raw_problems": [],
+      "trace_sha256": "bb3203a6884ecabbef97cbe947d969b7d2144432ec220db224ac854c50cf15ea",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 22,
+      "unconditional_return": 29,
+      "conditional_return": 46,
+      "task_events": {
+        "order.txt": 36,
+        "order result": 39,
+        "measure.txt": 48,
+        "first task command": 36
+      }
+    },
+    {
+      "mode": "common-only",
+      "scenario": "direct",
+      "prompt": "Примени always loaded правило comm-fixture-reading.md. Заказ обычный. Сообщи итоговое измерение по значению из measure.txt.",
+      "raw_status": "pass",
+      "raw_problems": [],
+      "trace_sha256": "bd709db72d75b06b50addcc9cb598a6c8714986473ee0c2fd3a0d59a66f69627",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 18,
+      "unconditional_return": 25,
+      "conditional_return": -1,
+      "task_events": {
+        "measure.txt": 37,
+        "first task command": 32
+      }
+    },
+    {
+      "mode": "common-only",
+      "scenario": "inactive",
+      "prompt": "Определи тип заказа из order.txt. Сообщи итоговое измерение по значению из measure.txt.",
+      "raw_status": "pass",
+      "raw_problems": [],
+      "trace_sha256": "c056e15314a5851330176f202e7789d02552632391e13b81cf5b4fb912a1acf0",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 22,
+      "unconditional_return": 29,
+      "conditional_return": -1,
+      "task_events": {
+        "order.txt": 36,
+        "order result": 39,
+        "measure.txt": 41,
+        "first task command": 36
+      }
+    },
+    {
+      "mode": "common-project",
+      "scenario": "conditional-at-start",
+      "prompt": "Заказ янтарный. Сообщи итоговое измерение по значению из measure.txt.",
+      "raw_status": "failed",
+      "raw_problems": [
+        "incomplete startup before first task command",
+        "unconditional skill missing or late"
+      ],
+      "trace_sha256": "63d59cbf112d2216bdb1a5d8bbe086b11e529860f477122cb615ebaacda78c94",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 23,
+      "unconditional_return": 35,
+      "conditional_return": 35,
+      "task_events": {
+        "measure.txt": 47,
+        "first task command": 42
+      }
+    },
+    {
+      "mode": "common-project",
+      "scenario": "conditional-mid-task",
+      "prompt": "Определи тип заказа из order.txt. Сообщи итоговое измерение по значению из measure.txt.",
+      "raw_status": "pass",
+      "raw_problems": [],
+      "trace_sha256": "b0e3332dbb8c38d8e1d0a356016b8ab70e7982870c3646c70f6f8830488ccb56",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 19,
+      "unconditional_return": 26,
+      "conditional_return": 48,
+      "task_events": {
+        "order.txt": 38,
+        "order result": 41,
+        "measure.txt": 50,
+        "first task command": 33
+      }
+    },
+    {
+      "mode": "common-project",
+      "scenario": "direct",
+      "prompt": "Примени always loaded правило comm-fixture-reading.md. Заказ обычный. Сообщи итоговое измерение по значению из measure.txt.",
+      "raw_status": "pass",
+      "raw_problems": [],
+      "trace_sha256": "e487d2eb5f1fcf22e22c465ecb5c1d8c8fdb3a31c2b9271df57d3795d163ea68",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 22,
+      "unconditional_return": 29,
+      "conditional_return": -1,
+      "task_events": {
+        "measure.txt": 41,
+        "first task command": 36
+      }
+    },
+    {
+      "mode": "common-project",
+      "scenario": "inactive",
+      "prompt": "Определи тип заказа из order.txt. Сообщи итоговое измерение по значению из measure.txt.",
+      "raw_status": "pass",
+      "raw_problems": [],
+      "trace_sha256": "c66850cc623159f8f652c373f3a243ebbdea327b3e2101d1daaf9ef94e42ff1a",
+      "status": "pass",
+      "problems": [],
+      "rules_expected": 13,
+      "missing_before_action": [],
+      "observed_native_rules": 0,
+      "rules_read_before_action": 13,
+      "repeated_full_rules": 0,
+      "repeated_paths": {},
+      "owner_return": 18,
+      "unconditional_return": 25,
+      "conditional_return": -1,
+      "task_events": {
+        "order.txt": 32,
+        "order result": 35,
+        "measure.txt": 37,
+        "first task command": 32
+      }
+    }
+  ],
+  "first_ten_lines": [
+    {
+      "mode": "common-only",
+      "kind": "rule",
+      "prompt": "Примени always loaded правило comm-fixture-fragments.md. Для проверки частичной выдачи первое получение именно этого файла ограничь первыми десятью строками. Дальше работай по обычному порядку harness. Какой код соответствует группе из receipt.txt?",
+      "trace_sha256": "990db8cafec2b26bc0821925f329892f3cc9201ea3396d4408d69c4f50b3a3a3",
+      "file_sha256": "72a6bcce4e9b513d405565702985a60304cb4a156e6e893cf9ad629b3c01eca5",
+      "receipts": [
+        {
+          "return": 11,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "return": 13,
+          "lines": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ]
+        }
+      ],
+      "first_task_request": 18,
+      "answer": "Группе **K14** из `receipt.txt` соответствует код **Z83**.",
+      "full_receipts": [],
+      "line_count": 18,
+      "all_nonempty_lines_before_task": true,
+      "head_then_remainder": true,
+      "answer_correct": true
+    },
+    {
+      "mode": "common-only",
+      "kind": "skill",
+      "prompt": "Примени контекстный lazy скилл comm-fixture-fragments. Для проверки частичной выдачи первое получение именно этого файла ограничь первыми десятью строками. Дальше работай по обычному порядку harness. Какой код соответствует группе из receipt.txt?",
+      "trace_sha256": "b2eaac85496b4e17631a66cce27d50bd2f2b18861de7eeda19802382a621b0b4",
+      "file_sha256": "4b9fd3add6aabbacd639ed30895c88a67084691aed420883b2aebc47f66ec338",
+      "receipts": [
+        {
+          "return": 17,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "return": 19,
+          "lines": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ]
+        }
+      ],
+      "first_task_request": 20,
+      "answer": "Группе K14 из `receipt.txt` соответствует код **Z83**.",
+      "full_receipts": [],
+      "line_count": 22,
+      "all_nonempty_lines_before_task": true,
+      "head_then_remainder": true,
+      "answer_correct": true
+    },
+    {
+      "mode": "common-project",
+      "kind": "rule",
+      "prompt": "Примени always loaded правило comm-fixture-fragments.md. Для проверки частичной выдачи первое получение именно этого файла ограничь первыми десятью строками. Дальше работай по обычному порядку harness. Какой код соответствует группе из receipt.txt?",
+      "trace_sha256": "bde9ed9f0080c288b7117791ecabc7fe48d0ac77c56b5be928b885c837ca3d39",
+      "file_sha256": "72a6bcce4e9b513d405565702985a60304cb4a156e6e893cf9ad629b3c01eca5",
+      "receipts": [
+        {
+          "return": 9,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "return": 11,
+          "lines": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ]
+        }
+      ],
+      "first_task_request": 14,
+      "answer": "Группе `K14` из `receipt.txt` соответствует код `Z83`.",
+      "full_receipts": [],
+      "line_count": 18,
+      "all_nonempty_lines_before_task": true,
+      "head_then_remainder": true,
+      "answer_correct": true
+    },
+    {
+      "mode": "common-project",
+      "kind": "skill",
+      "prompt": "Примени контекстный lazy скилл comm-fixture-fragments. Для проверки частичной выдачи первое получение именно этого файла ограничь первыми десятью строками. Дальше работай по обычному порядку harness. Какой код соответствует группе из receipt.txt?",
+      "trace_sha256": "e5b4c03d16773db2b59d57c4e352348f1825359daf543567aa663638660f787b",
+      "file_sha256": "4b9fd3add6aabbacd639ed30895c88a67084691aed420883b2aebc47f66ec338",
+      "receipts": [
+        {
+          "return": 17,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "return": 19,
+          "lines": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ]
+        }
+      ],
+      "first_task_request": 20,
+      "answer": "Группе `K14` из `receipt.txt` соответствует код **`Z83`**.",
+      "full_receipts": [],
+      "line_count": 22,
+      "all_nonempty_lines_before_task": true,
+      "head_then_remainder": true,
+      "answer_correct": true
+    }
+  ],
+  "actual_truncation": [
+    {
+      "mode": "common-only",
+      "kind": "rule",
+      "prompt": "Примени always loaded правило comm-fixture-fragments.md. Для проверки частичной выдачи первый раз запроси этот файл целиком через exec_command с max_output_tokens=100, чтобы инструмент действительно обрезал выдачу. Дальше работай по обычному порядку harness. Какой код соответствует группе из receipt.txt?",
+      "trace_sha256": "1608aa2cfe0b7dd177014324fba5b8e1416688e23d38a6452c7bd89dbe416d22",
+      "file_sha256": "21ba95e984ab708abbf24f694820de5026010e789be2362cb8c1bec067546190",
+      "receipts": [
+        {
+          "return": 11,
+          "lines": [
+            1,
+            2,
+            3,
+            97,
+            98
+          ]
+        },
+        {
+          "return": 13,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98
+          ]
+        }
+      ],
+      "first_task_request": 19,
+      "answer": "Группе `K14` из `receipt.txt` соответствует код **`Z83`**.",
+      "full_receipts": [
+        13
+      ],
+      "line_count": 98,
+      "all_nonempty_lines_before_task": true,
+      "head_then_remainder": false,
+      "answer_correct": true,
+      "truncation_seen": true,
+      "truncation_in_receipts": [
+        11,
+        13
+      ],
+      "full_range_again": true,
+      "recovery_shell_commands": [
+        "/bin/bash -c 'cat .claude/rules/comm-fixture-fragments.md'",
+        "/bin/bash -c \"wc -l -c -- '.claude/rules/comm-fixture-fragments.md'\ncat -- '.claude/rules/comm-fixture-fragments.md'\""
+      ]
+    },
+    {
+      "mode": "common-only",
+      "kind": "skill",
+      "prompt": "Примени контекстный lazy скилл comm-fixture-fragments. Для проверки частичной выдачи первый раз запроси этот файл целиком через exec_command с max_output_tokens=100, чтобы инструмент действительно обрезал выдачу. Дальше работай по обычному порядку harness. Какой код соответствует группе из receipt.txt?",
+      "trace_sha256": "45af7d8c9a3b36bbdbdd2945c5cc38bc2b70e7d01fa077b0e62e287b87ffb994",
+      "file_sha256": "4b555c4d08e7d662e28af06feb2dfb744443e68af837d8a48a1d567a270b2302",
+      "receipts": [
+        {
+          "return": 15,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            101,
+            102
+          ]
+        },
+        {
+          "return": 18,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102
+          ]
+        }
+      ],
+      "first_task_request": 19,
+      "answer": "Группе K14 из `receipt.txt` соответствует код **Z83**.",
+      "full_receipts": [],
+      "line_count": 102,
+      "all_nonempty_lines_before_task": true,
+      "head_then_remainder": false,
+      "answer_correct": true,
+      "truncation_seen": true,
+      "truncation_in_receipts": [
+        15
+      ],
+      "full_range_again": true,
+      "recovery_shell_commands": [
+        "/bin/bash -c 'find .claude/rules -type f ! -name README.human.md -exec sh -c '\"'for f do printf \\\"\\\\nFILE %s\\\\n\\\" \\\"\"'$f\"; cat \"$f\"; printf \"'\"\\\\nEND %s\\\\n\\\" \\\"\"'$f\"; done'\"' sh {} +\"",
+        "/bin/bash -c 'cat /workspace/.agents/skills/comm-fixture-fragments/SKILL.md'",
+        "/bin/bash -c \"sed -n '1,55p' /workspace/.agents/skills/comm-fixture-fragments/SKILL.md\"",
+        "/bin/bash -c \"sed -n '56,110p' /workspace/.agents/skills/comm-fixture-fragments/SKILL.md\""
+      ]
+    },
+    {
+      "mode": "common-project",
+      "kind": "rule",
+      "prompt": "Примени always loaded правило comm-fixture-fragments.md. Для проверки частичной выдачи первый раз запроси этот файл целиком через exec_command с max_output_tokens=100, чтобы инструмент действительно обрезал выдачу. Дальше работай по обычному порядку harness. Какой код соответствует группе из receipt.txt?",
+      "trace_sha256": "e1393b06ce1f41bbf7e1361faca2b0c1bf377413f1d4d81f1efda59dfe74c874",
+      "file_sha256": "21ba95e984ab708abbf24f694820de5026010e789be2362cb8c1bec067546190",
+      "receipts": [
+        {
+          "return": 11,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98
+          ]
+        }
+      ],
+      "first_task_request": 20,
+      "answer": "В `receipt.txt` указана группа K14. Ей соответствует код **Z83**.",
+      "full_receipts": [
+        11
+      ],
+      "line_count": 98,
+      "all_nonempty_lines_before_task": true,
+      "head_then_remainder": false,
+      "answer_correct": true,
+      "truncation_seen": true,
+      "truncation_in_receipts": [
+        11
+      ],
+      "full_range_again": true,
+      "recovery_shell_commands": [
+        "/bin/bash -c 'cat .claude/rules/comm-fixture-fragments.md'",
+        "/bin/bash -c 'find .claude/rules -type f ! -name README.human.md -print0 | sort -z | xargs -0 -I{} sh -c '\"'printf \\\"\\\\nFILE %s\\\\n\\\" \\\"\"'$1\"; wc -c < \"$1\"; cat \"$1\"'\"' sh '{}'\""
+      ]
+    },
+    {
+      "mode": "common-project",
+      "kind": "skill",
+      "prompt": "Примени контекстный lazy скилл comm-fixture-fragments. Для проверки частичной выдачи первый раз запроси этот файл целиком через exec_command с max_output_tokens=100, чтобы инструмент действительно обрезал выдачу. Дальше работай по обычному порядку harness. Какой код соответствует группе из receipt.txt?",
+      "trace_sha256": "e7d20e24dcbf98d353a6799a060d0e76508b97d7949ce18e7398f42cc90866ce",
+      "file_sha256": "4b555c4d08e7d662e28af06feb2dfb744443e68af837d8a48a1d567a270b2302",
+      "receipts": [
+        {
+          "return": 16,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            101,
+            102
+          ]
+        },
+        {
+          "return": 18,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102
+          ]
+        }
+      ],
+      "first_task_request": 19,
+      "answer": "Группе K14 из `receipt.txt` соответствует код **Z83**.",
+      "full_receipts": [],
+      "line_count": 102,
+      "all_nonempty_lines_before_task": true,
+      "head_then_remainder": false,
+      "answer_correct": true,
+      "truncation_seen": true,
+      "truncation_in_receipts": [
+        16
+      ],
+      "full_range_again": true,
+      "recovery_shell_commands": [
+        "/bin/bash -c 'cat /workspace/.agents/skills/comm-fixture-fragments/SKILL.md'",
+        "/bin/bash -c \"sed -n '1,55p' /workspace/.agents/skills/comm-fixture-fragments/SKILL.md\"",
+        "/bin/bash -c \"sed -n '56,110p' /workspace/.agents/skills/comm-fixture-fragments/SKILL.md\""
+      ]
+    }
+  ],
+  "runtime": [
+    {
+      "mode": "common-only",
+      "case": "different",
+      "rel": ".claude/rules/comm-application-config-git.md",
+      "rc": 0,
+      "repaired": true,
+      "trace_sha256": "f200f23f31e2e407fe2ecfd8ab9cca07544ef16474c48e2ddc9efb1a171ea3bd",
+      "script_result_indexes": [
+        18
+      ],
+      "restart_reported_by_script": true,
+      "first_request_for_app": null,
+      "answer": "Стартовая проверка восстановила `.claude/rules/comm-application-config-git.md` и потребовала начать новую сессию. Поиск `app.toml` остановился до чтения файла, поэтому значение `timeout` пока неизвестно.",
+      "stopped_before_task": true
+    },
+    {
+      "mode": "common-only",
+      "case": "missing-trigger",
+      "rel": ".claude/rules/comm-entrypoint-links-rule.md",
+      "rc": 0,
+      "repaired": false,
+      "trace_sha256": "5613e1b65599454cbaa7b350304894bfc18fe799dd63488d1218f454ccfc725e",
+      "script_result_indexes": [],
+      "restart_reported_by_script": false,
+      "first_request_for_app": 14,
+      "answer": "В [app.toml](/workspace/app.toml:1) указано `timeout = 20`.",
+      "stopped_before_task": false
+    },
+    {
+      "mode": "common-only",
+      "case": "missing",
+      "rel": ".claude/rules/comm-application-config-git.md",
+      "rc": 0,
+      "repaired": true,
+      "trace_sha256": "9478b73b379ed5db56916bc43999b8df73785af24a31ffba515558667634444e",
+      "script_result_indexes": [
+        14
+      ],
+      "restart_reported_by_script": true,
+      "first_request_for_app": null,
+      "answer": "Стартовая проверка восстановила правило [.claude/rules/comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) и потребовала новую сессию. Поиск `app.toml` остановлен до загрузки обновлённых правил. Повтори запрос в новой сессии, чтобы узнать значение `timeout`.",
+      "stopped_before_task": true
+    },
+    {
+      "mode": "common-project",
+      "case": "different",
+      "rel": ".claude/rules/comm-application-config-git.md",
+      "rc": 0,
+      "repaired": true,
+      "trace_sha256": "dc8adb9f09c5c6f3d359174f7741dc9307d726bc64c0e5ec708d4dc6631f5e1d",
+      "script_result_indexes": [
+        13
+      ],
+      "restart_reported_by_script": true,
+      "first_request_for_app": null,
+      "answer": "Значение `timeout` пока неизвестно. Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` восстановила правило `.claude/rules/comm-application-config-git.md` и завершилась с кодом 3, потребовав новой сессии. Поиск `app.toml` остановлен до перезапуска.",
+      "stopped_before_task": true
+    },
+    {
+      "mode": "common-project",
+      "case": "missing-trigger",
+      "rel": ".claude/rules/comm-entrypoint-links-rule.md",
+      "rc": 0,
+      "repaired": false,
+      "trace_sha256": "654d090f5435a9e1a380607eded729d21506f848106f45506e3e7f66d76d0314",
+      "script_result_indexes": [],
+      "restart_reported_by_script": false,
+      "first_request_for_app": 13,
+      "answer": "В [app.toml](/workspace/app.toml:1) значение `timeout = 20`.",
+      "stopped_before_task": false
+    },
+    {
+      "mode": "common-project",
+      "case": "missing",
+      "rel": ".claude/rules/comm-application-config-git.md",
+      "rc": 0,
+      "repaired": true,
+      "trace_sha256": "620a688f1833aebf88b6702629e4a3da7f30544d7ecc1789ba0163cdcc48ba78",
+      "script_result_indexes": [
+        13
+      ],
+      "restart_reported_by_script": true,
+      "first_request_for_app": null,
+      "answer": "Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` восстановила правило `.claude/rules/comm-application-config-git.md` и потребовала новую сессию. Поиск `app.toml` остановлен до загрузки восстановленного правила. Значение `timeout` пока неизвестно.",
+      "stopped_before_task": true
+    }
+  ],
+  "readonly_prompt": "Только чтение. Найди в проекте файл app.toml и сообщи значение timeout. Файлы приложения оставь без изменений.",
+  "readonly": [
+    {
+      "mode": "common-only",
+      "case": "different",
+      "rel": ".claude/rules/comm-application-config-git.md",
+      "rc": 0,
+      "repaired": false,
+      "trace_sha256": "c8b8fbf425db2a2afbbd0816f1c7ed9cfa57a1061065b4ef1d397d9fa8ad4421",
+      "script_result_indexes": [],
+      "restart_reported_by_script": false,
+      "first_request_for_app": null,
+      "answer": "Поиск `app.toml` остановлен до чтения конфигурации. Установленное правило `.claude/rules/comm-application-config-git.md` отличается от опубликованной версии. Правила проекта требуют восстановить актуальную копию и начать новый сеанс.\n\nЗначение `timeout` не проверено. Файлы не изменялись.",
+      "stopped_before_task": false
+    },
+    {
+      "mode": "common-only",
+      "case": "healthy",
+      "rel": ".claude/rules/comm-application-config-git.md",
+      "rc": 0,
+      "repaired": true,
+      "trace_sha256": "59a3d5fe8535f05be0c3ecaf182af8c58986f7475dedfa85d0260a0031154927",
+      "script_result_indexes": [
+        21
+      ],
+      "restart_reported_by_script": false,
+      "first_request_for_app": 22,
+      "answer": "В [app.toml](/workspace/app.toml:1) указано `timeout = 20`.",
+      "stopped_before_task": false
+    },
+    {
+      "mode": "common-project",
+      "case": "different",
+      "rel": ".claude/rules/comm-application-config-git.md",
+      "rc": 0,
+      "repaired": false,
+      "trace_sha256": "cc67d082529c115c70f7ef993c83a6ce4d222de4796ba3f10e4c4fec550a75d0",
+      "script_result_indexes": [],
+      "restart_reported_by_script": false,
+      "first_request_for_app": null,
+      "answer": "Поиск `app.toml` остановлен до проверки `timeout`. Установленное правило `.claude/rules/comm-application-config-git.md` расходится с канонической версией, а правила проекта требуют остановить задачу при загрузке устаревшего текста. Файлы не изменялись.",
+      "stopped_before_task": false
+    },
+    {
+      "mode": "common-project",
+      "case": "healthy",
+      "rel": ".claude/rules/comm-application-config-git.md",
+      "rc": 0,
+      "repaired": true,
+      "trace_sha256": "88eef10e5749c8c47fc11cbb4c0221c7260e43c935ab88200fc8afa86da2e803",
+      "script_result_indexes": [
+        25
+      ],
+      "restart_reported_by_script": false,
+      "first_request_for_app": 26,
+      "answer": "В [app.toml](/workspace/app.toml:1) указано `timeout = 20`.",
+      "stopped_before_task": false
+    }
+  ],
+  "disk": [
+    {
+      "mode": "common-only",
+      "case": "healthy",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-only",
+      "case": "missing",
+      "exit": 3,
+      "output_bytes": 652,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check completed. Изменены: ./.claude/rules/comm-entrypoint-links-rule.md\nНачните новую сессию: восстановленный контекст должен загрузиться до задачи.",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-only",
+      "case": "restart_after_missing",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-only",
+      "case": "different",
+      "exit": 3,
+      "output_bytes": 652,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check completed. Изменены: ./.claude/rules/comm-entrypoint-links-rule.md\nНачните новую сессию: восстановленный контекст должен загрузиться до задачи.",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-only",
+      "case": "restart_after_different",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-only",
+      "case": "unknown_changed_nothing",
+      "exit": 2,
+      "output_bytes": 414,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/extra.md; stop and resolve through INBOX.",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-only",
+      "case": "runtime_ignores_existing_AGENTS.md",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": []
+    },
+    {
+      "mode": "common-only",
+      "case": "runtime_ignores_missing_AGENTS.md",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": []
+    },
+    {
+      "mode": "common-only",
+      "case": "runtime_ignores_existing_CLAUDE.md",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": []
+    },
+    {
+      "mode": "common-only",
+      "case": "runtime_ignores_missing_CLAUDE.md",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": []
+    },
+    {
+      "mode": "common-only",
+      "case": "canonical_drift_local_restore",
+      "exit": 3,
+      "output_bytes": 652,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check completed. Изменены: ./.claude/rules/comm-entrypoint-links-rule.md\nНачните новую сессию: восстановленный контекст должен загрузиться до задачи.",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-only",
+      "case": "divergent_local_canon_passes",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ],
+      "published_rule_fixture_sha256": "605567475ea2117d9c754eb093ac0f6bd3e0e65120fac5f7e0854a92fb5a46f6"
+    },
+    {
+      "mode": "common-project",
+      "case": "healthy",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-project",
+      "case": "missing",
+      "exit": 3,
+      "output_bytes": 655,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check completed. Изменены: ./.claude/rules/comm-entrypoint-links-rule.md\nНачните новую сессию: восстановленный контекст должен загрузиться до задачи.",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-project",
+      "case": "restart_after_missing",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-project",
+      "case": "different",
+      "exit": 3,
+      "output_bytes": 655,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check completed. Изменены: ./.claude/rules/comm-entrypoint-links-rule.md\nНачните новую сессию: восстановленный контекст должен загрузиться до задачи.",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-project",
+      "case": "restart_after_different",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-project",
+      "case": "unknown_changed_nothing",
+      "exit": 2,
+      "output_bytes": 417,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/extra.md; stop and resolve through INBOX.",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-project",
+      "case": "runtime_ignores_existing_AGENTS.md",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": []
+    },
+    {
+      "mode": "common-project",
+      "case": "runtime_ignores_missing_AGENTS.md",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": []
+    },
+    {
+      "mode": "common-project",
+      "case": "runtime_ignores_existing_CLAUDE.md",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": []
+    },
+    {
+      "mode": "common-project",
+      "case": "runtime_ignores_missing_CLAUDE.md",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": []
+    },
+    {
+      "mode": "common-project",
+      "case": "canonical_drift_local_restore",
+      "exit": 3,
+      "output_bytes": 655,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check completed. Изменены: ./.claude/rules/comm-entrypoint-links-rule.md\nНачните новую сессию: восстановленный контекст должен загрузиться до задачи.",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ]
+    },
+    {
+      "mode": "common-project",
+      "case": "divergent_local_canon_passes",
+      "exit": 0,
+      "output_bytes": 308,
+      "output": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed",
+      "verified_files": [
+        ".claude/rules/comm-entrypoint-links-rule.md"
+      ],
+      "published_rule_fixture_sha256": "d908649406c189d745a4c807239cdae2c3e6382e00f2c205ca4fcd34c544da5c"
+    }
+  ],
+  "auditor_tests": {
+    "common-only": "45 passed in 0.86s",
+    "common-project": "45 passed in 0.91s"
+  },
+  "summary": {
+    "common-only": {
+      "sessions": 36,
+      "target_skill_received": 36,
+      "target_skill_received_more_than_once": [],
+      "target_not_confirmed": [],
+      "sessions_with_repeated_full_rules": [],
+      "startup_confirmed_before_owner_call": 36,
+      "all_rules_before_first_owner_request": 36,
+      "all_rules_before_answer": 36
+    },
+    "common-project": {
+      "sessions": 36,
+      "target_skill_received": 36,
+      "target_skill_received_more_than_once": [],
+      "target_not_confirmed": [],
+      "sessions_with_repeated_full_rules": [],
+      "startup_confirmed_before_owner_call": 36,
+      "all_rules_before_first_owner_request": 36,
+      "all_rules_before_answer": 36
+    }
+  },
+  "findings": [
+    "При удалении самого always loaded правила запуска в обеих установках Codex запросил предметное действие без скрипта. Независимый прямой запуск восстанавливает файл.",
+    "При явном запросе только на чтение и повреждённом рабочем always loaded правиле в обеих установках Codex остановился до поиска, но не запустил штатную команду и не восстановил файл. При обычном запросе оба режима восстановили удалённое или повреждённое рабочее always loaded правило и потребовали новый сеанс.",
+    "При реальной обрезке весь текст получен до запроса receipt.txt в четырёх случаях. При дочитывании также запрашивались уже виденные части. Экономное чтение только отсутствующих фрагментов не подтверждено. В одном сеансе обрезанная и полная выдачи объединены во внешнем инструменте.",
+    "Локальная сверка не подтверждает одинаковую версию опубликованного пакета common у разных проектов. Обе установки успешно сверились с разными локальными эталонами."
+  ],
+  "additional_checks": [
+    "До загрузки проверить потерю или подмену файла запуска проверки, его доверенного скрипта и защищённых входов; отдельно проверить запуск обычной командой каждого клиента и из вложенной рабочей папки.",
+    "Сопоставить версии common по утверждённому реестру SHA-256 при установке и обновлении. Допустимые проектные дополнения учитывать отдельно. Проверить конфликт имён и посторонний вложенный Markdown-файл.",
+    "Между двумя чтениями фрагментов сменить версию файла или оборвать чтение. Проверить остановку до зависимого действия без объединения версий.",
+    "На штатном пути восстановления проверить отказ записи, параллельную правку и прерывание посередине обновления. Убедиться, что следующая сессия начинает работу с полной одобренной версией."
+  ]
+}

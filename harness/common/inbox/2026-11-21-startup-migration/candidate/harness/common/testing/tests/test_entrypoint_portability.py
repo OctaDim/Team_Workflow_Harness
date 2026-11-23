@@ -32,8 +32,8 @@ class TestPortability:
             for rule in (project / 'rules').glob('proj-*.md'):
                 shutil.copyfile(rule, native / rule.name)
 
-    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py'):
-        return subprocess.run([sys.executable, '-I', '-B', script], cwd=root, env=dict(os.environ, PATH='/no-git-in-this-test'), capture_output=True, text=True)
+    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py', *args):
+        return subprocess.run([sys.executable, '-I', '-B', script, *args], cwd=root, env=dict(os.environ, PATH='/no-git-in-this-test'), capture_output=True, text=True)
 
     @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
     def test_startup_command_runs_in_each_clean_mode_without_git(self, mode):
@@ -57,15 +57,28 @@ class TestPortability:
             assert 'START.md' not in text
             assert not (root / 'CLAUDE.md').read_bytes()
             rule = (root / '.claude/rules/comm-entrypoint-links-rule.md').read_text()
-            command = re.search(r'(?m)^python3(?: -B)? (harness/[^\s]+\.py)$', rule)
+            command = re.search(r'(?m)^python3(?: -B)? (harness/[^\s]+\.py) (--check-rules)$', rule)
             assert command is not None
             assert command.group(1) == 'harness/common/checks/ensure_entrypoint_links.py'
             before_inputs = ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())
-            second = self.run_check(root, command.group(1))
+            second = self.run_check(root, *command.groups())
             assert second.returncode == 0, second.stderr
             assert 'будут автоматически восстановлены' not in second.stdout
             assert before_inputs == ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())
             assert not (root / '.git').exists()
+            target = root / '.claude/rules/comm-entrypoint-links-rule.md'
+            approved = target.read_bytes()
+            divergent = approved + b'\nLocal change.\n'
+            target.write_bytes(divergent)
+            rejected = self.run_check(root, *command.groups())
+            assert rejected.returncode == 4 and target.name in rejected.stderr
+            assert target.read_bytes() == divergent
+            restored = self.run_check(root, command.group(1), '--restore-rules')
+            assert restored.returncode == 3, restored.stderr
+            assert target.read_bytes() == approved
+            assert self.run_check(root, *command.groups()).returncode == 0
+            assert before_inputs == ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())
+
 
     def test_existing_settings_and_startup_command_are_never_rewritten(self):
         with tempfile.TemporaryDirectory() as directory:

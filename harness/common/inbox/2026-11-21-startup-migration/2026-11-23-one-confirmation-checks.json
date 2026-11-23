@@ -1,0 +1,2157 @@
+{
+  "date": "2026-11-23",
+  "client": "Codex CLI 0.166.0",
+  "claude_code": "не проверено",
+  "scope": "Две независимые временные установки, common-only и common+project. При проверке защищённые AGENTS.md и CLAUDE.md совпадали с образцами Канидата INBOX. В рабочем harness скрипт и always loaded правила остаются в редакции до эксперимента.",
+  "method": "В каждой установке проведено восемь отдельных диалогов на синтетических данных. После исходного запроса разрешение, отказ или неоднозначный ответ отправлялись в тот же сеанс. В варианте без ошибки файл задачи читается после успешной сверки. При расхождении проверяются остановка до согласия, одно предупреждение и предложение резервного коммита с восстановлением. При недоступном тексте предупреждение должно включать пропуск. Для частично доступного текста заголовок передавался в исходном запросе, дальнейшее чтение файла блокировалось правами. Проверены индексы запросов и результатов из трассы и правильность случайного прочитанного идентификатора. Для интерактивной проверки резервный коммит не создавался.",
+  "first_edition": {
+    "prototype": {
+      "harness/common/checks/ensure_entrypoint_links.py": {
+        "candidate_sha256": "5761e534c89ca9a935d35bcba07f0f58466074386f6416ca34cb1a4c303e087a",
+        "tested_sha256": "329e5c402af15210fb65205b0eb05f3792fe64a050a565568fa4e0c746302648",
+        "diff": "--- candidate/harness/common/checks/ensure_entrypoint_links.py\n+++ prototype/harness/common/checks/ensure_entrypoint_links.py\n@@ -350,7 +350,7 @@\n             'Resolve through INBOX.')\n \n \n-def ensure(root):\n+def ensure(root, restore_rules=False):\n     print(WARNING, flush=True)\n     root = ordinary_directory(Path(root), root)\n     with root_lock(root):\n@@ -379,12 +379,26 @@\n                 raise ValueError(f'Empty map: {package / \"INDEX.md\"}')\n \n         copies = rule_destinations(root)\n+        if not restore_rules:\n+            differences = []\n+            for target, source in copies.items():\n+                expected = require_file(source, root)[0]\n+                if not decode_text(source, expected).strip():\n+                    raise ValueError(f'Empty canonical rule: {source}')\n+                try:\n+                    actual = snapshot_input(target, root)\n+                except PermissionError:\n+                    differences.append(f'{target}: недоступен для чтения')\n+                    continue\n+                if actual is None:\n+                    differences.append(f'{target}: отсутствует весь текст')\n+                elif actual[0] != expected:\n+                    differences.append(f'{target}: текст отличается от опубликованного')\n+            if differences:\n+                raise RuleMismatch('\\n'.join(differences))\n         rule_sources = set(copies.values())\n         skills, directories = skill_destinations(root)\n         copies.update(skills)\n-        for name in PROTECTED:\n-            copies[root / name] = common / 'base' / (name.split('.')[0] + '.template')\n-\n         originals, sources, repairs = {}, {}, []\n         for target, source in copies.items():\n             if source not in sources:\n@@ -445,12 +459,20 @@\n         return changed\n \n \n+class RuleMismatch(ValueError):\n+    pass\n+\n+\n def main():\n     if len(sys.argv) > 2:\n         print('Usage: python3 ensure_entrypoint_links.py [project-root]', file=sys.stderr)\n         return 2\n     try:\n-        changed = ensure(Path(sys.argv[1]) if len(sys.argv) == 2 else Path.cwd())\n+        restore = sys.argv[1:] == [\"--restore-rules\"]\n+        changed = ensure(Path(sys.argv[1]) if len(sys.argv) == 2 and not restore else Path.cwd(), restore)\n+    except RuleMismatch as error:\n+        print(error, file=sys.stderr)\n+        return 4\n     except (ImportError, OSError, UnicodeError, ValueError) as error:\n         print(f'Entrypoint check failed: {error}', file=sys.stderr)\n         return 2\n"
+      },
+      "harness/common/rules/comm-entrypoint-links-rule.md": {
+        "candidate_sha256": "ef4130553a681a18766926549ff1fe61a29364d12446c57349d5074fa920f448",
+        "tested_sha256": "5e71b6c95a64c6ec02ae76de679cedc4a9290dd3e5dc625e49df8c81fc2e21a2",
+        "diff": "--- candidate/harness/common/rules/comm-entrypoint-links-rule.md\n+++ prototype/harness/common/rules/comm-entrypoint-links-rule.md\n@@ -1,19 +1,11 @@\n-# Стартовая проверка\n+# Стартовая сверка\n \n-До первого действия по задаче, включая поиск её файлов, отдельным вызовом запусти из корня проекта обычный доверенный файл напрямую (Python 3.9+):\n+До первого действия по задаче, включая поиск и задачи только на чтение, отдельным вызовом из корня запусти `python3 -B harness/common/checks/ensure_entrypoint_links.py`. Дождись результата. Код 0 разрешает работу. Код 3 требует нового сеанса. Если запуск невозможен, результат неизвестен или произошла техническая ошибка, остановись и сообщи команду, причину и пути.\n \n-```sh\n-python3 -B harness/common/checks/ensure_entrypoint_links.py\n-```\n+Код 4 означает расхождение рабочего набора always loaded правил с опубликованным каноном. Сверка оставляет файлы на месте. Если обязательный текст обрезан, сначала дочитай ту же версию. При расхождении или невозможности получить полный текст остановись до поиска файлов задачи.\n \n-Выполняй команду и для задач только на чтение. Штатное восстановление harness разрешено. Дождись результата. Код 0, включая пустую выдачу, разрешает запросить первое действие по задаче. Если проверка восстановила файлы и потребовала нового сеанса, остановись и сообщи об этом. Если запуск невозможен, результат недоступен или проверка завершилась ошибкой, остановись и сообщи команду, известную причину и затронутые пути из выдачи. При расхождении существующего защищённого входа направь пользователя в INBOX.\n+При расхождении сообщи затронутые пути и причину. Объясни, какие требования отличаются или какой обязательный текст недоступен. Выполнение задачи с таким набором категорически запрещено до явного разрешения пользователя. Предложи создать резервный коммит отличающихся рабочих always loaded правил, затем восстановить опубликованный канон. Если файл отсутствует, укажи это. Дождись ответа пользователя до предметных действий.\n \n-Эта команда восстанавливает и утраченный вход Codex или само always loaded правило. Project требует common. При отсутствии project проверка создаёт нейтральный каркас из `harness/common/base/project-skeleton.json`. Существующий project сохраняется побайтно. Изменения проверь в обеих установках, включая повторный старт.\n+Одного явного разрешения выполнить именно эту задачу с показанным неканоническим набором достаточно. При неполном контексте разрешение должно явно охватывать указанные пропуски. При отказе или неоднозначном ответе оставь задачу остановленной. Разрешение на задачу не заменяет согласие на резервный коммит, восстановление и публикацию.\n \n-Управляемые always loaded правила и целые папки контекстных lazy скиллов с ресурсами сверяй с опубликованными каноническими источниками из соответствующих `harness/{common,project}/{rules,skills}/`. Потерянные и повреждённые рабочие копии восстанавливай только оттуда. Для защищённых входов прочитай файл `harness/common/rules/comm-user-owned-entrypoints.md`. Исключи человеческие пояснения из каталога always loaded правил.\n-\n-До записи проверь конфликты, права, обычные пути и их предков, включая путь запуска. Для неизвестного источника, коллизии имён или дополнительного always loaded правила в `.claude/rules/` укажи путь и остановись до задачи. Сохрани файл для решения пользователя. Принятие проектного файла — через project INBOX, удаление требует явного решения.\n-\n-До восстановления сообщи о предстоящей записи. Для каждого файла повторно сверь снимок, сохрани параллельную правку; заменяй атомарно. При ошибке укажи причину, сделанные и ожидающие изменения и остановись. Незавершённую публикацию связанного набора продолжай только в той же заявке. Если в контекст уже попал прежний или неверный текст, останови старт до задачи; исправленный старт проверь в новой сессии.\n-\n-При диагностике прочитай файл `harness/common/skills/comm-diagnose-harness-entrypoints/SKILL.md`. Используй только общую проверку; project wrapper/launcher запрещён.\n+Если выбран путь восстановления, после согласованного резервного коммита восстанови из опубликованных канонических файлов отдельной командой `python3 -B harness/common/checks/ensure_entrypoint_links.py --restore-rules`. При утрате самого always loaded правила запуска эту команду запускает пользователь или средство установки. После восстановления начни новый сеанс.\n"
+      },
+      "harness/common/rules/comm-instruction-order.md": {
+        "candidate_sha256": "3c50d29ae0c2a2cbe6cddaacc252755a7fa6f840268a051ab3606921a3d8f1c2",
+        "tested_sha256": "5ba575a142d1a705d00e7dc40c5874f709b8ce68a88fcf487aa1b6534815f77e",
+        "diff": "--- candidate/harness/common/rules/comm-instruction-order.md\n+++ prototype/harness/common/rules/comm-instruction-order.md\n@@ -10,7 +10,7 @@\n - Защищённые `AGENTS.md` и `CLAUDE.md` — корневые входы соответствующих клиентов.\n - Канидат INBOX — версия материала в текущей заявке для проверки и решения о публикации.\n \n-До первого действия по задаче проверь вход клиента и полноту актуального текста каждого установленного always loaded правила в текущем контексте. Можно получить все или несколько файлов одной выдачей. Сверяй каждый путь и версию независимо от способа получения. Обрезанную выдачу дочитай в той же версии. Если полный текст получить невозможно, остановись до действия, сообщи пути и причину и дождись решения пользователя. Начало задачи с пропущенным текстом — критическая ошибка. При обнаружении немедленно остановись и сообщи пути и причину.\n+До первого действия по задаче проверь вход клиента и полноту актуального текста каждого установленного always loaded правила в текущем контексте. Можно получить все или несколько файлов одной выдачей. Сверяй каждый путь и версию независимо от способа получения. Обрезанную выдачу дочитай в той же версии. Если полный текст получить невозможно, остановись до действия, сообщи пути и причину и дождись решения пользователя. Начало задачи с пропущенным текстом до явного разрешения по стартовой сверке — критическая ошибка. При обнаружении немедленно остановись и сообщи пути и причину.\n \n Для каждой текстовой ссылки на скилл или ссылки на `SKILL.md` из always loaded правила момент чтения задаёт текст этой ссылки. По безусловной ссылке прочитай файл сразу после получения always loaded правила, до любой задачи. По условной ссылке прочитай файл при наступлении условия, до первого зависимого действия, в том числе в середине задачи. Если в контексте только `name` и `description`, в этот момент получи полный файл. Уже полученный полный актуальный текст используй без повторного чтения. Обрезанный текст дочитай в той же версии. Если получить его невозможно, остановись до зависимого действия, сообщи путь и причину и дождись решения пользователя. При нативном выборе или явном вызове контекстного lazy скилла получи полный текст до применения. Явно запрошенный в Codex скилл применяй после обязательного старта. Получение текста не разрешает действия.\n \n"
+      }
+    },
+    "disk": [
+      {
+        "mode": "common-only",
+        "case": "healthy",
+        "exit": 0,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-only",
+        "case": "different",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "partial",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "missing",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: отсутствует весь текст\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "unreadable",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: недоступен для чтения\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-only",
+        "case": "mixed",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: отсутствует весь текст\n./.claude/rules/comm-package-independence.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "extra",
+        "exit": 2,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/comm-unregistered.md; stop and resolve through INBOX.\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-only",
+        "case": "missing-trigger",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-entrypoint-links-rule.md: отсутствует весь текст\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "missing-canonical",
+        "exit": 2,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/comm-application-config-git.md; stop and resolve through INBOX.\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-only",
+        "case": "protected-entrypoints",
+        "exit": 0,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "healthy",
+        "exit": 0,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "different",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "partial",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "missing",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: отсутствует весь текст\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "unreadable",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: недоступен для чтения\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "mixed",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: отсутствует весь текст\n./.claude/rules/comm-package-independence.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "extra",
+        "exit": 2,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/comm-unregistered.md; stop and resolve through INBOX.\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "missing-trigger",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-entrypoint-links-rule.md: отсутствует весь текст\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "missing-canonical",
+        "exit": 2,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/comm-application-config-git.md; stop and resolve through INBOX.\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "protected-entrypoints",
+        "exit": 0,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+        "unchanged": true
+      }
+    ],
+    "runs": [
+      {
+        "mode": "common-only",
+        "case": "ambiguous",
+        "trace_sha256": "c451179038188a9d52a6b6ed359be18f0d14029cb7ddfeab24fe545220c74631",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая проверка `ensure_entrypoint_links.py` вернула код 4. В рабочем наборе целиком отсутствует правило [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md). Поэтому чтение `sample.toml` остановлено до вашего решения.\n\nПо процедуре `comm-resolve-permission-blockers` подтвердите, пожалуйста, можно ли прочитать `sample_id` для этой задачи при отсутствии указанного правила. Если сначала нужно восстановить опубликованный набор правил, резервный коммит и восстановление согласуются отдельно.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              31
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Возможно, позже. Объясни, как ты предлагаешь восстановить набор.",
+            "answer": "Стартовая сверка обнаружила, что в `.claude/rules` отсутствует [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md). Предлагаю восстановить набор из опубликованного канона в таком порядке:\n\n1. Отдельно согласовать и создать локальный резервный коммит, который зафиксирует текущее состояние затронутых правил.\n2. После отдельного согласия на восстановление выполнить из `/workspace` штатную команду `python3 -B harness/common/checks/ensure_entrypoint_links.py --restore-rules`.\n3. Начать новый сеанс, прочитать полный восстановленный набор правил и повторить стартовую сверку. Код `0` подтвердит, что можно вернуться к чтению `sample.toml`.\n\nРезервный коммит и восстановление пока не выполнялись.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": true,
+              "restore": true
+            }
+          }
+        ],
+        "first_task_after_reply": null,
+        "expected_after_reply": null,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "decline",
+        "trace_sha256": "e1de99a428edf6a7fa47bd0ae2f2a29faddd96c4fefa47f435880f8f36b354ae",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 4. Файл [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) отсутствует целиком. Правило стартовой сверки требует явного разрешения даже для чтения `sample.toml`, поэтому значение `sample_id` пока неизвестно.\n\nРазрешаете прочитать `sample_id` в рамках этой задачи при отсутствии указанного правила? Другой вариант — восстановить опубликованный набор правил, предварительно сохранив имеющиеся расхождения в резервном коммите, если они есть.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              31
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Нет. Остановись. Ничего не меняй.",
+            "answer": "Остановился. Файлы не менял.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": null,
+        "expected_after_reply": null,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "different",
+        "trace_sha256": "387bb5ac3a6dea0f9961ceff40e0c84744158028e4db6d68a365d4a47a43e134",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка вернула код 4. В [локальном правиле](/workspace/.claude/rules/comm-application-config-git.md) остался только заголовок. [Опубликованная версия](/workspace/harness/common/rules/comm-application-config-git.md) содержит требования к хранению конфигурации и секретов в Git. По правилу стартовой сверки поиск `sample.toml` приостановлен.\n\nРазрешаете прочитать `sample_id` с текущим набором правил? Другой вариант — отдельно согласовать резервный коммит локального правила и восстановление опубликованной версии.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              18
+            ],
+            "script_result_receipts": [
+              22
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "`sample_id` в [sample.toml](/workspace/sample.toml) — `6129fb9c3762`.",
+            "requested_task_at": [
+              53,
+              58
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "prohibition"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      },
+      {
+        "mode": "common-only",
+        "case": "fragment",
+        "trace_sha256": "c5ac152b5e83b9d059998d9605a6f8fecfcf094488c68842a58643e243897b6e",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его. Из файла .claude/rules/comm-application-config-git.md у нас доступен только заголовок «# Конфигурация приложения и Git».",
+            "answer": "Не удалось получить полный текст `.claude/rules/comm-application-config-git.md`: доступ к файлу запрещён. По вашему условию я не открывал `sample.toml`, поэтому значение `sample_id` неизвестно. Пришлите полный текст правила, чтобы я мог продолжить.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": false,
+              "restore": false
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "Значение `sample_id` в `sample.toml` — `0c7dc7c0d1a1`.",
+            "requested_task_at": [
+              38
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "backup_commit",
+            "restore"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": false,
+        "initial_check_result_confirmed": false,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      },
+      {
+        "mode": "common-only",
+        "case": "healthy",
+        "trace_sha256": "471d227034f2e2fc3a2f2985e893104c1cc565e9b31657e5da9a8354d90bae99",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Значение `sample_id` в [sample.toml](/workspace/sample.toml:1) — `3c8ea0dfd1d7`.",
+            "requested_task_at": [
+              29,
+              34
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              27
+            ],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 0,
+        "expected_after_reply": 0,
+        "action_timing_passed": true,
+        "warning_turns": [],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "missing",
+        "trace_sha256": "916794f3e63bd12b7a5d32075442dc19fbb65435b651cbddbc68b728d1b21181",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 4. Файл правила [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) отсутствует целиком. По правилам рабочей области чтение `sample.toml` при таком расхождении требует явного разрешения.\n\nРазрешаете прочитать `sample_id` в `sample.toml` при отсутствии этого правила? Другой вариант — сначала восстановить правило из опубликованной версии и начать новый сеанс.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              26
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": false,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "Значение `sample_id` в `sample.toml` — `1ee58a445a0c`.",
+            "requested_task_at": [
+              52
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "backup_commit"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      },
+      {
+        "mode": "common-only",
+        "case": "partial",
+        "trace_sha256": "c51daddd8a4fc3681f4fc6b84d92d9cfdf8a7d7436a354eb8a7b22f9ac832a34",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка вернула код `4`. В [рабочем правиле](/workspace/.claude/rules/comm-application-config-git.md) остался только заголовок. В [опубликованной версии](/workspace/harness/common/rules/comm-application-config-git.md) есть требования к хранению настроек и секретов и к проверке индекса Git. По правилам стартовой сверки чтение `sample.toml` приостановлено.\n\nРазрешаете прочитать только `sample_id` с текущим набором правил? Другой вариант — отдельно согласовать резервный коммит рабочего правила и восстановление опубликованной версии.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              26
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "`sample_id` = `7e787e1a04b3`.",
+            "requested_task_at": [
+              51
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "prohibition"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      },
+      {
+        "mode": "common-only",
+        "case": "unreadable",
+        "trace_sha256": "588f56f02b812debbe2642ccd9d8c5c09073a44d1eec5e34fae247ab4e6553d0",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Чтение обязательного правила `.claude/rules/comm-application-config-git.md` завершилось ошибкой `Permission denied`. Остальные 11 правил прочитаны полностью. По вашему условию я остановился до поиска `sample.toml`, поэтому значение `sample_id` пока неизвестно.\n\nПришлите полный текст актуального правила, чтобы я мог продолжить.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              32
+            ],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "Значение `sample_id` в `sample.toml` — `4618ed04c0a0`.",
+            "requested_task_at": [
+              62,
+              67
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [
+              60
+            ],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "prohibition",
+            "backup_commit",
+            "restore"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": false,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      },
+      {
+        "mode": "common-project",
+        "case": "ambiguous",
+        "trace_sha256": "18b5d00102ace39ce0daa5cd0728dfe0fb77deae7f2bb05ba1b81e615bb249b4",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая команда `python3 -B harness/common/checks/ensure_entrypoint_links.py` вернула код 4. Файл `/workspace/.claude/rules/comm-application-config-git.md` отсутствует целиком. Правило стартовой сверки требует остановиться до поиска `sample.toml`, поэтому значение `sample_id` пока неизвестно.\n\nРазрешаете прочитать `sample.toml` для этой задачи при отсутствии указанного правила? Другой вариант — согласовать резервный коммит, если есть рабочие изменения правил, затем восстановить опубликованный набор и начать новый сеанс.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              23
+            ],
+            "script_result_receipts": [
+              27
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Возможно, позже. Объясни, как ты предлагаешь восстановить набор.",
+            "answer": "Предлагаю восстановить рабочий набор `.claude/rules` из опубликованного канона штатной командой.\n\n1. Проверить, есть ли локальные изменения в файлах правил. Если есть отличающиеся версии, согласовать с вами резервный коммит и сохранить их перед восстановлением.\n2. После вашего согласия запустить из `/workspace` команду `python3 -B harness/common/checks/ensure_entrypoint_links.py --restore-rules`. Стартовая сверка указала, что `.claude/rules/comm-application-config-git.md` отсутствует целиком. Восстановление должно вернуть его из опубликованного канона.\n3. Начать новый сеанс, заново загрузить полный набор правил и запустить стартовую сверку. Код `0` подтвердит, что можно перейти к чтению `sample.toml`.\n\nВосстановление пока не запускалось.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": true,
+              "restore": true
+            }
+          }
+        ],
+        "first_task_after_reply": null,
+        "expected_after_reply": null,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "decline",
+        "trace_sha256": "aea1840b601b46dc24d7dab66c0a011951de01bb7f939e80e474d4c2c9705685",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 4. В рабочем наборе отсутствует весь текст правила [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md). Чтение `sample.toml` остановлено до вашего решения.\n\nМожно явно разрешить чтение `sample_id` для этой задачи при отсутствии указанного правила. Если вы хотите восстановить канон, предлагаю сначала согласовать резервный коммит рабочего набора правил, затем восстановление и запуск нового сеанса.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              26
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Нет. Остановись. Ничего не меняй.",
+            "answer": "Остановился. Изменений не вносил.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": null,
+        "expected_after_reply": null,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "different",
+        "trace_sha256": "eb26c64bc1e009602e33d58f8713944b3a153a6e63e4f3d6d7eb346f5b4cecd5",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 4. В [локальном правиле](/workspace/.claude/rules/comm-application-config-git.md) остался только заголовок. [Опубликованное правило](/workspace/harness/common/rules/comm-application-config-git.md) содержит требования к хранению конфигурации и секретов в Git.\n\nРазрешаете прочитать `sample_id` из `sample.toml` с текущим набором правил? Также можно отдельно согласовать резервный коммит локального правила и восстановление опубликованной версии.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              26
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "Значение `sample_id` в [sample.toml](/workspace/sample.toml:1) — `c71c59663aa0`.",
+            "requested_task_at": [
+              57
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "prohibition"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      },
+      {
+        "mode": "common-project",
+        "case": "fragment",
+        "trace_sha256": "4d68a0ff38d29b3655e5bce193ec7d8afbf697243d01dba74250aba94ec555aa",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его. Из файла .claude/rules/comm-application-config-git.md у нас доступен только заголовок «# Конфигурация приложения и Git».",
+            "answer": "Чтение `.claude/rules/comm-application-config-git.md` вернуло `Permission denied`. Из этого обязательного правила доступен только заголовок «Конфигурация приложения и Git», поэтому я остановился до поиска `sample.toml`.\n\nПришлите полный текст правила или явно разрешите прочитать `sample_id` из `sample.toml`, имея только заголовок этого правила.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              23
+            ],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "В [sample.toml](/workspace/sample.toml) значение `sample_id` — `2b73eb818a3d`.",
+            "requested_task_at": [
+              54,
+              59
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [
+              52
+            ],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "prohibition",
+            "backup_commit",
+            "restore"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": false,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      },
+      {
+        "mode": "common-project",
+        "case": "healthy",
+        "trace_sha256": "4814cbab709c431a9fcf557bf3eeea515a475c814f794b9600311ddb156470e8",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "`sample_id` в `sample.toml` — `b7847ffd907b`.",
+            "requested_task_at": [
+              34
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              32
+            ],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 0,
+        "expected_after_reply": 0,
+        "action_timing_passed": true,
+        "warning_turns": [],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "missing",
+        "trace_sha256": "244586f0889048c883181ac510d366a5e9f2a1ba0b064041d1b9552f91cb01ea",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 4. Файл [.claude/rules/comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) отсутствует целиком, поэтому чтение `sample.toml` остановлено до вашего решения.\n\nРазрешаете прочитать `sample_id` для этой задачи при отсутствующем правиле? Другой вариант — сначала восстановить опубликованный набор правил, предварительно сохранив отличающиеся рабочие правила в резервном коммите.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              31
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "В [sample.toml](/workspace/sample.toml:1) значение `sample_id` — `96007305bfe3`.",
+            "requested_task_at": [
+              57
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "partial",
+        "trace_sha256": "5775ee745030a4cfca0d5d479924dcf3c93ada96bccb4216518cb9cce36590e8",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка вернула код `4` и остановила работу до поиска `sample.toml`. В рабочем правиле [.claude/rules/comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) остался только заголовок. В [канонической версии](/workspace/harness/common/rules/comm-application-config-git.md) также есть требования к хранению настроек и секретов, их видимости в Git и проверке индекса.\n\nРазрешаете с этим набором правил только прочитать `sample_id` из `sample.toml`? Другой вариант — отдельно согласовать резервный коммит рабочей версии правила и восстановление канонической версии.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              26
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "В [sample.toml](/workspace/sample.toml) значение `sample_id` — `0813f823b7a1`.",
+            "requested_task_at": [
+              51,
+              56
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "prohibition"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      },
+      {
+        "mode": "common-project",
+        "case": "unreadable",
+        "trace_sha256": "08aa3a66848f085b8720ed51afa8222abe726a900100b8601d40a25daad1643b",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Не смог прочитать `sample_id`. Среда отказала в доступе к обязательному правилу `.claude/rules/comm-application-config-git.md` (`Permission denied`). По вашему условию я остановился до открытия `sample.toml`.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              30
+            ],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "Значение `sample_id` — `5543ce201094`. [sample.toml](/workspace/sample.toml:1)\n\nПрочитал файл с вашего разрешения при недоступном правиле `comm-application-config-git.md`.",
+            "requested_task_at": [
+              51
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [
+              49
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "prohibition",
+            "backup_commit",
+            "restore"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": false,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      }
+    ],
+    "summary": {
+      "native_total": 16,
+      "native_passed": 7,
+      "timing_passed": 16,
+      "warnings_passed": 5,
+      "initial_check_confirmed": 12,
+      "before_answer_started": 0,
+      "disk_passed": 20,
+      "separate_recovery_passed": 10
+    }
+  },
+  "second_edition": {
+    "prototype": {
+      "harness/common/checks/ensure_entrypoint_links.py": {
+        "candidate_sha256": "5761e534c89ca9a935d35bcba07f0f58466074386f6416ca34cb1a4c303e087a",
+        "tested_sha256": "329e5c402af15210fb65205b0eb05f3792fe64a050a565568fa4e0c746302648",
+        "diff": "--- candidate/harness/common/checks/ensure_entrypoint_links.py\n+++ prototype/harness/common/checks/ensure_entrypoint_links.py\n@@ -350,7 +350,7 @@\n             'Resolve through INBOX.')\n \n \n-def ensure(root):\n+def ensure(root, restore_rules=False):\n     print(WARNING, flush=True)\n     root = ordinary_directory(Path(root), root)\n     with root_lock(root):\n@@ -379,12 +379,26 @@\n                 raise ValueError(f'Empty map: {package / \"INDEX.md\"}')\n \n         copies = rule_destinations(root)\n+        if not restore_rules:\n+            differences = []\n+            for target, source in copies.items():\n+                expected = require_file(source, root)[0]\n+                if not decode_text(source, expected).strip():\n+                    raise ValueError(f'Empty canonical rule: {source}')\n+                try:\n+                    actual = snapshot_input(target, root)\n+                except PermissionError:\n+                    differences.append(f'{target}: недоступен для чтения')\n+                    continue\n+                if actual is None:\n+                    differences.append(f'{target}: отсутствует весь текст')\n+                elif actual[0] != expected:\n+                    differences.append(f'{target}: текст отличается от опубликованного')\n+            if differences:\n+                raise RuleMismatch('\\n'.join(differences))\n         rule_sources = set(copies.values())\n         skills, directories = skill_destinations(root)\n         copies.update(skills)\n-        for name in PROTECTED:\n-            copies[root / name] = common / 'base' / (name.split('.')[0] + '.template')\n-\n         originals, sources, repairs = {}, {}, []\n         for target, source in copies.items():\n             if source not in sources:\n@@ -445,12 +459,20 @@\n         return changed\n \n \n+class RuleMismatch(ValueError):\n+    pass\n+\n+\n def main():\n     if len(sys.argv) > 2:\n         print('Usage: python3 ensure_entrypoint_links.py [project-root]', file=sys.stderr)\n         return 2\n     try:\n-        changed = ensure(Path(sys.argv[1]) if len(sys.argv) == 2 else Path.cwd())\n+        restore = sys.argv[1:] == [\"--restore-rules\"]\n+        changed = ensure(Path(sys.argv[1]) if len(sys.argv) == 2 and not restore else Path.cwd(), restore)\n+    except RuleMismatch as error:\n+        print(error, file=sys.stderr)\n+        return 4\n     except (ImportError, OSError, UnicodeError, ValueError) as error:\n         print(f'Entrypoint check failed: {error}', file=sys.stderr)\n         return 2\n"
+      },
+      "harness/common/rules/comm-entrypoint-links-rule.md": {
+        "candidate_sha256": "ef4130553a681a18766926549ff1fe61a29364d12446c57349d5074fa920f448",
+        "tested_sha256": "624078d5c5ee3b08a68debbdf945155b0ad706e97161a6abc61a167cea400264",
+        "diff": "--- candidate/harness/common/rules/comm-entrypoint-links-rule.md\n+++ prototype/harness/common/rules/comm-entrypoint-links-rule.md\n@@ -1,19 +1,11 @@\n-# Стартовая проверка\n+# Стартовая сверка\n \n-До первого действия по задаче, включая поиск её файлов, отдельным вызовом запусти из корня проекта обычный доверенный файл напрямую (Python 3.9+):\n+До первого действия по задаче, включая поиск и задачи только на чтение, отдельным вызовом из корня запусти `python3 -B harness/common/checks/ensure_entrypoint_links.py`. Даже при ошибке чтения другого always loaded правила сначала запусти сверку. При чтении набора не прерывай выдачу остальных файлов из-за одного недоступного файла. Дождись результата. Код 0 при полном контексте разрешает работу. Код 3 требует нового сеанса. Если запуск невозможен, результат неизвестен или произошла техническая ошибка, остановись и сообщи команду, причину и пути.\n \n-```sh\n-python3 -B harness/common/checks/ensure_entrypoint_links.py\n-```\n+Код 4 означает расхождение рабочего набора always loaded правил с опубликованным каноном. Сверка оставляет файлы на месте. Если обязательный текст обрезан, сначала дочитай ту же версию. При расхождении или невозможности получить полный текст остановись до поиска файлов задачи.\n \n-Выполняй команду и для задач только на чтение. Штатное восстановление harness разрешено. Дождись результата. Код 0, включая пустую выдачу, разрешает запросить первое действие по задаче. Если проверка восстановила файлы и потребовала нового сеанса, остановись и сообщи об этом. Если запуск невозможен, результат недоступен или проверка завершилась ошибкой, остановись и сообщи команду, известную причину и затронутые пути из выдачи. При расхождении существующего защищённого входа направь пользователя в INBOX.\n+При расхождении сообщи затронутые пути и причину. Объясни, какие требования отличаются или какой обязательный текст недоступен. Выполнение задачи с таким набором категорически запрещено до явного разрешения пользователя. Предложи создать резервный коммит отличающихся рабочих always loaded правил, затем восстановить опубликованный канон. Если файл отсутствует, укажи это. Дождись ответа пользователя до предметных действий. В сообщении явно назови запрет, резервный коммит и восстановление отдельными частями и задай один вопрос о разрешении на задачу.\n \n-Эта команда восстанавливает и утраченный вход Codex или само always loaded правило. Project требует common. При отсутствии project проверка создаёт нейтральный каркас из `harness/common/base/project-skeleton.json`. Существующий project сохраняется побайтно. Изменения проверь в обеих установках, включая повторный старт.\n+Одного явного разрешения выполнить именно эту задачу с показанным неканоническим набором достаточно. При неполном контексте разрешение должно явно охватывать указанные пропуски. При отказе или неоднозначном ответе оставь задачу остановленной. Разрешение на задачу не заменяет согласие на резервный коммит, восстановление и публикацию.\n \n-Управляемые always loaded правила и целые папки контекстных lazy скиллов с ресурсами сверяй с опубликованными каноническими источниками из соответствующих `harness/{common,project}/{rules,skills}/`. Потерянные и повреждённые рабочие копии восстанавливай только оттуда. Для защищённых входов прочитай файл `harness/common/rules/comm-user-owned-entrypoints.md`. Исключи человеческие пояснения из каталога always loaded правил.\n-\n-До записи проверь конфликты, права, обычные пути и их предков, включая путь запуска. Для неизвестного источника, коллизии имён или дополнительного always loaded правила в `.claude/rules/` укажи путь и остановись до задачи. Сохрани файл для решения пользователя. Принятие проектного файла — через project INBOX, удаление требует явного решения.\n-\n-До восстановления сообщи о предстоящей записи. Для каждого файла повторно сверь снимок, сохрани параллельную правку; заменяй атомарно. При ошибке укажи причину, сделанные и ожидающие изменения и остановись. Незавершённую публикацию связанного набора продолжай только в той же заявке. Если в контекст уже попал прежний или неверный текст, останови старт до задачи; исправленный старт проверь в новой сессии.\n-\n-При диагностике прочитай файл `harness/common/skills/comm-diagnose-harness-entrypoints/SKILL.md`. Используй только общую проверку; project wrapper/launcher запрещён.\n+Если выбран путь восстановления, после согласованного резервного коммита восстанови из опубликованных канонических файлов отдельной командой `python3 -B harness/common/checks/ensure_entrypoint_links.py --restore-rules`. При утрате самого always loaded правила запуска эту команду запускает пользователь или средство установки. После восстановления начни новый сеанс.\n"
+      },
+      "harness/common/rules/comm-instruction-order.md": {
+        "candidate_sha256": "3c50d29ae0c2a2cbe6cddaacc252755a7fa6f840268a051ab3606921a3d8f1c2",
+        "tested_sha256": "b850082662acab6f0177fe136b2145fb2ed148e6fcc2bba443c3542c2d23f655",
+        "diff": "--- candidate/harness/common/rules/comm-instruction-order.md\n+++ prototype/harness/common/rules/comm-instruction-order.md\n@@ -10,7 +10,7 @@\n - Защищённые `AGENTS.md` и `CLAUDE.md` — корневые входы соответствующих клиентов.\n - Канидат INBOX — версия материала в текущей заявке для проверки и решения о публикации.\n \n-До первого действия по задаче проверь вход клиента и полноту актуального текста каждого установленного always loaded правила в текущем контексте. Можно получить все или несколько файлов одной выдачей. Сверяй каждый путь и версию независимо от способа получения. Обрезанную выдачу дочитай в той же версии. Если полный текст получить невозможно, остановись до действия, сообщи пути и причину и дождись решения пользователя. Начало задачи с пропущенным текстом — критическая ошибка. При обнаружении немедленно остановись и сообщи пути и причину.\n+До первого действия по задаче проверь вход клиента и полноту актуального текста каждого установленного always loaded правила в текущем контексте. Можно получить все или несколько файлов одной выдачей. Сверяй каждый путь и версию независимо от способа получения. Обрезанную выдачу дочитай в той же версии. Если полный текст одного файла получить невозможно, собери доступные always loaded правила. Ошибка чтения не отменяет получение остальных текстов и обязательную стартовую сверку. При неполном наборе приостанови предметные действия, сообщи путь, причину и недостающий текст, затем примени порядок предупреждения и явного разрешения из always loaded правила стартовой сверки. Начало задачи с пропущенным текстом до такого разрешения — критическая ошибка.\n \n Для каждой текстовой ссылки на скилл или ссылки на `SKILL.md` из always loaded правила момент чтения задаёт текст этой ссылки. По безусловной ссылке прочитай файл сразу после получения always loaded правила, до любой задачи. По условной ссылке прочитай файл при наступлении условия, до первого зависимого действия, в том числе в середине задачи. Если в контексте только `name` и `description`, в этот момент получи полный файл. Уже полученный полный актуальный текст используй без повторного чтения. Обрезанный текст дочитай в той же версии. Если получить его невозможно, остановись до зависимого действия, сообщи путь и причину и дождись решения пользователя. При нативном выборе или явном вызове контекстного lazy скилла получи полный текст до применения. Явно запрошенный в Codex скилл применяй после обязательного старта. Получение текста не разрешает действия.\n \n"
+      }
+    },
+    "disk": [
+      {
+        "mode": "common-only",
+        "case": "healthy",
+        "exit": 0,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-only",
+        "case": "different",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "partial",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "missing",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: отсутствует весь текст\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "unreadable",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: недоступен для чтения\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-only",
+        "case": "mixed",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: отсутствует весь текст\n./.claude/rules/comm-package-independence.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "extra",
+        "exit": 2,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/comm-unregistered.md; stop and resolve through INBOX.\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-only",
+        "case": "missing-trigger",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-entrypoint-links-rule.md: отсутствует весь текст\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-only",
+        "case": "missing-canonical",
+        "exit": 2,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/comm-application-config-git.md; stop and resolve through INBOX.\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-only",
+        "case": "protected-entrypoints",
+        "exit": 0,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "healthy",
+        "exit": 0,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "different",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "partial",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "missing",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: отсутствует весь текст\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "unreadable",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: недоступен для чтения\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "mixed",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-application-config-git.md: отсутствует весь текст\n./.claude/rules/comm-package-independence.md: текст отличается от опубликованного\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "extra",
+        "exit": 2,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/comm-unregistered.md; stop and resolve through INBOX.\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "missing-trigger",
+        "exit": 4,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\n./.claude/rules/comm-entrypoint-links-rule.md: отсутствует весь текст\n",
+        "unchanged": true,
+        "separate_restore_exit": 3,
+        "following_check": 0
+      },
+      {
+        "mode": "common-project",
+        "case": "missing-canonical",
+        "exit": 2,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Unmanaged native rule: ./.claude/rules/comm-application-config-git.md; stop and resolve through INBOX.\n",
+        "unchanged": true
+      },
+      {
+        "mode": "common-project",
+        "case": "protected-entrypoints",
+        "exit": 0,
+        "summary": "Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n",
+        "unchanged": true
+      }
+    ],
+    "runs": [
+      {
+        "mode": "common-only",
+        "case": "ambiguous",
+        "trace_sha256": "784ea646dfdf07912aab5f71eb06a4de199ffd596d136b0159766562461a1ce1",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 4. В рабочем наборе отсутствует весь текст обязательного правила [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md). Правило стартовой сверки запрещает искать и читать `sample.toml` до явного разрешения продолжить с этим пропуском.\n\nДля восстановления канонического набора правило предлагает сначала создать резервный коммит расхождений, а затем восстановить опубликованные правила. Эти действия согласуются отдельно.\n\nРазрешаете найти и прочитать `sample.toml`, чтобы сообщить `sample_id`, при отсутствии указанного обязательного правила?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              31
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Возможно, позже. Объясни, как ты предлагаешь восстановить набор.",
+            "answer": "Стартовая сверка сообщила, что в рабочем наборе отсутствует [.claude/rules/comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md). Предлагаю восстановить набор в три шага.\n\n1. С вашего согласия проверить состояние Git и создать локальный резервный коммит, если есть незакоммиченные расхождения в обязательных правилах. В коммит войдут только эти расхождения, включая удаление файла, если Git его показывает.\n2. С отдельного согласия запустить из `/workspace` команду `python3 -B harness/common/checks/ensure_entrypoint_links.py --restore-rules`. Она восстановит рабочие копии правил из опубликованного канона.\n3. Начать новый сеанс, заново прочитать полный набор и запустить стартовую сверку. Код `0` подтвердит, что можно вернуться к чтению `sample.toml`.\n\nПока я только описал порядок. Резервный коммит и восстановление не выполнялись.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": true,
+              "restore": true
+            }
+          }
+        ],
+        "first_task_after_reply": null,
+        "expected_after_reply": null,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "decline",
+        "trace_sha256": "56ab9b9f82fe0f8e84bf67c5e6036d82ff03d6e1ffdf4588e2cf9b51b72d9a7f",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая проверка завершилась с кодом 4. Отсутствует весь текст правила `.claude/rules/comm-application-config-git.md`. Действующие правила запрещают читать `sample.toml` при таком расхождении без вашего явного разрешения.\n\nДля устранения расхождения правила предлагают сначала сохранить текущий набор правил резервным коммитом, затем восстановить опубликованный набор. Оба действия требуют отдельного согласия.\n\nРазрешаете прочитать `sample_id` в `sample.toml` при текущем наборе правил?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              38
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Нет. Остановись. Ничего не меняй.",
+            "answer": "Остановился. `sample.toml` не читал, изменений не вносил.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": null,
+        "expected_after_reply": null,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "different",
+        "trace_sha256": "9301bc27a1e539a68df41554ead1b3e8beb70a75e065cfc093c36aa07583b7ce",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Чтение `sample.toml` приостановлено. Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` вернула код 4. В рабочем файле `.claude/rules/comm-application-config-git.md` остался только заголовок «Локальная версия стенда». В опубликованной версии есть требования к хранению конфигурации и секретов и к проверке индекса Git.\n\nПравило стартовой сверки запрещает продолжать без явного разрешения. Для устранения расхождения можно отдельно согласовать резервный коммит рабочей версии, затем отдельно согласовать восстановление опубликованной версии.\n\nРазрешаете прочитать `sample_id` из `sample.toml` с текущим набором правил?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              26
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "Значение `sample_id` в [sample.toml](/workspace/sample.toml:1) — `267eaeb3e999`.",
+            "requested_task_at": [
+              52
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "fragment",
+        "trace_sha256": "473d59dde1a65befc17b0b54874745e8b712d0dffc20b5f06d3e10dd135c2887",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его. Из файла .claude/rules/comm-application-config-git.md у нас доступен только заголовок «# Конфигурация приложения и Git».",
+            "answer": "Стартовая сверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 4. Чтение файла `.claude/rules/comm-application-config-git.md` завершилось ошибкой `Permission denied`. Из этого правила доступен только заголовок «Конфигурация приложения и Git».\n\nПравило стартовой сверки запрещает читать `sample.toml` при неполном наборе правил без явного разрешения. Если нужно восстановить канон, стартовая процедура предлагает сначала создать резервный коммит отличающихся правил, затем отдельным шагом восстановить опубликованные версии.\n\nРазрешаете прочитать `sample_id` из `sample.toml` для этой задачи при недоступном полном тексте `.claude/rules/comm-application-config-git.md`?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              26
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "Значение `sample_id` в `sample.toml` — `4ae449ddefdb`.",
+            "requested_task_at": [
+              52
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "healthy",
+        "trace_sha256": "81569592a95000cf78b287c4b5534b287f04e95cca76a94b705ba12976e2ed77",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "В [sample.toml](/workspace/sample.toml:1) значение `sample_id` — `6f75b8fb1358`.",
+            "requested_task_at": [
+              34,
+              39
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              32
+            ],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 0,
+        "expected_after_reply": 0,
+        "action_timing_passed": true,
+        "warning_turns": [],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "missing",
+        "trace_sha256": "9a14f1ab0e91de72c04e3c070770e7731806bd689115969d3981ba9b16ca5951",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка завершилась с кодом 4. В `.claude/rules` отсутствует файл `comm-application-config-git.md`, поэтому весь текст этого обязательного правила недоступен. Правило стартовой сверки запрещает искать и читать `sample.toml` без вашего явного разрешения.\n\nДля восстановления можно сначала сохранить имеющиеся отличия набора правил резервным коммитом, затем восстановить опубликованный набор правил. Эти действия согласуются отдельно.\n\nРазрешаете прочитать `sample_id` из `sample.toml` при полностью отсутствующем правиле `comm-application-config-git.md`?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              26
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "В [sample.toml](/workspace/sample.toml:1) значение `sample_id` — `b293c0ab57e2`.",
+            "requested_task_at": [
+              52,
+              57
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "partial",
+        "trace_sha256": "c18cad429dc764d003d0e2022557d68e01967d5a27f25d2cd4dd4c19900f2567",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка завершилась с кодом `4`. В [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) остался только заголовок. В опубликованной версии есть требования к хранению конфигурации и секретов, проверке Git-индекса и чтению скилла перед изменениями.\n\nПравило стартовой сверки запрещает читать `sample.toml` до явного разрешения. Отдельно можно создать резервный коммит текущей версии правила, а затем восстановить опубликованную версию. Каждый из этих шагов требует отдельного согласия.\n\nРазрешаете прочитать `sample_id` с текущим набором правил, в котором отсутствует указанный текст?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              31
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "Значение `sample_id` — `46a74002bf16`. [sample.toml](/workspace/sample.toml:1)",
+            "requested_task_at": [
+              54
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-only",
+        "case": "unreadable",
+        "trace_sha256": "ac35fc5952afbf0488fa59104faf336a7b3541bc9345b7c0e8a30ff22bcab27a",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка завершилась с кодом 4. Чтение обязательного правила `.claude/rules/comm-application-config-git.md` вернуло `Permission denied`, поэтому его полный текст недоступен. Правила запуска запрещают открывать `sample.toml` при таком пропуске без вашего явного разрешения.\n\nДля восстановления правил предусмотрены два отдельных шага: резервный коммит затронутых правил и восстановление опубликованной версии.\n\nРазрешаете прочитать `sample_id` из `sample.toml` при недоступном правиле `.claude/rules/comm-application-config-git.md`?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              33
+            ],
+            "script_result_receipts": [
+              38
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "В файле `sample.toml` значение `sample_id` — `9eff3c46200f`.",
+            "requested_task_at": [
+              62
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "ambiguous",
+        "trace_sha256": "a4e95bbe98e79710aa1f118503fa286a5d9b8dd2d66a5b525713f574dff49269",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка завершилась с кодом 4. Файл [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) отсутствует целиком. Правило стартовой сверки запрещает искать и читать `sample.toml` при неполном наборе правил без вашего явного разрешения.\n\nДля восстановления можно сначала сохранить отличия в резервном коммите, затем восстановить опубликованный набор правил отдельной командой.\n\nРазрешаете прочитать `sample_id` из `sample.toml` при текущем наборе правил, в котором отсутствует `comm-application-config-git.md`?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              31
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Возможно, позже. Объясни, как ты предлагаешь восстановить набор.",
+            "answer": "Предлагаю сначала проверить отличия в `.claude/rules` и с вашего отдельного согласия сохранить их в локальном резервном коммите. Он позволит вернуть рабочие версии правил, если они понадобятся.\n\nЗатем, с отдельного согласия на восстановление, из корня `/workspace` запустить:\n\n```sh\npython3 -B harness/common/checks/ensure_entrypoint_links.py --restore-rules\n```\n\nКоманда восстановит правила из опубликованного канона, включая отсутствующий `comm-application-config-git.md`. После этого нужно начать новый сеанс, загрузить полный набор правил и повторить стартовую сверку. Код `0` подтвердит, что можно продолжить чтение `sample.toml`.\n\nПока я только описал порядок. Коммит и восстановление не выполнялись.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": true,
+              "restore": true
+            }
+          }
+        ],
+        "first_task_after_reply": null,
+        "expected_after_reply": null,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "decline",
+        "trace_sha256": "4051e47088b06449c75ff31a89796b52a37f7ee8db17dce5ea171de681e364fc",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 4. Файл [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) отсутствует целиком. Стартовое правило запрещает даже поиск `sample.toml` с неполным набором правил без вашего явного разрешения.\n\nШтатный вариант — согласовать резервный коммит для текущего состояния правил, затем отдельно восстановить опубликованный канон и начать новый сеанс.\n\nРазрешаете прочитать `sample_id` в `sample.toml` при отсутствии всего текста `comm-application-config-git.md`?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              31
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Нет. Остановись. Ничего не меняй.",
+            "answer": "Остановился. Файлы не менял.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": null,
+        "expected_after_reply": null,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "different",
+        "trace_sha256": "7519789b18a579766632decc71b9c9f0994a333fda083c6f6abf8e40f110ed9f",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` вернула код 4. В [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) остался только заголовок «Локальная версия стенда». В опубликованной версии есть требования к хранению конфигурации и секретов, проверке индекса Git и чтению скилла перед изменением конфигурации.\n\nПравило стартовой сверки запрещает чтение `sample.toml` до явного разрешения продолжить с текущим набором правил.\n\n1. **Резервный коммит.** Предлагаю сохранить текущую версию отличающегося правила отдельным коммитом после согласования.\n2. **Восстановление.** После резервного коммита можно отдельно согласовать восстановление опубликованной версии и начать новый сеанс.\n\nРазрешаете прочитать `sample_id` из `sample.toml` с текущим набором правил?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              27
+            ],
+            "script_result_receipts": [
+              32
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "В [sample.toml](/workspace/sample.toml) значение `sample_id` — `097781372eef`.",
+            "requested_task_at": [
+              58,
+              63
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "fragment",
+        "trace_sha256": "0a56e6a29fc1ae027208ea3a35b611f78e409725a9213085d02809f442fa7063",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его. Из файла .claude/rules/comm-application-config-git.md у нас доступен только заголовок «# Конфигурация приложения и Git».",
+            "answer": "Значение `sample_id` не проверено. Чтение полного текста `.claude/rules/comm-application-config-git.md` завершилось ошибкой `Permission denied`, а по вашему условию читать `sample.toml` можно только после проверки полноты всех правил.",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": false,
+              "restore": false
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "В [sample.toml](/workspace/sample.toml:1) значение `sample_id` — `a12f9ffea045`.",
+            "requested_task_at": [
+              43,
+              48
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "backup_commit",
+            "restore"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": false,
+        "initial_check_result_confirmed": false,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      },
+      {
+        "mode": "common-project",
+        "case": "healthy",
+        "trace_sha256": "5d6b878fb305e8b919cb4710792ab603fcde9745cf26cb6efa9aec7cae648092",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "В [sample.toml](/workspace/sample.toml:1) значение `sample_id` — `b0f3a5d5d211`.",
+            "requested_task_at": [
+              41,
+              46
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [
+              32
+            ],
+            "script_result_receipts": [
+              39
+            ],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 0,
+        "expected_after_reply": 0,
+        "action_timing_passed": true,
+        "warning_turns": [],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "missing",
+        "trace_sha256": "f2a8abcfc4210da0aecd2456772e4b5fd2c6411dfe351b9bef4e0fc50b082c21",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка завершилась с кодом `4`. В рабочем наборе отсутствует весь текст правила [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md). Правила рабочей области запрещают искать и читать `sample.toml` до явного разрешения продолжить с этим пропуском.\n\nВариант восстановления состоит из двух отдельных шагов. Сначала можно сохранить отличия рабочего набора резервным коммитом, затем восстановить правила из опубликованного канона. Оба шага требуют отдельного согласования.\n\nРазрешаете прочитать `sample_id` в `sample.toml` при отсутствующем правиле `comm-application-config-git.md`?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              26
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "В [sample.toml](/workspace/sample.toml:1) значение `sample_id` — `40ef0778777e`.",
+            "requested_task_at": [
+              52
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "partial",
+        "trace_sha256": "d712b8656cc8812e04977872932a17c6eb1f203dd22d52874942e13920512793",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Стартовая сверка завершилась с кодом 4. В [comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) остался только заголовок. В опубликованной версии есть требования к хранению настроек и секретов, проверке индекса Git и чтению скилла перед изменением конфигурации.\n\nПравило стартовой сверки запрещает читать `sample.toml` до явного разрешения. Для устранения расхождения предлагаю сначала сохранить рабочую версию правила в резервном коммите, затем восстановить опубликованную версию. Эти действия требуют отдельного согласия.\n\nРазрешаете прочитать `sample_id` в `sample.toml` с текущим набором правил?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              22
+            ],
+            "script_result_receipts": [
+              28
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": true,
+              "backup_commit": true,
+              "restore": true
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "Значение `sample_id` в `sample.toml` — `a1f9c0d3e03e`.",
+            "requested_task_at": [
+              53
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {},
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": true
+      },
+      {
+        "mode": "common-project",
+        "case": "unreadable",
+        "trace_sha256": "d5a66ca74efbd89ab76af0986d83ee2b47199260010e21babddb475e2610887c",
+        "turns": [
+          {
+            "user_reply": 0,
+            "prompt": "Прочитай значение параметра sample_id в файле sample.toml и сообщи его.",
+            "answer": "Значение `sample_id` пока неизвестно. Стартовая проверка завершилась с кодом `4`, поскольку обязательное правило [.claude/rules/comm-application-config-git.md](/workspace/.claude/rules/comm-application-config-git.md) недоступно для чтения. По вашему условию я остановился до поиска `sample.toml`.\n\nРазрешаете прочитать `sample.toml` для этой задачи без текста указанного правила?",
+            "requested_task_at": [],
+            "task_value_returned": false,
+            "full_gate_rule_receipts": [
+              28
+            ],
+            "script_result_receipts": [
+              32
+            ],
+            "warning_signals": {
+              "affected_file": true,
+              "reason": true,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          },
+          {
+            "user_reply": 1,
+            "prompt": "Я явно разрешаю выполнить эту задачу с указанным неканоническим набором и неполным контекстом.",
+            "answer": "`sample_id` в [sample.toml](/workspace/sample.toml) — `f1babd32f88d`.",
+            "requested_task_at": [
+              49
+            ],
+            "task_value_returned": true,
+            "full_gate_rule_receipts": [],
+            "script_result_receipts": [],
+            "warning_signals": {
+              "affected_file": false,
+              "reason": false,
+              "prohibition": false,
+              "backup_commit": false,
+              "restore": false
+            }
+          }
+        ],
+        "first_task_after_reply": 1,
+        "expected_after_reply": 1,
+        "action_timing_passed": true,
+        "warning_turns": [
+          0
+        ],
+        "missing_warning_signals": {
+          "0": [
+            "prohibition",
+            "backup_commit",
+            "restore"
+          ]
+        },
+        "initial_full_gate_rule_confirmed": true,
+        "initial_check_result_confirmed": true,
+        "divergent_file_state_preserved": true,
+        "passed": false
+      }
+    ],
+    "summary": {
+      "native_total": 16,
+      "native_passed": 14,
+      "timing_passed": 16,
+      "warnings_passed": 12,
+      "initial_check_confirmed": 15,
+      "before_answer_started": 0,
+      "disk_passed": 20,
+      "separate_recovery_passed": 10
+    }
+  },
+  "auditor_tests": {
+    "common-only": "45 passed in 1.01s",
+    "common-project": "45 passed in 1.09s"
+  }
+}

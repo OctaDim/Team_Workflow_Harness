@@ -1,4 +1,5 @@
 """Check the harness installation and recover working files from its published packages."""
+import argparse
 import hashlib
 import json
 import os
@@ -20,6 +21,7 @@ PROTECTED = ('AGENTS.md', 'CLAUDE.md')
 PACKAGES = (('common', 'comm-'), ('project', 'proj-'))
 SKILL_CLIENTS = ('.agents/skills', '.claude/skills')
 RESTART_REQUIRED = 3
+RULE_MISMATCH = 4
 MAP_LABELS = {
     'rules': 'Always loaded правила проекта',
     'skills': 'Контекстные lazy скиллы и рабочий опыт проекта',
@@ -281,27 +283,75 @@ def canonical_rules(root):
     return sources
 
 
+class RuleMismatch(ValueError):
+    """The working always loaded rules differ from their published sources."""
+
+
 def rule_destinations(root):
     sources = canonical_rules(root)
     native = ordinary_directory(root / '.claude/rules', root)
     copies = {native / name: source for name, source in sources.items()}
     for file, is_dir in entries(native):
         if not is_dir and file.suffix.lower() == '.md' and file not in copies:
-            raise ValueError(f'Unmanaged native rule: {file}; stop and resolve through INBOX.')
+            raise RuleMismatch(f'Unmanaged native rule: {file}; stop and resolve through INBOX.')
     return copies
 
 
-def check_rule_copies(root):
-    """Read-only verifier retained for installed callers and diagnostics."""
-    copies = rule_destinations(root)
-    for target, source in copies.items():
-        expected = require_file(source, root)[0]
-        if not decode_text(source, expected).strip():
+def rule_snapshots(root, *, collect_read_errors=False):
+    """Collect matching sources and working copies without modifying either tree."""
+    snapshots = {}
+    differences = []
+    for target, source in rule_destinations(root).items():
+        expected = require_file(source, root)
+        if not decode_text(source, expected[0]).strip():
             raise ValueError(f'Empty canonical rule: {source}')
-        actual = snapshot_input(target, root)
-        if actual is None or actual[0] != expected:
-            raise ValueError(f'Missing or different rule copy: {target}')
-    return len(copies)
+        try:
+            actual = snapshot_input(target, root)
+        except PermissionError as error:
+            if not collect_read_errors:
+                raise
+            differences.append(f'Cannot read rule copy: {target} ({error.strerror})')
+            continue
+        snapshots[target] = (source, expected, actual)
+        if actual is None or actual[0] != expected[0]:
+            reason = 'absent' if actual is None else 'bytes differ'
+            differences.append(f'Missing or different rule copy: {target} ({reason}; canonical: {source})')
+    return snapshots, differences
+
+
+def check_rule_copies(root):
+    """Verify published rule copies without writing files or loading client entrypoints."""
+    check_publication_marker(root)
+    snapshots, differences = rule_snapshots(root, collect_read_errors=True)
+    check_publication_marker(root)
+    if differences:
+        raise RuleMismatch('\n'.join(differences))
+    return len(snapshots)
+
+
+def restore_rule_copies(root):
+    """Restore managed always loaded rules only, after an explicit recovery request."""
+    with root_lock(root):
+        check_publication_marker(root)
+        snapshots, _ = rule_snapshots(root)
+        repairs = {target: state for target, state in snapshots.items()
+                   if state[2] is None or state[1][0] != state[2][0]}
+        if repairs:
+            print('Восстановление рабочих always loaded правил из опубликованного канона.', flush=True)
+        changed = []
+        for target, (source, expected, actual) in repairs.items():
+            try:
+                if snapshot_input(source, root) != expected:
+                    raise ValueError(f'Canonical file changed before recovery: {source}')
+                ordinary_directory(target.parent, root).mkdir(parents=True, exist_ok=True)
+                replace_input(target, actual, expected[0], root, expected[1][-1])
+                changed.append(target)
+            except (OSError, ValueError) as error:
+                updated = ', '.join(map(str, changed)) or 'none'
+                pending = ', '.join(str(path) for path in repairs if path not in changed)
+                raise ValueError(f'{error}; already updated: {updated}; pending: {pending}') from error
+        check_rule_copies(root)
+        return changed
 
 
 def skill_destinations(root):
@@ -350,13 +400,17 @@ def protected_difference(path, actual, expected):
             'Resolve through INBOX.')
 
 
+def check_publication_marker(root):
+    marker = ordinary_path(root / PUBLICATION_MARKER)
+    if marker.exists():
+        raise ValueError(f'Unfinished publication: {marker}; resume the approved INBOX request.')
+
+
 def ensure(root):
     print(WARNING, flush=True)
     root = ordinary_directory(Path(root), root)
     with root_lock(root):
-        marker = ordinary_path(root / PUBLICATION_MARKER)
-        if marker.exists():
-            raise ValueError(f'Unfinished publication: {marker}; resume the approved INBOX request.')
+        check_publication_marker(root)
         script = ordinary_path(__file__)
         if not script.is_file():
             raise ValueError(f'Unsafe checker path: {script}')
@@ -446,14 +500,22 @@ def ensure(root):
 
 
 def main():
-    if len(sys.argv) > 2:
-        print('Usage: python3 ensure_entrypoint_links.py [project-root]', file=sys.stderr)
-        return 2
+    parser = argparse.ArgumentParser(description=__doc__)
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--check-rules', action='store_true', help='Compare rule copies without writing.')
+    modes.add_argument('--restore-rules', action='store_true', help='Recover managed rule copies only.')
+    parser.add_argument('project_root', nargs='?', type=Path, default=Path.cwd())
+    args = parser.parse_args()
+    root = args.project_root.absolute()
     try:
-        changed = ensure(Path(sys.argv[1]) if len(sys.argv) == 2 else Path.cwd())
+        if args.check_rules:
+            count = check_rule_copies(root)
+            print(f'Rule copies match the published canon: {count}')
+            return 0
+        changed = restore_rule_copies(root) if args.restore_rules else ensure(root)
     except (ImportError, OSError, UnicodeError, ValueError) as error:
         print(f'Entrypoint check failed: {error}', file=sys.stderr)
-        return 2
+        return RULE_MISMATCH if (args.check_rules or args.restore_rules) and isinstance(error, RuleMismatch) else 2
     if changed:
         print('Entrypoint check completed. Изменены: ' + ', '.join(map(str, changed)))
         print('Начните новую сессию: восстановленный контекст должен загрузиться до задачи.')

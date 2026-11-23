@@ -1,0 +1,774 @@
+{
+  "client": "Codex CLI 0.166.0",
+  "candidate_tree": "f40a71ae4004bdda2b17f524e8890afb1b9e6ae0",
+  "owner": "harness/common/rules/comm-entrypoint-links-rule.md",
+  "sha256": "ef4130553a681a18766926549ff1fe61a29364d12446c57349d5074fa920f448",
+  "command": "python3 -B harness/common/checks/ensure_entrypoint_links.py",
+  "rule_size": {
+    "words": 289,
+    "unicode_characters": 2419,
+    "plugin_eval_0.1.2_estimated_tokens": 605
+  },
+  "prompts": {
+    "read": "Найди в проекте файл app.toml и прочитай значение timeout. Сообщи значение.",
+    "explicit_read_only": "Только чтение. Найди в проекте файл app.toml и сообщи значение timeout. Файлы приложения оставь без изменений."
+  },
+  "method": "Новые независимые сеансы, рабочий каталог /workspace. Номера событий в JSONL начинаются с нуля. startup_call — запрос запуска, startup_result — выдача инструмента в контекст, first_task_request — первый запрос поиска или чтения файлов задачи. null означает отсутствие события. Для исправного harness нужен код 0 до запроса поиска, выдачи в общем вызове не засчитываются. Для восстановления нужен код 3, остановка и сообщение о новом сеансе, байты из канона. Для конфликта нужен код 2, исходные байты, сообщение с командой, путём, причиной и INBOX. В стенде восстановления в INBOX лежала отличная версия ресурса. Рабочий каталог разрешён для записи, профиль клиента защищает .agents. Для команды с пустым выводом достаточно кода 0. Отдельный нативный прогон с пустым выводом не проводился.",
+  "previous_100": {
+    "success_unconfirmed": 13,
+    "cause_demonstrated": 1,
+    "detail": "Только в контрольном сеансе comm-commit-task-stages агент объяснил пропуск возможной записью. Причины остальных 12 не установлены."
+  },
+  "direct": [
+    {
+      "mode": "common-only",
+      "case": "healthy",
+      "exit": 0
+    },
+    {
+      "mode": "common-only",
+      "case": "restore",
+      "exit": 3,
+      "restored_sha256": "072850b049b46ad1e8ca6fdc9f96cbdc5126639722a380d1612ad31130880c20"
+    },
+    {
+      "mode": "common-only",
+      "case": "restart",
+      "exit": 0
+    },
+    {
+      "mode": "common-only",
+      "case": "AGENTS",
+      "exit": 2,
+      "existing_entrypoint_preserved": true
+    },
+    {
+      "mode": "common-only",
+      "case": "CLAUDE",
+      "exit": 2,
+      "existing_entrypoint_preserved": true
+    },
+    {
+      "mode": "common-project",
+      "case": "healthy",
+      "exit": 0
+    },
+    {
+      "mode": "common-project",
+      "case": "restore",
+      "exit": 3,
+      "restored_sha256": "072850b049b46ad1e8ca6fdc9f96cbdc5126639722a380d1612ad31130880c20"
+    },
+    {
+      "mode": "common-project",
+      "case": "restart",
+      "exit": 0
+    },
+    {
+      "mode": "common-project",
+      "case": "AGENTS",
+      "exit": 2,
+      "existing_entrypoint_preserved": true
+    },
+    {
+      "mode": "common-project",
+      "case": "CLAUDE",
+      "exit": 2,
+      "existing_entrypoint_preserved": true
+    }
+  ],
+  "pytest_per_mode": 192,
+  "earlier_editions": [
+    {
+      "rule_sha256": "960d1302c09e8a473cd55952b45e449ee758d1fff6466d894670de7d925ff0f7",
+      "runs": 8,
+      "passed": 1,
+      "summary": [
+        {
+          "installation": "common-only",
+          "case": "AGENTS",
+          "prompt": "explicit_read_only",
+          "exit": 2,
+          "startup_call": 22,
+          "startup_result": 25,
+          "first_task_request": null,
+          "pass_contract": false,
+          "trace_sha256": "7c2f3c3de8c15c279f45e100c6e76b8b6963c95ec6bbafb22b47ba40f1c51ec9"
+        },
+        {
+          "installation": "common-only",
+          "case": "CLAUDE",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 27,
+          "pass_contract": false,
+          "trace_sha256": "59c87d581d447820161e09f13ab378771576a635dd5bcd7059146d992e633632"
+        },
+        {
+          "installation": "common-only",
+          "case": "healthy",
+          "prompt": "explicit_read_only",
+          "exit": 0,
+          "startup_call": 43,
+          "startup_result": 46,
+          "first_task_request": 48,
+          "pass_contract": true,
+          "trace_sha256": "6249b30507f6990dfe262aaaf05be970b7e76630e8160972347ef8ed5990ef6a"
+        },
+        {
+          "installation": "common-only",
+          "case": "restore",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": null,
+          "pass_contract": false,
+          "trace_sha256": "68cee714138636933d1a878b84e709f49ce8ae173a6ed8f42e71efef11678e56"
+        },
+        {
+          "installation": "common-project",
+          "case": "AGENTS",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 43,
+          "pass_contract": false,
+          "trace_sha256": "d7c35a310fad9122ac0cda852a38a208441e56814af065f60edfb7ba24c029fc"
+        },
+        {
+          "installation": "common-project",
+          "case": "CLAUDE",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 31,
+          "pass_contract": false,
+          "trace_sha256": "c3ad6de932739b80c36f564ed1327ce43a1ac6e75b715db04818a3e98960954f"
+        },
+        {
+          "installation": "common-project",
+          "case": "healthy",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 32,
+          "pass_contract": false,
+          "trace_sha256": "a54f01d300c840d62d70915514089e55d696e11a4e4f7fb4cab4a8a6cfc73bec"
+        },
+        {
+          "installation": "common-project",
+          "case": "restore",
+          "prompt": "explicit_read_only",
+          "exit": 2,
+          "startup_call": 48,
+          "startup_result": 51,
+          "first_task_request": null,
+          "pass_contract": false,
+          "trace_sha256": "9ec4e04b8d5f07bc700faba93b0d70a1cdcd3925230c57944cd8188e881a1b24"
+        }
+      ]
+    },
+    {
+      "rule_sha256": "dc9a4972072a23a9760f7de0ce57cba51f65f9ad9e84645086d47af7117aecd8",
+      "runs": 16,
+      "passed": 6,
+      "summary": [
+        {
+          "installation": "common-only",
+          "case": "AGENTS",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 22,
+          "pass_contract": false,
+          "trace_sha256": "653f7dacfa56faadc91a4c618ee1544ec8bb6b2c67503c96c1229575ca666812"
+        },
+        {
+          "installation": "common-only",
+          "case": "CLAUDE",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 22,
+          "pass_contract": false,
+          "trace_sha256": "7628c9b57707e26cd5920ef90536cc5fbcce06ec9e065cbd65b0716648b7c54d"
+        },
+        {
+          "installation": "common-only",
+          "case": "healthy",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 22,
+          "pass_contract": false,
+          "trace_sha256": "24b3eb166385f0972199b1ec27a14f682eb6c00d00ac9e325785c4ae3d1ef9f7"
+        },
+        {
+          "installation": "common-only",
+          "case": "restore",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 26,
+          "pass_contract": false,
+          "trace_sha256": "b6b3f04ee4f0e10ce7a79253e9cf5de2ca75511fec7ee97e144eda67f34c8427"
+        },
+        {
+          "installation": "common-project",
+          "case": "AGENTS",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": null,
+          "pass_contract": false,
+          "trace_sha256": "180cf09eb02eb88ac552308ce9409195f6610c5e5bb02527a37f6e51214451ee"
+        },
+        {
+          "installation": "common-project",
+          "case": "CLAUDE",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 26,
+          "pass_contract": false,
+          "trace_sha256": "67e561b8b445ce0fe38e08de70dd7b08f173a8398ffe007d7f5bf87da876ece3"
+        },
+        {
+          "installation": "common-project",
+          "case": "healthy",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 26,
+          "pass_contract": false,
+          "trace_sha256": "bbb7718f99cd7273dfa1bf8953b54f62b157d2a5cea5f60612189624550fc759"
+        },
+        {
+          "installation": "common-project",
+          "case": "restore",
+          "prompt": "explicit_read_only",
+          "exit": null,
+          "startup_call": null,
+          "startup_result": null,
+          "first_task_request": 26,
+          "pass_contract": false,
+          "trace_sha256": "d6891fde8ca4f8c8a4b42ca72acbdfe543586de2af3de3a2503a357ecdd990bb"
+        },
+        {
+          "installation": "common-only",
+          "case": "AGENTS",
+          "prompt": "read",
+          "exit": 2,
+          "startup_call": 31,
+          "startup_result": 34,
+          "first_task_request": null,
+          "pass_contract": true,
+          "trace_sha256": "a751f7e14bea99115f6c1ee3d2933958e72c7198fe54c17883a915178d7543f7"
+        },
+        {
+          "installation": "common-only",
+          "case": "CLAUDE",
+          "prompt": "read",
+          "exit": 2,
+          "startup_call": 26,
+          "startup_result": 29,
+          "first_task_request": null,
+          "pass_contract": true,
+          "trace_sha256": "15f3ac960bec6889615a141428412c4fdc4504afc6dede5edf1525e04a7d3157"
+        },
+        {
+          "installation": "common-only",
+          "case": "healthy",
+          "prompt": "read",
+          "exit": 0,
+          "startup_call": 34,
+          "startup_result": 37,
+          "first_task_request": 39,
+          "pass_contract": true,
+          "trace_sha256": "cb0992f55022599ce2d76e847c1d8c371e5c110df37854275edcc8b0126ce514"
+        },
+        {
+          "installation": "common-only",
+          "case": "restore",
+          "prompt": "read",
+          "exit": 2,
+          "startup_call": 29,
+          "startup_result": 32,
+          "first_task_request": null,
+          "pass_contract": false,
+          "trace_sha256": "ebd7042417245631616079c1360867371b0a32e764501df6f01a5a14c42eeb13"
+        },
+        {
+          "installation": "common-project",
+          "case": "AGENTS",
+          "prompt": "read",
+          "exit": 2,
+          "startup_call": 36,
+          "startup_result": 39,
+          "first_task_request": null,
+          "pass_contract": true,
+          "trace_sha256": "74dc55f7dcf75e99bda00cb73320f0c645aa8f64a1b0e75ee8627c9aefe9f350"
+        },
+        {
+          "installation": "common-project",
+          "case": "CLAUDE",
+          "prompt": "read",
+          "exit": 2,
+          "startup_call": 34,
+          "startup_result": 37,
+          "first_task_request": null,
+          "pass_contract": true,
+          "trace_sha256": "7dee1a45f20d4285a37d8e831772522dd6526f25690ec16b9943966e2715531a"
+        },
+        {
+          "installation": "common-project",
+          "case": "healthy",
+          "prompt": "read",
+          "exit": 0,
+          "startup_call": 25,
+          "startup_result": 28,
+          "first_task_request": 30,
+          "pass_contract": true,
+          "trace_sha256": "1d5c66ba9bc3f469e54aa6925b18f3afee112f8d6b2dda84221ddb9ea1fd05d7"
+        },
+        {
+          "installation": "common-project",
+          "case": "restore",
+          "prompt": "read",
+          "exit": 2,
+          "startup_call": 20,
+          "startup_result": 23,
+          "first_task_request": null,
+          "pass_contract": false,
+          "trace_sha256": "80ae4075af5823726cb64a349cd5014c668206eb16e4384a139334554af9d17d"
+        }
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "installation": "common-only",
+      "case": "AGENTS",
+      "working_path": null,
+      "prompt": "explicit_read_only",
+      "startup_call": 43,
+      "startup_result": 46,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Protected entrypoint differs: /workspace/AGENTS.md; first differing byte offset 549. Canonical: 549 bytes, SHA-256 212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24; observed: 573 bytes, SHA-256 0ab6df6ec28e79e1b256fc3b13bdddb9091dd8ddacaa81d459441ba2a7be7354. Resolve through INBOX.\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": true,
+      "reported_inbox": true,
+      "answer": "Поиск `app.toml` остановился на обязательной проверке `python3 -B harness/common/checks/ensure_entrypoint_links.py`. Файл `AGENTS.md` на 24 байта длиннее шаблона, первое расхождение на смещении 549. По правилам проекта это расхождение рассматривается через INBOX.\n\nЗначение `timeout` не проверено. Файлы приложения остались без изменений.",
+      "pass_contract": true,
+      "trace_sha256": "3b3628b49112783d18c2a8f2030b3a7685facdaad02ddc706b91bb748b23928a",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-only",
+      "case": "CLAUDE",
+      "working_path": null,
+      "prompt": "explicit_read_only",
+      "startup_call": 49,
+      "startup_result": 52,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Protected entrypoint differs: /workspace/CLAUDE.md; first differing byte offset 0. Canonical: 0 bytes, SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855; observed: 24 bytes, SHA-256 f5754c0b5fd383716052226296c1ccb77299cc77ff6199ed331bbd855a35e28f. Resolve through INBOX.\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": true,
+      "reported_inbox": true,
+      "answer": "Значение `timeout` не удалось проверить. Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 2: защищённый [CLAUDE.md](/workspace/CLAUDE.md) содержит 24 байта, а канонический шаблон пуст. Правила проекта требуют устранить расхождение через INBOX до поиска `app.toml`.",
+      "pass_contract": true,
+      "trace_sha256": "8dbf03d2da755086e6521b89545023ce3e39d8ded64599d80a41b3260b650f93",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-only",
+      "case": "healthy",
+      "working_path": null,
+      "prompt": "explicit_read_only",
+      "startup_call": null,
+      "startup_result": null,
+      "exit": null,
+      "first_task_request": 26,
+      "task_command_or_search": "text(await tools.exec_command({cmd:\"rg --files --hidden --no-ignore -g app.toml -g '!README.human.md' -g '!.git' -g '!**/inbox/**' -g '!**/evidence/**' .\",login:false}))\n",
+      "startup_shell": [],
+      "startup_output": [],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "В [app.toml](/workspace/app.toml:1) задано `timeout = 20`. Файлы остались без изменений.",
+      "pass_contract": false,
+      "trace_sha256": "8ca4c01472ddbcbba62bc5b0b209d1e2003d2336768715886918dfd80f54d7f5",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-only",
+      "case": "restore",
+      "working_path": ".agents/skills/comm-select-development-workflow/references/menu.md",
+      "prompt": "explicit_read_only",
+      "startup_call": null,
+      "startup_result": null,
+      "exit": null,
+      "first_task_request": 31,
+      "task_command_or_search": "text(await tools.exec_command({login:false,cmd:\"sed -n '66,125p;448,530p' harness/common/checks/ensure_entrypoint_links.py; rg --files --hidden --no-ignore -g app.toml -g '!README.human.md' -g '!.git' -g '!**/inbox/**' -g '!**/evidence/**'\"}))\n",
+      "startup_shell": [],
+      "startup_output": [],
+      "restored_from_canonical": false,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "В [app.toml](/workspace/app.toml:1) задано `timeout = 20`.\n\nСтартовую проверку пропустил, поскольку она может записывать файлы, а вы запросили режим только чтения.",
+      "pass_contract": false,
+      "trace_sha256": "c2cacacceb19028d2a482ae96a83213c835122275be1f8d05db564fbad3cf92f",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-project",
+      "case": "AGENTS",
+      "working_path": null,
+      "prompt": "explicit_read_only",
+      "startup_call": 50,
+      "startup_result": 53,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Protected entrypoint differs: /workspace/AGENTS.md; first differing byte offset 549. Canonical: 549 bytes, SHA-256 212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24; observed: 573 bytes, SHA-256 0ab6df6ec28e79e1b256fc3b13bdddb9091dd8ddacaa81d459441ba2a7be7354. Resolve through INBOX.\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": true,
+      "reported_inbox": true,
+      "answer": "Значение `timeout` не определено. Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` остановилась до поиска `app.toml`: в [AGENTS.md](/workspace/AGENTS.md) после 549 байт шаблона есть 24 дополнительных байта. По правилам проекта расхождение рассматривается через INBOX. Файлы остались без изменений.",
+      "pass_contract": true,
+      "trace_sha256": "68915df12b2c4ea4f48f8fb20761a7b5c6272c63ce88f0fcf084d44f37afdb88",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-project",
+      "case": "CLAUDE",
+      "working_path": null,
+      "prompt": "explicit_read_only",
+      "startup_call": 34,
+      "startup_result": 37,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\n/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Protected entrypoint differs: /workspace/CLAUDE.md; first differing byte offset 0. Canonical: 0 bytes, SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855; observed: 24 bytes, SHA-256 f5754c0b5fd383716052226296c1ccb77299cc77ff6199ed331bbd855a35e28f. Resolve through INBOX.\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": true,
+      "reported_inbox": true,
+      "answer": "Поиск `app.toml` остановлен до чтения файлов приложения. Обязательная проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 2. В [CLAUDE.md](/workspace/CLAUDE.md) 24 байта, а канонический шаблон пуст. По правилам проекта это расхождение нужно урегулировать через `harness/common/inbox/`.\n\nЗначение `timeout` не проверено. Файлы приложения остались без изменений.",
+      "pass_contract": true,
+      "trace_sha256": "4eff3af24c462811dfba54c86ead7c1296dcc8072cebb9a3349dce4dff31478b",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-project",
+      "case": "healthy",
+      "working_path": null,
+      "prompt": "explicit_read_only",
+      "startup_call": 38,
+      "startup_result": 41,
+      "exit": 0,
+      "first_task_request": 43,
+      "task_command_or_search": "text(await tools.exec_command({login:false,cmd:\"rg --files --hidden --no-ignore -g 'app.toml' -g '!.git' -g '!README.human.md' -g '!**/inbox/**' -g '!**/evidence/**'\"}))\n",
+      "startup_shell": [
+        "bwrap --ro-bind / / --chdir /workspace python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "В [app.toml](/workspace/app.toml:1) указано `timeout = 20`.",
+      "pass_contract": true,
+      "trace_sha256": "afe7f7a9e3d4872a0ff0cadd7f57fe5454fa55ad5afb87ae1685e3825cbfbb44",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-project",
+      "case": "restore",
+      "working_path": ".agents/skills/comm-select-development-workflow/references/menu.md",
+      "prompt": "explicit_read_only",
+      "startup_call": 31,
+      "startup_result": 34,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "for p in harness harness/common harness/common/checks harness/common/checks/ensure_entrypoint_links.py; do if test -L \"$p\"; then printf 'Симлинк: %s\\n' \"$p\"; exit 1; fi; done\npython3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check failed: [Errno 30] Read-only file system: '/workspace/.agents/skills/comm-select-development-workflow/references/.menu.md-jznru0bm'; already updated: none; pending: /workspace/.agents/skills/comm-select-development-workflow/references/menu.md\n"
+      ],
+      "restored_from_canonical": false,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "До поиска `app.toml` не дошёл. Обязательная проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 2: файловая система доступна только для чтения, поэтому проверка не смогла восстановить `.agents/skills/comm-select-development-workflow/references/menu.md`.\n\nЗначение `timeout` не установлено. Файлы приложения не изменялись.",
+      "pass_contract": false,
+      "trace_sha256": "2089f4f11db4291abdac857c1e759b46453fea6de3af62e45096838a92a4053f",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-only",
+      "case": "restore",
+      "working_path": ".claude/skills/comm-select-development-workflow/references/menu.md",
+      "prompt": "read",
+      "startup_call": 34,
+      "startup_result": 37,
+      "exit": 3,
+      "first_task_request": null,
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check completed. Изменены: /workspace/.claude/skills/comm-select-development-workflow/references/menu.md\nНачните новую сессию: восстановленный контекст должен загрузиться до задачи.\n"
+      ],
+      "restored_from_canonical": true,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "Значение `timeout` пока не прочитано. Обязательная стартовая проверка завершилась с кодом 3, восстановила [menu.md](/workspace/.claude/skills/comm-select-development-workflow/references/menu.md) и потребовала начать новую сессию перед поиском `app.toml`.",
+      "pass_contract": true,
+      "trace_sha256": "340a97b3d3e23e2f38e3b73f4f27e32d2a002fa1017799bf8b930aceed54f20c",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-project",
+      "case": "restore",
+      "working_path": ".claude/skills/comm-select-development-workflow/references/menu.md",
+      "prompt": "read",
+      "startup_call": 29,
+      "startup_result": 32,
+      "exit": 3,
+      "first_task_request": null,
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check completed. Изменены: /workspace/.claude/skills/comm-select-development-workflow/references/menu.md\nНачните новую сессию: восстановленный контекст должен загрузиться до задачи.\n"
+      ],
+      "restored_from_canonical": true,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "Значение `timeout` пока не прочитано. Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` восстановила [menu.md](/workspace/.claude/skills/comm-select-development-workflow/references/menu.md) и потребовала начать новую сессию. Поиск `app.toml` можно продолжить в новой сессии.",
+      "pass_contract": true,
+      "trace_sha256": "3ef0e0c19fdaff2f6a455b54a5de03a9168b03b95d9ac8cef1e3a0e961c17151",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-only",
+      "case": "AGENTS",
+      "working_path": null,
+      "prompt": "read",
+      "startup_call": 30,
+      "startup_result": 33,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Protected entrypoint differs: /workspace/AGENTS.md; first differing byte offset 549. Canonical: 549 bytes, SHA-256 212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24; observed: 573 bytes, SHA-256 0ab6df6ec28e79e1b256fc3b13bdddb9091dd8ddacaa81d459441ba2a7be7354. Resolve through INBOX.\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": true,
+      "reported_inbox": true,
+      "answer": "Значение `timeout` не прочитано. Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 2: в [AGENTS.md](/workspace/AGENTS.md:3) добавлена строка `# Local fixture marker`. Правила проекта требуют разрешить расхождение через INBOX до поиска `app.toml`.",
+      "pass_contract": true,
+      "trace_sha256": "317e6b73e38496777c33082855bc92262ddef3922c0685b737f1f56b11ef5b0d",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-only",
+      "case": "CLAUDE",
+      "working_path": null,
+      "prompt": "read",
+      "startup_call": 25,
+      "startup_result": 28,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "for path in /workspace harness harness/common harness/common/checks harness/common/checks/ensure_entrypoint_links.py; do\n  if test -L \"$path\"; then\n    printf 'Symlink: %s\\n' \"$path\"\n    exit 1\n  fi\ndone\ntest -f harness/common/checks/ensure_entrypoint_links.py && python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Protected entrypoint differs: /workspace/CLAUDE.md; first differing byte offset 0. Canonical: 0 bytes, SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855; observed: 24 bytes, SHA-256 f5754c0b5fd383716052226296c1ccb77299cc77ff6199ed331bbd855a35e28f. Resolve through INBOX.\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": true,
+      "reported_inbox": true,
+      "answer": "Значение `timeout` не прочитано. Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 2: [CLAUDE.md](/workspace/CLAUDE.md) содержит 24 байта, а канонический шаблон пуст. По правилам проекта это расхождение нужно устранить через INBOX до поиска `app.toml`.",
+      "pass_contract": true,
+      "trace_sha256": "c50963ead854d1a63fb2abe01cddfb03c9e07a65dc515e024c79d7dfeb93f372",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-only",
+      "case": "healthy",
+      "working_path": null,
+      "prompt": "read",
+      "startup_call": 24,
+      "startup_result": 27,
+      "exit": 0,
+      "first_task_request": 29,
+      "task_command_or_search": "text(await tools.exec_command({cmd:\"rg --files --hidden --no-ignore -g app.toml -g '!.git' -g '!README.human.md' -g '!**/inbox/**' -g '!**/evidence/**'\",login:false}))\n",
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "В [app.toml](/workspace/app.toml) задано `timeout = 20`.",
+      "pass_contract": true,
+      "trace_sha256": "aa62db3716c7c113baaba733783fe13c0e715a3a1efe1f9dbdef742977ee9ab3",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-only",
+      "case": "restore",
+      "working_path": ".agents/skills/comm-select-development-workflow/references/menu.md",
+      "prompt": "read",
+      "startup_call": 22,
+      "startup_result": 25,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "namei -l harness/common/checks/ensure_entrypoint_links.py && test ! -L harness && test ! -L harness/common && test ! -L harness/common/checks && test ! -L harness/common/checks/ensure_entrypoint_links.py && python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nf: harness/common/checks/ensure_entrypoint_links.py\ndrwxrwxr-x octadim octadim harness\ndrwxrwxr-x octadim octadim common\ndrwxrwxr-x octadim octadim checks\n-rw-rw-r-- octadim octadim ensure_entrypoint_links.py\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check failed: [Errno 30] Read-only file system: '/workspace/.agents/skills/comm-select-development-workflow/references/.menu.md-ygu_psj9'; already updated: none; pending: /workspace/.agents/skills/comm-select-development-workflow/references/menu.md\n"
+      ],
+      "restored_from_canonical": false,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "Значение `timeout` не удалось прочитать. Обязательная проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 2 при попытке восстановить [menu.md](/workspace/.agents/skills/comm-select-development-workflow/references/menu.md) на файловой системе, доступной только для чтения. По правилам проекта поиск `app.toml` после этой ошибки не запускался.",
+      "pass_contract": false,
+      "trace_sha256": "4f7ca4e992463dcce1f9ae9579418d13e22ebf4b3e638f4f66cc5774788d914a",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-project",
+      "case": "AGENTS",
+      "working_path": null,
+      "prompt": "read",
+      "startup_call": 34,
+      "startup_result": 37,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Protected entrypoint differs: /workspace/AGENTS.md; first differing byte offset 549. Canonical: 549 bytes, SHA-256 212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24; observed: 573 bytes, SHA-256 0ab6df6ec28e79e1b256fc3b13bdddb9091dd8ddacaa81d459441ba2a7be7354. Resolve through INBOX.\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": true,
+      "reported_inbox": true,
+      "answer": "Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` остановилась из-за расхождения в [AGENTS.md](/workspace/AGENTS.md). Первое отличие — на смещении 549 байт. По правилам проекта это расхождение нужно решить через [INBOX](/workspace/harness/common/inbox). До поиска `app.toml` я не дошёл, поэтому значение `timeout` неизвестно.",
+      "pass_contract": true,
+      "trace_sha256": "804c7ce9513624f24d30c0dc724938abbc4a4c800470badc48866e880fc4be42",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-project",
+      "case": "CLAUDE",
+      "working_path": null,
+      "prompt": "read",
+      "startup_call": 24,
+      "startup_result": 27,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "for p in harness harness/common harness/common/checks harness/common/checks/ensure_entrypoint_links.py; do test ! -L \"$p\" || { printf 'Symlink: %s\\n' \"$p\"; exit 1; }; done\npython3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check failed: Protected entrypoint differs: /workspace/CLAUDE.md; first differing byte offset 0. Canonical: 0 bytes, SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855; observed: 24 bytes, SHA-256 f5754c0b5fd383716052226296c1ccb77299cc77ff6199ed331bbd855a35e28f. Resolve through INBOX.\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": true,
+      "reported_inbox": true,
+      "answer": "Значение `timeout` не прочитано. Стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 2: [CLAUDE.md](/workspace/CLAUDE.md) содержит 24 байта, а канонический шаблон пуст. Правила проекта требуют устранить расхождение через INBOX до поиска `app.toml`.",
+      "pass_contract": true,
+      "trace_sha256": "94181a3190fa76e9e7dfeaec5b0a9a1c29fdef03a4d1cbfe54927eb0a0f48143",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-project",
+      "case": "healthy",
+      "working_path": null,
+      "prompt": "read",
+      "startup_call": 20,
+      "startup_result": 23,
+      "exit": 0,
+      "first_task_request": 25,
+      "task_command_or_search": "text(await tools.exec_command({cmd:\"rg --files --hidden --no-ignore -g app.toml -g '!README.human.md' -g '!.git/**' -g '!**/inbox/**' -g '!**/evidence/**'\",login:false}))\n",
+      "startup_shell": [
+        "for p in harness harness/common harness/common/checks harness/common/checks/ensure_entrypoint_links.py; do if test -L \"$p\"; then printf 'Symlink: %s\\n' \"$p\"; exit 1; fi; done\npython3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nEntrypoint check completed\n"
+      ],
+      "restored_from_canonical": null,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "В [app.toml](/workspace/app.toml) значение `timeout` равно `20`.",
+      "pass_contract": true,
+      "trace_sha256": "572371ade871320d40388b2e66d15295cdb7eafc46de3d8198629d2d7848ed63",
+      "rules_expected": 12
+    },
+    {
+      "installation": "common-project",
+      "case": "restore",
+      "working_path": ".agents/skills/comm-select-development-workflow/references/menu.md",
+      "prompt": "read",
+      "startup_call": 36,
+      "startup_result": 39,
+      "exit": 2,
+      "first_task_request": null,
+      "startup_shell": [
+        "python3 -B harness/common/checks/ensure_entrypoint_links.py"
+      ],
+      "startup_output": [
+        "/bin/bash: /profile/.bashrc: Permission denied\nПрямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, но технически не заблокировано. Изменения предлагайте через заявку в harness/<пакет>/inbox/.\nВосстановление рабочих файлов из канонических источников.\nEntrypoint check failed: [Errno 30] Read-only file system: '/workspace/.agents/skills/comm-select-development-workflow/references/.menu.md-551v545x'; already updated: none; pending: /workspace/.agents/skills/comm-select-development-workflow/references/menu.md\n"
+      ],
+      "restored_from_canonical": false,
+      "protected_edit_preserved": null,
+      "reported_inbox": false,
+      "answer": "Значение `timeout` не прочитано. Обязательная стартовая проверка `python3 -B harness/common/checks/ensure_entrypoint_links.py` завершилась с кодом 2. Файловая система доступна только для чтения по пути, где проверка пыталась восстановить [menu.md](/workspace/.agents/skills/comm-select-development-workflow/references/menu.md). Правила проекта требуют остановиться до поиска `app.toml`.",
+      "pass_contract": false,
+      "trace_sha256": "465157783549029cf7e5427407f14f4e2f4289158d29fd03c1ea458c5cafbe42",
+      "rules_expected": 12
+    }
+  ]
+}
