@@ -6784,5 +6784,71 @@
       "startup_before": true,
       "passed": true
     }
-  ]
+  ],
+  "scenario_correction": {
+    "reason": "Исходный запрос просил описать проверки и явно ограничивал работу чтением. Это проектирование тестов, область comm-assess-project-tests. comm-test-project-behavior отвечает за внесение изменений в приложение, поэтому прежнее ожидание не соответствовало исходному запросу.",
+    "original_runs": [
+      {
+        "installation": "common-only",
+        "prompt": "An application bug fix changes the cart total when the last item is removed. Describe the before/after behavioral checks for this code change. Give your decision in English. This is a read-only assessment.",
+        "checked_in": "05034a7",
+        "old_expected": "comm-test-project-behavior",
+        "correct_expected": "comm-assess-project-tests",
+        "full_at": [
+          34
+        ],
+        "original_trace_sha256": "f94d362e711f35c6517fe57af78c8cd1ffefb749df968cadc16b9ea6b6349222"
+      },
+      {
+        "installation": "common-project",
+        "prompt": "An application bug fix changes the cart total when the last item is removed. Describe the before/after behavioral checks for this code change. Give your decision in English. This is a read-only assessment.",
+        "checked_in": "05034a7",
+        "old_expected": "comm-test-project-behavior",
+        "correct_expected": "comm-assess-project-tests",
+        "full_at": [
+          39
+        ],
+        "original_trace_sha256": "26e7458a56b635f0f8688340ba1d8ec2bab8dd4b45c27df6e94105b90cb8e86c"
+      }
+    ],
+    "cart_report": "2026-11-23-cart-behavior-scenario-checks.json"
+  },
+  "summary_with_targeted_rechecks": {
+    "implicit": [
+      {
+        "installation": "common-only",
+        "passed": 36,
+        "total": 36,
+        "baseline": "05034a7",
+        "targeted_recheck": "068b84a",
+        "replaced_owners": [
+          "comm-test-project-behavior",
+          "comm-verify-project-facts"
+        ]
+      },
+      {
+        "installation": "common-project",
+        "passed": 36,
+        "total": 36,
+        "baseline": "05034a7",
+        "targeted_recheck": "068b84a",
+        "replaced_owners": [
+          "comm-test-project-behavior",
+          "comm-verify-project-facts"
+        ]
+      }
+    ],
+    "explicit": {
+      "passed": 72,
+      "total": 72,
+      "candidate_commit": "05034a7"
+    },
+    "index_navigation": {
+      "passed": 8,
+      "total": 8,
+      "candidate_commit": "05034a7",
+      "report": "2026-11-23-index-navigation-recheck.json"
+    },
+    "project_facts_report": "2026-11-23-project-facts-trigger-checks.json"
+  }
 }
