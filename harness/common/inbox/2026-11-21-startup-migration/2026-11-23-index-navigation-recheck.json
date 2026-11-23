@@ -1,0 +1,390 @@
+{
+  "date": "2026-11-23",
+  "client": "Codex CLI 0.166.0",
+  "candidate_commit": "05034a7",
+  "candidate_tree": "d754235b91614d503a54932d624157fd3e8c319b",
+  "method": "Четыре одинаковых запроса в каждой изолированной установке. Проверены ноль, одна конкретная или две карты. Точные строки handoffs подтверждены в выдаче и ответах. Запросы карт начались после полной выдачи 12 always loaded правил и успешной штатной сверки. Сравнительный расход токенов в этой серии не измерялся.",
+  "fixture_sha256": {
+    "common-only": {
+      "AGENTS.md": "212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24",
+      "CLAUDE.md": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "harness/common/INDEX.md": "607b11a883a108e04ef4b4843096e150894bea7010cbecb6b03e867c2040acc1",
+      "harness/project/INDEX.md": "c15bf54a72eb39b66e41f971f78a374a1da00542ad6f9d18e66352323122786e",
+      "harness/common/rules/comm-entrypoint-links-rule.md": "2a977960b7ad2394b3e92e89666e42a4bf37e3654aa796399911ad501deb0d3a",
+      "harness/common/rules/comm-instruction-order.md": "3dda84d3eb5604ffda996afadcbc475d3ad1e14eddb5e498fda0db400e0e370f"
+    },
+    "common-project": {
+      "AGENTS.md": "212f11dee326d906e3a00c099eab1f902b1f1a5faf75862de58e93e8b429af24",
+      "CLAUDE.md": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "harness/common/INDEX.md": "607b11a883a108e04ef4b4843096e150894bea7010cbecb6b03e867c2040acc1",
+      "harness/project/INDEX.md": "c15bf54a72eb39b66e41f971f78a374a1da00542ad6f9d18e66352323122786e",
+      "harness/common/rules/comm-entrypoint-links-rule.md": "2a977960b7ad2394b3e92e89666e42a4bf37e3654aa796399911ad501deb0d3a",
+      "harness/common/rules/comm-instruction-order.md": "3dda84d3eb5604ffda996afadcbc475d3ad1e14eddb5e498fda0db400e0e370f"
+    }
+  },
+  "runs": [
+    {
+      "mode": "common-only",
+      "name": "both",
+      "trigger": "navigation",
+      "prompt": "Сопоставь дословные подписи каталога handoffs в картах общего и проектного пакетов. Приведи обе подписи.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "5c2cb1be1fc404cb46f52f0ec47e086a84ff636fb813c8cf594777793d965a00",
+      "final_event": 40,
+      "expected_rules": 12,
+      "successful_check_events": [
+        32
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [
+        "common",
+        "project"
+      ],
+      "map_rows_received": [
+        "common",
+        "project"
+      ],
+      "answer_sha256": "9430f2614bcda7c90b380bfea07cba25ee96b3d98ec0d00ede6dbd4d224901c8",
+      "answer_excerpt": "- В карте общего пакета — «Продолжение задачи». [INDEX.md](/workspace/harness/common/INDEX.md:16)\n- В карте проектного пакета — «Контекст передачи незавершённых задач». [INDEX.md](/workspace/harness/project/INDEX.md:13)",
+      "boundary": 34,
+      "expected_maps": [
+        "common",
+        "project"
+      ],
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "answer_correct": true,
+      "nav_passed": true,
+      "passed": true
+    },
+    {
+      "mode": "common-only",
+      "name": "common",
+      "trigger": "navigation",
+      "prompt": "Как дословно обозначено назначение каталога handoffs в карте общего пакета? Приведи подпись из карты.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "4f58c213d76a547203aed077997e3dcab0515502e8c66f607362d1770bb07ca1",
+      "final_event": 40,
+      "expected_rules": 12,
+      "successful_check_events": [
+        32
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [
+        "common"
+      ],
+      "map_rows_received": [
+        "common"
+      ],
+      "answer_sha256": "e9ac97e1fd6acc8f2e807991d48a1805335c853c0122cfdecab6acb7a9de1c07",
+      "answer_excerpt": "«Продолжение задачи» — [INDEX.md](/workspace/harness/common/INDEX.md:16).",
+      "boundary": 34,
+      "expected_maps": [
+        "common"
+      ],
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "answer_correct": true,
+      "nav_passed": true,
+      "passed": true
+    },
+    {
+      "mode": "common-only",
+      "name": "none",
+      "trigger": "navigation",
+      "prompt": "Сколько минут в трёх часах? Ответь по-русски.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "359dca57f817cc7db65f5f7cead20d54c7673e53e41a254ddf7b97e1b0fa512e",
+      "final_event": 35,
+      "expected_rules": 12,
+      "successful_check_events": [
+        32
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "79c51341756c86a104eacff17e1b8ad004e17f4feef8f0d9c45f8e4768e02cbf",
+      "answer_excerpt": "В трёх часах 180 минут.",
+      "boundary": 35,
+      "expected_maps": [],
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "answer_correct": true,
+      "nav_passed": true,
+      "passed": true
+    },
+    {
+      "mode": "common-only",
+      "name": "project",
+      "trigger": "navigation",
+      "prompt": "Как дословно обозначено назначение каталога handoffs в карте проектного пакета? Приведи подпись из карты.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "e322b000f0c0b9e5f74c69c533e103575fdbec4b307f491d44ddf60c1ed2c7b9",
+      "final_event": 35,
+      "expected_rules": 12,
+      "successful_check_events": [
+        27
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [
+        "project"
+      ],
+      "map_rows_received": [
+        "project"
+      ],
+      "answer_sha256": "9563ec6c7c14df344519e6a98a26b11a9645ed0abcee2cf8e378531a786b59ea",
+      "answer_excerpt": "«Контекст передачи незавершённых задач». [INDEX.md](/workspace/harness/project/INDEX.md:13)",
+      "boundary": 29,
+      "expected_maps": [
+        "project"
+      ],
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "answer_correct": true,
+      "nav_passed": true,
+      "passed": true
+    },
+    {
+      "mode": "common-project",
+      "name": "both",
+      "trigger": "navigation",
+      "prompt": "Сопоставь дословные подписи каталога handoffs в картах общего и проектного пакетов. Приведи обе подписи.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "9591a91e5a2fbddfe9db3fc5f73b4429dd12c446169074ce6298a3be76af8731",
+      "final_event": 42,
+      "expected_rules": 12,
+      "successful_check_events": [
+        32
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [
+        "common",
+        "project"
+      ],
+      "map_rows_received": [
+        "common",
+        "project"
+      ],
+      "answer_sha256": "84dbfdb9756800876de7834d1b1a31a76220c2cd73ec573d7043d7772aeeac0b",
+      "answer_excerpt": "Подписи `handoffs` различаются:\n\n- В карте общего пакета — «Продолжение задачи» ([INDEX.md](/workspace/harness/common/INDEX.md:16)).\n- В карте проектного пакета — «Контекст передачи незавершённых задач» ([INDEX.md](/workspace/harness/project/INDEX.md:13)).",
+      "boundary": 36,
+      "expected_maps": [
+        "common",
+        "project"
+      ],
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "answer_correct": true,
+      "nav_passed": true,
+      "passed": true
+    },
+    {
+      "mode": "common-project",
+      "name": "common",
+      "trigger": "navigation",
+      "prompt": "Как дословно обозначено назначение каталога handoffs в карте общего пакета? Приведи подпись из карты.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "a5ca9fe166c9b2cf86195c11a8dfd9b59a1a359f1eea3bd78c879a9992e4a133",
+      "final_event": 35,
+      "expected_rules": 12,
+      "successful_check_events": [
+        27
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [
+        "common"
+      ],
+      "map_rows_received": [
+        "common"
+      ],
+      "answer_sha256": "641105b4969ca7bd01f8e508b77442c51f78260d6cebdd1f894400343ed6e261",
+      "answer_excerpt": "«Продолжение задачи». [INDEX.md](/workspace/harness/common/INDEX.md:16)",
+      "boundary": 29,
+      "expected_maps": [
+        "common"
+      ],
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "answer_correct": true,
+      "nav_passed": true,
+      "passed": true
+    },
+    {
+      "mode": "common-project",
+      "name": "none",
+      "trigger": "navigation",
+      "prompt": "Сколько минут в трёх часах? Ответь по-русски.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "e64b5b68e69fbabab67cca1eb7d9ac112443bbdcb28b3ef35a5005adc3f9c201",
+      "final_event": 31,
+      "expected_rules": 12,
+      "successful_check_events": [
+        28
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [],
+      "map_rows_received": [],
+      "answer_sha256": "79c51341756c86a104eacff17e1b8ad004e17f4feef8f0d9c45f8e4768e02cbf",
+      "answer_excerpt": "В трёх часах 180 минут.",
+      "boundary": 31,
+      "expected_maps": [],
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "answer_correct": true,
+      "nav_passed": true,
+      "passed": true
+    },
+    {
+      "mode": "common-project",
+      "name": "project",
+      "trigger": "navigation",
+      "prompt": "Как дословно обозначено назначение каталога handoffs в карте проектного пакета? Приведи подпись из карты.",
+      "exit": 0,
+      "errors": [],
+      "trace_sha256": "e10d46e7734e40585cc454161666dcea4d067dfe3593446127a7681b68fccea8",
+      "final_event": 36,
+      "expected_rules": 12,
+      "successful_check_events": [
+        28
+      ],
+      "rule_repeats": {},
+      "full_skills_before_answer": {},
+      "maps_requested": [
+        "project"
+      ],
+      "map_rows_received": [
+        "project"
+      ],
+      "answer_sha256": "9563ec6c7c14df344519e6a98a26b11a9645ed0abcee2cf8e378531a786b59ea",
+      "answer_excerpt": "«Контекст передачи незавершённых задач». [INDEX.md](/workspace/harness/project/INDEX.md:13)",
+      "boundary": 30,
+      "expected_maps": [
+        "project"
+      ],
+      "full_rules_before": [
+        ".claude/rules/comm-application-config-git.md",
+        ".claude/rules/comm-application-startup-readiness.md",
+        ".claude/rules/comm-ban-harness-symlinks.md",
+        ".claude/rules/comm-confirm-development-workflow.md",
+        ".claude/rules/comm-dependencies-through-uv.md",
+        ".claude/rules/comm-entrypoint-links-rule.md",
+        ".claude/rules/comm-human-folder-guides.md",
+        ".claude/rules/comm-instruction-order.md",
+        ".claude/rules/comm-package-independence.md",
+        ".claude/rules/comm-skill-rule-ownership.md",
+        ".claude/rules/comm-task-commit-on-completion.md",
+        ".claude/rules/comm-user-owned-entrypoints.md"
+      ],
+      "startup_before": true,
+      "answer_correct": true,
+      "nav_passed": true,
+      "passed": true
+    }
+  ],
+  "claude_code": "не проверено"
+}
