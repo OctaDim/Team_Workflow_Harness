@@ -38,6 +38,116 @@ def test_recovery_requests_fresh_context_only_after_changes(installed, startup):
     assert NOTICE not in repeat.stdout and 'новую сессию' not in repeat.stdout
 
 
+CHECK_START = '--check-start-entrypoints'
+
+
+def check_start(root, startup, *args):
+    return startup(root, 'harness/common/checks/ensure_entrypoint_links.py', *args)
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+@pytest.mark.parametrize(('name', 'empty'), [
+    ('AGENTS.md', False), ('CLAUDE.md', False), ('AGENTS.md', True),
+])
+def test_check_start_recovers_only_missing_or_empty_protected_input(installed, startup, name, empty):
+    entry = installed / name
+    expected = entry.read_bytes()
+    rule = installed / NATIVE
+    rule.write_bytes(b'Separate conflicting rule')
+    if empty:
+        entry.write_bytes(b'')
+    else:
+        entry.unlink()
+    result = check_start(installed, startup, CHECK_START)
+    assert result.returncode == 3
+    assert str(entry) in result.stdout and 'новую сессию' in result.stdout
+    assert ('файл пуст' if empty else 'файл отсутствует') in result.stdout
+    assert entry.read_bytes() == expected
+    assert rule.read_bytes() == b'Separate conflicting rule'
+    assert check_start(installed, startup, CHECK_START).returncode == 0
+    assert check_start(installed, startup, '--check-rules').returncode == 4
+
+
+def test_check_start_preserves_nonempty_inputs_and_reports_all_paths(installed, startup):
+    unexpected = {'AGENTS.md': b' ', 'CLAUDE.md': b'@AGENTS.md\n'}
+    for name, value in unexpected.items():
+        (installed / name).write_bytes(value)
+    result = check_start(installed, startup, CHECK_START)
+    assert result.returncode == 2 and 'INBOX' in result.stderr
+    for name, value in unexpected.items():
+        assert str(installed / name) in result.stderr and digest(value) in result.stderr
+        assert (installed / name).read_bytes() == value
+    assert check_start(installed, startup, '--check-rules').returncode == 0
+
+
+def test_check_start_recovers_missing_input_even_when_other_needs_approval(installed, startup):
+    agents, claude = installed / 'AGENTS.md', installed / 'CLAUDE.md'
+    expected = agents.read_bytes()
+    agents.unlink()
+    claude.write_bytes(b'@AGENTS.md\n')
+    result = check_start(installed, startup, CHECK_START)
+    assert result.returncode == 2 and str(claude) in result.stderr
+    assert str(agents) in result.stdout and 'новую сессию' in result.stdout
+    assert agents.read_bytes() == expected and claude.read_bytes() == b'@AGENTS.md\n'
+
+
+def test_check_start_publication_marker_blocks_repairs(installed, startup):
+    (installed / '.harness-publication.json').write_bytes(b'{}')
+    entry = installed / 'AGENTS.md'
+    entry.unlink()
+    result = check_start(installed, startup, CHECK_START)
+    assert result.returncode == 2 and 'Unfinished publication' in result.stderr
+    assert not entry.exists()
+
+
+def test_approved_protected_repair_uses_exact_backup_and_preserves_other_staging(installed, startup):
+    def git(*args):
+        return subprocess.check_output(['git', *args], cwd=installed)
+
+    def restore(commit, *entries):
+        args = ['--restore-start-entrypoints', commit]
+        for name, observed, canonical in entries:
+            args.extend(('--entrypoint', f'{name}:{digest(observed)}:{digest(canonical)}'))
+        return startup(installed, 'harness/common/checks/ensure_entrypoint_links.py', *args, no_git=False)
+
+    git('init', '-q')
+    git('config', 'user.name', 'Harness Test')
+    git('config', 'user.email', 'harness-test@example.invalid')
+    git('add', 'AGENTS.md', 'CLAUDE.md')
+    git('commit', '-qm', 'Published inputs')
+    agents, claude = installed / 'AGENTS.md', installed / 'CLAUDE.md'
+    canonical_agents = agents.read_bytes()
+    unexpected_agents, unexpected_claude = b'Observed Agents\n', b'Observed Claude\n'
+    agents.write_bytes(unexpected_agents)
+    claude.write_bytes(unexpected_claude)
+    approval_agents = ('AGENTS.md', unexpected_agents, canonical_agents)
+    approval_claude = ('CLAUDE.md', unexpected_claude, b'')
+    assert restore(git('rev-parse', 'HEAD').decode().strip(), approval_agents).returncode == 2
+    (installed / 'other.txt').write_bytes(b'Staged unrelated data\n')
+    git('add', 'other.txt')
+    before = git('ls-files', '--stage', '--', 'other.txt')
+    git('commit', '--only', '-qm', 'Back up observed inputs', '--', 'AGENTS.md', 'CLAUDE.md')
+    backup = git('rev-parse', 'HEAD').decode().strip()
+
+    claude.write_bytes(b'Changed after approval\n')
+    result = restore(backup, approval_agents, approval_claude)
+    assert result.returncode == 2 and str(claude) in result.stderr
+    assert agents.read_bytes() == unexpected_agents and claude.read_bytes() == b'Changed after approval\n'
+    claude.write_bytes(unexpected_claude)
+    assert restore(backup, ('AGENTS.md', unexpected_agents, b'Wrong template')).returncode == 2
+    assert restore(backup, approval_agents).returncode == 3
+    assert claude.read_bytes() == unexpected_claude
+    assert restore(backup, approval_agents, approval_claude).returncode == 3
+    assert (agents.read_bytes(), claude.read_bytes()) == (canonical_agents, b'')
+    assert restore(backup, approval_agents, approval_claude).returncode == 0
+    assert git('ls-files', '--stage', '--', 'other.txt') == before
+    assert git('show', 'HEAD:AGENTS.md') == unexpected_agents
+    assert git('show', 'HEAD:CLAUDE.md') == unexpected_claude
+
+
 def test_checker_does_not_change_git_config_or_install_hooks(installed, startup):
     def git(*args):
         return subprocess.check_output(['git', *args], cwd=installed)

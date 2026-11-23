@@ -5,6 +5,7 @@ import json
 import os
 import re
 import stat
+import subprocess
 import sys
 import tempfile
 from contextlib import contextmanager
@@ -400,6 +401,101 @@ def protected_difference(path, actual, expected):
             'Resolve through INBOX.')
 
 
+def protected_template(source, root):
+    expected = require_file(source, root)
+    if source.name == 'CLAUDE.template' and expected[0]:
+        raise ValueError(f'Canonical CLAUDE template must be empty: {source}')
+    if source.name == 'AGENTS.template' and not decode_text(source, expected[0]).strip():
+        raise ValueError(f'Empty canonical AGENTS template: {source}')
+    return expected
+
+
+def parse_entrypoint_approvals(values):
+    approvals = {}
+    for value in values:
+        name, *digests = value.split(':')
+        if (name not in PROTECTED or name in approvals or len(digests) != 2 or
+                any(not re.fullmatch(r'[0-9a-f]{64}', digest) for digest in digests)):
+            raise ValueError(f'Invalid or duplicate approved entrypoint: {name}')
+        approvals[name] = tuple(digests)
+    return approvals
+
+
+def verify_entrypoint_backup(root, commit, approvals):
+    """Git proves the backup bytes; the published templates supply recovery bytes."""
+    if not re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', commit):
+        raise ValueError('Backup commit must be a full Git object ID.')
+    env = {name: value for name, value in os.environ.items() if not name.startswith('GIT_')}
+
+    def git(*args):
+        result = subprocess.run(['git', '--no-replace-objects', *args], cwd=root,
+                                env=env, capture_output=True, check=False)
+        if result.returncode:
+            raise ValueError(f'Cannot verify backup commit {commit} in {root}.')
+        return result.stdout
+
+    git_root = Path(os.fsdecode(git('rev-parse', '--show-toplevel').rstrip(b'\r\n')))
+    if not os.path.samefile(root, git_root) or git('rev-parse', '--verify', 'HEAD').strip() != commit.encode():
+        raise ValueError(f'Backup commit must be HEAD of this installation: {root}')
+    for name, (observed, _) in approvals.items():
+        if hashlib.sha256(git('cat-file', 'blob', f'{commit}:{name}')).hexdigest() != observed:
+            raise ValueError(f'Backup commit bytes differ from the approved version: {root / name}')
+
+
+def check_start_entrypoints(root, backup_commit=None, approvals=None):
+    """Check protected inputs, repairing only empty/missing or explicitly backed-up files."""
+    with root_lock(root):
+        check_publication_marker(root)
+        repairs = {}
+        conflicts = []
+        if backup_commit is not None:
+            verify_entrypoint_backup(root, backup_commit, approvals)
+        for name in PROTECTED:
+            path = root / name
+            source = root / 'harness/common/base' / path.with_suffix('.template').name
+            expected = protected_template(source, root)
+            actual = snapshot_input(path, root)
+            if backup_commit is not None:
+                if name not in approvals:
+                    continue
+                observed, canonical = approvals[name]
+                if hashlib.sha256(expected[0]).hexdigest() != canonical:
+                    raise ValueError(f'Canonical entrypoint changed since approval: {source}')
+                if actual is not None and actual[0] == expected[0]:
+                    continue
+                if actual is None or hashlib.sha256(actual[0]).hexdigest() != observed:
+                    raise ValueError(f'Working entrypoint changed since approval: {path}')
+                reason = f'резервный коммит {backup_commit} проверен'
+            else:
+                if actual is not None and actual[0] == expected[0]:
+                    continue
+                if actual is not None and actual[0]:
+                    conflicts.append(protected_difference(path, actual[0], expected[0]))
+                    continue
+                reason = 'файл отсутствует' if actual is None else 'файл пуст'
+            repairs[path] = (source, expected, actual, reason)
+
+        changed = []
+        for path, (source, expected, actual, reason) in repairs.items():
+            try:
+                if snapshot_input(source, root) != expected:
+                    raise ValueError(f'Canonical file changed before recovery: {source}')
+                print(f'Восстановление защищённого входа {path} ({reason}) из {source}.', flush=True)
+                replace_input(path, actual, expected[0], root, expected[1][-1])
+                changed.append(path)
+                if require_file(path, root)[0] != expected[0]:
+                    raise ValueError(f'Incomplete recovery: {path}')
+            except (OSError, ValueError) as error:
+                updated = ', '.join(map(str, changed)) or 'none'
+                pending = ', '.join(str(target) for target in repairs if target not in changed) or 'none'
+                raise ValueError(f'{error}; already updated: {updated}; pending: {pending}') from error
+        if conflicts:
+            if changed:
+                print('Начните новую сессию после разрешения оставшихся расхождений.', flush=True)
+            raise ValueError('\n'.join(conflicts))
+        return changed
+
+
 def check_publication_marker(root):
     marker = ordinary_path(root / PUBLICATION_MARKER)
     if marker.exists():
@@ -442,15 +538,12 @@ def ensure(root):
         originals, sources, repairs = {}, {}, []
         for target, source in copies.items():
             if source not in sources:
-                sources[source] = require_file(source, root)
+                sources[source] = (protected_template(source, root) if target.parent == root
+                                   else require_file(source, root))
             expected = sources[source][0]
             if source in rule_sources or source.name == 'SKILL.md':
                 if not decode_text(source, expected).strip():
                     raise ValueError(f'Empty canonical file: {source}')
-            if target == root / 'CLAUDE.md' and expected:
-                raise ValueError(f'Canonical CLAUDE template must be empty: {source}')
-            if target == root / 'AGENTS.md' and not decode_text(source, expected).strip():
-                raise ValueError(f'Empty canonical AGENTS template: {source}')
             actual = originals[target] = snapshot_input(target, root)
             if actual is not None and actual[0] == expected:
                 continue
@@ -504,15 +597,29 @@ def main():
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument('--check-rules', action='store_true', help='Compare rule copies without writing.')
     modes.add_argument('--restore-rules', action='store_true', help='Recover managed rule copies only.')
+    modes.add_argument('--check-start-entrypoints', action='store_true',
+                       help='Check AGENTS.md and CLAUDE.md and recover missing or empty inputs.')
+    modes.add_argument('--restore-start-entrypoints', metavar='BACKUP_COMMIT',
+                       help='Restore only the confirmed protected entries backed up in this commit.')
+    parser.add_argument('--entrypoint', action='append', default=[], metavar='NAME:OBSERVED:CANONICAL',
+                        help='File and both SHA-256 values approved for protected recovery.')
     parser.add_argument('project_root', nargs='?', type=Path, default=Path.cwd())
     args = parser.parse_args()
+    if bool(args.entrypoint) != (args.restore_start_entrypoints is not None):
+        parser.error('--entrypoint and --restore-start-entrypoints must be used together.')
     root = args.project_root.absolute()
     try:
         if args.check_rules:
             count = check_rule_copies(root)
             print(f'Rule copies match the published canon: {count}')
             return 0
-        changed = restore_rule_copies(root) if args.restore_rules else ensure(root)
+        if args.check_start_entrypoints or args.restore_start_entrypoints is not None:
+            changed = check_start_entrypoints(root, args.restore_start_entrypoints,
+                                              parse_entrypoint_approvals(args.entrypoint))
+        elif args.restore_rules:
+            changed = restore_rule_copies(root)
+        else:
+            changed = ensure(root)
     except (ImportError, OSError, UnicodeError, ValueError) as error:
         print(f'Entrypoint check failed: {error}', file=sys.stderr)
         return RULE_MISMATCH if (args.check_rules or args.restore_rules) and isinstance(error, RuleMismatch) else 2
