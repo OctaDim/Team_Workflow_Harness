@@ -7,7 +7,7 @@ description: Use when designing SQL schemas, startup, migrations, queries, trans
 
 1. Inspect the stack, schema, migration history, startup, ownership and prior
    approvals read-only. Respect read-only references.
-2. Read [choices](references/choices.md) for the applicable work. For SQL,
+2. Прочитай файл `harness/common/skills/comm-confirm-database-design/references/choices.md` для применимой задачи. For SQL,
    check schema/initialization, queries and resource ownership independently.
    For any database, check applicable field-storage and empty-value decisions.
    Identify each specific approval and its source, or mark the choice OPEN.

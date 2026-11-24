@@ -5,9 +5,8 @@ description: Use when saving or changing harness evidence, distinguishing applic
 
 # Preserve evidence by purpose and operation
 
-Before classifying any evidence operation read [operations](references/operations.md)
-and from root `harness/common/skills/comm-process-harness-inbox/SKILL.md` plus its
-`references/workflow.md` for the authorized route. Reading within project access is allowed.
+Перед классификацией операции со свидетельствами прочитай файл `harness/common/skills/comm-protect-harness-evidence/references/operations.md`
+и для согласованного маршрута прочитай файл `harness/common/skills/comm-process-harness-inbox/SKILL.md` и файл `harness/common/skills/comm-process-harness-inbox/references/workflow.md`. Reading within project access is allowed.
 
 Application/task evidence belongs in `harness/project/testing/evidence/work/`;
 project mechanism evidence in `harness/project/testing/evidence/harness/`;

@@ -16,9 +16,9 @@ name/description, выбранное body и реально открытые р�
 токенов не является измеренным расходом или ценой. Сжатие, формат и равенство
 копий не доказывают нативное применение.
 
-Текущий владелец авторства: [authoring skill](../skills/comm-create-lazy-claude-codex-skills/SKILL.md).
-Методика: [validation](../skills/comm-validate-harness-instructions/references/validation.md).
-Gate: [publication](../skills/comm-publish-harness-instructions/references/gate.md).
+Текущий владелец авторства: [SKILL.md](../skills/comm-create-lazy-claude-codex-skills/SKILL.md).
+Методика: [validation.md](../skills/comm-validate-harness-instructions/references/validation.md).
+Gate: [gate.md](../skills/comm-publish-harness-instructions/references/gate.md).
 Этот документ объясняет решения, не задаёт отдельный порядок действий.
 
 Указатели на текущих владельцев обновлены 2026-10-08; даты и исторические

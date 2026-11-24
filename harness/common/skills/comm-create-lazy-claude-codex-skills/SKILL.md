@@ -6,8 +6,7 @@ description: Use when designing, creating or substantially editing working Codex
 # Author one instruction
 
 Use superpowers:using-superpowers before authoring. Establish task, useful result, intended
-harness and destination; cwd is not proof. Before design/substantial edits read
-[content and form selection](references/content-contract.md).
+harness and destination; cwd is not proof. Перед проектированием или существенной правкой прочитай файл `harness/common/skills/comm-create-lazy-claude-codex-skills/references/content-contract.md`.
 
 1. Inspect existing owners/rules/resources/checks. Covered → reuse; a small gap
    → amend its owner. Select by independent result, not theme or old name.
@@ -17,15 +16,12 @@ harness and destination; cwd is not proof. Before design/substantial edits read
    failure that lazy metadata cannot prevent.
 3. Produce inputs → actions → result → observable completion, with limits,
    approvals/stops/missing data and exact tested conditions for resource reading.
-4. Before writing follow the authorized inbox route from root
-   `harness/common/skills/comm-process-harness-inbox/SKILL.md`; keep a full dated
+4. Перед записью по согласованной INBOX-заявке прочитай файл `harness/common/skills/comm-process-harness-inbox/SKILL.md`. Keep a full dated
    candidate and permanent rationale/evidence outside working instructions.
 
 Done: justified form and compact complete candidate preserving every contract
 and both-mode dependencies. Design alone is not validation or publication.
-When checking is requested use
-`harness/common/skills/comm-validate-harness-instructions/SKILL.md`;
-when publishing use
-`harness/common/skills/comm-publish-harness-instructions/SKILL.md`.
+Если запрошена проверка, прочитай файл `harness/common/skills/comm-validate-harness-instructions/SKILL.md`;
+перед публикацией прочитай файл `harness/common/skills/comm-publish-harness-instructions/SKILL.md`.
 Do not load these stages for an unrelated request. Protected entrypoints and
 canonical priority remain mandatory.

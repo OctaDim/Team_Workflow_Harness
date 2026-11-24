@@ -12,10 +12,10 @@ Checker не требует Git/настроек машины и не блоки
 Повреждённый/небезопасный ресурс может дать ошибку: безопасное восстановление
 невозможно; это отличается от запрета прямого редактирования.
 
-Текущие рабочие владельцы: [rule](../rules/comm-user-owned-entrypoints.md),
-[installation](../skills/comm-install-harness/SKILL.md),
-[diagnosis](../skills/comm-diagnose-harness-entrypoints/references/entrypoints.md),
-[byte preservation](../skills/comm-preserve-text-line-endings/SKILL.md).
+Текущие рабочие владельцы: [comm-user-owned-entrypoints.md](../rules/comm-user-owned-entrypoints.md),
+[SKILL.md](../skills/comm-install-harness/SKILL.md),
+[entrypoints.md](../skills/comm-diagnose-harness-entrypoints/references/entrypoints.md),
+[SKILL.md](../skills/comm-preserve-text-line-endings/SKILL.md).
 Common содержит реализацию; старый project path — совместимый wrapper.
 Прежняя автономная project копия и hooks относятся к отменённым вариантам.
 

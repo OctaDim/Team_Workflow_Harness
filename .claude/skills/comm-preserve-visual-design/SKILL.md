@@ -25,7 +25,7 @@ Inputs: actual reference/version, approvals, delegated decisions.
 5. Report evidence, approved deviations and unverified aspects. Unapproved
    material mismatches prevent full-completion claims.
 
-Before token/literal choices read [semantics](references/value-semantics.md).
+Перед выбором дизайн-токена или буквального значения прочитай файл `harness/common/skills/comm-preserve-visual-design/references/value-semantics.md`.
 
 Before preserving records follow
 `harness/common/skills/comm-preserve-harness-knowledge/SKILL.md`; evidence also

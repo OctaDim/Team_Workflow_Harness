@@ -1,7 +1,7 @@
 # Решение о стадиях и учёте inbox
 
 Принято 2026-10-05; уточнено 2026-10-06. Working owner после WORKFLOW-48:
-[inbox workflow](../skills/comm-process-harness-inbox/references/workflow.md).
+[workflow.md](../skills/comm-process-harness-inbox/references/workflow.md).
 
 Причина: проверка материала не равна выполнению заявки; без отдельных статусов
 повторная обработка могла повторять завершённую работу. Выбор номера решения
@@ -16,7 +16,7 @@
   разрешением и подтверждением обхода. Проверки и защита входов остаются.
 - Inbox временный; постоянный результат понятен независимо от заявки.
   До 2026-10-07 опыт направлялся в категорию lessons; этот маршрут отменён
-  [WORKFLOW-48](2026-10-07-skills-first-knowledge.md).
+  WORKFLOW-48 [2026-10-07-skills-first-knowledge.md](2026-10-07-skills-first-knowledge.md).
 - Каждая заявка имеет контекст пяти полей и отдельный execution status/result/
   reason/update date. Допустимы новая/в работе/выполнена/заблокирована/отклонена.
   Native statuses независимы; publication exception не повышает их.

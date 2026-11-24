@@ -1,339 +1,396 @@
-"""Reject incomplete/unsafe native traces; do not call the external agent in pytest."""
-import runpy
+"""Check the observer contract using known fixture content and real offline CLI invocations."""
+import copy
+import hashlib
+import json
 from pathlib import Path
+import runpy
+import subprocess
+import sys
 
 import pytest
 
 
-def test_rule_reader_rejects_globs_missing_files_and_combined_calls():
-    script = Path(__file__).with_name('check_human_guide_search.py')
-    if not script.is_file():
-        root = next(p for p in Path(__file__).resolve().parents
-                    if (p / 'harness/common/checks/ensure_entrypoint_links.py').is_file())
-        script = root / 'harness/common/checks/check_human_guide_search.py'
-    try:
-        assess = runpy.run_path(str(script))['assess_rule_reading']
-    except (SystemExit, KeyError):
-        pytest.fail('The check cannot assess a completed bulk-rule-reading trace')
-    paths = ['.claude/rules/comm-a.md', '.claude/rules/nested/personal space.md']
-    bodies = dict(zip(paths, ['# First rule\n', '# Nested rule\n']))
-    listing = {'command': "rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '!README.human.md'",
-               'aggregated_output': '\n'.join(paths) + '\n', 'exit_code': 0}
-    reading = {'command': "cat '.claude/rules/comm-a.md' '.claude/rules/nested/personal space.md'",
-               'aggregated_output': '# First rule\n# Nested rule\n', 'exit_code': 0}
-    skill = {'command': 'cat .agents/skills/example/SKILL.md',
-             'aggregated_output': 'Skill body', 'exit_code': 0}
-    assert assess([listing, reading, skill], bodies)['rule_reading_pass']
-    startup_listing = dict(listing, command='cat harness/common/START.md; ' + listing['command'],
-                           aggregated_output='# Startup boundary\n' + listing['aggregated_output'])
-    assert not assess([startup_listing, reading, skill], bodies)['rule_reading_pass']
-    preliminary = [dict(listing, command=listing['command'].replace('--no-ignore ', '')),
-                   dict(reading, command='cat .claude/rules/comm-a.md', aggregated_output='# First rule\n')]
-    assert not assess(preliminary + [listing, reading, skill], bodies)['rule_reading_pass']
-    assert not assess([reading, skill], bodies)['rule_reading_pass']
-    assert not assess([dict(listing, command=listing['command'].replace('--no-ignore ', '')), reading, skill], bodies)['rule_reading_pass']
-    assert not assess([dict(listing, aggregated_output=paths[0]), reading, skill], bodies)['rule_reading_pass']
-    assert not assess([listing, dict(reading, aggregated_output='# First rule\n'), skill], bodies)['rule_reading_pass']
-    assert not assess([listing, dict(reading, command='cat .claude/rules/*.md'), skill], bodies)['rule_reading_pass']
-    combined = dict(listing, command=listing['command'] + ' && ' + reading['command'],
-                    aggregated_output=listing['aggregated_output'] + reading['aggregated_output'])
-    assert not assess([combined, listing, reading, skill], bodies)['rule_reading_pass']
-    reversed_call = dict(listing, command=reading['command'] + ' && ' + listing['command'],
-                         aggregated_output=reading['aggregated_output'] + listing['aggregated_output'])
-    assert not assess([listing, reading, reversed_call, skill], bodies)['rule_reading_pass']
-    assert not assess([listing, skill, reading], bodies)['rule_reading_pass']
-    assert not assess([listing, dict(reading, exit_code=1), skill], bodies)['rule_reading_pass']
-    assert not assess([], {})['rule_reading_pass']
+CHECK = Path(__file__).absolute().parents[2] / 'checks/check_human_guide_search.py'
+AUDIT = runpy.run_path(str(CHECK))['audit']
+COMMON_MAP = 'harness/common/INDEX.md'
+PROJECT_MAP = 'harness/project/INDEX.md'
+ENTRY_RULE = '.claude/rules/sub/config.md'
+SKILL = 'harness/common/skills/config/SKILL.md'
+ALIAS = '.agents/skills/config/SKILL.md'
+BODY = '---\nname: config\ndescription: Use before edits.\n---\n# Конфигурация\nСохрани значение.\n'
+OWNER = f'Before changing configuration open /{SKILL}.\n'
+ENTRY = 'AGENTS.md'
+ALWAYS = '.claude/rules/start.md'
 
 
-def event(command, output='', code=0):
-    return {'command': command, 'aggregated_output': output, 'exit_code': code}
+def put(root, path, text):
+    file = root / path
+    file.parent.mkdir(parents=True, exist_ok=True)
+    file.write_bytes(text.encode())
 
 
-def fixture_trace(mode, linked, skipped=(), repeated=()):
-    import shlex
-    from collections import defaultdict
-
-    paths = [f'.claude/rules/nested/rule {n}.md' for n in range(12)]
-    rules = {p: f'# Rule {n}\nSecond line {n}\n' for n, p in enumerate(paths)}
-    starts = defaultdict(str)
-    aliases = {}
-    for n, path in enumerate(paths[:linked]):
-        package = 'project' if mode == 'both' and n % 2 else 'common'
-        relative = path.removeprefix('.claude/')
-        starts[f'harness/{package}/START.md'] += f'[{n}](<{relative}>)\n'
-        aliases[f'harness/{package}/{relative}'] = path
-    trace = [event('cat ' + s, body) for s, body in starts.items()]
-    trace += [event('cat ' + shlex.quote(s), rules[p]) for s, p in aliases.items()]
-    trace.append(event("rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '!README.human.md'",
-                       '\n'.join(paths)))
-    for n in [*range(linked, 12), *repeated]:
-        if n not in skipped:
-            trace.append(event('cat ' + shlex.quote(paths[n]), rules[paths[n]]))
-    indexes = ' '.join(str(Path(start).with_name('INDEX.md')) for start in starts) or 'harness/common/INDEX.md'
-    trace += [event('cat ' + indexes, '# Index\n'),
-              event('cat .agents/skills/example/SKILL.md', '# Skill\n')]
-    return trace, rules, starts, aliases
+@pytest.fixture
+def root(tmp_path):
+    for p, value in {
+        ENTRY: 'Read all mandatory rules.\n', 'CLAUDE.md': '',
+        COMMON_MAP: 'Common\n', PROJECT_MAP: 'Project\n', ENTRY_RULE: OWNER, ALWAYS: 'Proceed.\n',
+        'harness/project/rules/sub/config.md': OWNER, 'harness/common/rules/start.md': 'Proceed.\n',
+        SKILL: BODY, ALIAS: BODY, '.claude/skills/config/SKILL.md': BODY,
+        'harness/common/rules/README.human.md': 'Human text',
+    }.items():
+        put(tmp_path,p,value)
+    return tmp_path
 
 
-def evaluate(trace, rules, starts, aliases):
-    root = next(p for p in Path(__file__).absolute().parents
-                if (p / 'harness/common/checks/ensure_entrypoint_links.py').is_file())
-    check = runpy.run_path(str(root / 'harness/common/checks/check_human_guide_search.py'))
-    return check['assess_rule_reading'](trace, rules, starts=starts, aliases=aliases)
+def read(root, path, method='read'):
+    return dict(type=method,path=path,text=(root/path).read_bytes().decode())
 
 
-@pytest.mark.parametrize('mode', ['common', 'both'])
-@pytest.mark.parametrize('linked,skipped,repeated,unique,duplicates', [
-    (0, (), (), 12, 0), (1, (), (), 12, 0), (2, (), (), 12, 0),
-    (5, (), (), 12, 0), (12, (), (), 12, 0), (2, (9, 10), (), 10, 0),
-    (2, (), (1, 4, 4), 12, 3), (2, (11,), (3,), 11, 1),
+def observe(root, index='required', client='codex', mode='common'):
+    paths = [ENTRY_RULE, ALWAYS]
+    events = [read(root, ENTRY if client=='codex' else 'CLAUDE.md', 'native')]
+    if client=='claude':
+        events.extend(read(root,p,'native') for p in paths)
+    events.append(dict(type='listing',paths=paths))
+    if client=='codex':
+        events.extend(read(root,p) for p in paths)
+    if index=='required':
+        events.extend(read(root,p) for p in (COMMON_MAP,PROJECT_MAP))
+    events.append(dict(type='action',id='explain',observed='the value is 2'))
+    return {'client':client,'mode':mode,'scenario':'explain','index':index,'completed':True,
+            'startup_visible':True,'events':events,'actions':[{'id':'explain','expected':'the value is 2'}]}
+
+
+@pytest.mark.parametrize('index',['required','on-demand'])
+@pytest.mark.parametrize('client',['codex','claude'])
+@pytest.mark.parametrize('mode',['common','both'])
+def test_six_lines_and_delivery_method(root,index,client,mode):
+    result = AUDIT(root, observe(root,index,client,mode))
+    assert result['rule_reading_pass'], result
+    assert set(result['first_reads'].values())==({'native'} if client=='claude' else {'read'})
+    assert len(result['rule_read_report'])==6
+    assert result['delivery_methods']['CLAUDE.md' if client=='claude' else ENTRY]==['native']
+    assert (COMMON_MAP in result['delivery_methods'])==(index=='required')
+    assert result['observed_actions']==['explain']
+
+
+@pytest.mark.parametrize('mutation', ['no-native','truncated-entry','no-task','wrong-answer',
+                                     'parallel','unclassified','removed-file',
+                                     'stale','incomplete-rules','early-map','wrong-map-order',
+                                     'missing-map','leaked-human','unfinished'])
+def test_incomplete_or_wrong_evidence_never_passes(root,mutation):
+    t=observe(root);events=t['events']
+    if mutation=='no-native': t['startup_visible']=False
+    if mutation=='truncated-entry': events.pop(0)
+    if mutation=='no-task': events.pop()
+    if mutation=='wrong-answer': events[-1]['observed']='something else'
+    if mutation=='parallel': events[3].update(start=2,end=4)
+    if mutation=='unclassified':events.insert(-1,dict(type='unobserved',reason='incomplete payload'))
+    if mutation=='removed-file':events.insert(-1,dict(type='invalidate',path=ENTRY_RULE))
+    if mutation=='stale': events[2]['text']='# A previous version\n'
+    if mutation=='incomplete-rules':events.pop(2)
+    if mutation=='early-map':events.insert(2,events.pop(4))
+    if mutation=='wrong-map-order':events[4],events[5]=events[5],events[4]
+    if mutation=='missing-map':events.pop(4)
+    if mutation=='leaked-human':events.insert(3,dict(type='read',path='.claude/rules/README.human.md',text=''))
+    if mutation=='unfinished':t['completed']=False
+    result=AUDIT(root,t)
+    assert not result['rule_reading_pass']
+    if mutation=='no-native':
+        assert result['status']=='не проверено'
+        assert 'не проверено' in result['rule_read_report'][0]
+    if mutation=='leaked-human': assert 'Human text' not in str(result)
+
+
+@pytest.mark.parametrize('mode,repeat_path', [
+    ('common', ENTRY_RULE),
+    ('both', 'harness/project/rules/sub/config.md'),
 ])
-def test_start_rule_accounting(mode, linked, skipped, repeated, unique, duplicates):
-    result = evaluate(*fixture_trace(mode, linked, skipped, repeated))
-    status = 'Успешно' if unique == 12 and not duplicates else 'Ошибка'
-    details = []
-    if unique != 12 or not duplicates:
-        details.append(f'прочтено {unique} из 12')
-    if duplicates:
-        duplicate_paths = sorted({f'.claude/rules/nested/rule {n}.md' for n in repeated})
-        details.append(f'дублированное чтение {unique + duplicates} из 12 (' + ', '.join(duplicate_paths) + ')')
-    assert result['rule_read_report'] == [
-        f'Правила `.claude/rules/` через ссылки в START.md: {linked}',
-        f'Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: {unique - linked}',
-        'Всего правил в `.claude/rules/`: 12',
-        f'Всего правил прочитано: {unique}',
-        f'Повторно прочитанных правил: {duplicates}',
-        f'Результат: {status} - ' + ', '.join(details),
-    ]
-    assert result['rule_reading_pass'] == (status == 'Успешно')
-    print(mode, *result['rule_read_report'], sep='\n')
+def test_repeated_rule_read_is_counted_without_failing_the_trace(root, mode, repeat_path):
+    trace = observe(root, mode=mode)
+    trace['events'].insert(4, read(root, repeat_path))
+    result = AUDIT(root, trace)
+    assert result['rule_reading_pass'], result
+    assert result['duplicate_reads'] == {ENTRY_RULE: 1}
+    assert result['observed_actions'] == ['explain']
 
 
-def test_partial_current_reads_and_boundaries():
-    trace, rules, starts, aliases = fixture_trace('common', 1)
-    path = next(iter(aliases))
-    body = rules[aliases[path]]
-    second = event(f"sed -n '2,$p' '{path}'", body.splitlines(True)[1])
-    partial = event(f"head -n 1 '{path}'", body.splitlines(True)[0])
-    def passed(events):
-        return evaluate(events, rules, starts, aliases)['rule_reading_pass']
-
-    assert passed([trace[0], partial, trace[2], second, *trace[3:]])
-    assert not passed([trace[0], partial, *trace[2:]])
-    assert not passed([trace[0], dict(trace[1], aggregated_output='old'), *trace[2:]])
-    # A changed or unverified version invalidates accumulated fragments.
-    for marker in [event("cat '" + path + "'", 'different version\n'),
-                   event("touch '" + path + "'")]:
-        assert not passed([trace[0], partial, marker, trace[2], second, *trace[3:]])
-        assert passed([*trace[:2], marker, trace[2], trace[1], *trace[3:]])
-    for boundary in [trace[-2], event('cat .agents/skills/example/references/help.md')]:
-        assert not passed([*trace[:2], boundary, *trace[2:]])
-        mixed = dict(trace[-3], command=trace[-3]['command'] + ' && ' + boundary['command'])
-        assert not passed([*trace[:-3], mixed, *trace[-2:]])
-    assert not passed([trace[0], dict(trace[1], command='cat unrelated/rule.md'), *trace[2:]])
-    assert not passed([trace[1], trace[0], *trace[2:]])
-    assert not evaluate([trace[0], *trace[2:]], rules, starts, {})['rule_reading_pass']
+def config_case(root):
+    t=observe(root)
+    t['actions'].append(dict(id='write',expected='value=3'))
+    t['links']=[dict(owner=ENTRY_RULE,path=SKILL,condition='change',before='write')]
+    t['expected_conditions']=['change']
+    t['events'].extend([dict(type='condition',id='change'), read(root,ALIAS),
+                        dict(type='action',id='write',observed='value=3')])
+    return t
 
 
-def test_canonical_mapping_requires_full_relative_path_and_matching_bytes(tmp_path):
-    root = next(p for p in Path(__file__).absolute().parents
-                if (p / 'harness/common/checks/check_human_guide_search.py').is_file())
-    snapshot = runpy.run_path(str(root / 'harness/common/checks/check_human_guide_search.py'))['snapshot_rule_inputs']
-    native = tmp_path / '.claude/rules'
-    canonical = tmp_path / 'harness/project/rules'
-    for parent in [native, canonical]:
-        for relative in ['x/same.md', 'y/same.md', '.ignored/local.md', 'z/README.human.md']:
-            target = parent / relative
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text('# Identical content\n')
-    (canonical / 'y/same.md').write_text('New version\n')
-    (canonical / 'START.md').write_text('Unrelated file\n')
-    expected, _, aliases = snapshot(tmp_path)
-    assert set(expected) == {'.claude/rules/' + name for name in ['x/same.md', 'y/same.md', '.ignored/local.md']}
-    assert aliases == {'harness/project/rules/' + name: '.claude/rules/' + name
-                       for name in ['x/same.md', '.ignored/local.md']}
+@pytest.mark.parametrize('client', ['codex', 'claude'])
+def test_single_return_without_listing_and_unconditional_skill(root, client):
+    trace = observe(root, client=client)
+    method = 'native' if client == 'claude' else 'read'
+    trace['events'][1:4] = [
+        dict(type=method, files=[dict(path=p, text=(root/p).read_text()) for p in (ENTRY_RULE, ALWAYS)]),
+        read(root, SKILL)]
+    trace['links'] = [dict(owner=ENTRY_RULE, path=SKILL, condition=None)]
+    result = AUDIT(root, trace)
+    assert result['rule_reading_pass'], result
+    assert not result['rule_listing_completed']
+    assert set(result['first_reads']) == {ENTRY_RULE, ALWAYS}
 
 
-@pytest.mark.parametrize('mode', ['common', 'both'])
-def test_skill_and_listing_must_wait_for_rule_read_results(mode):
-    trace, rules, starts, aliases = fixture_trace(mode, 5)
-    for i, row in enumerate(trace):
-        row.update(start_event=2*i, end_event=2*i+1)
-    listing = next(i for i, row in enumerate(trace) if '--files' in row['command'])
-    for index in [listing, listing+1, len(trace)-2]:
-        overlapping = [*trace]
-        overlapping[index] = dict(trace[index], start_event=trace[index-1]['start_event'])
-        assert not evaluate(overlapping, rules, starts, aliases)['rule_reading_pass']
+def test_native_skill_already_in_context_and_optional_listing(root):
+    trace = observe(root)
+    trace['links'] = [dict(owner=ENTRY_RULE, path=SKILL, condition=None)]
+    trace['events'].insert(1, read(root, SKILL, 'native'))
+    assert AUDIT(root, trace)['rule_reading_pass']
+    trace['events'].pop(1)
+    trace['events'].insert(3, trace['events'].pop(1))
+    trace['events'].insert(4, read(root, SKILL))
+    assert AUDIT(root, trace)['rule_reading_pass']
 
 
-@pytest.mark.parametrize('form', ['ls', 'loop'])
-def test_literal_reads_with_directory_output_and_named_loop(form):
-    import shlex
+def test_partial_rule_in_batch_must_be_completed_before_action(root):
+    trace = observe(root, index='on-demand')
+    content = (root/ALWAYS).read_bytes()
+    digest = hashlib.sha256(content).hexdigest()
+    files = [dict(path=ENTRY_RULE, text=OWNER),
+             dict(path=ALWAYS, text=content[:2].decode(), offset=0, sha256=digest)]
+    trace['events'][1:4] = [dict(type='read', files=files)]
+    critical = AUDIT(root, trace)
+    assert critical['status'] == 'ошибка' and ALWAYS in critical['missing_rule_paths']
+    assert 'критическая ошибка' in critical['rule_read_report'][-1]
+    trace['events'].insert(-1, dict(type='read', path=ALWAYS, text=content[2:].decode(),
+                                    offset=2, sha256=digest))
+    assert AUDIT(root, trace)['rule_reading_pass']
+    trace['events'][-2]['sha256'] = '0'*64
+    assert not AUDIT(root, trace)['rule_reading_pass']
 
-    trace, rules, starts, aliases = fixture_trace('common', 5)
-    names = list(aliases)
-    args = ' '.join(map(shlex.quote, names))
-    if form == 'ls':
-        command = 'ls -la harness/common; cat -- ' + args
-        output = 'directory contents\n' + ''.join(rules[aliases[name]] for name in names)
+
+def test_inaccessible_rule_stops_before_task(root):
+    trace = observe(root, index='on-demand')
+    trace.update(expected_stop=ALWAYS, actions=[])
+    trace['events'][3:] = [dict(type='error', path=ALWAYS),
+                            dict(type='stop', path=ALWAYS, reason='permission denied')]
+    assert AUDIT(root, trace)['rule_reading_pass']
+
+
+@pytest.mark.parametrize('reference', ['config', SKILL])
+@pytest.mark.parametrize('trigger', ['unconditional', 'at-start', 'mid-task', 'inactive'])
+def test_when_each_textual_reference_is_due(root, reference, trigger):
+    owner = ('До первого действия прочитай файл ' if trigger == 'unconditional' else 'Перед правкой прочитай файл ') + reference
+    for path in (ENTRY_RULE, 'harness/project/rules/sub/config.md'):
+        put(root, path, owner)
+    trace = observe(root, index='on-demand')
+    write = dict(type='action', id='write', observed='value=3')
+    trace['events'].insert(1, dict(type='metadata', path=SKILL, name='config', description='Use before edits.'))
+    trace['links'] = [dict(owner=ENTRY_RULE, path=SKILL, condition=None if trigger=='unconditional' else 'change',
+                           before='explain' if trigger=='inactive' else 'write')]
+    if trigger == 'unconditional':
+        trace['events'].insert(4, read(root, SKILL))
+    elif trigger != 'inactive':
+        if trigger == 'at-start':
+            trace['actions'].clear()
+            trace['events'].pop()
+        trace['expected_conditions'] = ['change']
+        trace['actions'].append(dict(id='write', expected='value=3'))
+        trace['events'].extend([dict(type='condition', id='change'), read(root, SKILL), write])
+    assert AUDIT(root, trace)['rule_reading_pass']
+    if trigger != 'inactive':
+        trace['events'] = [e for e in trace['events'] if e.get('path') != SKILL or e['type']=='metadata']
+        assert not AUDIT(root, trace)['rule_reading_pass']
+
+
+def test_condition_when_discovered_mid_task(root):
+    t=config_case(root)
+    assert AUDIT(root,t)['rule_reading_pass']
+    for pos in [1,4,-4]:
+        wrong=copy.deepcopy(t)
+        wrong['events'].insert(pos,wrong['events'].pop(-2))
+        assert not AUDIT(root,wrong)['rule_reading_pass']
+    missing=copy.deepcopy(t);del missing['events'][-3:-1]
+    assert not AUDIT(root,missing)['rule_reading_pass']
+    no_read=copy.deepcopy(t);no_read['events'].pop(-2)
+    assert not AUDIT(root,no_read)['rule_reading_pass']
+    # Metadata before an explanation is sufficient; it is no proof of delivery.
+    inactive=observe(root)
+    inactive['links']=[dict(owner=ENTRY_RULE,path=SKILL,condition='change',before='explain')]
+    inactive['expected_catalog']=[SKILL]
+    inactive['events'].insert(-1,dict(type='metadata',path=ALIAS,name='config',description='Use before edits.'))
+    result=AUDIT(root,inactive)
+    assert result['rule_reading_pass'] and SKILL not in result['delivery_methods']
+    inactive['events'].insert(-1,read(root,ALIAS))
+    assert not AUDIT(root,inactive)['rule_reading_pass']
+
+
+def test_version_bound_chunks_and_invalidation(root):
+    t=config_case(root)
+    first, second=BODY.split('Сохрани',1)
+    second='Сохрани'+second
+    digest=hashlib.sha256(BODY.encode()).hexdigest()
+    chunks=[dict(type='read',path=ALIAS,text=first,offset=0,sha256=digest),
+            dict(type='read',path=SKILL,text=second,offset=len(first.encode()),sha256=digest)]
+    t['events'][-2:-1]=chunks
+    assert AUDIT(root,t)['rule_reading_pass']
+    for fault in ('gap','no-version','wrong-version','changed','overlap','duplicated'):
+        bad=copy.deepcopy(t)
+        if fault=='gap':bad['events'].pop(-2)
+        if fault=='no-version':del bad['events'][-2]['sha256']
+        if fault=='wrong-version':bad['events'][-2]['sha256']='0'*64
+        if fault=='changed':bad['events'].insert(-2,dict(type='invalidate',path=SKILL))
+        if fault=='overlap':bad['events'][-2]=bad['events'][-3]
+        if fault=='duplicated':bad['events'].insert(-1,read(root,ALIAS))
+        assert not AUDIT(root,bad)['rule_reading_pass'],fault
+    t['events'].insert(-1,dict(type='invalidate',path=SKILL))
+    t['events'].insert(-1,read(root,ALIAS))
+    assert AUDIT(root,t)['rule_reading_pass']
+
+
+@pytest.mark.parametrize('position', ['before-other-rule', 'after-other-rule', 'after-index'])
+def test_unconditional_skill_is_due_before_the_first_action(root, position):
+    second = f'Before the first action read {SKILL}.\n'
+    put(root, ALWAYS, second)
+    put(root, 'harness/common/rules/start.md', second)
+    trace = observe(root)
+    trace['links'] = [dict(owner=owner, path=SKILL, condition=None) for owner in (ENTRY_RULE, ALWAYS)]
+    events = trace['events']
+    other_reads = events[3:-1]
+    split = {'before-other-rule': 0, 'after-other-rule': 1, 'after-index': 3}[position]
+    events[3:-1] = [*other_reads[:split], read(root, ALIAS), *other_reads[split:]]
+    if position == 'after-other-rule':
+        events.insert(2, events.pop(1))
+    result = AUDIT(root, trace)
+    assert result['rule_reading_pass'], result
+
+
+@pytest.mark.parametrize('event_order', ['missing', 'late', 'stop', 'action-after-stop'])
+def test_unconditional_skill_missing_at_action_requires_a_stop(root, event_order):
+    trace = observe(root, index='on-demand')
+    trace['links'] = [dict(owner=ENTRY_RULE, path=SKILL, condition=None)]
+    events = trace['events']
+    if event_order == 'late':
+        events.append(read(root, ALIAS))
+    if event_order in ('stop', 'action-after-stop'):
+        trace.update(expected_stop=SKILL, actions=[])
+        action = events.pop()
+        events.extend([dict(type='error', path=ALIAS),
+                       dict(type='stop', path=ALIAS, reason='permission denied')])
+        if event_order == 'action-after-stop':
+            events.append(action)
+    result = AUDIT(root, trace)
+    if event_order == 'stop':
+        assert result['rule_reading_pass'], result
     else:
-        command = 'for p in ' + args + "; do printf '%s\\n' \"$p\"; cat \"$p\"; done"
-        output = ''.join(name + '\n' + rules[aliases[name]] for name in names)
-    reads = event(command, output)
-    assert evaluate([trace[0], reads, *trace[6:]], rules, starts, aliases)['rule_reading_pass']
-    assert not evaluate([trace[0], dict(reads, aggregated_output=output[:-10]), *trace[6:]],
-                        rules, starts, aliases)['rule_reading_pass']
+        assert result['status'] == 'ошибка', result
+    if event_order in ('missing', 'late'):
+        assert f'до действия отсутствует полный текст: {SKILL}' in result['rule_read_report'][-1]
 
 
-def test_duplicate_in_compound_literal_reads(tmp_path):
+def test_selected_native_skill_has_independent_expected_action(root):
+    t=observe(root)
+    t['task_skills']={SKILL:'explain'}
+    t['events'][-1:-1]=[dict(type='select',path=ALIAS),read(root,SKILL,'native')]
+    assert AUDIT(root,t)['rule_reading_pass']
+    wrong=copy.deepcopy(t);wrong['task_skills']={}
+    assert not AUDIT(root,wrong)['rule_reading_pass']
+    t['events'].pop(-2)
+    assert not AUDIT(root,t)['rule_reading_pass']
+
+
+@pytest.mark.parametrize('mode', ['common', 'both'])
+@pytest.mark.parametrize('index, before_index', [
+    ('required', True),
+    ('required', False),
+    ('on-demand', True),
+])
+def test_first_skill_read_before_index_is_informational(root, mode, index, before_index):
+    trace = observe(root, index=index, mode=mode)
+    trace['task_skills'] = {SKILL: 'explain'}
+    start = 4 if before_index else len(trace['events']) - 1
+    trace['events'][start:start] = [dict(type='invoke', path=ALIAS), read(root, ALIAS)]
+    result = AUDIT(root, trace)
+    assert result['rule_reading_pass'], result
+    assert result['skills_read_before_index'] == ([ALIAS] if before_index else [])
+    if before_index:
+        assert 'Информационное событие' in result['rule_read_report'][-1]
+        assert ALIAS in result['rule_read_report'][-1]
+
+    trace['events'].append(trace['events'].pop(start + 1))
+    result = AUDIT(root, trace)
+    assert not result['rule_reading_pass']
+    assert 'до зависимого действия не получен' in result['rule_read_report'][-1]
+
+
+def test_observed_stop_on_failure(root):
+    t=config_case(root);t['expected_stop']=SKILL;t['actions']=t['actions'][:1]
+    t['events'][-2:]=[dict(type='error',path=ALIAS),dict(type='stop',path=ALIAS,reason='unreadable')]
+    # The dependent action deliberately never happens in this scenario.
+    t['blocked_action']='write'
+    assert AUDIT(root,t)['rule_reading_pass']
+    t['events'].append(dict(type='action',id='write',observed='value=3'))
+    assert not AUDIT(root,t)['rule_reading_pass']
+
+
+def test_stale_copy_and_name_collision(root):
+    put(root,'harness/project/rules/sub/config.md','changed')
+    with pytest.raises(ValueError,match='stale'):
+        AUDIT(root,observe(root))
+    put(root,'harness/project/rules/sub/config.md',OWNER)
+    put(root,'harness/common/rules/sub/config.md',OWNER)
+    with pytest.raises(ValueError,match='Conflicting'):
+        AUDIT(root,observe(root))
+
+
+def test_offline_cli_and_unknown_evidence(root,tmp_path):
+    case=observe(root);trace=tmp_path/'record.json';result=tmp_path/'result.json'
+    trace.write_text(json.dumps(case))
+    command=[sys.executable,'-B',str(CHECK),'audit',str(root),str(trace),'--output',str(result)]
+    proc=subprocess.run(command,capture_output=True,text=True)
+    assert proc.returncode==0,proc.stderr
+    assert json.loads(result.read_text())['status']=='проверено'
+    case['completed']=False;trace.write_text(json.dumps(case));result.unlink()
+    proc=subprocess.run(command,capture_output=True,text=True)
+    assert proc.returncode==1 and json.loads(result.read_text())['status']=='не проверено'
+
+
+def test_native_command_adapter_does_not_credit_hidden_payloads(tmp_path):
+    probe = runpy.run_path(str(CHECK))
+    marker, paths, links = probe['diagnostic_fixture'](tmp_path,'common','search','Exclude human files.\n')
+    def shell(command, output, identifier):
+        return [{'type':'item.started','item':{'id':identifier,'type':'command_execution'}},
+                {'type':'item.completed','item':{'id':identifier,'type':'command_execution','command':command,
+                                                 'aggregated_output':output,'exit_code':0}}]
+    rules = sorted(probe['snapshot_inputs'](tmp_path,'codex')[1])
+    listing = "rg --files --hidden --no-ignore .claude/rules -g '*.md' -g '!README.human.md'"
     import shlex
-
-    trace, rules, starts, aliases = fixture_trace('both', 2, repeated=(0,))
-    paths = list(aliases)
-    installed = aliases[paths[0]]
-    extra = tmp_path / 'AGENTS.md'
-    extra.write_text('Fixture entry.\n')
-    reads = event('cat ' + shlex.quote(paths[0]) + '\ncat ' + shlex.quote(paths[1])
-                  + '\ncat AGENTS.md',
-                  rules[installed] + rules[aliases[paths[1]]] + extra.read_text())
-    compare = f'cmp {shlex.quote(paths[0])} {shlex.quote(installed)}'
-    repeat = event(compare + '\ncat ' + shlex.quote(installed), rules[installed])
-    root = next(p for p in Path(__file__).absolute().parents
-                if (p / 'harness/common/checks/ensure_entrypoint_links.py').is_file())
-    assess = runpy.run_path(str(root / 'harness/common/checks/check_human_guide_search.py'))['assess_rule_reading']
-    def audit(first):
-        return assess([*trace[:2], first, *trace[4:-3], repeat, *trace[-2:]], rules,
-                      starts=starts, aliases=aliases, root=tmp_path, immutable_fixture=True)
-    result = audit(reads)
-    assert result['duplicate_rule_reads'] == {installed: 1}
-    assert installed in result['rule_read_report'][-1]
-    for bad in (dict(reads, aggregated_output=extra.read_text()),
-                dict(reads, command=reads['command'].replace('cat AGENTS.md', 'echo unsafe'))):
-        assert not audit(bad)['duplicate_rule_reads']
-
-@pytest.mark.parametrize('mode', ['common', 'both'])
-@pytest.mark.parametrize('linked', [0, 2, 12])
-@pytest.mark.parametrize('body_lines', [1, 1200])
-def test_rule_link_applies_after_owner_before_next_rule(mode, linked, body_lines):
-    trace, rules, starts, aliases = fixture_trace(mode, linked)
-    early = '.agents/skills/config-check/SKILL.md'
-    late = '.agents/skills/example/SKILL.md'
-    body = '# Configuration procedure\n'
-    owner, other = list(rules)[:2]
-    for path in [owner, other]:
-        original = rules[path]
-        rules[path] += f'For a configuration change read {early}.\n' + ('Context.\n' * body_lines)
-        for row in trace:
-            if row['aggregated_output'] == original:
-                row['aggregated_output'] = rules[path]
-    lookup = next(i for i, row in enumerate(trace) if '--files' in row['command'])
-    offset = (next(i for i, row in enumerate(trace) if row['aggregated_output'] == rules[owner]) + 1
-              if linked else lookup + 2)
-    step = event('cat ' + early, body)
-    ordered = trace[:offset] + [step] + trace[offset:]
-    root = next(p for p in Path(__file__).absolute().parents
-                if (p / 'harness/common/checks/ensure_entrypoint_links.py').is_file())
-    assess = runpy.run_path(str(root / 'harness/common/checks/check_human_guide_search.py'))['assess_rule_reading']
-    def audit(events, active):
-        return assess(events, rules, starts=starts, aliases=aliases,
-                      skill_links=active, skill_bodies={early: body, late: '# Skill\n'}, task_skills={late})
-    links = {owner: {early: 0}, other: {early: 0}}
-    ok = audit(ordered, links)
-    assert ok['rule_reading_pass'], ok['rule_read_report']
-    assert ok['skill_reads'] == [early, late]
-    assert ok['full_rule_read_before_skill'] is False
-    assert ok['full_rule_read_before_index'] is True
-    assert audit(trace, {})['rule_reading_pass']
-    index = trace[-2]
-    # Listing and complete reading are independent requirements at the first INDEX.
-    for incomplete in ([*ordered[:offset+1], index, *ordered[offset+1:]],
-                       [row for row in ordered if '--files' not in row['command']],
-                       [*ordered[:lookup], event('ls .claude/rules'), index, *ordered[lookup:]]):
-        assert not audit(incomplete, links)['rule_reading_pass']
-    if linked == len(rules):
-        before_list = next(i for i,row in enumerate(ordered) if '--files' in row['command'])
-        failure = audit([*ordered[:before_list], index, *ordered[before_list:]], links)
-        assert not failure['rule_reading_pass']
-        assert 'INDEX открыт до получения полного списка правил' in failure['rule_read_report'][-1]
-        assert failure['full_rule_read_before_index'] is False
-    if linked:
-        short = dict(ordered[offset-1], aggregated_output=rules[owner].split('Context.')[0])
-        assert not audit([*ordered[:offset-1], short, *ordered[offset:]], links)['rule_reading_pass']
-        # A metadata probe does not open INDEX; its actual contents stay deferred.
-        assert audit([event('ls harness/common/INDEX.md'), *ordered], links)['rule_reading_pass']
-
-    assert not audit(ordered, {})['rule_reading_pass']
-    assert not audit(ordered, {owner: {early: 999}})['rule_reading_pass']
-    assert not audit(trace, links)['rule_reading_pass']
-    late_condition = {owner: {early: len(trace) - 1}}
-    assert audit([*trace[:-1], step, trace[-1]], late_condition)['rule_reading_pass']
-    metadata = event('ls -l ' + early)
-    assert audit([*ordered[:offset], metadata, *ordered[offset:]], links)['rule_reading_pass']
-    bulk = event('find .agents/skills -name SKILL.md -exec cat {} +')
-    assert not audit([*ordered, bulk], links)['rule_reading_pass']
-
-    for forbidden in ([step, *ordered], [*ordered, step],
-                      [*ordered, event('cat .agents/skills/*/SKILL.md')],
-                      [*ordered[:offset], dict(step, aggregated_output='partial'), *ordered[offset+1:]]):
-        assert not audit(forbidden, links)['rule_reading_pass']
+    events = shell(listing,'\n'.join(rules),0)
+    for i,p in enumerate(rules,1):
+        events.extend(shell('cat '+shlex.quote(p),(tmp_path/p).read_text(),i))
+    content = "rg -n 'заявка' harness -g '!README.human.md'"
+    events.extend(shell(content,'\n'.join(p+':1:заявка' for p in paths),7))
+    events.append({'type':'turn.completed'})
+    def report():
+        return probe['observe_codex'](events,tmp_path,'search',marker,paths,links,'common')
+    observed=report()
+    assert observed['all_machine_matches_present'] and observed['searches_exclude_human_guides']
+    assert observed['native_completed'] and observed['status']=='не проверено'
+    assert set(observed['first_reads'])==set(rules)
+    # The actual command adapter can identify complete files inside a single
+    # return, even without a listing and with a truncated final body.
+    joined = shell('cat -- '+' '.join(shlex.quote(p) for p in rules),
+                   ''.join((tmp_path/p).read_text() for p in rules), 2)
+    events[:] = joined + events[-3:]
+    assert set(report()['first_reads']) == set(rules)
+    joined[-1]['item']['aggregated_output'] = (tmp_path/rules[0]).read_text() + '[truncated]'
+    assert set(report()['first_reads']) == {rules[0]}
+    events[-2]['item']['aggregated_output']+='\nREADME.human.md:1:'+marker
+    observed=report()
+    assert observed['human_canary_in_any_native_event'] and observed['human_body_line_in_tool_output']
+    assert observed['status']=='ошибка' and marker not in json.dumps(observed)
 
 
-@pytest.mark.parametrize('mode', ['common', 'both'])
-def test_skill_read_once_across_rule_and_index(mode, tmp_path):
-    trace, rules, starts, aliases = fixture_trace(mode, linked=2)
-    target = '.agents/skills/example/SKILL.md'
-    body = '# Skill\nUse the existing default.\n'
-    owner = next(iter(rules))
-    before = rules[owner]
-    rules[owner] += f'When needed, read {target}.\n'
-    for row in trace:
-        if row['aggregated_output'] == before:
-            row['aggregated_output'] = rules[owner]
-    pos = next(i for i,row in enumerate(trace) if row['aggregated_output'] == rules[owner]) + 1
-    trace[-2]['aggregated_output'] += f'[Required procedure](../../{target})\n'
-    full = event('cat ' + target, body)
-    first = event('head -n 1 ' + target, '# Skill\n')
-    last = event('tail -n 1 ' + target, 'Use the existing default.\n')
-    root = next(p for p in Path(__file__).absolute().parents
-                if (p / 'harness/common/checks/ensure_entrypoint_links.py').is_file())
-    audit = runpy.run_path(str(root / 'harness/common/checks/check_human_guide_search.py'))['assess_rule_reading']
-
-    def check(early=(), late=(), due=True, **kwargs):
-        events = trace[:pos] + list(early) + trace[pos:-1] + list(late)
-        return audit(events, rules, starts=starts, aliases=aliases,
-                     skill_links={owner: {target: 0}} if due else {},
-                     skill_bodies={target: body}, task_skills={target}, **kwargs)
-
-    positive = check([full])
-    assert positive['rule_reading_pass'] and positive['skill_reads'] == [target]
-    negative = check([full], [full])
-    assert not negative['rule_reading_pass']
-    assert negative['duplicate_skill_reads'] == {target: 1}
-    assert target in negative['rule_read_report'][-1] and 'решение пользователя' in negative['rule_read_report'][-1]
-    assert check([], [full], due=False)['rule_reading_pass']
-    assert check([first], [last])['rule_reading_pass']
-    assert not check([first], [])['rule_reading_pass']
-    assert not check([first], [event('tail -n 1 ' + target, 'Incorrect\n')])['rule_reading_pass']
-    unrelated = event('touch unrelated.txt')
-    assert check([full], [unrelated, full])['duplicate_skill_reads'] == {target: 1}
-
-    changed = '# Skill\nUse the revised default.\n'
-    reread = event('cat ' + target, changed)
-    at = len(trace)  # after the inserted early read and both INDEX reads
-    updated = check([full], [reread], skill_updates={at: {target: changed}})
-    assert updated['rule_reading_pass'] and updated['skill_reads'] == [target, target]
-    assert not check([first], [event('tail -n 1 ' + target, changed.splitlines(True)[1])],
-                     skill_updates={at: {target: changed}})['rule_reading_pass']
-
-    canonical = 'harness/common/skills/example/SKILL.md'
-    for path in (target, canonical):
-        file = tmp_path / path
-        file.parent.mkdir(parents=True)
-        file.write_text(body)
-    canonical_read = event('cat ' + canonical, body)
-    alias_repeat = check([canonical_read], [full], root=tmp_path, immutable_fixture=True)
-    assert alias_repeat['duplicate_skill_reads'] == {target: 1}
-    (tmp_path / canonical).write_text(changed)
-    distinct = check([event('cat ' + canonical, changed)], [full], root=tmp_path, immutable_fixture=True)
-    assert not distinct['rule_reading_pass'] and not distinct['duplicate_skill_reads']
+def test_metadata_contract_fails_closed(root):
+    t=observe(root);t['expected_catalog']=[SKILL]
+    assert not AUDIT(root,t)['rule_reading_pass']
+    t['events'].insert(1,dict(type='metadata',path=SKILL,name='config',description='Wrong'))
+    assert not AUDIT(root,t)['rule_reading_pass']

@@ -45,25 +45,30 @@ class TestRuleCopies:
                 (rules / (prefix + 'example.md')).write_bytes(b'canonical\n')
                 (rules / 'README.human.md').write_bytes(b'')
                 (native / (prefix + 'example.md')).write_bytes(b'canonical\n')
-            (native / 'personal.md').write_bytes(b'personal\n')
+            extra_personal = native / 'personal.md'
+            extra_personal.write_bytes(b'personal\n')
+            with pytest.raises(ValueError, match='personal.md'):
+                check_rule_copies(root)
+            assert extra_personal.read_bytes() == b'personal\n'
+            extra_personal.unlink()
             assert check_rule_copies(root) == len(mode)
             source = next((root / 'harness' / mode[0] / 'rules').glob('*-example.md'))
             copy = native / source.name
             copy.unlink()
-            with pytest.raises(ValueError, match='Missing copies'):
+            with pytest.raises(ValueError, match='Missing or different rule copy'):
                 check_rule_copies(root)
             copy.write_bytes(b'changed\n')
-            with pytest.raises(ValueError, match='Different rule bytes'):
+            with pytest.raises(ValueError, match='Missing or different rule copy'):
                 check_rule_copies(root)
             copy.unlink()
             copy.symlink_to(source)
-            with pytest.raises(ValueError, match='Not an ordinary file'):
+            with pytest.raises(ValueError, match='Symlink forbidden'):
                 check_rule_copies(root)
             copy.unlink()
             copy.write_bytes(source.read_bytes())
             extra = native / (source.name.split('-')[0] + '-stale.md')
             extra.write_bytes(b'stale\n')
-            with pytest.raises(ValueError, match='extra copies'):
+            with pytest.raises(ValueError, match='Unmanaged native rule'):
                 check_rule_copies(root)
             extra.unlink()
             assert check_rule_copies(root) == len(mode)

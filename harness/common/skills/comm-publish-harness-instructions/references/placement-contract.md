@@ -1,17 +1,7 @@
-# Placement
+# Назначения
 
-Ordinary equal folders, no symlink components:
-shared harness/{common/skills/comm-name,project/skills/proj-name} →
-.agents/skills/name + .claude/skills/name; personal .agents/skills/name →
-.claude/skills/name. Shared rules: same-name .claude/rules directly, no Codex mirror.
-Classify by content; common required/project dependent; canonical prevails,
-personal prefixes optional; conflicts need decision; octadim scheme revoked.
+Управляемые скиллы из `harness/common/skills/comm-*` и `harness/project/skills/proj-*` имеют полные обычные папки-копии в `.agents/skills/` и `.claude/skills/`. Включать рабочие ресурсы. Личные скиллы живут отдельно от управляемого набора. Для always loaded правил из канонических rules использовать соответствующий путь внутри `.claude/rules/`. Не помещать `README.human.md` из канонического rules в нативный каталог автоматической загрузки. Симлинки и коллизии владельцев исключают перенос. Сохранять точные правила Git-видимости для личных папок.
 
-After gate source+copies together, no extra approval; other-owner mismatch stops.
-Check full sets/bytes/Git visibility. Shared visible; exact personal
-paths auto-ignored only, preserve entries/roots; ignore ≠ untrack.
-Installed canonical comm-/proj- rules: nonempty, ordinary paths, equal bytes,
-no missing/extra; ignore personal/human. Both-mode negative pytest controls:
-harness/common/testing/tests/test_rule_copies.py. Restore only through gate;
-Claude native/Codex recursive AGENTS; entrypoint
-check restores links only. Link/equality success ≠ native proof.
+Сначала опубликовать одобренный Канидат INBOX в канонической папке. Рабочие копии записывать только из неё. Управляемую утраченную или повреждённую копию стартовая проверка восстанавливает из опубликованного источника. Любой лишний Markdown для нативной загрузки требует остановки с путём для решения. Нулевой `CLAUDE.md` соответствует образцу. Проверка защищённых входов восстанавливает отсутствующий вход или нулевой `AGENTS.md`. Расхождение непустого входа требует решения через INBOX и резервного коммита до восстановления.
+
+После публикации сверить состав, типы, байты, Git-видимость и нативную интеграцию. Для незавершённого набора сохранить запрет обычного старта до сверки всех файлов.

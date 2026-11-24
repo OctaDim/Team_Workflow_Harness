@@ -1,6 +1,5 @@
 """Exercise two supported installations and reject missing common."""
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -15,25 +14,25 @@ MODES = [('common',), ('common', 'project')]
 class TestPortability:
 
     def install(self, root, mode):
-        shutil.copytree(PACKAGES / 'common', root / 'harness/common', ignore=shutil.ignore_patterns('inbox', '__pycache__'))
+        shutil.copytree(PACKAGES / 'common', root / 'harness/common', ignore=shutil.ignore_patterns('inbox', 'evidence', 'handoffs', '__pycache__', '.pytest_cache'))
         native = root / '.claude/rules'
-        shutil.copytree(PACKAGES / 'common/rules', native)
+        shutil.copytree(PACKAGES / 'common/rules', native, ignore=shutil.ignore_patterns('README.human.md'))
         if 'project' in mode:
             project = root / 'harness/project'
             if (PACKAGES / 'project').is_dir():
-                shutil.copytree(PACKAGES / 'project', project)
+                shutil.copytree(PACKAGES / 'project', project, ignore=shutil.ignore_patterns('inbox', 'evidence', 'handoffs', '__pycache__', '.pytest_cache'))
             else:
                 project.mkdir()
                 (project / 'INDEX.md').write_text('# Existing project\n')
-                (project / 'START.md').write_text('# Existing startup\n')
+
             material = project / 'docs/local-task/notes.md'
             material.parent.mkdir(parents=True, exist_ok=True)
             material.write_bytes(b'Existing project material\n')
             for rule in (project / 'rules').glob('proj-*.md'):
                 shutil.copyfile(rule, native / rule.name)
 
-    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py'):
-        return subprocess.run([sys.executable, '-I', '-B', script], cwd=root, env=dict(os.environ, PATH='/no-git-in-this-test'), capture_output=True, text=True)
+    def run_check(self, root, script='harness/common/checks/ensure_entrypoint_links.py', *args):
+        return subprocess.run([sys.executable, '-I', '-B', script, *args], cwd=root, env=dict(os.environ, PATH='/no-git-in-this-test'), capture_output=True, text=True)
 
     @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
     def test_startup_command_runs_in_each_clean_mode_without_git(self, mode):
@@ -41,26 +40,50 @@ class TestPortability:
             root = Path(directory)
             self.install(root, mode)
             project = root / 'harness/project'
-            before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}
+            before = {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}
             first = self.run_check(root)
-            assert first.returncode == 0, first.stderr
+            assert first.returncode == 3, first.stderr
             if 'project' in mode:
-                assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file() and p.name != 'README.human.md'}
+                assert before == {p.relative_to(project): p.read_bytes() for p in project.rglob('*') if p.is_file()}
             else:
                 assert (project / 'base/README.human.md').is_file()
                 assert not (project / 'docs/local-task').exists()
             text = (root / 'AGENTS.md').read_text()
-            assert '](.claude/rules/)' in text
-            assert 'harness/project/START.md' in text
-            command = re.search('(?m)^python3(?: -B)? (harness/[^\\s]+\\.py)$', text)
-            assert command is not None
-            assert command.group(1) == 'harness/common/checks/ensure_entrypoint_links.py'
+            assert (root / 'AGENTS.md').read_bytes() == (root / 'harness/common/base/AGENTS.template').read_bytes()
+            assert '`.claude/rules`' in text and '`README.human.md`' in text
+            assert 'включая поиск её файлов' in text and 'проверил полноту каждого файла' in text
+            assert 'применяй полученные always loaded правила' in text
+            assert 'START.md' not in text
+            assert not (root / 'CLAUDE.md').read_bytes()
+            script = 'harness/common/checks/ensure_entrypoint_links.py'
+            configs = [root / '.codex/hooks.json', root / '.claude/settings.json']
+            assert all(not config.exists() for config in configs)
+            original_config = b'{ "hooks": { "Stop": [] }, "custom": true }\n'
+            for config in configs:
+                config.parent.mkdir(exist_ok=True)
+                config.write_bytes(original_config)
             before_inputs = ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())
-            second = self.run_check(root, command.group(1))
+            install_again = self.run_check(root)
+            assert install_again.returncode == 0, install_again.stderr
+            assert all(config.read_bytes() == original_config for config in configs)
+            second = self.run_check(root, script, '--check-rules')
             assert second.returncode == 0, second.stderr
             assert 'будут автоматически восстановлены' not in second.stdout
             assert before_inputs == ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())
             assert not (root / '.git').exists()
+            target = root / '.claude/rules/comm-entrypoint-links-rule.md'
+            approved = target.read_bytes()
+            divergent = approved + b'\nLocal change.\n'
+            target.write_bytes(divergent)
+            rejected = self.run_check(root, script, '--check-rules')
+            assert rejected.returncode == 4 and target.name in rejected.stderr
+            assert target.read_bytes() == divergent
+            restored = self.run_check(root, script, '--restore-rules')
+            assert restored.returncode == 3, restored.stderr
+            assert target.read_bytes() == approved
+            assert self.run_check(root, script, '--check-rules').returncode == 0
+            assert before_inputs == ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())
+
 
     def test_existing_settings_and_startup_command_are_never_rewritten(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -70,8 +93,9 @@ class TestPortability:
             prefix = '# Existing settings\n\npython3 ' + script + '\nKeep this setting.\n'
             (root / 'AGENTS.md').write_text(prefix)
             result = self.run_check(root, script)
-            assert result.returncode == 0, result.stderr
-            assert (root / 'AGENTS.md').read_text().startswith(prefix)
+            assert result.returncode == 2, result.stderr
+            assert (root / 'AGENTS.md').read_text() == prefix
+            assert 'AGENTS.md' in result.stderr and 'INBOX' in result.stderr
 
     @pytest.mark.parametrize('mode', MODES, ids=['common-only', 'common-and-project'])
     @pytest.mark.parametrize('relative', ('harness/common', 'harness/common/checks', 'harness/common/checks/ensure_entrypoint_links.py'))
@@ -101,10 +125,10 @@ class TestPortability:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.install(root, mode)
-            (root / 'harness/common/START.md').unlink()
+            (root / 'harness/common/base/AGENTS.template').unlink()
             result = self.run_check(root)
             assert result.returncode == 2
-            assert 'START.md' in result.stderr
+            assert 'AGENTS.template' in result.stderr
             assert not (root / 'AGENTS.md').exists()
 
     def test_project_only_rejected_without_writes(self):
@@ -112,7 +136,7 @@ class TestPortability:
             root = Path(directory)
             project = root / 'harness/project'
             if (PACKAGES / 'project').is_dir():
-                shutil.copytree(PACKAGES / 'project', project)
+                shutil.copytree(PACKAGES / 'project', project, ignore=shutil.ignore_patterns('inbox', 'evidence', 'handoffs', '__pycache__', '.pytest_cache'))
             else:
                 project.mkdir(parents=True)
             checker = str(PACKAGES / 'common/checks/ensure_entrypoint_links.py')

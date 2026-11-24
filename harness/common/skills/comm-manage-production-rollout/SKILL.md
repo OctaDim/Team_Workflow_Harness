@@ -20,5 +20,4 @@ Inputs: authorized scope, environment, exact release artifact and trigger.
    release. Verify the affected function at its normal entry point. For a schema
    change, check the actual revision and exercise a scenario using it. Report run,
    delivery and behavior separately. Mark unavailable checks unverified.
-4. For a failed or partially applied rollout, read
-   [partial rollout recovery](references/partial-rollout.md).
+4. При сбое или частично выполненном развёртывании прочитай файл `harness/common/skills/comm-manage-production-rollout/references/partial-rollout.md`.

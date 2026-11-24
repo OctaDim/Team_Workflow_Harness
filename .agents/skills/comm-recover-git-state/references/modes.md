@@ -13,6 +13,5 @@ and reverting a merge affects later merges.
 Lost ref: read existing refs/reflog to locate and inspect a surviving commit.
 Reflogs are local and expire; promise no recovery of all data. An authorized
 recovery branch needs a stated purpose/source SHA and safe name, without changing
-the original branch. Before creating it read
-harness/common/skills/comm-create-git-branch/references/naming.md; its source is
+the original branch. Перед созданием ветки прочитай файл `harness/common/skills/comm-create-git-branch/references/naming.md`; its source is
 the expressly agreed recovery SHA. Never prune/expire logs or overwrite evidence.

@@ -9,8 +9,7 @@ attempt to publish.
 
 Recheck repository/PR, head/base names/SHAs, open/non-draft state and mandatory
 checks/reviews for the head or tested combined result. Match expected head;
-GitHub --match-head-commit guards head, not base. Read
-harness/common/skills/comm-verify-project-facts/references/git-base-state.md
+GitHub --match-head-commit guards head, not base. Прочитай файл `harness/common/skills/comm-verify-project-facts/references/git-base-state.md`
 for target races and the project's checked-integration mechanism. Never bypass gates.
 
 Queued/requested is not merged. Confirm MERGED, result SHA on intended integration

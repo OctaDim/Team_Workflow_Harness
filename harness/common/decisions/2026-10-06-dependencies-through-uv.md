@@ -11,4 +11,4 @@
 в эти два пути подтверждена пользователем ответом «да» на конкретный запрос.
 Codex — проверено; Claude и итог — непроверенные.
 
-[Доказательства и ограничения](../testing/evidence/2026-10-06-uv-dependencies/2026-10-06-uv-dependencies-evidence.md).
+Доказательства и ограничения [2026-10-06-uv-dependencies-evidence.md](../testing/evidence/2026-10-06-uv-dependencies/2026-10-06-uv-dependencies-evidence.md).

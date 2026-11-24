@@ -10,11 +10,10 @@ Inputs: source/destination, purpose, retained properties and authorized stages.
 1. Establish transfer/rename versus independent copy/cross-platform migration.
    Compare suitable current mechanisms using comm-choose-effective-solution;
    agree unresolved identity, method and scope before mutation.
-2. Before planning the concrete move read [inventory](references/inventory.md);
-   for host behavior read [platform conditions](references/platform.md).
+2. Перед планированием переноса прочитай файл `harness/common/skills/comm-migrate-git-repository/references/inventory.md`;
+   для проверки поведения хостинга прочитай файл `harness/common/skills/comm-migrate-git-repository/references/platform.md`.
    Inspect current configuration; private access remains bounded.
-3. Before mutation read
-   `harness/common/skills/comm-commit-task-stages/references/work-safety.md`;
+3. Перед изменениями прочитай файл `harness/common/skills/comm-commit-task-stages/references/work-safety.md`;
    preserve evidence/recovery points. Execute only the authorized method; mirroring/import is not automatic authority
    to replace/delete refs, remove the source, change visibility or grants.
    Never delete remote main/master or any primary, integration or protected branch.

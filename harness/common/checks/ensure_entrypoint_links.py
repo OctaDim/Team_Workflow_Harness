@@ -1,4 +1,6 @@
-"""Restore entrypoint links; run from the project root or pass that root."""
+"""Check the harness installation and recover working files from its published packages."""
+import argparse
+import hashlib
 import json
 import os
 import re
@@ -6,274 +8,166 @@ import stat
 import subprocess
 import sys
 import tempfile
+from contextlib import contextmanager, nullcontext
 from pathlib import Path
-from string import Template
 
 
-BOOTSTRAP_RESOURCE = Path('harness/common/base/AGENTS.bootstrap.json')
-AUTHOR_LAYOUT = Path('harness/AGENTS.bootstrap.md.in')
-COMMAND_PATTERN = r'python3(?: -B)? harness/common/checks/ensure_entrypoint_links\.py'
-ORDER_HEADING = '## Порядок чтения после START'
-
-
-def bootstrap_content(fields):
-    """Render only the two portable fields; never copy an entire project entrypoint."""
-    if not isinstance(fields, dict) or set(fields) != {'layout', 'command', 'reading_order'}:
-        raise ValueError('Invalid fields in ' + str(BOOTSTRAP_RESOURCE))
-    if not all(isinstance(v, str) and v.strip() for v in fields.values()):
-        raise ValueError('Empty or invalid BOOTSTRAP field')
-    if not re.fullmatch(COMMAND_PATTERN, fields['command']):
-        raise ValueError('Unsupported portable startup command')
-    layout = fields['layout']
-    if layout.splitlines().count('$command') != 1 or layout.splitlines().count('$reading_order') != 1:
-        raise ValueError('BOOTSTRAP requires a standalone command and reading_order field')
-    try:
-        return Template(layout).substitute(command=fields['command'], reading_order=fields['reading_order'])
-    except (ValueError, KeyError) as error:
-        raise ValueError('Invalid BOOTSTRAP layout placeholder') from error
-
-
-def sync_bootstrap(root):
-    """Materialize publisher sources; package-only installations have no author layout."""
-    layout = ordinary_path(root / AUTHOR_LAYOUT)
-    if not layout.exists():
-        return
-    resource = root / BOOTSTRAP_RESOURCE
-    inputs = {name: snapshot_input(root / name, root) for name in
-              (AUTHOR_LAYOUT, Path('AGENTS.md'), Path('harness/common/START.md'))}
-    original = snapshot_input(resource, root)
-    try:
-        if any(value is None for value in inputs.values()):
-            raise ValueError('Missing author layout, AGENTS.md or harness/common/START.md')
-        previous = json.loads(original[0]) if original else {}
-        if not isinstance(previous, dict):
-            raise ValueError('Invalid existing BOOTSTRAP resource')
-        agent = utf8_text(inputs[Path('AGENTS.md')][0], 'AGENTS.md').splitlines()
-        commands = [line for line in agent if re.fullmatch(COMMAND_PATTERN, line)]
-        if len(commands) != 1:
-            raise ValueError('AGENTS.md must have exactly one supported startup command')
-        start = utf8_text(inputs[Path('harness/common/START.md')][0], 'harness/common/START.md')
-        sections = re.split(r'^' + re.escape(ORDER_HEADING) + r'[ \t]*\r?$', start, flags=re.M)
-        if len(sections) != 2:
-            raise ValueError('Expected one reading-order section in harness/common/START.md')
-        order = re.split(r'^#{1,2} ', sections[1], maxsplit=1, flags=re.M)[0].strip()
-        fields = {'layout': utf8_text(inputs[AUTHOR_LAYOUT][0], str(AUTHOR_LAYOUT)),
-                  'command': commands[0], 'reading_order': order}
-        bootstrap_content(fields)
-        changed = [key for key in fields if previous.get(key) != fields[key]]
-        if not changed and set(previous) == set(fields):
-            return
-        for name, snapshot in inputs.items():
-            if snapshot_input(root / name, root) != snapshot:
-                raise ValueError(f'Author input changed: {name}')
-        replace_input(resource, original, (json.dumps(fields, ensure_ascii=False, indent=2) + '\n').encode(), root)
-    except (ValueError, OSError) as error:
-        raise ValueError(f'BOOTSTRAP: обновлено 0; не согласован {BOOTSTRAP_RESOURCE} → AGENTS.md: {error}') from error
-    sources = {'layout': f'{AUTHOR_LAYOUT} (каркас)', 'command': 'AGENTS.md (команда запуска)',
-               'reading_order': 'harness/common/START.md (порядок чтения)'}
-    print('BOOTSTRAP: ' + ', '.join(sources[key] for key in changed) +
-          f' → {BOOTSTRAP_RESOURCE} → AGENTS.md', flush=True)
-
-
-def fenced_lines(text, *, reject_unclosed=True):
-    """Classify original lines; allow an unclosed historical example through EOF."""
-    fence = None
-    depth, list_indent = 0, 0
-    for number, line in enumerate(text.splitlines(keepends=True), 1):
-        inside = fence is not None
-        candidate = line
-        quotes = 0
-        while (not inside or quotes < depth) and re.match(r'^ {0,3}>[ \t]?', candidate):
-            candidate = re.sub(r'^ {0,3}>[ \t]?', '', candidate, count=1)
-            quotes += 1
-        if inside and quotes < depth and candidate.strip() and reject_unclosed:
-            raise ValueError(f'Ambiguous Markdown quote fence at line {number}.')
-        bullet = re.match(r'^ {0,3}(?:[-+*]|[0-9]+[.)])[ \t]+', candidate) if not inside else None
-        indentation = len(bullet.group()) if bullet else 0
-        if bullet:
-            candidate = candidate[indentation:]
-            if (re.match(r'^ {0,3}(?:>|[-+*]|[0-9]+[.)])', candidate)
-                    and re.search(r'`{3,}|~{3,}', candidate) and reject_unclosed):
-                raise ValueError(f'Unsupported nested Markdown fence at line {number}.')
-        elif inside and list_indent and candidate.startswith(' ' * list_indent):
-            candidate = candidate[list_indent:]
-        elif inside and list_indent and candidate.strip() and reject_unclosed:
-            raise ValueError(f'Ambiguous Markdown list fence at line {number}.')
-        match = re.match(r'^ {0,3}(`{3,}|~{3,})([^\r\n]*)', candidate)
-        if match:
-            marker, suffix = match.groups()
-            if fence is None and (marker[0] == '~' or '`' not in suffix):
-                fence, start = marker, number
-                depth, list_indent = quotes, indentation
-                inside = True
-            elif (fence is not None and quotes == depth and marker[0] == fence[0]
-                  and len(marker) >= len(fence) and not suffix.strip(' \t')):
-                fence = None
-        elif not inside and re.match(r'^(?: {4}|\t)', candidate):
-            inside = True
-        yield line, inside
-    if fence is not None and reject_unclosed:
-        raise ValueError(f'Unclosed Markdown code fence starting at line {start}.')
-
-
-def instruction_text(text):
-    """Exclude common fenced and inline code examples from link detection."""
-    text = ''.join(line for line, inside in fenced_lines(text) if not inside)
-    return re.sub(r'(`+).*?\1', '', text, flags=re.S)
-
-
+PUBLICATION_MARKER = '.harness-publication.json'
+WINDOWS_LOCK_FILE = '.harness-startup.lock'
 WARNING = ('Прямое редактирование AGENTS.md и CLAUDE.md запрещено договорённостью harness, '
            'но технически не заблокировано. Изменения предлагайте через заявку в '
            'harness/<пакет>/inbox/.')
-NOTICE = 'Стартовые ссылки повреждены и будут автоматически восстановлены.'
-RULES_LINK = '- [.claude/rules](.claude/rules/)'
-RULES_READ = ('До выполнения задачи прочитай все Markdown-правила из .claude/rules '
-              'и его подпапок, кроме README.human.md; соблюдай применимые требования.')
-LINK_LINES = {f'- [harness/{p}/{n}](harness/{p}/{n})'
-              for p in ('common', 'project') for n in ('INDEX.md', 'START.md')} | {RULES_LINK, RULES_READ, RULES_LINK + ' ' + RULES_READ}
+HUMAN = 'README.human.md'
+PROTECTED = ('AGENTS.md', 'CLAUDE.md')
+PACKAGES = (('common', 'comm-'), ('project', 'proj-'))
+SKILL_CLIENTS = ('.agents/skills', '.claude/skills')
+RESTART_REQUIRED = 3
+RULE_MISMATCH = 4
+ENTRYPOINT_REPAIR_REQUIRED = 5
+MAP_LABELS = {
+    'rules': 'Always loaded правила проекта',
+    'skills': 'Контекстные lazy скиллы и рабочий опыт проекта',
+    'testing/evidence/work': 'Результаты работ по приложению',
+    'testing/evidence/harness': 'Результаты проверок механизма project',
+}
 
 
-def without_startup_links(text):
-    """Ignore generated links outside fenced code, and trailing line endings."""
-    return ''.join(line for line, inside in fenced_lines(text, reject_unclosed=False)
-                   if inside or line.rstrip('\r\n') not in LINK_LINES).rstrip('\r\n')
-
-
-def report_history_changes(root):
-    """Use existing Git history if available; no registration or setup is required."""
-    try:
-        top = subprocess.run(['git', '--no-optional-locks', 'rev-parse', '--show-toplevel'],
-                             cwd=root, capture_output=True)
-        if top.returncode or Path(top.stdout.decode().strip()).resolve() != root:
-            print('Сравнение настроек с историей не проверено: нет истории этого проекта.')
-            return
-        for name in ('AGENTS.md', 'CLAUDE.md'):
-            baseline = subprocess.run(['git', '--no-optional-locks', 'show', f'HEAD:{name}'],
-                                      cwd=root, capture_output=True)
-            if baseline.returncode:
-                print(f'{name}: сравнение с историей не проверено; версии в HEAD нет.')
-                continue
-            file = root / name
-            current = file.read_bytes().decode('utf-8') if file.exists() else ''
-            previous = baseline.stdout.decode('utf-8')
-            changed = (without_startup_links(current) != without_startup_links(previous)
-                       if name == 'AGENTS.md' else current != previous)
-            if changed:
-                print(f'{name}: обнаружено изменение настроек относительно HEAD. ' + WARNING)
-    except FileNotFoundError:
-        print('Сравнение настроек с историей не проверено: Git отсутствует; он не обязателен.')
+def validate_type(path, info):
+    mode = info.st_mode
+    reparse = getattr(info, 'st_file_attributes', 0) & getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0)
+    if stat.S_ISLNK(mode):
+        raise ValueError(f'Symlink forbidden: {path}')
+    if reparse:
+        raise ValueError(f'Reparse point forbidden: {path}')
+    if not (stat.S_ISDIR(mode) or stat.S_ISREG(mode)):
+        raise ValueError(f'Special file forbidden: {path}')
 
 
 def ordinary_path(path):
-    """Check original components from the root before following any ancestor."""
+    """Validate the original components; never normalize away a symlink."""
     path = Path(path).absolute()
-    for component in (*reversed(path.parents), path):
+    for item in (*reversed(path.parents), path):
         try:
-            mode = component.lstat().st_mode
+            info = item.lstat()
         except FileNotFoundError:
             continue
-        if stat.S_ISLNK(mode):
-            raise ValueError(f'Symlink forbidden: {component}')
+        validate_type(item, info)
+        if item != path and not stat.S_ISDIR(info.st_mode):
+            raise ValueError(f'Not an ordinary directory: {item}')
     return path
 
 
-def ordinary_tree(path):
-    """Inspect directory entries without following links or suppressing I/O errors."""
-    path = ordinary_path(path)
-    pending = [path] if path.is_dir() else []
-    while pending:
-        directory = ordinary_path(pending.pop())
-        with os.scandir(directory) as entries:
-            for entry in entries:
-                if entry.is_symlink():
-                    raise ValueError(f'Symlink forbidden: {entry.path}')
-                if entry.is_dir(follow_symlinks=False):
-                    pending.append(Path(entry.path))
-
-
 def ordinary_directory(path, root):
-    ordinary_path(path)
-    for directory in (*reversed(path.parents), path):
-        if directory.exists() and not directory.is_dir():
-            relative = directory.relative_to(root) if directory.is_relative_to(root) else directory
-            raise ValueError(f'Not an ordinary directory: {relative}')
+    path = ordinary_path(path)
+    if path.exists() and not path.is_dir():
+        raise ValueError(f'Not an ordinary directory: {path}')
+    return path
 
 
-def utf8_text(data, name):
+def entries(path):
+    """Walk without following links, suppressing errors or opening file contents."""
+    if not ordinary_path(path).exists():
+        return
+    pending = [path]
+    while pending:
+        directory = pending.pop()
+        with os.scandir(directory) as iterator:
+            for item in sorted(iterator, key=lambda entry: entry.name):
+                file = directory / item.name
+                info = item.stat(follow_symlinks=False)
+                validate_type(file, info)
+                is_dir = stat.S_ISDIR(info.st_mode)
+                yield file, is_dir
+                if is_dir:
+                    pending.append(file)
+
+
+def ordinary_tree(path):
+    path = ordinary_path(path)
+    if path.is_dir():
+        for _ in entries(path):
+            pass
+
+
+@contextmanager
+def root_lock(root):
+    """Serialize a checking/repairing startup with other startups and the publisher."""
+    root = ordinary_directory(root, root)
+    if os.name == 'nt':
+        import msvcrt
+        path = ordinary_path(root / WINDOWS_LOCK_FILE)
+        fd = os.open(path, os.O_CREAT | os.O_RDWR | os.O_BINARY, 0o600)
+        try:
+            info = path.lstat()
+            validate_type(path, info)
+            if not stat.S_ISREG(info.st_mode) or not os.path.samestat(os.fstat(fd), info):
+                raise ValueError(f'Invalid startup lock: {path}')
+            os.lseek(fd, 0, os.SEEK_SET)
+            try:
+                # A byte range beyond EOF can be locked before initialization.
+                msvcrt.locking(fd, msvcrt.LK_NBLCK, 1)
+            except OSError as exc:
+                raise ValueError(f'Harness lock unavailable: {path} ({exc})') from exc
+            if not os.fstat(fd).st_size:
+                os.lseek(fd, 0, os.SEEK_SET)
+                os.write(fd, b'\0')
+                os.fsync(fd)
+            yield
+        finally:
+            os.close(fd)
+        return
+    import fcntl
+    fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
     try:
-        return data.decode('utf-8')
-    except UnicodeError as error:
-        raise ValueError(f'Invalid UTF-8 text: {name}: {error}') from error
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise ValueError(f'Harness busy: {root}') from exc
+        yield
+    finally:
+        os.close(fd)
 
 
-def check_rule_copies(root):
-    """Check the complete installed canonical set without publishing missing copies."""
-    common = root / 'harness/common'
-    ordinary_directory(common, root)
-    if not common.is_dir():
-        raise ValueError('harness/common is required; project-only is unsupported.')
-    native = root / '.claude/rules'
-    ordinary_directory(native, root)
-    sources = {}
-    for package, prefix in (('common', 'comm-'), ('project', 'proj-')):
-        rules = root / 'harness' / package / 'rules'
-        ordinary_directory(rules, root)
-        if rules.is_dir():
-            for path in (rules, *rules.rglob('*')):
-                if path.is_symlink():
-                    raise ValueError(f'Not an ordinary file: {path}')
-                if path.is_dir():
-                    tuple(path.iterdir())  # glob may silently omit unreadable directories.
-                if path.name.startswith(prefix) and path.suffix == '.md' and path.parent != rules:
-                    raise ValueError(f'Canonical rules must be direct ordinary files: {path}')
-            sources.update((file.name, file) for file in rules.glob(prefix + '*.md'))
-    if not any(name.startswith('comm-') for name in sources):
-        raise ValueError('No canonical shared rules found; nothing checked.')
-    for path in (native, *native.rglob('*')):
-        if path.is_symlink():
-            raise ValueError(f'Not an ordinary file: {path}')
-        if path.is_dir():
-            tuple(path.iterdir())
-    actual = {file.relative_to(native).as_posix() for file in native.rglob('*.md')
-              if file.name.startswith(('comm-', 'proj-'))}
-    expected = set(sources)
-    if expected != actual:
-        raise ValueError(f'Missing copies: {sorted(expected - actual)}; '
-                         f'extra copies: {sorted(actual - expected)}')
-    for name, source in sorted(sources.items()):
-        copy = native / name
-        if not source.is_file() or not copy.is_file():
-            raise ValueError(f'Not an ordinary file: {name}')
-        data = source.read_bytes()
-        if not utf8_text(data, source.relative_to(root)).strip():
-            raise ValueError(f'Empty canonical rule: {name}')
-        if data != copy.read_bytes():
-            raise ValueError(f'Different rule bytes: {name}')
-    return len(sources)
+def file_attributes(value):
+    return (value.st_dev, value.st_ino, value.st_mtime_ns, value.st_ctime_ns,
+            value.st_size, value.st_uid, value.st_gid, stat.S_IMODE(value.st_mode))
 
 
 def snapshot_input(path, root):
+    """Read one regular file and bind its bytes to its identity; None means missing."""
     ordinary_path(path)
-    ordinary_directory(path.parent, root)
-    if path.is_symlink() or (path.exists() and not path.is_file()):
-        raise ValueError(f'Not a regular file: {path.name}')
-    if not path.exists():
+    try:
+        before = path.lstat()
+    except FileNotFoundError:
         return None
-    before = path.stat()
-    data = path.read_bytes()
-    after = path.stat()
-    attributes = lambda value: (value.st_dev, value.st_ino, value.st_mtime_ns, value.st_ctime_ns,
-                                value.st_size, value.st_uid, value.st_gid, stat.S_IMODE(value.st_mode))
-    if attributes(before) != attributes(after):
-        raise ValueError(f'Input changed while reading: {path.name}')
-    return data, attributes(after)
+    if not stat.S_ISREG(before.st_mode):
+        raise ValueError(f'Not a regular file: {path}')
+    fd = os.open(path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0) |
+                 getattr(os, 'O_NONBLOCK', 0) | getattr(os, 'O_BINARY', 0))
+    with os.fdopen(fd, 'rb') as source:
+        identity = file_attributes(before)
+        if file_attributes(os.fstat(fd)) != identity:
+            raise ValueError(f'Input changed before reading: {path}')
+        data = source.read()
+        if file_attributes(os.fstat(fd)) != identity or file_attributes(path.lstat()) != identity:
+            raise ValueError(f'Input changed while reading: {path}')
+    return data, identity
 
 
-def replace_input(path, original, updated, root):
-    """Replace one input atomically, preserving a detected concurrent edit."""
+def require_file(path, root):
+    result = snapshot_input(path, root)
+    if result is None:
+        raise ValueError(f'Missing canonical file: {path}')
+    return result
+
+
+def replace_input(path, original, updated, root, new_mode=None):
+    """Preserve existing permissions/attributes and publish a complete file atomically."""
+    ordinary_directory(path.parent, root)
     temporary = None
     try:
-        with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.' + path.name + '-', delete=False) as handle:
+        with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.' + path.name + '-',
+                                         delete=False) as handle:
             temporary = Path(handle.name)
             handle.write(updated)
             handle.flush()
@@ -282,7 +176,7 @@ def replace_input(path, original, updated, root):
                 current = temporary.stat()
                 if (current.st_uid, current.st_gid) != (uid, gid):
                     if not hasattr(os, 'chown'):
-                        raise ValueError(f'Cannot preserve input ownership: {path.name}')
+                        raise ValueError(f'Cannot preserve file ownership: {path}')
                     os.chown(temporary, uid, gid)
                 if hasattr(os, 'listxattr'):
                     attributes = {name: os.getxattr(path, name, follow_symlinks=False)
@@ -293,256 +187,479 @@ def replace_input(path, original, updated, root):
                     for name, value in attributes.items():
                         os.setxattr(temporary, name, value, follow_symlinks=False)
                 temporary.chmod(mode)
+            elif new_mode is not None:
+                temporary.chmod(new_mode & 0o777)
             os.fsync(handle.fileno())
         if snapshot_input(path, root) != original:
-            raise ValueError(f'Input changed before replacement: {path.name}')
-        os.replace(temporary, path)
+            raise ValueError(f'Input changed before replacement: {path}')
+        if original is None:
+            # A file created by another owner after the snapshot must survive.
+            if os.name == 'nt':
+                os.rename(temporary, path)  # Windows refuses an existing destination.
+            else:
+                os.link(temporary, path, follow_symlinks=False)
+        else:
+            os.replace(temporary, path)
+        if os.name != 'nt':
+            directory = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+            try:
+                os.fsync(directory)
+            finally:
+                os.close(directory)
     finally:
         if temporary is not None:
             temporary.unlink(missing_ok=True)
 
 
+def decode_text(path, raw):
+    try:
+        return raw.decode('utf-8')
+    except UnicodeDecodeError as error:
+        raise ValueError(f'Invalid UTF-8 in {path} at byte {error.start}') from error
+
+
 def load_project_skeleton(common, root):
-    template = common / 'base/project-skeleton.json'
-    ordinary_directory(template.parent, root)
-    if not template.is_file() or template.is_symlink():
-        raise ValueError('Missing or unsafe resource: harness/common/base/project-skeleton.json')
-    data = json.loads(template.read_text(encoding='utf-8'))
-    categories = data.get('categories') if isinstance(data, dict) else None
+    path = common / 'base/project-skeleton.json'
+    raw, _ = require_file(path, root)
+    try:
+        template = json.loads(decode_text(path, raw))
+    except json.JSONDecodeError as error:
+        raise ValueError(f'Invalid JSON in {path}: {error}') from error
+    categories = template.get('categories') if isinstance(template, dict) else None
     if not isinstance(categories, dict) or not categories:
-        raise ValueError('Project skeleton requires nonempty categories.')
-    for name, details in categories.items():
+        raise ValueError(f'Project skeleton requires nonempty categories: {path}')
+    for name, detail in categories.items():
         if (not re.fullmatch(r'[a-z0-9][a-z0-9_-]*(?:/[a-z0-9][a-z0-9_-]*)*', name)
-                or not isinstance(details, dict)
-                or any(not isinstance(details.get(key), str) or not details[key].strip()
-                       for key in ('purpose', 'example'))):
-            raise ValueError(f'Invalid project skeleton category: {name}')
+                or not isinstance(detail, dict)
+                or any(not isinstance(detail.get(k), str) or not detail[k].strip()
+                       for k in ('purpose', 'example'))):
+            raise ValueError(f'Invalid project skeleton category in {path}: {name}')
     return categories
 
 
 def create_project_skeleton(project, categories):
-    # Build off-path so an interrupted write cannot leave a half-created project.
+    """Create only the missing project. A failure never exposes a partial skeleton."""
     with tempfile.TemporaryDirectory(prefix='.project-skeleton-', dir=project.parent) as temporary:
         staging = Path(temporary)
-        (staging / 'README.human.md').write_text(
-            '# Проектный harness\n\nЗдесь сохраняются материалы текущего проекта; '
-            'при создании каркаса рабочих материалов ещё нет. Например, согласованный '
-            'контракт проекта позже можно сохранить в base/project-contract.md. '
-            'Пример иллюстративный, а наличие папок не подтверждает проверенность.\n', encoding='utf-8')
-        rows = []
-        for name, details in categories.items():
+        (staging / HUMAN).write_text(
+            '# Проектный harness\n\nЗдесь сохраняются материалы проекта. Например, '
+            'согласованный контракт можно поместить в base/project-contract.md.\n',
+            encoding='utf-8')
+        rows = ['# Проектный harness', '', '| Назначение | Открой каталог |', '|---|---|']
+        for name, detail in categories.items():
             directory = staging / name
             directory.mkdir(parents=True, exist_ok=True)
-            (directory / 'README.human.md').write_text(
-                f'# {name}\n\n{details["purpose"]}\n\n'
-                f'Пример (иллюстративный): {details["example"]}\n', encoding='utf-8')
-            rows.append(f'| {details["purpose"]} | [{name}/]({name}/) |')
-        # Include explanations for intermediate directories of an approved nested path.
+            (directory / HUMAN).write_text(f'# {name}\n\n{detail["purpose"]}\n\n'
+                                           f'Пример: {detail["example"]}\n', encoding='utf-8')
+            label = MAP_LABELS.get(name, detail['purpose'])
+            rows.append(f'| {label} | [{directory.name}]({name}) |')
         for directory in staging.rglob('*'):
-            if directory.is_dir() and not (directory / 'README.human.md').exists():
-                (directory / 'README.human.md').write_text(
-                    '# Проектные материалы\n\nЗдесь сгруппированы утверждённые категории. '
-                    'Например, вложенная категория хранит относящиеся к её задаче материалы. '
-                    'Это иллюстративный пример для пока пустой папки.\n', encoding='utf-8')
-        (staging / 'INDEX.md').write_text(
-            '# Проектный harness\n\nПустой каркас для знаний текущего проекта.\n\n'
-            '| Назначение | Каталог |\n|---|---|\n' + '\n'.join(rows) +
-            '\n\nИщи материалы по задаче, исключая README.human.md. '
-            'Наличие категории не подтверждает её наполненность или проверенность.\n', encoding='utf-8')
-        (staging / 'START.md').write_text(
-            '# Старт проектного harness\n\nПроектный пакет требует установленного common. '
-            'Из корня проекта запускается `python3 -B harness/common/checks/ensure_entrypoint_links.py`; '
-            'повторный запуск после команды статичного входа не нужен. '
-            'Затем ищи проектные материалы по INDEX.md; подробности открывай по задаче.\n', encoding='utf-8')
-        if project.exists() or project.is_symlink():
-            raise ValueError('Project appeared during initialization; existing data preserved.')
+            if directory.is_dir() and not (directory / HUMAN).exists():
+                (directory / HUMAN).write_text(
+                    '# Материалы проекта\n\nЗдесь размещаются вложенные категории, '
+                    'например документы проекта.\n', encoding='utf-8')
+        (staging / 'INDEX.md').write_text('\n'.join(rows) + '\n', encoding='utf-8')
+        if ordinary_path(project).exists():
+            raise ValueError(f'Project appeared during initialization: {project}')
         staging.rename(project)
 
 
+def canonical_rules(root):
+    """Retain the relative path to each published comm-/proj- rule, including subfolders."""
+    sources = {}
+    for package, prefix in PACKAGES:
+        folder = ordinary_directory(root / 'harness' / package / 'rules', root)
+        if package == 'common' and not folder.is_dir():
+            raise ValueError(f'Missing canonical folder: {folder}')
+        for file, is_dir in entries(folder):
+            if is_dir or file.suffix.lower() != '.md' or file.name == HUMAN:
+                continue
+            if not file.name.startswith(prefix) or file.suffix != '.md':
+                raise ValueError(f'Unknown canonical rule owner: {file}')
+            key = file.relative_to(folder)
+            if key in sources:
+                raise ValueError(f'Canonical rule collision: {sources[key]} and {file}')
+            sources[key] = file
+    if not any(key.name.startswith('comm-') for key in sources):
+        raise ValueError('No canonical shared rules found.')
+    return sources
 
-def startup_connections(content, resources):
-    visible = instruction_text(content)
-    present = set()
-    for relative in resources + ['.claude/rules']:
-        target = re.escape(relative) + (r'/?' if relative == '.claude/rules' else '')
-        if re.search(r'\[[^\]\n]+\]\(<?(?:\./)?' + target + r'(?:#[^\s)>]+)?>?\)', visible):
-            present.add(relative)
-    return visible, present
+
+class RuleMismatch(ValueError):
+    """The working always loaded rules differ from their published sources."""
 
 
-def repair_startup_blocks(content, resources, missing_connections):
-    """Validate each block; repair only recognizable missing connections."""
-    pattern = re.compile(r'^- \[(?P<label>[^\]\n]+)\]\(<?(?:\./)?(?P<target>harness/(?:common|project)/(?:START|INDEX)\.md|\.claude/rules/?)(?:#[^\s)>]+)?>?\)')
-    lines = list(fenced_lines(content))
-    parts = []
-    order = resources[:2] + ['.claude/rules'] + resources[2:]
-    ending = re.search(r'\r?\n', content)
-    newline = ending.group() if ending else '\n'
-    index = 0
-    while index < len(lines):
-        line, inside = lines[index]
-        if inside or not pattern.match(line):
-            parts.append(line)
-            index += 1
+def rule_destinations(root):
+    sources = canonical_rules(root)
+    native = ordinary_directory(root / '.claude/rules', root)
+    copies = {native / name: source for name, source in sources.items()}
+    for file, is_dir in entries(native):
+        if not is_dir and file.suffix.lower() == '.md' and file not in copies:
+            raise RuleMismatch(f'Unmanaged native rule: {file}; stop and resolve through INBOX.')
+    return copies
+
+
+def rule_snapshots(root, *, collect_read_errors=False):
+    """Collect matching sources and working copies without modifying either tree."""
+    snapshots = {}
+    differences = []
+    for target, source in rule_destinations(root).items():
+        expected = require_file(source, root)
+        if not decode_text(source, expected[0]).strip():
+            raise ValueError(f'Empty canonical rule: {source}')
+        try:
+            actual = snapshot_input(target, root)
+        except PermissionError as error:
+            if not collect_read_errors:
+                raise
+            differences.append(f'Cannot read rule copy: {target} ({error.strerror})')
             continue
-        block, labels = {}, {}
-        start = index + 1
-        while index < len(lines) and not lines[index][1]:
-            match = pattern.match(lines[index][0])
-            if not match:
-                if block and next(reversed(block)) == '.claude/rules' and lines[index][0].rstrip('\r\n') == RULES_READ:
-                    block['.claude/rules'] += lines[index][0]
-                    index += 1
+        snapshots[target] = (source, expected, actual)
+        if actual is None or actual[0] != expected[0]:
+            reason = 'absent' if actual is None else 'bytes differ'
+            differences.append(f'Missing or different rule copy: {target} ({reason}; canonical: {source})')
+    return snapshots, differences
+
+
+def check_rule_copies(root):
+    """Verify published rule copies without writing files or loading client entrypoints."""
+    check_publication_marker(root)
+    snapshots, differences = rule_snapshots(root, collect_read_errors=True)
+    check_publication_marker(root)
+    if differences:
+        raise RuleMismatch('\n'.join(differences))
+    return len(snapshots)
+
+
+def restore_rule_copies(root):
+    """Restore managed always loaded rules only, after an explicit recovery request."""
+    with root_lock(root):
+        check_publication_marker(root)
+        snapshots, _ = rule_snapshots(root)
+        repairs = {target: state for target, state in snapshots.items()
+                   if state[2] is None or state[1][0] != state[2][0]}
+        if repairs:
+            print('Восстановление рабочих always loaded правил из опубликованного канона.', flush=True)
+        changed = []
+        for target, (source, expected, actual) in repairs.items():
+            try:
+                if snapshot_input(source, root) != expected:
+                    raise ValueError(f'Canonical file changed before recovery: {source}')
+                ordinary_directory(target.parent, root).mkdir(parents=True, exist_ok=True)
+                replace_input(target, actual, expected[0], root, expected[1][-1])
+                changed.append(target)
+            except (OSError, ValueError) as error:
+                updated = ', '.join(map(str, changed)) or 'none'
+                pending = ', '.join(str(path) for path in repairs if path not in changed)
+                raise ValueError(f'{error}; already updated: {updated}; pending: {pending}') from error
+        check_rule_copies(root)
+        return changed
+
+
+def skill_destinations(root):
+    folders = {}
+    for package, prefix in PACKAGES:
+        folder = ordinary_directory(root / 'harness' / package / 'skills', root)
+        if not folder.is_dir():
+            continue
+        for source in sorted(folder.iterdir()):
+            if source.name == HUMAN and source.is_file():
+                continue
+            if not source.is_dir() or not source.name.startswith(prefix):
+                raise ValueError(f'Unknown canonical skill owner: {source}')
+            if not (source / 'SKILL.md').is_file():
+                raise ValueError(f'Incomplete canonical skill: {source}')
+            folders[source.name] = source
+    copies, directories = {}, set()
+    for client in SKILL_CLIENTS:
+        native = ordinary_directory(root / client, root)
+        if native.is_dir():
+            for entry in native.iterdir():
+                if entry.name.startswith(('comm-', 'proj-')) and entry.name not in folders:
+                    raise ValueError(f'Unmanaged reserved skill name: {entry}; resolve through INBOX.')
+        for name, folder in folders.items():
+            target = ordinary_directory(native / name, root)
+            directories.add(target)
+            for file, is_dir in entries(folder):
+                destination = target / file.relative_to(folder)
+                if is_dir:
+                    directories.add(destination)
+                else:
+                    copies[destination] = file
+            for file, is_dir in entries(target):
+                if (is_dir and file not in directories) or (not is_dir and file not in copies):
+                    raise ValueError(f'Unexpected file or directory in managed skill: {file}')
+    return copies, directories
+
+
+def protected_difference(path, actual, expected):
+    """Identify a mismatch without echoing arbitrary bytes from an unexpected version."""
+    first = next((n for n, pair in enumerate(zip(expected, actual)) if pair[0] != pair[1]),
+                 min(len(actual), len(expected)))
+    return (f'Protected entrypoint differs: {path}; first differing byte offset {first}. '
+            f'Canonical: {len(expected)} bytes, SHA-256 {hashlib.sha256(expected).hexdigest()}; '
+            f'observed: {len(actual)} bytes, SHA-256 {hashlib.sha256(actual).hexdigest()}. '
+            'Resolve through INBOX.')
+
+
+def protected_template(source, root):
+    expected = require_file(source, root)
+    if source.name == 'CLAUDE.template' and expected[0]:
+        raise ValueError(f'Canonical CLAUDE template must be empty: {source}')
+    if source.name == 'AGENTS.template' and not decode_text(source, expected[0]).strip():
+        raise ValueError(f'Empty canonical AGENTS template: {source}')
+    return expected
+
+
+def parse_entrypoint_approvals(values):
+    approvals = {}
+    for value in values:
+        name, *digests = value.split(':')
+        if (name not in PROTECTED or name in approvals or len(digests) != 2 or
+                any(not re.fullmatch(r'[0-9a-f]{64}', digest) for digest in digests)):
+            raise ValueError(f'Invalid or duplicate approved entrypoint: {name}')
+        approvals[name] = tuple(digests)
+    return approvals
+
+
+def verify_entrypoint_backup(root, commit, approvals):
+    """Git proves the backup bytes; the published templates supply recovery bytes."""
+    if not re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', commit):
+        raise ValueError('Backup commit must be a full Git object ID.')
+    env = {name: value for name, value in os.environ.items() if not name.startswith('GIT_')}
+
+    def git(*args):
+        result = subprocess.run(['git', '--no-replace-objects', *args], cwd=root,
+                                env=env, capture_output=True, check=False)
+        if result.returncode:
+            raise ValueError(f'Cannot verify backup commit {commit} in {root}.')
+        return result.stdout
+
+    git_root = Path(os.fsdecode(git('rev-parse', '--show-toplevel').rstrip(b'\r\n')))
+    if not os.path.samefile(root, git_root) or git('rev-parse', '--verify', 'HEAD').strip() != commit.encode():
+        raise ValueError(f'Backup commit must be HEAD of this installation: {root}')
+    for name, (observed, _) in approvals.items():
+        if hashlib.sha256(git('cat-file', 'blob', f'{commit}:{name}')).hexdigest() != observed:
+            raise ValueError(f'Backup commit bytes differ from the approved version: {root / name}')
+
+
+class EntrypointRepairRequired(ValueError):
+    """A protected entrypoint can be repaired automatically before the next session."""
+
+
+def check_start_entrypoints(root, backup_commit=None, approvals=None, *, no_repair=False):
+    """Check protected inputs, repairing only empty/missing or explicitly backed-up files."""
+    # The Windows writer lock can create a file. Read-only checks use snapshots instead.
+    with nullcontext() if no_repair else root_lock(root):
+        check_publication_marker(root)
+        repairs = {}
+        conflicts = []
+        checked = []
+        if backup_commit is not None:
+            verify_entrypoint_backup(root, backup_commit, approvals)
+        for name in PROTECTED:
+            path = root / name
+            source = root / 'harness/common/base' / path.with_suffix('.template').name
+            expected = protected_template(source, root)
+            actual = snapshot_input(path, root)
+            if no_repair:
+                checked.extend(((source, expected), (path, actual)))
+            if backup_commit is not None:
+                if name not in approvals:
                     continue
-                break
-            target = match.group('target').rstrip('/')
-            if target in block:
-                break
-            block[target] = lines[index][0]
-            labels[target] = match.group('label').rstrip('/')
-            index += 1
-        if len(block) < 3 or (len(block) < len(order) and any(labels[p] != p for p in block)):
-            raise ValueError(f'Ambiguous partial startup link list at line {start}.')
-        if list(block) != [path for path in order if path in block]:
-            raise ValueError(f'Invalid startup block order at line {start}; use inbox for reordering.')
-        parts.append(block)
-    has_complete = any(isinstance(part, dict) and len(part) == len(order) for part in parts)
-    output, changed = [], False
-    for part in parts:
-        if isinstance(part, str):
-            output.append(part)
-            continue
-        missing = [path for path in order if path not in part]
-        # Complete global links without a full block may be deliberate user fragments.
-        if not missing or (not missing_connections and not has_complete):
-            output.extend(part.values())
-            continue
-        for path in missing:
-            part[path] = (RULES_LINK + ' ' + RULES_READ if path == '.claude/rules'
-                          else f'- [{path}]({path})') + newline
-        output.extend(part[path] if part[path].endswith('\n') else part[path] + newline for path in order)
-        changed = True
-    return ''.join(output), changed
+                observed, canonical = approvals[name]
+                if hashlib.sha256(expected[0]).hexdigest() != canonical:
+                    raise ValueError(f'Canonical entrypoint changed since approval: {source}')
+                if actual is not None and actual[0] == expected[0]:
+                    continue
+                if actual is None or hashlib.sha256(actual[0]).hexdigest() != observed:
+                    raise ValueError(f'Working entrypoint changed since approval: {path}')
+                reason = f'резервный коммит {backup_commit} проверен'
+            else:
+                if actual is not None and actual[0] == expected[0]:
+                    continue
+                if actual is not None and actual[0]:
+                    conflicts.append(protected_difference(path, actual[0], expected[0]))
+                    continue
+                reason = 'файл отсутствует' if actual is None else 'файл пуст'
+            repairs[path] = (source, expected, actual, reason)
+
+        if no_repair:
+            for path, original in checked:
+                if snapshot_input(path, root) != original:
+                    raise ValueError(f'Entrypoint changed during checking: {path}')
+            check_publication_marker(root)
+            if repairs:
+                needed = '\n'.join(f'{path} ({reason}); образец: {source}'
+                                   for path, (source, _, _, reason) in repairs.items())
+                notice = 'Защищённые входы требуют восстановления из канона:\n' + needed
+                if not conflicts:
+                    raise EntrypointRepairRequired(notice)
+                conflicts.append(notice)
+            repairs.clear()
+
+        changed = []
+        for path, (source, expected, actual, reason) in repairs.items():
+            try:
+                if snapshot_input(source, root) != expected:
+                    raise ValueError(f'Canonical file changed before recovery: {source}')
+                print(f'Восстановление защищённого входа {path} ({reason}) из {source}.', flush=True)
+                replace_input(path, actual, expected[0], root, expected[1][-1])
+                changed.append(path)
+                if require_file(path, root)[0] != expected[0]:
+                    raise ValueError(f'Incomplete recovery: {path}')
+            except (OSError, ValueError) as error:
+                updated = ', '.join(map(str, changed)) or 'none'
+                pending = ', '.join(str(target) for target in repairs if target not in changed) or 'none'
+                raise ValueError(f'{error}; already updated: {updated}; pending: {pending}') from error
+        if conflicts:
+            if changed:
+                print('Начните новую сессию после разрешения оставшихся расхождений.', flush=True)
+            raise ValueError('\n'.join(conflicts) + '\nПредложите явно согласовать через INBOX '
+                             'резервный коммит и последующее восстановление этих входов из канона.')
+        return changed
+
+
+def check_publication_marker(root):
+    marker = ordinary_path(root / PUBLICATION_MARKER)
+    if marker.exists():
+        raise ValueError(f'Unfinished publication: {marker}; resume the approved INBOX request.')
 
 
 def ensure(root):
-    print(WARNING)
-    root = ordinary_path(root)
-    ordinary_directory(root, root)
-    root = Path(os.path.normpath(root))
-    script = ordinary_path(__file__)
-    ordinary_directory(script.parent, root)
-    if script.is_symlink():
-        raise ValueError(f'Unsafe checker path: {script}')
-    common, project = root / 'harness/common', root / 'harness/project'
-    for directory in (common, common / 'checks', project):
-        ordinary_directory(directory, root)
-    if not common.is_dir():
-        raise ValueError('harness/common is required; project-only is unsupported.')
-    checker = ordinary_path(common / 'checks/ensure_entrypoint_links.py')
-    if checker.is_symlink() or (checker.exists() and not checker.is_file()):
-        raise ValueError(f'Unsafe checker path: {checker}')
-    ordinary_tree(root / 'harness')
-    categories = load_project_skeleton(common, root)
-    create_project = not project.exists()
-    resources = [f'harness/{package}/{name}' for name in ('START.md', 'INDEX.md')
-                 for package in ('common', 'project')]
-    for relative in resources:
-        if create_project and relative.startswith('harness/project/'):
-            continue
-        path = root / relative
-        if not path.is_file() or path.is_symlink() or not path.resolve().is_relative_to(root):
-            raise ValueError(f'Missing or unsafe resource: {relative}')
-        if not utf8_text(path.read_bytes(), relative).strip():
-            raise ValueError(f'Empty resource: {relative}')
-    agents, claude = root / 'AGENTS.md', root / 'CLAUDE.md'
-    for path in (agents, claude):
-        if path.is_symlink() or (path.exists() and not path.is_file()):
-            raise ValueError(f'Not a regular file: {path.name}')
-    rules = root / '.claude' / 'rules'
-    for path in (rules.parent, rules):
-        if path.is_symlink() or (path.exists() and not path.is_dir()):
-            raise ValueError(f'Not an ordinary directory: {path.relative_to(root)}')
-    check_rule_copies(root)
-    snapshots = {path: snapshot_input(path, root) for path in (agents, claude)}
-    report_history_changes(root)
-    original_agents = utf8_text(snapshots[agents][0], agents.name) if snapshots[agents] is not None else ''
-    if original_agents:
-        content = original_agents
-    else:
-        template = ordinary_path(script.parents[1] / 'base' / BOOTSTRAP_RESOURCE.name)
-        content = bootstrap_content(json.loads(template.read_text(encoding='utf-8')))
-    _, present = startup_connections(content, resources)
-    content, repaired_blocks = repair_startup_blocks(content, resources,
-        bool(set(resources + ['.claude/rules']) - present))
-    visible, present = startup_connections(content, resources)
-    missing = [relative for relative in resources if relative not in present]
-    additions = [f'- [{relative}]({relative})' for relative in missing]
-    if '.claude/rules' not in present:
-        additions.append(RULES_LINK)
-    if RULES_READ not in visible:
-        additions.append(RULES_READ)
-    if additions:
-        ending = re.search(r'\r?\n', content)
-        newline = ending.group() if ending else '\n'
-        order = {f'- [{relative}]({relative})': index
-                 for index, relative in enumerate(resources[:2] + ['.claude/rules/'] + resources[2:])}
-        order[RULES_LINK] = 2
-        order[RULES_READ] = 2.5
-        additions.sort(key=lambda line: order[line])
-        if RULES_LINK in additions and RULES_READ in additions:
-            additions[additions.index(RULES_LINK)] += ' ' + RULES_READ
-            additions.remove(RULES_READ)
-        content += ('' if content.endswith('\n') else newline) + newline + newline.join(additions) + newline
-    original_claude = utf8_text(snapshots[claude][0], claude.name) if snapshots[claude] is not None else ''
-    bridge = original_claude
-    if not re.search(r'(?m)^@(?:\./)?AGENTS\.md[ \t]*\r?$', instruction_text(bridge)):
-        ending = re.search(r'\r?\n', bridge)
-        newline = ending.group() if ending else '\n'
-        bridge = '@AGENTS.md' + newline + bridge
-    changed = []
-    updates = [(path, updated.encode('utf-8'))
-               for path, original, updated in ((agents, original_agents, content),
-                                               (claude, original_claude, bridge))
-               if updated != original or snapshots[path] is None]
-    for path, original in snapshots.items():
-        if snapshot_input(path, root) != original:
-            raise ValueError(f'Input changed during planning: {path.name}')
-    if additions or repaired_blocks or bridge != original_claude:
-        print(NOTICE, flush=True)
-    try:
-        if create_project:
-            print('harness/project отсутствует: создаётся пустой каркас из common.', flush=True)
-            create_project_skeleton(project, categories)
-            changed.append('harness/project')
-        for path, updated in updates:
-            replace_input(path, snapshots[path], updated, root)
-            changed.append(path.name)
-    except (OSError, ValueError) as error:
-        raise ValueError(f'{error}; already changed: {changed}; '
-                         f'pending inputs: {[p.name for p, _ in updates if p.name not in changed]}') from error
-    if bridge not in ('@AGENTS.md', '@AGENTS.md\n', '@AGENTS.md\r\n'):
-        print('CLAUDE.md: требуется единственная строка @AGENTS.md; '
-              'дополнительное или отличающееся содержимое сохранено. ' + WARNING)
-    try:
-        sync_bootstrap(root)
-    except (OSError, ValueError) as error:
-        raise ValueError(f'{error}; already changed: {changed}') from error
-    return changed
+    print(WARNING, flush=True)
+    root = ordinary_directory(Path(root), root)
+    with root_lock(root):
+        check_publication_marker(root)
+        script = ordinary_path(__file__)
+        if not script.is_file():
+            raise ValueError(f'Unsafe checker path: {script}')
+        root = Path(os.path.normpath(root))
+        common, project = root / 'harness/common', root / 'harness/project'
+        if not ordinary_directory(common, root).is_dir():
+            raise ValueError('harness/common is required; project-only is unsupported.')
+        ordinary_directory(project, root)
+        installed = common / 'checks/ensure_entrypoint_links.py'
+        installed_bytes = require_file(installed, root)[0]
+        if script != installed and require_file(script, root)[0] != installed_bytes:
+            raise ValueError(f'Different checker version; run the installed checker directly: {installed}')
+        # This structural symlink guard never opens inbox/evidence contents.
+        ordinary_tree(root / 'harness')
+        categories = load_project_skeleton(common, root)
+        create_project = not project.exists()
+        for package in [common] + ([] if create_project else [project]):
+            index = package / 'INDEX.md'
+            if not decode_text(index, require_file(index, root)[0]).strip():
+                raise ValueError(f'Empty map: {package / "INDEX.md"}')
+
+        copies = rule_destinations(root)
+        rule_sources = set(copies.values())
+        skills, directories = skill_destinations(root)
+        copies.update(skills)
+        for name in PROTECTED:
+            copies[root / name] = common / 'base' / (name.split('.')[0] + '.template')
+
+        originals, sources, repairs = {}, {}, []
+        for target, source in copies.items():
+            if source not in sources:
+                sources[source] = (protected_template(source, root) if target.parent == root
+                                   else require_file(source, root))
+            expected = sources[source][0]
+            if source in rule_sources or source.name == 'SKILL.md':
+                if not decode_text(source, expected).strip():
+                    raise ValueError(f'Empty canonical file: {source}')
+            actual = originals[target] = snapshot_input(target, root)
+            if actual is not None and actual[0] == expected:
+                continue
+            if target.parent == root and actual is not None:
+                raise ValueError(protected_difference(target, actual[0], expected))
+            repairs.append(target)
+
+        for folder in directories:
+            ordinary_directory(folder, root)
+        for source, snapshot in sources.items():
+            if snapshot_input(source, root) != snapshot:
+                raise ValueError(f'Canonical file changed during checking: {source}')
+        for target, snapshot in originals.items():
+            if snapshot_input(target, root) != snapshot:
+                raise ValueError(f'Working file changed during checking: {target}')
+
+        missing_folders = [folder for folder in sorted(directories, key=lambda p: (len(p.parts), p))
+                           if not folder.exists()]
+        planned = ([project] if create_project else []) + missing_folders + repairs
+        if planned:
+            print('Восстановление рабочих файлов из канонических источников.', flush=True)
+        changed = []
+        try:
+            if create_project:
+                create_project_skeleton(project, categories)
+                changed.append(project)
+            for folder in missing_folders:
+                if not ordinary_directory(folder, root).exists():
+                    folder.mkdir(parents=True, exist_ok=True)
+                    changed.append(folder)
+            for target in repairs:
+                source = copies[target]
+                expected = sources[source]
+                if snapshot_input(source, root) != expected:
+                    raise ValueError(f'Canonical file changed before recovery: {source}')
+                ordinary_directory(target.parent, root).mkdir(parents=True, exist_ok=True)
+                replace_input(target, originals[target], expected[0], root, expected[1][-1])
+                changed.append(target)
+                if require_file(target, root)[0] != expected[0]:
+                    raise ValueError(f'Incomplete recovery: {target}')
+        except (OSError, ValueError) as error:
+            completed = set(changed)
+            remaining = [str(path) for path in planned if path not in completed]
+            raise ValueError(f'{error}; already updated: {", ".join(map(str, changed)) or "none"}; '
+                             f'pending: {", ".join(remaining) or "none"}') from error
+        return changed
 
 
 def main():
-    if len(sys.argv) > 2:
-        print('Usage: python3 ensure_entrypoint_links.py [project-root]', file=sys.stderr)
-        return 2
-    root = Path(sys.argv[1] if len(sys.argv) == 2 else '.').absolute()
+    parser = argparse.ArgumentParser(description=__doc__)
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--check-rules', action='store_true', help='Compare rule copies without writing.')
+    modes.add_argument('--restore-rules', action='store_true', help='Recover managed rule copies only.')
+    modes.add_argument('--check-start-entrypoints', action='store_true',
+                       help='Check AGENTS.md and CLAUDE.md and recover missing or empty inputs.')
+    modes.add_argument('--restore-start-entrypoints', metavar='BACKUP_COMMIT',
+                       help='Restore only the confirmed protected entries backed up in this commit.')
+    parser.add_argument('--no-repair', action='store_true',
+                        help='With --check-start-entrypoints, compare without writing and report required repair.')
+    parser.add_argument('--entrypoint', action='append', default=[], metavar='NAME:OBSERVED:CANONICAL',
+                        help='File and both SHA-256 values approved for protected recovery.')
+    parser.add_argument('project_root', nargs='?', type=Path, default=Path.cwd())
+    args = parser.parse_args()
+    if bool(args.entrypoint) != (args.restore_start_entrypoints is not None):
+        parser.error('--entrypoint and --restore-start-entrypoints must be used together.')
+    if args.no_repair and not args.check_start_entrypoints:
+        parser.error('--no-repair requires --check-start-entrypoints.')
+    root = args.project_root.absolute()
     try:
-        changed = ensure(root)
-    except (OSError, UnicodeError, ValueError) as error:
+        if args.check_rules:
+            count = check_rule_copies(root)
+            print(f'Rule copies match the published canon: {count}')
+            return 0
+        if args.check_start_entrypoints or args.restore_start_entrypoints is not None:
+            changed = check_start_entrypoints(root, args.restore_start_entrypoints,
+                                              parse_entrypoint_approvals(args.entrypoint),
+                                              no_repair=args.no_repair)
+        elif args.restore_rules:
+            changed = restore_rule_copies(root)
+        else:
+            changed = ensure(root)
+    except EntrypointRepairRequired as error:
+        print(error, file=sys.stderr)
+        return ENTRYPOINT_REPAIR_REQUIRED
+    except (ImportError, OSError, UnicodeError, ValueError) as error:
         print(f'Entrypoint check failed: {error}', file=sys.stderr)
-        return 2
-    print('Entrypoint check completed' + (': changed paths: ' + ', '.join(changed) if changed else ''))
-    print('Следующим вызовом прочитай только harness/common/START.md, затем harness/project/START.md. Дождись результата этого вызова. Дальше следуй указаниям прочитанных START.')
+        return RULE_MISMATCH if (args.check_rules or args.restore_rules) and isinstance(error, RuleMismatch) else 2
+    if changed:
+        print('Entrypoint check completed. Изменены: ' + ', '.join(map(str, changed)))
+        print('Начните новую сессию: восстановленный контекст должен загрузиться до задачи.')
+        return RESTART_REQUIRED
+    print('Entrypoint check completed')
     return 0
 
 

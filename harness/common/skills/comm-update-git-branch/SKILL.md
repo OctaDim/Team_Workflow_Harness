@@ -7,15 +7,13 @@ description: Use when resuming deferred branch work, synchronizing with integrat
 
 Inputs: task, repository/branch, agreed dependencies and authorized update.
 
-1. Read harness/common/skills/comm-commit-task-stages/references/work-safety.md
-   before mutation and
-   harness/common/skills/comm-verify-project-facts/references/git-base-state.md
+1. Прочитай файл `harness/common/skills/comm-commit-task-stages/references/work-safety.md`
+   перед изменением. Затем прочитай файл `harness/common/skills/comm-verify-project-facts/references/git-base-state.md`
    for identity, fresh target and recorded SHAs. Inspect divergence and both changesets.
-2. Before choosing preservation read [methods](references/methods.md).
+2. Перед выбором способа сохранить изменения прочитай файл `harness/common/skills/comm-update-git-branch/references/methods.md`.
    Agree unresolved choices; a necessary feature dependency never excuses stale
    integration. Incorporate missing target changes before resumed implementation.
-3. For explicit conflicts or relevant semantic overlap read
-   [conflicts](references/conflicts.md). Unknown intent/authority blocks dependent edits.
+3. При явном конфликте или пересечении смысла изменений прочитай файл `harness/common/skills/comm-update-git-branch/references/conflicts.md`. Unknown intent/authority blocks dependent edits.
 4. Verify saved behavior with the combined affected contracts on the resulting
    stable revision. Use comm-test-project-behavior, comm-assess-project-tests and
    comm-run-project-checks for application changes; harness checks use comm-validate-harness-instructions separately.

@@ -12,15 +12,8 @@ for source in (SCRIPT, CHECKER):
         if component.is_symlink():
             raise ValueError(f'Symlink forbidden: {component}')
 GUARDS = runpy.run_path(str(CHECKER))
-ordinary_path, ordinary_tree = GUARDS['ordinary_path'], GUARDS['ordinary_tree']
-
 ROOT = SCRIPT.parents[3]
-ordinary_tree(ROOT / 'harness')
-try:
-    GUARDS['sync_bootstrap'](ROOT)
-except (OSError, ValueError) as error:
-    print(error, file=sys.stderr)
-    raise SystemExit(2)
+GUARDS['ordinary_tree'](ROOT / 'harness')
 result = subprocess.run(
     [sys.executable, '-m', 'pytest', '--import-mode=importlib', '-q', '.',
      '--ignore=' + str(ROOT / 'harness/common/inbox'),

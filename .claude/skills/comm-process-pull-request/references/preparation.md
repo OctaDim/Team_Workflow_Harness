@@ -1,8 +1,7 @@
 # Prepare the PR
 
 Verify repository/head/base and intended commits; ambiguity needs the user.
-Before describing PR changes read
-harness/common/skills/comm-verify-project-facts/references/git-integration.md.
+Перед описанием изменений PR прочитай файл `harness/common/skills/comm-verify-project-facts/references/git-integration.md`.
 Separate task changes since the merge base from target advancement.
 A head lacking target-only additions is not deleting them in the PR;
 judge post-merge effects against the merge-time integration base.

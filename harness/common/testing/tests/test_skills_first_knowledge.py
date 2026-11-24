@@ -24,12 +24,37 @@ def test_active_skill_resources_and_native_copies_are_complete():
                 continue
             text = data.decode('utf-8')
             assert not re.search(r'(?:harness/(?:common|project)/|\.\./)lessons/', text)
-            for target in re.findall(r'\[[^\]]*\]\(([^)#]+)(?:#[^)]*)?\)', text):
-                if '://' not in target:
-                    path = entry.parent / relative.parent / target
-                    assert path.exists(), (entry.parent.name, relative, target)
+            local_links = [target for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)', text)
+                           if '://' not in target and not target.startswith('#')]
+            assert not local_links, (entry, relative, local_links)
             for target in re.findall(r'`(harness/[^`\s]+\.(?:md|py|mjs|json))`', text):
                 assert (ROOT / target).is_file(), (entry.parent.name, relative, target)
+
+
+def test_internal_paths_from_actual_installation_copies():
+    root_paths = re.compile(r'`((?:harness/(?:common|project)/[^\s`{}*]+\.(?:md|py|json|mjs|template)|\.claude/rules))`')
+    for package in ('common', 'project'):
+        base = ROOT / 'harness' / package
+        for category in ('rules', 'skills'):
+            for source in (base / category).rglob('*.md'):
+                relative = source.relative_to(base / category)
+                if category == 'rules' and source.name == 'README.human.md':
+                    continue
+                if relative.parts == ('README.human.md',):
+                    continue
+                natives = ('.claude',) if category == 'rules' else ('.agents', '.claude')
+                for file in [source, *(ROOT / client / category / relative for client in natives)]:
+                    assert file.read_bytes() == source.read_bytes(), file
+                    text = file.read_text()
+                    for path in root_paths.findall(text):
+                        target = ROOT / path
+                        assert target.is_dir() if path == '.claude/rules' else target.is_file(), (file, path)
+                    for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)', text):
+                        assert '://' in target or target.startswith('#'), (file, target)
+
+    for entry in [ROOT / 'AGENTS.md', ROOT / 'harness/common/base/AGENTS.template']:
+        assert root_paths.findall(entry.read_text()) == ['.claude/rules']
+    assert (ROOT / '.claude/rules').is_dir()
 
 
 def test_active_maps_and_approved_template_have_no_lessons():

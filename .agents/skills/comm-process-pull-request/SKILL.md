@@ -22,11 +22,10 @@ including helpers/cleanup. User manual deletion remains allowed: install no
 technical block and never delete as their proxy. Never use gh pr merge --delete-branch.
 If local changes are needed, stop for an agreed preparation scope.
 
-Before creating, editing or merging a PR complete the checks in harness/common/skills/comm-check-publication-data/SKILL.md
-and harness/common/skills/comm-commit-task-stages/references/message-transfer.md.
-Before creation or description edits read [preparation](references/preparation.md);
-merge only for 2/3 after [merge checks](references/merge.md);
-delete only for 3 under [remote deletion](references/remote-deletion.md).
+Перед созданием, правкой или слиянием PR прочитай файл `harness/common/skills/comm-check-publication-data/SKILL.md` и файл `harness/common/skills/comm-commit-task-stages/references/message-transfer.md`. Выполни описанные проверки.
+Перед созданием PR или правкой его описания прочитай файл `harness/common/skills/comm-process-pull-request/references/preparation.md`;
+перед слиянием в вариантах 2 и 3 прочитай файл `harness/common/skills/comm-process-pull-request/references/merge.md`;
+перед удалением в варианте 3 прочитай файл `harness/common/skills/comm-process-pull-request/references/remote-deletion.md`.
 
 Done: report the PR URL and actual selected-stage results/SHAs/gaps.
 Protected-harness and production permissions remain separate.

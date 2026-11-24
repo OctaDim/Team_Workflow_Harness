@@ -28,4 +28,4 @@ pytest.ini. Common needs no plugins; autoload diagnostics must not mask required
 
 Report command/scope/completion/exit/gaps. Empty/collect-only is not a pass;
 target success is not full success. Startup needs no test dependencies.
-Lock/coverage: harness/common/docs/2026-10-06-run-tests.md.
+Для проверки зависимостей и покрытия прочитай файл `harness/common/docs/2026-10-06-run-tests.md`.

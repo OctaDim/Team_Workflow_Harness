@@ -15,11 +15,11 @@ Link checker проверяет подключения, не публикует 
 входа прошла. Наборы/bytes/обычные файлы и native behavior — разные свидетельства.
 Personal ignore не должен скрывать общие материалы; .gitignore не удаляет историю.
 
-Рабочие владельцы: [ownership rule](../rules/comm-skill-rule-ownership.md),
-[inbox workflow](../skills/comm-process-harness-inbox/SKILL.md),
-[placement](../skills/comm-publish-harness-instructions/references/placement-contract.md),
-[validation](../skills/comm-validate-harness-instructions/references/validation.md).
-Решения и прежние разовые исключения: [decision](../decisions/2026-10-05-skill-rule-ownership.md).
+Рабочие владельцы: [comm-skill-rule-ownership.md](../rules/comm-skill-rule-ownership.md),
+[SKILL.md](../skills/comm-process-harness-inbox/SKILL.md),
+[placement-contract.md](../skills/comm-publish-harness-instructions/references/placement-contract.md),
+[validation.md](../skills/comm-validate-harness-instructions/references/validation.md).
+Решения и прежние разовые исключения: [2026-10-05-skill-rule-ownership.md](../decisions/2026-10-05-skill-rule-ownership.md).
 Здесь основания и смысл контрактов, не самостоятельная процедура.
 
 Указатели на текущих владельцев обновлены 2026-10-08; даты и исторические

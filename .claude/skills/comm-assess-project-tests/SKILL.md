@@ -14,8 +14,7 @@ Inputs: contract, implementation/tests, authority.
 3. Reuse suitable fixtures/factories. Mock external boundaries, not all tested
    logic; preserve relevant failure/timing semantics and affect the actual callee.
 4. Check sensitivity: removing protection without changing results means the test
-   does not protect it. Before controlled mutations read
-   [isolated checks](references/isolated-mutations.md). Preserve authority;
+   does not protect it. Перед контролируемыми изменениями прочитай файл `harness/common/skills/comm-assess-project-tests/references/isolated-mutations.md`. Preserve authority;
    insufficient evidence requires proposed additional checks.
 5. Never hide unfinished work through skip, xfail or disabled assertions.
    An allowable exception needs justification, a tracked task and deadline;

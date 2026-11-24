@@ -25,7 +25,7 @@ Rules/skills с условными ресурсами — единственны
 Границы стадий, публикации, защищённых входов, common/project, uv и human
 exclusion сохраняются; прежние статусы не приёмка новой версии.
 
-Working owners: [inbox](../skills/comm-process-harness-inbox/SKILL.md),
-[authoring](../skills/comm-create-lazy-claude-codex-skills/SKILL.md),
-[installation](../skills/comm-install-harness/SKILL.md).
+Working owners: [SKILL.md](../skills/comm-process-harness-inbox/SKILL.md),
+[SKILL.md](../skills/comm-create-lazy-claude-codex-skills/SKILL.md),
+[SKILL.md](../skills/comm-install-harness/SKILL.md).
 Карта требований/проверки: testing/evidence/2026-10-07-workflow-48-lessons-to-skills.

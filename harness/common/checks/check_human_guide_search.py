@@ -1,6 +1,15 @@
 from pathlib import Path
 import runpy
-import argparse, hashlib, json, os, re, subprocess, sys, shlex, tempfile, time, uuid
+import argparse
+import hashlib
+import json
+import os
+import re
+import shlex
+import subprocess
+import sys
+import tempfile
+import uuid
 
 # Check the bootstrap paths before importing the existing shared guards.
 SCRIPT = Path(__file__).absolute()
@@ -30,17 +39,6 @@ def command_tokens(command):
         return []
 
 
-def start_rule_links(start, body, paths):
-    """Resolve literal Markdown links and inline paths relative to the START that owns them."""
-    linked = set()
-    for angle, plain, inline in re.findall(r'\]\((?:<([^>]+)>|([^\s)]+))\)|`([^`\n]+)`', body):
-        target = (angle or plain or inline).split('#')[0]
-        for path in (target, os.path.normpath(os.path.join(os.path.dirname(start), target))):
-            if path in paths:
-                linked.add(path)
-    return linked
-
-
 def line_slice(tokens, lines):
     """Return bounds only for unambiguous single-file line reads."""
     if len(tokens) == 4 and tokens[0] in ('head', 'tail') and tokens[1] == '-n' and tokens[2].isdigit():
@@ -54,655 +52,607 @@ def line_slice(tokens, lines):
     return None
 
 
-def explicit_read(tokens, output, bodies):
-    """Extract a literal cat, including common enumerated loops and directory displays."""
-    if tokens[:1] == ['for'] and len(tokens) > 4 and tokens[2] == 'in' and ';' in tokens:
-        end = tokens.index(';')
-        variable = '$' + tokens[1]
-        names = tokens[3:end]
-        tail = tokens[end+1:]
-        if tail[:2] == ['do', ';']:
-            tail = tail[:1] + tail[2:]
-        if 'done' not in tail:
-            return [], ''
-        stop = tail.index('done') + 1
-        suffix = tail[stop:]
-        if suffix and (suffix[:2] != [';', 'cat'] or any(t in bodies or t in (';', '|', '&&', '>', '>>') for t in suffix[2:])):
-            return [], ''
-        loop = [t for t in tail[:stop] if t != '--']
-        if names and all(name in bodies for name in names):
-            plain = ''.join(bodies[name] for name in names)
-            if loop == ['do', 'printf', '%s\\n', variable, ';', 'cat', variable, ';', 'done']:
-                observed = ''.join(name + '\n' + bodies[name] for name in names)
-            elif loop == ['do', 'cat', variable, ';', 'done']:
-                observed = plain
-            else:
-                return [], ''
-            if output == observed or (suffix and output.startswith(observed)):
-                return names, plain
-    if tokens[:1] in (['cat'], ['cmp']) and any(t in (';', '&&') for t in tokens):
-        # Accept only literal reads and silent comparisons of identical known files.
-        # Bind the entire combined output to the operands before crediting any path.
-        names = []
-        group = []
-        for token in [*tokens, ';']:
-            if token not in (';', '&&'):
-                group.append(token)
-                continue
-            operands = group[1:]
-            if operands[:1] == ['--']:
-                operands = operands[1:]
-            if not operands or not all(name in bodies for name in operands):
-                return [], ''
-            if group[0] == 'cat':
-                names.extend(operands)
-            elif group[0] != 'cmp' or len(operands) != 2 or bodies[operands[0]] != bodies[operands[1]]:
-                return [], ''
-            group = []
-        if names and output == ''.join(bodies[name] for name in names):
-            return names, output
-        return [], ''
-    prefix = False
-    while tokens[:1] == ['ls'] and ';' in tokens:
-        end = tokens.index(';')
-        if any(op in tokens[:end] for op in ('>', '>>', '|', '&&', '||')):
-            return [], ''
-        tokens = tokens[end+1:]
-        prefix = True
-    names = tokens[2:] if tokens[1:2] == ['--'] else tokens[1:]
-    if tokens[:1] != ['cat'] or not names or not all(name in bodies for name in names):
-        return [], ''
-    if prefix:
-        expected_output = ''.join(bodies[name] for name in names)
-        return names, expected_output if output.endswith(expected_output) else ''
-    return names, output
+INDEXES = ('harness/common/INDEX.md', 'harness/project/INDEX.md')
+ENTRIES = {'codex': 'AGENTS.md', 'claude': 'CLAUDE.md'}
+LISTING = ['rg', '--files', '--hidden', '--no-ignore', '.claude/rules',
+           '-g', '*.md', '-g', '!README.human.md']
 
 
-def may_change_files(tokens):
-    groups = [[]]
-    for token in tokens:
-        if token in (';', '&&', '||', '|'):
-            groups.append([])
-        else:
-            groups[-1].append(token)
-    for group in groups:
-        if any(op in group for op in ('>', '>>', '>&', '>|', '(', ')')):
-            return True
-        while group and group[0] in ('do', 'then'):
-            group = group[1:]
-        if len(group) == 1 and re.fullmatch(r'[A-Za-z_]\w*=[\w.$/-]+', group[0]):
-            continue
-        if group and group[0] not in ('cat', 'head', 'tail', 'rg', 'ls', 'pwd', 'cmp',
-                                      'set', 'for', 'printf', 'done', 'fi', 'realpath'):
-            return True
-    return False
-
-
-def snapshot_rule_inputs(root):
-    """Take a fresh snapshot, checking canonical copies against exact installed paths."""
-    native = ordinary_path(root / '.claude/rules')
+def snapshot_inputs(root, client):
+    """Use only ordinary live inputs; aliases require the exact same relative path and bytes."""
+    root = ordinary_path(root)
+    native = root / '.claude/rules'
     ordinary_tree(native)
-    expected = {p.relative_to(root).as_posix(): p.read_text()
-                for p in native.rglob('*.md') if p.name != 'README.human.md' and p.is_file()}
+    index = {}
     aliases = {}
-    starts = {}
+    rules = set()
+
+    def add(path):
+        key = path.relative_to(root).as_posix()
+        index[key] = ordinary_path(path).read_bytes()
+        return key
+
+    for name in (ENTRIES[client], *INDEXES):
+        add(root / name)
+    for file in native.rglob('*.md'):
+        if file.name != 'README.human.md' and file.is_file():
+            rules.add(add(file))
+    owners = set()
     for package in ('common', 'project'):
         base = root / 'harness' / package
-        start = ordinary_path(base / 'START.md')
-        if start.is_file():
-            starts[start.relative_to(root).as_posix()] = start.read_text()
-        canonical = ordinary_path(base / 'rules')
-        if not canonical.is_dir():
-            continue
-        ordinary_tree(canonical)
-        for source in canonical.rglob('*.md'):
-            if source.name == 'README.human.md' or not source.is_file():
+        for category in ('rules', 'skills'):
+            ordinary_tree(base / category)
+        for file in (base / 'rules').rglob('*.md'):
+            if file.name == 'README.human.md':
                 continue
-            installed = native / source.relative_to(canonical)
-            path = installed.relative_to(root).as_posix()
-            if path in expected and source.read_bytes() == installed.read_bytes():
-                aliases[source.relative_to(root).as_posix()] = path
-    return expected, starts, aliases
+            alias = file.relative_to(root).as_posix()
+            key = (native / file.relative_to(base / 'rules')).relative_to(root).as_posix()
+            if key in owners or key not in rules or ordinary_path(file).read_bytes() != index[key]:
+                raise ValueError(f'Conflicting or stale installed rule: {key}')
+            aliases[alias] = key
+            owners.add(key)
+        for file in (base / 'skills').glob('*/SKILL.md'):
+            key = add(file)
+            for destination in ('.agents/skills', '.claude/skills'):
+                path = root / destination / file.parent.name / 'SKILL.md'
+                alias = path.relative_to(root).as_posix()
+                if alias in aliases or not path.is_file() or ordinary_path(path).read_bytes() != index[key]:
+                    raise ValueError(f'Conflicting or stale installed skill: {alias}')
+                aliases[alias] = key
+    if owners != rules or not rules:
+        raise ValueError('Missing or unowned live rules: ' + ', '.join(sorted(rules - owners)))
+    return index, rules, aliases
 
 
-def content_access_targets(tokens):
-    """Identify content-access operands without treating directory/metadata probes as body reads."""
-    targets = []
-    group = []
-    for token in [*tokens, ';']:
-        if token not in (';', '&&', '||', '|'):
-            group.append(token)
-            continue
-        if group and group[0] not in ('ls', 'stat', 'test', 'pwd', 'readlink', 'realpath'):
-            listing = group[0] == 'rg' and '--files' in group
-            listing |= group[0] == 'find' and '-exec' not in group and '-execdir' not in group
-            if not listing:
-                targets.extend(t for t in group[1:] if not t.startswith(('!', '-')))
-        group = []
-    return targets
+def audit(root, trace):
+    """Replay an observer's ordered deliveries and actions against immutable fixture bytes.
 
+    An event is evidence supplied by the observer, never a conclusion inferred
+    from a prompt, a tool invocation, a transcript summary or client metadata.
+    Text is the returned payload, offset counts UTF-8 bytes. Partial payloads
+    require a fixture version hash. A changed fixture needs a new recording.
+    """
+    client = trace['client']
+    mode = trace['mode']
+    scenario = trace['scenario']
+    order = trace['index']
+    if client not in ENTRIES or mode not in ('common', 'both') or order not in ('required', 'on-demand') or not scenario:
+        raise ValueError('Invalid client, mode, INDEX policy or scenario')
+    bodies, rules, aliases = snapshot_inputs(root, client)
+    entry = ENTRIES[client]
+    def resolve(path):
+        return aliases.get(path, path)
 
-def installed_skill_aliases(root, bodies):
-    """Match ordinary, identical native copies to their unique shared package owner."""
-    shared = [Path('harness') / package / 'skills' for package in ('common', 'project')]
-    native = [Path('.agents/skills'), Path('.claude/skills')]
-    aliases = {}
-    for source, body in bodies.items():
-        path = Path(source)
-        if path.name != 'SKILL.md':
-            continue
-        location = next((base for base in shared + native if base in path.parents), None)
-        if location is None:
-            continue
-        relative = path.relative_to(location)
-        if '..' in relative.parts:
-            continue
-        sources = [ordinary_path(root / base / relative) for base in shared]
-        owners = [file for file in sources if file.is_file()]
-        if len(owners) != 1 or owners[0].read_text() != body:
-            continue
-        source_file = ordinary_path(root / path)
-        if not source_file.is_file() or source_file.read_bytes() != owners[0].read_bytes():
-            continue
-        for base in shared + native:
-            alias = base / relative
-            file = ordinary_path(root / alias)
-            if file.is_file() and file.read_bytes() == source_file.read_bytes():
-                aliases[str(alias)] = source
-    return aliases
+    def skill(path):
+        path = resolve(path)
+        if path not in bodies or Path(path).name != 'SKILL.md':
+            raise ValueError(f'Unknown fixture skill: {path}')
+        return path
 
+    contract = trace['actions']
+    if not isinstance(contract, list):
+        raise ValueError('Expected an ordered action contract')
+    for action in contract:
+        if not isinstance(action.get('id'), str) or not isinstance(action.get('expected'), str):
+            raise ValueError('An action requires an id and independent expected result')
+    action_ids = [a['id'] for a in contract]
+    if len(set(action_ids)) != len(action_ids):
+        raise ValueError('Duplicate expected action')
+    dependent_actions = set(action_ids)
+    if trace.get('expected_stop') and trace.get('blocked_action'):
+        dependent_actions.add(trace['blocked_action'])
+    links = []
+    for link in trace.get('links', []):
+        owner = resolve(link['owner'])
+        path = skill(link['path'])
+        condition = link['condition']
+        if owner not in rules or condition is not None and not isinstance(condition, str):
+            raise ValueError('Invalid link owner or condition')
+        literals = [p for p in (path, *aliases) if resolve(p) == path]
+        # A registered name can be the entire textual reference in the rule.
+        name = Path(path).parent.name
+        named = re.search(r'(?<![\w/-])' + re.escape(name) + r'(?![\w/-])', bodies[owner].decode())
+        if not named and not any(p.encode() in bodies[owner] for p in literals):
+            raise ValueError(f'Observer contract has no matching literal target in {owner}: {path}')
+        before = link.get('before')
+        if condition is not None and before not in dependent_actions:
+            raise ValueError('A conditional link requires a named dependent action')
+        links.append((owner, path, condition, before))
+    # The test designer sets these independently of observed client selections.
+    required_skills = {skill(p): before for p, before in trace.get('task_skills', {}).items()}
+    if any(before not in dependent_actions for before in required_skills.values()):
+        raise ValueError('Task skill needs a named dependent action')
+    expected_conditions = set(trace.get('expected_conditions', ()))
+    if not expected_conditions <= {c for _, _, c, _ in links if c is not None}:
+        raise ValueError('Expected condition has no fixture link')
+    stop_expected = trace.get('expected_stop')
+    if stop_expected is not None and resolve(stop_expected) not in bodies:
+        raise ValueError('Unknown expected stop path')
+    if not action_ids and stop_expected is None:
+        raise ValueError('Missing observable task or stop contract')
 
-def skill_read_lines(tokens, path, output, body):
-    """Bind a standalone read to complete lines of the independently known version."""
-    lines = body.splitlines(keepends=True)
-    if tokens in (['cat', path], ['cat', '--', path]):
-        if output == body:
-            return range(len(lines))
-        if not output or not body.startswith(output):
-            return None
-        count = sum(line.endswith('\n') for line in output.splitlines(keepends=True))
-        return range(count) if count else None
-    bounds = line_slice(tokens, len(lines)) if tokens[-1] == path else None
-    if bounds:
-        first, last = bounds
-        if first < last and output == ''.join(lines[first:last]):
-            return range(first, last)
-    return None
-
-
-def assess_rule_reading(tools, expected, *, starts=None, aliases=None, root=None, search_at=None, immutable_fixture=False,
-                        skill_links=None, skill_bodies=None, task_skills=(), skill_updates=None):
-    """Audit completed reads against the fixture's current bodies and byte-verified aliases."""
-    starts = starts or {}
-    aliases = aliases or {}
-    paths = {path: path for path in expected}
-    paths.update(aliases)
-    links = set()
-    origins = {}
+    seen = {}
+    methods = {}
     partial = {}
     duplicates = {}
-    listing = None
-    first_boundary = None
-    skill = False
-    explicit = separate = True
+    skills_before_index = set()
+    conditions = set()
+    outcomes = []
+    selected = set()
+    invoked = set()
+    metadata = set()
+    errors = set()
     issues = []
-    bodies = dict(starts)
-    bodies.update({source: expected[path] for source, path in paths.items()})
-    if immutable_fixture and root is not None:
-        for name in ('AGENTS.md', 'PERSONAL.md'):
-            extra = ordinary_path(root / name)
-            if extra.is_file():
-                bodies[name] = extra.read_text()
-    listing_args = ['--files', '--hidden', '--no-ignore', '.claude/rules', '-g', '*.md', '-g', '!README.human.md']
-    indexes_seen = set()
-    expected_indexes = {str(Path(start).with_name('INDEX.md')) for start in starts}
-    rule_read_ends = []
-    listing_end = -1
-    # A fixture supplies task-specific conditions; a mention alone grants no access.
-    # Values are the first event at which the corresponding condition is true.
-    skill_links = skill_links or {}
-    inspect_skills = skill_bodies is not None
-    task_skills = set(task_skills)
-    skill_reads = []
-    # Snapshots come from the observer, independently of tool output.
-    versions = dict(skill_bodies or {})
-    skill_updates = skill_updates or {}
-    # Cross-path identity is proven only while the fixture is immutable.
-    skill_aliases = installed_skill_aliases(root, versions) if root and immutable_fixture else {}
-    if skill_aliases:
-        task_skills = {skill_aliases.get(path, path) for path in task_skills}
-        skill_links = {owner: {skill_aliases.get(path, path): since for path, since in targets.items()}
-                       for owner, targets in skill_links.items()}
-    skill_fragments = {}
-    duplicate_skills = {}
-    current_skills = set()
-    full_before_first_skill = None
-    full_before_first_index = None
-    skill_end = -1
-    index_end = -1
-    index_order = [f'harness/{package}/INDEX.md' for package in ('common', 'project')
-                   if f'harness/{package}/START.md' in starts]
+    gaps = []
+    observed_actions = []
+    listed = False
+    stopped = False
+    action_started = False
+    native_counts_visible = trace.get('startup_visible') is True
+    delivery_observed = native_counts_visible
+    last_end = -1
 
-    def forget(path):
-        partial.pop(path, None)
-        origins.pop(path, None)
+    def unconditional():
+        return {p for owner, p, condition, _ in links if owner in seen and condition is None}
 
-    def credit(source, first, last):
-        path = paths[source]
-        if source in aliases and source not in links:
-            return
-        if inspect_skills and listing is None and source not in links:
-            issues.append(f'прочитано правило вне ссылок START до перечисления: {path}')
-            return
-        covered = partial.setdefault(path, set())
-        covered.update(range(first, last))
-        if len(covered) == len(expected[path].splitlines(keepends=True)):
-            if path in origins:
-                duplicates[path] = duplicates.get(path, 0) + 1
+    def startup_complete():
+        missing = ({entry} | rules) - seen.keys()
+        if missing:
+            gaps.append('до действия не подтверждены полные тексты: ' + ', '.join(sorted(missing)))
+
+    def observations():
+        for number, event in enumerate(trace['events']):
+            start = event.get('start', number)
+            end = event.get('end', start)
+            if type(start) is not int or type(end) is not int:
+                raise ValueError('Non-integer event boundary')
+            if event['type'] in ('read', 'native') and 'files' in event:
+                files = event['files']
+                if not isinstance(files, list) or not files:
+                    raise ValueError('Empty or invalid grouped delivery')
+                for index, file in enumerate(files):
+                    if set(file) - {'path', 'text', 'offset', 'sha256'} or resolve(file['path']) not in rules:
+                        raise ValueError('Invalid grouped rule payload')
+                    yield dict(file, type=event['type']), start, end, index == 0
             else:
-                origins[path] = 'START' if source in links and (source in aliases or listing is None) else 'AGENTS'
-            covered.clear()
+                yield event, start, end, True
 
-    for number, item in enumerate(tools):
-        started = item.get('start_event', number)
-        for path, body in skill_updates.get(started, {}).items():
-            if body != versions.get(path):
-                versions[path] = body
-                current_skills.discard(path)
-                skill_fragments.pop(path, None)
-        tokens = command_tokens(item.get('command', ''))
-        if root is not None:
-            tokens = [t[len(str(root))+1:] if t.startswith(str(root) + '/') else t for t in tokens]
-        tokens = [t.removeprefix('./') for t in tokens]
-        tokens = [skill_aliases.get(t, t) for t in tokens]
-        output = item.get('aggregated_output', '')
-        success = item.get('exit_code') == 0
-        if not tokens:
-            skill_fragments.clear()
-            for path in list(origins.keys() | partial.keys()):
-                forget(path)
-            continue
-        listing_only = tokens[0] == 'rg' and '--files' in tokens and not any(t in ('cat', 'sed', 'head', 'tail') for t in tokens)
-        skill_access = not listing_only and any('/skills/' in '/' + t and not t.startswith(('!', '-')) for t in tokens)
-        ended = item.get('end_event', number)
-        index_access = any(t in ('harness/common/INDEX.md', 'harness/project/INDEX.md') for t in tokens)
-        cat_targets = []
-        for i, token in enumerate(tokens):
-            if token == 'cat':
-                for operand in tokens[i+1:]:
-                    if operand in (';', '|', '&&', '||'):
-                        break
-                    cat_targets.append(operand)
-        if inspect_skills:
-            operands = content_access_targets(tokens)
-            index_access = any(t in ('harness/common/INDEX.md', 'harness/project/INDEX.md') for t in operands)
-            accessed = [t for t in operands if 'skills' in Path(t).parts]
-            skill_access = bool(accessed)
-            # An unrelated operation does not prove a new skill version. Fragments
-            # cannot span an unobserved mutation; a standalone sed -n read is safe.
-            is_slice = len(accessed) == 1 and line_slice(tokens, 1) is not None
-            if not immutable_fixture and not is_slice and may_change_files(tokens):
-                skill_fragments.clear()
-            due = set()
-            for owner in origins:
-                for target, since in skill_links.get(owner, {}).items():
-                    name = Path(target).parent.name
-                    if since <= started and re.search(r'(?<![\w-])' + re.escape(name) + r'(?![\w-])', expected[owner]):
-                        due.add(target)
-            pending = due.difference(current_skills, skill_fragments)
-            if skill_access and full_before_first_skill is None:
-                full_before_first_skill = (listing is not None and bool(expected)
-                                           and set(expected) == set(origins)
-                                           and started > max([listing_end, *rule_read_ends]))
-            if index_access and full_before_first_index is None:
-                if listing is None:
-                    issues.append('INDEX открыт до получения полного списка правил')
-                missing_at_index = set(expected).difference(origins)
-                if missing_at_index:
-                    issues.append('до INDEX не подтверждены полные тексты: ' + ', '.join(sorted(missing_at_index)))
-                full_before_first_index = (listing is not None and bool(expected)
-                                           and set(expected) == set(origins)
-                                           and started > max([listing_end, *rule_read_ends]))
-            if skill_access:
-                target = accessed[0]
-                early = first_boundary is None
-                allowed = due if early else due | task_skills
-                span = (skill_read_lines(tokens, target, output, versions[target])
-                        if success and target in versions else None)
-                ordered = (started > max([listing_end, index_end, skill_end, *rule_read_ends])
-                           and (early or indexes_seen == expected_indexes))
-                if span is None or target not in allowed or not ordered:
-                    issues.append(f'необоснованное, неполное или совмещённое чтение скилла: {target}')
-                else:
-                    covered = skill_fragments.setdefault(target, set())
-                    covered.update(span)
-                    if len(covered) == len(versions[target].splitlines(keepends=True)):
-                        del skill_fragments[target]
-                        if target in current_skills:
-                            duplicate_skills[target] = duplicate_skills.get(target, 0) + 1
-                            issues.append(f'повторное полное чтение неизменного скилла: {target}; '
-                                          'сообщить ошибку и путь, запросить решение пользователя и ждать ответа')
-                        else:
-                            skill_reads.append(target)
-                            current_skills.add(target)
-                            skill = True
-                skill_end = ended
-                continue
-            rule_targets = [t for t in cat_targets if t in paths]
-            if listing is not None and len(rule_targets) > 1:
-                issues.append('после списка каждое оставшееся правило требует отдельного вызова')
-            if index_access or listing_only or rule_targets or number == search_at:
-                if pending:
-                    issues.append('пропущен переход по применимой ссылке: ' + ', '.join(sorted(pending)))
-                if started <= skill_end:
-                    separate = False
-            if index_access:
-                new_indexes = [t for t in cat_targets if t in expected_indexes]
-                offset = len(indexes_seen)
-                if started <= index_end or new_indexes != index_order[offset:offset + len(new_indexes)]:
-                    issues.append('нарушен порядок чтения INDEX')
-                index_end = ended
-        if index_access and success:
-            indexes_seen.update(t for t in cat_targets if t in expected_indexes)
-        if index_access or skill_access or number == search_at:
-            if index_access and skill_access:
-                separate = False
-            if first_boundary is None:
-                first_boundary = number
-                if any(end >= started for end in rule_read_ends) or listing_end >= started:
-                    separate = False
-            if any(t in paths for t in cat_targets) or (
-                    any(t in paths for t in tokens) and any(t in tokens for t in ('head', 'tail', 'sed', 'for'))):
-                separate = False
-            if number == search_at:
-                break
-            if skill_access:
-                skill = success and any(t in ('cat', 'sed', 'head', 'tail') for t in tokens)
-                break
-        if first_boundary is not None:
-            continue
-        if 'rg' in tokens and '--files' in tokens:
-            args = tokens[tokens.index('rg'):]
-            if '.claude/rules' in args and (any(t in paths for t in cat_targets) or
-                    (any(t in paths for t in tokens) and any(t in tokens for t in ('head', 'tail', 'sed', 'for')))):
-                separate = False
-            globs = [b for a, b in zip(tokens, tokens[1:]) if a == '-g']
-            listed = [line.removeprefix('./') for line in output.splitlines()]
-            if (success and tokens[0] == 'rg' and sorted(tokens[1:]) == sorted(listing_args)
-                    and globs == ['*.md', '!README.human.md'] and set(listed) == set(expected)
-                    and len(listed) == len(expected)):
-                if any(end >= started for end in rule_read_ends):
-                    separate = False
-                listing = number
-                listing_end = ended
-            elif not immutable_fixture and may_change_files(tokens):
-                for path in list(origins.keys() | partial.keys()):
-                    forget(path)
-            continue
-        if any('.claude/rules/' in t and t not in paths and any(c in t for c in '*?[') for t in tokens):
-            explicit = False
-        if any(t in paths for t in tokens):
-            rule_read_ends.append(ended)
-            if listing is not None and started <= listing_end:
-                separate = False
-        names, read_output = explicit_read(tokens, output, bodies)
-        if success and names:
-            output = read_output
-            # Match the concatenation, binding each byte to its argument even for identical files.
-            if output == ''.join(bodies[t] for t in names):
-                for name in names:
-                    if name in starts:
-                        targets = start_rule_links(name, starts[name], paths)
-                        links.update(targets)
-                        links.update(paths[target] for target in targets)
-                    elif name in paths:
-                        credit(name, 0, len(bodies[name].splitlines(True)))
-            elif len(names) == 1 and names[0] in paths and bodies[names[0]].startswith(output):
-                complete_lines = sum(line.endswith('\n') for line in output.splitlines(True))
-                credit(names[0], 0, complete_lines)
+    for event, start, end, first_in_delivery in observations():
+        what = event['type']
+        if first_in_delivery:
+            if start <= last_end or end < start:
+                gaps.append('порядок получения и начала действия не доказан')
+            last_end = max(end, last_end)
+        path = resolve(event.get('path', ''))
+        if stopped:
+            issues.append('действие после остановки до решения пользователя')
+            break
+        if what == 'listing':
+            paths = event['paths']
+            listed |= set(paths) == rules
+        elif what == 'condition':
+            condition = event['id']
+            if condition in conditions:
+                issues.append('одно условие объявлено дважды: ' + condition)
+            conditions.add(condition)
+        elif what in ('select', 'invoke'):
+            path = skill(path)
+            if path not in required_skills and path not in unconditional() and not any(
+                owner in seen and p == path and cond in conditions for owner, p, cond, _ in links):
+                issues.append('необоснованный выбор контекстного lazy скилла: ' + path)
+            if what == 'select':
+                selected.add(path)
             else:
-                for name in names:
-                    if name in paths:
-                        forget(paths[name])
-            continue
-        source = tokens[-1]
-        if success and source in paths:
-            lines = bodies[source].splitlines(keepends=True)
-            bounds = line_slice(tokens, len(lines))
-            if bounds is not None:
-                first, last = bounds
-                if output == ''.join(lines[first:last]):
-                    credit(source, first, last)
-                else:
-                    forget(paths[source])
+                invoked.add(path)
+        elif what == 'error':
+            if path not in bodies:
+                raise ValueError(f'Unknown failed path: {path}')
+            errors.add(path)
+        elif what == 'stop':
+            allowed_stop = ({entry} | rules | selected | invoked | unconditional()
+                            | {p for owner, p, cond, _ in links if owner in seen and cond in conditions}
+                            | (set(INDEXES) if order == 'required' else set()))
+            if path not in allowed_stop or path != resolve(stop_expected) or path not in errors or not event.get('reason'):
+                issues.append('причина наблюдаемой остановки не совпадает с необходимым файлом и отказом чтения')
+            stopped = True
+        elif what == 'action':
+            startup_skills = unconditional()
+            missing_startup = (rules | startup_skills) - seen.keys()
+            if missing_startup and delivery_observed:
+                issues.append('критическая ошибка: до действия отсутствует полный текст: ' +
+                              ', '.join(sorted(missing_startup)))
+            startup_complete()
+            action_started = True
+            name = event['id']
+            due = startup_skills | {p for p, before in required_skills.items() if before == name} | {
+                p for owner, p, cond, before in links if owner in seen and cond in conditions and before == name}
+            if due - seen.keys():
+                gaps.append('до зависимого действия не получен ' + ', '.join(sorted(due - seen.keys())))
+            if order == 'required' and any(p not in seen for p in INDEXES):
+                gaps.append('до действия обязательные карты не получены полностью')
+            observed_actions.append((name, event['observed']))
+            outcomes.append({'action':name, 'required_skills':sorted(due),
+                             'received_before_action':sorted(due & seen.keys())})
+            for _, _, condition, before in links:
+                if before == name and condition in expected_conditions - conditions:
+                    gaps.append('до зависимого действия не наблюдалось условие: ' + condition)
+        elif what in ('native', 'read'):
+            if path not in bodies:
+                issues.append(f'неожиданное или запрещённое получение: {path}')
                 continue
-        # Unknown operations can change a prior version. A fresh full read restores proof.
-        if not immutable_fixture and may_change_files(tokens):
-            for path in list(set(origins) | set(partial)):
-                forget(path)
+            data = event['text'].encode('utf-8')
+            body = bodies[path]
+            offset = event.get('offset', 0)
+            digest = event.get('sha256')
+            complete = offset == 0 and data == body
+            if (type(offset) is not int or offset < 0 or offset + len(data) > len(body)
+                or data != body[offset:offset+len(data)] or (not complete and not data)
+                or (not complete or digest is not None) and digest != hashlib.sha256(body).hexdigest()):
+                partial.pop(path, None)
+                gaps.append(f'версия или полнота выдачи не подтверждена: {path}')
+                continue
+            if what == 'native' and path in rules | {entry} and action_started:
+                issues.append('поздняя выдача помечена как стартовая: ' + path)
+            if path in INDEXES:
+                startup_complete()
+                if order == 'required' and path == INDEXES[1] and INDEXES[0] not in seen:
+                    issues.append('проектная карта получена до общей')
+            if Path(path).name == 'SKILL.md':
+                allowed = selected | invoked | unconditional() | {
+                    p for owner, p, cond, _ in links if owner in seen and cond in conditions}
+                already_supplied = what == 'native' and any(
+                    target == path and condition is None for _, target, condition, _ in links)
+                if path not in allowed and not already_supplied:
+                    issues.append('преждевременная загрузка контекстного lazy скилла: ' + path)
+                linked_due = unconditional() | {
+                    p for owner, p, cond, _ in links if owner in seen and cond in conditions}
+                if path in required_skills and path not in linked_due and not already_supplied:
+                    startup_complete()
+                missing_indexes = set(INDEXES) - seen.keys()
+                if path not in seen and missing_indexes and (order == 'required' or len(missing_indexes) == len(INDEXES)):
+                    skills_before_index.add(event['path'])
+            # Store byte coverage, not concatenation: overlap or out-of-order slices
+            # cannot fill an unobserved gap. A duplicate requires a second full copy.
+            covered = partial.setdefault(path, bytearray(len(body)))
+            covered[offset:offset+len(data)] = b'\x01' * len(data)
+            if all(covered):
+                partial.pop(path)
+                if path in seen:
+                    duplicates[path] = duplicates.get(path, 0) + 1
+                else:
+                    seen[path] = what
+                methods.setdefault(path, []).append(what)
+                errors.discard(path)
+        elif what == 'metadata':
+            # Name/description and filesystem listings cannot establish body delivery.
+            target = skill(path)
+            name, description = event.get('name'), event.get('description')
+            # Harness SKILL.md uses scalar name/description fields. A different
+            # representation is unverified without an independently decoded catalogue.
+            header = bodies[target].decode('utf-8').split('---', 2)
+            fields = dict(re.findall(r'^(name|description):[ \t]+(.+)$', header[1], re.MULTILINE)) if len(header)==3 and not header[0] else {}
+            if not name or not description or fields.get('name')!=name or fields.get('description')!=description:
+                gaps.append('поля каталога не подтверждены: ' + target)
+            else:
+                metadata.add(target)
+        elif what == 'invalidate':
+            if path not in bodies:
+                raise ValueError(f'Unknown invalidated file: {path}')
+            seen.pop(path, None)
+            partial.pop(path, None)
+        elif what == 'violation':
+            issues.append(event['reason'])
+        elif what == 'unobserved':
+            delivery_observed = False
+            gaps.append('нет данных: ' + event['reason'])
+        else:
+            raise ValueError(f'Unknown event type: {what}')
 
-    listed = listing is not None
-    total = len(expected)
-    count = len(origins)
-    repeats = sum(duplicates.values())
-    if not listed or not total:
-        issues.append('нет отдельного подтверждённого полного списка правил' if inspect_skills
-                      else 'нет подтверждённого полного списка правил до INDEX или скилла')
-    if listed and count < total:
-        issues.append(f'прочтено {count} из {total}')
-    if repeats:
-        paths_read_again = ', '.join(sorted(duplicates))
-        issues.append(f'дублированное чтение {count + repeats} из {total} ({paths_read_again})')
-    if not explicit or not separate:
-        issues.append('нарушен порядок перечисления и явного чтения')
-    if expected_indexes - indexes_seen:
-        issues.append('нет отдельного чтения обязательных INDEX перед скиллом')
-    incomplete_skills = set(skill_fragments).difference(current_skills)
-    if incomplete_skills:
-        issues.append('не завершено чтение скилла: ' + ', '.join(sorted(incomplete_skills)))
-    if inspect_skills and task_skills.difference(current_skills):
-        issues.append('не прочитаны нужные для задачи скиллы: ' + ', '.join(sorted(task_skills.difference(current_skills))))
-    if not skill and search_at is None:
-        issues.append('нет подтверждённого открытия скилла')
-    def value(n):
-        return n if listed else 'нет данных'
-    lines = [
-        f'Правила `.claude/rules/` через ссылки в START.md: {value(sum(v == "START" for v in origins.values()))}',
-        f'Правила `.claude/rules/` через ссылку на `.claude/rules/` в AGENTS.md: {value(sum(v == "AGENTS" for v in origins.values()))}',
-        f'Всего правил в `.claude/rules/`: {value(total)}',
-        f'Всего правил прочитано: {value(count)}',
-        f'Повторно прочитанных правил: {value(repeats)}',
-        'Результат: ' + ('Ошибка - ' + ', '.join(issues) if issues else f'Успешно - прочтено {count} из {total}'),
+    if trace.get('completed') is not True:
+        gaps.append('завершение прогона не подтверждено')
+    if not native_counts_visible:
+        gaps.append('нативная выдача при старте не наблюдалась')
+    if stop_expected is not None and not stopped:
+        gaps.append('остановка не наблюдалась')
+    if errors and not stopped:
+        gaps.append('после ошибки чтения нет получения текста или остановки')
+    expected_catalog = {skill(p) for p in trace.get('expected_catalog', ())}
+    if expected_catalog - metadata:
+        gaps.append('поля каталога не наблюдались: ' + ', '.join(sorted(expected_catalog - metadata)))
+    if expected_conditions - conditions:
+        gaps.append('переход условия не наблюдался: ' + ', '.join(sorted(expected_conditions - conditions)))
+    if not stopped and (selected | invoked) - seen.keys():
+        gaps.append('выбранный скилл не получен: ' + ', '.join(sorted((selected | invoked) - seen.keys())))
+    if observed_actions != [(a['id'], a['expected']) for a in contract]:
+        issues.append('наблюдаемое поведение расходится с контрактом действий')
+    invalid_duplicates = duplicates.keys() - rules
+    if invalid_duplicates:
+        issues.append('лишние полные чтения: ' + ', '.join(sorted(invalid_duplicates)))
+    if not stopped:
+        startup_complete()
+    first = {path: source for path, source in seen.items() if path in rules}
+    known = native_counts_visible
+    reasons = list(dict.fromkeys(issues + gaps))
+    status = 'ошибка' if issues else 'не проверено' if gaps else 'проверено'
+    information = ('. Информационное событие: чтение до INDEX: ' + ', '.join(sorted(skills_before_index))
+                   if skills_before_index else '')
+    report = [
+        f'Впервые получено нативно: {sum(v == "native" for v in first.values()) if known else "не проверено"}',
+        f'Впервые открыто явно: {sum(v == "read" for v in first.values()) if known else "не проверено"}',
+        f'Размер списка: {len(rules)}',
+        f'Уникальных полностью полученных путей always loaded правил: {len(first)}',
+        f'Лишние полные чтения always loaded правил: {sum(n for p, n in duplicates.items() if p in rules) if known else "не проверено"}',
+        'Результат: ' + status + ('. ' + '. '.join(reasons) if reasons else '') + information,
     ]
-    return {'rule_listing_completed': listed, 'expected_rule_paths': list(expected),
-            'missing_rule_paths': sorted(set(expected) - origins.keys()), 'first_reads': origins,
-            'duplicate_rule_reads': duplicates, 'all_rule_bodies_read': bool(total) and count == total,
-            'skill_reads': skill_reads, 'duplicate_skill_reads': duplicate_skills, 'explicit_rule_paths': explicit, 'separate_rule_reads': separate,
-            'full_rule_read_before_index': full_before_first_index,
-            'full_rule_read_before_skill': (bool(full_before_first_skill) if inspect_skills
-                                            else listed and bool(total) and count == total and skill),
-            'rule_read_report': lines, 'rule_reading_pass': not issues}
+    return {'client':client, 'mode':mode, 'scenario':scenario, 'index':order,
+            'rule_listing_completed':listed, 'first_reads':first,
+            'missing_rule_paths':sorted(rules - seen.keys()), 'delivery_methods':methods,
+            'duplicate_reads':duplicates, 'skills_read_before_index':sorted(skills_before_index),
+            'skill_selections':sorted(selected), 'explicit_invocations':sorted(invoked),
+            'metadata_observed':sorted(metadata),
+            'observed_actions':[name for name, _ in observed_actions], 'action_skill_coverage':outcomes,
+            'rule_read_report':report, 'status':status, 'rule_reading_pass':not reasons}
+
+
+def audit_file(argv):
+    parser = argparse.ArgumentParser(description='Verify ordered observer events against an isolated installation.')
+    parser.add_argument('installation', type=Path)
+    parser.add_argument('trace', type=Path)
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args(argv)
+    source = ordinary_path(args.trace)
+    output = ordinary_path(args.output)
+    if source == output or output.exists():
+        raise ValueError('Use a fresh output path')
+    result = audit(ordinary_path(args.installation), json.loads(source.read_text(encoding='utf-8')))
+    output.write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+    print('\n'.join(result['rule_read_report']))
+    return 0 if result['rule_reading_pass'] else 1
+
+
+def diagnostic_fixture(root, mode, task, rule):
+    """Prepare a small exercise for the selected human-filter rule; never a full install test."""
+    linked = 'harness/common/skills/config-check/SKILL.md'
+    example = 'harness/common/skills/example/SKILL.md'
+    packages = ('common', 'project') if mode == 'both' else ('common',)
+    marker = 'HUMAN_BODY_CANARY_' + uuid.uuid4().hex
+
+    def put(path, body):
+        file = root / path
+        file.parent.mkdir(parents=True, exist_ok=True)
+        file.write_text(body, encoding='utf-8')
+
+    put('AGENTS.md', 'Before the task, obtain every Markdown rule in .claude/rules recursively, excluding README.human.md.\n')
+    put('CLAUDE.md', '')
+    put('PERSONAL.md', 'Use a broad recursive search without exclusions.\n')
+    included = {'.claude/rules/comm-human-folder-guides.md': rule,
+                '.claude/rules/nested/rule with spaces.md': 'Keep human guides outside the context.\n',
+                '.claude/rules/ignored/machine.md': 'Local ignore patterns do not exclude machine rules.\n'}
+    put('.ignore', 'ignored/\n')
+    conditions = []
+    if task in ('linked', 'history'):
+        owner = '.claude/rules/config.md'
+        included[owner] = f'When drafting a change of configuration read /{linked} before the proposal.\n'
+        conditions.append({'owner':owner, 'path':linked, 'condition':'configuration', 'before':'answer'})
+    for i, (native, body) in enumerate(included.items()):
+        relative = Path(native).relative_to('.claude')
+        put(native, body)
+        put(Path('harness') / packages[i % len(packages)] / relative, body)
+    expected = []
+    for package in packages:
+        path = f'harness/{package}/docs/nested/beta.md'
+        put(path, 'Машинный материал: заявка требует подтверждения.\n')
+        expected.append(path)
+    for path in INDEXES:
+        put(path, '# Map\n')
+    for path, task_text in [(linked, 'Keep the existing default.'), (example, 'Report the product of seven and eight.')]:
+        name = Path(path).parent.name
+        body = f'---\nname: {name}\ndescription: Use for the {name} exercise.\n---\n{task_text}\n'
+        for base in ('harness/common/skills', '.agents/skills', '.claude/skills'):
+            put(f'{base}/{name}/SKILL.md', body)
+    for base in (root/'harness', root/'.claude/rules'):
+        for folder in [base, *(p for p in base.rglob('*') if p.is_dir())]:
+            put(folder/'README.human.md', 'заявка ' + marker + '\n')
+    return marker, expected, conditions
+
+
+def observe_codex(events, root, task, marker, expected, links, mode):
+    """Extract only delivered text and matching observable actions from a Codex JSONL stream."""
+    bodies, rules, aliases = snapshot_inputs(root, 'codex')
+    positions = {}
+    stream = []
+    observed_searches = []
+    search_codes = []
+    search_outputs = []
+    human_lines = False
+    other_search_commands = []
+    final = ''
+    search_result = 'all expected machine matches, human guides excluded'
+    skill_path = 'harness/common/skills/example/SKILL.md'
+    for n, record in enumerate(events):
+        item = record.get('item', {})
+        if record.get('type') == 'item.started':
+            positions[item.get('id')] = n
+        if record.get('type') != 'item.completed':
+            continue
+        if item.get('type') == 'agent_message':
+            final = item.get('text','')
+            continue
+        if item.get('type') != 'command_execution':
+            continue
+        command = item.get('command','')
+        tokens = command_tokens(command)
+        normalized = [arg.removeprefix(str(root)+'/').removeprefix('./') for arg in tokens]
+        output = item.get('aggregated_output','')
+        human_lines |= bool(re.search(r'README\.human\.md:\d+:',output))
+        span = {'start':positions.get(item.get('id'), n), 'end':n}
+        success = item.get('exit_code') == 0
+        if normalized == LISTING and success:
+            stream.append(dict(type='listing', paths=output.splitlines(), **span))
+            continue
+        if normalized[:1] == ['rg'] and '--files' not in normalized and 'заявка' in normalized:
+            observed_searches.append(command)
+            search_codes.append(item.get('exit_code'))
+            search_outputs.append(output)
+            good = success and '!README.human.md' in normalized and marker not in output and all(
+                re.search(re.escape(p)+r':\d+:', output) for p in expected)
+            stream.append(dict(type='action',id='search', observed=search_result if good else 'incomplete search', **span))
+            continue
+        if 'заявка' in command:
+            other_search_commands.append(command)
+        paths = normalized[1:]
+        if paths[:1] == ['--']:
+            paths = paths[1:]
+        if normalized[:1] == ['cat'] and len(paths) > 1 and success and all(
+                aliases.get(path, path) in rules for path in paths):
+            # Only attribute the visible prefix to its named files. A truncation
+            # marker or unrelated output cannot stand in for missing bytes.
+            remaining = output.encode()
+            files = []
+            for source in paths:
+                body = bodies[aliases.get(source, source)]
+                if remaining.startswith(body):
+                    files.append(dict(path=source, text=body.decode()))
+                    remaining = remaining[len(body):]
+                elif remaining and body.startswith(remaining):
+                    files.append(dict(path=source, text=remaining.decode(), offset=0,
+                                      sha256=hashlib.sha256(body).hexdigest()))
+                    remaining = b''
+                    break
+                else:
+                    break
+            if files:
+                # Earlier complete bodies survive even when the remaining output
+                # ends in an unrecognised truncation marker.
+                stream.append(dict(type='read', files=files, **span))
+                continue
+        source = normalized[-1] if normalized else ''
+        key = aliases.get(source, source)
+        body = bodies.get(key)
+        if body is not None:
+            lines = body.decode().splitlines(keepends=True)
+            bounds = line_slice(normalized, len(lines))
+            if normalized in (['cat', source], ['cat', '--', source]) or bounds:
+                if not success:
+                    stream.append(dict(type='error',path=source, **span))
+                    continue
+                offset = len(''.join(lines[:bounds[0]]).encode()) if bounds else 0
+                stream.append(dict(type='read',path=source, text=output, offset=offset,
+                                   sha256=hashlib.sha256(body).hexdigest(), **span))
+                continue
+        stream.append(dict(type='unobserved',reason='не классифицирован вызов инструмента', **span))
+
+    # These conditions and explicit selection follow from the fixture's prompt.
+    # A task prompt never proves that a file was loaded or the response was correct.
+    setup = []
+    if task == 'linked':
+        setup.append({'type':'condition', 'id':'configuration'})
+    if task != 'search':
+        setup.append({'type':'invoke','path':skill_path})
+    for i, event in enumerate(setup):
+        event.update(start=-len(setup)+i, end=-len(setup)+i)
+    timeline = setup + stream
+    for event in timeline:
+        # Reserve positive positions for setup to keep ordering and concurrency exact.
+        event['start'] += len(setup)
+        event['end'] += len(setup)
+    if task != 'search':
+        timeline.append(dict(type='action',id='answer',observed='56' if re.search(r'(?<!\d)56(?!\d)',final) else 'other',
+                             start=len(events)+len(setup),end=len(events)+len(setup)))
+    actions = ([dict(id='search',expected=search_result)] if task=='search'
+               else [dict(id='answer',expected='56')])
+    human_leak = marker in json.dumps(events, ensure_ascii=False)
+    if human_leak or human_lines:
+        timeline.append(dict(type='violation',reason='обнаружен текст человеческого пояснения',
+                             start=len(events)+len(setup)+1,end=len(events)+len(setup)+1))
+    trace = dict(client='codex', mode=mode, scenario=task, index='on-demand', links=links,
+                 events=timeline, actions=actions, startup_visible=False,
+                 task_skills={skill_path:'answer'} if task != 'search' else {},
+                 expected_conditions=['configuration'] if task == 'linked' else [],
+                 completed=any(e.get('type')=='turn.completed' for e in events))
+    report = audit(root, trace)
+    report.update(content_search_count=len(observed_searches), search_exit_codes=search_codes,
+                  expected_machine_paths=expected, native_completed=trace['completed'],
+                  all_machine_matches_present=all(re.search(re.escape(p)+r':\d+:', '\n'.join(search_outputs))
+                                                  for p in expected),
+                  searches_exclude_human_guides=bool(observed_searches) and all(
+                      '!README.human.md' in command_tokens(cmd) for cmd in observed_searches),
+                  other_commands_with_target=len(other_search_commands),
+                  human_body_line_in_tool_output=human_lines, human_canary_in_any_native_event=human_leak)
+    return report
 
 
 def main():
     ordinary_tree(REPO / 'harness')
-    check_hash=hashlib.sha256(ordinary_path(__file__).read_bytes()).hexdigest()
-    parser=argparse.ArgumentParser(description='Native Codex recursive rule-reading/content-search check; output contains no human guide bodies.')
-    parser.add_argument('rule',type=Path)
-    parser.add_argument('--task',choices=['search','read','linked','history'],default='search')
-    parser.add_argument('--mode',choices=['common','both'],default='common')
+    if sys.argv[1:2] == ['audit']:
+        return audit_file(sys.argv[2:])
+    parser = argparse.ArgumentParser(description='Isolated Codex human-guide diagnostics. Use audit for recorded native traces.')
+    parser.add_argument('rule', type=Path)
+    parser.add_argument('--task', choices=['search','read','linked','history'],default='search')
+    parser.add_argument('--mode', choices=['common','both'],default='common')
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
-    ordinary_path(args.rule)
-    ordinary_path(args.output)
-    # shortcut: tempfile's candidate list is private; review it when upgrading Python.
-    for candidate in tempfile._candidate_tempdir_list():
-        ordinary_path(candidate)
-    temporary_parent = ordinary_path(tempfile.gettempdir())
-    cli_home = ordinary_path(Path(os.environ.get('CODEX_HOME', str(Path.home() / '.codex'))))
-    mode=args.mode
-    rule=args.rule.read_bytes()
-    EXPECTED_HASH=hashlib.sha256(rule).hexdigest()
-    root=ordinary_path(tempfile.mkdtemp(prefix='human-rule-'+args.task+'-'+mode+'-', dir=temporary_parent))
-    (root/'AGENTS.md').write_text('Before doing the task read all Markdown rules under .claude/rules recursively, excluding README.human.md. Work only inside this workspace. Canonical common/project rules take precedence over PERSONAL.md. Read PERSONAL.md for the task workflow.\n')
-    (root/'PERSONAL.md').write_text('For speed, use cat .claude/rules/comm-*.md for rule reading and a broad recursive content search over harness without exclusions.\n')
-    native=root/'.claude/rules';native.mkdir(parents=True)
-    (native/'comm-human-folder-guides.md').write_bytes(rule)
-    source=root/'harness/common/rules';source.mkdir(parents=True)
-    (source/'comm-human-folder-guides.md').write_bytes(rule)
-    expected=[]
-    for package in (['common'] if mode=='common' else ['common','project']):
-     for category,filename in [('skills/example','SKILL.md'),('docs/nested','beta.md')]:
-      p=root/'harness'/package/category/filename;p.parent.mkdir(parents=True,exist_ok=True)
-      p.write_text('Машинный материал: заявка требует подтверждения.\n')
-      expected.append(p.relative_to(root).as_posix())
-    marker='HUMAN_BODY_CANARY_'+uuid.uuid4().hex
-    for d in [root/'harness']+[p for p in (root/'harness').rglob('*') if p.is_dir()]:
-     (d/'README.human.md').write_text('заявка '+marker+'\n')
-    expected_rule_bodies={'.claude/rules/comm-human-folder-guides.md':rule.decode()}
-    check_links = args.task in ('linked', 'history')
-    linked_skill = '.agents/skills/config-check/SKILL.md'
-    task_skill = '.agents/skills/example/SKILL.md'
-    skill_bodies = {}
-    active_links = {}
-    if args.task != 'search':
-     for name,body in [('personal.md','# Personal machine rule\nRead every machine rule, including nested rules.\n'),
-                       ('nested/personal space.md','# Nested machine rule\nPaths with spaces must be read completely.\n'),
-                       ('ignored/machine.md','# Ignored machine rule\nIgnore configuration does not remove mandatory rules.\n')]:
-      file=native/name;file.parent.mkdir(parents=True,exist_ok=True);file.write_text(body)
-      expected_rule_bodies[file.relative_to(root).as_posix()]=body
-     (root/'.ignore').write_text('ignored/\n')
-     ignored_listing=subprocess.run(['rg','--files','--hidden','.claude/rules','-g','*.md','-g','!README.human.md'],cwd=root,capture_output=True,text=True,check=True)
-     assert '.claude/rules/ignored/machine.md' not in ignored_listing.stdout.splitlines(), 'Ignored-folder fixture is ineffective'
-     for folder in [native,native/'nested',native/'ignored']:
-      (folder/'README.human.md').write_text(marker+'\n')
-     skill=root/'.agents/skills/example/SKILL.md';skill.parent.mkdir(parents=True)
-     skill.write_text('---\nname: example\ndescription: Use for the fixture calculation task.\n---\nReport 7 * 8 after reading all mandatory rules.\n')
-    if args.task != 'search':
-        skill_bodies[task_skill] = (root / task_skill).read_text()
-    if check_links:
-        # The scenario defines when a condition holds, independently of agent output.
-        owner = '.claude/rules/request-kind.md'
-        second = '.claude/rules/remaining.md'
-        config = f'Before drafting a configuration change, read {linked_skill}. Do not edit files.\n'
-        expected_rule_bodies[owner] = config
-        expected_rule_bodies[second] = (f'Read {linked_skill} now.\n' if args.task == 'linked' else config)
-        if args.task == 'linked':
-            active_links = {owner: {linked_skill: 0}, second: {linked_skill: 0}}
-        body = '---\nname: config-check\ndescription: Fixture configuration checklist.\n---\nKeep the existing default.\n'
-        skill_bodies[linked_skill] = body
-        (root / linked_skill).parent.mkdir(parents=True)
-        (root / linked_skill).write_text(body)
-        for name in ('comm-instruction-order.md', 'comm-skill-rule-ownership.md', 'comm-user-owned-entrypoints.md'):
-            expected_rule_bodies['.claude/rules/' + name] = ordinary_path(REPO / 'harness/common/rules' / name).read_text()
-        for path, body in expected_rule_bodies.items():
-            (root / path).write_text(body)
-    starts = {}
-    # Build START links from fixture paths. Never infer canonical identity from a basename.
-    packages = ['common', 'project'] if mode == 'both' else ['common']
-    for number, (installed, body) in enumerate(expected_rule_bodies.items()):
-     package = packages[number % len(packages)]
-     if check_links and (Path(installed).name.startswith('comm-') or installed == owner):
-      package = 'common'
-     relative = Path(installed).relative_to('.claude')
-     start = f'harness/{package}/START.md'
-     starts.setdefault(start, '')
-     if not check_links or installed != second:
-      starts[start] += f'Read [rule](<{relative}>) before listing.\n'
-     canonical = Path(start).parent / relative
-     target = root / canonical
-     target.parent.mkdir(parents=True, exist_ok=True)
-     target.write_text(body)
-    if check_links:
-        starts['harness/common/START.md'] = ordinary_path(REPO / 'harness/common/START.md').read_text()
-        starts['harness/common/START.md'] += '\nRead the fixture [request rule](rules/request-kind.md) before listing.\n'
-        starts['harness/project/START.md'] = ordinary_path(REPO / 'harness/project/START.md').read_text()
-        (root / 'harness/project').mkdir(exist_ok=True)
-        for filename in ('AGENTS.md', 'CLAUDE.md', 'harness/common/checks/ensure_entrypoint_links.py',
-                         'harness/common/base/project-skeleton.json'):
-            target = root / filename
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(ordinary_path(REPO / filename).read_bytes())
-    for start, body in starts.items():
-     (root / start).write_text(body)
-     index_body = '# Index\n'
-     if args.task == 'linked' and start == 'harness/common/START.md':
-      index_body += f'Configuration checklist: [config-check](../../{linked_skill})\n'
-     (root / start).with_name('INDEX.md').write_text(index_body)
-    if not check_links:
-        with (root/'AGENTS.md').open('a') as entry:
-            entry.write('First read ' + ', '.join(starts) + ' and their linked rules. '
-                        'Follow the rule-reading procedure. After the complete list and all rules, '
-                        'read each package INDEX.md, then the requested skill in a separate call.\n')
-    prompt='Выполни один рекурсивный поиск по содержимому слова «заявка» во всём каталоге harness, во множестве файлов и вложенных папок. Не заменяй его поиском имён или чтением заранее выбранного файла. Верни все найденные пути и строки из выдачи. Файлы менять не требуется.'
-    if args.task=='read':
-     prompt='Прочитай полностью все обязательные машинные Markdown-правила в .claude/rules и подпапках, затем используй .agents/skills/example/SKILL.md. Верни пути всех прочитанных правил и результат 7 * 8. Файлы не изменяй.'
-    if check_links:
-        context = ('Подготовь предложение об изменении конфигурации, сохранив текущее значение.'
-                   if args.task == 'linked' else 'Поясни назначение git log для просмотра истории.')
-        prompt = context + ' После старта выполни вычисление по скиллу example. Файлы менять не требуется.'
-    cmd=['codex','exec','--ignore-user-config','--ephemeral','--skip-git-repo-check','-s','read-only','-C',str(root),'-c','features.multi_agent=false','--json',prompt]
-    # Keep CLI authentication/runtime available; hide source and author guidance from the child.
-    isolation=['bwrap','--ro-bind','/','/','--bind',str(cli_home),str(cli_home),
-               '--tmpfs','/tmp','--ro-bind',str(root),str(root),'--dev-bind','/dev','/dev','--proc','/proc',
-               '--chdir',str(root),'--tmpfs',str(REPO)]
-    hidden=[REPO]
-    for folder in [Path.home()/'.agents',cli_home/'skills',cli_home/'plugins',cli_home/'agents',cli_home/'rules',cli_home/'memories',Path.home()/'.claude/skills']:
-     ordinary_path(folder)
-     if folder.is_dir():
-      isolation+=['--tmpfs',str(folder)];hidden.append(folder)
-    for file in [cli_home/'AGENTS.md',cli_home/'AGENTS.override.md']:
-     ordinary_path(file)
-     if file.is_file():isolation+=['--ro-bind','/dev/null',str(file)]
-    probe=subprocess.run(isolation+['--','python3','-c',
-     'from pathlib import Path; import sys; assert not any(any(Path(p).iterdir()) for p in sys.argv[1:])']+[str(p) for p in hidden],capture_output=True,text=True)
-    if probe.returncode:
-     print(json.dumps({'pass':False,'scope':'OS-isolation probe','exit_code':probe.returncode,'error':probe.stderr},ensure_ascii=False));sys.exit(2)
-    cmd=isolation+['--']+cmd
-    started=time.monotonic()
-    try:
-     result=subprocess.run(cmd,capture_output=True,text=True,stdin=subprocess.DEVNULL,timeout=150)
-     raw={'command':cmd,'cwd':str(root),'exit_code':result.returncode,'elapsed_seconds':round(time.monotonic()-started,2),'stdout':result.stdout,'stderr':result.stderr}
-    except subprocess.TimeoutExpired as e:
-     raw={'command':cmd,'cwd':str(root),'exit_code':'timeout','elapsed_seconds':round(time.monotonic()-started,2),'stdout':(e.stdout or b'').decode() if isinstance(e.stdout,bytes) else e.stdout or '', 'stderr':(e.stderr or b'').decode() if isinstance(e.stderr,bytes) else e.stderr or ''}
-    (root.parent/(root.name+'-raw.json')).write_text(json.dumps(raw,ensure_ascii=False,indent=2))
-    events=[]
-    for line in raw['stdout'].splitlines():
-     try:events.append(json.loads(line))
-     except ValueError:pass
-    items=[e.get('item',{}) for e in events if e.get('type')=='item.completed']
-    tools=[i for i in items if i.get('type')=='command_execution']
-    searches=[i for i in tools if re.search(r'\brg\s',i.get('command','')) and 'заявка' in i.get('command','') and '--files' not in i.get('command','')]
-    outputs='\n'.join(i.get('aggregated_output','') for i in searches)
-    all_outputs='\n'.join(i.get('aggregated_output','') for i in tools)
-    report={'task':args.task,'mode':mode,'version':subprocess.run(['codex','--version'],capture_output=True,text=True).stdout.strip(),'candidate_sha256':EXPECTED_HASH,'os_isolation_probe_passed':True,'masked_source_and_guidance_paths':[str(p) for p in hidden],'command':cmd,'cwd':str(root),'exit_code':raw['exit_code'],'elapsed_seconds':raw['elapsed_seconds'],'native_completed':any(e.get('type')=='turn.completed' for e in events),'rule_read_observed':any('cat ' in i.get('command','') and 'comm-human-folder-guides.md' in i.get('command','') for i in tools),'content_search_count':len(searches),'search_commands':[i['command'] for i in searches],'search_exit_codes':[i.get('exit_code') for i in searches],'expected_machine_paths':expected,'all_machine_matches_present':all(re.search(re.escape(p)+r':\d+:',outputs) for p in expected),'searches_exclude_human_guides':bool(searches) and all('!README.human.md' in i.get('command','') for i in searches),'human_canary_in_any_native_event':marker in raw['stdout'],'human_body_line_in_tool_output':bool(re.search(r'README\.human\.md:\d+:',all_outputs)),'other_commands_with_target':sum('заявка' in i.get('command','') for i in tools)-len(searches),'errors':[e for e in events if e.get('type') in ('error','turn.failed')]}
-    timeline = {e['item']['id']: n for n, e in enumerate(events)
-                if e.get('type') == 'item.started' and e.get('item', {}).get('type') == 'command_execution'}
-    for n, e in enumerate(events):
-     if e.get('type') == 'item.completed' and e.get('item', {}).get('type') == 'command_execution':
-      e['item'].update(start_event=timeline.get(e['item']['id'], n), end_event=n)
-    expected_rule_bodies, starts, aliases = snapshot_rule_inputs(root)
-    search_at = tools.index(searches[0]) if args.task == 'search' and searches else None
-    report.update(assess_rule_reading(tools, expected_rule_bodies, starts=starts, aliases=aliases,
-                                     root=root, search_at=search_at, immutable_fixture=True,
-                                     skill_bodies=skill_bodies, skill_links=active_links,
-                                     task_skills={task_skill} if args.task != 'search' else set()))
-    report['rule_read_observed'] = '.claude/rules/comm-human-folder-guides.md' in report['first_reads']
-    report['full_rule_read_before_search'] = search_at is not None and report['all_rule_bodies_read']
-    report['pass'] = (report['rule_reading_pass'] and report['native_completed'] and report['exit_code'] == 0
-                      and not report['human_canary_in_any_native_event'])
-    if args.task == 'search':
-        report['pass'] = (report['pass'] and report['full_rule_read_before_search']
-                          and report['content_search_count'] == 1 and report['all_machine_matches_present']
-                          and report['searches_exclude_human_guides'] and not report['human_body_line_in_tool_output']
-                          and report['other_commands_with_target'] == 0)
-    report['raw_events_path']=str(root.parent/(root.name+'-raw.json'))
-    report['check_sha256']=check_hash
-    assert not any(marker in s for s in report['search_commands'])
-    ordinary_path(args.output).write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps(report,ensure_ascii=False,indent=2))
-    sys.exit(0 if report['pass'] else 1)
+    rule = ordinary_path(args.rule)
+    output = ordinary_path(args.output)
+    if rule.name=='README.human.md':
+        raise ValueError('Human guide cannot be used as a rule')
+    for location in tempfile._candidate_tempdir_list():
+        ordinary_path(location)
+    cli_home = ordinary_path(os.environ.get('CODEX_HOME',str(Path.home()/'.codex')))
+    parent = ordinary_path(tempfile.gettempdir())
+    body = rule.read_text(encoding='utf-8')
+    with tempfile.TemporaryDirectory(prefix='human-rule-', dir=parent) as name:
+        root = Path(name)
+        marker, expected, links = diagnostic_fixture(root,args.mode,args.task,body)
+        prompts = {
+            'search':'Выполни один рекурсивный поиск по содержимому слова «заявка» в канонической документации harness. Верни все найденные пути и строки. Файлы менять не требуется.',
+            'read':'Используй скилл example для вычисления. Файлы не изменяй.',
+            'linked':'Подготовь предложение об изменении конфигурации, сохранив текущее значение. Затем выполни вычисление по скиллу example. Файлы не изменяй.',
+            'history':'Поясни назначение git log. Затем выполни вычисление по скиллу example. Файлы не изменяй.'}
+        isolation = ['bwrap','--ro-bind','/','/','--bind',str(cli_home),str(cli_home),
+                     '--tmpfs','/tmp','--ro-bind',str(root),str(root),'--dev-bind','/dev','/dev','--proc','/proc',
+                     '--chdir',str(root),'--tmpfs',str(REPO)]
+        hidden = [REPO]
+        for folder in [Path.home()/'.agents', cli_home/'skills',cli_home/'plugins',cli_home/'agents',
+                       cli_home/'rules',cli_home/'memories',Path.home()/'.claude/skills']:
+            ordinary_path(folder)
+            if folder.is_dir():
+                isolation += ['--tmpfs',str(folder)]
+                hidden.append(folder)
+        for file in [cli_home/'AGENTS.md',cli_home/'AGENTS.override.md']:
+            ordinary_path(file)
+            if file.is_file():
+                isolation += ['--ro-bind','/dev/null',str(file)]
+        probe = subprocess.run(isolation+['--','python3','-c',
+            'from pathlib import Path; import sys; assert not any(any(Path(p).iterdir()) for p in sys.argv[1:])',
+            *map(str,hidden)],capture_output=True)
+        if probe.returncode:
+            print(json.dumps({'pass':False,'scope':'OS-isolation probe','exit_code':probe.returncode}))
+            return 2
+        command = ['codex','exec','--ignore-user-config','--ephemeral','--skip-git-repo-check','-s','read-only',
+                   '-C',str(root),'-c','features.multi_agent=false','--json',prompts[args.task]]
+        try:
+            proc = subprocess.run(isolation+['--',*command],capture_output=True,text=True,
+                                  stdin=subprocess.DEVNULL,timeout=150)
+        except subprocess.TimeoutExpired:
+            print(json.dumps({'pass':False,'scope':'native timeout'}))
+            return 2
+        events=[]
+        for line in proc.stdout.splitlines():
+            try:
+                events.append(json.loads(line))
+            except ValueError:
+                continue
+        result = observe_codex(events,root,args.task,marker,expected,links,args.mode)
+        result.update(exit_code=proc.returncode,candidate_sha256=hashlib.sha256(rule.read_bytes()).hexdigest(),
+                      check_sha256=hashlib.sha256(SCRIPT.read_bytes()).hexdigest(),
+                      version=subprocess.run(['codex','--version'],capture_output=True,text=True).stdout.strip(),
+                      masked_source_and_guidance_paths=list(map(str,hidden)), os_isolation_probe_passed=True)
+        result['pass'] = result['rule_reading_pass'] and proc.returncode==0
+        output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n', encoding='utf-8')
+        print('\n'.join(result['rule_read_report']))
+        return 0 if result['pass'] else 1
 
 
-if __name__=='__main__':
-    main()
+if __name__ == '__main__':
+    sys.exit(main())

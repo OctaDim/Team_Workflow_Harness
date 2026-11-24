@@ -12,9 +12,7 @@ General test quality/TDD/check execution retain their existing owners.
    interaction, scrolling or responsiveness. Suitable lightweight tests can verify
    pure logic, not establish browser-dependent claims.
 2. Establish needed conditions through comm-prepare-browser-check when unverified;
-   reuse valid existing setup. Before choosing coverage read
-   [browser coverage](references/coverage.md); before designing/reviewing relevant
-   scenarios read [fidelity cases](references/fidelity.md).
+   reuse valid existing setup. Перед выбором охвата прочитай файл `harness/common/skills/comm-verify-browser-ui/references/coverage.md`; перед разработкой или проверкой таких сценариев прочитай файл `harness/common/skills/comm-verify-browser-ui/references/fidelity.md`.
 3. Exercise the intended user path and assert its observable contract. Apply
    comm-assess-project-tests for general quality and comm-run-project-checks for
    general scope/execution; do not substitute passing narrow tests for coverage.

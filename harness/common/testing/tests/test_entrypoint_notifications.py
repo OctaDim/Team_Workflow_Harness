@@ -1,314 +1,338 @@
-"""Notification checks use temporary projects and need no configured hooks."""
-import contextlib
-import importlib.util
-import io
+"""Observable repair messages, concurrent edits, and metadata on working copies."""
+from pathlib import Path
+import hashlib
 import os
-import shutil
+import struct
 import subprocess
 import sys
+
 import pytest
-from pathlib import Path
 
-SCRIPT = Path(__file__).resolve().parents[2] / 'checks/ensure_entrypoint_links.py'
+
+NATIVE = Path('.claude/rules/comm-fixture.md')
+NOTICE = 'Восстановление'
 POLICY = 'технически не заблокировано'
-NOTICE = 'Стартовые ссылки повреждены и будут автоматически восстановлены.'
-RULES_LINES = ('- [.claude/rules](.claude/rules/)\n'
-               'До выполнения задачи прочитай все Markdown-правила из .claude/rules '
-               'и его подпапок, кроме README.human.md; соблюдай применимые требования.\n')
 
 
-class TestNotification:
+def test_conflict_reports_digests_offset_and_route_without_echoing_contents(installed, startup):
+    entry = installed / 'AGENTS.md'
+    approved = entry.read_bytes()
+    unexpected = approved[:2] + b'Private settings'
+    entry.write_bytes(unexpected)
+    result = startup(installed)
+    assert result.returncode == 2 and POLICY in result.stdout
+    assert str(entry) in result.stderr and 'offset 2' in result.stderr and 'INBOX' in result.stderr
+    for data in (approved, unexpected):
+        assert hashlib.sha256(data).hexdigest() in result.stderr
+    assert 'Private settings' not in result.stdout + result.stderr
+    assert entry.read_bytes() == unexpected
 
-    @pytest.fixture(autouse=True)
-    def _project(self, tmp_path):
-        self.root = tmp_path
-        for folder in ('harness/common/rules', '.claude/rules'):
-            rules = self.root / folder
-            rules.mkdir(parents=True)
-            (rules / 'comm-fixture.md').write_bytes(b'# Rule fixture\n')
-        for package in ('common', 'project'):
-            directory = self.root / 'harness' / package
-            directory.mkdir(parents=True, exist_ok=True)
-            (directory / 'INDEX.md').write_text('# Index\n')
-            (directory / 'START.md').write_bytes(b'# Start\n')
-        template = self.root / 'harness/common/base/project-skeleton.json'
-        template.parent.mkdir()
-        shutil.copyfile(SCRIPT.parent.parent / 'base/project-skeleton.json', template)
-        (self.root / 'AGENTS.md').write_text('# Static settings\n\nKeep this setting.\n\n' + ''.join(f'- [harness/{p}/START.md](harness/{p}/START.md)\n' for p in ('common', 'project')) + RULES_LINES + ''.join(f'- [harness/{p}/INDEX.md](harness/{p}/INDEX.md)\n' for p in ('common', 'project')))
-        (self.root / 'CLAUDE.md').write_text('@AGENTS.md\n')
 
-    def check(self, git_available=True):
-        environment = dict(os.environ)
-        if not git_available:
-            environment['PATH'] = '/nonexistent-for-this-test'
-        return subprocess.run([sys.executable, '-B', str(SCRIPT), str(self.root)], capture_output=True, text=True, env=environment)
+def test_recovery_requests_fresh_context_only_after_changes(installed, startup):
+    (installed / NATIVE).unlink()
+    result = startup(installed)
+    assert result.returncode == 3 and NOTICE in result.stdout and 'новую сессию' in result.stdout
+    assert str(installed / NATIVE) in result.stdout
+    repeat = startup(installed)
+    assert repeat.returncode == 0 and POLICY in repeat.stdout
+    assert NOTICE not in repeat.stdout and 'новую сессию' not in repeat.stdout
 
-    def git(self, *args):
-        result = subprocess.run(['git', *args], cwd=self.root, capture_output=True, text=True)
-        assert result.returncode == 0, result.stderr
+
+CHECK_START = '--check-start-entrypoints'
+
+
+def check_start(root, startup, *args):
+    return startup(root, 'harness/common/checks/ensure_entrypoint_links.py', *args)
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+@pytest.mark.parametrize(('name', 'empty'), [
+    ('AGENTS.md', False), ('CLAUDE.md', False), ('AGENTS.md', True),
+])
+def test_check_start_recovers_only_missing_or_empty_protected_input(installed, startup, name, empty):
+    entry = installed / name
+    expected = entry.read_bytes()
+    rule = installed / NATIVE
+    rule.write_bytes(b'Separate conflicting rule')
+    if empty:
+        entry.write_bytes(b'')
+    else:
+        entry.unlink()
+    result = check_start(installed, startup, CHECK_START)
+    assert result.returncode == 3
+    assert str(entry) in result.stdout and 'новую сессию' in result.stdout
+    assert ('файл пуст' if empty else 'файл отсутствует') in result.stdout
+    assert entry.read_bytes() == expected
+    assert rule.read_bytes() == b'Separate conflicting rule'
+    assert check_start(installed, startup, CHECK_START).returncode == 0
+    assert check_start(installed, startup, '--check-rules').returncode == 4
+
+
+def test_check_start_preserves_nonempty_inputs_and_reports_all_paths(installed, startup):
+    unexpected = {'AGENTS.md': b' ', 'CLAUDE.md': b'@AGENTS.md\n'}
+    for name, value in unexpected.items():
+        (installed / name).write_bytes(value)
+    result = check_start(installed, startup, CHECK_START)
+    assert result.returncode == 2 and 'INBOX' in result.stderr
+    assert 'резервный коммит' in result.stderr and 'восстановление этих входов из канона' in result.stderr
+    for name, value in unexpected.items():
+        assert str(installed / name) in result.stderr and digest(value) in result.stderr
+        assert (installed / name).read_bytes() == value
+    assert check_start(installed, startup, '--check-rules').returncode == 0
+
+
+def test_check_start_recovers_missing_input_even_when_other_needs_approval(installed, startup):
+    agents, claude = installed / 'AGENTS.md', installed / 'CLAUDE.md'
+    expected = agents.read_bytes()
+    agents.unlink()
+    claude.write_bytes(b'@AGENTS.md\n')
+    result = check_start(installed, startup, CHECK_START)
+    assert result.returncode == 2 and str(claude) in result.stderr
+    assert str(agents) in result.stdout and 'новую сессию' in result.stdout
+    assert agents.read_bytes() == expected and claude.read_bytes() == b'@AGENTS.md\n'
+
+
+def test_check_start_publication_marker_blocks_repairs(installed, startup):
+    (installed / '.harness-publication.json').write_bytes(b'{}')
+    entry = installed / 'AGENTS.md'
+    entry.unlink()
+    result = check_start(installed, startup, CHECK_START)
+    assert result.returncode == 2 and 'Unfinished publication' in result.stderr
+    assert not entry.exists()
+
+
+@pytest.mark.parametrize(('name', 'empty'), [
+    ('AGENTS.md', False), ('CLAUDE.md', False), ('AGENTS.md', True),
+])
+def test_read_only_check_reports_missing_or_empty_without_writing(installed, startup, name, empty):
+    entry = installed / name
+    canonical = entry.read_bytes()
+    if empty:
+        entry.write_bytes(b'')
+    else:
+        entry.unlink()
+    result = check_start(installed, startup, CHECK_START, '--no-repair')
+    assert result.returncode == 5 and str(entry) in result.stderr
+    assert ('файл пуст' if empty else 'файл отсутствует') in result.stderr
+    if empty:
+        assert entry.read_bytes() == b''
+    else:
+        assert not entry.exists()
+    assert check_start(installed, startup, CHECK_START).returncode == 3
+    assert entry.read_bytes() == canonical
+    assert check_start(installed, startup, CHECK_START, '--no-repair').returncode == 0
+
+
+def test_read_only_mixed_case_requires_approval_and_preserves_both_states(installed, startup):
+    agents, claude = installed / 'AGENTS.md', installed / 'CLAUDE.md'
+    agents.unlink()
+    claude.write_bytes(b'@AGENTS.md\n')
+    result = check_start(installed, startup, CHECK_START, '--no-repair')
+    assert result.returncode == 2
+    assert str(agents) in result.stderr and str(claude) in result.stderr
+    assert 'резервный коммит' in result.stderr
+    assert not agents.exists() and claude.read_bytes() == b'@AGENTS.md\n'
+
+
+def test_read_only_mode_uses_no_writer_lock(published, checker, monkeypatch):
+    def forbidden(*args, **kwargs):
+        pytest.fail('Read-only check attempted a writer operation')
+    monkeypatch.setattr(checker, 'root_lock', forbidden)
+    monkeypatch.setattr(checker, 'replace_input', forbidden)
+    with pytest.raises(checker.EntrypointRepairRequired):
+        checker.check_start_entrypoints(published, no_repair=True)
+    assert not (published / checker.WINDOWS_LOCK_FILE).exists()
+
+
+def test_read_only_mode_refuses_an_unfinished_publication(installed, startup):
+    (installed / '.harness-publication.json').write_bytes(b'{}')
+    entry = installed / 'AGENTS.md'
+    entry.unlink()
+    result = check_start(installed, startup, CHECK_START, '--no-repair')
+    assert result.returncode == 2 and 'Unfinished publication' in result.stderr
+    assert not entry.exists()
+
+
+def test_no_repair_cannot_be_used_with_other_modes(installed, startup):
+    result = check_start(installed, startup, '--check-rules', '--no-repair')
+    assert result.returncode == 2 and 'requires --check-start-entrypoints' in result.stderr
+
+
+def test_approved_protected_repair_uses_exact_backup_and_preserves_other_staging(installed, startup):
+    def git(*args):
+        return subprocess.check_output(['git', *args], cwd=installed)
+
+    def restore(commit, *entries):
+        args = ['--restore-start-entrypoints', commit]
+        for name, observed, canonical in entries:
+            args.extend(('--entrypoint', f'{name}:{digest(observed)}:{digest(canonical)}'))
+        return startup(installed, 'harness/common/checks/ensure_entrypoint_links.py', *args, no_git=False)
+
+    git('init', '-q')
+    git('config', 'user.name', 'Harness Test')
+    git('config', 'user.email', 'harness-test@example.invalid')
+    git('add', 'AGENTS.md', 'CLAUDE.md')
+    git('commit', '-qm', 'Published inputs')
+    agents, claude = installed / 'AGENTS.md', installed / 'CLAUDE.md'
+    canonical_agents = agents.read_bytes()
+    unexpected_agents, unexpected_claude = b'Observed Agents\n', b'Observed Claude\n'
+    agents.write_bytes(unexpected_agents)
+    claude.write_bytes(unexpected_claude)
+    approval_agents = ('AGENTS.md', unexpected_agents, canonical_agents)
+    approval_claude = ('CLAUDE.md', unexpected_claude, b'')
+    assert restore(git('rev-parse', 'HEAD').decode().strip(), approval_agents).returncode == 2
+    (installed / 'other.txt').write_bytes(b'Staged unrelated data\n')
+    git('add', 'other.txt')
+    before = git('ls-files', '--stage', '--', 'other.txt')
+    git('commit', '--only', '-qm', 'Back up observed inputs', '--', 'AGENTS.md', 'CLAUDE.md')
+    backup = git('rev-parse', 'HEAD').decode().strip()
+
+    claude.write_bytes(b'Changed after approval\n')
+    result = restore(backup, approval_agents, approval_claude)
+    assert result.returncode == 2 and str(claude) in result.stderr
+    assert agents.read_bytes() == unexpected_agents and claude.read_bytes() == b'Changed after approval\n'
+    claude.write_bytes(unexpected_claude)
+    assert restore(backup, ('AGENTS.md', unexpected_agents, b'Wrong template')).returncode == 2
+    assert restore(backup, approval_agents).returncode == 3
+    assert claude.read_bytes() == unexpected_claude
+    assert restore(backup, approval_agents, approval_claude).returncode == 3
+    assert (agents.read_bytes(), claude.read_bytes()) == (canonical_agents, b'')
+    assert restore(backup, approval_agents, approval_claude).returncode == 0
+    assert git('ls-files', '--stage', '--', 'other.txt') == before
+    assert git('show', 'HEAD:AGENTS.md') == unexpected_agents
+    assert git('show', 'HEAD:CLAUDE.md') == unexpected_claude
+
+
+def test_checker_does_not_change_git_config_or_install_hooks(installed, startup):
+    def git(*args):
+        return subprocess.check_output(['git', *args], cwd=installed)
+    git('init', '-q')
+    git('config', 'user.name', 'Harness Test')
+    git('config', 'user.email', 'harness-test@example.invalid')
+    config = (installed / '.git/config').read_bytes()
+    (installed / 'AGENTS.md').write_bytes(b'Intentional mismatch\n')
+    assert startup(installed).returncode == 2
+    assert config == (installed / '.git/config').read_bytes()
+    assert not (installed / '.git/hooks/pre-commit').exists()
+    git('add', 'AGENTS.md')
+    git('commit', '-qm', 'Test commit')
+    assert git('show', 'HEAD:AGENTS.md') == b'Intentional mismatch\n'
+
+
+def test_atomic_repair_preserves_permissions_and_published_crlf(installed, checker, monkeypatch, capsys):
+    target = installed / NATIVE
+    target.write_bytes(b'Incorrect\n')
+    target.chmod(0o640)
+    replace = os.replace
+    calls = []
+
+    def observe(temporary, destination):
+        assert NOTICE in capsys.readouterr().out
+        assert destination == target and Path(temporary).parent == target.parent
+        assert target.read_bytes() == b'Incorrect\n'
+        calls.append(destination)
+        return replace(temporary, destination)
+
+    monkeypatch.setattr(os, 'replace', observe)
+    checker.ensure(installed)
+    assert calls == [target]
+    assert target.stat().st_mode & 0o777 == 0o640
+    assert target.read_bytes() == b'# Published rule\r\n'
+    assert not list(target.parent.glob('.comm-fixture.md-*'))
+
+
+def test_concurrent_edit_before_replace_survives(installed, checker, monkeypatch):
+    target = installed / NATIVE
+    target.write_bytes(b'Damaged')
+    write = checker.replace_input
+
+    def concurrent(path, *args):
+        path.write_bytes(b'Concurrent')
+        return write(path, *args)
+
+    monkeypatch.setattr(checker, 'replace_input', concurrent)
+    with pytest.raises(ValueError, match='changed'):
+        checker.ensure(installed)
+    assert target.read_bytes() == b'Concurrent'
+
+
+def test_concurrent_creation_after_first_update_reports_partial_operation(installed, checker, monkeypatch):
+    rule = installed / NATIVE
+    rule.write_bytes(b'Damaged')
+    entry = installed / 'CLAUDE.md'
+    entry.unlink()
+    write = checker.replace_input
+
+    def concurrent(path, *args):
+        result = write(path, *args)
+        if path == rule:
+            entry.write_bytes(b'Concurrent bridge\n')
         return result
 
-    def register_fixture(self):
-        self.git('init', '-q')
-        self.git('config', 'user.name', 'Harness Test')
-        self.git('config', 'user.email', 'harness-test@example.invalid')
-        self.git('add', 'AGENTS.md', 'CLAUDE.md')
-        self.git('commit', '-qm', 'Initial test fixture')
+    monkeypatch.setattr(checker, 'replace_input', concurrent)
+    with pytest.raises(ValueError) as error:
+        checker.ensure(installed)
+    completed, pending = str(error.value).split('already updated: ', 1)[1].split('; pending: ', 1)
+    assert str(rule) in completed and str(entry) in pending
+    assert rule.read_bytes() == b'# Published rule\r\n'
+    assert entry.read_bytes() == b'Concurrent bridge\n'
 
-    def test_no_git_binary_or_repository_or_baseline_is_required(self):
-        before = ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes())
-        result = self.check(git_available=False)
-        assert result.returncode == 0, result.stderr
-        assert POLICY in result.stdout
-        assert before == ((self.root / 'AGENTS.md').read_bytes(), (self.root / 'CLAUDE.md').read_bytes())
 
-    def test_instruction_change_is_reported_and_preserved_without_blocking(self):
-        self.register_fixture()
-        agents = self.root / 'AGENTS.md'
-        changed = agents.read_text().replace('Keep this setting.', 'Changed setting.')
-        agents.write_text(changed)
-        result = self.check()
-        assert result.returncode == 0, result.stderr
-        assert POLICY in result.stdout
-        assert 'AGENTS.md' in result.stdout
-        assert 'inbox' in result.stdout
-        assert 'изменение настроек' in result.stdout
-        assert agents.read_text() == changed
+@pytest.mark.parametrize('failure', ['create', 'replace', 'write'])
+def test_io_failure_preserves_file_and_cleans_temp(installed, checker, monkeypatch, failure):
+    target = installed / NATIVE
+    target.write_bytes(b'Original')
+    def fail(*args, **kwargs):
+        raise OSError('injected I/O failure')
+    if failure == 'replace':
+        monkeypatch.setattr(os, 'replace', fail)
+    elif failure == 'create':
+        monkeypatch.setattr(checker.tempfile, 'NamedTemporaryFile', fail)
+    else:
+        create = checker.tempfile.NamedTemporaryFile
+        class BrokenWriter:
+            def __init__(self, *args, **kwargs):
+                self.file = create(*args, **kwargs)
+                self.name = self.file.name
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                self.file.close()
+            def write(self, data):
+                self.file.write(data[:2])
+                raise OSError('injected I/O failure')
+        monkeypatch.setattr(checker.tempfile, 'NamedTemporaryFile', BrokenWriter)
+    with pytest.raises((OSError, ValueError), match='injected I/O failure'):
+        checker.ensure(installed)
+    assert target.read_bytes() == b'Original'
+    assert not list(target.parent.glob('.comm-fixture.md-*'))
 
-    def test_rules_instruction_added_inside_fence_is_reported_as_a_settings_change(self):
-        agents = self.root / 'AGENTS.md'
-        original = agents.read_text() + '\n~~~md\n~~~example\n~~~\n'
-        agents.write_text(original)
-        self.register_fixture()
-        instruction = RULES_LINES.splitlines(keepends=True)[1]
-        changed = original.replace('~~~example\n', '~~~example\n' + instruction)
-        agents.write_text(changed)
-        result = self.check()
-        assert result.returncode == 0, result.stderr
-        assert 'изменение настроек' in result.stdout
-        assert NOTICE not in result.stdout
-        assert agents.read_text() == changed
 
-    def test_unclosed_historical_fence_does_not_block_repair_of_valid_current_file(self):
-        agents = self.root / 'AGENTS.md'
-        original = '# Keep user settings\n~~~md\nexample\n'
-        agents.write_text(original)
-        self.register_fixture()
-        current = original + '~~~\n'
-        agents.write_text(current)
-        result = self.check()
-        assert result.returncode == 0, result.stderr
-        assert 'изменение настроек' in result.stdout
-        assert NOTICE in result.stdout
-        repaired = agents.read_text()
-        assert repaired.startswith(current)
-        assert '](harness/common/START.md)' in repaired[len(current):]
-        before = agents.read_bytes()
-        assert self.check().returncode == 0
-        assert agents.read_bytes() == before
+@pytest.mark.skipif(sys.platform != 'linux' or not hasattr(os, 'setxattr'), reason='Linux ACL check')
+def test_repair_preserves_owner_and_extended_attributes(installed, checker):
+    target = installed / NATIVE
+    target.write_bytes(b'Damaged')
+    os.setxattr(target, 'user.harness-test', b'preserve')
+    acl = [(1, 6, 0xffffffff), (2, 4, os.getuid()), (4, 0, 0xffffffff),
+           (16, 4, 0xffffffff), (32, 0, 0xffffffff)]
+    os.setxattr(target, 'system.posix_acl_access', struct.pack('<I', 2) + b''.join(
+        struct.pack('<HHI', *row) for row in acl))
+    before = {name: os.getxattr(target, name) for name in os.listxattr(target)}
+    original = target.stat()
+    checker.ensure(installed)
+    after = target.stat()
+    assert (after.st_uid, after.st_gid, after.st_mode) == (original.st_uid, original.st_gid, original.st_mode)
+    assert before == {name: os.getxattr(target, name) for name in os.listxattr(target)}
 
-    def test_extra_bridge_text_warns_without_rewriting_or_blocking(self):
-        self.register_fixture()
-        bridge = self.root / 'CLAUDE.md'
-        extra = '@AGENTS.md\nUser text\n'
-        bridge.write_text(extra)
-        result = self.check()
-        assert result.returncode == 0, result.stderr
-        assert 'CLAUDE.md' in result.stdout
-        assert 'inbox' in result.stdout
-        assert POLICY in result.stdout
-        assert bridge.read_text() == extra
 
-    def test_repair_is_announced_and_next_run_has_no_damage_message(self):
-        agents = self.root / 'AGENTS.md'
-        line = '- [harness/common/START.md](harness/common/START.md)\n'
-        agents.write_text(agents.read_text().replace(line, ''))
-        first = self.check(git_available=False)
-        assert first.returncode == 0, first.stderr
-        assert NOTICE in first.stdout
-        assert line in agents.read_text()
-        assert NOTICE not in self.check(git_available=False).stdout
-
-    def test_repair_message_is_visible_before_the_first_write(self, monkeypatch):
-        agents = self.root / 'AGENTS.md'
-        line = '- [harness/common/START.md](harness/common/START.md)\n'
-        agents.write_text(agents.read_text().replace(line, ''))
-        spec = importlib.util.spec_from_file_location('entrypoint_notifications', SCRIPT)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        output = io.StringIO()
-        original_replace = os.replace
-        replacements = []
-
-        def replace(source, destination):
-            assert NOTICE in output.getvalue()
-            replacements.append(destination)
-            return original_replace(source, destination)
-        with monkeypatch.context() as scoped:
-            scoped.setattr(os, 'replace', replace)
-            with contextlib.redirect_stdout(output):
-                module.ensure(self.root)
-        assert output.getvalue().count(NOTICE) == 1
-        assert replacements == [agents]
-
-    def test_rules_repair_is_not_reported_as_a_settings_change(self):
-        agents = self.root / 'AGENTS.md'
-        agents.write_text(agents.read_text().replace(RULES_LINES, ''))
-        self.register_fixture()
-        first = self.check()
-        assert first.returncode == 0, first.stderr
-        assert NOTICE in first.stdout
-        second = self.check()
-        assert NOTICE not in second.stdout
-        assert 'изменение настроек' not in second.stdout
-
-    def test_check_installs_no_hooks_or_configuration_and_does_not_block_commit(self):
-        self.register_fixture()
-        config = (self.root / '.git/config').read_bytes()
-        agents = self.root / 'AGENTS.md'
-        agents.write_text(agents.read_text() + '\nDirect edit.\n')
-        assert self.check().returncode == 0
-        assert (self.root / '.git/config').read_bytes() == config
-        assert not (self.root / '.git/hooks/pre-commit').exists()
-        self.git('add', 'AGENTS.md')
-        before = self.git('rev-parse', 'HEAD').stdout
-        self.git('commit', '-qm', 'Commit is not mechanically blocked')
-        assert self.git('rev-parse', 'HEAD').stdout != before
-
-    def test_crlf_link_repair_is_not_reported_as_a_settings_change(self):
-        agents = self.root / 'AGENTS.md'
-        original = agents.read_bytes().replace(b'\n', b'\r\n')
-        line = b'- [harness/common/START.md](harness/common/START.md)\r\n'
-        original = original.replace(line, b'')
-        agents.write_bytes(original)
-        self.register_fixture()
-        first = self.check()
-        assert first.returncode == 0, first.stderr
-        assert NOTICE in first.stdout
-        repaired = agents.read_bytes()
-        assert repaired.startswith(b'# Static settings\r\n\r\nKeep this setting.\r\n\r\n')
-        assert b'\n' not in repaired.replace(b'\r\n', b'')
-        assert line in agents.read_bytes()
-        second = self.check()
-        assert second.returncode == 0, second.stderr
-        assert NOTICE not in second.stdout
-        assert 'изменение настроек' not in second.stdout
-
-    def load_checker(self):
-        spec = importlib.util.spec_from_file_location('entrypoint_atomic_checks', SCRIPT)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        return module
-
-    def damage_agents(self):
-        agents = self.root / 'AGENTS.md'
-        agents.write_bytes(agents.read_bytes().replace(
-            b'- [harness/common/START.md](harness/common/START.md)\n', b''))
-        return agents
-
-    def test_atomic_repair_preserves_permissions_and_crlf(self, monkeypatch):
-        agents = self.damage_agents()
-        original = agents.read_bytes().replace(b'\n', b'\r\n')
-        agents.write_bytes(original)
-        agents.chmod(0o640)
-        module = self.load_checker()
-        replacements = []
-        original_replace = os.replace
-
-        def replace(source, destination):
-            assert Path(destination).read_bytes() == original
-            assert Path(source).parent == agents.parent
-            replacements.append(destination)
-            return original_replace(source, destination)
-        monkeypatch.setattr(os, 'replace', replace)
-        module.ensure(self.root)
-        assert replacements == [agents]
-        assert agents.stat().st_mode & 0o777 == 0o640
-        assert b'\n' not in agents.read_bytes().replace(b'\r\n', b'')
-        assert not list(self.root.glob('.AGENTS.md-*'))
-
-    def test_parallel_edit_during_planning_is_preserved(self, monkeypatch):
-        agents = self.damage_agents()
-        module = self.load_checker()
-        repair = module.repair_startup_blocks
-
-        def changed(*args):
-            result = repair(*args)
-            agents.write_bytes(b'# Concurrent edit\n')
-            return result
-        monkeypatch.setattr(module, 'repair_startup_blocks', changed)
-        with pytest.raises(ValueError, match='changed'):
-            module.ensure(self.root)
-        assert agents.read_bytes() == b'# Concurrent edit\n'
-
-    def test_concurrent_bridge_edit_after_first_replace_reports_partial_result(self, monkeypatch):
-        agents = self.damage_agents()
-        bridge = self.root / 'CLAUDE.md'
-        bridge.write_bytes(b'User bridge\n')
-        module = self.load_checker()
-        replace = os.replace
-
-        def changed(source, destination):
-            result = replace(source, destination)
-            if Path(destination) == agents:
-                bridge.write_bytes(b'Concurrent bridge\n')
-            return result
-        monkeypatch.setattr(os, 'replace', changed)
-        with pytest.raises(ValueError, match='AGENTS.md') as error:
-            module.ensure(self.root)
-        assert 'CLAUDE.md' in str(error.value)
-        assert bridge.read_bytes() == b'Concurrent bridge\n'
-        assert b'](harness/common/START.md)' in agents.read_bytes()
-        assert not list(self.root.glob('.CLAUDE.md-*'))
-
-    @pytest.mark.parametrize('failure', ('create', 'replace', 'write'))
-    def test_atomic_io_failure_preserves_original_and_removes_temporary_file(self, monkeypatch, failure):
-        agents = self.damage_agents()
-        original = agents.read_bytes()
-        module = self.load_checker()
-
-        def fail(*args, **kwargs):
-            raise OSError('injected I/O failure')
-        if failure == 'replace':
-            monkeypatch.setattr(os, 'replace', fail)
-        elif failure == 'create':
-            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', fail)
-        else:
-            create = module.tempfile.NamedTemporaryFile
-
-            class BrokenWriter:
-                def __init__(self, *args, **kwargs):
-                    self.file = create(*args, **kwargs)
-                    self.name = self.file.name
-
-                def __enter__(self):
-                    return self
-
-                def __exit__(self, *args):
-                    self.file.close()
-
-                def write(self, data):
-                    self.file.write(data[:2])
-                    raise OSError('injected I/O failure')
-            monkeypatch.setattr(module.tempfile, 'NamedTemporaryFile', BrokenWriter)
-        with pytest.raises((OSError, ValueError), match='injected I/O failure'):
-            module.ensure(self.root)
-        assert agents.read_bytes() == original
-        assert not list(self.root.glob('.AGENTS.md-*'))
-
-    @pytest.mark.skipif(sys.platform != 'linux' or not hasattr(os, 'setxattr'), reason='Linux extended-attribute/ACL check requires Linux APIs')
-    def test_atomic_repair_preserves_extended_attributes_and_acl(self):
-        import struct
-        agents = self.damage_agents()
-        os.setxattr(agents, 'user.harness-test', b'preserve metadata')
-        # Use the mapped UID so this ACL is valid inside a single-user namespace.
-        acl = struct.pack('<I', 2) + b''.join(struct.pack('<HHI', tag, permission, uid)
-            for tag, permission, uid in ((1, 6, 0xffffffff), (2, 4, os.getuid()),
-                                         (4, 0, 0xffffffff), (16, 4, 0xffffffff), (32, 0, 0xffffffff)))
-        os.setxattr(agents, 'system.posix_acl_access', acl)
-        before = {name: os.getxattr(agents, name) for name in os.listxattr(agents)}
-        original = agents.stat()
-        self.load_checker().ensure(self.root)
-        after = agents.stat()
-        assert (after.st_uid, after.st_gid, after.st_mode) == (original.st_uid, original.st_gid, original.st_mode)
-        assert before == {name: os.getxattr(agents, name) for name in os.listxattr(agents)}
+def test_skeleton_creation_is_announced_before_writes(published, checker, monkeypatch, capsys):
+    create = checker.create_project_skeleton
+    def inspect(project, categories):
+        assert NOTICE in capsys.readouterr().out
+        assert not project.exists()
+        return create(project, categories)
+    monkeypatch.setattr(checker, 'create_project_skeleton', inspect)
+    assert published / 'harness/project' in checker.ensure(published)

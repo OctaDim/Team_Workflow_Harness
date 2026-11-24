@@ -8,10 +8,8 @@ description: Use when a Git operation is interrupted, a branch or commit appears
 Inputs: intended recovery, repository/worktree, known SHAs and authority.
 
 1. Inspect operation, refs/SHAs, files/index, publication and collaborators
-   without changes. Use comm-verify-project-facts for uncertain results and
-   harness/common/skills/comm-commit-task-stages/references/work-safety.md
-   before any authorized mutation.
-2. Before choosing read [recovery modes](references/modes.md).
+   without changes. Use comm-verify-project-facts for uncertain results. Перед разрешённым изменением прочитай файл `harness/common/skills/comm-commit-task-stages/references/work-safety.md`.
+2. Перед выбором способа восстановления прочитай файл `harness/common/skills/comm-recover-git-state/references/modes.md`.
    Show consequences and obtain missing decisions/permissions; retain existing
    scoped approvals. No automatic destructive reset, published-history rewrite,
    foreign-work cleanup or branch deletion.

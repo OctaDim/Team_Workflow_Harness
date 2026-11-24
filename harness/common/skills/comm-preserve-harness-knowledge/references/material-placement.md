@@ -1,8 +1,6 @@
 # Placement and migration
 
-Before placement read from root
-`harness/common/specs/2026-10-06-structure-and-creation-dates.md` for agreed
-categories/date semantics. Common portable; project contract-dependent;
+Перед размещением прочитай файл `harness/common/specs/2026-10-06-structure-and-creation-dates.md` с согласованными категориями и значением дат. Common portable; project contract-dependent;
 no duplicated knowledge or mass conversion of old inbox. Plans stay docs/plans.
 New folders immediately have a human guide/example; never load its body.
 
@@ -18,8 +16,7 @@ requirement to owner/check. Complete coverage review/current checks, update
 live links/commands, then remove freed sources; no lessons archive. Historical
 commands/results remain historical, never fresh successes. Check resources/
 links/tests, two isolated clean installations, repeat startup, project-only
-refusal, preserved existing files and source/native sets/bytes. For installation
-checks read `harness/common/skills/comm-install-harness/SKILL.md` from root;
+refusal, preserved existing files and source/native sets/bytes. Для проверки установки прочитай файл `harness/common/skills/comm-install-harness/SKILL.md`.
 instruction changes require current validation/publication stages.
 Edits reset separate agent statuses, gate stays; protected inputs remain protected.
 Shared template changes need separate common request/decision/confirmation
@@ -28,8 +25,7 @@ addressed authorization; ordinary authorized application saves/updates are not
 migrations. Mechanism changes retain project/inbox. Ordinary startup preserves
 existing project; new projects use the agreed template.
 
-For evidence placement first read from project root
-`harness/common/skills/comm-protect-harness-evidence/SKILL.md`.
+Перед размещением свидетельств прочитай файл `harness/common/skills/comm-protect-harness-evidence/SKILL.md`.
 New application/task evidence: project/testing/evidence/work; project mechanism:
 project/testing/evidence/harness; common evidence retains common/testing/evidence.
 Completed-report corrections use new dated addenda linked to the original;

@@ -12,8 +12,4 @@ stop another writer automatically. Worktrees are optional and share some refs/co
 Unknown ownership or unsafe overlap blocks dependent mutation: explain and wait;
 independent reads may continue. Inspect again when relevant state changes.
 
-In the harness author checkout (`harness/AGENTS.bootstrap.md.in` present), when
-the layout, the portable startup command in AGENTS.md, or the reading-order
-section of harness/common/START.md changes, run the ordinary entrypoint check
-after editing and before staging. Include the reported bootstrap template in
-the same change. Preserve unrelated edits and existing entrypoint settings.
+For a protected-entrypoint migration, commit only the explicitly owned stage and exact files. Stage the approved templates and their working copies only at the authorized publication stage. Never generate a canonical template from the working AGENTS.md or a retired START.md. Verify the installed checker and fresh starts in isolated installations.

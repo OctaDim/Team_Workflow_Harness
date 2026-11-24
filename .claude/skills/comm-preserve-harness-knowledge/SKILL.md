@@ -6,16 +6,14 @@ description: Use when saving reusable harness experience or placing project work
 # Preserve useful knowledge
 
 Classify purpose/operation and the intended harness; cwd alone is insufficient.
-Before choosing a form read
-[experience routing](references/experience-routing.md).
+Перед выбором формы прочитай файл `harness/common/skills/comm-preserve-harness-knowledge/references/experience-routing.md`.
 
 1. For mechanism knowledge inspect descriptions/rules, then relevant bodies/resources/checks.
    Fully covered → reuse without a record. Independent request/result/check →
    suitable owner; same-result detail → conditional resource.
 2. Select common/project by content and the permanent category. Keep procedure
    with one skills/rules owner; retain essential rationale/evidence separately.
-3. Before placement or date migration read
-   [material placement](references/material-placement.md). Preserve unknown dates.
+3. Перед размещением материалов или переносом дат прочитай файл `harness/common/skills/comm-preserve-harness-knowledge/references/material-placement.md`. Preserve unknown dates.
 4. Save authorized application records directly in permanent project categories;
    preserve actual decision, implementation and check statuses. For protected
    common/project-mechanism changes follow the inbox route from project root

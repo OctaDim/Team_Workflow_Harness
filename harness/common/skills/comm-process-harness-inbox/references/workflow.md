@@ -21,30 +21,17 @@ Approved request creation and permanent results of its authorized execution
 are the inbox route. Bypass conditions below govern protected changes,
 not ordinary app saves.
 
-Direct bypass requires an unambiguous instruction for named material/operation,
-plus a separate agent question about paths/operations/bypass and a positive
-answer after it. Check that history first: no question → ask/stop; no answer or
-silence/time → wait; conditional/ambiguous/options → clarify/wait; refusal → stop.
-Preliminary “confirm”, explicit skill invocation, deadline, or an operation
-permission does not cancel ordering. Same unchanged scope with that pair needs
-no repeat question; expanded/new scope needs new instruction/question/answer.
-User priority and asking are compatible unless the ordering itself is revoked.
-Bypass never waives checks, publication gate, protected inputs or template decisions.
+Direct bypass requires named material, paths and operation, a separate agent question about bypass, and an unequivocal positive reply after it. Check the conversation. Ask if the question is missing; wait for a clear answer, respect refusal. Initial confirmation, skill invocation, deadlines and operation permission cannot supply that reply. Reuse the pair within unchanged scope. Expansion requires another pair. Only explicit user revocation changes the ordering. Checks, publication approval, protected inputs and template decisions still apply.
 
-Only mandatory startup may create an absent neutral project from the agreed
-common skeleton without inbox/extra confirmation; preserve existing project bytes.
-This does not authorize changing existing project or the shared template.
+Only startup may create an absent neutral project from the agreed skeleton without INBOX. Preserve an existing project and shared template.
 
-Creation, execution (including tests), publication and bypass are distinct.
-One message can authorize several stages; do not re-ask authorized stages.
-Path/“save”/deadline/option number do not grant missing stages. If separate
-agreement is required, wait before even creating/testing. An error grants no
-new authorization: propose a contextual request, then wait as necessary.
+Prepare and test the Канидат INBOX in this request. Keep the last publication canonical. Report each client/mode and gaps. Obtain explicit approval for the exact versions, including any gaps, in this request. Publish to canonical first, synchronize working copies only from canonical, verify bytes, then update status. Direct INBOX-to-working copying is forbidden even on request.
+
+Creation, execution (including tests), publication and bypass have separate permissions. One message can grant several; reuse granted stages. Paths, deadlines, an option number or an error grant no missing stage. When separate agreement is required, ask and wait before creation or testing.
 
 When authorized, run targeted checks for changed behavior and full project checks
 when compatibility needs them. Creation grants no candidate execution or all
-historical editions. Before suite use read from root
-`harness/common/skills/comm-install-harness/references/testing.md`.
+historical editions. Перед запуском тестов прочитай файл `harness/common/skills/comm-install-harness/references/testing.md`.
 Report scope/exit/limits: target success is not full, collection not execution.
 
 Create harness/<package>/inbox/YYYY-MM-DD-meaning/ using actual creation date;
@@ -64,8 +51,7 @@ Sequential earliest→latest; unclear chronology requires decision, not invented
 dates. Do not start next until result and required publication complete or user
 explicitly decides closure. Blocked/in progress/prepared candidate is not closure.
 Missing authorization/branch/conflict → precise question and wait, no dependent
-work. For permission/auto-review blockers read from project root
-`harness/common/skills/comm-resolve-permission-blockers/SKILL.md`; known technical
+work. При блокировке разрешениями или автоматической проверкой прочитай файл `harness/common/skills/comm-resolve-permission-blockers/SKILL.md`; known technical
 errors within granted scope can be fixed without choosing for the user.
 Permanent result stands without inbox; its link is provenance. Accounting or
 unverified publication never upgrades agent statuses.
