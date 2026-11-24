@@ -331,6 +331,144 @@ def check_rule_copies(root):
     return len(snapshots)
 
 
+def startup_snapshot(root):
+    """Capture the published startup set and all safely readable working copies."""
+    check_publication_marker(root)
+    base = root / 'harness/common/base'
+    native = root / '.claude/rules'
+    sources = canonical_rules(root)
+    copies = {root / name: base / Path(name).with_suffix('.template') for name in PROTECTED}
+    copies.update({native / relative: source for relative, source in sources.items()})
+    snapshots = {}
+    differences = {}
+    unavailable = 'недоступен для чтения'
+    for target, source in copies.items():
+        try:
+            expected = require_file(source, root)
+        except (OSError, ValueError):
+            differences[source] = unavailable
+            continue
+        try:
+            observed = snapshot_input(target, root)
+        except (OSError, ValueError):
+            differences[target] = unavailable
+            continue
+        snapshots[target] = (source, expected, observed)
+        if observed is None:
+            differences[target] = 'отсутствует'
+        elif hashlib.sha256(observed[0]).digest() != hashlib.sha256(expected[0]).digest():
+            differences[target] = 'отличается от канона'
+
+    try:
+        for path, is_dir in entries(native):
+            if not is_dir and path.suffix.lower() == '.md' and path.name != HUMAN and path not in copies:
+                differences[path] = 'лишний'
+    except OSError as error:
+        differences[Path(error.filename) if error.filename else native] = unavailable
+    except ValueError:
+        differences[native] = unavailable
+    check_publication_marker(root)
+    return snapshots, differences
+
+
+def print_startup_differences(root, differences):
+    for path, status in sorted(differences.items()):
+        print(f'{path.relative_to(root).as_posix()}\t{status}')
+
+
+def startup_git(root, env, *args, data=None, allowed=(0,)):
+    result = subprocess.run(['git', '--no-replace-objects', *args], cwd=root, env=env,
+                            input=data, capture_output=True, check=False)
+    if result.returncode not in allowed:
+        reason = os.fsdecode(result.stderr).strip()
+        raise ValueError(f'Резервный коммит: git {args[0]}: {reason or result.returncode}')
+    return result.stdout
+
+
+def backup_startup_files(root, originals):
+    """Commit the exact recovery bytes without writing the user's index or branch."""
+    env = {name: value for name, value in os.environ.items() if not name.startswith('GIT_')}
+
+    def git(*args, data=None, allowed=(0,)):
+        return startup_git(root, env, *args, data=data, allowed=allowed)
+
+    git_root = Path(os.fsdecode(git('rev-parse', '--show-toplevel').rstrip(b'\r\n')))
+    if not os.path.samefile(root, git_root):
+        raise ValueError(f'Резервный коммит требует отдельного Git-корня проекта: {root}')
+    paths = {path.relative_to(root).as_posix(): original for path, original in originals.items()}
+    parent = git('rev-parse', '--verify', '--quiet', 'HEAD', allowed=(0, 1)).decode().strip()
+    with tempfile.TemporaryDirectory(prefix='harness-backup-index-') as directory:
+        env['GIT_INDEX_FILE'] = str(Path(directory) / 'index')
+        git('read-tree', parent or '--empty')
+        for path, (contents, attributes) in paths.items():
+            blob = git('hash-object', '-w', '--stdin', data=contents).decode().strip()
+            mode = '100755' if attributes[-1] & stat.S_IXUSR else '100644'
+            git('update-index', '--add', '--cacheinfo', mode, blob, path)
+        tree = git('write-tree').decode().strip()
+        parent_args = ('-p', parent) if parent else ()
+        commit = git('commit-tree', tree, *parent_args, '-m', 'Back up managed harness files').decode().strip()
+        changed = git('diff-tree', '--root', '--no-commit-id', '-r', '--name-only', '-z', commit)
+        if not set(filter(None, os.fsdecode(changed).split('\0'))) <= paths.keys():
+            raise ValueError(f'Резервный коммит содержит посторонние пути: {commit}')
+        for path, (contents, _) in paths.items():
+            copied = git('cat-file', 'blob', f'{commit}:{path}')
+            if hashlib.sha256(copied).digest() != hashlib.sha256(contents).digest():
+                raise ValueError(f'Неверные байты резервного коммита {commit}: {path}')
+        git('update-ref', f'refs/harness/backups/{commit}', commit)
+    return commit, sorted(paths)
+
+
+def restore_startup_copies(root):
+    """Restore only managed working copies after backing up existing revisions."""
+    with root_lock(root):
+        snapshots, differences = startup_snapshot(root)
+        if any(status == 'недоступен для чтения' for status in differences.values()):
+            print_startup_differences(root, differences)
+            return RULE_MISMATCH
+        if not differences:
+            print('OK')
+            return 0
+
+        protected = {root / name for name in PROTECTED}
+        extras = {path for path, status in differences.items() if status == 'лишний'}
+        originals = {path: snapshots[path][2] for path in differences
+                     if path not in extras and snapshots[path][2] is not None and
+                     (path not in protected or snapshots[path][2][0])}
+        originals.update({path: require_file(path, root) for path in extras})
+        if originals:
+            commit, paths = backup_startup_files(root, originals)
+            print(f'Резервный коммит {commit}', flush=True)
+            print('\n'.join(paths), flush=True)
+
+        for target in differences:
+            if target in extras:
+                if snapshot_input(target, root) != originals[target]:
+                    raise ValueError(f'Лишний файл изменился после резервного коммита: {target}')
+                continue
+            source, expected, observed = snapshots[target]
+            if snapshot_input(source, root) != expected or snapshot_input(target, root) != observed:
+                raise ValueError(f'Файл изменился до восстановления: {target}')
+        for target in sorted(differences):
+            if target in extras:
+                if snapshot_input(target, root) != originals[target]:
+                    raise ValueError(f'Лишний файл изменился до удаления: {target}')
+                target.unlink()
+                continue
+            source, expected, observed = snapshots[target]
+            if snapshot_input(source, root) != expected:
+                raise ValueError(f'Канон изменился до восстановления: {source}')
+            ordinary_directory(target.parent, root).mkdir(parents=True, exist_ok=True)
+            replace_input(target, observed, expected[0], root, expected[1][-1])
+
+        _, remaining = startup_snapshot(root)
+        if remaining:
+            print_startup_differences(root, remaining)
+            return RULE_MISMATCH
+        print('OK')
+        print('Начните новую сессию после восстановления из опубликованного канона.')
+        return RESTART_REQUIRED
+
+
 def restore_rule_copies(root):
     """Restore managed always loaded rules only, after an explicit recovery request."""
     with root_lock(root):
@@ -620,6 +758,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument('--check-rules', action='store_true', help='Compare rule copies without writing.')
+    modes.add_argument('--check-startup', action='store_true',
+                       help='Compare both protected inputs and all rules in one read-only pass.')
+    modes.add_argument('--restore-startup', action='store_true',
+                       help='Restore managed startup copies after verifying a backup commit.')
     modes.add_argument('--restore-rules', action='store_true', help='Recover managed rule copies only.')
     modes.add_argument('--check-start-entrypoints', action='store_true',
                        help='Check AGENTS.md and CLAUDE.md and recover missing or empty inputs.')
@@ -637,6 +779,15 @@ def main():
         parser.error('--no-repair requires --check-start-entrypoints.')
     root = args.project_root.absolute()
     try:
+        if args.check_startup:
+            _, differences = startup_snapshot(root)
+            if not differences:
+                print('OK')
+                return 0
+            print_startup_differences(root, differences)
+            return RULE_MISMATCH
+        if args.restore_startup:
+            return restore_startup_copies(root)
         if args.check_rules:
             count = check_rule_copies(root)
             print(f'Rule copies match the published canon: {count}')
