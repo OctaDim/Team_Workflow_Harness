@@ -1,15 +1,82 @@
 """Exercise two supported installations and reject missing common."""
+import json
 import os
-import re
 import shutil
 import subprocess
 import sys
 import tempfile
 import pytest
 from pathlib import Path
+from uuid import uuid4
 
 PACKAGES = Path(__file__).resolve().parents[3]
 MODES = [('common',), ('common', 'project')]
+CHECK = 'harness/common/checks/ensure_entrypoint_links.py'
+CONFIGS = ('.codex/hooks.json', '.claude/settings.json')
+
+
+def test_hook_installation_preserves_existing_settings(published, startup):
+    original = {
+        'hooks': {'UserPromptSubmit': [{'hooks': [{'type': 'command', 'command': 'echo existing'}]}]},
+        'customSetting': {'key': 'value'},
+    }
+    for relative in CONFIGS:
+        path = published / relative
+        path.parent.mkdir()
+        path.write_text(json.dumps(original))
+    assert startup(published).returncode == 3
+    installed = {}
+    for relative in CONFIGS:
+        installed[relative] = (published / relative).read_bytes()
+        parsed = json.loads(installed[relative])
+        assert parsed['customSetting'] == original['customSetting']
+        assert parsed['hooks']['UserPromptSubmit'][0] == original['hooks']['UserPromptSubmit'][0]
+        assert len(parsed['hooks']['UserPromptSubmit']) == 2
+        assert len(parsed['hooks']['SessionStart']) == 1
+    assert startup(published).returncode == 0
+    assert all((published / path).read_bytes() == data for path, data in installed.items())
+
+
+@pytest.mark.parametrize('invalid', ('{', '{"hooks": {}, "hooks": {}}', '{"hooks": {"SessionStart": {}}}'))
+def test_invalid_settings_leave_both_configs_unchanged(published, startup, invalid):
+    for relative, data in zip(CONFIGS, ('{}', invalid)):
+        path = published / relative
+        path.parent.mkdir()
+        path.write_text(data)
+    result = startup(published)
+    assert result.returncode == 2
+    assert CONFIGS[1] in result.stderr
+    assert (published / CONFIGS[0]).read_text() == '{}'
+    assert (published / CONFIGS[1]).read_text() == invalid
+    assert not (published / 'AGENTS.md').exists()
+
+
+def test_resume_rejects_changed_published_startup_context(installed, monkeypatch):
+    monkeypatch.setenv('XDG_STATE_HOME', str(installed.parent / 'state'))
+    nested = installed / 'nested task folder'
+    nested.mkdir()
+
+    def hook(session, event, source='startup'):
+        payload = {'hook_event_name': event, 'cwd': str(nested),
+                   'session_id': str(session), 'source': source}
+        result = subprocess.run([sys.executable, '-I', '-B', str(installed / CHECK),
+                                 '--startup-hook', str(installed)], cwd=nested,
+                                input=json.dumps(payload), capture_output=True, text=True)
+        assert result.returncode == 0, result.stderr
+        return json.loads(result.stdout) if result.stdout else None
+
+    first, fresh = uuid4(), uuid4()
+    hook(first, 'SessionStart')
+    assert hook(first, 'UserPromptSubmit') == {'continue': True}
+    for name in ('harness/common/rules/comm-fixture.md', '.claude/rules/comm-fixture.md'):
+        (installed / name).write_bytes(b'new publication')
+    hook(first, 'SessionStart', 'resume')
+    blocked = hook(first, 'UserPromptSubmit')
+    assert blocked['decision'] == 'block'
+    assert 'Актуальность стартовых текстов' in blocked['reason']
+    assert hook(first, 'UserPromptSubmit') == blocked
+    hook(fresh, 'SessionStart')
+    assert hook(fresh, 'UserPromptSubmit') == {'continue': True}
 
 
 class TestPortability:
@@ -56,27 +123,28 @@ class TestPortability:
             assert 'применяй полученные always loaded правила' in text
             assert 'START.md' not in text
             assert not (root / 'CLAUDE.md').read_bytes()
-            rule = (root / '.claude/rules/comm-entrypoint-links-rule.md').read_text()
-            command = re.search(r'(?m)^python3(?: -B)? (harness/[^\s]+\.py) (--check-rules)$', rule)
-            assert command is not None
-            assert command.group(1) == 'harness/common/checks/ensure_entrypoint_links.py'
+            script = 'harness/common/checks/ensure_entrypoint_links.py'
+            for relative in ('.codex/hooks.json', '.claude/settings.json'):
+                hooks = json.loads((root / relative).read_bytes())['hooks']
+                for event in ('SessionStart', 'UserPromptSubmit'):
+                    assert '--startup-hook' in hooks[event][0]['hooks'][0]['command']
             before_inputs = ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())
-            second = self.run_check(root, *command.groups())
+            second = self.run_check(root, script, '--check-startup')
             assert second.returncode == 0, second.stderr
-            assert 'будут автоматически восстановлены' not in second.stdout
+            assert second.stdout == 'OK\n'
             assert before_inputs == ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())
             assert not (root / '.git').exists()
             target = root / '.claude/rules/comm-entrypoint-links-rule.md'
             approved = target.read_bytes()
             divergent = approved + b'\nLocal change.\n'
             target.write_bytes(divergent)
-            rejected = self.run_check(root, *command.groups())
-            assert rejected.returncode == 4 and target.name in rejected.stderr
+            rejected = self.run_check(root, script, '--check-startup')
+            assert rejected.returncode == 4 and target.name in rejected.stdout
             assert target.read_bytes() == divergent
-            restored = self.run_check(root, command.group(1), '--restore-rules')
+            restored = self.run_check(root, script, '--restore-rules')
             assert restored.returncode == 3, restored.stderr
             assert target.read_bytes() == approved
-            assert self.run_check(root, *command.groups()).returncode == 0
+            assert self.run_check(root, script, '--check-startup').returncode == 0
             assert before_inputs == ((root / 'AGENTS.md').read_bytes(), (root / 'CLAUDE.md').read_bytes())
 
 

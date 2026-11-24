@@ -1,0 +1,771 @@
+{
+  "candidate_tree": "3788374a2741726ef1e1f4497db975612b286c37",
+  "client_versions": {
+    "codex": "0.166.0",
+    "claude": "2.1.260"
+  },
+  "cells": [
+    {
+      "client": "codex",
+      "mode": "common-only",
+      "scenario": "mixed, old and fresh session",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "01a20dfa-e768-7361-96ab-996f32819180",
+          "cwd": "/workspace/nested",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "1b3c042d6b23d252b7818da015ae69319d43d80e94873eafdb44f18ac3aa7752"
+        },
+        {
+          "index": 1,
+          "session_id": "01a20dfa-e768-7361-96ab-996f32819180",
+          "cwd": "/workspace/nested",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 592fa067c3fe10bc82b4157064b724ff4b11ece9\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 592fa067c3fe10bc82b4157064b724ff4b11ece9\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "289db1fd5dfe0656656bc3106e835e215a40ebcd927a23345565a24e9b10b98a",
+          "backup_git_id": "592fa067c3fe10bc82b4157064b724ff4b11ece9",
+          "backup_visible_in_client_log": false
+        },
+        {
+          "index": 2,
+          "session_id": "01a20dfa-e768-7361-96ab-996f32819180",
+          "cwd": "/workspace/nested",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 592fa067c3fe10bc82b4157064b724ff4b11ece9\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 592fa067c3fe10bc82b4157064b724ff4b11ece9\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "289db1fd5dfe0656656bc3106e835e215a40ebcd927a23345565a24e9b10b98a",
+          "backup_git_id": "592fa067c3fe10bc82b4157064b724ff4b11ece9",
+          "backup_visible_in_client_log": false
+        },
+        {
+          "index": 3,
+          "session_id": "01a20dfb-145b-7672-848f-03824517d810",
+          "cwd": "/workspace/nested",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "d3486686918f94459f42123445a5d0ffa1705f869210e24ae6790f1b6342c81c"
+        }
+      ]
+    },
+    {
+      "client": "codex",
+      "mode": "common-only",
+      "scenario": "backup failure",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "01a20dfd-ae2f-7142-a9ed-ed6e21cb2ef7",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "83a8575d5ddfff849a1a9d49af6cbff6cd323d97848c19671a042217afd69c21"
+        },
+        {
+          "index": 1,
+          "session_id": "01a20dfd-ae2f-7142-a9ed-ed6e21cb2ef7",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/extra-native-fixture.md\tлишний\nCLAUDE.md\tотличается от канона\nОшибка восстановления: Резервный коммит: git commit-tree: Author identity unknown\n\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account's default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: no email was given and auto-detection is disabled\nНачните свежий сеанс после успешной сверки.",
+            "systemMessage": ".claude/rules/extra-native-fixture.md\tлишний\nCLAUDE.md\tотличается от канона\nОшибка восстановления: Резервный коммит: git commit-tree: Author identity unknown\n\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account's default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: no email was given and auto-detection is disabled\nНачните свежий сеанс после успешной сверки."
+          },
+          "client_log_sha256": "cd0a7dbcf9e20343788920914608f88e86b79135238783637ece9aa0895a067a"
+        }
+      ]
+    },
+    {
+      "client": "codex",
+      "mode": "common-only",
+      "scenario": "changed published startup files",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "01a20dfd-d7c9-7f43-819f-b44f0cda708b",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "5a0e3edfc1580ac024e15c4a127f06178ca11d9d2810f44e726cbfd31efff91d"
+        },
+        {
+          "index": 1,
+          "session_id": "01a20dfd-d7c9-7f43-819f-b44f0cda708b",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": "Актуальность стартовых текстов этого сеанса не подтверждена.\nНачните свежий сеанс после успешной сверки.",
+            "systemMessage": "Актуальность стартовых текстов этого сеанса не подтверждена.\nНачните свежий сеанс после успешной сверки."
+          },
+          "client_log_sha256": "a3e2ed931b5aa5f1ef83a440034fa98a68665bebd39357cfaace0f121622d342",
+          "canon_before": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "canon_after": "fac1f5857cca74f6cefe032f43f727f8c125c997a75154164dcffa3e8d44150d"
+        },
+        {
+          "index": 2,
+          "session_id": "01a20dfd-ef56-7230-863f-1015a2c17c13",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "d1f9b62bc508666dbef129b8532fae492c9ef36746cfdb1028e535b0a2e5fba4"
+        }
+      ]
+    },
+    {
+      "client": "codex",
+      "mode": "common-project",
+      "scenario": "mixed, old and fresh session",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "01a20dfa-e767-7bb0-9e5b-5aeec2c8979e",
+          "cwd": "/workspace/nested",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "299af1822448a070ccf36400826d0dfe6eda48def8776ece6c48db13afeb1775"
+        },
+        {
+          "index": 1,
+          "session_id": "01a20dfa-e767-7bb0-9e5b-5aeec2c8979e",
+          "cwd": "/workspace/nested",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 592fa067c3fe10bc82b4157064b724ff4b11ece9\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 592fa067c3fe10bc82b4157064b724ff4b11ece9\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "abc6a64d05bc383f1c625b8516c4eacfae6cf6637805b2462db384c7d74ac0b9",
+          "backup_git_id": "592fa067c3fe10bc82b4157064b724ff4b11ece9",
+          "backup_visible_in_client_log": false
+        },
+        {
+          "index": 2,
+          "session_id": "01a20dfa-e767-7bb0-9e5b-5aeec2c8979e",
+          "cwd": "/workspace/nested",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 592fa067c3fe10bc82b4157064b724ff4b11ece9\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 592fa067c3fe10bc82b4157064b724ff4b11ece9\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "abc6a64d05bc383f1c625b8516c4eacfae6cf6637805b2462db384c7d74ac0b9",
+          "backup_git_id": "592fa067c3fe10bc82b4157064b724ff4b11ece9",
+          "backup_visible_in_client_log": false
+        },
+        {
+          "index": 3,
+          "session_id": "01a20dfb-1459-76b0-8724-a3226327e1dd",
+          "cwd": "/workspace/nested",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "ffb6f5d1b0ad0e8913d6c9f48f4205ca199930368959cd687af5e65fc4016f22"
+        }
+      ]
+    },
+    {
+      "client": "codex",
+      "mode": "common-project",
+      "scenario": "backup failure",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "01a20dfd-ae2f-7032-8b43-ff9ad5ed8416",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "7d2edc75dfabadbe7a93c8cd3a717862c11e155641973a24710b30619afdaa35"
+        },
+        {
+          "index": 1,
+          "session_id": "01a20dfd-ae2f-7032-8b43-ff9ad5ed8416",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/extra-native-fixture.md\tлишний\nCLAUDE.md\tотличается от канона\nОшибка восстановления: Резервный коммит: git commit-tree: Author identity unknown\n\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account's default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: no email was given and auto-detection is disabled\nНачните свежий сеанс после успешной сверки.",
+            "systemMessage": ".claude/rules/extra-native-fixture.md\tлишний\nCLAUDE.md\tотличается от канона\nОшибка восстановления: Резервный коммит: git commit-tree: Author identity unknown\n\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account's default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: no email was given and auto-detection is disabled\nНачните свежий сеанс после успешной сверки."
+          },
+          "client_log_sha256": "e19789d357af807a80442ec8eddc7387ec7b967daf03c532ae042d913b25643a"
+        }
+      ]
+    },
+    {
+      "client": "codex",
+      "mode": "common-project",
+      "scenario": "changed published startup files",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "01a20dfd-d7c3-7c50-b9fe-3b0c8fcfa1cf",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "3f576a7325b5599ce82d15298a2602ceda44bf80c67f45e4d8cb2c99aae817cc"
+        },
+        {
+          "index": 1,
+          "session_id": "01a20dfd-d7c3-7c50-b9fe-3b0c8fcfa1cf",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": "Актуальность стартовых текстов этого сеанса не подтверждена.\nНачните свежий сеанс после успешной сверки.",
+            "systemMessage": "Актуальность стартовых текстов этого сеанса не подтверждена.\nНачните свежий сеанс после успешной сверки."
+          },
+          "client_log_sha256": "4f094fa594e6908ff691259113f7f1af478c9fb1000e2c384af609c6a1734d30",
+          "canon_before": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "canon_after": "fac1f5857cca74f6cefe032f43f727f8c125c997a75154164dcffa3e8d44150d"
+        },
+        {
+          "index": 2,
+          "session_id": "01a20dfd-ef3c-7b92-a12e-df3665fec323",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 1,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "9520c04ad88024504171763deeef2458e6e5e7fa8464c8aaa59234b3675100a6"
+        }
+      ]
+    },
+    {
+      "client": "claude",
+      "mode": "common-only",
+      "scenario": "nested without explicit settings",
+      "observed_hook_events": 0,
+      "gateway_reached": true,
+      "session_id": "5d6b925a-229a-4aa2-85b2-7c5bc41210f5",
+      "client_log_sha256": "84e9245805aac8aaf3ff13c9605b63c1082b431f58e652ebe12f4c0a8e181145"
+    },
+    {
+      "client": "claude",
+      "mode": "common-only",
+      "scenario": "mixed, old and fresh session",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "6f5c6dd5-6ec1-4366-8034-67ac040cc70f",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "b65f69a74b481f1dca5c53a33b1beab2b4a3481fbf9c5d0bb2025820aab805d6"
+        },
+        {
+          "index": 1,
+          "session_id": "6f5c6dd5-6ec1-4366-8034-67ac040cc70f",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит f87c345e46bd3ada37124db52758e3aa99eb67bc\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит f87c345e46bd3ada37124db52758e3aa99eb67bc\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "71b985fa7355888ee5fadf5bbad719a93dbe9eb8067039818b902e9cfcf8f940",
+          "backup_git_id": "f87c345e46bd3ada37124db52758e3aa99eb67bc",
+          "backup_visible_in_client_log": true
+        },
+        {
+          "index": 2,
+          "session_id": "6f5c6dd5-6ec1-4366-8034-67ac040cc70f",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит f87c345e46bd3ada37124db52758e3aa99eb67bc\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит f87c345e46bd3ada37124db52758e3aa99eb67bc\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "c85f9c2900e3aa9706bc2ff26fc32b3ebc6d91466988b94d3dde1a9ea9d7b96b",
+          "backup_git_id": "f87c345e46bd3ada37124db52758e3aa99eb67bc",
+          "backup_visible_in_client_log": true
+        },
+        {
+          "index": 3,
+          "session_id": "555069cd-fb49-49c9-a752-9cdd75a0a6fb",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "acd4ee9e62f8f3eeccff022d43cfb7e2f74e3baf0b805553a5b3844936fbad79"
+        }
+      ]
+    },
+    {
+      "client": "claude",
+      "mode": "common-only",
+      "scenario": "backup failure",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "5401d3a7-8ba2-48c4-a90a-0c3dd50c859e",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "95122a42e1013e22658a865358b080a29a4d1c3b2f0c0bde8a0ac5afb29af216"
+        },
+        {
+          "index": 1,
+          "session_id": "5401d3a7-8ba2-48c4-a90a-0c3dd50c859e",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/extra-native-fixture.md\tлишний\nCLAUDE.md\tотличается от канона\nОшибка восстановления: Резервный коммит: git commit-tree: Author identity unknown\n\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account's default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: no email was given and auto-detection is disabled\nНачните свежий сеанс после успешной сверки.",
+            "systemMessage": ".claude/rules/extra-native-fixture.md\tлишний\nCLAUDE.md\tотличается от канона\nОшибка восстановления: Резервный коммит: git commit-tree: Author identity unknown\n\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account's default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: no email was given and auto-detection is disabled\nНачните свежий сеанс после успешной сверки."
+          },
+          "client_log_sha256": "4e9e52ad99297624382017940a6403581de6c1c0441291e46c99ed5a082ca533"
+        }
+      ]
+    },
+    {
+      "client": "claude",
+      "mode": "common-only",
+      "scenario": "changed published startup files",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "17d7490e-dd42-4bcb-bf54-4b9c28643227",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "0809164a8d444939715e5e73f66ae7dafa88bab58a92d7ac166896ebb80c2847"
+        },
+        {
+          "index": 1,
+          "session_id": "17d7490e-dd42-4bcb-bf54-4b9c28643227",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": "Актуальность стартовых текстов этого сеанса не подтверждена.\nНачните свежий сеанс после успешной сверки.",
+            "systemMessage": "Актуальность стартовых текстов этого сеанса не подтверждена.\nНачните свежий сеанс после успешной сверки."
+          },
+          "client_log_sha256": "23b82bcf1ad0b73024a4d4b75d63e9155a264807f7d518a435f423118c1e7445",
+          "canon_before": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "canon_after": "fac1f5857cca74f6cefe032f43f727f8c125c997a75154164dcffa3e8d44150d"
+        },
+        {
+          "index": 2,
+          "session_id": "2ee36351-05c6-46ac-aefc-a0c47f467fcd",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "6047595d422b2b103864f80aefa6ec7dc15be5d60bbce53e379fabc59860dd66"
+        }
+      ]
+    },
+    {
+      "client": "claude",
+      "mode": "common-only",
+      "scenario": "nested, explicit settings",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "c82d2aa9-139c-4b2f-ad65-74002f29d410",
+          "cwd": "/workspace/nested",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "355589cdbe19fefc28900d5cbc47f5891e78e40d9ddd77f43bbe8ff0bcec6ab0"
+        },
+        {
+          "index": 1,
+          "session_id": "c82d2aa9-139c-4b2f-ad65-74002f29d410",
+          "cwd": "/workspace/nested",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 51aa13afa500e7f829236d9d82ad62e218d144ac\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 51aa13afa500e7f829236d9d82ad62e218d144ac\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "4f1977e43261d16b850aec4752f779908cfdf73091a38485547ef164dbda294e",
+          "backup_git_id": "51aa13afa500e7f829236d9d82ad62e218d144ac",
+          "backup_visible_in_client_log": true
+        },
+        {
+          "index": 2,
+          "session_id": "c82d2aa9-139c-4b2f-ad65-74002f29d410",
+          "cwd": "/workspace/nested",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 51aa13afa500e7f829236d9d82ad62e218d144ac\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 51aa13afa500e7f829236d9d82ad62e218d144ac\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "6d7809d07834ca4faf6c81323d8719fddb66fbf3c3c46833a49dbc48abfe7bcc",
+          "backup_git_id": "51aa13afa500e7f829236d9d82ad62e218d144ac",
+          "backup_visible_in_client_log": true
+        },
+        {
+          "index": 3,
+          "session_id": "79a9dde2-924d-4195-a792-c28f5d6d4bcc",
+          "cwd": "/workspace/nested",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "d71704cbd6d0659702478321304702e4c26464f6166a2fc72b6def2bd02fd61b"
+        }
+      ]
+    },
+    {
+      "client": "claude",
+      "mode": "common-project",
+      "scenario": "nested without explicit settings",
+      "observed_hook_events": 0,
+      "gateway_reached": true,
+      "session_id": "b7a6b3ca-e11d-4f41-b4fa-42a3313455e6",
+      "client_log_sha256": "c8e13ec9512d34fd3bf0292a1cee552b2e2c5540c06eccc4c73a54f616acc121"
+    },
+    {
+      "client": "claude",
+      "mode": "common-project",
+      "scenario": "mixed, old and fresh session",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "3c04eae8-b9be-41e3-b222-500b119fecc6",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "5e2acfede00cca6e287d5a61d6e910b9b5ab0be38fd991dbdc238c105e9bbb2d"
+        },
+        {
+          "index": 1,
+          "session_id": "3c04eae8-b9be-41e3-b222-500b119fecc6",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит f87c345e46bd3ada37124db52758e3aa99eb67bc\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит f87c345e46bd3ada37124db52758e3aa99eb67bc\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "8b067e38fcb6f8418888798d4946cc2f536f15f50490cf6c829f57ad3a2f9bc7",
+          "backup_git_id": "f87c345e46bd3ada37124db52758e3aa99eb67bc",
+          "backup_visible_in_client_log": true
+        },
+        {
+          "index": 2,
+          "session_id": "3c04eae8-b9be-41e3-b222-500b119fecc6",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит f87c345e46bd3ada37124db52758e3aa99eb67bc\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит f87c345e46bd3ada37124db52758e3aa99eb67bc\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "3f612e14326f988dc866336cb8681f7aa2b913cf30547314d49eebbfc2794b07",
+          "backup_git_id": "f87c345e46bd3ada37124db52758e3aa99eb67bc",
+          "backup_visible_in_client_log": true
+        },
+        {
+          "index": 3,
+          "session_id": "83dbb3cb-18b1-4698-9108-cba9ab2d2072",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "13f52adfadc0283fbedad0d4c69dbd3bfebec7953b245156489f3d61d3f58d05"
+        }
+      ]
+    },
+    {
+      "client": "claude",
+      "mode": "common-project",
+      "scenario": "backup failure",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "c90f32a4-1ddb-484e-ae62-b3ad06604273",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "12a1817cc5c66659240e7a02d12297a32a67a10d3e2946a15eb127a8cf8f4517"
+        },
+        {
+          "index": 1,
+          "session_id": "c90f32a4-1ddb-484e-ae62-b3ad06604273",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/extra-native-fixture.md\tлишний\nCLAUDE.md\tотличается от канона\nОшибка восстановления: Резервный коммит: git commit-tree: Author identity unknown\n\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account's default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: no email was given and auto-detection is disabled\nНачните свежий сеанс после успешной сверки.",
+            "systemMessage": ".claude/rules/extra-native-fixture.md\tлишний\nCLAUDE.md\tотличается от канона\nОшибка восстановления: Резервный коммит: git commit-tree: Author identity unknown\n\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account's default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: no email was given and auto-detection is disabled\nНачните свежий сеанс после успешной сверки."
+          },
+          "client_log_sha256": "6b8d1f668c5f1e0208f060a6ffe77a434b1a90af91055196e530fba572f28de3"
+        }
+      ]
+    },
+    {
+      "client": "claude",
+      "mode": "common-project",
+      "scenario": "changed published startup files",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "4852844c-c8ba-43ca-910a-1454bc151276",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "b95be2ddb85cab4c59d66ab7636101d0888b0dfe01ca2f063bbd8c1e48721806"
+        },
+        {
+          "index": 1,
+          "session_id": "4852844c-c8ba-43ca-910a-1454bc151276",
+          "cwd": "/workspace",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": "Актуальность стартовых текстов этого сеанса не подтверждена.\nНачните свежий сеанс после успешной сверки.",
+            "systemMessage": "Актуальность стартовых текстов этого сеанса не подтверждена.\nНачните свежий сеанс после успешной сверки."
+          },
+          "client_log_sha256": "1ac1b8a8083ec7c923aa77a877e4f4845917ff0d16f9ba5007168302d8408c32",
+          "canon_before": "3f7ae0f39768922d94d7bd80feb2915fa67f5551c6bf2b9ecc9699f8d71feb51",
+          "canon_after": "fac1f5857cca74f6cefe032f43f727f8c125c997a75154164dcffa3e8d44150d"
+        },
+        {
+          "index": 2,
+          "session_id": "59575b3a-9054-46b4-b26b-bc5984521c3d",
+          "cwd": "/workspace",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "c67cfdd49496841f5c62e33559fb301c2f5df0afdd33b457b816a65a9234f3ab"
+        }
+      ]
+    },
+    {
+      "client": "claude",
+      "mode": "common-project",
+      "scenario": "nested, explicit settings",
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "0535c8b2-39a2-4162-aedc-d53cfad6b46a",
+          "cwd": "/workspace/nested",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "183a83321a58d14d96a7acc44dca30c1ac9038f4b1ea67b23e22613601364562"
+        },
+        {
+          "index": 1,
+          "session_id": "0535c8b2-39a2-4162-aedc-d53cfad6b46a",
+          "cwd": "/workspace/nested",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 51aa13afa500e7f829236d9d82ad62e218d144ac\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 51aa13afa500e7f829236d9d82ad62e218d144ac\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "e633b29cfc760e554a1e5663541d7300e8d92c9cf213eb7011a1389b58c4f4ce",
+          "backup_git_id": "51aa13afa500e7f829236d9d82ad62e218d144ac",
+          "backup_visible_in_client_log": true
+        },
+        {
+          "index": 2,
+          "session_id": "0535c8b2-39a2-4162-aedc-d53cfad6b46a",
+          "cwd": "/workspace/nested",
+          "client_exit": 0,
+          "gateway_hits": 0,
+          "hook_output": {
+            "decision": "block",
+            "reason": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 51aa13afa500e7f829236d9d82ad62e218d144ac\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона.",
+            "systemMessage": ".claude/rules/comm-application-config-git.md\tотсутствует\n.claude/rules/comm-dependencies-through-uv.md\tотличается от канона\n.claude/rules/extra-native-fixture.md\tлишний\nAGENTS.md\tотличается от канона\nCLAUDE.md\tотличается от канона\nРезервный коммит 51aa13afa500e7f829236d9d82ad62e218d144ac\n.claude/rules/comm-dependencies-through-uv.md\n.claude/rules/extra-native-fixture.md\nCLAUDE.md\nOK\nНачните новую сессию после восстановления из опубликованного канона."
+          },
+          "client_log_sha256": "acb115b5737498cfd8089903ae05d2ee7e1412b26553f4fd33642817e863d188",
+          "backup_git_id": "51aa13afa500e7f829236d9d82ad62e218d144ac",
+          "backup_visible_in_client_log": true
+        },
+        {
+          "index": 3,
+          "session_id": "f1335bfb-3b92-4bb4-92b8-b59cac43488e",
+          "cwd": "/workspace/nested",
+          "client_exit": 1,
+          "gateway_hits": 2,
+          "hook_output": {
+            "continue": true
+          },
+          "client_log_sha256": "552aa4cd7106f777537358f436d1a348b23ef60d174559ae7d4de9d36f1c1095"
+        }
+      ]
+    }
+  ],
+  "codex_app_server_hooks_list": {
+    "common-only": [
+      {
+        "cwd": "/workspace",
+        "hooks": [
+          {
+            "eventName": "sessionStart",
+            "source": "project",
+            "enabled": true,
+            "async": false,
+            "currentHash": "sha256:3c7bdb11c4cb8366944cb81d08798cf60f6c366318e338db78d7d020d5317557",
+            "trustStatus": "untrusted"
+          },
+          {
+            "eventName": "userPromptSubmit",
+            "source": "project",
+            "enabled": true,
+            "async": false,
+            "currentHash": "sha256:7e7ca2d9fe58af3885f3b5b2c00ba97548a2505d80f25c209bb294cd517b408e",
+            "trustStatus": "untrusted"
+          }
+        ]
+      },
+      {
+        "cwd": "/workspace/nested",
+        "hooks": [
+          {
+            "eventName": "sessionStart",
+            "source": "project",
+            "enabled": true,
+            "async": false,
+            "currentHash": "sha256:3c7bdb11c4cb8366944cb81d08798cf60f6c366318e338db78d7d020d5317557",
+            "trustStatus": "untrusted"
+          },
+          {
+            "eventName": "userPromptSubmit",
+            "source": "project",
+            "enabled": true,
+            "async": false,
+            "currentHash": "sha256:7e7ca2d9fe58af3885f3b5b2c00ba97548a2505d80f25c209bb294cd517b408e",
+            "trustStatus": "untrusted"
+          }
+        ]
+      }
+    ],
+    "common-project": [
+      {
+        "cwd": "/workspace",
+        "hooks": [
+          {
+            "eventName": "sessionStart",
+            "source": "project",
+            "enabled": true,
+            "async": false,
+            "currentHash": "sha256:3c7bdb11c4cb8366944cb81d08798cf60f6c366318e338db78d7d020d5317557",
+            "trustStatus": "untrusted"
+          },
+          {
+            "eventName": "userPromptSubmit",
+            "source": "project",
+            "enabled": true,
+            "async": false,
+            "currentHash": "sha256:7e7ca2d9fe58af3885f3b5b2c00ba97548a2505d80f25c209bb294cd517b408e",
+            "trustStatus": "untrusted"
+          }
+        ]
+      },
+      {
+        "cwd": "/workspace/nested",
+        "hooks": [
+          {
+            "eventName": "sessionStart",
+            "source": "project",
+            "enabled": true,
+            "async": false,
+            "currentHash": "sha256:3c7bdb11c4cb8366944cb81d08798cf60f6c366318e338db78d7d020d5317557",
+            "trustStatus": "untrusted"
+          },
+          {
+            "eventName": "userPromptSubmit",
+            "source": "project",
+            "enabled": true,
+            "async": false,
+            "currentHash": "sha256:7e7ca2d9fe58af3885f3b5b2c00ba97548a2505d80f25c209bb294cd517b408e",
+            "trustStatus": "untrusted"
+          }
+        ]
+      }
+    ]
+  }
+}
