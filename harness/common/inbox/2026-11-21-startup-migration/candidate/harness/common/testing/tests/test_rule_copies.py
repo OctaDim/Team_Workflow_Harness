@@ -6,53 +6,12 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[4]
-CHECK = Path('harness/common/checks/ensure_entrypoint_links.py')
 
 
-spec = importlib.util.spec_from_file_location('common_rule_copy_checks', ROOT / CHECK)
+spec = importlib.util.spec_from_file_location('common_rule_copy_checks', ROOT / 'harness/common/checks/ensure_entrypoint_links.py')
 checker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(checker)
 check_rule_copies = checker.check_rule_copies
-
-
-def test_combined_startup_check_is_short_and_read_only(installed, startup):
-    inputs = [installed / name for name in ('AGENTS.md', 'CLAUDE.md', '.claude/rules/comm-fixture.md')]
-    original = [(path.read_bytes(), path.stat().st_mtime_ns) for path in inputs]
-    result = startup(installed, CHECK, '--check-startup')
-    assert (result.returncode, result.stdout, result.stderr) == (0, 'OK\n', '')
-    assert [(path.read_bytes(), path.stat().st_mtime_ns) for path in inputs] == original
-    assert inputs[1].read_bytes() == b''
-
-
-@pytest.mark.parametrize('combined', (False, True), ids=('common-only', 'common-project'))
-def test_combined_startup_check_reports_all_safe_mismatches(installed, startup, combined):
-    native = installed / '.claude/rules'
-    native.mkdir(exist_ok=True)
-    (native / 'sub').mkdir()
-    (native / 'sub/stale.md').write_bytes(b'preserve this copy')
-    (native / 'README.human.md').write_bytes(b'human only')
-    (native / 'comm-fixture.md').write_bytes(b'changed')
-    (installed / 'AGENTS.md').write_bytes(b'')
-    (installed / 'CLAUDE.md').unlink()
-    expected = {
-        '.claude/rules/comm-fixture.md': 'отличается от канона',
-        '.claude/rules/sub/stale.md': 'лишний',
-        'AGENTS.md': 'отличается от канона',
-        'CLAUDE.md': 'отсутствует',
-    }
-    if combined:
-        folder = installed / 'harness/project/rules/sub'
-        folder.mkdir(parents=True, exist_ok=True)
-        (folder / 'proj-missing.md').write_bytes(b'published')
-        expected['.claude/rules/sub/proj-missing.md'] = 'отсутствует'
-    result = startup(installed, CHECK, '--check-startup')
-    assert result.returncode == 4
-    assert dict(line.split('\t', 1) for line in result.stdout.splitlines()) == expected
-    assert result.stderr == ''
-    assert (native / 'sub/stale.md').read_bytes() == b'preserve this copy'
-    assert (native / 'comm-fixture.md').read_bytes() == b'changed'
-    assert (installed / 'AGENTS.md').read_bytes() == b''
-    assert not (installed / 'CLAUDE.md').exists()
 
 
 class TestRuleCopies:

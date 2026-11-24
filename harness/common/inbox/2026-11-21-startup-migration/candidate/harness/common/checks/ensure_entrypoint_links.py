@@ -1,18 +1,15 @@
 """Check the harness installation and recover working files from its published packages."""
 import argparse
 import hashlib
-import io
 import json
 import os
 import re
-import shlex
 import stat
 import subprocess
 import sys
 import tempfile
-from contextlib import contextmanager, nullcontext, redirect_stdout
+from contextlib import contextmanager, nullcontext
 from pathlib import Path
-from uuid import UUID
 
 
 PUBLICATION_MARKER = '.harness-publication.json'
@@ -24,10 +21,6 @@ HUMAN = 'README.human.md'
 PROTECTED = ('AGENTS.md', 'CLAUDE.md')
 PACKAGES = (('common', 'comm-'), ('project', 'proj-'))
 SKILL_CLIENTS = ('.agents/skills', '.claude/skills')
-STARTUP_CHECKER = 'harness/common/checks/ensure_entrypoint_links.py'
-HOOK_CONFIGS = ('.codex/hooks.json', '.claude/settings.json')
-HOOK_EVENTS = ('SessionStart', 'UserPromptSubmit')
-HOOK_LABEL = 'Team Workflow Harness startup'
 RESTART_REQUIRED = 3
 RULE_MISMATCH = 4
 ENTRYPOINT_REPAIR_REQUIRED = 5
@@ -338,235 +331,6 @@ def check_rule_copies(root):
     return len(snapshots)
 
 
-def startup_snapshot(root):
-    """Capture the published startup set and all safely readable working copies."""
-    check_publication_marker(root)
-    base = root / 'harness/common/base'
-    native = root / '.claude/rules'
-    sources = canonical_rules(root)
-    copies = {root / name: base / Path(name).with_suffix('.template') for name in PROTECTED}
-    copies.update({native / relative: source for relative, source in sources.items()})
-    snapshots = {}
-    differences = {}
-    unavailable = 'недоступен для чтения'
-    for target, source in copies.items():
-        try:
-            expected = require_file(source, root)
-        except (OSError, ValueError):
-            differences[source] = unavailable
-            continue
-        try:
-            observed = snapshot_input(target, root)
-        except (OSError, ValueError):
-            differences[target] = unavailable
-            continue
-        snapshots[target] = (source, expected, observed)
-        if observed is None:
-            differences[target] = 'отсутствует'
-        elif hashlib.sha256(observed[0]).digest() != hashlib.sha256(expected[0]).digest():
-            differences[target] = 'отличается от канона'
-
-    try:
-        for path, is_dir in entries(native):
-            if not is_dir and path.suffix.lower() == '.md' and path.name != HUMAN and path not in copies:
-                differences[path] = 'лишний'
-    except OSError as error:
-        differences[Path(error.filename) if error.filename else native] = unavailable
-    except ValueError:
-        differences[native] = unavailable
-    check_publication_marker(root)
-    return snapshots, differences
-
-
-def print_startup_differences(root, differences):
-    for path, status in sorted(differences.items()):
-        print(f'{path.relative_to(root).as_posix()}\t{status}')
-
-
-def startup_fingerprint(root, snapshots):
-    published = [(path.relative_to(root).as_posix(), hashlib.sha256(expected[0]).hexdigest())
-                 for path, (_, expected, _) in sorted(snapshots.items())]
-    return hashlib.sha256(json.dumps(published).encode()).hexdigest()
-
-
-def startup_session_file(root, session):
-    state = Path(os.environ.get('XDG_STATE_HOME') or Path.home() / '.local/state')
-    project = hashlib.sha256(os.fsencode(root)).hexdigest()
-    return state / 'team-workflow-harness' / project / f'{UUID(session)}.json'
-
-
-def save_startup_session(root, state, saved, record):
-    ordinary_directory(state.parent, root).mkdir(parents=True, exist_ok=True, mode=0o700)
-    replace_input(state, saved, json.dumps(record, ensure_ascii=False).encode(), root)
-
-
-def deny_startup(reason):
-    print(json.dumps({'decision': 'block', 'reason': reason, 'systemMessage': reason},
-                     ensure_ascii=False))
-    return 0
-
-
-def startup_hook(root):
-    """Handle both native clients, retaining the first baseline of each session."""
-    event_name = None
-    state = None
-    saved = None
-    try:
-        event = json.load(sys.stdin)
-        if not isinstance(event, dict):
-            raise ValueError('Invalid hook input.')
-        event_name = event.get('hook_event_name')
-        if event_name not in HOOK_EVENTS:
-            raise ValueError('Unexpected startup event.')
-        if not ordinary_path(__file__).samefile(ordinary_path(root / STARTUP_CHECKER)):
-            raise ValueError('Startup hook is outside its installation.')
-        cwd = ordinary_directory(Path(event['cwd']), root)
-        if not cwd.is_relative_to(root):
-            raise ValueError(f'Рабочий каталог триггера вне проекта: {cwd}')
-        state = startup_session_file(root, event['session_id'])
-        saved = snapshot_input(state, root)
-        baseline = json.loads(saved[0]) if saved is not None else None
-        if event_name == 'SessionStart':
-            if saved is None:
-                published, differences = startup_snapshot(root)
-                fingerprint = (startup_fingerprint(root, published)
-                               if event.get('source') == 'startup' and not differences else None)
-                save_startup_session(root, state, None, {'fingerprint': fingerprint})
-            return 0
-
-        results = io.StringIO()
-        published, differences = startup_snapshot(root)
-        refusal = baseline.get('refusal') if baseline else None
-        if not differences:
-            if refusal:
-                return deny_startup(refusal)
-            if baseline and baseline.get('fingerprint') == startup_fingerprint(root, published):
-                print(json.dumps({'continue': True}))
-                return 0
-        with redirect_stdout(results):
-            print_startup_differences(root, differences)
-            if differences:
-                if not refusal:
-                    # Lock this session before any recovery can change its startup files.
-                    refusal = {'refusal': 'В этом сеансе обнаружено расхождение стартовых файлов.'}
-                    save_startup_session(root, state, saved, refusal)
-                    saved = require_file(state, root)
-                try:
-                    restore_startup_copies(root)
-                except (OSError, ValueError) as error:
-                    print(f'Ошибка восстановления: {error}')
-            else:
-                print('Актуальность стартовых текстов этого сеанса не подтверждена.')
-        reason = results.getvalue().strip()
-        instruction = 'Начните свежий сеанс после успешной сверки.'
-        if instruction not in reason and 'Начните новую сессию' not in reason:
-            reason += '\n' + instruction
-    except (AttributeError, KeyError, OSError, TypeError, ValueError) as error:
-        reason = f'Сверка запуска: {error}\nНачните свежий сеанс после успешной сверки.'
-        if event_name == 'SessionStart':
-            print(reason, file=sys.stderr)
-            return 1
-    if state is not None:
-        try:
-            save_startup_session(root, state, saved, {'refusal': reason})
-        except (OSError, ValueError) as error:
-            reason += f'\nНе удалось сохранить остановку сеанса: {error}'
-    return deny_startup(reason)
-
-
-def startup_git(root, env, *args, data=None, allowed=(0,)):
-    result = subprocess.run(['git', '--no-replace-objects', *args], cwd=root, env=env,
-                            input=data, capture_output=True, check=False)
-    if result.returncode not in allowed:
-        reason = os.fsdecode(result.stderr).strip()
-        raise ValueError(f'Резервный коммит: git {args[0]}: {reason or result.returncode}')
-    return result.stdout
-
-
-def backup_startup_files(root, originals):
-    """Commit the exact recovery bytes without writing the user's index or branch."""
-    env = {name: value for name, value in os.environ.items() if not name.startswith('GIT_')}
-
-    def git(*args, data=None, allowed=(0,)):
-        return startup_git(root, env, *args, data=data, allowed=allowed)
-
-    git_root = Path(os.fsdecode(git('rev-parse', '--show-toplevel').rstrip(b'\r\n')))
-    if not os.path.samefile(root, git_root):
-        raise ValueError(f'Резервный коммит требует отдельного Git-корня проекта: {root}')
-    paths = {path.relative_to(root).as_posix(): original for path, original in originals.items()}
-    parent = git('rev-parse', '--verify', '--quiet', 'HEAD', allowed=(0, 1)).decode().strip()
-    with tempfile.TemporaryDirectory(prefix='harness-backup-index-') as directory:
-        env['GIT_INDEX_FILE'] = str(Path(directory) / 'index')
-        git('read-tree', parent or '--empty')
-        for path, (contents, attributes) in paths.items():
-            blob = git('hash-object', '-w', '--stdin', data=contents).decode().strip()
-            mode = '100755' if attributes[-1] & stat.S_IXUSR else '100644'
-            git('update-index', '--add', '--cacheinfo', mode, blob, path)
-        tree = git('write-tree').decode().strip()
-        parent_args = ('-p', parent) if parent else ()
-        commit = git('commit-tree', tree, *parent_args, '-m', 'Back up managed harness files').decode().strip()
-        changed = git('diff-tree', '--root', '--no-commit-id', '-r', '--name-only', '-z', commit)
-        if not set(filter(None, os.fsdecode(changed).split('\0'))) <= paths.keys():
-            raise ValueError(f'Резервный коммит содержит посторонние пути: {commit}')
-        for path, (contents, _) in paths.items():
-            copied = git('cat-file', 'blob', f'{commit}:{path}')
-            if hashlib.sha256(copied).digest() != hashlib.sha256(contents).digest():
-                raise ValueError(f'Неверные байты резервного коммита {commit}: {path}')
-        git('update-ref', f'refs/harness/backups/{commit}', commit)
-    return commit, sorted(paths)
-
-
-def restore_startup_copies(root):
-    """Restore only managed working copies after backing up existing revisions."""
-    with root_lock(root):
-        snapshots, differences = startup_snapshot(root)
-        if any(status == 'недоступен для чтения' for status in differences.values()):
-            print_startup_differences(root, differences)
-            return RULE_MISMATCH
-        if not differences:
-            print('OK')
-            return 0
-
-        protected = {root / name for name in PROTECTED}
-        extras = {path for path, status in differences.items() if status == 'лишний'}
-        originals = {path: snapshots[path][2] for path in differences
-                     if path not in extras and snapshots[path][2] is not None and
-                     (path not in protected or snapshots[path][2][0])}
-        originals.update({path: require_file(path, root) for path in extras})
-        if originals:
-            commit, paths = backup_startup_files(root, originals)
-            print(f'Резервный коммит {commit}', flush=True)
-            print('\n'.join(paths), flush=True)
-
-        for target in differences:
-            if target in extras:
-                if snapshot_input(target, root) != originals[target]:
-                    raise ValueError(f'Лишний файл изменился после резервного коммита: {target}')
-                continue
-            source, expected, observed = snapshots[target]
-            if snapshot_input(source, root) != expected or snapshot_input(target, root) != observed:
-                raise ValueError(f'Файл изменился до восстановления: {target}')
-        for target in sorted(differences):
-            if target in extras:
-                if snapshot_input(target, root) != originals[target]:
-                    raise ValueError(f'Лишний файл изменился до удаления: {target}')
-                target.unlink()
-                continue
-            source, expected, observed = snapshots[target]
-            if snapshot_input(source, root) != expected:
-                raise ValueError(f'Канон изменился до восстановления: {source}')
-            ordinary_directory(target.parent, root).mkdir(parents=True, exist_ok=True)
-            replace_input(target, observed, expected[0], root, expected[1][-1])
-
-        _, remaining = startup_snapshot(root)
-        if remaining:
-            print_startup_differences(root, remaining)
-            return RULE_MISMATCH
-        print('OK')
-        print('Начните новую сессию после восстановления из опубликованного канона.')
-        return RESTART_REQUIRED
-
-
 def restore_rule_copies(root):
     """Restore managed always loaded rules only, after an explicit recovery request."""
     with root_lock(root):
@@ -762,69 +526,6 @@ def check_publication_marker(root):
         raise ValueError(f'Unfinished publication: {marker}; resume the approved INBOX request.')
 
 
-def config_fields(pairs):
-    fields = dict(pairs)
-    if len(fields) != len(pairs):
-        raise ValueError('Duplicate JSON field.')
-    return fields
-
-
-def invalid_config_value(value):
-    raise ValueError(f'Invalid JSON value: {value}')
-
-
-def project_hook_changes(root):
-    """Plan both project merges before changing either configuration."""
-    checker = root / STARTUP_CHECKER
-    args = ['python3', '-B', str(checker), '--startup-hook', str(root)]
-    command = subprocess.list2cmdline(args) if os.name == 'nt' else shlex.join(args)
-    definition = {'type': 'command', 'command': command, 'timeout': 30,
-                  'statusMessage': HOOK_LABEL}
-    changes = {}
-    for relative in HOOK_CONFIGS:
-        path = root / relative
-        try:
-            original = snapshot_input(path, root)
-            config = (json.loads(original[0], object_pairs_hook=config_fields,
-                                 parse_constant=invalid_config_value)
-                      if original is not None else {})
-            if not isinstance(config, dict) or not isinstance(config.setdefault('hooks', {}), dict):
-                raise ValueError('Expected a JSON object for the configuration and hooks.')
-            updated = False
-            for event in HOOK_EVENTS:
-                groups = config['hooks'].setdefault(event, [])
-                if not isinstance(groups, list):
-                    raise ValueError(f'Expected a hook array at {event}.')
-                managed = []
-                for group in groups:
-                    if not isinstance(group, dict) or not isinstance(group.get('hooks'), list):
-                        raise ValueError(f'Invalid hook group at {event}.')
-                    for index, hook in enumerate(group['hooks']):
-                        if not isinstance(hook, dict):
-                            raise ValueError(f'Invalid hook definition at {event}.')
-                        if (hook.get('statusMessage') == HOOK_LABEL and
-                                ' --startup-hook ' in hook.get('command', '')):
-                            managed.append((group, index))
-                if len(managed) > 1:
-                    raise ValueError(f'Duplicate managed hook at {event}.')
-                if managed:
-                    group, index = managed[0]
-                    if group.get('matcher', ''):
-                        raise ValueError(f'Managed hook has a restricted matcher at {event}.')
-                    if group['hooks'][index] != definition:
-                        group['hooks'][index] = definition
-                        updated = True
-                else:
-                    groups.append({'hooks': [definition]})
-                    updated = True
-            if updated:
-                changes[path] = (original, (json.dumps(config, ensure_ascii=False, indent=2,
-                                                        allow_nan=False) + '\n').encode())
-        except (OSError, TypeError, ValueError) as error:
-            raise ValueError(f'{relative}: {error}') from error
-    return changes
-
-
 def ensure(root):
     print(WARNING, flush=True)
     root = ordinary_directory(Path(root), root)
@@ -842,7 +543,6 @@ def ensure(root):
         installed_bytes = require_file(installed, root)[0]
         if script != installed and require_file(script, root)[0] != installed_bytes:
             raise ValueError(f'Different checker version; run the installed checker directly: {installed}')
-        hook_changes = project_hook_changes(root)
         # This structural symlink guard never opens inbox/evidence contents.
         ordinary_tree(root / 'harness')
         categories = load_project_skeleton(common, root)
@@ -886,7 +586,7 @@ def ensure(root):
 
         missing_folders = [folder for folder in sorted(directories, key=lambda p: (len(p.parts), p))
                            if not folder.exists()]
-        planned = ([project] if create_project else []) + missing_folders + repairs + list(hook_changes)
+        planned = ([project] if create_project else []) + missing_folders + repairs
         if planned:
             print('Восстановление рабочих файлов из канонических источников.', flush=True)
         changed = []
@@ -908,12 +608,6 @@ def ensure(root):
                 changed.append(target)
                 if require_file(target, root)[0] != expected[0]:
                     raise ValueError(f'Incomplete recovery: {target}')
-            for target, (original, updated) in hook_changes.items():
-                ordinary_directory(target.parent, root).mkdir(parents=True, exist_ok=True)
-                replace_input(target, original, updated, root, 0o644)
-                changed.append(target)
-                if require_file(target, root)[0] != updated:
-                    raise ValueError(f'Incomplete hook installation: {target}')
         except (OSError, ValueError) as error:
             completed = set(changed)
             remaining = [str(path) for path in planned if path not in completed]
@@ -926,12 +620,6 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument('--check-rules', action='store_true', help='Compare rule copies without writing.')
-    modes.add_argument('--check-startup', action='store_true',
-                       help='Compare both protected inputs and all rules in one read-only pass.')
-    modes.add_argument('--restore-startup', action='store_true',
-                       help='Restore managed startup copies after verifying a backup commit.')
-    modes.add_argument('--startup-hook', action='store_true',
-                       help='Handle a synchronous native project startup event.')
     modes.add_argument('--restore-rules', action='store_true', help='Recover managed rule copies only.')
     modes.add_argument('--check-start-entrypoints', action='store_true',
                        help='Check AGENTS.md and CLAUDE.md and recover missing or empty inputs.')
@@ -949,17 +637,6 @@ def main():
         parser.error('--no-repair requires --check-start-entrypoints.')
     root = args.project_root.absolute()
     try:
-        if args.startup_hook:
-            return startup_hook(root)
-        if args.check_startup:
-            _, differences = startup_snapshot(root)
-            if not differences:
-                print('OK')
-                return 0
-            print_startup_differences(root, differences)
-            return RULE_MISMATCH
-        if args.restore_startup:
-            return restore_startup_copies(root)
         if args.check_rules:
             count = check_rule_copies(root)
             print(f'Rule copies match the published canon: {count}')
